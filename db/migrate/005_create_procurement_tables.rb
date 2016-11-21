@@ -19,7 +19,7 @@ class CreateProcurementTables < ActiveRecord::Migration
       t.belongs_to :group
       t.money :amount
 
-      t.index [:budget_period_id, :group_id], unique: true
+      t.index [:budget_period_id, :group_id], unique: true, name: :idx_procurement_budget_limits_bpg
     end
     add_foreign_key(:procurement_budget_limits, :procurement_budget_periods, column: 'budget_period_id')
     add_foreign_key(:procurement_budget_limits, :procurement_groups, column: 'group_id')
@@ -80,7 +80,7 @@ class CreateProcurementTables < ActiveRecord::Migration
       t.integer :approved_quantity,    null: true
       t.integer :order_quantity,       null: true
       t.money :price
-      t.column :priority,              "ENUM('normal', 'high')", default: 'normal'
+      t.string :priority,              default: 'normal', null: false
       t.boolean :replacement,          default: true
       t.string :supplier_name
       t.string :receiver,              null: true
@@ -90,6 +90,16 @@ class CreateProcurementTables < ActiveRecord::Migration
 
       t.datetime :created_at,       null: false
     end
+
+    execute <<-SQL.strip_heredoc
+      ALTER TABLE procurement_requests
+        ADD CONSTRAINT check_allowed_priorities
+        CHECK (
+          priority IN ('normal', 'high')
+        );
+    SQL
+
+
     add_foreign_key(:procurement_requests, :procurement_budget_periods, column: 'budget_period_id')
     add_foreign_key(:procurement_requests, :procurement_groups, column: 'group_id')
     add_foreign_key(:procurement_requests, :procurement_organizations, column: 'organization_id')

@@ -5,7 +5,12 @@ gem 'procurement', path: "engines/procurement"
 
 gem 'rails', '4.2.6'
 
-gem 'activerecord-jdbcmysql-adapter', platform: :jruby
+gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
+gem 'jdbc-postgres', platform: :jruby
+gem 'pg', platform: :mri
+gem 'pg_tasks', '>= 1.3.3', '< 2.0.0'
+
+# gem 'activerecord-jdbcmysql-adapter', platform: :jruby
 gem 'acts-as-dag', '~> 4.0' # alternative: 'dagnabit'
 gem 'axlsx', '~> 2.0', '>= 2.0.1'
 gem 'audited-activerecord', git: 'https://github.com/sellittf/audited.git' #, '~> 4.2'
@@ -27,7 +32,7 @@ gem 'jsrender-rails', '~> 1.2', git: 'https://github.com/spape/jsrender-rails.gi
 gem 'liquid', '~> 3.0'
 gem 'mini_magick', '~> 3.4'
 gem 'money-rails', '~>1.4'
-gem 'mysql2', '~> 0.4', platform: :mri
+# gem 'mysql2', '~> 0.4', platform: :mri
 gem 'net-ldap', require: 'net/ldap'
 gem 'nilify_blanks', '~> 1.1'
 gem 'paperclip', '~> 4.3'

@@ -33,6 +33,9 @@ module Leihs
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    config.active_record.schema_format = :sql
+    config.active_record.timestamped_migrations = false
+
     config.gettext_i18n_rails.use_for_active_record_attributes = false
 
     config.paths["db/migrate"] << \

@@ -27,7 +27,7 @@ class ProcurementCategories < ActiveRecord::Migration
       t.belongs_to :user, null: false, foreign_key: true
       t.belongs_to :category, null: false
 
-      t.index [:user_id, :category_id], unique: true
+      t.index [:user_id, :category_id], unique: true, name: :idx_procurement_group_inspectors_uc
     end
     add_foreign_key(:procurement_category_inspectors, :procurement_categories, column: 'category_id')
 
