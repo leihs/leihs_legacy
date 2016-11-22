@@ -7,15 +7,15 @@ class ProcurementCategories < ActiveRecord::Migration
     end
 
     drop_table :procurement_template_categories
-    create_table :procurement_main_categories do |t|
+    create_table :procurement_main_categories, id: :uuid do |t|
       t.string :name
       t.attachment :image
 
       t.index :name, unique: true
     end
-    create_table :procurement_categories do |t|
+    create_table :procurement_categories, id: :uuid do |t|
       t.string :name
-      t.integer :main_category_id, null: true
+      t.uuid :main_category_id, null: true
 
       t.index :name, unique: true
       t.index :main_category_id
@@ -23,9 +23,9 @@ class ProcurementCategories < ActiveRecord::Migration
 
 
     drop_table :procurement_group_inspectors
-    create_table :procurement_category_inspectors do |t|
-      t.belongs_to :user, null: false, foreign_key: true
-      t.belongs_to :category, null: false
+    create_table :procurement_category_inspectors, id: :uuid do |t|
+      t.uuid :user_id, null: false, foreign_key: true
+      t.uuid :category_id, null: false
 
       t.index [:user_id, :category_id], unique: true, name: :idx_procurement_group_inspectors_uc
     end
@@ -33,9 +33,9 @@ class ProcurementCategories < ActiveRecord::Migration
 
 
     drop_table :procurement_budget_limits
-    create_table :procurement_budget_limits do |t|
-      t.belongs_to :budget_period, null: false
-      t.belongs_to :main_category, null: false
+    create_table :procurement_budget_limits, id: :uuid do |t|
+      t.uuid :budget_period_id, null: false
+      t.uuid :main_category_id, null: false
       t.money :amount
 
       t.index [:budget_period_id, :main_category_id], unique: true, name: 'index_on_budget_period_id_and_category_id'
@@ -55,7 +55,7 @@ class ProcurementCategories < ActiveRecord::Migration
 
 
     change_table :procurement_templates do |t|
-      t.belongs_to :category, null: false
+      t.uuid :category_id, null: false
     end
     Procurement::Template.update_all(category_id: sub_cat)
     add_foreign_key(:procurement_templates, :procurement_categories, column: 'category_id')

@@ -5,9 +5,9 @@ class CreateAllTables < ActiveRecord::Migration
 
     # This is a fresh install, let's create all leihs tables in the DB
 
-    create_table :access_rights do |t|
-      t.belongs_to :user
-      t.belongs_to :inventory_pool
+    create_table :access_rights, id: :uuid do |t|
+      t.uuid :user_id
+      t.uuid :inventory_pool_id
       t.date       :suspended_until
       t.text       :suspended_reason
       t.date       :deleted_at
@@ -32,8 +32,8 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :accessories do |t|
-      t.belongs_to :model
+    create_table :accessories, id: :uuid do |t|
+      t.uuid :model_id
       t.string     :name
       t.integer    :quantity
     end
@@ -43,15 +43,15 @@ class CreateAllTables < ActiveRecord::Migration
 
 
     create_table :accessories_inventory_pools, :id => false do |t|
-      t.belongs_to :accessory
-      t.belongs_to :inventory_pool
+      t.uuid :accessory_id
+      t.uuid :inventory_pool_id
     end
     change_table :accessories_inventory_pools do |t|
       t.index [:accessory_id, :inventory_pool_id], :unique => true, :name => 'index_accessories_inventory_pools'
       t.index :inventory_pool_id
     end
 
-    create_table :addresses do |t|
+    create_table :addresses, id: :uuid do |t|
       t.string :street
       t.string :zip_code
       t.string :city
@@ -64,8 +64,8 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :attachments do |t|
-      t.belongs_to :model
+    create_table :attachments, id: :uuid do |t|
+      t.uuid :model_id
       t.boolean    :is_main,  :default => false
       ### attachment_fu
       t.string  :content_type
@@ -79,7 +79,7 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :authentication_systems do |t|
+    create_table :authentication_systems, id: :uuid do |t|
       t.string  :name
       t.string  :class_name
       t.boolean :is_default, :default => false
@@ -87,29 +87,29 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :buildings do |t|
+    create_table :buildings, id: :uuid do |t|
       t.string :name
       t.string :code
     end
 
 
-    create_table :reservations do |t|
-      t.belongs_to :contract
-      t.belongs_to :inventory_pool
-      t.belongs_to :user
-      t.belongs_to :delegated_user
-      t.belongs_to :handed_over_by_user
+    create_table :reservations, id: :uuid do |t|
+      t.uuid :contract_id
+      t.uuid :inventory_pool_id
+      t.uuid :user_id
+      t.uuid :delegated_user_id
+      t.uuid :handed_over_by_user_id
       t.string     :type,     :default => 'ItemLine', :null => false # STI (single table inheritance)
       t.string     :status, null: false
-      t.belongs_to :item
-      t.belongs_to :model
+      t.uuid :item_id
+      t.uuid :model_id
       t.integer    :quantity, :default => 1
       t.date       :start_date
       t.date       :end_date
       t.date       :returned_date
-      t.belongs_to :option,   :null => true
-      t.belongs_to :purpose
-      t.belongs_to :returned_to_user
+      t.uuid :option_id, :null => true
+      t.uuid :purpose_id
+      t.uuid :returned_to_user_id
       t.timestamps null: false
     end
 
@@ -134,32 +134,32 @@ class CreateAllTables < ActiveRecord::Migration
       t.index :status
     end
 
-    create_table :contracts do |t|
+    create_table :contracts, id: :uuid do |t|
       t.text       :note
       t.timestamps null: false
     end
 
-    create_table :database_authentications do |t|
+    create_table :database_authentications, id: :uuid do |t|
       t.string     :login
       t.string     :crypted_password, :limit => 40
       t.string     :salt,             :limit => 40
-      t.belongs_to :user
+      t.uuid :user_id
       t.timestamps null: false
     end
 
 
     create_table :delegations_users, :id => false do |t|
-      t.belongs_to :delegation
-      t.belongs_to :user
+      t.uuid :delegation_id
+      t.uuid :user_id
     end
     change_table :delegations_users do |t|
       t.index [:user_id, :delegation_id], :unique => true
       t.index :delegation_id
     end
 
-    create_table :groups do |t|
+    create_table :groups, id: :uuid do |t|
       t.string     :name
-      t.belongs_to :inventory_pool
+      t.uuid :inventory_pool_id
       t.boolean    :is_verification_required, default: false
       t.timestamps null: false
     end
@@ -170,16 +170,17 @@ class CreateAllTables < ActiveRecord::Migration
 
 
     create_table :groups_users, :id => false do |t|
-      t.belongs_to :user
-      t.belongs_to :group
+      t.uuid :user_id
+      t.uuid :group_id
     end
+
     change_table :groups_users do |t|
       t.index [:user_id, :group_id], :unique => true
       t.index :group_id
     end
 
-    create_table :holidays do |t|
-      t.belongs_to :inventory_pool
+    create_table :holidays, id: :uuid do |t|
+      t.uuid :inventory_pool_id
       t.date       :start_date
       t.date       :end_date
       t.string     :name
@@ -190,8 +191,9 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :images do |t|
-      t.belongs_to :target,       :polymorphic => true
+    create_table :images, id: :uuid do |t|
+      t.uuid :target_id
+      t.string :target_type
       t.boolean    :is_main,      :default => false
       ### attachment_fu
       t.string  :content_type
@@ -199,7 +201,7 @@ class CreateAllTables < ActiveRecord::Migration
       t.integer :size
       t.integer :height
       t.integer :width
-      t.integer :parent_id
+      t.uuid :parent_id
       t.string  :thumbnail
       ###
     end
@@ -208,7 +210,7 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :inventory_pools do |t|
+    create_table :inventory_pools, id: :uuid do |t|
       t.string     :name
       t.text       :description
       t.string     :contact_details
@@ -221,7 +223,7 @@ class CreateAllTables < ActiveRecord::Migration
       t.text       :color
       t.boolean    :print_contracts,       :default => true
       t.text       :opening_hours
-      t.belongs_to :address
+      t.uuid :address_id
       t.boolean    :automatic_suspension, null: false, default: false
       t.text       :automatic_suspension_reason
       t.boolean    :automatic_access
@@ -233,8 +235,8 @@ class CreateAllTables < ActiveRecord::Migration
 
 
     create_table :inventory_pools_model_groups, :id => false do |t|
-      t.belongs_to :inventory_pool
-      t.belongs_to :model_group
+      t.uuid :inventory_pool_id
+      t.uuid :model_group_id
     end
     change_table :inventory_pools_model_groups do |t|
       t.index :inventory_pool_id
@@ -242,15 +244,15 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :items do |t|
+    create_table :items, id: :uuid do |t|
       t.string     :inventory_code
       t.string     :serial_number
-      t.belongs_to :model
-      t.belongs_to :location
-      t.belongs_to :supplier
-      t.integer    :owner_id,              :null => false
-      t.integer    :inventory_pool_id,     :null => false
-      t.integer    :parent_id,             :null => true # used for packages
+      t.uuid :model_id
+      t.uuid :location_id
+      t.uuid :supplier_id
+      t.uuid :owner_id, :null => false
+      t.uuid :inventory_pool_id, :null => false
+      t.uuid :parent_id, :null => true # used for packages
       t.string     :invoice_number
       t.date       :invoice_date
       t.date       :last_check,            :default => nil
@@ -285,7 +287,7 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :languages do |t|
+    create_table :languages, id: :uuid do |t|
       t.string  :name
       t.string  :locale_name
       t.boolean :default
@@ -297,27 +299,27 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :locations do |t|
+    create_table :locations, id: :uuid do |t|
       t.string     :room
       t.string     :shelf
-      t.belongs_to :building
+      t.uuid :building_id
     end
     change_table :locations do |t|
       t.index :building_id
     end
 
-    create_table :mail_templates do |t|
-      t.belongs_to :inventory_pool, null: true # NOTE when null, then is system-wide
-      t.belongs_to :language
+    create_table :mail_templates, id: :uuid do |t|
+      t.uuid :inventory_pool_id, null: true # NOTE when null, then is system-wide
+      t.uuid :language_id
       t.string :name
       t.string :format
       t.text :body
     end
 
     # acts_as_dag
-    create_table :model_group_links do |t|
-      t.integer :ancestor_id
-      t.integer :descendant_id
+    create_table :model_group_links, id: :uuid do |t|
+      t.uuid :ancestor_id
+      t.uuid :descendant_id
       t.boolean :direct
       t.integer :count
       t.string  :label
@@ -328,7 +330,7 @@ class CreateAllTables < ActiveRecord::Migration
       t.index       [:descendant_id, :ancestor_id, :direct], :name => :index_on_descendant_id_and_ancestor_id_and_direct
     end
 
-    create_table :model_groups do |t|
+    create_table :model_groups, id: :uuid do |t|
       t.string   :type   # STI (single table inheritance)
       t.string   :name
       t.timestamps null: false
@@ -338,9 +340,9 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :model_links do |t|
-      t.belongs_to :model_group
-      t.belongs_to :model
+    create_table :model_links, id: :uuid do |t|
+      t.uuid :model_group_id
+      t.uuid :model_id
       t.integer    :quantity,   :default => 1
     end
     change_table :model_links do |t|
@@ -349,7 +351,7 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :models do |t|
+    create_table :models, id: :uuid do |t|
       t.string   :type,                :default => 'Model', :null => false # STI (single table inheritance)
       t.string   :manufacturer
       t.string   :product,             :null => false
@@ -374,8 +376,8 @@ class CreateAllTables < ActiveRecord::Migration
 
 
     create_table :models_compatibles, :id => false do |t|
-      t.belongs_to :model
-      t.belongs_to :compatible
+      t.uuid :model_id
+      t.uuid :compatible_id
     end
     change_table :models_compatibles do |t|
       t.index :compatible_id
@@ -383,8 +385,8 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :notifications do |t|
-      t.belongs_to :user
+    create_table :notifications, id: :uuid do |t|
+      t.uuid :user_id
       t.string     :title,      :default => ""
       t.datetime   :created_at, :null => false
     end
@@ -394,13 +396,13 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :numerators do |t|
+    create_table :numerators, id: :uuid do |t|
       t.integer :item
     end
 
 
-    create_table :options do |t|
-      t.belongs_to :inventory_pool
+    create_table :options, id: :uuid do |t|
+      t.uuid :inventory_pool_id
       t.string     :inventory_code
       t.string     :manufacturer
       t.string     :product,        :null => false
@@ -411,18 +413,18 @@ class CreateAllTables < ActiveRecord::Migration
       t.index :inventory_pool_id
     end
 
-    create_table :partitions do |t|
-      t.belongs_to :model
-      t.belongs_to :inventory_pool
-      t.belongs_to :group, :null => true
+    create_table :partitions, id: :uuid do |t|
+      t.uuid :model_id
+      t.uuid :inventory_pool_id
+      t.uuid :group_id, :null => true
       t.integer :quantity
     end
     change_table :partitions do |t|
       t.index [:model_id, :inventory_pool_id, :group_id], :unique => true
     end
 
-    create_table :properties do |t|
-      t.belongs_to :model
+    create_table :properties, id: :uuid do |t|
+      t.uuid :model_id
       t.string     :key
       t.string     :value
     end
@@ -430,12 +432,12 @@ class CreateAllTables < ActiveRecord::Migration
       t.index :model_id
     end
 
-    create_table :purposes do |t|
+    create_table :purposes, id: :uuid do |t|
       t.text :description
     end
 
 
-    create_table :settings do |t|
+    create_table :settings, id: :uuid do |t|
       t.string  :smtp_address
       t.integer :smtp_port
       t.string  :smtp_domain
@@ -462,7 +464,7 @@ class CreateAllTables < ActiveRecord::Migration
     end
 
 
-    create_table :suppliers do |t|
+    create_table :suppliers, id: :uuid do |t|
       t.string   :name, :null => false
       t.timestamps null: false
     end
@@ -470,12 +472,12 @@ class CreateAllTables < ActiveRecord::Migration
       t.index   :name, :unique => true
     end
 
-    create_table :users do |t|
+    create_table :users, id: :uuid do |t|
       t.string     :login
       t.string     :firstname
       t.string     :lastname
       t.string     :phone
-      t.belongs_to :authentication_system, :default => 1
+      t.uuid :authentication_system_id, :default => 1
       t.string     :unique_id
       t.string     :email
       t.string     :badge_id
@@ -483,18 +485,18 @@ class CreateAllTables < ActiveRecord::Migration
       t.string     :city
       t.string     :zip
       t.string     :country
-      t.integer    :language_id,           :default => nil
+      t.uuid :language_id, :default => nil
       t.text       :extended_info  # serialized
       t.string     :settings, :limit => 1024
-      t.belongs_to :delegator_user
+      t.uuid :delegator_user_id
       t.timestamps null: false
     end
     change_table :users do |t|
       t.index :authentication_system_id
     end
 
-    create_table :workdays do |t|
-      t.belongs_to :inventory_pool
+    create_table :workdays, id: :uuid do |t|
+      t.uuid :inventory_pool_id
       t.boolean    :monday,        :default => true
       t.boolean    :tuesday,       :default => true
       t.boolean    :wednesday,     :default => true
@@ -577,7 +579,7 @@ class CreateAllTables < ActiveRecord::Migration
 
     ############################################################
 
-    create_table :audits, :force => true do |t|
+    create_table :audits, :force => true, id: :uuid do |t|
       t.column :auditable_id, :integer
       t.column :auditable_type, :string
       t.column :associated_id, :integer
@@ -599,9 +601,9 @@ class CreateAllTables < ActiveRecord::Migration
     add_index :audits, :request_uuid
     add_index :audits, :created_at
 
-    create_table :hidden_fields do |t|
+    create_table :hidden_fields, id: :uuid do |t|
       t.string :field_id
-      t.belongs_to :user
+      t.uuid :user_id
     end
 
     create_table :fields, id: false do |t|

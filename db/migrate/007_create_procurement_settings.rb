@@ -1,6 +1,6 @@
 class CreateProcurementSettings < ActiveRecord::Migration
   def change
-    create_table :procurement_settings do |t|
+    create_table :procurement_settings, id: :uuid do |t|
       t.string :key, null: false
       t.string :value, null: false
 
