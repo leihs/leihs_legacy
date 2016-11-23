@@ -11,7 +11,7 @@ gem 'pg', platform: :mri
 gem 'pg_tasks', '>= 1.3.3', '< 2.0.0'
 
 # gem 'activerecord-jdbcmysql-adapter', platform: :jruby
-gem 'acts-as-dag', '~> 4.0' # alternative: 'dagnabit'
+# gem 'acts-as-dag', '~> 4.0' # alternative: 'dagnabit'
 gem 'axlsx', '~> 2.0', '>= 2.0.1'
 gem 'audited-activerecord', git: 'https://github.com/sellittf/audited.git' #, '~> 4.2'
 gem 'barby', '~> 0.5.0'

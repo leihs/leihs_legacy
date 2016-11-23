@@ -318,16 +318,9 @@ class CreateAllTables < ActiveRecord::Migration
 
     # acts_as_dag
     create_table :model_group_links, id: :uuid do |t|
-      t.uuid :ancestor_id
-      t.uuid :descendant_id
-      t.boolean :direct
-      t.integer :count
+      t.uuid :parent_id, index: true
+      t.uuid :child_id, index: true
       t.string  :label
-    end
-    change_table    :model_group_links do |t|
-      t.index       :ancestor_id
-      t.index       :direct
-      t.index       [:descendant_id, :ancestor_id, :direct], :name => :index_on_descendant_id_and_ancestor_id_and_direct
     end
 
     create_table :model_groups, id: :uuid do |t|
@@ -527,8 +520,8 @@ class CreateAllTables < ActiveRecord::Migration
       add_foreign_key(:items, :models)
       add_foreign_key(:items, :suppliers)
       add_foreign_key(:locations, :buildings)
-      add_foreign_key(:model_group_links, :model_groups, column: 'ancestor_id', on_delete: :cascade)
-      add_foreign_key(:model_group_links, :model_groups, column: 'descendant_id', on_delete: :cascade)
+      add_foreign_key(:model_group_links, :model_groups, column: 'parent_id', on_delete: :cascade)
+      add_foreign_key(:model_group_links, :model_groups, column: 'child_id', on_delete: :cascade)
       add_foreign_key(:model_links, :model_groups, on_delete: :cascade)
       add_foreign_key(:model_links, :models, on_delete: :cascade)
       add_foreign_key(:notifications, :users, on_delete: :cascade)

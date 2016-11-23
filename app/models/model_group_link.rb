@@ -2,7 +2,9 @@
 class ModelGroupLink < ActiveRecord::Base
   audited
 
-  # TODO: use dagnabit gem instead ??
-  acts_as_dag_links node_class_name: 'ModelGroup'
+  belongs_to :child, class_name: 'ModelGroup'
+
+  belongs_to :parent, class_name: 'ModelGroup'
+
 
 end
