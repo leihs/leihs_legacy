@@ -31,8 +31,7 @@ module PublicAsset
   def public_filename(thumb = nil)
     thumb = nil if thumb == :original
     filename = thumbnail_name_for(thumb)
-    partitioned_path = format('%08d', id).scan(/..../).join('/')
-    "#{self.class::PATH_PREFIX}/#{partitioned_path}/#{filename}"
+    "#{self.class::PATH_PREFIX}/#{id}/#{filename}"
   end
 
   def destroy_original_file

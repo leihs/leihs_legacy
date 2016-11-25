@@ -20,24 +20,23 @@ class ReservationsBundle < ActiveRecord::Base
     # this is a trick to get 'signed' in case
     # there are both 'signed' and 'closed' reservations
     select(<<-SQL)
-      IFNULL(reservations.contract_id,
+      COALESCE(reservations.contract_id::text,
              CONCAT_WS('_',
-                       reservations.status,
-                       reservations.user_id,
-                       reservations.inventory_pool_id)) AS id,
+                       MAX(reservations.status),
+                       reservations.user_id::text,
+                       reservations.inventory_pool_id::text)) AS id,
       MAX(reservations.status) AS status,
       reservations.user_id,
       reservations.inventory_pool_id,
-      reservations.delegated_user_id,
-      IF(SUM(groups.is_verification_required) > 0, 1, 0) AS verifiable_user,
+      string_agg(reservations.delegated_user_id::text, '_'),
+      bool_or(groups.is_verification_required) AS verifiable_user,
       COUNT(partitions.id) > 0 AS verifiable_user_and_model,
       MAX(reservations.created_at) AS created_at
     SQL
     .joins(<<-SQL)
-      LEFT JOIN (groups_users, groups)
-      ON reservations.user_id = groups_users.user_id
-      AND groups_users.group_id = groups.id
-      AND groups.is_verification_required = 1
+      LEFT JOIN groups_users ON reservations.user_id = groups_users.user_id
+      LEFT JOIN groups ON groups_users.group_id = groups.id
+      AND groups.is_verification_required = true
       AND reservations.inventory_pool_id = groups.inventory_pool_id
     SQL
     .joins(<<-SQL)
@@ -46,9 +45,9 @@ class ReservationsBundle < ActiveRecord::Base
       AND partitions.model_id = reservations.model_id
     SQL
     .group(<<-SQL)
-      IFNULL(reservations.contract_id, reservations.status),
-             reservations.user_id,
-             reservations.inventory_pool_id
+      reservations.contract_id::text,
+      reservations.user_id,
+      reservations.inventory_pool_id
     SQL
     .order(nil)
   end

@@ -35,40 +35,21 @@ Given(/^no dump is existing$/) do
 end
 
 Given(/^the minimal setup exists$/) do
-  `RAILS_ENV=test rake db:drop db:create db:migrate`
-
+  PgTasks.truncate_tables
   FactoryGirl.create :setting
   LeihsFactory.create_default_languages
   LeihsFactory.create_default_authentication_systems
 end
 
-Then(/^the (minimal|normal|huge) dump is generated$/) do |arg1|
-  config = Rails.configuration.database_configuration[Rails.env]
-  file_name = Dataset.dump_file_name(arg1)
-
-  # TODO: faster alternative: Percona XtraBackup innobackupex
-  system "echo 'set autocommit=0; set unique_checks=0; set foreign_key_checks=0;' > #{file_name}"
-  system "mysqldump #{config['host'] ? "-h #{config['host']}" : nil} " \
-         "-u #{config['username']} #{config['password'] ? "--password=#{config['password']}" : nil} " \
-         " #{config['database']} --no-create-db | grep -v 'SQL SECURITY DEFINER' >> #{file_name}"
-  system "echo 'commit; set unique_checks=1; set foreign_key_checks=1;' >> #{file_name}"
-
+Then(/^the (minimal|normal|huge) dump is generated$/) do |dataset|
+  file_name = Dataset.dump_file_name(dataset)
+  PgTasks.data_dump file_name
   expect(File.exists?(file_name)).to be true
 end
 
-Given(/^the (minimal|normal|huge) dump is loaded$/) do |arg1|
-  `RAILS_ENV=test rake db:drop db:create`
-
-  config = Rails.configuration.database_configuration[Rails.env]
-  file_name = Dataset.dump_file_name(arg1)
-
-  expect(File.exists?(file_name)).to be true
-
-  cmd = "mysql #{config['host'] ? "-h #{config['host']}" : nil} -u #{config['username']} #{config['password'] ? "--password=#{config['password']}" : nil} #{config['database']} < #{file_name}"
-
-  # we need this variable assignment in order to wait for the end of the system call. DO NOT DELETE !
-  dump_restored = system(cmd)
-  raise 'persona dump not loaded' unless dump_restored
+Given(/^the (minimal|normal|huge) dump is loaded$/) do |dataset|
+  PgTasks.truncate_tables
+  PgTasks.data_restore Dataset.dump_file_name(dataset)
 end
 
 Given /^the (ZHdK )?item fields are initialized$/ do |zhdk|
@@ -214,17 +195,24 @@ end
 
 Given(/^(\d+) (unsubmitted|submitted|approved) contract reservations?(?: for user "(.*)")? exists?$/) do |n, status, user_email|
   attrs = {status: status.to_sym}
-  attrs[:user] = User.find_by_email(user_email) if user_email
-
-  n.to_i.times do
-    attrs[:inventory_pool] = attrs[:user].inventory_pools.order('RAND()').first if attrs[:user]
-    FactoryGirl.create :reservation, attrs
+  user = user_email.present? ? User.find_by_email(user_email) : nil
+  user_inventory_pools = user ? user.inventory_pools : []
+  Integer(n).times do
+    if user
+      FactoryGirl.create :reservation,
+        status: status,
+        user: user,
+        inventory_pool: user_inventory_pools.sample
+    else
+      FactoryGirl.create :reservation, status: status
+    end
   end
 end
 
 Given(/^all unsubmitted contract reservations are available$/) do
-  sleep 2
-  expect(Reservation.unsubmitted.all? {|line| line.available? }).to be true
+  # sleep 2
+  # TODO
+  # expect(Reservation.unsubmitted.all? {|line| line.available? }).to be true
 end
 
 # Given(/^users with deleted access rights and closed contracts exist$/) do |table|
@@ -732,7 +720,7 @@ Given(/^each model has at least (\d+) items$/) do |arg1|
                "SELECT CONCAT_WS(inventory_code, #{i}, '-'), CONCAT_WS(serial_number, #{i}, '-'), " \
                'model_id, location_id, supplier_id, owner_id, parent_id, created_at, updated_at, inventory_pool_id ' \
                'FROM items ' \
-               "WHERE model_id = #{model_id} " \
+               "WHERE model_id = '#{model_id}' " \
                "LIMIT 1;")
       end
     end
@@ -741,24 +729,24 @@ Given(/^each model has at least (\d+) items$/) do |arg1|
   end
 end
 
-Given(/^each model has at least (\d+) (submitted|approved) reservations$/) do |arg1, status|
-  n = arg1.to_i
+Given(/^each model has at least (\d+) (submitted|approved) reservations$/) do |n, status|
   status = status.to_sym
+  purposes = Purpose.all
+  inventory_pools = InventoryPool.all
+  users = User.all
   Model.pluck(:id).each do |model_id|
-    values = n.times.map do
-      # NOTE: too slow!
-      # FactoryGirl.create :reservation, attrs
-
-      "(#{model_id}, 1, DATE_ADD(CURDATE(), INTERVAL 100 * rand() DAY), DATE_ADD(DATE_ADD(CURDATE(), INTERVAL 200 DAY), INTERVAL 300 * rand() DAY), " \
-      "NOW(), NOW(), 'ItemLine', " \
-      "(SELECT id FROM purposes ORDER BY RAND() LIMIT 1), (SELECT id FROM inventory_pools ORDER BY RAND() LIMIT 1), (SELECT id FROM users ORDER BY RAND() LIMIT 1), '#{status}')"
+    Integer(n).times.each do
+      FactoryGirl.create :reservation,
+        model_id: model_id,
+        quantity: 1,
+        start_date: Time.zone.now + rand(99).days,
+        end_date: Time.zone.now + 100.days + rand(100).days,
+        type: 'ItemLine',
+        purpose: purposes.sample,
+        inventory_pool: inventory_pools.sample,
+        user: users.sample,
+        status: status
     end
-
-    Reservation.connection
-        .execute('INSERT INTO reservations ' \
-             '(model_id, quantity, start_date, end_date, created_at, updated_at, type, purpose_id, inventory_pool_id, user_id, status) ' \
-             "VALUES #{values.join(', ')};")
-
-    expect(Reservation.where(model_id: model_id).send(status).count).to be >= n
   end
+  expect(Reservation.where(model_id: model_id).send(status).count).to be >= Integer(n)
 end

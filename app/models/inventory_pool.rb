@@ -97,7 +97,7 @@ class InventoryPool < ActiveRecord::Base
            (lambda do
               select('id, inventory_pool_id, model_id, item_id, quantity, ' \
                      'start_date, end_date, returned_date, status, ' \
-                     'GROUP_CONCAT(groups_users.group_id) AS concat_group_ids')
+                     "string_agg(groups_users.group_id::text, ', ') AS concat_group_ids")
                 .joins('LEFT JOIN groups_users ' \
                        'ON groups_users.user_id = reservations.user_id')
                 .where.not(status: [:rejected, :closed])

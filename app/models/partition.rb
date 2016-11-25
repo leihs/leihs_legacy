@@ -30,19 +30,19 @@ class Partition < ActiveRecord::Base
   def self.query(model_ids: nil, inventory_pool_id: nil)
     sql = 'SELECT model_id, inventory_pool_id, group_id, quantity ' \
               'FROM partitions WHERE 1=1 '
-    sql += "AND model_id IN (#{model_ids.join(',')})  " if model_ids
-    sql += "AND inventory_pool_id = #{inventory_pool_id} " if inventory_pool_id
+    sql += "AND model_id IN ('#{model_ids.join('\', \'')}')  " if model_ids
+    sql += "AND inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id
 
     sql += 'UNION ' \
         'SELECT model_id, inventory_pool_id, NULL as group_id, ' \
-        '(COUNT(i.id) - IFNULL((SELECT SUM(quantity) FROM partitions AS p ' \
+        '(COUNT(i.id) - COALESCE((SELECT SUM(quantity) FROM partitions AS p ' \
           'WHERE p.model_id = i.model_id ' \
           'AND p.inventory_pool_id = i.inventory_pool_id '\
         'GROUP BY p.inventory_pool_id, p.model_id), 0)) as quantity ' \
         'FROM items AS i ' \
-        'WHERE i.retired IS NULL AND i.is_borrowable = 1 AND i.parent_id IS NULL '
-    sql += "AND i.model_id IN (#{model_ids.join(',')}) " if model_ids
-    sql += "AND i.inventory_pool_id = #{inventory_pool_id} " if inventory_pool_id
+        'WHERE i.retired IS NULL AND i.is_borrowable = true AND i.parent_id IS NULL '
+    sql += "AND i.model_id IN ('#{model_ids.join('\', \'')}') " if model_ids
+    sql += "AND i.inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id
     sql += 'GROUP BY i.inventory_pool_id, i.model_id'
 
     sql

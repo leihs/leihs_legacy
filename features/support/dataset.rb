@@ -15,25 +15,16 @@ module Dataset
 
     # The minimum representable time is 1901-12-13, and the maximum representable time is 2038-01-19
     #tmp# ActiveRecord::Base.connection.execute "SET time_zone='+1:00'"
-    ActiveRecord::Base.connection.execute "SET TIMESTAMP=unix_timestamp('#{Time.now.iso8601}')" #old# Time.now.utc.iso8601
+    #ActiveRecord::Base.connection.execute "SET TIMESTAMP=unix_timestamp('#{Time.now.iso8601}')" #old# Time.now.utc.iso8601
     #mysql_now = ActiveRecord::Base.connection.exec_query("NOW()").rows.flatten.first
     #raise "MySQL current datetime has not been changed" if mysql_now != Time.now
-    mysql_now = ActiveRecord::Base.connection.exec_query('SELECT CURDATE()').rows.flatten.first
-    raise 'MySQL current datetime has not been changed' if mysql_now != Date.today
+    #mysql_now = ActiveRecord::Base.connection.exec_query('SELECT CURDATE()').rows.flatten.first
+    #raise 'MySQL current datetime has not been changed' if mysql_now != Date.today
   end
 
   def restore_random_dump(dataset)
     use_test_datetime
-
-    config = Rails.configuration.database_configuration[Rails.env]
-    file_name = dump_file_name(dataset)
-    cmd = "mysql #{config['host'] ? "-h #{config['host']}" : nil} -u #{config['username']} #{config['password'] ? "--password=#{config['password']}" : nil} #{config['database']} < #{file_name}"
-
-    # we need this variable assignment in order to wait for the end of the system call. DO NOT DELETE !
-    dump_restored = system(cmd)
-    raise 'persona dump not loaded' unless dump_restored
-
-    dump_restored
+    PgTasks.data_restore dump_file_name(dataset)
   end
 
   def use_test_datetime(reset: false, freeze: false)
@@ -83,13 +74,13 @@ module Dataset
   def dump_file_name(dataset)
     s = case dataset
         when 'minimal'
-          'minimal.sql'
+          'minimal.pgbin'
         when 'normal'
           get_test_datetime
-          "normal_#{ENV['TEST_DATETIME']}.sql"
+          "normal_#{ENV['TEST_DATETIME']}.pgbin"
         when 'huge'
           get_test_datetime
-          "huge_#{ENV['TEST_DATETIME']}.sql"
+          "huge_#{ENV['TEST_DATETIME']}.pgbin"
         else
           raise
         end

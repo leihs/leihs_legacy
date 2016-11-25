@@ -5,11 +5,11 @@
 
 Feature: Generating Personas
 
-  @generating_personas
+  @generating_personas @minimal_dataset  @normal_dataset
   Scenario: Deleting old Datasets
     Given no dump is existing
 
-  @generating_personas
+  @generating_personas @minimal_dataset @normal_dataset
   Scenario: Genarating Minimal Dataset
     Given the minimal setup exists
     And the item fields are initialized
@@ -18,7 +18,7 @@ Feature: Generating Personas
     Then there are 51 fields in total
     Then the minimal dump is generated
 
-  @generating_personas
+  @generating_personas @normal_dataset
   Scenario: Genarating Dataset 1
     Given today is a random date
     And the minimal dump is loaded
@@ -476,7 +476,7 @@ Feature: Generating Personas
     And 3 unsubmitted contract reservation for user "normin@zhdk.ch" exists
 
     And all unsubmitted contract reservations are available
-    
+
     And 3 to 5 submitted item reservations with following properties exists:
       | user email          | normin@zhdk.ch |
       | inventory pool name | A-Ausleihe     |
@@ -704,7 +704,7 @@ Feature: Generating Personas
     And the following access right is revoked:
       | user email          | customer7@zhdk.ch |
       | inventory pool name | A-Ausleihe        |
-    
+
     And 1 to 1 approved item reservations with following properties exists:
       | user email          | normin@zhdk.ch |
       | inventory pool name | A-Ausleihe     |
@@ -967,7 +967,7 @@ Feature: Generating Personas
 
     Then the normal dump is generated
 
-  @generating_personas
+  @generating_personas @huge_dataset
   Scenario: Genarating Huge Dataset
     Given the normal dump is loaded
     And each model has at least 300 items
