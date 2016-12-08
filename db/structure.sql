@@ -1746,6 +1746,14 @@ CREATE INDEX user_index ON audits USING btree (user_id, user_type);
 
 
 --
+-- Name: fk_rails_00a4ef0c4f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hidden_fields
+    ADD CONSTRAINT fk_rails_00a4ef0c4f FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: fk_rails_042cf7b23c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1802,6 +1810,14 @@ ALTER TABLE ONLY procurement_budget_limits
 
 
 --
+-- Name: fk_rails_214a7de1ff; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY procurement_requests
+    ADD CONSTRAINT fk_rails_214a7de1ff FOREIGN KEY (model_id) REFERENCES models(id);
+
+
+--
 -- Name: fk_rails_330f34f125; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1826,6 +1842,22 @@ ALTER TABLE ONLY reservations
 
 
 --
+-- Name: fk_rails_3dac013d86; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY hidden_fields
+    ADD CONSTRAINT fk_rails_3dac013d86 FOREIGN KEY (field_id) REFERENCES fields(id) ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_3e8b923972; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY mail_templates
+    ADD CONSTRAINT fk_rails_3e8b923972 FOREIGN KEY (language_id) REFERENCES languages(id) ON DELETE CASCADE;
+
+
+--
 -- Name: fk_rails_44495fc6cf; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1847,6 +1879,14 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY groups
     ADD CONSTRAINT fk_rails_45f96f9df2 FOREIGN KEY (inventory_pool_id) REFERENCES inventory_pools(id);
+
+
+--
+-- Name: fk_rails_46cc05bf71; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY procurement_templates
+    ADD CONSTRAINT fk_rails_46cc05bf71 FOREIGN KEY (supplier_id) REFERENCES suppliers(id);
 
 
 --
@@ -1890,6 +1930,14 @@ ALTER TABLE ONLY groups_users
 
 
 --
+-- Name: fk_rails_51707743b7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY procurement_requests
+    ADD CONSTRAINT fk_rails_51707743b7 FOREIGN KEY (supplier_id) REFERENCES suppliers(id);
+
+
+--
 -- Name: fk_rails_538506beaf; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1919,6 +1967,14 @@ ALTER TABLE ONLY models_compatibles
 
 ALTER TABLE ONLY reservations
     ADD CONSTRAINT fk_rails_5cc2043d96 FOREIGN KEY (returned_to_user_id) REFERENCES users(id);
+
+
+--
+-- Name: fk_rails_5d00b5b086; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY mail_templates
+    ADD CONSTRAINT fk_rails_5d00b5b086 FOREIGN KEY (inventory_pool_id) REFERENCES inventory_pools(id) ON DELETE CASCADE;
 
 
 --
@@ -1959,6 +2015,14 @@ ALTER TABLE ONLY reservations
 
 ALTER TABLE ONLY attachments
     ADD CONSTRAINT fk_rails_753607b7c1 FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_8244a2f05f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY procurement_requests
+    ADD CONSTRAINT fk_rails_8244a2f05f FOREIGN KEY (location_id) REFERENCES locations(id);
 
 
 --
@@ -2170,6 +2234,14 @@ ALTER TABLE ONLY models_compatibles
 
 
 --
+-- Name: fk_rails_e6aab61827; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY procurement_templates
+    ADD CONSTRAINT fk_rails_e6aab61827 FOREIGN KEY (model_id) REFERENCES models(id);
+
+
+--
 -- Name: fk_rails_e8ed83a2e6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2202,11 +2274,27 @@ ALTER TABLE ONLY items
 
 
 --
+-- Name: fk_rails_f365098d3c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY procurement_requests
+    ADD CONSTRAINT fk_rails_f365098d3c FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
 -- Name: fk_rails_f6d36cd48e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY attachments
     ADD CONSTRAINT fk_rails_f6d36cd48e FOREIGN KEY (model_id) REFERENCES models(id) ON DELETE CASCADE;
+
+
+--
+-- Name: fk_rails_f80c94fb1e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY procurement_category_inspectors
+    ADD CONSTRAINT fk_rails_f80c94fb1e FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --
@@ -2226,6 +2314,14 @@ ALTER TABLE ONLY procurement_templates
 
 
 --
+-- Name: fkey_images_images_parent_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY images
+    ADD CONSTRAINT fkey_images_images_parent_id FOREIGN KEY (parent_id) REFERENCES images(id);
+
+
+--
 -- Name: fkey_users_delegators; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2242,6 +2338,8 @@ SET search_path TO "$user", public;
 INSERT INTO schema_migrations (version) VALUES ('0');
 
 INSERT INTO schema_migrations (version) VALUES ('1');
+
+INSERT INTO schema_migrations (version) VALUES ('10');
 
 INSERT INTO schema_migrations (version) VALUES ('2');
 
