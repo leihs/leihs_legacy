@@ -1,3 +1,7 @@
+jobs:
+  import-production-db-test:
+    include: cider-ci/jobs/import-production-db-test.yml
+
 include:
   # per-engine jobs:
 
@@ -26,3 +30,5 @@ include:
 
   # run manually
   - cider-ci/jobs/hot_spot_scenarios.yml
+
+

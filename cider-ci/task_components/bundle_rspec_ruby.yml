@@ -1,6 +1,5 @@
 traits:
   ruby-install: true
-  chruby: true
   Bash: true
 
 scripts:
@@ -28,5 +27,3 @@ scripts:
       gems are bundled:
         script_key: bundle-rspec-ruby
         states: [passed]
-
-

@@ -1,5 +1,4 @@
 traits:
-  MySQL: true
   Ruby: true
 
 environment_variables:
@@ -9,35 +8,40 @@ scripts:
 
   configure-database:
     body: |
-      #!/usr/bin/ruby
+      #!/usr/bin/env ruby
       require 'yaml'
-      config = \
-        { 'test' =>
-          { 'adapter' => 'mysql2',
-            'encoding' => 'utf8',
-            'host' => 'localhost',
-            'pool' => 3,
-            'username' => ENV['MYSQL_USER'],
-            'password' => ENV['MYSQL_PASSWORD'],
-            'database' => ENV['DATABASE']}}
+      db_config = {
+        'adapter' => 'postgresql',
+        'encoding' => 'unicode',
+        'host' => 'localhost',
+        'pool' => 10,
+        'username' => ENV['PGUSER'],
+        'password' =>  ENV['PGPASSWORD'],
+        'database' => ENV['DATABASE']}
+      config = { 'test' => db_config}
       File.open('config/database.yml','w') { |file| file.write config.to_yaml }
 
-
   create-database:
-    body: mysqladmin --user=$MYSQL_USER --password=$MYSQL_PASSWORD create $DATABASE
-    start_when:
-      database is configured:
-        script_key: configure-database
+    body: |
+      #!/usr/bin/env bash
+      set -eux
+      createdb "$DATABASE"
+      psql -d "$DATABASE" -f db/structure.sql
 
   test:
     start_when:
-      the database is configured:
+      database has been created:
         script_key: create-database
+      database has been configured:
+        script_key: configure-database
 
   delete-database:
-    body:  mysqladmin --user=$MYSQL_USER --password=$MYSQL_PASSWORD --force drop $DATABASE
+    body: |
+      #!/usr/bin/env bash
+      set -eux
+      dropdb "$DATABASE"
     start_when:
-      tests is in terminal state:
+      test is in termial state:
         script_key: test
         states: [aborted, defective, passed, failed, skipped]
 

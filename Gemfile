@@ -9,6 +9,9 @@ gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
 gem 'jdbc-postgres', platform: :jruby
 gem 'pg', platform: :mri
 gem 'pg_tasks', '>= 1.3.3', '< 2.0.0'
+#gem 'pg_tasks', path: '/Users/thomas/Programming/ROR/pg_tasks/'
+
+gem 'uuidtools'
 
 # gem 'activerecord-jdbcmysql-adapter', platform: :jruby
 # gem 'acts-as-dag', '~> 4.0' # alternative: 'dagnabit'

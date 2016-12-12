@@ -21,7 +21,6 @@ class ProcurementCategories < ActiveRecord::Migration
       t.index :main_category_id
     end
 
-
     drop_table :procurement_group_inspectors
     create_table :procurement_category_inspectors, id: :uuid do |t|
       t.uuid :user_id, null: false, foreign_key: true
@@ -36,7 +35,7 @@ class ProcurementCategories < ActiveRecord::Migration
     create_table :procurement_budget_limits, id: :uuid do |t|
       t.uuid :budget_period_id, null: false
       t.uuid :main_category_id, null: false
-      t.money :amount
+      t.monetize :amount
 
       t.index [:budget_period_id, :main_category_id], unique: true, name: 'index_on_budget_period_id_and_category_id'
     end
@@ -44,12 +43,8 @@ class ProcurementCategories < ActiveRecord::Migration
     add_foreign_key(:procurement_budget_limits, :procurement_main_categories, column: 'main_category_id')
 
 
-    main_category = Procurement::MainCategory.create name: 'Old Groups'
-    sub_cat = Procurement::Category.create name: 'Existing requests', main_category: main_category
-
     remove_foreign_key(:procurement_requests, column: 'group_id')
     rename_column(:procurement_requests, :group_id, :category_id)
-    Procurement::Request.update_all(category_id: sub_cat)
     change_column_null :procurement_requests, :category_id, false
     add_foreign_key(:procurement_requests, :procurement_categories, column: 'category_id')
 
@@ -57,7 +52,6 @@ class ProcurementCategories < ActiveRecord::Migration
     change_table :procurement_templates do |t|
       t.uuid :category_id, null: false
     end
-    Procurement::Template.update_all(category_id: sub_cat)
     add_foreign_key(:procurement_templates, :procurement_categories, column: 'category_id')
 
 

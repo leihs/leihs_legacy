@@ -27,6 +27,14 @@ module Leihs
     # But the Faker gem is currently broken and does not accept properly spelled locales like 'en_US', it tries
     # to look for 'en' and that breaks. If Faker is ever fixed, we can uncomment the above lines.
 
+    config.logger = ActiveSupport::Logger.new(STDOUT)
+
+    if ENV['RAILS_LOG_LEVEL'].present?
+      config.log_level = ENV['RAILS_LOG_LEVEL']
+    else
+      config.log_level = :info
+    end
+
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 

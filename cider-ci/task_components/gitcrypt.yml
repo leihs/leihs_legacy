@@ -1,0 +1,11 @@
+traits:
+  git-crypt: yes
+scripts:
+  unlock:
+    body: |
+      git crypt unlock
+      git submodule foreach 'git crypt unlock || exit 0'
+  test:
+    start_when:
+      unlock:
+        script_key: unlock

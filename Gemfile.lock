@@ -515,6 +515,7 @@ GEM
       equalizer (~> 0.0.9)
       parser (~> 2.3.0)
       procto (~> 0.0.2)
+    uuidtools (2.1.5)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -611,6 +612,7 @@ DEPENDENCIES
   trinidad
   turnip
   uglifier (~> 2.4)
+  uuidtools
   web-console (~> 2.0)
   will_paginate (~> 3.0)
   yard

@@ -542,7 +542,7 @@ class CreateAllTables < ActiveRecord::Migration
         add_foreign_key(:reservations, :users, column: 'returned_to_user_id')
         add_foreign_key(:users, :authentication_systems)
         add_foreign_key(:users, :languages)
-        add_foreign_key(:users, :users, column: 'delegator_user_id')
+        add_foreign_key(:users, :users, column: 'delegator_user_id', name: 'fkey_users_delegators')
         add_foreign_key(:workdays, :inventory_pools, on_delete: :cascade)
 
         # join tables
@@ -573,11 +573,11 @@ class CreateAllTables < ActiveRecord::Migration
     ############################################################
 
     create_table :audits, :force => true, id: :uuid do |t|
-      t.column :auditable_id, :integer
+      t.column :auditable_id, :uuid
       t.column :auditable_type, :string
-      t.column :associated_id, :integer
+      t.column :associated_id, :uuid
       t.column :associated_type, :string
-      t.column :user_id, :integer
+      t.column :user_id, :uuid
       t.column :user_type, :string
       t.column :username, :string
       t.column :action, :string

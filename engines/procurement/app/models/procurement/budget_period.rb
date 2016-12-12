@@ -47,7 +47,7 @@ module Procurement
     class << self
 
       def current
-        order(end_date: :asc).find_by('end_date >= CURDATE()')
+        order(end_date: :asc).find_by('end_date >= now()')
       end
 
     end

@@ -17,7 +17,8 @@ class CreateProcurementTables < ActiveRecord::Migration
     create_table :procurement_budget_limits, id: :uuid do |t|
       t.uuid :budget_period_id
       t.uuid :group_id
-      t.money :amount
+      t.integer :amount_cents, default: 0, null: false
+      t.string :amount_currency, default: 'CHF', null: false
 
       t.index [:budget_period_id, :group_id], unique: true, name: :idx_procurement_budget_limits_bpg
     end
@@ -60,7 +61,7 @@ class CreateProcurementTables < ActiveRecord::Migration
       t.uuid :supplier_id, foreign_key: true
       t.string :article_name, null: false
       t.string :article_number,        null: true
-      t.money :price
+      t.monetize :price
       t.string :supplier_name
     end
     add_foreign_key(:procurement_templates, :procurement_template_categories, column: 'template_category_id')
@@ -79,7 +80,7 @@ class CreateProcurementTables < ActiveRecord::Migration
       t.integer :requested_quantity,   null: false
       t.integer :approved_quantity,    null: true
       t.integer :order_quantity,       null: true
-      t.money :price
+      t.monetize :price
       t.string :priority,              default: 'normal', null: false
       t.boolean :replacement,          default: true
       t.string :supplier_name

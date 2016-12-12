@@ -1,0 +1,29 @@
+name: Test Import Production-DB
+context:
+  include: cider-ci/shared/main_context.yml
+  tasks:
+    test-import:
+      include:
+      - cider-ci/task_components/database.yml
+      - cider-ci/task_components/gitcrypt.yml
+      - cider-ci/task_components/bundle_rspec_ruby.yml
+      load: 5 # we need lots of RAM
+      max_trials: 1
+      traits:
+        ci-g2016-01: yes
+      scripts:
+        unzip:
+          body: gunzip secrets/db_production.yml.gz
+          timeout: 5 Minutes
+          start_when:
+            git crypt unlocked:
+              script_key: unlock
+        test:
+          start_when:
+            unziped:
+              script_key: unzip
+          timeout: 5 hours
+          body: |
+            set -eux
+            export PATH=~/.rubies/$RUBY/bin:$PATH
+            bundle exec rake leihs:dbio:import FILE=secrets/db_production.yml

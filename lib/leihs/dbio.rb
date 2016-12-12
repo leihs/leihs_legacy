@@ -28,6 +28,7 @@ module Leihs
         filename ||= Rails.root.join('tmp', 'db_data.yml')
         ::IO.write filename, data.to_yaml
       end
+
     end
 
   end

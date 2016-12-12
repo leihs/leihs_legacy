@@ -693,7 +693,7 @@ module CommonSteps
     ActiveRecord::Base.connection.execute \
       "SET TIMESTAMP=unix_timestamp('#{Time.now.iso8601}')"
     mysql_now = ActiveRecord::Base.connection \
-    .exec_query('SELECT CURDATE()').rows.flatten.first
+    .exec_query('SELECT now()').rows.flatten.first
     if mysql_now != Time.zone.today
       raise 'MySQL current datetime has not been changed'
     end
