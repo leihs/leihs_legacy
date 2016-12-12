@@ -12,7 +12,7 @@ When(/^a new inventory code is assigned$/) do
 end
 
 When(/^I edit software$/) do
-  @software ||= Software.order('RAND()').first
+  @software ||= Software.first
   step 'I open the inventory'
   @page_to_return = current_path
   all('a', text: _('Software')).first.click
@@ -40,7 +40,7 @@ Then(/^I can save and copy the existing software license$/) do
 end
 
 When(/^I select some different software$/) do
-  @new_software = Software.where.not(id: @license.model_id).order('RAND()').first
+  @new_software = Software.where.not(id: @license.model_id).first
   fill_in_autocomplete_field _('Software'), @new_software.name
 end
 
@@ -176,7 +176,7 @@ end
 Then(/^for "(.*?)" one can select a supplier$/) do |arg1|
   i = find('.field', text: _(arg1)).find 'input'
   i.click
-  supplier = Supplier.order('RAND()').first
+  supplier = Supplier.first
   find('.ui-menu-item', text: supplier.name).click
   expect(i.value).to eq supplier.name
 end
@@ -184,7 +184,7 @@ end
 Then(/^for "(.*?)" one can select an inventory pool$/) do |arg1|
   i = find('.field', text: _(arg1)).find 'input'
   i.click
-  ip = InventoryPool.order('RAND()').first
+  ip = InventoryPool.first
   find('.ui-menu-item', text: ip.name).click
   expect(i.value).to eq ip.name
 end
@@ -305,7 +305,7 @@ Given(/^there is a (.*) with the following properties:$/) do |arg1, table|
                                    when 'Current inventory pool'
                                      @current_inventory_pool
                                    when 'Another inventory pool'
-                                     @other_inventory_pool ||= InventoryPool.where.not(id: @current_inventory_pool).order('RAND()').first
+                                     @other_inventory_pool ||= InventoryPool.where.not(id: @current_inventory_pool).first
                                  end
           else
             puts "Don't know how to handle the field named #{k}"
@@ -456,7 +456,7 @@ Given(/^there exist licenses for this software product$/) do
   rand(1..3).times do
     @model.items << FactoryGirl.create(:license, {owner: @current_inventory_pool, model: @model})
   end
-  @item = @model.items.order('RAND()').first
+  @item = @model.items.first
 end
 
 When(/^I see these in my search result$/) do
@@ -509,7 +509,7 @@ When(/^I fill in all the required fields for the license$/) do
 end
 
 When(/^I fill in the software$/) do
-  @software = Software.order('RAND()').first
+  @software = Software.first
   fill_in_autocomplete_field _('Software'), @software.name
 end
 
@@ -618,7 +618,7 @@ end
 
 Then(/^the manufacturer can be selected from the list$/) do
   input_field = find('.field', text: _('Manufacturer')).find('input')
-  input_field.click
+  input_field.set @manufacturer
   find('.ui-menu-item', text: @manufacturer).click
   expect(input_field.value).to eq @manufacturer
 end
@@ -666,7 +666,7 @@ Given(/^a software product with more than (\d+) text rows in field "(.*?)" exist
                r ||= begin
                  td = []
                  (arg1.to_i + rand(1..10)).times { td << Faker::Lorem.paragraph }
-                 m = @current_inventory_pool.models.order('RAND()').first
+                 m = @current_inventory_pool.models.first
                  m.update_attributes(technical_detail: td.join("\r\n"))
                  m
                end

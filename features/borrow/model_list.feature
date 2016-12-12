@@ -21,7 +21,7 @@ Feature: Model list
     | Manufacturer     |
     | Selection button |
 
-  @javascript @browser @personas
+  @javascript @browser @personas @flapping
   Scenario: Scrolling the model list
     Given I am Normin
     And I see a model list that can be scrolled
@@ -77,7 +77,7 @@ Feature: Model list
     When I am listing models
     Then I cannot deselect all the inventory pools in the inventory pool selector
 
-  @javascript @personas @problematic
+  @javascript @personas
   Scenario: Specifying the start date of an order
     Given I am Petra
     When I am listing models and some of them are unavailable
@@ -85,7 +85,7 @@ Feature: Model list
     Then the end date is automatically set to the next day
     And the list is filtered by models that are available in that time frame
 
-  @javascript @personas @problematic
+  @javascript @personas
   Scenario: Specifying the end date of an order
     Given I am Petra
     When I am listing models and some of them are unavailable
@@ -108,7 +108,7 @@ Feature: Model list
     And I am listing models
     Then I can also use a date picker to specify start and end date instead of entering them by hand
 
-  @javascript @personas @problematic
+  @javascript @personas
   Scenario: Searching for a model
     Given I am Normin
     And I am listing models
@@ -116,7 +116,7 @@ Feature: Model list
     And I press the Enter key
     Then those models are shown whose names or manufacturers match the search term
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Hovering over models
     Given I am Normin
     And there is a model with images, description and properties
@@ -154,7 +154,7 @@ Feature: Model list
     And the inventory pool selector is still expanded
     And the filter shows the count of selected inventory pools
 
-  @javascript @personas @problematic
+  @javascript @personas @browser
   Scenario: Deselecting all but one inventory pool
     Given I am Normin
     And I am listing models
@@ -163,7 +163,8 @@ Feature: Model list
     And the inventory pool selector is still expanded
     And the filter shows the name of the inventory pool that is left
 
-  @javascript @personas @browser @problematic
+  # this one is very strange; fails locally always; passes on CI sometimes
+  @javascript @personas @browser @flapping
   Scenario: Resetting everything
     Given I am Normin
     And I am listing models
@@ -178,7 +179,7 @@ Feature: Model list
     And the button "Reset all filters" is not visible
 
   @javascript @personas
-  Scenario: Reset all button disappears automatically when filters were set to their default positions by hand 
+  Scenario: Reset all button disappears automatically when filters were set to their default positions by hand
     Given I am Normin
     And I am listing models
     And filters are being applied

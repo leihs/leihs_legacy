@@ -19,7 +19,7 @@ Given(/^I navigate to the (open orders|hand over visits|take back visits)$/) do 
 end
 
 When(/^I quick approve a submitted order$/) do
-  @contract ||= @current_inventory_pool.reservations_bundles.submitted.order('RAND ()').detect{|o| o.approvable? }
+  @contract ||= @current_inventory_pool.reservations_bundles.submitted.detect{|o| o.approvable? }
   within(".line[data-id='#{@contract.id}']") do
     find('[data-order-approve]', text: _('Approve')).click
   end
@@ -30,7 +30,7 @@ Then(/^I see a link to the hand over process of that order$/) do
 end
 
 Given /^I try to approve a contract that has problems$/ do
-  @contract =  @current_inventory_pool.reservations_bundles.submitted.order('RAND ()').detect{|o| not o.approvable?}
+  @contract =  @current_inventory_pool.reservations_bundles.submitted.detect{|o| not o.approvable?}
   step 'I quick approve a submitted order'
   find('.modal')
 end
@@ -40,10 +40,8 @@ Then /^I got an information that this contract has problems$/ do
 end
 
 When /^I approve anyway$/ do
-  within('.modal') do
-    find('.dropdown-toggle').click
-    find('.dropdown-item[data-approve-anyway]').click
-  end
+  page.execute_script '$(".modal .dropdown-toggle").trigger("mouseover")'
+  find('.modal .dropdown-item[data-approve-anyway]').click
   step 'the modal is closed'
 end
 

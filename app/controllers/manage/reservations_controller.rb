@@ -85,7 +85,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     rescue => e
       Rails.logger.error e
     ensure
-      render status: :ok, json: { id: params[:line_id].to_i }
+      render status: :ok, json: { id: params[:line_id] }
     end
   end
 
@@ -179,12 +179,12 @@ class Manage::ReservationsController < Manage::ApplicationController
     reservations = current_inventory_pool.reservations.find(params[:ids])
 
     returned_quantity.each_pair do |k, v|
-      line = reservations.detect { |l| l.id == k.to_i }
-      next unless line and v.to_i < line.quantity
+      line = reservations.detect { |l| l.id == k }
+      next unless line and Integer(v) < line.quantity
       new_line = line.dup # NOTE use .dup instead of .clone (from Rails 3.1)
-      new_line.quantity -= v.to_i
+      new_line.quantity -= Integer(v)
       new_line.save
-      line.update_attributes(quantity: v.to_i)
+      line.update_attributes(quantity: Integer(v))
     end if returned_quantity
 
     reservations.each do |l|
@@ -263,7 +263,7 @@ class Manage::ReservationsController < Manage::ApplicationController
   end
 
   def quantity_param
-    (params[:quantity] || 1).to_i
+    Integer(params[:quantity].presence || 1)
   end
 
   def start_date_param
@@ -316,7 +316,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     end
     reservation.inventory_pool = inventory_pool
     reservation.status = status
-    reservation.quantity = quantity.to_i
+    reservation.quantity = Integer(quantity)
     reservation.start_date = \
       start_date.try { |x| Date.parse(x) } || Time.zone.today
     reservation.end_date = end_date.try { |x| Date.parse(x) } || Date.tomorrow

@@ -54,7 +54,7 @@ Feature: Model
     And I save
     Then the model is saved without the compatible model that I removed
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Editing group capacities
     Given I edit a model that exists and has group capacities allocated to it
     When I remove existing allocations
@@ -62,7 +62,7 @@ Feature: Model
     And I save
     Then the changed allocations are saved
 
-  @javascript @personas @problematic
+  @javascript @personas
   Scenario: Delete model
     Given there is a model with the following conditions:
       | not in any contract |

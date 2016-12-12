@@ -9,6 +9,10 @@ class Category < ModelGroup
     not (models.empty? and children.empty?)
   end
 
+  default_scope do
+    order(:name, :created_at, :id)
+  end
+
   def self.filter(params, _inventory_pool = nil)
     categories = all
     categories = categories.search(params[:search_term]) if params[:search_term]

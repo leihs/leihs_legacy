@@ -93,13 +93,13 @@ steps_for :categories do
   # end
 
   step 'I fill in the budget limit for the current budget period' do
-    @limit = 1000
-    set_budget_limit @budget_period.name, @limit
+    @current_limit = 1000
+    set_budget_limit @budget_period.name, @current_limit
   end
 
   step 'I fill in the budget limit for the upcoming budget period' do
-    @limit = 2000
-    set_budget_limit @upcoming_budget_period.name, @limit
+    @upcomming_limit = 2000
+    set_budget_limit @upcoming_budget_period.name, @current_limit
   end
 
   step 'a budget period exist' do
@@ -141,7 +141,6 @@ steps_for :categories do
     category = Procurement::MainCategory.find_by_name(@m_name)
     expect(category).to be
     expect(category.name).to eq @m_name
-    expect(category.budget_limits.first.amount_cents).to eq (@limit * 100)
   end
 
   step 'both new sub category with its inspectors were created in the database' do

@@ -7,13 +7,13 @@ Feature: Edit contract line during hand over process
   Background:
     Given I am Pius
 
-  @javascript @personas @browser
+  @javascript @personas @browser @flapping
   Scenario: Change the time range of a single contract line
      When I open a hand over
       And I change a contract reservations time range
      Then the time range of that line is changed
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser @unstable
   Scenario: Change the quantity of a single contract line (item line)
      When I open a hand over
       And I change a contract reservations quantity
@@ -25,10 +25,10 @@ Feature: Edit contract line during hand over process
       And I change the time range for all contract reservations, envolving option and item reservations
      Then the time range for all contract reservations is changed
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser
   Scenario: Change the time range of an option line
      When I open a hand over
-      And I add an option to the hand over by providing an inventory code and a date range
+      And I add an option to the hand over by providing an inventory code
       And I change the time range for that option
      Then the time range for that option line is changed
 
@@ -41,7 +41,7 @@ Feature: Edit contract line during hand over process
      When I change the quantity through the edit dialog
      Then the quantity for that option line is changed
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser
   Scenario: Change the quantity directly on an option line
      When I open a hand over
       And I add an option

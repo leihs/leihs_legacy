@@ -7,7 +7,7 @@ Feature: Edit order
     And I open a take back for a suspended user
     Then I see the note 'Suspended!' next to their name
 
-  @javascript @personas
+  @javascript @personas @flapping
   Scenario: Prevent 'approve anyway' for group managers
     Given I am Andi
     And an order contains overbooked models
@@ -32,7 +32,7 @@ Feature: Edit order
     Then this order was created by a user that is in a group whose orders require verification
     And this order contains a model from a group whose orders require verification
 
-  @javascript @personas @problematic
+  @javascript @personas @browser
   Scenario: Show all orders - tab 'All orders'
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -41,7 +41,7 @@ Feature: Edit order
     Then I see all verifiable orders
     And these orders are ordered by creation date
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Displaying the tab of pending orders
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -58,7 +58,7 @@ Feature: Edit order
     And I can edit the order
     And I cannot hand over orders
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Displaying the tab of approved orders
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -70,12 +70,8 @@ Feature: Edit order
     And I see the number of items on the order line and can view a popup containing the items ordered
     And I see the duration of the order on the order line
     And I see the order's status on the order line
-    And I edit an already approved order
-    And I am directed to the hand over view
-    But I cannot hand over
 
-
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Displaying the tab of rejected orders
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -97,7 +93,7 @@ Feature: Edit order
     When I uncheck the filter "To be verified"
     Then I see orders placed by users in groups requiring verification
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas @unstable
   Scenario: Reset order that is already approved
     Given I am Andi
     And I am in an inventory pool with verifiable orders

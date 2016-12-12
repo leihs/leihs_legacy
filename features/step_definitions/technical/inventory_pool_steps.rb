@@ -220,7 +220,7 @@ Then /^the first 2 contract reservations should now be grouped inside the 1st vi
 end
 
 Given(/^a maximum amount of visits is defined for a week day$/) do
-  @inventory_pool = @current_user.inventory_pools.order('RAND ()').detect { |ip| not ip.workday.max_visits.empty? }
+  @inventory_pool = @current_user.inventory_pools.detect { |ip| not ip.workday.max_visits.empty? }
   expect(@inventory_pool).not_to be_nil
 end
 

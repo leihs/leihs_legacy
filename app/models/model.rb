@@ -54,8 +54,8 @@ class Model < ActiveRecord::Base
         unless new_partitions.blank?
           valid_group_ids = inventory_pool.group_ids
           new_partitions.each_pair do |group_id, quantity|
-            group_id = group_id.to_i
-            quantity = quantity.to_i
+            group_id = group_id
+            quantity = Integer(quantity.presence || 0)
             if valid_group_ids.include?(group_id) and quantity > 0
               create(group_id: group_id, quantity: quantity)
             end
@@ -137,13 +137,13 @@ class Model < ActiveRecord::Base
   scope :packages, -> { where(is_package: true) }
 
   scope :with_properties, lambda {
-                            select('DISTINCT models.*')
-      .joins('LEFT JOIN properties ON properties.model_id = models.id')
+    joins('LEFT JOIN properties ON properties.model_id = models.id')
       .where.not(properties: { model_id: nil })
+      .uniq
   }
 
   scope :by_inventory_pool, lambda { |inventory_pool|
-                              select('DISTINCT models.*').joins(:items)
+    joins(:items)
       .where(['items.inventory_pool_id = ?', inventory_pool])
   }
 
@@ -208,22 +208,22 @@ class Model < ActiveRecord::Base
           return all if query.blank?
 
           # old# joins(:categories, :properties, :items)
-          sql = select('DISTINCT models.*')
+          sql = uniq
           if fields.empty?
             sql = sql
-              .joins('LEFT JOIN `model_links` AS ml2 ' \
-                     'ON `ml2`.`model_id` = `models`.`id`')
-              .joins('LEFT JOIN `model_groups` AS mg2 ON ' \
-                     '`mg2`.`id` = `ml2`.`model_group_id` ' \
-                     "AND `mg2`.`type` = 'Category'")
-              .joins('LEFT JOIN `properties` AS p2 ' \
-                     'ON `p2`.`model_id` = `models`.`id`')
+              .joins('LEFT JOIN model_links AS ml2 ' \
+                     'ON ml2.model_id = models.id')
+              .joins('LEFT JOIN model_groups AS mg2 ON ' \
+                     'mg2.id = ml2.model_group_id ' \
+                     "AND mg2.type = 'Category'")
+              .joins('LEFT JOIN properties AS p2 ' \
+                     'ON p2.model_id = models.id ')
           end
           if fields.empty? or fields.include?(:items)
             sql = sql
-              .joins('LEFT JOIN `items` AS i2 ON `i2`.`model_id` = `models`.`id`')
-              .joins('LEFT JOIN `items` AS i3 ON `i3`.`parent_id` = `i2`.`id`')
-              .joins('LEFT JOIN `models` AS m3 ON `m3`.`id` = `i3`.`model_id`')
+              .joins('LEFT JOIN items AS i2 ON i2.model_id = models.id')
+              .joins('LEFT JOIN items AS i3 ON i3.parent_id = i2.id')
+              .joins('LEFT JOIN models AS m3 ON m3.id = i3.model_id')
           end
 
           # FIXME: refactor to Arel
@@ -321,8 +321,8 @@ class Model < ActiveRecord::Base
                  else
                    models
                      .joins(:items)
-                     .where(':id IN (`items`.`owner_id`, ' \
-                                    '`items`.`inventory_pool_id`)',
+                     .where(':id IN (items.owner_id, ' \
+                                    'items.inventory_pool_id)',
                             id: inventory_pool.id)
                      .uniq
                  end
@@ -346,7 +346,7 @@ class Model < ActiveRecord::Base
     end
 
     unless params[:category_id].blank?
-      if params[:category_id].to_i == -1
+      if params[:category_id] == '00000000-0000-0000-0000-000000000000'
         models = models.where.not(id: Model.joins(:categories))
       else
         models = \
@@ -382,7 +382,7 @@ class Model < ActiveRecord::Base
   end
 
   def image(offset = 0)
-    images.offset(offset.to_i).first
+    images.offset(Integer(offset.presence || 0)).first
   end
 
   def needs_permission

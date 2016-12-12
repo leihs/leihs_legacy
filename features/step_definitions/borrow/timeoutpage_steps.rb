@@ -72,7 +72,7 @@ end
 
 Given(/^I delete one entry$/) do
   line = all('.row.line').to_a.sample
-  @line_ids = line.find('button[data-ids]')['data-ids'].gsub(/\[|\]/, '').split(',').map(&:to_i)
+  @line_ids = JSON.parse(line.find('button[data-ids]')['data-ids'])
   expect(@line_ids.all? { |id| @current_user.reservations.unsubmitted.map(&:id).include?(id) }).to be true
   line.find('.dropdown-toggle').click
   line.find('a', text: _('Delete')).click
@@ -145,7 +145,7 @@ Then(/^the error message appears$/) do
 end
 
 def resolve_conflict_for_reservation(line_id)
-  within ".line[data-ids='[#{line_id}]']" do
+  within ".line[data-ids='[\"#{line_id}\"]']" do
     find('.button', text: _('Change entry')).click
   end
   expect(has_selector?('#booking-calendar .fc-day-content')).to be true
@@ -156,7 +156,7 @@ def resolve_conflict_for_reservation(line_id)
   find('.modal .button.green').click
 
   step 'the booking calendar is closed'
-  within ".line[data-ids='[#{line_id}]']" do
+  within ".line[data-ids='[\"#{line_id}\"]']" do
     expect(has_no_selector?('.line-info.red')).to be true
   end
 end

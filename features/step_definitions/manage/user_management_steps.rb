@@ -101,7 +101,7 @@ Given(/^I edit a (user|delegation)$/) do |user_type|
 
                 when 'user'
                   @inventory_pool.users.customers.not_as_delegations
-              end.order('RAND()').first
+              end.first
   @delegation = @customer # Some of the delegation tests expect this to be defined
   visit manage_edit_inventory_pool_user_path(@inventory_pool, @customer)
 end
@@ -147,7 +147,12 @@ Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |
   user = User.where(login: 'normin').first
   case suspended
     when 'suspended '
-      user.access_rights.active.first.update_attributes(suspended_until: Date.today + 1.year, suspended_reason: 'suspended reason')
+      user
+        .access_rights
+        .where(inventory_pool: @current_inventory_pool)
+        .active
+        .first
+        .update_attributes(suspended_until: Date.today + 1.year, suspended_reason: 'suspended reason')
   end
   case with_or_without
     when 'with'
@@ -166,7 +171,7 @@ end
 
 Then /^I see the following information, in order:$/ do |table|
   user = User.find @el.find('[data-id]')['data-id']
-  access_right = user.access_right_for(@inventory_pool)
+  access_right = user.access_right_for(@current_inventory_pool)
 
   strings = table.hashes.map do |x|
     case x[:attr]
@@ -304,7 +309,7 @@ end
 
 Then(/^I can assign and remove roles to and from users as specified in the following table, but only in the inventory pool for which I am manager$/) do |table|
   table.hashes.map do |x|
-    unknown_user = User.order('RAND()').detect { |u| not u.access_right_for(@inventory_pool) }
+    unknown_user = User.all.detect { |u| not u.access_right_for(@inventory_pool) }
     expect(unknown_user).not_to be_nil
 
     role = case x[:role]
@@ -381,7 +386,7 @@ end
 
 Then(/^I can make another inventory pool the owner of the items$/) do
   attributes = {
-      owner_id: (InventoryPool.order('RAND()').pluck(:id) - [@inventory_pool.id]).first
+      owner_id: (InventoryPool.pluck(:id) - [@inventory_pool.id]).first
   }
   expect(@item.owner_id).not_to eq attributes[:owner_id]
 
@@ -392,7 +397,7 @@ end
 When(/^I don't choose a responsible department when creating or editing items$/) do
   @item = @inventory_pool.own_items.find &:in_stock?
   attributes = {
-      inventory_pool_id: (InventoryPool.order('RAND()').pluck(:id) - [@inventory_pool.id, @item.inventory_pool_id]).first
+      inventory_pool_id: (InventoryPool.pluck(:id) - [@inventory_pool.id, @item.inventory_pool_id]).first
   }
   expect(@item.inventory_pool_id).not_to eq attributes[:inventory_pool_id]
 
@@ -730,10 +735,10 @@ Given(/^I am editing a user who has access to (and no items from )?(the current|
       @user = if arg1
                 access_rights.detect { |ar| @current_inventory_pool.reservations.where(user_id: ar.user).empty? }
               else
-                access_rights.order('RAND()').first
+                access_rights.first
               end.user
     when 'an'
-      access_right = AccessRight.active.where(role: :customer, inventory_pool_id: @current_user.inventory_pools.managed).order('RAND ()').detect {|ar| ar.inventory_pool.reservations.where(user_id: ar.user).empty? }
+      access_right = AccessRight.active.where(role: :customer, inventory_pool_id: @current_user.inventory_pools.managed).detect {|ar| ar.inventory_pool.reservations.where(user_id: ar.user).empty? }
       @user = access_right.user
       @current_inventory_pool = access_right.inventory_pool
   end
@@ -794,8 +799,8 @@ Then(/^the user still has access to the current inventory pool$/) do
 end
 
 Given(/^I edit a user who used to have access to the current inventory pool$/) do
-  @current_inventory_pool = @current_user.inventory_pools.managed.where(id: AccessRight.select(:inventory_pool_id).where.not(deleted_at: nil)).order('RAND()').first
-  @user = @current_inventory_pool.access_rights.where.not(deleted_at: nil).order('RAND()').first.user
+  @current_inventory_pool = @current_user.inventory_pools.managed.where(id: AccessRight.select(:inventory_pool_id).where.not(deleted_at: nil)).first
+  @user = @current_inventory_pool.access_rights.where.not(deleted_at: nil).first.user
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 

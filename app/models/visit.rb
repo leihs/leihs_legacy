@@ -16,34 +16,35 @@ class Visit < ActiveRecord::Base
   end
 
   self.table_name = 'reservations'
+  self.primary_key = 'visit_id'
+
+  def id
+    visit_id
+  end
+
+  VISIT_ID_SQL_EXPR =
+    "ENCODE( DIGEST( CONCAT_WS('_', date, reservations.inventory_pool_id, " \
+    " reservations.user_id, status), 'sha1' ), 'hex' )"
 
   default_scope do
     select(<<-SQL)
       date, reservations.inventory_pool_id, reservations.user_id, status,
       SUM(quantity) AS quantity,
-      CONV(
-        SUBSTRING(
-          CAST(
-            SHA(
-              CONCAT_WS('_',
-                        date,
-                        reservations.inventory_pool_id,
-                        reservations.user_id, status)) AS CHAR),
-          1,
-          10),
-        16,
-        10) AS id
+      #{VISIT_ID_SQL_EXPR} AS visit_id
     SQL
     .from(<<-SQL)
-      (SELECT IF((status = 'signed'), end_date, start_date) AS date,
-              inventory_pool_id,
-              user_id,
-              status,
-              quantity
-       FROM `reservations`
+      (SELECT
+        CASE WHEN status = 'signed' THEN end_date ELSE start_date END AS date,
+        inventory_pool_id,
+        inventory_pools.name AS inventory_pool_name,
+        user_id,
+        status,
+        quantity
+       FROM reservations
+       JOIN inventory_pools ON inventory_pools.id = inventory_pool_id
        WHERE status IN ('submitted', 'approved','signed')) AS reservations
     SQL
-    .group('user_id, status, date, inventory_pool_id')
+    .group('user_id, status, date, inventory_pool_id, inventory_pool_name')
     .order('date')
   end
 
@@ -128,9 +129,6 @@ class Visit < ActiveRecord::Base
     read_attribute(:status).to_sym
   end
 
-  # NOTE: `total_entries` from will_paginate gem does not
-  # work with our custom `Visit.default_scope`, thus we
-  # use our own `Visit.total_count_for_paginate`
   def self.total_count_for_paginate
     scope_sql = \
       Visit
@@ -139,6 +137,10 @@ class Visit < ActiveRecord::Base
         .project(Arel.star)
         .to_sql
     ActiveRecord::Base.connection.execute(scope_sql).count
+  end
+
+  def visit_as_json
+    as_json(methods: [:reservation_ids, :action]).merge('id' => visit_id)
   end
 
 end

@@ -173,6 +173,7 @@ module FilterSteps
       else
           within '.btn-group' do
             find('button.multiselect').click # NOTE open the dropdown
+            wait_until(3) { first '.dropdown-menu' }
             within '.dropdown-menu' do
               selector = case string_with_spaces
                          when 'main categories'

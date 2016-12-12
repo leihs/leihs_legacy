@@ -1,5 +1,5 @@
 When /^I open a take back(, not overdue)?( with at least an option handed over before today)?$/ do |arg1, arg2|
-  reservations = Reservation.signed.where(inventory_pool_id: @current_user.inventory_pools.managed).order('RAND()')
+  reservations = Reservation.signed.where(inventory_pool_id: @current_user.inventory_pools.managed)
   reservation = if arg1
                   reservations.detect { |c| c.user.reservations.signed.all? { |l| not l.late? } }
                 elsif arg2

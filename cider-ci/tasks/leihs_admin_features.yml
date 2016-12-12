@@ -8,14 +8,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default --strict "engines/leihs_admin/features/buildings.feature"
-- name: database
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        DISPLAY=":$XVNC_PORT" bundle exec cucumber -p default --strict "engines/leihs_admin/features/database.feature"
 - name: delegation
   scripts:
     test:

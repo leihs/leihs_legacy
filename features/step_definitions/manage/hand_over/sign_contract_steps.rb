@@ -3,7 +3,7 @@
 When(/^I open a hand over( with at least one unassigned line)?( for today)?( with options| with models)?$/) do |unassigned_line, for_today, with_options_or_models|
   @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
 
-    @customer = ip.users.not_as_delegations.order('RAND ()').detect do |user|
+    @customer = ip.users.not_as_delegations.detect do |user|
       if unassigned_line and for_today
         user.visits.hand_over.any?{ |v| v.reservations.size >= 3 and v.reservations.any? { |l| not l.item and l.start_date == ip.next_open_date(Time.zone.today) } }
       elsif for_today
@@ -149,10 +149,10 @@ When(/^I select (an item|a license) line and assign an inventory code$/) do |arg
   step 'I assign an inventory code to the item line'
   find('#flash .fa-times-circle').click
 
-  find(".button[data-edit-lines][data-ids='[#{@item_line.id}]']").click
+  find(".button[data-edit-lines][data-ids='[#{"\"#{@item_line.id}"}\"]']").click
   step "I set the start date in the calendar to '#{I18n.l(Date.today)}'"
   step 'I save the booking calendar'
-  find(".button[data-edit-lines][data-ids='[#{@item_line.id}]']")
+  find(".button[data-edit-lines][data-ids='[#{"\"#{@item_line.id}"}\"]']")
 end
 
 Then(/^I see a summary of the things I selected for hand over$/) do
@@ -235,7 +235,7 @@ When(/^I select an overdue item line and assign an inventory code$/) do
 end
 
 When(/^I assign an inventory code to the item line$/) do
-  item = @current_inventory_pool.items.in_stock.where(model_id: @item_line.model).order('RAND()').first
+  item = @current_inventory_pool.items.in_stock.where(model_id: @item_line.model).first
   expect(item).not_to be_nil
   @selected_items ||= []
   within(".line[data-id='#{@item_line.id}']") do

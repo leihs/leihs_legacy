@@ -1,16 +1,16 @@
 ###
-  
+
   CategoryLink
 
 ###
 
 class window.App.CategoryLink extends Spine.Model
 
-  @configure "CategoryLink", "id", "ancestor_id", "descendant_id", "direct", "count"
-  
+  @configure "CategoryLink", "id", "parent_id", "child_id"
+
   @extend Spine.Model.Ajax
 
-  @belongsTo "ascendant", "App.Category", "ancestor_id"
-  @belongsTo "descendant", "App.Category", "descendant_id"
+  @belongsTo "parent", "App.Category", "parent_id"
+  @belongsTo "child", "App.Category", "child_id"
 
   @url: => "/category_links"

@@ -1,1 +1,1 @@
-!= @visits.to_json(methods: [:reservation_ids, :action])
+!= @visits.map(&:visit_as_json).to_json

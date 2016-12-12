@@ -133,15 +133,11 @@ class Manage::UsersController < Manage::ApplicationController
         @user.delegated_user_ids = delegated_user_ids if delegated_user_ids
         @user.update_attributes! params[:user] if params[:user]
         if params[:db_auth]
-          DatabaseAuthentication
-            .find_or_create_by(user_id: @user.id)
-            .update_attributes! params[:db_auth].merge(user: @user)
-          @user
-            .update_attributes! \
-              authentication_system_id: \
-                AuthenticationSystem \
-                  .find_by_class_name(DatabaseAuthentication.name)
-                  .id
+          dbauth = DatabaseAuthentication.find_or_create_by(user_id: @user.id)
+          dbauth.update_attributes! params[:db_auth].merge(user: @user)
+          auth_system = \
+            AuthenticationSystem.find_by_class_name(DatabaseAuthentication.name)
+          @user.update_attributes! authentication_system: auth_system
         end
         @access_right = \
           AccessRight.find_or_initialize_by(user_id: @user.id,

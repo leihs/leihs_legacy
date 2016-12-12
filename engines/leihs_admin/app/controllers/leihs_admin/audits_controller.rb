@@ -12,7 +12,7 @@ module LeihsAdmin
       requests = requests.where(user_id: params[:user_id]) if params[:user_id]
 
       per_page = 10
-      page = (params[:page] || 1).to_i
+      page = Integer(params[:page].presence || 1)
       @audits = \
         requests
           .group_by(&:request_uuid)

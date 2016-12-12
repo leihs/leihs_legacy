@@ -21,9 +21,9 @@ class Accessory < ActiveRecord::Base
 
   def inventory_pool_toggle=(val)
     if val.split(',')[0] == '1'
-      self.inventory_pool_ids += [val.split(',')[1].to_i]
+      self.inventory_pool_ids += [val.split(',')[1]]
     else
-      self.inventory_pool_ids -= [val.split(',')[1].to_i]
+      self.inventory_pool_ids -= [val.split(',')[1]]
     end
   end
 

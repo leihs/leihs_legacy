@@ -146,7 +146,7 @@ steps_for :managing_requests do
 
   step 'I search :boolean model by typing the article name' do |boolean|
     @text = if boolean
-              @model = Model.order('RAND()').first
+              @model = Model.first
               expect(@model).to be
               @model.to_s[0, 4]
             else
@@ -171,7 +171,9 @@ steps_for :managing_requests do
     @template = @category.templates.sample
     within '.panel-success > .panel-body' do
       within '.panel-info > .panel-body', text: @category.name do
-        find('.list-group-item', text: @template.article_name).click
+        wait_until 3 do
+          find('.list-group-item', text: @template.article_name).click rescue nil
+        end
       end
     end
   end
@@ -579,7 +581,7 @@ steps_for :managing_requests do
       step 'I expand all the sub categories'
 
       client_ids = all('[data-request_id]', minimum: 1).map do |el|
-        el['data-request_id'].to_i
+        el['data-request_id']
       end
 
       server_ids = Procurement::Request.where(id: client_ids).sort do |a, b|
@@ -699,7 +701,7 @@ steps_for :managing_requests do
       all('[data-request_id]', minimum: 1).map do |el|
         el['data-request_id']
       end.each do |id|
-        expect(@found_requests.map(&:id)).to include id.to_i
+        expect(@found_requests.map(&:id)).to include id
       end
     end
   end

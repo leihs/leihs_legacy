@@ -1,0 +1,8 @@
+task_defaults:
+  traits:
+    g2016: true
+  load: 1.5
+  max_trials: 25
+  eager_trials: 2
+  include:
+    - cider-ci/task_components/database.yml

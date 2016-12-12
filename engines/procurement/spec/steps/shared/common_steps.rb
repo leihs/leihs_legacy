@@ -16,6 +16,23 @@ end
 
 module CommonSteps
 
+  # rubocop:disable Style/RaiseArgs
+
+  def wait_until(wait_time = 60, &block)
+    begin
+      Timeout.timeout(wait_time) do
+        until value = block.call
+          sleep(1)
+        end
+        value
+      end
+    rescue Timeout::Error
+      fail Timeout::Error.new(block.source)
+    end
+  end
+
+  # rubocop:enable Style/RaiseArgs
+
   step 'a receiver exists' do
     FactoryGirl.create :user
   end
@@ -83,7 +100,7 @@ module CommonSteps
         budget_period: current_budget_period
       }
       if value['category'] == 'inspected' or not @category.nil?
-        h[:category] = @category || Procurement::Category.detect do |category|
+        h[:category] = @category || Procurement::Category.all.detect do |category|
           not category.inspectable_by?(@current_user)
         end
       end
@@ -94,6 +111,12 @@ module CommonSteps
       expect(current_budget_period.requests.where(user_id: user).count).to eq n
     end
   end
+
+  # rubocop:disable Lint/Debugger
+  step 'I pry' do
+    binding.pry
+  end
+  # rubocop:enable Lint/Debugger
 
   step 'for each request I see the following information' do |table|
     step 'I expand all the sub categories'
@@ -115,14 +138,17 @@ module CommonSteps
           when 'price'
               find '.col-sm-1 .total_price', text: request.price.to_i
           when 'requested amount'
-              within all('.col-sm-2.quantities div')[0] do
+              wait_until(5) { first '.col-sm-2.quantities div' }
+              within first('.col-sm-2.quantities div') do
                 expect(page).to have_content request.requested_quantity
               end
           when 'approved amount'
+              wait_until(5) { all('.col-sm-2.quantities div')[1] }
               within all('.col-sm-2.quantities div')[1] do
                 expect(page).to have_content request.approved_quantity
               end
           when 'order amount'
+              wait_until(5) { all('.col-sm-2.quantities div')[2] }
               within all('.col-sm-2.quantities div')[2] do
                 expect(page).to have_content request.order_quantity
               end
@@ -321,7 +347,9 @@ module CommonSteps
   step 'I move a request to the future budget period' do
     within all('.request', minimum: 1).last do
       @request = Procurement::Request.find current_scope['data-request_id']
-      link_on_dropdown(@future_budget_period.to_s).click
+      wait_until 3 do
+        link_on_dropdown(@future_budget_period.to_s).click rescue nil
+      end
     end
 
     @changes = {
@@ -342,7 +370,9 @@ module CommonSteps
                           categories.first
                         end
 
-      link_on_dropdown(@other_category.name).click
+      wait_until 3 do
+        link_on_dropdown(@other_category.name).click rescue nil
+      end
     end
 
     @changes = {
@@ -369,7 +399,9 @@ module CommonSteps
     within '#filter_target' do
       within '.panel-success .panel-body' do
         within '.row .h4', text: @category.name do
-          find('i.fa-plus-circle').click
+          wait_until 3 do
+            find('i.fa-plus-circle').click rescue nil
+          end
         end
       end
     end
@@ -686,16 +718,6 @@ module CommonSteps
       Timecop.travel datetime
     else
       Timecop.return
-    end
-
-    # The minimum representable time is 1901-12-13,
-    # and the maximum representable time is 2038-01-19
-    ActiveRecord::Base.connection.execute \
-      "SET TIMESTAMP=unix_timestamp('#{Time.now.iso8601}')"
-    mysql_now = ActiveRecord::Base.connection \
-    .exec_query('SELECT now()').rows.flatten.first
-    if mysql_now != Time.zone.today
-      raise 'MySQL current datetime has not been changed'
     end
   end
 

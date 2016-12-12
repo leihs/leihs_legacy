@@ -24,6 +24,7 @@ module Dataset
 
   def restore_random_dump(dataset)
     use_test_datetime
+    PgTasks.truncate_tables
     PgTasks.data_restore dump_file_name(dataset)
   end
 

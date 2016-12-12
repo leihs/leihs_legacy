@@ -18,15 +18,14 @@ class Contract < ActiveRecord::Base
   has_many :option_lines,
            ORDER_BY,
            dependent: :destroy
-  has_many :models,
-           (lambda do
-             order('reservations.start_date ASC, ' \
-                   'reservations.end_date ASC, ' \
-                   'models.product ASC').uniq
-           end),
-           through: :item_lines
   has_many :items, through: :item_lines
   has_many :options, -> { uniq }, through: :option_lines
+
+  #########################################################################
+
+  def models
+    Model.where(id: item_lines.pluck(&:model_id)).order('product ASC').uniq
+  end
 
   #########################################################################
 

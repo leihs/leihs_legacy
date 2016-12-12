@@ -1,4 +1,7 @@
 # frozen_string_literal: true
+
+require_dependency 'model' # in tests Model constant seems not to autoload properly
+
 class InventoryPool < ActiveRecord::Base
   include Availability::InventoryPool
   audited
@@ -49,9 +52,6 @@ class InventoryPool < ActiveRecord::Base
   has_many :item_lines, dependent: :restrict_with_exception
   has_many :visits
 
-  # tmp#2#, :finder_sql => 'SELECT * FROM `groups`
-  # WHERE (`groups`.inventory_pool_id = #{id}
-  # OR `groups`.inventory_pool_id IS NULL)'
   has_many :groups do
     def with_general
       all + [Group::GENERAL_GROUP_ID]
@@ -97,7 +97,8 @@ class InventoryPool < ActiveRecord::Base
            (lambda do
               select('id, inventory_pool_id, model_id, item_id, quantity, ' \
                      'start_date, end_date, returned_date, status, ' \
-                     "string_agg(groups_users.group_id::text, ', ') AS concat_group_ids")
+                     "string_agg(groups_users.group_id::text, ',') " \
+                     'AS concat_group_ids')
                 .joins('LEFT JOIN groups_users ' \
                        'ON groups_users.user_id = reservations.user_id')
                 .where.not(status: [:rejected, :closed])
@@ -126,11 +127,11 @@ class InventoryPool < ActiveRecord::Base
         .connection
         .execute('INSERT INTO access_rights ' \
                    '(role, inventory_pool_id, user_id, created_at, updated_at) ' \
-                 "SELECT 'customer', #{id}, users.id, NOW(), NOW() " \
+                 "SELECT 'customer', '#{id}', users.id, NOW(), NOW() " \
                  'FROM users ' \
                  'LEFT JOIN access_rights ' \
                  'ON access_rights.user_id = users.id ' \
-                 "AND access_rights.inventory_pool_id = #{id} " \
+                 "AND access_rights.inventory_pool_id = '#{id}' " \
                  'WHERE access_rights.user_id IS NULL;')
     end
   end

@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   # Borrow Section
   namespace :borrow do
     root to: "application#root"
-    
+
     # maintenance
     get "maintenance", to: "application#maintenance"
 
@@ -291,6 +291,7 @@ Rails.application.routes.draw do
 
   if Rails.env.test? or Rails.env.development?
     get "/images/attachments/:dir1/:dir2/:file", to: redirect('/images/test.jpg')
+    get "/images/attachments/:d/:file", to: redirect('/images/test.jpg')
     get "/attachments/:dir1/:dir2/:file", to: redirect('/images/test.jpg')
   end
 

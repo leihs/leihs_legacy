@@ -21,7 +21,7 @@ Feature: Inventory helper
     And the changed values are highlighted
     And the location of the other item has remained the same
 
-  @javascript @personas @problematic
+  @javascript @personas
   Scenario: You can't change the responsible department while something is not in stock
     Given I go to the inventory helper screen
     And I edit the field "Responsible department" of an item that isn't in stock and belongs to the current inventory pool
@@ -33,7 +33,7 @@ Feature: Inventory helper
     And I retire an item that is not in stock
     Then I see an error message that I can't retire the item because it's already handed over or assigned to a contract
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser @unstable
   Scenario: Editing items on the helper screen using a complete inventory code (barcode scanner)
     Given I go to the inventory helper screen
     When I choose all fields through a list or by name

@@ -23,7 +23,7 @@ end
 Then(/^I see by default the last (\d+) days' statistics$/) do |number_of_days|
   from_date = Date.parse(all('input.datepicker').first.value)
   to_date = Date.parse(all('input.datepicker')[1].value)
-  expect((to_date - from_date).days).to eq(number_of_days.to_i.days)
+  expect((to_date - from_date).days).to eq(Integer(number_of_days).days)
 end
 
 When(/^I set the time frame to (\d+)\/(\d+) \- (\d+)\/(\d+) of the current year$/) do |from_day, from_month, to_day, to_month|

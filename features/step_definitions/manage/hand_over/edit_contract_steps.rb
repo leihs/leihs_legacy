@@ -17,7 +17,7 @@ When(/^I select an option line$/) do
 end
 
 When(/^I change the time range for all contract reservations, envolving option and item reservations$/) do
-  step 'I add an option to the hand over by providing an inventory code and a date range'
+  step 'I add an option to the hand over by providing an inventory code'
   step 'I select all reservations'
   step 'I edit the timerange of the selection'
   @line = @hand_over.reservations.first

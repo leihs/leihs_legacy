@@ -229,7 +229,7 @@ When(/^I enter a supplier( that does not exist)?$/) do |supplier_string|
     @new_supplier = Faker::Lorem.words(rand 1..3).join(' ')
     expect(Supplier.find_by_name(@new_supplier)).to eq nil
   else
-    @new_supplier = Supplier.order('RAND()').first.name
+    @new_supplier = Supplier.first.name
   end
   find('.row.emboss', match: :prefer_exact, text: _('Supplier')).find('input').set @new_supplier
 end

@@ -36,19 +36,10 @@ module Procurement
         access.update_attributes(organization: org)
       end
 
-      # existing_requester_ids = Access.requesters.pluck(:user_id)
-      # requester_ids = (params[:requester_ids] || '').split(',').map &:to_i
-      # (existing_requester_ids - requester_ids).each do |user_id|
-      #   Access.requesters.find_by(user_id: user_id).destroy
-      # end
-      # (requester_ids - existing_requester_ids).each do |user_id|
-      #   Access.requesters.create(user_id: user_id)
-      # end
-
       Procurement::Organization.cleanup
 
       existing_admin_ids = Access.admins.pluck(:user_id)
-      admin_ids = (params[:admin_ids] || '').split(',').map &:to_i
+      admin_ids = (params[:admin_ids] || '').split(',')
       (existing_admin_ids - admin_ids).each do |user_id|
         Access.admins.find_by(user_id: user_id).destroy
       end

@@ -22,6 +22,7 @@ FactoryGirl.define do
     factory :signed_contract do
       after :build do |c, evaluator|
         3.times do
+          item = FactoryGirl.create(:item)
           c.reservations << \
             FactoryGirl.create(
               :reservation,
@@ -29,7 +30,8 @@ FactoryGirl.define do
               inventory_pool: evaluator.inventory_pool,
               user: evaluator.user,
               contract: c,
-              item: FactoryGirl.create(:item)
+              item: item,
+              model: item.model
             )
         end
       end
@@ -38,6 +40,7 @@ FactoryGirl.define do
     factory :closed_contract do
       after :build do |c, evaluator|
         3.times do
+          item = FactoryGirl.create(:item)
           c.reservations << \
             FactoryGirl.create(
               :reservation,
@@ -45,7 +48,8 @@ FactoryGirl.define do
               inventory_pool: evaluator.inventory_pool,
               user: evaluator.user,
               contract: c,
-              item: FactoryGirl.create(:item)
+              item: item,
+              model: item.model
             )
         end
       end

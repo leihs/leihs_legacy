@@ -16,10 +16,10 @@ Given(/^I open (a|the) picking list( for a signed contract)?$/) do |arg1, arg2|
   else
     @contract = case arg1
                   when 'a'
-                    @current_inventory_pool.reservations_bundles.order('RAND()').first
+                    @current_inventory_pool.reservations_bundles.first
                   when 'the'
                     if arg2
-                      @current_inventory_pool.reservations_bundles.signed.order('RAND()').first
+                      @current_inventory_pool.reservations_bundles.signed.first
                     end
                 end
     visit manage_picking_list_path(@current_inventory_pool, @contract)
@@ -128,7 +128,7 @@ Then(/^the items without location, are displayed with (the available quantity fo
       next if line.item.location and not line.item.location.room.blank? and not line.item.location.shelf.blank?
       find('section.list .model_name', match: :prefer_exact, text: line.model.name).find(:xpath, './..').find('.location', text: arg2)
     else
-      locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.location_id) AS count, locations.room AS room, locations.shelf AS shelf').joins(:location).group(:location_id).order('count DESC, room ASC, shelf ASC')
+      locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.location_id) AS count, locations.room AS room, locations.shelf AS shelf').joins(:location).group(:location_id, :room, :shelf).order('count DESC, room ASC, shelf ASC')
       locations.to_a.delete_if { |location| location.room.blank? and location.shelf.blank? }
       not_defined_count = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).count - locations.to_a.sum(&:count)
       if not_defined_count > 0

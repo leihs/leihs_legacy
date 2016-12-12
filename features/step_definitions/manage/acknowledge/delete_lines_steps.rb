@@ -28,7 +28,7 @@ When /^I delete multiple reservations of this contract$/ do
 end
 
 When(/^I add a model that is not already part of that contract$/) do
-  @item = (@current_inventory_pool.models.order('RAND()') - @contract.models).first.items.order('RAND()').first
+  @item = (@current_inventory_pool.models - @contract.models).first.items.first
   step 'I add a model by typing in the inventory code of an item of that model to the quick add'
 end
 
@@ -55,7 +55,7 @@ Then /^none of the reservations are deleted$/ do
 end
 
 When(/^I delete a hand over$/) do
-  @visit = @current_inventory_pool.visits.hand_over.where(date: Date.today).order('RAND()').first
+  @visit = @current_inventory_pool.visits.hand_over.where(date: Date.today).first
   expect(@visit).not_to be_nil
   expect(@visit.reservations.empty?).to be false
   @visit_line_ids = @visit.reservations.map(&:id)
@@ -69,7 +69,7 @@ Then(/^all reservations of that hand over are deleted$/) do
   within(".line[data-id='#{@visit.id}']") do
     find('.line-actions', text: _('Deleted'))
   end
-  reloaded_visit = Visit.having('id = ?', @visit.id).first
+  reloaded_visit = Visit.having("#{Visit::VISIT_ID_SQL_EXPR} = ?", @visit.id).first
   expect(reloaded_visit).to be_nil
   @visit_line_ids.each do |line_id|
     expect { Reservation.find(line_id) }.to raise_error(ActiveRecord::RecordNotFound)

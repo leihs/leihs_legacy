@@ -28,11 +28,14 @@ FactoryGirl.define do
     factory :model_with_items do
       transient do
         inventory_pool { FactoryGirl.create :inventory_pool }
+        is_borrowable true
       end
       after(:create) do |model, evaluator|
         3.times do
           model.items << \
-            FactoryGirl.create(:item, inventory_pool: evaluator.inventory_pool)
+            FactoryGirl.create(:item,
+                               is_borrowable: evaluator.is_borrowable,
+                               inventory_pool: evaluator.inventory_pool)
         end
       end
     end

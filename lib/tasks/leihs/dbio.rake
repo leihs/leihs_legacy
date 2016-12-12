@@ -13,7 +13,7 @@ namespace :leihs do
     end
 
     desc 'Restore a legacy personas MySQL dump; DATASET=minimal|normal|huge'
-    task restore_lagacy: :environment do
+    task restore_legacy: :environment do
       load 'features/support/dataset.rb'
       Dataset.restore_random_dump(ENV['DATASET'].presence || 'normal')
     end

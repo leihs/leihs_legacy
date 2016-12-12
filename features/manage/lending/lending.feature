@@ -7,7 +7,7 @@ Feature: Lending
 
   @javascript @browser @personas
   Scenario: Selection during manual interaction when handing over
-    When I open a hand over
+    When I open a hand over with an unassigned item line
     And I manually assign an inventory code to an item
     Then the item is selected and the box is checked
 
@@ -64,7 +64,7 @@ Feature: Lending
     And I click on "Hand Over"
     Then there are inventory codes for item and license in the contract
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Handing over items and licenses by model search
     Given I am doing a hand over
     When I add a borrowable item to the hand over by using the search input field
@@ -74,7 +74,7 @@ Feature: Lending
     And I click on "Hand Over"
     Then there are inventory codes for item and license in the contract
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas @unstable
   Scenario: Inspection during take back
     Given I take back an item
     Then I can inspect each item
@@ -87,7 +87,7 @@ Feature: Lending
     And I save the inspection
     Then the item is saved with the currently set states
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas @unstable
   Scenario: Automatic printing during hand over
     When I open a hand over
     Then the print dialog opens automatically
@@ -97,7 +97,7 @@ Feature: Lending
     When I open a hand over
     Then start and end date are set to the corresponding dates of the hand over's first time window
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser
   Scenario: Show all search results
     Given I search for 'a'
     Then I see search results in the following categories:
@@ -117,7 +117,7 @@ Feature: Lending
     Then I can choose to see all results
     When I choose to see all results, I receive a separate list with all results from this category
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser
   Scenario: Merging the numbers in an item popup
     Given I navigate to the open orders
     And I hover over the number of items in a line

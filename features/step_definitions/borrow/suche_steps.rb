@@ -45,7 +45,7 @@ end
 
 When(/^I search for models giving at least two space separated terms$/) do
   @models = @current_user.models.borrowable.where.not(product: nil).where.not(version: nil)
-  @search_term = @models.order('RAND()').first.name
+  @search_term = @models.first.name
   expect(@search_term.split(' ').size).to be >= 2
   fill_in 'search_term', with: @search_term
 end
@@ -75,7 +75,7 @@ Then(/^the suggestions have disappeared$/) do
 end
 
 When(/^I search for a model that I can't borrow$/) do
-  @model = (@current_user.models.order('RAND()') - @current_user.models.borrowable).first
+  @model = (@current_user.models - @current_user.models.borrowable).first
 end
 
 Then(/^that model is not shown in the search results$/) do

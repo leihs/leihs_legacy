@@ -43,7 +43,7 @@ When(/^I open a take back for a suspended user$/) do
 end
 
 Given(/^I am taking something back$/) do
-  @take_back = @current_inventory_pool.visits.take_back.order('RAND()').detect {|v| v.reservations.any? {|l| l.is_a? ItemLine}}
+  @take_back = @current_inventory_pool.visits.take_back.detect {|v| v.reservations.any? {|l| l.is_a? ItemLine}}
   @user = @take_back.user
   step 'I open a take back for this user'
 end
@@ -70,7 +70,7 @@ When(/^I take back an( overdue)? (item|option) using the assignment field$/) do 
                        if arg1
                          @take_back.reservations.find{|l| l.end_date.past?}
                        else
-                         @take_back.reservations.order('RAND()').detect {|l| l.is_a? ItemLine}
+                         @take_back.reservations.detect {|l| l.is_a? ItemLine}
                        end
                      when 'option'
                        @take_back.reservations.find {|l| l.quantity >= 2 }

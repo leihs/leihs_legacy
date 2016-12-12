@@ -98,39 +98,20 @@ class Item < ActiveRecord::Base
     model_fields_2 = Model::SEARCHABLE_FIELDS.map { |f| "m2.#{f}" }.join(', ')
     item_fields_1 = Item::SEARCHABLE_FIELDS.map { |f| "i1.#{f}" }.join(', ')
     item_fields_2 = Item::SEARCHABLE_FIELDS.map { |f| "i2.#{f}" }.join(', ')
-    joins('INNER JOIN ' \
-            '(SELECT i1.id, ' \
-               "CAST(CONCAT_WS(' ', " \
-                              "#{model_fields_1}, " \
-                              "#{model_fields_2}, " \
-                              "#{item_fields_1}, " \
-                              "#{item_fields_2}) AS CHAR) AS text " \
-             'FROM items AS i1 ' \
-             'INNER JOIN models AS m1 ON i1.model_id = m1.id ' \
-             'LEFT JOIN items AS i2 ON i2.parent_id = i1.id ' \
-             'LEFT JOIN models AS m2 ON m2.id = i2.model_id) ' \
-             'AS full_text ON items.id = full_text.id')
-      .where(Arel::Table.new(:full_text)[:text].matches_all(q))
-
-    #     sql = select("DISTINCT items.*").
-    #       joins("LEFT JOIN `models` ON `models`.`id` = `items`.`model_id`").
-    #       joins("LEFT JOIN `inventory_pools` ON
-    #       `inventory_pools`.`id` = `items`.`inventory_pool_id`")
-    #
-    #     query.split.each{|q|
-    #       q = "%#{q}%"
-    #       sql = sql.where(arel_table[:inventory_code].matches(q).
-    #                       or(arel_table[:serial_number].matches(q)).
-    #                       or(arel_table[:invoice_number].matches(q)).
-    #                       or(arel_table[:note].matches(q)).
-    #                       or(arel_table[:name].matches(q)).
-    #                       or(arel_table[:user_name].matches(q)).
-    #                       or(arel_table[:properties].matches(q)).
-    #                       or(Model.arel_table[:name].matches(q)).
-    #                       or(Model.arel_table[:manufacturer].matches(q)).
-    #                       or(InventoryPool.arel_table[:name].matches(q)))
-    #     }
-    #     sql
+    joins(<<-SQL)
+      INNER JOIN (SELECT i1.id,
+                         CONCAT_WS(' ',
+                                   #{model_fields_1},
+                                   #{model_fields_2},
+                                   #{item_fields_1},
+                                   #{item_fields_2}) AS text
+                  FROM items AS i1
+                  INNER JOIN models AS m1 ON i1.model_id = m1.id
+                  LEFT JOIN items AS i2 ON i2.parent_id = i1.id
+                  LEFT JOIN models AS m2 ON m2.id = i2.model_id) AS full_text
+      ON items.id = full_text.id
+    SQL
+    .where(Arel::Table.new(:full_text)[:text].matches_all(q))
   }
 
   def self.filter(params, inventory_pool = nil)
@@ -159,7 +140,7 @@ class Item < ActiveRecord::Base
 
     items = items.unborrowable if params[:unborrowable]
     if params[:category_id]
-      model_ids = if params[:category_id].to_i == -1
+      model_ids = if params[:category_id] == '00000000-0000-0000-0000-000000000000'
                     Model.where.not(id: Model.joins(:categories))
                   else
                     Model
@@ -469,7 +450,7 @@ class Item < ActiveRecord::Base
       h[num] = if with_allocated_codes
                  (h[num].nil? ? code : Array(h[num]) << code)
                else
-                 h[num].to_i + 1
+                 Integer(h[num].presence || 0) + 1
                end
     end
     h
@@ -489,13 +470,13 @@ class Item < ActiveRecord::Base
     default_params = { from: 1, to: infinity, min_gap: 1 }
     params.reverse_merge!(default_params)
 
-    from = [params[:from].to_i, 1].max
+    from = [Integer(params[:from].presence || 0), 1].max
     if params[:to] == infinity
       to = infinity
     else
-      to = [[params[:to].to_i, from].max, infinity].min
+      to = [[Integer(params[:to].presence || 0), from].max, infinity].min
     end
-    min_gap = [[params[:min_gap].to_i, 1].max, to].min
+    min_gap = [[Integer(params[:min_gap].presence || 0), 1].max, to].min
 
     ranges = []
     last_n = from - 1

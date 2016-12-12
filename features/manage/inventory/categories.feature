@@ -21,7 +21,9 @@ Feature: Categories
     And the first level is displayed on top
     And I can expand and collapse subcategories
 
-  @javascript @personas
+  # sometimes there is an error that association 'models' is not
+  # defined for category, but it is via inheritence (ModelGroup). WTF?
+  @javascript @personas @flapping
   Scenario: Edit categories
     When I edit a category
     And I change the name and the parents
@@ -55,7 +57,7 @@ Feature: Categories
     And I save
     Then the categories are removed and the model is saved
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas @unstable
   Scenario: Category search
     When I search for a category by name
     Then I find categories whose names contain the search term

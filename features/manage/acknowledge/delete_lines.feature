@@ -7,7 +7,7 @@ Feature: Delete reservations of an open order
   Background:
     Given I am Pius
 
-  @javascript @personas @problematic
+  @javascript @personas
   Scenario: Delete a single line of an open contract
     When I open a contract for acknowledgement with more then one line
     And I delete a line of this contract

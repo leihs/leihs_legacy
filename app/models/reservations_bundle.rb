@@ -21,14 +21,20 @@ class ReservationsBundle < ActiveRecord::Base
     # there are both 'signed' and 'closed' reservations
     select(<<-SQL)
       COALESCE(reservations.contract_id::text,
-         CONCAT_WS('_',
-                   MAX(reservations.status),
-                   reservations.user_id::text,
-                   reservations.inventory_pool_id::text)) AS id,
+               CONCAT_WS('_',
+                         MAX(reservations.status),
+                         reservations.user_id::text,
+                         reservations.inventory_pool_id::text,
+                         CASE
+                           WHEN
+                             MAX(reservations.status) = 'submitted'
+                           THEN
+                             MAX(reservations.created_at::date)
+                         END)) AS id,
       MAX(reservations.status) AS status,
       reservations.user_id,
       reservations.inventory_pool_id,
-      string_agg(reservations.delegated_user_id::text, '_'),
+      reservations.delegated_user_id,
       bool_or(groups.is_verification_required) AS verifiable_user,
       COUNT(partitions.id) > 0 AS verifiable_user_and_model,
       MAX(reservations.created_at) AS created_at
@@ -47,19 +53,28 @@ class ReservationsBundle < ActiveRecord::Base
     .group(<<-SQL)
       reservations.contract_id::text,
       reservations.user_id,
-      reservations.inventory_pool_id
+      reservations.inventory_pool_id,
+      reservations.created_at::date,
+      reservations.delegated_user_id
     SQL
     .order(nil)
+  end
+
+  def contract_id
+    r = id_before_type_cast
+    if r.is_a? String and r.include?('_')
+      nil
+    else
+      r
+    end
   end
 
   def id
     r = id_before_type_cast
     if r.nil? # it is not persisted
       "#{status}_#{user_id}_#{inventory_pool_id}"
-    elsif r.is_a? String and r.include?('_')
-      r
     else
-      r.to_i
+      r
     end
   end
 
@@ -79,7 +94,7 @@ class ReservationsBundle < ActiveRecord::Base
          AND reservations.user_id = ?
          AND reservations.status = ?)
       SQL
-            r.id,
+            r.contract_id,
             r.user_id,
             r.status)
     end
@@ -96,14 +111,22 @@ class ReservationsBundle < ActiveRecord::Base
            LINE_CONDITIONS,
            foreign_key: :inventory_pool_id,
            primary_key: :inventory_pool_id)
-  has_many :models, -> { order('models.product ASC').uniq }, through: :item_lines
   has_many :items, through: :item_lines
-  has_many :options, -> { uniq }, through: :option_lines
 
   # NOTE we need this method because the association
   # has a inventory_pool_id as primary_key
   def reservation_ids
     reservations.pluck :id
+  end
+
+  #######################################################
+
+  def models
+    Model.where(id: item_lines.pluck(&:model_id)).order('product ASC').uniq
+  end
+
+  def options
+    Option.where(id: option_lines.pluck(&:option_id)).uniq
   end
 
   #######################################################
@@ -122,10 +145,12 @@ class ReservationsBundle < ActiveRecord::Base
 
   #######################################################
 
-  scope :with_verifiable_user, -> { having('verifiable_user = 1') }
+  scope :with_verifiable_user, lambda {
+    having('bool_or(groups.is_verification_required)')
+  }
   scope(:with_verifiable_user_and_model,
-        -> { having('verifiable_user_and_model = 1') })
-  scope :no_verification_required, -> { having('verifiable_user_and_model != 1') }
+        -> { having('COUNT(partitions.id) > 0') })
+  scope :no_verification_required, -> { having('COUNT(partitions.id) = 0') }
 
   def to_be_verified?
     verifiable_user_and_model == 1
@@ -217,18 +242,17 @@ class ReservationsBundle < ActiveRecord::Base
     contracts = contracts.where(id: params[:id]) if params[:id]
 
     if r = params[:range]
-      created_at_date = \
-        Arel::Nodes::NamedFunction.new('CAST',
-                                       [arel_table[:created_at].as('DATE')])
       if r[:start_date]
-        contracts = contracts.where(created_at_date.gteq(r[:start_date]))
+        contracts = contracts.having(
+          'reservations.created_at::date >= ?', r[:start_date])
       end
       if r[:end_date]
-        contracts = contracts.where(created_at_date.lteq(r[:end_date]))
+        contracts = contracts.having(
+          'reservations.created_at::date <= ?', r[:end_date])
       end
     end
 
-    contracts = contracts.order(arel_table[:created_at].desc)
+    contracts = contracts.order('created_at DESC')
 
     unless params[:paginate] == 'false'
       contracts = contracts.default_paginate params
@@ -258,8 +282,8 @@ class ReservationsBundle < ActiveRecord::Base
 
   def max_range
     return nil if reservations.blank?
-    line = reservations.max_by { |x| (x.end_date - x.start_date).to_i }
-    (line.end_date - line.start_date).to_i + 1
+    line = reservations.max_by { |x| Integer(x.end_date - x.start_date) }
+    Integer(line.end_date - line.start_date) + 1
   end
 
   ############################################
@@ -301,7 +325,7 @@ class ReservationsBundle < ActiveRecord::Base
               end_date: end_date || next_open_date(time_window_max),
               delegated_user_id: delegated_user_id || self.delegated_user_id }
 
-    new_lines = quantity.to_i.times.map do
+    new_lines = Integer(quantity).times.map do
       line = user.item_lines.create(attrs) do |l|
         if status == :submitted and reservations.first.try :purpose
           l.purpose = reservations.first.purpose

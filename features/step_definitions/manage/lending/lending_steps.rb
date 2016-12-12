@@ -1,3 +1,18 @@
+When(/^I open a hand over with an unassigned item line$/) do
+  @event = 'hand_over'
+  @customer = FactoryGirl.create(:user)
+  FactoryGirl.create(:access_right,
+                     user: @customer,
+                     inventory_pool: @current_inventory_pool,
+                     role: :customer)
+  FactoryGirl.create(:reservation,
+                     status: :approved,
+                     item: nil,
+                     inventory_pool: @current_inventory_pool,
+                     user: @customer)
+  visit manage_hand_over_path(@current_inventory_pool, @customer)
+end
+
 When /^I manually assign an inventory code to an item$/ do
   step 'I click an inventory code input field of an item line'
   step 'I select one of those'
@@ -42,14 +57,14 @@ Then /^unborrowable items are highlighted$/ do
 end
 
 Given /^I (open|return to) the daily view$/ do |arg1|
-  @current_inventory_pool = @current_user.inventory_pools.managed.order('RAND()').detect {|ip| ip.visits.hand_over.where(date: Date.today).exists? }
+  @current_inventory_pool = @current_user.inventory_pools.managed.detect {|ip| ip.visits.hand_over.where(date: Date.today).exists? }
   visit manage_daily_view_path(@current_inventory_pool)
   find('#daily-view')
 end
 
 When(/^I edit an order$/) do
   @event = 'order'
-  @contract = @current_inventory_pool.reservations_bundles.submitted.order('RAND()').first
+  @contract = @current_inventory_pool.reservations_bundles.submitted.first
   @user = @contract.user
   @customer = @contract.user
   step 'I edit the order'
@@ -136,8 +151,8 @@ When /^I open a hand over for a customer that has things to pick up today as wel
 end
 
 When /^I scan something \(assign it using its inventory code\) and it is already assigned to a future contract$/ do
-  @model = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).models.order('RAND()').detect do |model|
-    @item = model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).order('RAND()').first
+  @model = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).models.detect do |model|
+    @item = model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).first
   end
   find('#assign-or-add-input input').set @item.inventory_code
   find('#assign-or-add button').click
@@ -152,7 +167,7 @@ end
 When /^it doesn't exist in any future contracts$/ do
   @model_not_in_contract = (@current_inventory_pool.items.borrowable.in_stock.map(&:model).uniq -
                               @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).models).sample
-  @item = @model_not_in_contract.items.borrowable.in_stock.order('RAND()').first
+  @item = @model_not_in_contract.items.borrowable.in_stock.first
   find('#add-start-date').set I18n.l(Date.today+7.days)
   find('#add-end-date').set I18n.l(Date.today+8.days)
   find('#assign-or-add-input input').set @item.inventory_code
@@ -167,9 +182,9 @@ Then /^it is added for the selected time span$/ do
 end
 
 
-Given /^I am doing a hand over$/ do
+Given /^I am doing a hand over( with models)?$/ do |with_models|
   @event = 'hand_over'
-  step 'I open a hand over'
+  step "I open a hand over#{with_models}"
 end
 
 When(/^I click on "(.*?)"$/) do |arg1|
@@ -400,7 +415,7 @@ Then /^I open an order( placed by "(.*?)")$/ do |arg0, arg1|
       find('.dropdown-item', text: _('Edit')).click
     end
   else
-    @contract = @current_inventory_pool.reservations_bundles.submitted.order('RAND()').first
+    @contract = @current_inventory_pool.reservations_bundles.submitted.first
     visit manage_edit_contract_path(@current_inventory_pool, @contract)
   end
   @user = @contract.user

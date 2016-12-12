@@ -62,10 +62,28 @@ Feature: Description of roles
         | inspection comment |
         | inspector's priority |
       And I can export the data
+
+    @roles
+    Scenario: Role Inspector and Requester
+      Given I am Barbara
+      And the basic dataset is ready
+      And I navigate to procurement
       And I can move requests of my own category to other budget periods
       And I can move requests of my own category to other categories
+
+    @roles
+    Scenario: Role Inspector and Requester
+      Given I am Barbara
+      And the basic dataset is ready
+      And I navigate to procurement
       And I can create a request for myself
       And I can create requests for my category for another person
+
+    @roles
+    Scenario: Role Inspector and Requester
+      Given I am Barbara
+      And the basic dataset is ready
+      And I navigate to procurement
       And I can manage templates for categories I am inspector
       And I can see all budget limits
       And I can not add requester

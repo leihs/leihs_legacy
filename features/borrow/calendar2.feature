@@ -19,7 +19,7 @@ Feature: Calendar
     And the quantity is 1
     And all inventory pools are shown that have items of this model
 
-  @javascript @personas @browser
+  @javascript @personas @browser @flapping
   Scenario: Calendar appearance with date already set
     Given I am listing models
     And I have set a time span

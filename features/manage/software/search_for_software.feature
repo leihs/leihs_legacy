@@ -36,7 +36,7 @@ Feature: Search for software
       And I hover over the list of licenses on the contract line
       Then I see in the tooltip the software name of this license
 
-  @javascript @personas @problematic
+  @javascript @personas
   Scenario: Finding contracts for software by searching for a borrower
     Given a software license exists
     And this software license is handed over to somebody

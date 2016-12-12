@@ -11,9 +11,7 @@ module LeihsAdmin
       # rubocop:disable Metrics/CyclomaticComplexity
       # rubocop:disable Metrics/PerceivedComplexity
       def consistency
-        @only_tables_no_views = @connection.execute(
-          "SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'")
-          .to_h.keys
+        @only_tables_no_views = ActiveRecord::Base.connection.tables
         @excluded_models = [ReservationsBundle, Visit,
                             Audited::Adapters::ActiveRecord::Audit]
         @references = []

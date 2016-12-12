@@ -137,7 +137,7 @@ Then(/^the edited template and all the entered information are saved$/) do
 end
 
 Then(/^I can delete any template directly from this list$/) do
-  @template = @current_inventory_pool.templates.order('RAND()').first
+  @template = @current_inventory_pool.templates.first
   within('.line', text: @template.name) do
     within('.multibutton') do
       find('.dropdown-toggle').click

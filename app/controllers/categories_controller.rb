@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
     @categories =
       if params[:children]
         if params[:category_id]
-          if params[:category_id].to_i == -1
+          if params[:category_id] == '-1'
             []
           else
             Category.find(params[:category_id]).children

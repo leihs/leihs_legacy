@@ -1,6 +1,6 @@
 :ruby
-  max = max.to_i
-  used = used.to_i
+  max = Integer(max.presence || 0)
+  used = Integer(used.presence || 0)
   percentage = if max > 0
                  used * 100 / max
                elsif used > 0

@@ -7,8 +7,6 @@ jobs:
     description: |
       Run Admin engine scenarios under MRI
 
-    priority: -1
-
     run_when:
       branch name matches master or admin:
         type: branch

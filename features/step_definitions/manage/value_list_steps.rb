@@ -130,7 +130,7 @@ Then /^the list contains the following columns:$/ do |table|
               if line.model.is_a?(Option)
                 _('Location not defined')
               else
-                locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.location_id) AS count, locations.room AS room, locations.shelf AS shelf').joins(:location).group(:location_id).order('count DESC')
+                locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.location_id) AS count, locations.room AS room, locations.shelf AS shelf').joins(:location).group(:location_id, :room, :shelf).order('count DESC')
                 locations.to_a.delete_if {|location| location.room.blank? and location.shelf.blank? }
                 locations.each do |location|
                   if line.item_id
@@ -189,7 +189,7 @@ When(/^each model has exactly one assigned item$/) do
 
   @models.uniq.each do |m|
     l = @reservations.find{|l| l.model == m}
-    l.update_attribute(:item, l.model.borrowable_items.where(inventory_pool_id: @current_inventory_pool).order('RAND()').first) unless l.is_a? OptionLine
+    l.update_attribute(:item, l.model.borrowable_items.where(inventory_pool_id: @current_inventory_pool).first) unless l.is_a? OptionLine
   end
 end
 

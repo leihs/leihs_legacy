@@ -60,7 +60,7 @@ Then(/^for each model I see the quantity as specified by the template$/) do
 end
 
 When(/^I can modify the quantity of each model before ordering$/) do
-  @model_link = @template.model_links.order('RAND()').first
+  @model_link = @template.model_links.first
   find('.row', match: :first, text: @model_link.model.name).find("input[name='reservations[][quantity]'][value='#{@model_link.quantity}']", match: :first).set rand(10)
 end
 

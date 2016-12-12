@@ -48,7 +48,7 @@ end
 
 When /^none of the selected items have an assigned purpose$/ do
   step 'I add an item to the hand over by providing an inventory code'
-  step 'I add an option to the hand over by providing an inventory code and a date range'
+  step 'I add an option to the hand over by providing an inventory code'
   step 'I edit the timerange of the selection'
   step "I set the start date in the calendar to '#{I18n.l(Date.today)}'"
   step 'I save the booking calendar'

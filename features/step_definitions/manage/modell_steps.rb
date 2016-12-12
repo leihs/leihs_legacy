@@ -15,12 +15,12 @@ Then(/^a compatible model has been added to the model I am editing$/) do
 end
 
 When(/^I open a model that already has compatible models$/) do
-  @model = @current_inventory_pool.models.order('RAND()').detect {|m| m.compatibles.exists? }
+  @model = @current_inventory_pool.models.detect {|m| m.compatibles.exists? }
 
   @model ||= begin
     @current_inventory_pool = @current_user.inventory_pools.managed.select {|ip| not ip.models.empty? and ip.models.any? {|m| m.compatibles.exists?} }.sample
     step 'I open the inventory'
-    @current_inventory_pool.models.order('RAND()').detect {|m| m.compatibles.exists? }
+    @current_inventory_pool.models.detect {|m| m.compatibles.exists? }
   end
 
   step 'I search for "%s"' % @model.name
@@ -145,7 +145,7 @@ end
 Then(/^the changed allocations are saved$/) do
   find('#flash')
   model_group_ids = @model.reload.partitions.map(&:group_id)
-  expect(model_group_ids.sort).to eq @groups.map(&:id)
+  expect(model_group_ids).to match_array @groups.map(&:id)
 end
 
 Then /^the new model is created and can be found in the list of unused models$/ do
@@ -156,7 +156,7 @@ end
 
 When(/^I edit a model that exists and is in use$/) do
   @page_to_return = current_path
-  @model = @current_inventory_pool.items.items.unretired.where(parent_id: nil).order('RAND()').first.model
+  @model = @current_inventory_pool.items.items.unretired.where(parent_id: nil).first.model
   visit manage_edit_model_path @current_inventory_pool, @model
 end
 

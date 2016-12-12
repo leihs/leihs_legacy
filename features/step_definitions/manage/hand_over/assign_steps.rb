@@ -1,5 +1,5 @@
 When /^I click an inventory code input field of an item line$/ do
-  @item_line = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).item_lines.where(item_id: nil).order('RAND()').first
+  @item_line = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).item_lines.where(item_id: nil).first
   @item_line_element = find('.line', match: :prefer_exact, text: @item_line.model.name)
   @item_line_element.find('[data-assign-item]').click
 end
@@ -58,13 +58,13 @@ end
 
 Then /^the first itemline in the selection matching the provided inventory code is assigned$/ do
   expect(has_selector?('.line.green')).to be true
-  reloaded_visit = Visit.having('id = ?', @hand_over.id).first
+  reloaded_visit = Visit.having("#{Visit::VISIT_ID_SQL_EXPR} = ?", @hand_over.id).first
   line = reloaded_visit.reservations.detect{|line| line.item == @item}
   expect(line).not_to be_nil
 end
 
 Then /^no new line is added to the hand over$/ do
-  reloaded_visit = Visit.having('id = ?', @hand_over.id).first
+  reloaded_visit = Visit.having("#{Visit::VISIT_ID_SQL_EXPR} = ?", @hand_over.id).first
   expect(@hand_over.reservations.size).to eq reloaded_visit.reservations.size
 end
 

@@ -190,9 +190,9 @@ When /^the item is in stock and my department is responsible for it$/ do
 end
 
 When /^the item is not in stock and another department is responsible for it$/ do
-  all("select[name='responsible_inventory_pool_id'] option:not([selected])").detect{|o| o.value != @current_inventory_pool.id.to_s and o.value != ''}.select_option
   find("input[name='in_stock']").click if find("input[name='in_stock']").checked?
   @item = @current_inventory_pool.own_items.items.detect{|i| not i.inventory_pool_id.nil? and i.inventory_pool != @current_inventory_pool and not i.in_stock?}
+  all("select[name='responsible_inventory_pool_id'] option").detect { |o| o.value == @item.inventory_pool.id }.select_option
   step 'I search for "%s"' % @item.inventory_code
   step 'expand the corresponding model'
   @item_line, @item = fetch_item_line_and_item
@@ -406,7 +406,7 @@ Then /^the data has been updated$/ do
   if @model && !@model_id
     @model_id = @model.id
   end
-  expect((Rails.application.routes.recognize_path current_path)[:id].to_i).to eq @model_id
+  expect((Rails.application.routes.recognize_path current_path)[:id]).to eq @model_id
 
   @table_hashes.each do |row|
     field_name = row['Field']
@@ -444,7 +444,7 @@ When /^I edit an existing (Model|Option|Package|)$/ do |entity|
   if entity == 'Package'
 
     if @model
-      @package = @model.items.packages.where(inventory_pool_id: @current_inventory_pool).order('RAND()').first
+      @package = @model.items.packages.where(inventory_pool_id: @current_inventory_pool).first
       find("#packages .line[data-id='#{@package.id}'] [data-edit-package]").click
     else
       find('#packages .line[data-new] [data-edit-package]', match: :first).click
@@ -457,11 +457,11 @@ When /^I edit an existing (Model|Option|Package|)$/ do |entity|
     @page_to_return = current_path
     object_name = case entity
                     when 'Model'
-                      @model = @current_inventory_pool.models.where(type: 'Model').order('RAND()').first
+                      @model = @current_inventory_pool.models.where(type: 'Model').first
                       @model.name
                     when 'Option'
                       find(:select, 'retired').first('option').select_option
-                      @option = @current_inventory_pool.options.order('RAND()').first
+                      @option = @current_inventory_pool.options.first
                       @option.name
                   end
     step 'I search for "%s"' % object_name
@@ -655,18 +655,18 @@ Then(/^the license line contains the '(.*)' information$/) do |arg1|
 end
 
 Given(/^there exists a software license$/) do
-  @item = @license = Item.licenses.where(inventory_pool_id: @current_inventory_pool.id).order('RAND()').detect { |l| l.properties[:operating_system] and l.properties[:license_type] }
+  @item = @license = Item.licenses.where(inventory_pool_id: @current_inventory_pool.id).detect { |l| l.properties[:operating_system] and l.properties[:license_type] }
   expect(@license).not_to be_nil
 end
 
 Given(/^there exists a software license of one of the following types$/) do |table|
   types = table.hashes.map { |h| h['technical'] }
-  @item = @license = Item.licenses.where(inventory_pool_id: @current_inventory_pool.id).order('RAND()').detect { |l| types.include?(l.properties[:license_type]) and l.properties[:operating_system] }
+  @item = @license = Item.licenses.where(inventory_pool_id: @current_inventory_pool.id).detect { |l| types.include?(l.properties[:license_type]) and l.properties[:operating_system] }
   expect(@license).not_to be_nil
 end
 
 Given(/^there exists a software license, owned by my inventory pool, but given responsibility to another inventory pool$/) do
-  @item = @license = Item.licenses.where.not(inventory_pool_id: nil).where('owner_id = :ip_id AND inventory_pool_id != :ip_id', {ip_id: @current_inventory_pool.id}).order('RAND()').detect { |l| l.properties[:operating_system] and l.properties[:license_type] }
+  @item = @license = Item.licenses.where.not(inventory_pool_id: nil).where('owner_id = :ip_id AND inventory_pool_id != :ip_id', {ip_id: @current_inventory_pool.id}).detect { |l| l.properties[:operating_system] and l.properties[:license_type] }
   expect(@license).not_to be_nil
 end
 
@@ -751,7 +751,7 @@ Given(/^one is on the list of the options$/) do
 end
 
 When(/^I choose a certain responsible pool inside the whole inventory$/) do
-  @responsible_pool = @current_inventory_pool.own_items.select(:inventory_pool_id).where.not(items: {inventory_pool_id: [@current_inventory_pool.id, nil]}).order('RAND()').uniq.first.inventory_pool
+  @responsible_pool = @current_inventory_pool.own_items.select(:inventory_pool_id, :id).where.not(items: {inventory_pool_id: [@current_inventory_pool.id, nil]}).uniq.first.inventory_pool
   find(:select, 'responsible_inventory_pool_id').find(:option, @responsible_pool.name).select_option
 end
 

@@ -1,5 +1,5 @@
 When(/^I open the calendar of a model$/) do
-  model = @current_user.models.borrowable.where('models.id' => @inventory_pool.models.select('models.id')).order('RAND()').first
+  model = @current_user.models.borrowable.where('models.id' => @inventory_pool.models.select('models.id')).first
   visit borrow_model_path(model)
   find("[data-create-order-line][data-model-id='#{model.id}']").click
 end
@@ -13,7 +13,7 @@ Given(/^the current inventory pool has reached maximum amount of visits$/) do
 end
 
 When(/^I open the calendar of a model related to an inventory pool for which has reached maximum amount of visits$/) do
-  @inventory_pool = @current_user.inventory_pools.order('RAND ()').detect { |ip| not ip.workday.reached_max_visits.empty? }
+  @inventory_pool = @current_user.inventory_pools.detect { |ip| not ip.workday.reached_max_visits.empty? }
   @inventory_pool ||= @current_user.inventory_pools.detect do |ip|
     if ip.visits.where.not(status: :submitted).where('date >= ?', Date.today)
       # NOTE set max visits to 1 for all days
@@ -27,9 +27,9 @@ When(/^I open the calendar of a model related to an inventory pool for which has
 end
 
 When(/^I open the calendar of a model related to an inventory pool for which the number of days between order submission and hand over is defined as (\d+)$/) do |arg1|
-  @inventory_pool = @current_user.inventory_pools.order('RAND ()').detect { |ip| ip.workday.reservation_advance_days == arg1.to_i }
+  @inventory_pool = @current_user.inventory_pools.detect { |ip| ip.workday.reservation_advance_days == arg1.to_i }
   @inventory_pool ||= begin
-    ip = @current_user.inventory_pools.order('RAND()').first
+    ip = @current_user.inventory_pools.first
     ip.workday.update_attributes(reservation_advance_days: arg1.to_i)
     ip
   end

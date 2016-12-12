@@ -5,7 +5,7 @@ class window.App.TimeLineController extends Spine.Controller
 
   show: (e)->
     trigger = $ e.currentTarget
-    id = parseInt trigger.data "model-id"
+    id = trigger.data "model-id"
     model = ( App.Model.exists(id) or App.Software.find(id) )
     tmpl = App.Render "manage/views/models/timeline_modal", model
     @modal = new App.Modal tmpl

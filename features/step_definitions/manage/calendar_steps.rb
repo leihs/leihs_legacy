@@ -16,11 +16,9 @@ Then /^I see the availability of models on weekdays as well as holidays and week
 end
 
 When /^I open the booking calendar$/ do
-  @line_el = if @contract.status == :submitted
-               find('.order-line', match: :first)
-             elsif @contract.status == :approved
-               find(".line[data-line-type='item_line']", match: :first)
-             end
+  wait_until { page.has_selector?(".order-line, .line[data-line-type='item_line']") }
+  @line_el = first(".order-line, .line[data-line-type='item_line']")
+  expect(@line_el).to be
   id = @line_el['data-id'] || JSON.parse(@line_el['data-ids']).first
   @line = Reservation.find_by_id id
   @line_el.find('.multibutton .button[data-edit-lines]', text: _('Change entry')).click

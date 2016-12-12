@@ -16,7 +16,7 @@ Feature: Templates
     And the templates are sorted alphabetically by name
     And I can look at one of the templates in detail
 
-  @javascript @browser @personas
+  @javascript @browser @personas @flapping
   Scenario: Viewing a template in the borrow section
     Given I am looking at a template
     Then I see all models that template contains

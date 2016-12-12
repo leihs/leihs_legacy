@@ -11,7 +11,7 @@ Given(/^I am ([a-zA-Z]*)$/) do |persona_name|
 end
 
 Given(/^I am a customer with contracts$/) do
-  user = Reservation.closed.where.not(returned_to_user_id: nil).order('RAND()').map(&:user).select{|u| not u.access_rights.active.blank?}.uniq.first
+  user = Reservation.closed.where.not(returned_to_user_id: nil).map(&:user).select{|u| not u.access_rights.active.blank?}.uniq.first
   step 'I am logged in as "%s"' % user.login
 end
 

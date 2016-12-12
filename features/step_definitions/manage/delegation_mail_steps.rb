@@ -9,7 +9,7 @@ Given(/^there is (an order|a take back|an overdue take back) for a delegation th
            end
   @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
     User.as_delegations.detect do |delegation|
-      @contract = ip.reservations_bundles.send(status).where(user_id: delegation).where.not(delegated_user_id: delegation.delegator_user).order('RAND()').detect do |reservation_bundle|
+      @contract = ip.reservations_bundles.send(status).where(user_id: delegation).where.not(delegated_user_id: delegation.delegator_user).detect do |reservation_bundle|
         if arg1 == "an overdue take back"
           reservation_bundle.reservations.any? {|reservation| reservation.end_date < Date.today }
         else

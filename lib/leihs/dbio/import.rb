@@ -3,7 +3,7 @@ module Leihs
     module Import
       class << self
 
-        LEIHS_UUID_NS = UUIDTools::UUID.sha1_create UUIDTools::UUID.parse_int(0), "leihs"
+        LEIHS_UUID_NS = UUIDTools::UUID.sha1_create UUIDTools::UUID.parse_int(0), 'leihs'
 
         IGNORED_TABLES = %w(audits schema_migrations)
 
@@ -105,45 +105,44 @@ module Leihs
           procurement_organizations:
             parent_id: procurement_organizations
         YML
-        ).with_indifferent_access
-
+                                  ).with_indifferent_access
 
         def reload!
           load File.absolute_path(__FILE__)
         end
 
-        def map_model_group_link row
+        def map_model_group_link(row)
           begin
             unless row['direct']
               nil
             else
               table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, 'model_group_links'
               ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, 'model_groups'
-              {id: UUIDTools::UUID.sha1_create(table_uuid_ns, row[:id].to_s),
-               parent_id: UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:ancestor_id].to_s),
-               child_id: UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:descendant_id].to_s),
-               label: row[:label]}
+              { id: UUIDTools::UUID.sha1_create(table_uuid_ns, row[:id].to_s),
+                parent_id: UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:ancestor_id].to_s),
+                child_id: UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:descendant_id].to_s),
+                label: row[:label] }
             end
           rescue
             binding.pry
           end
         end
 
-        def map_audit_row row
+        def map_audit_row(row)
           ref_table = row[:auditable_type].pluralize.underscore
           ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, ref_table
           auditable_id = UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:auditable_id].to_s)
-          row.merge({auditable_id: auditable_id})
+          row.merge({ auditable_id: auditable_id })
         end
 
-        def map_images_row row
+        def map_images_row(row)
           ref_table = row[:target_type].underscore.pluralize
           ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, ref_table
           target_id = UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:target_id].to_s)
-          row.merge({target_id: target_id})
+          row.merge({ target_id: target_id })
         end
 
-        def map_hiddden_field_row row
+        def map_hiddden_field_row(row)
           unless LeihsDBIOImportFields.where(id: row[:field_id]).first
             Rails.logger.warn "Discarding hidden_filed #{row} because its field row does not exist"
             nil
@@ -156,7 +155,7 @@ module Leihs
           row.merge(position: row[:id])
         end
 
-        def custom_pre_migrator table_name, row
+        def custom_pre_migrator(table_name, row)
           case table_name
           when 'model_group_links'
             map_model_group_link row
@@ -173,20 +172,19 @@ module Leihs
           end
         end
 
-        def general_migrator table_name, row
+        def general_migrator(table_name, row)
           table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, table_name.to_s
-
-          row.map do|k,v|
+          row.map do|k, v|
             begin
               if k.to_s == 'id' and v.is_a? Integer
                 [k, UUIDTools::UUID.sha1_create(table_uuid_ns, v.to_s)]
               elsif k.to_s =~ /_id$/ and v.is_a? Integer
-                ref_table_name = FOREIGN_TABLE_RESOLVERS[table_name].try(:[],k) \
-                  ||  k.gsub(/_id$/,'').pluralize
+                ref_table_name = FOREIGN_TABLE_RESOLVERS[table_name].try(:[], k) \
+                  || k.gsub(/_id$/, '').pluralize
                 ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, ref_table_name
                 [k, UUIDTools::UUID.sha1_create(ref_table_uuid_ns, v.to_s)]
               else
-                [k,v]
+                [k, v]
               end
             rescue
               binding.pry
@@ -194,12 +192,12 @@ module Leihs
           end.to_h
         end
 
-        def convert table_name, rows
-          rows.map{|row| custom_pre_migrator(table_name, row)} \
-            .compact.map{ |row| general_migrator(table_name, row) }
+        def convert(table_name, rows)
+          rows.map { |row| custom_pre_migrator(table_name, row) } \
+            .compact.map { |row| general_migrator(table_name, row) }
         end
 
-        def import_table_data table_name, rows
+        def import_table_data(table_name, rows)
           Rails.logger.info "Importing #{table_name} with #{rows.count} rows..."
           class_name = "LeihsDBIOImport#{table_name.to_s.camelize}"
           eval <<-RB.strip_heredoc
@@ -214,18 +212,18 @@ module Leihs
           Rails.logger.info "Imported #{table_name} with #{rows.count} rows."
         end
 
-        def unvalidated_import data
-          ActiveRecord::Base.connection.execute "SET session_replication_role = replica;"
+        def unvalidated_import(data)
+          ActiveRecord::Base.connection.execute 'SET session_replication_role = replica;'
           ActiveRecord::Base.record_timestamps = false
-          data.reject{|tn,_| IGNORED_TABLES.include? tn}.each do |table_name, rows|
+          data.reject { |tn, _| IGNORED_TABLES.include? tn }.each do |table_name, rows|
             if rows.presence && (not rows.empty?)
               import_table_data table_name, rows
             end
           end
-          ActiveRecord::Base.connection.execute "SET session_replication_role = DEFAULT;"
+          ActiveRecord::Base.connection.execute 'SET session_replication_role = DEFAULT;'
         end
 
-        def validated_import data
+        def validated_import(data)
           ActiveRecord::Base.connection.execute <<-SQL.strip_heredoc
             ALTER TABLE ONLY users
               DROP CONSTRAINT fkey_users_delegators;
@@ -256,14 +254,12 @@ module Leihs
               ADD CONSTRAINT fkey_images_images_parent_id FOREIGN KEY (parent_id) REFERENCES images(id);
           SQL
 
-          Rails.logger.info "Yet unmigrated tables: #{(ActiveRecord::Base.connection.tables.reject{|tn| tn =~ /schema_migrations/} - TABLES).sort}."
-
+          Rails.logger.info "Yet unmigrated tables: #{(ActiveRecord::Base.connection.tables.reject { |tn| tn =~ /schema_migrations/ } - TABLES).sort}."
         end
 
-
-        def import_data data, unvalidated_import = false
+        def import_data(data, unvalidated_import = false)
           ActiveRecord::Base.connection.transaction do
-            PgTasks.truncate_tables()
+            PgTasks.truncate_tables
             ActiveRecord::Base.record_timestamps = false
             if unvalidated_import
               unvalidated_import data
@@ -274,10 +270,10 @@ module Leihs
           end
         end
 
-        def load_data filename
+        def load_data(filename)
           Rails.logger.info "Loading data from #{filename} ..."
           data = YAML.load(::IO.read filename).with_indifferent_access
-          Rails.logger.info "Data loaded."
+          Rails.logger.info 'Data loaded.'
           data
         end
 

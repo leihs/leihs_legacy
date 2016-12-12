@@ -74,7 +74,7 @@ Then /^the amount of reservations remains unchanged$/ do
 end
 
 Given /^required test data for contract tests existing$/ do
-  @inventory_pool = InventoryPool.order('RAND()').detect {|ip| ip.users.customers.exists? and ip.reservations.unsubmitted.exists? and ip.reservations.submitted.exists? }
+  @inventory_pool = InventoryPool.all.detect {|ip| ip.users.customers.exists? and ip.reservations.unsubmitted.exists? and ip.reservations.submitted.exists? }
   @model_with_items = @inventory_pool.items.sample.model
 end
 
@@ -102,7 +102,7 @@ Then /^the size of the contract should increase exactly by the amount of reserva
 end
 
 Given /^an? (submitted|unsubmitted) contract with reservations existing$/ do |arg1|
-  User.order('RAND()').detect do |user|
+  User.all.detect do |user|
     @contract = user.reservations_bundles.where(status: arg1).sample
   end
 end

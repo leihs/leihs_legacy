@@ -81,7 +81,6 @@ module Availability
           reservation.concat_group_ids
             .to_s
             .split(',')
-            .map(&:to_i) # read from the running_reservation
 
         # if overdue, extend end_date to today
         # given a reservation is running until the 24th
@@ -180,9 +179,11 @@ module Availability
         h[group_id] = \
           inner_changes
             .values
-            .map { |c| c[group_id].try(:fetch, :in_quantity).to_i }
+            .map do |c|
+            Integer(c[group_id] \
+                               .try(:fetch, :in_quantity).presence || 0)
+            end
             .min
-            .to_i
       end
       h
     end

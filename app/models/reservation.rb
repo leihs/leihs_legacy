@@ -21,7 +21,17 @@ class Reservation < ActiveRecord::Base
   has_many :groups, through: :user
 
   def contract_id
-    read_attribute(:contract_id) || "#{status}_#{user_id}_#{inventory_pool_id}"
+    read_attribute(:contract_id) || dynamic_contract_id
+  end
+
+  def dynamic_contract_id
+    [status, user_id, inventory_pool_id, created_at_date_if_submitted]
+      .compact
+      .join('_')
+  end
+
+  def created_at_date_if_submitted
+    created_at.strftime('%Y-%m-%d') if status == :submitted
   end
 
   def contract_with_container
@@ -62,9 +72,9 @@ class Reservation < ActiveRecord::Base
       conditions = params[:contract_ids].map do |p|
         if p.include?('_')
           format_args = p.split('_')[0, 2]
-          format("(status = '%s' AND user_id = %d)", *format_args)
+          format("(status = '%s' AND user_id = '%s')", *format_args)
         else
-          format('contract_id = %d', p)
+          format("contract_id = '%s'", p)
         end
       end.join(' OR ')
       reservations = reservations.where(conditions)

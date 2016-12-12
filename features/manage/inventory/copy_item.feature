@@ -79,7 +79,7 @@ Feature: Copy item
     Then an item copy screen is shown
     And all fields are editable, because the current inventory pool owns this new item
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Creating a new supplier while copying an item
     Given I copy an item
     Then an item copy screen is shown

@@ -3,7 +3,7 @@ Feature: Edit a hand over
   Background:
     Given I am Pius
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Feedback on a successful manual interaction during hand over
     Given there is a hand over with at least one unproblematic model and an option
     And I open the hand over
@@ -35,7 +35,7 @@ Feature: Edit a hand over
     And the user in this hand over is suspended
     Then I see the note 'Suspended!' next to their name
 
-  @javascript @browser @personas
+  @javascript @browser @personas @unstable
   Scenario: System feedback when adding an option
     Given I open a hand over
     When I add an option
@@ -60,7 +60,7 @@ Feature: Edit a hand over
     Then a hand over dialog appears
     And the contract note field in this dialog is already filled in with the default note
 
-  @javascript @personas @problematic
+  @javascript @personas
   Scenario: Contract note
     When I open a hand over with at least one assigned item
     And I hand over the items
@@ -70,7 +70,7 @@ Feature: Edit a hand over
     And I click hand over inside the dialog
     Then "something" appears on the contract
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Hand over options with at least quantity 1
     When I open a hand over
     And I add an option

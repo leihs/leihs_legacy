@@ -1,0 +1,25 @@
+jobs:
+
+  leihs_admin_v4stable_scenarios:
+
+    name: 'Admin: v4stable Scenarios'
+
+    description: |
+      Run v4stable Admin engine scenarios under MRI
+
+    run_when:
+      branch name matches master or admin:
+        type: branch
+        include_match: '^.*(master|admin).*$'
+        exclude_match: '^.*(no-ci|hotspot).*$'
+
+    context:
+
+      task_defaults:
+        max_trials: 1
+        include:
+          - cider-ci/task_components/database.yml
+
+      include:
+        - cider-ci/shared/main_context.yml
+        - cider-ci/tasks/leihs_admin_v4stable_scenarios.yml

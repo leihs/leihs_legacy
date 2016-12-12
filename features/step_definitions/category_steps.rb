@@ -34,11 +34,11 @@ Then /^the model "([^"]*)" should( not)? be in category "([^"]*)"$/ do |model_na
 end
 
 Given(/^there is a main category$/) do
-  @main_category = Category.roots.order('RAND()').first
+  @main_category = Category.roots.first
 end
 
 Then(/^this category can have children$/) do
-  child_category = Category.where.not(id: @main_category).order('RAND()').detect {|c| not @main_category.children.include? c }
+  child_category = Category.where.not(id: @main_category).detect {|c| not @main_category.children.include? c }
   @main_category.children << child_category
   expect(@main_category.reload.children.include? child_category).to be true
 end

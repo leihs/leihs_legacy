@@ -93,7 +93,7 @@ Then(/^I see a timer$/) do
   @timeoutStart = if @current_user.reservations.unsubmitted.empty?
                     Time.now
                   else
-                    @current_user.reservations.unsubmitted.order('RAND()').first.updated_at
+                    @current_user.reservations.unsubmitted.first.updated_at
                   end
   @countdown = find('#timeout-countdown-time', match: :first).text
 end

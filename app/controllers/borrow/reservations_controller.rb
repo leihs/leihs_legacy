@@ -55,7 +55,7 @@ class Borrow::ReservationsController < Borrow::ApplicationController
     begin
       current_user.reservations.unsubmitted.find(params[:line_id]).destroy
     ensure
-      render status: :ok, json: { id: params[:line_id].to_i }
+      render status: :ok, json: { id: params[:line_id] }
     end
   end
 

@@ -92,6 +92,7 @@ class App.InventoryHelperController extends Spine.Controller
     App.Item.ajaxFetch
       data: $.param
         search_term: term
+        paginate: false
 
   fetchItemLocations: (items)=>
     ids = _.map items, (i)->i.id

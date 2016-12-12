@@ -15,7 +15,7 @@ When(/^a database admin deletes some (referenced|visit related access right) rec
                %Q(DELETE access_rights.* FROM reservations AS cl LEFT JOIN access_rights ON cl.user_id = access_rights.user_id AND cl.inventory_pool_id = access_rights.inventory_pool_id)
 
              when 'referenced'
-               only_tables_no_views = @connection.execute("SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'").to_h.keys
+               only_tables_no_views = ActiveRecord::Base.connection.tables
                begin
                  reference = ActiveRecord::Base.descendants.flat_map do |klass|
                    next if klass.name =~ /^HABTM_/

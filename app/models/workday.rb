@@ -48,8 +48,14 @@ class Workday < ActiveRecord::Base
 
   def workdays=(wdays)
     wdays.each_pair do |k, v|
-      write_attribute(WORKDAYS[k.to_i], v['open'].to_i)
-      max_visits[k.to_i] = v['max_visits'].blank? ? nil : v['max_visits'].to_i
+      write_attribute(WORKDAYS[Integer(k.presence || 0)],
+                      Integer(v['open'].presence || 0))
+      max_visits[Integer(k.presence || 0)] = \
+        if v['max_visits'].blank?
+          nil
+        else
+          Integer(v['max_visits'].presence || 0)
+        end
     end
   end
 

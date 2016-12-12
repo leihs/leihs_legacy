@@ -32,7 +32,7 @@ class Authenticator::ZhdkController < Authenticator::AuthenticatorController
     response = fetch("#{AUTHENTICATION_URL}/response" \
                      "&agw_sess_id=#{session_id}" \
                      "&app_ident=#{APPLICATION_IDENT}")
-    if response.code.to_i == 200
+    if Integer(response.code) == 200
       xml = Hash.from_xml(response.body)
       # old# uid = xml["authresponse"]["person"]["uniqueid"]
       self.current_user = create_or_update_user(xml)

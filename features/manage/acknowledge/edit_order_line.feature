@@ -7,13 +7,13 @@ Feature: Edit contract line during acknowledge process
   Background:
     Given I am Pius
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser
   Scenario: Change the time range of a single contract line
     When I open a contract for acknowledgement
     And I change a contract reservations time range
     Then the time range of that line is changed
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser
   Scenario: Change the quantity of a single contract line
     When I open a contract for acknowledgement
     And I increase a submitted contract reservations quantity

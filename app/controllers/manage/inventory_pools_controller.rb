@@ -118,8 +118,12 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
 
   def latest_reminder
     user = current_inventory_pool.users.find(params[:user_id])
-    visit = current_inventory_pool.visits
-                .having('id = ?', params[:visit_id]).first
+    visit = \
+      current_inventory_pool
+      .visits
+      .having("#{Visit::VISIT_ID_SQL_EXPR} = ?", params[:visit_id])
+      .first
+
     @notifications = \
       user.notifications.where('created_at >= ?', visit.date).limit(10)
   end
@@ -138,7 +142,7 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
         @holidays_initial \
         + params_holidays.reject { |h| h[:id] }.map { |h| Holiday.new h }
       @holidays.select(&:id).each do |holiday|
-        if added_holiday = params_holidays.detect { |h| h[:id].to_i == holiday.id }
+        if added_holiday = params_holidays.detect { |h| h[:id] == holiday.id }
           holiday._destroy = 1 if added_holiday.key? '_destroy'
         end
       end

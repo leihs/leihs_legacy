@@ -54,7 +54,7 @@ Feature: Search
     And I hover over the list of items on the contract line
     Then I see in the tooltip the model name of this item
 
-  @personas @javascript @browser @problematic
+  @personas @javascript @browser @unstable
   Scenario Outline: Showing items' problems in global search
     Given I am Mike
     And there is a "<state>" item in my inventory pool

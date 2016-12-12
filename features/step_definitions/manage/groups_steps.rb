@@ -151,7 +151,7 @@ end
 
 
 When(/^I add one user to the group$/) do
-  fill_in_autocomplete_field _('Users'), @user_name = @current_inventory_pool.users.order('RAND()').first.name
+  fill_in_autocomplete_field _('Users'), @user_name = @current_inventory_pool.users.first.name
 end
 
 Then(/^the user is added to the top of the list$/) do
@@ -160,7 +160,7 @@ end
 
 
 When(/^I add a model to the group$/) do
-  @model = @current_inventory_pool.models.order('RAND()').first
+  @model = @current_inventory_pool.models.first
   fill_in_autocomplete_field _('Models'), @model.name
 end
 
@@ -178,7 +178,7 @@ Then(/^the already present models are sorted alphabetically$/) do
 end
 
 When(/^I add a model that is already present in the group$/) do
-  @model = @group.models.order('RAND()').first
+  @model = @group.models.first
   @quantity = 2
   find('#models-allocations .list-of-lines .line', match: :prefer_exact, text: @model.name).fill_in 'group[partitions_attributes][][quantity]', with: @quantity
   fill_in_autocomplete_field _('Models'), @model.name
@@ -190,7 +190,7 @@ Then(/^the model is not added again$/) do
 end
 
 When(/^I add a user that is already present in the group$/) do
-  @user = @group.users.order('RAND()').first
+  @user = @group.users.first
   fill_in_autocomplete_field _('Users'), @user.name
 end
 

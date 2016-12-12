@@ -7,7 +7,7 @@ Feature: Sign Contract
   Background:
     Given I am Pius
 
-  @personas @javascript @browser
+  @personas @javascript @browser @unstable
   Scenario: Hand over an not complete quantity of an option line
     When I open a hand over with options
     And I select an option line
@@ -18,7 +18,7 @@ Feature: Sign Contract
     When I click hand over inside the dialog
     Then the quantity of options is handed over
 
-  @javascript @browser @personas
+  @javascript @browser @personas @flapping
   Scenario: Hand over reservations which start in the history
     When I open a hand over with overdue reservations
     And I select an overdue item line and assign an inventory code
@@ -27,7 +27,7 @@ Feature: Sign Contract
     When I click hand over inside the dialog
     Then the reservations start date is today
 
-  @javascript @browser @personas
+  @javascript @browser @personas @unstable
   Scenario: Hand over a selection of items
     When I open a hand over with at least one unassigned line for today
     And I select an item line and assign an inventory code
@@ -36,7 +36,7 @@ Feature: Sign Contract
     When I click hand over inside the dialog
     Then the contract is signed for the selected items
 
-  @javascript @personas
+  @javascript @personas @unstable
   Scenario: Try to hand over unassigned items
     When I open a hand over with at least one unassigned line for today
     # travel in time in case today is not an open day of the pool

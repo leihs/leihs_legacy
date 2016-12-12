@@ -16,7 +16,7 @@ Feature: Option
     And I save
     Then the information is saved
 
-  @javascript @browser @personas
+  @javascript @browser @personas @flapping
   Scenario: Editing an option
     Given I open the inventory
     When I edit an existing Option

@@ -11,6 +11,7 @@ AllCops:
     - 'Gemfile'
     - 'Guardfile'
     - 'lib/tasks/leihs.rake'
+    - 'lib/leihs/dbio/import.rb'
     - 'tmp/**/*'
     - 'node_modules/**/*'
     - 'script/**/*'

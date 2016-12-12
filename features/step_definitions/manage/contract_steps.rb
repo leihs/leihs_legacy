@@ -236,7 +236,7 @@ Given(/^there is a contract for a user whose address ends with "(.*?)"$/) do |ar
 end
 
 When(/^I open this user's contract$/) do
-  visit manage_contract_path(@current_inventory_pool, @user.reservations_bundles.signed_or_closed.order('RAND()').first)
+  visit manage_contract_path(@current_inventory_pool, @user.reservations_bundles.signed_or_closed.first)
 end
 
 Then(/^their address is shown without the "(.*?)"$/) do |arg1|

@@ -22,7 +22,7 @@ Then /^there are (\d+) items found$/ do |n|
 end
 
 When /^I fetch a random item$/ do
-  @fetched_item = Item.order('RAND()').first
+  @fetched_item = Item.first
 end
 
 When /^I store some text as a value to some new property in this item$/ do

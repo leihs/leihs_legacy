@@ -29,8 +29,8 @@ Then /^the model is created and the packages and their assigned items are saved$
   expect(@model.is_package?).to be true
   @packages = @model.items
   expect(@packages.count).to eq 1
-  expect(@packages.first.children.first.inventory_code).to eq 'beam123'
-  expect(@packages.first.children.second.inventory_code).to eq 'beam345'
+  expect(@packages.first.children.map(&:inventory_code))
+    .to match_array ['beam123', 'beam345', 'bose123']
 end
 
 Then /^the packages have their own inventory codes$/ do
@@ -38,7 +38,7 @@ Then /^the packages have their own inventory codes$/ do
 end
 
 Given /^a (never|once) handed over item package is currently in stock$/ do |arg1|
-  item_packages = @current_inventory_pool.items.packages.in_stock.order('RAND ()')
+  item_packages = @current_inventory_pool.items.packages.in_stock
   @package = case arg1
                when 'never'
                  item_packages.detect {|p| p.item_lines.empty? }
@@ -82,7 +82,7 @@ Then(/^that item package is not listed$/) do
 end
 
 When /^the package is currently not in stock$/ do
-  @package_not_in_stock = @current_inventory_pool.items.packages.not_in_stock.order('RAND()').first
+  @package_not_in_stock = @current_inventory_pool.items.packages.not_in_stock.first
   visit manage_edit_model_path(@current_inventory_pool, @package_not_in_stock.model)
 end
 
@@ -92,7 +92,7 @@ end
 
 When /^I edit a model that already has packages( in mine and other inventory pools)?$/ do |arg1|
   step 'I open the inventory'
-  @model = @current_inventory_pool.models.order('RAND ()').detect do |m|
+  @model = @current_inventory_pool.models.detect do |m|
     b = (not m.items.empty? and m.is_package?)
     if arg1
       b = (b and m.items.map(&:inventory_pool_id).uniq.size > 1)

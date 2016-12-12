@@ -7,8 +7,6 @@ jobs:
     description: |
       Run Borrow scenarios under MRI
 
-    priority: -1
-
     run_when:
       branch name matches master or borrow:
         type: branch
@@ -18,7 +16,7 @@ jobs:
     context:
 
       task_defaults:
-        load: 2
+        load: 1.5
         max_trials: 3
         include:
           - cider-ci/task_components/database.yml

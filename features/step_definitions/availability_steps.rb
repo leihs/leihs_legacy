@@ -23,8 +23,8 @@ end
 
 Given "a contract exists for $quantity '$model' from $from to $to" do |quantity, model, from, to|
   model = Model.find_by_name(model)
-  inventory_pool = model.inventory_pools.order('RAND()').detect { |ip| ip.open_on?(to_date(from)) && ip.open_on?(to_date(to)) }
-  user = inventory_pool.users.order('RAND()').first
+  inventory_pool = model.inventory_pools.detect { |ip| ip.open_on?(to_date(from)) && ip.open_on?(to_date(to)) }
+  user = inventory_pool.users.first
   purpose = FactoryGirl.create(:purpose)
   @reservations = []
   quantity.to_i.times do
@@ -32,7 +32,7 @@ Given "a contract exists for $quantity '$model' from $from to $to" do |quantity,
                                             status: :approved,
                                             quantity: 1,
                                             model: model,
-                                            item: model.items.in_stock.where(inventory_pool_id: inventory_pool).order('RAND()').first,
+                                            item: model.items.in_stock.where(inventory_pool_id: inventory_pool).first,
                                             start_date: to_date(from),
                                             end_date: to_date(to),
                                             purpose: purpose)

@@ -1,0 +1,29 @@
+jobs:
+
+  manage_broken_scenarios:
+
+    name: 'Manage: Broken Scenarios'
+
+    description: |
+      Run Manage flapping scenarios
+
+    priority: -10
+
+    run_when:
+      branch name matches master or manage:
+        type: branch
+        include_match: '^.*(master|manage).*$'
+        exclude_match: '^.*(no-ci|hotspot).*$'
+
+    context:
+
+      task_defaults:
+        load: 1.5
+        max_trials: 25
+        eager_trials: 1
+        include:
+          - cider-ci/task_components/database.yml
+
+      include:
+        - cider-ci/shared/main_context.yml
+        - cider-ci/tasks/manage_broken_scenarios.yml

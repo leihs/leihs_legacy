@@ -9,7 +9,7 @@ When(/^there are some inventory pools with automatic access enabled$/) do
       3.times do
         FactoryGirl.create :inventory_pool
       end
-      ips_with_automatic_access = InventoryPool.order('RAND()').limit(2)
+      ips_with_automatic_access = InventoryPool.limit(2)
       ips_with_automatic_access.each {|ip| ip.update_attributes automatic_access: true}
 end
 

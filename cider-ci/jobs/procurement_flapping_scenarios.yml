@@ -1,0 +1,20 @@
+jobs:
+
+  procurement_flapping_scenarios:
+
+    name: 'Procurement: Flapping Scenarios'
+
+    description: |
+      Run procurement flapping scenarios
+
+    run_when:
+      branch name matches master or procurement:
+        type: branch
+        include_match: '^.*(master|procurement).*$'
+        exclude_match: '^.*(no-ci|hotspot).*$'
+
+    context:
+      include:
+        - cider-ci/shared/main_context.yml
+        - cider-ci/shared/flapping_context_configuration.yml
+        - cider-ci/tasks/procurement_flapping_scenarios.yml

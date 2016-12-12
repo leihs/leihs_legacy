@@ -43,7 +43,7 @@ When /^I click "([^"]*)"(?: within "([^"]*)")?$/ do |text, selector|
   with_scope(selector) do
     begin
       click_link text
-    rescue ElementNotFound
+    rescue Capybara::ElementNotFound
       click_button(text)
     end
   end

@@ -28,7 +28,7 @@
                 %input{type: :hidden, name: "main_categories[new][budget_limits_attributes][#{budget_limit.object_id}][budget_period_id]", value: ff.object.budget_period_id}
                 = budget_period
               .col-sm-8
-                %input.form-control{type: :number, name: "main_categories[new][budget_limits_attributes][#{budget_limit.object_id}][amount]", min: 0, step: 1, placeholder: _('Budget'), autocomplete: :off, value: ff.object.amount.to_i}
+                %input.form-control{type: :number, name: "main_categories[new][budget_limits_attributes][#{budget_limit.object_id}][amount]", min: 0, step: 1, placeholder: _('Budget'), autocomplete: :off, value: Integer(ff.object.amount.presence ||0)}
 
       .col-xs-8.border-left
         %h4= _('Subcategories')

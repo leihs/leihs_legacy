@@ -49,7 +49,7 @@ module LeihsAdmin
           .select { |c| c.type == :string and c.null }
           .each do |column|
           r = @connection.execute(
-            "SELECT * FROM `#{table_name}` WHERE `#{column.name}` REGEXP '^\ *$'")
+            %(SELECT * FROM "#{table_name}" WHERE "#{column.name}" ~ '^\\s*$'))
             .to_a
           next if r.empty?
           @empty_columns[[table_name, column.name]] = r
@@ -92,19 +92,15 @@ module LeihsAdmin
     private
 
     def nullify_empty_columns
-      only_tables_no_views = \
-        @connection \
-          .execute("SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'")
-          .to_h
-          .keys
+      only_tables_no_views = ActiveRecord::Base.connection.tables
       only_tables_no_views.each do |table_name|
         @connection
           .columns(table_name)
           .select { |c| c.type == :string and c.null }
           .each do |column|
           @connection.execute \
-            %(UPDATE `#{table_name}`
-                SET `#{column.name}` = NULL WHERE `#{column.name}` REGEXP '^\ *$')
+            %(UPDATE "#{table_name}"
+                SET "#{column.name}" = NULL WHERE "#{column.name}" ~ '^\s*$')
         end
       end
     end

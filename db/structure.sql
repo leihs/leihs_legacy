@@ -86,6 +86,22 @@ CREATE TYPE reservation_status AS ENUM (
 );
 
 
+--
+-- Name: hex_to_int(character varying); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION hex_to_int(hexval character varying) RETURNS bigint
+    LANGUAGE plpgsql IMMUTABLE STRICT
+    AS $$
+      DECLARE
+        result bigint;
+      BEGIN
+        EXECUTE 'SELECT x''' || hexval || '''::bigint' INTO result;
+        RETURN result;
+      END;
+      $$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -2369,4 +2385,6 @@ INSERT INTO schema_migrations (version) VALUES ('6');
 INSERT INTO schema_migrations (version) VALUES ('7');
 
 INSERT INTO schema_migrations (version) VALUES ('8');
+
+INSERT INTO schema_migrations (version) VALUES ('9');
 

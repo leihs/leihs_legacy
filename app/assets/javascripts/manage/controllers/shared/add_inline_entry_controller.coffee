@@ -13,11 +13,11 @@ class window.App.AddInlineEntryController extends Spine.Controller
       focus: => return false
       select: @select
       minLength: 0
-    .data("uiAutocomplete")._renderItem = (ul, item) => 
+    .data("uiAutocomplete")._renderItem = (ul, item) =>
       $(App.Render "views/autocomplete/element", item).data("value", item).appendTo(ul)
     @input.autocomplete("search")
 
-  source: (request, response) => 
+  source: (request, response) =>
     @fetch(request.term).done (data)=>
       data = _.map data, (datum)=>
         label: @customLabelFn?(datum) ? datum.name

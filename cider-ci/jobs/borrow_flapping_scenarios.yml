@@ -1,0 +1,20 @@
+jobs:
+
+  borrow_flapping_scenarios:
+
+    name: 'Borrow: Flapping Scenarios'
+
+    description: |
+      Run Borrow flapping scenarios
+
+    run_when:
+      branch name matches master or borrow:
+        type: branch
+        include_match: '^.*(master|borrow).*$'
+        exclude_match: '^.*(no-ci|hotspot).*$'
+
+    context:
+      include:
+        - cider-ci/shared/main_context.yml
+        - cider-ci/shared/flapping_context_configuration.yml
+        - cider-ci/tasks/borrow_flapping_scenarios.yml

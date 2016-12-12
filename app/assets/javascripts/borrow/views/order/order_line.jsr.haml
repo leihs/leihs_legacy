@@ -1,4 +1,4 @@
-.row.line{:"data-ids" => "[{{>ids}}]"}
+.row.line{:"data-ids" => "{{JSON ids/}}"}
 
   {{if !available()}}
   .line-info.red{title: _("Not available")}
@@ -33,7 +33,7 @@
 
       %button.button.white{:"data-change-order-lines" => true,
                            :"data-model-id" => "{{>model_id}}",
-                           :"data-ids" => "[{{>ids}}]",
+                           :"data-ids" => "{{JSON ids/}}",
                            :"data-start-date" => "{{>start_date}}",
                            :"data-end-date" => "{{>end_date}}"}
         %i.fa.fa-calendar

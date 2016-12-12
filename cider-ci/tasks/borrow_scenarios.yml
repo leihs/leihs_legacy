@@ -128,14 +128,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/calendar2.feature:14 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:23
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/calendar2.feature:23 DEFAULT_BROWSER=firefox
 - name: features/borrow/calendar2.feature:32
   scripts:
     test:
@@ -288,14 +280,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:15 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:25
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:25 DEFAULT_BROWSER=firefox
 - name: features/borrow/model_list.feature:34
   scripts:
     test:
@@ -344,6 +328,22 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:75 DEFAULT_BROWSER=firefox
+- name: features/borrow/model_list.feature:81
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:81 DEFAULT_BROWSER=firefox
+- name: features/borrow/model_list.feature:89
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:89 DEFAULT_BROWSER=firefox
 - name: features/borrow/model_list.feature:97
   scripts:
     test:
@@ -360,6 +360,22 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:106 DEFAULT_BROWSER=firefox
+- name: features/borrow/model_list.feature:112
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:112 DEFAULT_BROWSER=firefox
+- name: features/borrow/model_list.feature:120
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:120 DEFAULT_BROWSER=firefox
 - name: features/borrow/model_list.feature:131
   scripts:
     test:
@@ -384,14 +400,22 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:149 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:181
+- name: features/borrow/model_list.feature:158
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:181 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:158 DEFAULT_BROWSER=firefox
+- name: features/borrow/model_list.feature:182
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/model_list.feature:182 DEFAULT_BROWSER=firefox
 - name: features/borrow/model_overview.feature:9
   scripts:
     test:
@@ -432,6 +456,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/my_orders_overview.feature:23 DEFAULT_BROWSER=firefox
+- name: features/borrow/my_orders_overview.feature:29
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/my_orders_overview.feature:29 DEFAULT_BROWSER=firefox
 - name: features/borrow/my_orders_overview.feature:39
   scripts:
     test:
@@ -696,14 +728,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/templates.feature:13 DEFAULT_BROWSER=firefox
-- name: features/borrow/templates.feature:20
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/borrow/templates.feature:20 DEFAULT_BROWSER=firefox
 - name: features/borrow/templates.feature:30
   scripts:
     test:

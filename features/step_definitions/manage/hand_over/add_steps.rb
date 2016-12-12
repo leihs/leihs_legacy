@@ -1,15 +1,13 @@
 When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over by providing an inventory code$/ do |item_attr, item_type|
-  existing_model_ids = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).models.map(&:id)
-  items = @current_inventory_pool.items.send(item_type.pluralize)
+  item = FactoryGirl.create(item_type.to_sym, inventory_pool: @current_inventory_pool)
+  case item_attr
+  when 'a borrowable'
+    item.update_attributes(is_borrowable: true)
+  when 'an unborrowable'
+    item.update_attributes(is_borrowable: false)
+  end
+  @inventory_code = item.inventory_code
   @inventory_codes ||= []
-  @inventory_code = case item_attr
-                      when 'a', 'an'
-                        items.in_stock
-                      when 'a borrowable'
-                        items.in_stock.where(is_borrowable: true)
-                      when 'an unborrowable'
-                        items.in_stock.where(is_borrowable: false)
-                    end.detect{|i| not existing_model_ids.include?(i.model_id)}.inventory_code
   @inventory_codes << @inventory_code
   line_amount_before = all('.line', minimum: 1).size
   step 'I close the flash message'
@@ -30,7 +28,7 @@ When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over
              items.in_stock.where(is_borrowable: true)
            when 'an unborrowable'
              items.in_stock.where(is_borrowable: false)
-           end.order('RAND()').first
+           end.first
   @model = @item.model
   @inventory_codes << @item.inventory_code
   find('#assign-or-add-input input').set @item.model.name
@@ -45,22 +43,12 @@ Then /^the item is added to the hand over for the provided date range and the in
   expect(assigned_inventory_codes).to include @inventory_code
 end
 
-When /^I add an option to the hand over by providing an inventory code and a date range$/ do
-  @inventory_code = if @option
-                      @option
-                    else
-                      existing_options = if @contract
-                                           @contract.options
-                                         elsif @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)
-                                           @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).options
-                                         else
-                                           []
-                                         end
-                      (@current_inventory_pool.options.order('RAND()') - existing_options).first
-                    end.inventory_code
+When /^I add an option to the hand over by providing an inventory code$/ do
+  @option ||= FactoryGirl.create(:option, inventory_pool: @current_inventory_pool)
+  @inventory_code = @option.inventory_code
   find('#assign-or-add-input input').set @inventory_code
   find('#assign-or-add button').click
-  find(".line[data-line-type='option_line'] .grey-text", text: @inventory_code)
+  find(".line[data-line-type='option_line'] .grey-text", text: @inventory_code, match: :first)
   step 'the option is added to the hand over'
 end
 
@@ -81,12 +69,12 @@ Then /^the (.*?) is added to the hand over$/ do |type|
 end
 
 When /^I add an option to the hand over which is already existing in the selected date range by providing an inventory code$/ do
-  option_line = @contract.option_lines.order('RAND()').first
+  option_line = @contract.option_lines.first
   @option = option_line.option
   @quantity_before = option_line.quantity
   @n = rand(2..5)
   @n.times do
-    step 'I add an option to the hand over by providing an inventory code and a date range'
+    step 'I add an option to the hand over by providing an inventory code'
   end
 end
 
@@ -102,16 +90,17 @@ end
 When /^I type the beginning of (.*?) name to the add\/assign input field$/ do |type|
   @target_name = case type
     when 'an option'
-      @option = @current_inventory_pool.options.first
+      @option = FactoryGirl.create(:option, inventory_pool: @current_inventory_pool)
       @inventory_code = @option.inventory_code
       @option.name
     when 'a model'
-      @model = @current_inventory_pool.items.in_stock.first.model
+      @model = FactoryGirl.create(:model_with_items, inventory_pool: @current_inventory_pool)
       @model.name
     when 'that model'
       @model.name
     when 'a template'
-      @template = @current_inventory_pool.templates.first
+      @template = FactoryGirl.create(:template)
+      @current_inventory_pool.templates << @template
       @template.name
   end
   type_into_autocomplete '#assign-or-add-input input', @target_name[0..-2]
@@ -152,7 +141,7 @@ Then /^each model of the template is added to the hand over for the provided dat
 end
 
 When /^I add so many reservations that I break the maximal quantity of a model$/ do
-  @model ||= (@contract || @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)).item_lines.order('RAND()').first.model
+  @model ||= FactoryGirl.create(:model_with_items, inventory_pool: @current_inventory_pool)
   @target_name = @model.name
   quantity_to_add = if @contract
                       start_date = Date.parse find('#add-start-date').value
@@ -183,11 +172,13 @@ When /^I add an item to the hand over$/ do
   find('#flash')
 end
 
-Given(/^there is a model or software which all items are set to "(.*?)"$/) do |arg1|
-  @model = case arg1
-             when 'not borrowable'
-               @current_inventory_pool.models.order('RAND ()').detect { |m| m.items.all? { |i| not i.is_borrowable? } }
-             else
-               'not found'
-           end
+Given(/^there is a model or software which all items are set to "not borrowable"$/) do
+  @model = FactoryGirl.create(:model_with_items, inventory_pool: @current_inventory_pool, is_borrowable: false)
+end
+
+Then(/^the quantity on the option line is (\d+)$/) do |quantity|
+  within(".line[data-line-type='option_line']", text: @option.inventory_code) do
+    find("input[value='#{quantity}']")
+  end
+  expect(@option_line.reload.quantity).to be == quantity.to_i
 end

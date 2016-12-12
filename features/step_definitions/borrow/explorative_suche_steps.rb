@@ -24,7 +24,7 @@ When(/^I choose a category$/) do
 end
 
 Then(/^the models of the currently chosen category are shown$/) do
-  expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id'].to_i).to eq @category.id
+  expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id']).to eq @category.id
   find('#model-list', match: :first)
   models = Model.from_category_and_all_its_descendants(@category).active
   within '#model-list' do

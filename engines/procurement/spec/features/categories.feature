@@ -16,6 +16,13 @@ Feature: Procurement Categories
     And I stay on the main categories edit page
     And the new main category appears in the list
     And the new main category was created in the database
+
+  @categories
+  Scenario: Creating the main categories
+    Given I am Hans Ueli
+    And a budget period exist
+    And an upcoming budget period exists
+    When I navigate to the categories page
     When I add a new main category
     And I fill in the main category name
     And I do not save

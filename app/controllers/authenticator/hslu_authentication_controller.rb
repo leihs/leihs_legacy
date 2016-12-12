@@ -15,7 +15,7 @@ class LdapHelper
     @base_dn = @ldap_config[Rails.env]['base_dn']
     @search_field = @ldap_config[Rails.env]['search_field']
     @host = @ldap_config[Rails.env]['host']
-    @port = @ldap_config[Rails.env]['port'].to_i || 636
+    @port = Integer(@ldap_config[Rails.env]['port'].presence || 636)
     @encryption = @ldap_config[Rails.env]['encryption'].to_sym || :simple_tls
     @method = :simple
     @master_bind_dn = @ldap_config[Rails.env]['master_bind_dn']

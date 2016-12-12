@@ -1,10 +1,5 @@
-# newer version in lending/lending_steps.rb?
-#  @current_inventory_pool = @current_inventory_pool || @current_user.inventory_pools.managed.order("RAND()").first
-#  visit manage_daily_view_path @current_inventory_pool
-#end
-
 When /^I reject a contract$/ do
-  @contract = @current_inventory_pool.reservations_bundles.submitted.order('RAND()').first
+  @contract = @current_inventory_pool.reservations_bundles.submitted.first
 
   step %Q(I uncheck the "No verification required" button)
 

@@ -102,7 +102,7 @@ When(/^a take back contains only options$/) do
   @customer = @current_inventory_pool.users.detect {|u| u.visits.take_back.empty? }
   expect(@customer).not_to be_nil
   step 'I open a hand over for this customer'
-  step 'I add an option to the hand over by providing an inventory code and a date range'
+  step 'I add an option to the hand over by providing an inventory code'
   step 'the option is added to the hand over'
   step 'I click hand over'
   find('#purpose').set 'text'

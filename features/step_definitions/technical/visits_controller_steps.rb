@@ -9,9 +9,9 @@ Given /^test data setup for scenario "Writing an unavailable inventory code"$/ d
       m.reservations.joins(:contract).where(contracts: {inventory_pool_id: @inventory_pool}, returned_date: nil).where.not(item_id: nil).exists?
   end
   expect(model).not_to be_nil
-  @line = model.reservations.joins(:contract).where(contracts: {inventory_pool_id: @inventory_pool}, returned_date: nil, item_id: nil).order('RAND()').first
+  @line = model.reservations.joins(:contract).where(contracts: {inventory_pool_id: @inventory_pool}, returned_date: nil, item_id: nil).first
   expect(@line).not_to eq nil
-  @item = model.reservations.joins(:contract).where(contracts: {inventory_pool_id: @inventory_pool}, returned_date: nil).where.not(item_id: nil).order('RAND()').first.item
+  @item = model.reservations.joins(:contract).where(contracts: {inventory_pool_id: @inventory_pool}, returned_date: nil).where.not(item_id: nil).first.item
   expect(@line.item).to eq nil
 end
 

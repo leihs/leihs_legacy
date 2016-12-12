@@ -103,7 +103,7 @@ When(/^I am editing a(?:n) (item|software license)$/) do |arg1|
                        ['licenses', 'software', 'license', _('Edit License')]
                    end
 
-  @item = @current_inventory_pool.items.send(s0).where(retired: nil).order('RAND()').first
+  @item = @current_inventory_pool.items.send(s0).where(retired: nil).first
   step %Q(I search for "%s") % @item.model.name
   within(".line[data-type='#{s1}']", match: :prefer_exact, text: @item.model.name) do
     find("[data-type='inventory-expander']").click

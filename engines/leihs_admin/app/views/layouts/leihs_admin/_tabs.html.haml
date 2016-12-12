@@ -27,10 +27,6 @@
     %a{:href => '/admin/mail_templates'}
       = _('Mail Templates')
 
-  %li{role: 'presentation', class: params[:controller] == 'leihs_admin/database' ? 'active' : nil}
-    %a{:href => '/admin/database/indexes'}
-      = _('Database')
-
   %li{role: 'presentation', class: params[:controller] == 'leihs_admin/statistics' ? 'active' : nil}
     %a{href: admin.statistics_path}
       = _('Statistics')

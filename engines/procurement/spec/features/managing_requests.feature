@@ -50,7 +50,7 @@ Feature: section Managing Requests
     And I navigate to the requests overview page
     Then I see the default picture
 
-  @managing_requests
+  @managing_requests @flapping
   Scenario: Using the filters as requester only
     Given I am Roger
     And several requests created by myself exist
@@ -96,7 +96,7 @@ Feature: section Managing Requests
       | Barbara  |
       | Roger    |
 
-  @managing_requests
+  @managing_requests @flapping
   Scenario Outline: Creating a request through a budget period selecting a template article
     Given I am <username>
     And several categories exist
@@ -126,7 +126,7 @@ Feature: section Managing Requests
       | Barbara  |
       | Roger    |
 
-  @managing_requests
+  @managing_requests @flapping
   Scenario Outline: Creating a request through a budget period selecting a sub category
     Given I am <username>
     And several categories exist
@@ -161,7 +161,7 @@ Feature: section Managing Requests
       | Barbara  |
       | Roger    |
 
-  @managing_requests
+  @managing_requests @flapping
   Scenario: Creating a request by choosing a template article inside the request form
     Given I am Barbara
     And several categories exist
@@ -185,7 +185,7 @@ Feature: section Managing Requests
     Then I see a success message
     And the request with all given information was created successfully in the database
 
-  @managing_requests
+  @managing_requests @flapping
   Scenario Outline: Inserting an already inserted template article as Roger
     Given I am Roger
     And a request containing a template article exists
@@ -193,7 +193,7 @@ Feature: section Managing Requests
     And I click on the template article which has already been added to the request
     Then I am navigated to the request containing this template article
 
-  @managing_requests
+  @managing_requests @flapping
   Scenario Outline: Inserting an already inserted template article as Barbara
     Given I am Barbara
     And a request containing a template article exists
@@ -237,7 +237,7 @@ Feature: section Managing Requests
       | Barbara  |
       | Roger    |
 
-  @managing_requests
+  @managing_requests @flapping
   Scenario Outline: sorting requests
     Given I am <username>
     And several requests created by myself exist
@@ -332,7 +332,7 @@ Feature: section Managing Requests
     Then I see a success message
     And the changes are saved successfully to the database
 
-  @managing_requests
+  @managing_requests @flapping
   Scenario Outline: Priority values
     Given I am <username>
     When I want to create a new request

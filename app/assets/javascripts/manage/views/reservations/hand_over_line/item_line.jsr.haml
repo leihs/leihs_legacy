@@ -50,7 +50,7 @@
 
   .col2of10.line-col.line-actions.padding-left-xxs.padding-right-s
     .multibutton
-      %button.button.white.text-ellipsis{:"data-edit-lines" => true, :"data-ids" => "[{{>id/}}]"} {{jed "Change entry"/}}
+      %button.button.white.text-ellipsis{:"data-edit-lines" => true, :"data-ids" => "{{JSON [id]/}}"} {{jed "Change entry"/}}
       .dropdown-holder.inline-block
         .button.white.dropdown-toggle
           .arrow.down

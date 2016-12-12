@@ -1,6 +1,6 @@
 :ruby
-  def add_timeband(inventory_pool, bandNames_js, bandInfos_js, group_id_as_string)
-    if group_id_as_string == "-1"
+  def add_timeband(inventory_pool, bandNames_js, bandInfos_js, group_id)
+    if group_id == "-1"
       bandInfos_js << <<-BAND2A
         Timeline.createBandInfo( { timeZone:       2,
                                    eventSource:    null,
@@ -10,8 +10,18 @@
                                    theme:         theme } )
         BAND2A
       bandNames_js << _("Available in total: ")
-   else
-      group_id = group_id_as_string.to_i
+    elsif group_id.nil?
+      bandInfos_js << <<-BAND2B
+        Timeline.createBandInfo( { timeZone:       2,
+                                   eventSource:    eventSource[0],
+                                   intervalUnit:   Timeline.DateTime.DAY,
+                                   intervalPixels: 50,
+                                   align:         'Top',
+                                   theme:         theme } )
+        BAND2B
+      group_name = _("general")
+      bandNames_js << (_("Available in group '") + group_name + "' :")
+    else
       bandInfos_js << <<-BAND2B
         Timeline.createBandInfo( { timeZone:       2,
                                    eventSource:    eventSource[#{group_id}],
@@ -20,25 +30,25 @@
                                    align:         'Top',
                                    theme:         theme } )
         BAND2B
-      group_name = group_id > 0 ? inventory_pool.groups.find(group_id).to_s : _("general")
+      group_name = inventory_pool.groups.find(group_id).to_s
       bandNames_js << (_("Available in group '") + group_name + "' :")
     end
   end
-  
+
   # iterate through model reservations and prepare necessary parameters to construct events inside with Timeline
   def reservations_to_events(av)
     events = {}
     av.running_reservations.each do |line|
       line.reload # NOTE this is quick fix because we have a running_reservation
       user = line.user
-      group_id = line.allocated_group_id.to_i
-  
-      # if line is late then it won't be available until the item is returned 
+      group_id = line.allocated_group_id || 0 # fallback as 0 when general group (nil)
+
+      # if line is late then it won't be available until the item is returned
       end_date = line.late? ? Availability::ETERNITY : (line.end_date.tomorrow.to_time - 1.second)
-  
-      # if line is reserved in the future and assigned an item, then the item will be reserved until then and not available from now on 
+
+      # if line is reserved in the future and assigned an item, then the item will be reserved until then and not available from now on
       start_date = line.reserved? ? Date.today : line.start_date
-  
+
       events[group_id] ||= []
       events[group_id] << {:start         => start_date.to_time.to_s(:rfc822),
                            :end           => end_date.to_time.to_s(:rfc822),
@@ -54,7 +64,7 @@
                                 else
                                   [ _("Take Back"), manage_take_back_path(current_inventory_pool, user) ]
                                 end
-                           
+
                               document_link = unless lending_manager?
                                                 ""
                                               else
@@ -65,10 +75,10 @@
                               comment = ""
                               comment += ("<b>" + _("Item is overdue and therefore unavailable!") + "</b>") if line.late?
                               comment += ("<b>" + _("Item is reserved in the future, therefore it's not available!") + "</b>") if line.reserved?
-                        
+
                               ("#{_("Phone")}: #{user.phone}<br/>" +
                               "#{_("Reservation")}: #{line.start_date} " + _("until") + " #{line.end_date}<br/>" +
-                              comment + '<br/>' +  
+                              comment + '<br/>' +
                               document_link)
                            end,
                            :classname     =>  if not line.item_id
@@ -76,7 +86,7 @@
                                                   'no-assigned-item'
                                                 else
                                                   'unavailable'
-                                                end 
+                                                end
                                               elsif line.returned_date
                                                 'is-returned'
                                               elsif line.late?
@@ -90,7 +100,7 @@
     end
     events
   end
-  
+
   av = @model.availability_in(current_inventory_pool)
 
   # events represent the horizontal bars in Timeline that display how long an item is lent out
@@ -117,23 +127,23 @@
   # TODO total overview # bandInfos_js << "Timeline.createBandInfo({ timeZone: 2, overview: true, width: '#{sum_w}px', intervalUnit: Timeline.DateTime.DAY, intervalPixels: 32, align: 'Top', theme: theme })"
 
   # decorators are specially marked days inside a bar, which in leihs will display the available items
-  # inside a group on a certain day. We only display available numbers of items on days where the numbers change 
+  # inside a group on a certain day. We only display available numbers of items on days where the numbers change
   decorators_js = [""]
-  
+
   # We color days according to whether the total in a particular group is above zero or no.
   # In addition to each group we also do this for the overall total of available items in stock of a certain model.
   # We use the "special" group id -1 for the total. The to_i comparison is needed to convert nil to 0 :
-  group_ids = (["-1"] + av.partitions.keys).sort {|a,b| a.to_i <=> b.to_i }
+  group_ids = (["-1"] + av.partitions.keys)
   group_ids.each do |g|
     add_timeband(current_inventory_pool, bandNames_js, bandInfos_js, g)
-    
+
     decorators_js << av.changes.map do |start_date, change|
       end_date = [av.changes.end_date_of(start_date), start_date + 1.month].min
       d = []
       in_quantity = if g == "-1" # showing total
         change.values.sum{|x| x[:in_quantity]}
       else
-        change[g].try(:fetch, :in_quantity).to_i
+        Integer(change[g].try(:fetch, :in_quantity).presence || 0)
       end
       if in_quantity < 0
         d << <<-BAND3
@@ -188,7 +198,7 @@
       eventSource[group_id] = new Timeline.DefaultEventSource();
       eventSource[group_id].loadJSON({events: events[group_id]}, document.location.href);
     }
-    
+
     var theme = Timeline.ClassicTheme.create();
     theme.firstDayOfWeek = 1;
     theme.autoWidth = true;
@@ -197,15 +207,15 @@
     theme.event.track.gap = -13;
     theme.event.overviewTrack.offset = #{sum_w};
     theme.event.tape.height = 15;
-    
+
     var bandNames = #{bandNames_js.to_json};
-    
+
     var bandInfos = [
         #{bandInfos_js.join(',')}
     ];
-    
+
     bandInfos[0].highlight = true;
-  
+
     for (var i = 0; i < bandInfos.length; i++) {
       if(bandInfos.length > 1 && i != 1) bandInfos[i].syncWith = 1;
       bandInfos[i].decorators = [
@@ -218,14 +228,14 @@
           })
       ];
     }
-    
+
     #{dec = ""
       decorators_js.each_with_index do |d,i|
         next if d.blank?
         dec << "bandInfos[#{i}].decorators = bandInfos[#{i}].decorators.concat([#{d.join(', ')}]); "
       end
       dec}
-  
+
     var tl = Timeline.create(document.getElementById("my_timeline"), bandInfos);
     tl.getBand(1).setMinVisibleDate(Timeline.DateTime.parseGregorianDateTime("#{Date.today - 1.week}"));
     tl.layout();
@@ -236,11 +246,11 @@
       window.parent.Dialog.rescale($(window.parent.document).find(".dialog"));
     }
   });
-  
+
 
 = stylesheet_link_tag 'timeline'
 
-%div 
+%div
   #my_timeline{:style => "height: #{sum_w}px; border: 1px solid #aaa"}
 
   %table.timeline-legend

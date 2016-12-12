@@ -31,7 +31,7 @@ When(/^I choose a subcategory$/) do
 end
 
 Then(/^that category opens$/) do
-  expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id'].to_i).to eq @category.id
+  expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id']).to eq @category.id
 end
 
 When(/^I pick a second-level category from the results of the explorative search$/) do

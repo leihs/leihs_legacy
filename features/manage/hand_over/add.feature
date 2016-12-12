@@ -18,14 +18,16 @@ Feature: Add reservations during hand over
   @javascript @personas
   Scenario: Add an option to the hand over providing an inventory code
     Given I open a hand over
-    And I add an option to the hand over by providing an inventory code and a date range
+    And I add an option to the hand over by providing an inventory code
     Then the option is added to the hand over
 
-  @javascript @personas
+  @javascript @personas @browser
   Scenario: Increase the quantity of an option of the hand over by adding an option providing an inventory code
     Given I open a hand over with options
-    And I add an option to the hand over which is already existing in the selected date range by providing an inventory code
-    Then the existing option quantity is increased
+    When I add an option to the hand over by providing an inventory code
+    Then the quantity on the option line is 1
+    And I add an option to the hand over by providing an inventory code
+    Then the quantity on the option line is 2
 
   @javascript @personas @browser
   Scenario: Add a template to the hand over picking an autocomplete element
@@ -35,7 +37,7 @@ Feature: Add reservations during hand over
     When I select the template from the list
     Then each model of the template is added to the hand over for the provided date range
 
-  @javascript @personas @browser @problematic
+  @javascript @personas @browser
   Scenario: Add reservations which changes other reservations availability
     Given I open a hand over for today
     And I add so many reservations that I break the maximal quantity of a model

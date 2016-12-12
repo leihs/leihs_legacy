@@ -96,7 +96,7 @@ module LeihsAdmin
     def submitted_inventory_manager_ids
       @submitted_inventory_manager_ids ||= \
         if params[:inventory_managers] and params[:inventory_managers][:user_ids]
-          params[:inventory_managers][:user_ids].map(&:to_i).sort
+          params[:inventory_managers][:user_ids].sort
         else
           []
         end

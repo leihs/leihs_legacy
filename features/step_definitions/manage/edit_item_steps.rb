@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 Given(/^I edit an item that belongs to the current inventory pool( and is in stock)?( and is not part of any contract)?$/) do |in_stock, not_in_contract|
-  items = @current_inventory_pool.items.items.where(owner_id: @current_inventory_pool, models: {is_package: false}).order('RAND()')
+  items = @current_inventory_pool.items.items.where(owner_id: @current_inventory_pool, models: {is_package: false})
   items = items.in_stock if in_stock
 
   @item = if not_in_contract
@@ -104,17 +104,17 @@ When(/^I change the supplier$/) do
 end
 
 Given(/^I edit an item that belongs to the current inventory pool and is not in stock$/) do
-  @item = @current_inventory_pool.own_items.not_in_stock.order('RAND()').first
+  @item = @current_inventory_pool.own_items.not_in_stock.first
   @item_before = @item.to_json
   step "I go to this item's edit page"
 end
 
 When(/^I change the responsible department$/) do
-  fill_in_autocomplete_field _('Responsible'), InventoryPool.where('id != ?', @item.inventory_pool.id).order('RAND()').first.name
+  fill_in_autocomplete_field _('Responsible'), InventoryPool.where('id != ?', @item.inventory_pool.id).first.name
 end
 
 When(/^I change the model$/) do
-  fill_in_autocomplete_field _('Model'), @current_inventory_pool.models.order('RAND()').detect { |m| m != @item.model }.name
+  fill_in_autocomplete_field _('Model'), @current_inventory_pool.models.detect { |m| m != @item.model }.name
 end
 
 When(/^I retire the item$/) do

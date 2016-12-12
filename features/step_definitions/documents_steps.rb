@@ -44,7 +44,7 @@ Then(/^I see the following information for each contract:$/) do |table|
 end
 
 Given(/^I click the value list link$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.order('RAND()').first
+  @contract = @current_user.reservations_bundles.signed_or_closed.first
   within(".row.line[data-id='#{@contract.id}']") do
     find('.dropdown-toggle').click
     document_window = window_opened_by do
@@ -59,7 +59,7 @@ Then(/^the value list opens$/) do
 end
 
 Given(/^I click the contract link$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.order('RAND()').first
+  @contract = @current_user.reservations_bundles.signed_or_closed.first
   document_window = window_opened_by do
     find("a[href='#{borrow_user_contract_path(@contract.id)}']", text: _('Contract')).click
   end
@@ -71,7 +71,7 @@ Then(/^the contract opens$/) do
 end
 
 When(/^I open a value list from my documents$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.order('RAND()').first
+  @contract = @current_user.reservations_bundles.signed_or_closed.first
   visit borrow_user_value_list_path(@contract.id)
   #step "öffnet sich die Werteliste"
   step 'the value list opens'
@@ -79,7 +79,7 @@ When(/^I open a value list from my documents$/) do
 end
 
 When(/^I open a contract from my documents$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.order('RAND()').first
+  @contract = @current_user.reservations_bundles.signed_or_closed.first
   visit borrow_user_contract_path(@contract.id)
   step 'the contract opens'
   @contract_element = find('.contract', match: :first)

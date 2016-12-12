@@ -41,7 +41,7 @@
             %select.width-full{:name => "responsible_inventory_pool_id", :title => _("Responsible inventory pool")}
               %option{value: ""}= _("All inventory pools")
               - @responsibles.each do |responsible|
-                %option{value: responsible.id, selected: (session[:params].try(:fetch, :responsible_inventory_pool_id, nil).try(:to_i) == responsible.id)}= responsible.name
+                %option{value: responsible.id, selected: (session[:params].try(:fetch, :responsible_inventory_pool_id, nil) == responsible.id)}= responsible.name
         .row
           .col2of8.padding-right-xs
             .row

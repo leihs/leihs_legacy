@@ -50,11 +50,11 @@ When(/^I choose one of these child categories$/) do
 end
 
 Then(/^I see the model list for this main category$/) do
-  expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id'].to_i).to eq @main_category.id
+  expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id']).to eq @main_category.id
 end
 
 Then(/^I see the model list for this category$/) do
-  expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id'].to_i).to eq @second_level_category.id
+  expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id']).to eq @second_level_category.id
 end
 
 Given(/^there is a main category whose child categories cannot offer me any items$/) do

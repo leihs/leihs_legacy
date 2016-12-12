@@ -40,7 +40,7 @@ Then /^the category is created with the assigned name and parent categories( and
   expect(current_path).to eq manage_categories_path(@current_inventory_pool)
   @category = Category.find_by_name "#{@new_category_name}"
   expect(@category).not_to be_nil
-  expect(ModelGroupLink.where('ancestor_id = ? AND label = ?', @parent_category.id, @label_1).count).to eq 1
+  expect(ModelGroupLink.where('parent_id = ? AND label = ?', @parent_category.id, @label_1).count).to eq 1
   if image
     expect(@category.images.count).to eq 1
   end
@@ -50,7 +50,8 @@ Then /^I see the list of categories$/ do
   within('#categories-index-view') do
     find('h1', text: _('List of Categories'))
     expect(current_path).to eq manage_categories_path(@current_inventory_pool)
-    @parent_categories = ModelGroup.where(type: 'Category').select { |mg| ModelGroupLink.where(descendant_id: mg.id).empty? }
+    @parent_categories =
+      ModelGroup.where(type: 'Category').select { |mg| ModelGroupLink.where(child_id: mg.id).empty? }
     @parent_categories.each do |pc|
       find '.line', visible: true, text: pc.name
     end
@@ -63,7 +64,7 @@ When /^I edit a category$/ do
   within('#categories-index-view #list') do
     find('.line', match: :first)
     all(".button[data-type='expander'] i.arrow.right").each {|toggle| toggle.click }
-    find("a[href='/manage/%d/categories/%d/edit']" % [@current_inventory_pool.id, @category.id], match: :first).click
+    find("a[href='/manage/%s/categories/%s/edit']" % [@current_inventory_pool.id, @category.id], match: :first).click
   end
 end
 

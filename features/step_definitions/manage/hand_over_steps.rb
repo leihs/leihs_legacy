@@ -35,7 +35,7 @@ end
 
 # Superseded by sign_contract_steps.rb
 Given(/^I open a hand over containing software$/) do
-  @hand_over = @current_inventory_pool.visits.hand_over.order('RAND ()').detect {|v| v.reservations.any?{|cl| cl.model.is_a? Software } }
+  @hand_over = @current_inventory_pool.visits.hand_over.detect {|v| v.reservations.any?{|cl| cl.model.is_a? Software } }
   step 'I open the hand over'
 end
 
@@ -245,7 +245,7 @@ Given(/^a line with an assigned item which doesn't have a location is marked$/) 
 end
 
 Given(/^an option line is marked$/) do
-  @reservation = @hand_over.reservations.where(type: 'OptionLine').order('RAND()').first
+  @reservation = @hand_over.reservations.where(type: 'OptionLine').first
   @line_css = ".line[data-id='#{@reservation.id}']"
   step 'I reselect the line'
 end
@@ -284,7 +284,7 @@ end
 Given(/^there is a model with a retired and a borrowable item$/) do
   @model = @current_inventory_pool.models.find { |m| m.items.borrowable.where(retired: nil).exists? and m.items.retired.exists? }
   expect(@model).not_to be_nil
-  @item = @model.items.retired.order('RAND()').first
+  @item = @model.items.retired.first
 end
 
 Then(/^the retired item is not displayed in the list$/) do

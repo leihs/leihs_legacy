@@ -1,4 +1,4 @@
-.order-line.line.light.row.focus-hover-thin{:"data-ids" => "[{{>ids/}}]"}
+.order-line.line.light.row.focus-hover-thin{:"data-ids" => "{{JSON ids/}}"}
 
   %div{:class => "line-info{{if ~renderAvailability && anyProblems()}} red{{/if}}"}
   
@@ -38,7 +38,7 @@
 
   .col2of10.line-col.line-actions
     .multibutton
-      %button.button.white.text-ellipsis{:"data-edit-lines" => true, :"data-ids" => "[{{>ids/}}]"}
+      %button.button.white.text-ellipsis{:"data-edit-lines" => true, :"data-ids" => "{{JSON ids/}}"}
         {{jed "Change entry"/}}
       .dropdown-holder.inline-block
         .button.white.dropdown-toggle
@@ -53,6 +53,6 @@
               %i.fa.fa-exchange
               {{jed "Swap Model"/}}
           %li
-            %a.dropdown-item.red{:"data-destroy-lines" => true, :"data-ids" => "[{{>ids/}}]"}
+            %a.dropdown-item.red{:"data-destroy-lines" => true, :"data-ids" => "{{JSON ids/}}"}
               %i.fa.fa-trash
               {{jed "Delete"/}}

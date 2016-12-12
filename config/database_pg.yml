@@ -1,0 +1,18 @@
+pg: &default
+  adapter: postgresql
+  host: localhost
+  port: 5432
+  pool: 5
+  encoding: unicode
+  username: thomas
+  password: thomas
+  database: leihs_v4
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

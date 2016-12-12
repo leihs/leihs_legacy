@@ -28,7 +28,9 @@ steps_for :roles do
     visit procurement.overview_requests_path
     find("a[href*='requests/new']").click
     find('.panel-info .panel-heading', match: :first).click
-    find("a[href*='new_request']").click
+    wait_until 5 do
+      find("a[href*='new_request']").click rescue nil
+    end
   end
 
   step 'I can edit my request' do

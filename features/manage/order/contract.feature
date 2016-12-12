@@ -24,12 +24,12 @@ Feature: Contract
     | Contract number      |
     And the models are sorted alphabetically within their group
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Mentioning terms and conditions
     Given I open a contract during hand over
     Then I see a note mentioning the terms and conditions
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: User information on the contract
     Given I open a contract during hand over
     Then the following user information is included on the contract:
@@ -42,7 +42,7 @@ Feature: Contract
     | Postal code   |
     | City          |
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: List of returned items
     Given I open a contract during hand over
     When there are returned items
@@ -65,17 +65,17 @@ Feature: Contract
     Given I open a contract during hand over
     Then I see a title in the format "Contract No. #"
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Position of the barcode
     Given I open a contract during hand over
     Then I see the barcode in the top left
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas @flapping
   Scenario: Position of the borrower
     Given I open a contract during hand over
     Then I see the borrower in the top left corner
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Content of lists 1 and 2
     Given I open a contract during hand over that contains software
     Then list 1 and list 2 contain the following columns:
@@ -89,7 +89,7 @@ Feature: Contract
     Then I additionally see the following information
     | Serial number  |
 
-  @javascript @browser @personas
+  @javascript @browser @personas @flapping
   Scenario: Rücknehmende Person
     Given I open a take back
     And I select all reservations of an open contract
@@ -97,19 +97,19 @@ Feature: Contract
     And I click take back inside the dialog
     Then the relevant reservations show the person taking back the item in the format "F. Lastname"
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Lender
     Given I open a contract during hand over
     Then the lender is shown next to the borrower
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: List of borrowed items
     Given I open a contract during hand over
     When there are unreturned items
     Then I see list 2 with the title "Borrowed Items"
     And this list contains items that were borrowed but not yet returned
 
-  @javascript @browser @personas @problematic
+  @javascript @browser @personas
   Scenario: Listing the lending party's address
     Given I open a contract during hand over
     Then the inventory pool is listed as lender

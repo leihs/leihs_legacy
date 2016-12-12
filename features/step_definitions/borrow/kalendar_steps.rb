@@ -384,7 +384,7 @@ When(/^a model exists that is only available to a group$/) do
     partitions.count > 1 and partitions.find{|p| p.group_id == nil}.quantity == 0
   end
   expect(@model.blank?).to be false
-  @partition = @model.partitions.order('RAND()').first
+  @partition = @model.partitions.first
 end
 
 Then(/^I cannot order that model unless I am part of that group$/) do

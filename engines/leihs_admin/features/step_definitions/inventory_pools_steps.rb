@@ -46,7 +46,7 @@ end
 
 # The shitty sentence structure is due to Cucumber's stupid global steps, this would be ambiguous otherwise
 When(/^I edit in the admin area's inventory pool tab an existing inventory pool$/) do
-  @current_inventory_pool = InventoryPool.order('RAND()').first
+  @current_inventory_pool = InventoryPool.first
   expect(has_content?(_('List of Inventory Pools'))).to be true
   find('.row', match: :prefer_exact, text: @current_inventory_pool.name).click_link _('Edit')
 end

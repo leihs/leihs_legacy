@@ -12,7 +12,7 @@ Then(/^I don't see empty orders in the list of orders$/) do
 end
 
 When(/^I open a suspended user's order$/) do
-  user = @current_inventory_pool.reservations_bundles.submitted.order('RAND()').first.user
+  user = @current_inventory_pool.reservations_bundles.submitted.first.user
   ensure_suspended_user(user, @current_inventory_pool)
   step 'I navigate to the open orders'
   step 'I open an order placed by "%s"' % user
@@ -91,23 +91,8 @@ Then(/^I see all verifiable orders$/) do
 end
 
 Then(/^these orders are ordered by creation date$/) do
-  # some of the contracts have exactly the same created_at, that's why this insanity:
-  number_of_tries = 100
-  counter = 0
-
-  begin
-    c_ids = \
-      @contracts
-      .order(created_at: :desc)
-      .group_by(&:created_at)
-      .values
-      .map { |a| a.length > 1 ? a.permutation.to_a : a }
-      .map { |a| a.length == 1 ? a.first : a.sample }
-      .flatten
-      .map { |c| c.id.to_s }
-    counter += 1
-  end until c_ids == all("[data-type='contract']").map{|x| x['data-id']} or counter == number_of_tries
-  raise if counter == number_of_tries
+  expect(all("[data-type='contract']").map { |x| x['data-id'] })
+    .to be == @contracts.order('created_at DESC').map(&:id)
 end
 
 Then(/^I see all pending verifiable orders$/) do
@@ -140,10 +125,12 @@ end
 
 Then(/^I see the number of items on the order line and can view a popup containing the items ordered$/) do
   find("#{@line_css} [data-type='lines-cell']", text: "#{@contract.reservations.count} #{n_("Item", "Items", @contract.reservations.count)}")
-  @contract.models.each {|m|
-    find("#{@line_css} [data-type='lines-cell']").hover
-    find('.tooltipster-base', text: m.name)
-  }
+    .hover
+  within find('.tooltipster-base') do
+    @contract.models.each do |m|
+      page.should have_content m.name
+    end
+  end
 end
 
 Then(/^I see the duration of the order on the order line$/) do
@@ -211,7 +198,7 @@ end
 
 When(/^I edit an already approved order$/) do
   within '#contracts' do
-    within all('.line[data-id]', minimum: 1).sample do
+    within all('.line[data-id]', minimum: 1).first do
       a = find('a', text: _('Edit'))
       @target_url = a[:href]
       a.click
@@ -243,15 +230,15 @@ end
 
 Then(/^I can add models$/) do
   @model = if @current_user.access_right_for(@current_inventory_pool).role == :group_manager
-             @current_inventory_pool.models.order('RAND()').select {|m| m.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(Date.today, Date.today) > 0 }
+             @current_inventory_pool.models.select {|m| m.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(Date.today, Date.today) > 0 }
            else
-             @current_inventory_pool.models.order('RAND()')
+             @current_inventory_pool.models
            end.detect {|m| m.items.where(inventory_pool_id: @current_inventory_pool, parent_id: nil).exists? }
   hand_over_assign_or_add @model.to_s
 end
 
 Then(/^I can add options$/) do
-  option = @current_inventory_pool.options.order('RAND()').first
+  option = @current_inventory_pool.options.first
   hand_over_assign_or_add option.to_s
 end
 
@@ -295,7 +282,7 @@ Given(/^(orders|contracts|visits) exist$/) do |arg1|
 end
 
 When(/^I search( globally)? for (an order|a contract|a visit)( with its purpose)?$/) do |arg0, arg1, arg2|
-  @contract = @contracts.order('RAND()').first
+  @contract = @contracts.first
   @search_term = if arg2
                    @contract.purpose.split.sample.gsub(/^\W*/, '').gsub(/\W*$/, '')
                  else

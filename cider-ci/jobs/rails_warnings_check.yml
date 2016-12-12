@@ -24,7 +24,7 @@ jobs:
 
       tasks:
         count_stderr_lines:
-          max_trials: 1
+          max_trials: 2
           name: 'Count if number of STDERR lines greater than 0'
           scripts:
             test:

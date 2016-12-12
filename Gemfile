@@ -1,14 +1,19 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'leihs_admin', path: "engines/leihs_admin"
 gem 'procurement', path: "engines/procurement"
 
-gem 'rails', '4.2.6'
+# NOTE: upgrading from 4.2.7 to 4.2.7.1 will break about 130 specs mostly in mange
+# needs to be investigated, changelog is here:
+# http://weblog.rubyonrails.org/2016/8/11/Rails-5-0-0-1-4-2-7-2-and-3-2-22-3-have-been-released/
+gem 'rails', '4.2.7'
+
+gem 'puma'
 
 gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
 gem 'jdbc-postgres', platform: :jruby
 gem 'pg', platform: :mri
-gem 'pg_tasks', '>= 1.3.3', '< 2.0.0'
+gem 'pg_tasks', '= 2.0.0.pre.1'
 #gem 'pg_tasks', path: '/Users/thomas/Programming/ROR/pg_tasks/'
 
 gem 'uuidtools'
@@ -78,6 +83,7 @@ group :development do
 end
 
 group :test do
+  gem 'capybara-puma'
   gem 'ladle'
   gem 'open4'
   gem 'rack_session_access', '~> 0.1.1'
@@ -92,7 +98,7 @@ group :development, :test do
   gem 'byebug' # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'cider_ci-support'
   gem 'cucumber-rails', '1.4.2', require: false # it already includes capybara # NOTE '~> 1.4' doesn't work beacause 'gherkin'
-  # gem 'database_cleaner'
+  gem 'database_cleaner'
   gem 'factory_girl_rails', '~> 4.1'
   gem 'faker', '1.3.0' # NOTE '~> 1.4' doesn't work beacause "I18n::InvalidLocale" error, see note for config.i18n in config/application.rb
   gem 'flog'

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 Given(/^there is an order with two different time windows$/) do
-  @customer = @current_inventory_pool.users.customers.order('RAND()').first
+  @customer = @current_inventory_pool.users.customers.first
   FactoryGirl.create :reservation, user: @customer, status: :submitted, inventory_pool: @current_inventory_pool, start_date: Date.today, end_date: Date.tomorrow
   FactoryGirl.create :reservation, user: @customer, status: :submitted, inventory_pool: @current_inventory_pool, start_date: Date.today, end_date: Date.today+10.days
   @contract = @customer.reservations_bundles.submitted.find_by(inventory_pool_id: @current_inventory_pool)
@@ -21,7 +21,7 @@ end
 
 When(/^the current inventory pool has at least suspended (\d+) users?$/) do |n|
   n.to_i.times do
-    user = @hand_over.user.delegated_users.order('RAND()').first
+    user = @hand_over.user.delegated_users.first
     ensure_suspended_user(user, @current_inventory_pool)
   end
 end

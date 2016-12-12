@@ -20,7 +20,7 @@ class LdapHelper
     @base_dn = @ldap_config[Rails.env]['base_dn']
     @search_field = @ldap_config[Rails.env]['search_field']
     @host = @ldap_config[Rails.env]['host']
-    @port = @ldap_config[Rails.env]['port'].to_i || 636
+    @port = Integer(@ldap_config[Rails.env]['port'].presence || 636)
     if @ldap_config[Rails.env]['encryption'] == 'none'
       @encryption = nil
     else

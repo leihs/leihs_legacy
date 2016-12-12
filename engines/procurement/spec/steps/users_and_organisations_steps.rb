@@ -148,7 +148,7 @@ steps_for :users_and_organisations do
   end
 
   step 'the new admin was saved to the database' do
-    expect(Procurement::Access.admins.exists?(@user.id)).to be true
+    expect(Procurement::Access.admins.exists?(user_id: @user.id)).to be true
   end
 
   step 'the requesters are sorted 0-10 and a-z' do
@@ -164,14 +164,6 @@ steps_for :users_and_organisations do
     expect(texts).to eq texts.sort
     expect(texts.count).to be Procurement::Access.admins.count
   end
-
-  # step 'a admin user exists' do
-  #   # FactoryGirl.create(:procurement_access, :admin)
-  #
-  #   @admin = Procurement::Access.admins \
-  #     # .where.not(user_id: @current_user)
-  #     .order('RAND()').first.user
-  # end
 
   step 'I can delete an admin' do
     @admin = Procurement::Access.admins \

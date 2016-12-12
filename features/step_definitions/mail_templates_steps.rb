@@ -41,7 +41,7 @@ Given(/^I have a contract with deadline (yesterday|tomorrow)( for the inventory 
              @current_user.visits.where(inventory_pool_id: inventory_pool)
            else
              @current_user.visits
-           end.take_back.order('RAND()').first
+           end.take_back.first
   expect(@visit).not_to be_nil
 
   sign = case day

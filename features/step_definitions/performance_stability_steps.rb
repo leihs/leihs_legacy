@@ -84,7 +84,7 @@ Then /^approvable check on single approvable reservation should take maximum (\d
 
   seconds = seconds.to_f
 
-  reservations = Reservation.submitted.order('RAND()')
+  reservations = Reservation.submitted
 
   b = false
   reservations.each do |reservation|
@@ -105,7 +105,7 @@ Then /^availability check on single submitted reservation should take maximum (\
 
   seconds = seconds.to_f
 
-  reservations = Reservation.submitted.order('RAND()').limit(200)
+  reservations = Reservation.submitted.limit(200)
 
   reservations.each do |reservation|
     time = Benchmark.measure {

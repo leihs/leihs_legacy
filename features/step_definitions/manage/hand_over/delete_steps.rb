@@ -20,7 +20,7 @@ Then(/^this line is deleted$/) do
 end
 
 When(/^I select multiple reservations$/) do
-  @selected_line_ids = @hand_over.reservations.order('RAND()').limit(rand(1..@hand_over.reservations.count)).map &:id
+  @selected_line_ids = @hand_over.reservations.limit(rand(1..@hand_over.reservations.count)).map &:id
   expect(has_selector?('.line[data-id]', match: :first)).to be true
   @selected_line_ids.each do |id|
     cb = find(".line[data-id='#{id}'] input[type='checkbox'][data-select-line]")

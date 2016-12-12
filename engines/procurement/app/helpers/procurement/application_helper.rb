@@ -4,7 +4,7 @@ module Procurement
     # override money-rails helper
     def money_without_cents_and_with_symbol(value, with_symbol = true)
       value = Money.new(value) unless value.respond_to? :currency
-      number_to_currency(value.to_i,
+      number_to_currency(Integer(value.presence || 0),
                          unit: with_symbol ? "#{value.currency} " : '',
                          separator: '.',
                          delimiter: "'",

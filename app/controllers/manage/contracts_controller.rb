@@ -44,6 +44,7 @@ class Manage::ContractsController < Manage::ApplicationController
     add_visitor(@user)
     @reservations = @contract.reservations
     @models = @contract.models
+    @items = @contract.items
     @purposes = @contract.reservations.map(&:purpose).uniq
     @grouped_lines = @reservations.group_by { |g| [g.start_date, g.end_date] }
     @grouped_lines.each_pair do |k, reservations|

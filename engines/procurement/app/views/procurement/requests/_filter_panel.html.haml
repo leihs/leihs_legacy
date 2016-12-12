@@ -16,7 +16,7 @@
     %ul
       %select{name: 'filter[budget_period_ids][]', multiple: true}
         - Procurement::BudgetPeriod.order(end_date: :desc).each do |budget_period|
-          %option{value: budget_period.id, selected: @filter['budget_period_ids'].map(&:to_i).include?(budget_period.id)}= budget_period
+          %option{value: budget_period.id, selected: @filter['budget_period_ids'].include?(budget_period.id)}= budget_period
 
   .form-group
     %b
@@ -27,7 +27,7 @@
         - Procurement::MainCategory.with_categories.each do |main_category|
           %optgroup{label: main_category.name}
             - main_category.categories.each do |category|
-              %option{value: category.id, selected: @filter['category_ids'].map(&:to_i).include?(category.id)}
+              %option{value: category.id, selected: @filter['category_ids'].include?(category.id)}
                 = category.name
 
   - if procurement_inspector? or procurement_admin?
@@ -57,7 +57,7 @@
           - Procurement::Organization.departments.each do |department|
             %optgroup{label: department.name}
               - department.children.each do |organization_unit|
-                %option{value: organization_unit.id, selected: @filter['organization_ids'].map(&:to_i).include?(organization_unit.id)}
+                %option{value: organization_unit.id, selected: @filter['organization_ids'].include?(organization_unit.id)}
                   = organization_unit.name
 
   .form-group

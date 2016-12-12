@@ -40,9 +40,12 @@ class Partition < ActiveRecord::Base
           'AND p.inventory_pool_id = i.inventory_pool_id '\
         'GROUP BY p.inventory_pool_id, p.model_id), 0)) as quantity ' \
         'FROM items AS i ' \
-        'WHERE i.retired IS NULL AND i.is_borrowable = true AND i.parent_id IS NULL '
+        'WHERE i.retired IS NULL AND i.is_borrowable = true ' \
+        'AND i.parent_id IS NULL '
     sql += "AND i.model_id IN ('#{model_ids.join('\', \'')}') " if model_ids
-    sql += "AND i.inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id
+    if inventory_pool_id
+      sql += "AND i.inventory_pool_id = \'#{inventory_pool_id}\' "
+    end
     sql += 'GROUP BY i.inventory_pool_id, i.model_id'
 
     sql

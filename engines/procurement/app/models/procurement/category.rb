@@ -51,7 +51,7 @@ module Procurement
     # }
 
     def inspector_ids_with_split=(val)
-      self.inspector_ids_without_split = val.split(',').map &:to_i
+      self.inspector_ids_without_split = val.split(',')
     end
     alias_method_chain :inspector_ids=, :split
 

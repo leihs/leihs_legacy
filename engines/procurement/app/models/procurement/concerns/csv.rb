@@ -27,7 +27,7 @@ module Procurement
           _('Main category') => category.main_category.name,
           _('Subcategory') => category.name,
           _('Requester') => user,
-          _('Department') => organization.parent.name,
+          _('Department') => organization.parent.try(:name),
           _('Organisation') => organization.name,
           _('Article or Project') => article_name,
           _('Article nr. or Producer nr.') => article_number,
