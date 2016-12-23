@@ -34,3 +34,4 @@ tmp/
 features/reports/*
 .settings
 .byebug_history
+db/structure_and_data.pgbin

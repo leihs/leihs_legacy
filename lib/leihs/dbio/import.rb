@@ -15,6 +15,9 @@ module Leihs
           delegations_users
           database_authentications
 
+          fields
+          hidden_fields
+
           addresses
           inventory_pools
           workdays
@@ -45,8 +48,6 @@ module Leihs
 
           images
           mail_templates
-          fields
-          hidden_fields
           numerators
           settings
           attachments
@@ -73,6 +74,8 @@ module Leihs
           items:
             owner_id: inventory_pools
             parent_id: items
+          images:
+            parent_id: images
           models_compatibles:
             compatible_id: models
           reservations:
@@ -133,6 +136,25 @@ module Leihs
           row.merge({auditable_id: auditable_id})
         end
 
+        def map_images_row row
+          ref_table = row[:target_type].underscore.pluralize
+          ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, ref_table
+          target_id = UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:target_id].to_s)
+          row.merge({target_id: target_id})
+        end
+
+        def map_hiddden_field_row row
+          unless LeihsDBIOImportFields.where(id: row[:field_id]).first
+            Rails.logger.warn "Discarding hidden_filed #{row} because its field row does not exist"
+            nil
+          else
+            row
+          end
+        end
+
+        def add_position_to_partition row
+          row.merge(position: row.id)
+        end
 
         def custom_pre_migrator table_name, row
           case table_name
@@ -140,6 +162,12 @@ module Leihs
             map_model_group_link row
           when 'audits'
             map_audit_row row
+          when 'images'
+            map_images_row row
+          when 'hidden_fields'
+            map_hiddden_field_row row
+          when 'partitions'
+            add_position_to_partition row
           else
             row
           end
@@ -147,6 +175,7 @@ module Leihs
 
         def general_migrator table_name, row
           table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, table_name.to_s
+
           row.map do|k,v|
             begin
               if k.to_s == 'id' and v.is_a? Integer
@@ -204,10 +233,18 @@ module Leihs
               DROP CONSTRAINT fk_rails_ed5bf219ac;
             ALTER TABLE ONLY procurement_organizations
               DROP CONSTRAINT fk_rails_0731e8b712 ;
+            ALTER TABLE ONLY images
+              DROP CONSTRAINT fkey_images_images_parent_id;
           SQL
           TABLES.each do |table_name|
             import_table_data table_name, data[table_name]
           end
+
+          ActiveRecord::Base.connection.execute <<-SQL.strip_heredoc
+            UPDATE images SET parent_id = NULL
+              WHERE (NOT EXISTS (SELECT 1 FROM images parents WHERE parents.id = images.parent_id))
+          SQL
+
           ActiveRecord::Base.connection.execute <<-SQL.strip_heredoc
             ALTER TABLE ONLY users
                 ADD CONSTRAINT fkey_users_delegators FOREIGN KEY (delegator_user_id) REFERENCES users(id);
@@ -215,6 +252,8 @@ module Leihs
                 ADD CONSTRAINT fk_rails_ed5bf219ac FOREIGN KEY (parent_id) REFERENCES items(id) ON DELETE SET NULL;
             ALTER TABLE ONLY procurement_organizations
                 ADD CONSTRAINT fk_rails_0731e8b712 FOREIGN KEY (parent_id) REFERENCES procurement_organizations(id);
+            ALTER TABLE ONLY images
+              ADD CONSTRAINT fkey_images_images_parent_id FOREIGN KEY (parent_id) REFERENCES images(id);
           SQL
 
           Rails.logger.info "Yet unmigrated tables: #{(ActiveRecord::Base.connection.tables.reject{|tn| tn =~ /schema_migrations/} - TABLES).sort}."

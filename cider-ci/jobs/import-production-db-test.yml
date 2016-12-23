@@ -10,7 +10,7 @@ context:
       load: 5 # we need lots of RAM
       max_trials: 1
       traits:
-        ci-g2016-01: yes
+        ci-g2016-02: yes
       scripts:
         unzip:
           body: gunzip secrets/db_production.yml.gz
@@ -27,3 +27,5 @@ context:
             set -eux
             export PATH=~/.rubies/$RUBY/bin:$PATH
             bundle exec rake leihs:dbio:import FILE=secrets/db_production.yml
+            bundle exec rake db:pg:structure_and_data:dump
+            mv db/structure_and_data.pgbin /tmp/db_production.pgbin
