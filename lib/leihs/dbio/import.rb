@@ -153,7 +153,7 @@ module Leihs
         end
 
         def add_position_to_partition row
-          row.merge(position: row.id)
+          row.merge(position: row[:id])
         end
 
         def custom_pre_migrator table_name, row

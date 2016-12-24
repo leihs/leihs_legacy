@@ -1,0 +1,2068 @@
+---
+access_rights: []
+accessories: []
+accessories_inventory_pools: []
+addresses: []
+attachments: []
+audits:
+- id: 1
+  auditable_id: 1
+  auditable_type: Setting
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: "---\nsmtp_address: smtp.zhdk.ch\nsmtp_port: 25\nsmtp_domain: beta.ausleihe.zhdk.ch\nlocal_currency_string:
+    CHF\ncontract_terms: Die Benutzerin/der Benutzer ist bei unsachgemässer Handhabung
+    oder\n  Verlust schadenersatzpflichtig. Sie/Er verpflichtet sich, das Material
+    sorgfältig\n  zu behandeln und gereinigt zu retournieren. Bei mangelbehafteter
+    oder verspäteter\n  Rückgabe kann eine Ausleihsperre (bis zu 6 Monaten) verhängt
+    werden. Das geliehene\n  Material bleibt jederzeit uneingeschränktes Eigentum
+    der Zürcher Hochschule der\n  Künste und darf ausschliesslich für schulische Zwecke
+    eingesetzt werden. Mit ihrer/seiner\n  Unterschrift akzeptiert die Benutzerin/der
+    Benutzer diese Bedingungen sowie die\n  'Richtlinie zur Ausleihe von Sachen' der
+    ZHdK und etwaige abteilungsspezifische\n  Ausleih-Richtlinien.\ncontract_lending_party_string:
+    |-\n  Your\n  Address\n  Here\nemail_signature: Das PZ-leihs Team\ndefault_email:
+    sender@example.com\ndeliver_order_notifications: false\nuser_image_url: http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}\nldap_config:
+    \nlogo_url: \"/assets/image-logo-zhdk.png\"\nmail_delivery_method: test\nsmtp_username:
+    \nsmtp_password: \nsmtp_enable_starttls_auto: false\nsmtp_openssl_verify_mode:
+    none\ntime_zone: Bern\ndisable_manage_section: false\ndisable_manage_section_message:
+    \ndisable_borrow_section: false\ndisable_borrow_section_message: \ntext: \ntimeout_minutes:
+    30\n"
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: d37cd427-d8d5-4480-95c7-d9e4d1cdeeef
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 2
+  auditable_id: 1
+  auditable_type: Language
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    name: English (UK)
+    locale_name: en-GB
+    default: true
+    active: true
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: ac3b1bd7-c68e-47fc-8863-8ac17364f2f2
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 3
+  auditable_id: 2
+  auditable_type: Language
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    name: English (US)
+    locale_name: en-US
+    default: false
+    active: true
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: 80a68303-85ac-481b-ba8e-1950932896a2
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 4
+  auditable_id: 3
+  auditable_type: Language
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    name: Deutsch
+    locale_name: de-CH
+    default: false
+    active: true
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: 8265522f-576a-4160-8af1-71abcd0d478c
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 5
+  auditable_id: 4
+  auditable_type: Language
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    name: Züritüütsch
+    locale_name: gsw-CH
+    default: false
+    active: true
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: b01dbc58-e301-41b3-8830-d43079609732
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 6
+  auditable_id: 1
+  auditable_type: AuthenticationSystem
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    name: Database Authentication
+    class_name: DatabaseAuthentication
+    is_default: true
+    is_active: true
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: 8daafe24-70c7-4fbf-b88b-ba0d2b1aace1
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 7
+  auditable_id: 2
+  auditable_type: AuthenticationSystem
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    name: LDAP Authentication
+    class_name: LdapAuthentication
+    is_default: false
+    is_active: false
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: 0f8c6083-d299-4c24-a71b-990f68deffef
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 8
+  auditable_id: 3
+  auditable_type: AuthenticationSystem
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    name: ZHDK Authentication
+    class_name: Zhdk
+    is_default: false
+    is_active: false
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: d9ed6ab1-646e-4c83-8ef5-8f945fec5c8e
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 9
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: "---\ndata:\n  label: Inventory Code\n  attribute: inventory_code\n
+    \ required: true\n  permissions:\n    role: inventory_manager\n    owner: true\n
+    \ type: text\n  group: \n  forPackage: true\nactive: true\nposition: 1\n"
+  version: 1
+  comment: 
+  remote_address: 
+  request_uuid: 15241582-ffab-4639-a0b0-2bfa62ed7931
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 10
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: "---\ndata:\n  label: Model\n  attribute:\n  - model\n  - id\n
+    \ value_label:\n  - model\n  - product\n  value_label_ext:\n  - model\n  - version\n
+    \ form_name: model_id\n  required: true\n  type: autocomplete-search\n  target_type:
+    item\n  search_path: models\n  search_attr: search_term\n  value_attr: id\n  display_attr:
+    product\n  display_attr_ext: version\n  group: \nactive: true\nposition: 2\n"
+  version: 2
+  comment: 
+  remote_address: 
+  request_uuid: 82afe79e-c287-41a2-8566-22902b9159f1
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 11
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: "---\ndata:\n  label: Software\n  attribute:\n  - model\n  - id\n
+    \ value_label:\n  - model\n  - product\n  value_label_ext:\n  - model\n  - version\n
+    \ form_name: model_id\n  required: true\n  type: autocomplete-search\n  target_type:
+    license\n  search_path: software\n  search_attr: search_term\n  value_attr: id\n
+    \ display_attr: product\n  display_attr_ext: version\n  group: \nactive: true\nposition:
+    3\n"
+  version: 3
+  comment: 
+  remote_address: 
+  request_uuid: 1633ef29-e51d-4012-810c-5916756d4aa7
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 12
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Serial Number
+      attribute: serial_number
+      permissions:
+        role: lending_manager
+        owner: true
+      type: text
+      group: General Information
+    active: true
+    position: 4
+  version: 4
+  comment: 
+  remote_address: 
+  request_uuid: 45ce7955-d471-422c-83b2-a48c0c64c4b6
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 13
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: MAC-Address
+      attribute:
+      - properties
+      - mac_address
+      permissions:
+        role: lending_manager
+        owner: true
+      type: text
+      target_type: item
+      group: General Information
+    active: true
+    position: 5
+  version: 5
+  comment: 
+  remote_address: 
+  request_uuid: 83635c57-6ed4-47cf-a6e0-40b7bd277f65
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 14
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: IMEI-Number
+      attribute:
+      - properties
+      - imei_number
+      permissions:
+        role: lending_manager
+        owner: true
+      type: text
+      target_type: item
+      group: General Information
+    active: true
+    position: 6
+  version: 6
+  comment: 
+  remote_address: 
+  request_uuid: 11820bc6-8da8-4267-819d-bec71a147636
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 15
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Name
+      attribute: name
+      type: text
+      target_type: item
+      group: General Information
+      forPackage: true
+    active: true
+    position: 7
+  version: 7
+  comment: 
+  remote_address: 
+  request_uuid: 75f65345-2193-466e-a987-6e9535c21d20
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 16
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Note
+      attribute: note
+      type: textarea
+      group: General Information
+      forPackage: true
+    active: true
+    position: 8
+  version: 8
+  comment: 
+  remote_address: 
+  request_uuid: 56a033bd-c625-4a7e-9b1d-03ec2ee58dbf
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 17
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Retirement
+      attribute: retired
+      type: select
+      permissions:
+        role: lending_manager
+        owner: true
+      values:
+      - label: 'No'
+        value: false
+      - label: 'Yes'
+        value: true
+      default: false
+      group: Status
+    active: true
+    position: 9
+  version: 9
+  comment: 
+  remote_address: 
+  request_uuid: b2389cc5-29bd-4af9-b2a6-8384525dab3d
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 18
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Reason for Retirement
+      attribute: retired_reason
+      type: textarea
+      required: true
+      permissions:
+        role: lending_manager
+        owner: true
+      visibility_dependency_field_id: retired
+      visibility_dependency_value: 'true'
+      group: Status
+    active: true
+    position: 10
+  version: 10
+  comment: 
+  remote_address: 
+  request_uuid: 7522af7f-bb53-43b9-9f04-9106fd1bdaa7
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 19
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Working order
+      attribute: is_broken
+      type: radio
+      target_type: item
+      values:
+      - label: OK
+        value: false
+      - label: Broken
+        value: true
+      default: false
+      group: Status
+      forPackage: true
+    active: true
+    position: 11
+  version: 11
+  comment: 
+  remote_address: 
+  request_uuid: cc90e0d7-5066-4576-95db-96bed159242c
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 20
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Completeness
+      attribute: is_incomplete
+      type: radio
+      target_type: item
+      values:
+      - label: OK
+        value: false
+      - label: Incomplete
+        value: true
+      default: false
+      group: Status
+      forPackage: true
+    active: true
+    position: 12
+  version: 12
+  comment: 
+  remote_address: 
+  request_uuid: b9b0fe47-fe03-4eef-92af-bd9518345657
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 21
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Borrowable
+      attribute: is_borrowable
+      type: radio
+      values:
+      - label: OK
+        value: true
+      - label: Unborrowable
+        value: false
+      default: false
+      group: Status
+      forPackage: true
+    active: true
+    position: 13
+  version: 13
+  comment: 
+  remote_address: 
+  request_uuid: d1633d35-74a4-4261-9947-f79a794bfafa
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 22
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Status note
+      attribute: status_note
+      type: textarea
+      target_type: item
+      group: Status
+      forPackage: true
+    active: true
+    position: 14
+  version: 14
+  comment: 
+  remote_address: 
+  request_uuid: a115b328-28d5-4464-94d0-3cafc2a488f2
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 23
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Building
+      attribute:
+      - location
+      - building_id
+      type: autocomplete
+      target_type: item
+      values: all_buildings
+      group: Location
+      forPackage: true
+    active: true
+    position: 15
+  version: 15
+  comment: 
+  remote_address: 
+  request_uuid: 1c78ca0f-3202-409a-9556-63da2fa72a4f
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 24
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Room
+      attribute:
+      - location
+      - room
+      type: text
+      target_type: item
+      group: Location
+      forPackage: true
+    active: true
+    position: 16
+  version: 16
+  comment: 
+  remote_address: 
+  request_uuid: 6ae6c459-ebe0-4d78-9058-82ee35abc3aa
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 25
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Shelf
+      attribute:
+      - location
+      - shelf
+      type: text
+      target_type: item
+      group: Location
+      forPackage: true
+    active: true
+    position: 17
+  version: 17
+  comment: 
+  remote_address: 
+  request_uuid: 8de39ab4-0531-44c8-8c9a-fe693b3e0738
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 26
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Relevant for inventory
+      attribute: is_inventory_relevant
+      type: select
+      target_type: item
+      permissions:
+        role: inventory_manager
+        owner: true
+      values:
+      - label: 'No'
+        value: false
+      - label: 'Yes'
+        value: true
+      default: true
+      group: Inventory
+      forPackage: true
+    active: true
+    position: 18
+  version: 18
+  comment: 
+  remote_address: 
+  request_uuid: 3800b02a-e54f-4dc5-b2e5-1f381398ff4d
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 27
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Owner
+      attribute:
+      - owner
+      - id
+      type: autocomplete
+      permissions:
+        role: inventory_manager
+        owner: true
+      values: all_inventory_pools
+      group: Inventory
+    active: true
+    position: 19
+  version: 19
+  comment: 
+  remote_address: 
+  request_uuid: 32384c8d-ee0f-4115-82b2-f1054f21e971
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 28
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Last Checked
+      attribute: last_check
+      permissions:
+        role: lending_manager
+        owner: true
+      default: today
+      type: date
+      target_type: item
+      group: Inventory
+      forPackage: true
+    active: true
+    position: 20
+  version: 20
+  comment: 
+  remote_address: 
+  request_uuid: c3e4cce1-85bd-4c0c-811a-5ad0d4b26328
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 29
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Responsible department
+      attribute:
+      - inventory_pool
+      - id
+      type: autocomplete
+      values: all_inventory_pools
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: Inventory
+      forPackage: true
+    active: true
+    position: 21
+  version: 21
+  comment: 
+  remote_address: 
+  request_uuid: 37a7942b-744e-46ca-820a-5106a5eec48f
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 30
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Responsible person
+      attribute: responsible
+      permissions:
+        role: lending_manager
+        owner: true
+      type: text
+      target_type: item
+      group: Inventory
+      forPackage: true
+    active: true
+    position: 22
+  version: 22
+  comment: 
+  remote_address: 
+  request_uuid: df732b5a-75ca-4e12-bbd8-1fd54c86fb1b
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 31
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: User/Typical usage
+      attribute: user_name
+      permissions:
+        role: inventory_manager
+        owner: true
+      type: text
+      target_type: item
+      group: Inventory
+      forPackage: true
+    active: true
+    position: 23
+  version: 23
+  comment: 
+  remote_address: 
+  request_uuid: ec3ea72b-a7ec-465c-a49f-6311bcaaa63c
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 32
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Reference
+      attribute:
+      - properties
+      - reference
+      permissions:
+        role: inventory_manager
+        owner: true
+      required: true
+      values:
+      - label: Running Account
+        value: invoice
+      - label: Investment
+        value: investment
+      default: invoice
+      type: radio
+      group: Invoice Information
+    active: true
+    position: 24
+  version: 24
+  comment: 
+  remote_address: 
+  request_uuid: cc17ccb8-f14e-4fb3-bd08-38cbeff7f66f
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 33
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Project Number
+      attribute:
+      - properties
+      - project_number
+      permissions:
+        role: inventory_manager
+        owner: true
+      type: text
+      required: true
+      visibility_dependency_field_id: properties_reference
+      visibility_dependency_value: investment
+      group: Invoice Information
+    active: true
+    position: 25
+  version: 25
+  comment: 
+  remote_address: 
+  request_uuid: 24820561-99df-49ce-a58f-f72e9c89f168
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 34
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Invoice Number
+      attribute: invoice_number
+      permissions:
+        role: lending_manager
+        owner: true
+      type: text
+      target_type: item
+      group: Invoice Information
+    active: true
+    position: 26
+  version: 26
+  comment: 
+  remote_address: 
+  request_uuid: e6baeea5-9cd4-4489-8898-255c13ee7167
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 35
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Invoice Date
+      attribute: invoice_date
+      permissions:
+        role: lending_manager
+        owner: true
+      type: date
+      group: Invoice Information
+    active: true
+    position: 27
+  version: 27
+  comment: 
+  remote_address: 
+  request_uuid: 29b17a95-470f-43ba-ae6b-882c652864f8
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 36
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Initial Price
+      attribute: price
+      permissions:
+        role: lending_manager
+        owner: true
+      type: text
+      currency: true
+      group: Invoice Information
+      forPackage: true
+    active: true
+    position: 28
+  version: 28
+  comment: 
+  remote_address: 
+  request_uuid: 855bbe00-ffc8-4f4a-8752-88eb3d12afa0
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 37
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Supplier
+      attribute:
+      - supplier
+      - id
+      type: autocomplete
+      extensible: true
+      extended_key:
+      - supplier
+      - name
+      permissions:
+        role: lending_manager
+        owner: true
+      values: all_suppliers
+      group: Invoice Information
+    active: true
+    position: 29
+  version: 29
+  comment: 
+  remote_address: 
+  request_uuid: 16d7e5ca-efcc-4150-ad3a-fa6320e30aed
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 38
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Warranty expiration
+      attribute:
+      - properties
+      - warranty_expiration
+      permissions:
+        role: lending_manager
+        owner: true
+      type: date
+      target_type: item
+      group: Invoice Information
+    active: true
+    position: 30
+  version: 30
+  comment: 
+  remote_address: 
+  request_uuid: 71463dee-9668-4219-b6d0-241f72ed565f
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 39
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Contract expiration
+      attribute:
+      - properties
+      - contract_expiration
+      permissions:
+        role: lending_manager
+        owner: true
+      type: date
+      target_type: item
+      group: Invoice Information
+    active: true
+    position: 31
+  version: 31
+  comment: 
+  remote_address: 
+  request_uuid: 8210069e-9624-40c8-9494-b926b3c1bfad
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 40
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Activation Type
+      attribute:
+      - properties
+      - activation_type
+      type: select
+      target_type: license
+      values:
+      - label: None
+        value: none
+      - label: Dongle
+        value: dongle
+      - label: Serial Number
+        value: serial_number
+      - label: License Server
+        value: license_server
+      - label: Challenge Response/System ID
+        value: challenge_response
+      default: none
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: General Information
+    active: true
+    position: 32
+  version: 32
+  comment: 
+  remote_address: 
+  request_uuid: 4564c66e-ea7f-4da8-a31e-606427c5bc43
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 41
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Dongle ID
+      attribute:
+      - properties
+      - dongle_id
+      type: text
+      target_type: license
+      required: true
+      permissions:
+        role: inventory_manager
+        owner: true
+      visibility_dependency_field_id: properties_activation_type
+      visibility_dependency_value: dongle
+      group: General Information
+    active: true
+    position: 33
+  version: 33
+  comment: 
+  remote_address: 
+  request_uuid: f6429e55-3021-4978-9796-cc7bb6598485
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 42
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: License Type
+      attribute:
+      - properties
+      - license_type
+      type: select
+      target_type: license
+      values:
+      - label: Free
+        value: free
+      - label: Single Workplace
+        value: single_workplace
+      - label: Multiple Workplace
+        value: multiple_workplace
+      - label: Site License
+        value: site_license
+      - label: Concurrent
+        value: concurrent
+      default: free
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: General Information
+    active: true
+    position: 34
+  version: 34
+  comment: 
+  remote_address: 
+  request_uuid: e6f20df3-4d09-43b7-bdf8-89c1053f014e
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 43
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Total quantity
+      attribute:
+      - properties
+      - total_quantity
+      type: text
+      target_type: license
+      permissions:
+        role: inventory_manager
+        owner: true
+      visibility_dependency_field_id: properties_license_type
+      visibility_dependency_value:
+      - multiple_workplace
+      - site_license
+      - concurrent
+      group: General Information
+    active: true
+    position: 35
+  version: 35
+  comment: 
+  remote_address: 
+  request_uuid: 76f00654-7253-4986-9b83-13518feb2cb0
+  created_at: 2016-12-08 14:29:03.000000000 Z
+- id: 44
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Quantity allocations
+      attribute:
+      - properties
+      - quantity_allocations
+      type: composite
+      target_type: license
+      permissions:
+        role: inventory_manager
+        owner: true
+      visibility_dependency_field_id: properties_total_quantity
+      data_dependency_field_id: properties_total_quantity
+      group: General Information
+    active: true
+    position: 36
+  version: 36
+  comment: 
+  remote_address: 
+  request_uuid: 0ad7e73c-7db3-444a-b9d4-4bd3778cc6df
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 45
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Operating System
+      attribute:
+      - properties
+      - operating_system
+      type: checkbox
+      target_type: license
+      values:
+      - label: Windows
+        value: windows
+      - label: Mac OS X
+        value: mac_os_x
+      - label: Linux
+        value: linux
+      - label: iOS
+        value: ios
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: General Information
+    active: true
+    position: 37
+  version: 37
+  comment: 
+  remote_address: 
+  request_uuid: 0416cf88-bbb3-45e1-8e6f-1c0b40f0a012
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 46
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Installation
+      attribute:
+      - properties
+      - installation
+      type: checkbox
+      target_type: license
+      values:
+      - label: Citrix
+        value: citrix
+      - label: Local
+        value: local
+      - label: Web
+        value: web
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: General Information
+    active: true
+    position: 38
+  version: 38
+  comment: 
+  remote_address: 
+  request_uuid: c8d62b1f-ccf9-41a5-9fbe-0c1278db9b54
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 47
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: License expiration
+      attribute:
+      - properties
+      - license_expiration
+      permissions:
+        role: inventory_manager
+        owner: true
+      type: date
+      target_type: license
+      group: General Information
+    active: true
+    position: 39
+  version: 39
+  comment: 
+  remote_address: 
+  request_uuid: f4f73040-70b7-42f4-82b0-028bb418b262
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 48
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Maintenance contract
+      attribute:
+      - properties
+      - maintenance_contract
+      type: select
+      target_type: license
+      permissions:
+        role: inventory_manager
+        owner: true
+      values:
+      - label: 'No'
+        value: 'false'
+      - label: 'Yes'
+        value: 'true'
+      default: 'false'
+      group: Maintenance
+    active: true
+    position: 40
+  version: 40
+  comment: 
+  remote_address: 
+  request_uuid: 6c051496-d85b-4729-9059-fb40b08c3676
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 49
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Maintenance expiration
+      attribute:
+      - properties
+      - maintenance_expiration
+      type: date
+      target_type: license
+      permissions:
+        role: inventory_manager
+        owner: true
+      visibility_dependency_field_id: properties_maintenance_contract
+      visibility_dependency_value: 'true'
+      group: Maintenance
+    active: true
+    position: 41
+  version: 41
+  comment: 
+  remote_address: 
+  request_uuid: 96576f2b-2f3d-49fc-b1ee-9b52df219002
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 50
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Currency
+      attribute:
+      - properties
+      - maintenance_currency
+      type: select
+      values: all_currencies
+      default: CHF
+      target_type: license
+      permissions:
+        role: inventory_manager
+        owner: true
+      visibility_dependency_field_id: properties_maintenance_expiration
+      group: Maintenance
+    active: true
+    position: 42
+  version: 42
+  comment: 
+  remote_address: 
+  request_uuid: 46bf054a-67ad-4f1a-a767-765473df9ef7
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 51
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Price
+      attribute:
+      - properties
+      - maintenance_price
+      type: text
+      currency: true
+      target_type: license
+      permissions:
+        role: inventory_manager
+        owner: true
+      visibility_dependency_field_id: properties_maintenance_currency
+      group: Maintenance
+    active: true
+    position: 43
+  version: 43
+  comment: 
+  remote_address: 
+  request_uuid: 1479daf0-8115-4e9b-abd5-ff51467b4404
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 52
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Procured by
+      attribute:
+      - properties
+      - procured_by
+      permissions:
+        role: inventory_manager
+        owner: true
+      type: text
+      target_type: license
+      group: Invoice Information
+    active: true
+    position: 44
+  version: 44
+  comment: 
+  remote_address: 
+  request_uuid: e05c95f6-b09b-464e-a385-7328b6ea995b
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 53
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Attachments
+      attribute: attachments
+      type: attachment
+      group: General Information
+      permissions:
+        role: inventory_manager
+        owner: true
+    active: true
+    position: 45
+  version: 45
+  comment: 
+  remote_address: 
+  request_uuid: 0ed0be79-260a-471b-bd67-b9cfc4231448
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 54
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Umzug
+      attribute:
+      - properties
+      - umzug
+      type: select
+      target_type: item
+      values:
+      - label: zügeln
+        value: zügeln
+      - label: sofort entsorgen
+        value: sofort entsorgen
+      - label: bei Umzug entsorgen
+        value: bei Umzug entsorgen
+      - label: bei Umzug verkaufen
+        value: bei Umzug verkaufen
+      default: zügeln
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: Umzug
+    active: true
+    position: 46
+  version: 46
+  comment: 
+  remote_address: 
+  request_uuid: 3993a92c-5b7f-4ed2-981c-799453b3a507
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 55
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Zielraum
+      attribute:
+      - properties
+      - zielraum
+      type: text
+      target_type: item
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: Umzug
+    active: true
+    position: 47
+  version: 47
+  comment: 
+  remote_address: 
+  request_uuid: daba063c-5c27-4683-9411-8f358cb39b83
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 56
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Ankunftsdatum
+      attribute:
+      - properties
+      - ankunftsdatum
+      type: date
+      target_type: item
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: Toni Ankunftskontrolle
+    active: true
+    position: 48
+  version: 48
+  comment: 
+  remote_address: 
+  request_uuid: 9a66b86c-3a4c-45d9-9b78-59b9eab16c6b
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 57
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Ankunftszustand
+      attribute:
+      - properties
+      - ankunftszustand
+      type: select
+      target_type: item
+      values:
+      - label: intakt
+        value: intakt
+      - label: transportschaden
+        value: transportschaden
+      default: intakt
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: Toni Ankunftskontrolle
+    active: true
+    position: 49
+  version: 49
+  comment: 
+  remote_address: 
+  request_uuid: 49ded9d3-dbac-496f-9ec3-bbae71357718
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 58
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: |
+    ---
+    data:
+      label: Ankunftsnotiz
+      attribute:
+      - properties
+      - ankunftsnotiz
+      type: textarea
+      target_type: item
+      permissions:
+        role: inventory_manager
+        owner: true
+      group: Toni Ankunftskontrolle
+    active: true
+    position: 50
+  version: 50
+  comment: 
+  remote_address: 
+  request_uuid: 987e567b-4ad1-4f9a-b399-e8b76a0f7291
+  created_at: 2016-12-08 14:29:04.000000000 Z
+- id: 59
+  auditable_id: 0
+  auditable_type: Field
+  associated_id: 
+  associated_type: 
+  user_id: 
+  user_type: 
+  username: 
+  action: create
+  audited_changes: "---\ndata:\n  label: Beschaffungsgruppe\n  attribute:\n  - properties\n
+    \ - anschaffungskategorie\n  value_label:\n  - properties\n  - anschaffungskategorie\n
+    \ required: true\n  type: select\n  target_type: item\n  values:\n  - label: ''\n
+    \   value: \n  - label: Werkstatt-Technik\n    value: Werkstatt-Technik\n  - label:
+    Produktionstechnik\n    value: Produktionstechnik\n  - label: AV-Technik\n    value:
+    AV-Technik\n  - label: Musikinstrumente\n    value: Musikinstrumente\n  - label:
+    Facility Management\n    value: Facility Management\n  - label: IC-Technik/Software\n
+    \   value: IC-Technik/Software\n  - label: Durch Kunde beschafft\n    value: Durch
+    Kunde beschafft\n  default: \n  visibility_dependency_field_id: is_inventory_relevant\n
+    \ visibility_dependency_value: 'true'\n  permissions:\n    role: inventory_manager\n
+    \   owner: true\n  group: Inventory\nactive: true\nposition: 51\n"
+  version: 51
+  comment: 
+  remote_address: 
+  request_uuid: 414c3d98-fd95-45d6-b9e9-67f46543986f
+  created_at: 2016-12-08 14:29:04.000000000 Z
+authentication_systems:
+- id: 1
+  name: Database Authentication
+  class_name: DatabaseAuthentication
+  is_default: true
+  is_active: true
+- id: 2
+  name: LDAP Authentication
+  class_name: LdapAuthentication
+  is_default: false
+  is_active: false
+- id: 3
+  name: ZHDK Authentication
+  class_name: Zhdk
+  is_default: false
+  is_active: false
+buildings: []
+contracts: []
+database_authentications: []
+delegations_users: []
+fields:
+- id: attachments
+  data: '{"label":"Attachments","attribute":"attachments","type":"attachment","group":"General
+    Information","permissions":{"role":"inventory_manager","owner":true}}'
+  active: true
+  position: 45
+- id: inventory_code
+  data: '{"label":"Inventory Code","attribute":"inventory_code","required":true,"permissions":{"role":"inventory_manager","owner":true},"type":"text","group":null,"forPackage":true}'
+  active: true
+  position: 1
+- id: inventory_pool_id
+  data: '{"label":"Responsible department","attribute":["inventory_pool","id"],"type":"autocomplete","values":"all_inventory_pools","permissions":{"role":"inventory_manager","owner":true},"group":"Inventory","forPackage":true}'
+  active: true
+  position: 21
+- id: invoice_date
+  data: '{"label":"Invoice Date","attribute":"invoice_date","permissions":{"role":"lending_manager","owner":true},"type":"date","group":"Invoice
+    Information"}'
+  active: true
+  position: 27
+- id: invoice_number
+  data: '{"label":"Invoice Number","attribute":"invoice_number","permissions":{"role":"lending_manager","owner":true},"type":"text","target_type":"item","group":"Invoice
+    Information"}'
+  active: true
+  position: 26
+- id: is_borrowable
+  data: '{"label":"Borrowable","attribute":"is_borrowable","type":"radio","values":[{"label":"OK","value":true},{"label":"Unborrowable","value":false}],"default":false,"group":"Status","forPackage":true}'
+  active: true
+  position: 13
+- id: is_broken
+  data: '{"label":"Working order","attribute":"is_broken","type":"radio","target_type":"item","values":[{"label":"OK","value":false},{"label":"Broken","value":true}],"default":false,"group":"Status","forPackage":true}'
+  active: true
+  position: 11
+- id: is_incomplete
+  data: '{"label":"Completeness","attribute":"is_incomplete","type":"radio","target_type":"item","values":[{"label":"OK","value":false},{"label":"Incomplete","value":true}],"default":false,"group":"Status","forPackage":true}'
+  active: true
+  position: 12
+- id: is_inventory_relevant
+  data: '{"label":"Relevant for inventory","attribute":"is_inventory_relevant","type":"select","target_type":"item","permissions":{"role":"inventory_manager","owner":true},"values":[{"label":"No","value":false},{"label":"Yes","value":true}],"default":true,"group":"Inventory","forPackage":true}'
+  active: true
+  position: 18
+- id: last_check
+  data: '{"label":"Last Checked","attribute":"last_check","permissions":{"role":"lending_manager","owner":true},"default":"today","type":"date","target_type":"item","group":"Inventory","forPackage":true}'
+  active: true
+  position: 20
+- id: location_building_id
+  data: '{"label":"Building","attribute":["location","building_id"],"type":"autocomplete","target_type":"item","values":"all_buildings","group":"Location","forPackage":true}'
+  active: true
+  position: 15
+- id: location_room
+  data: '{"label":"Room","attribute":["location","room"],"type":"text","target_type":"item","group":"Location","forPackage":true}'
+  active: true
+  position: 16
+- id: location_shelf
+  data: '{"label":"Shelf","attribute":["location","shelf"],"type":"text","target_type":"item","group":"Location","forPackage":true}'
+  active: true
+  position: 17
+- id: model_id
+  data: '{"label":"Model","attribute":["model","id"],"value_label":["model","product"],"value_label_ext":["model","version"],"form_name":"model_id","required":true,"type":"autocomplete-search","target_type":"item","search_path":"models","search_attr":"search_term","value_attr":"id","display_attr":"product","display_attr_ext":"version","group":null}'
+  active: true
+  position: 2
+- id: name
+  data: '{"label":"Name","attribute":"name","type":"text","target_type":"item","group":"General
+    Information","forPackage":true}'
+  active: true
+  position: 7
+- id: note
+  data: '{"label":"Note","attribute":"note","type":"textarea","group":"General Information","forPackage":true}'
+  active: true
+  position: 8
+- id: owner_id
+  data: '{"label":"Owner","attribute":["owner","id"],"type":"autocomplete","permissions":{"role":"inventory_manager","owner":true},"values":"all_inventory_pools","group":"Inventory"}'
+  active: true
+  position: 19
+- id: price
+  data: '{"label":"Initial Price","attribute":"price","permissions":{"role":"lending_manager","owner":true},"type":"text","currency":true,"group":"Invoice
+    Information","forPackage":true}'
+  active: true
+  position: 28
+- id: properties_activation_type
+  data: '{"label":"Activation Type","attribute":["properties","activation_type"],"type":"select","target_type":"license","values":[{"label":"None","value":"none"},{"label":"Dongle","value":"dongle"},{"label":"Serial
+    Number","value":"serial_number"},{"label":"License Server","value":"license_server"},{"label":"Challenge
+    Response/System ID","value":"challenge_response"}],"default":"none","permissions":{"role":"inventory_manager","owner":true},"group":"General
+    Information"}'
+  active: true
+  position: 32
+- id: properties_ankunftsdatum
+  data: '{"label":"Ankunftsdatum","attribute":["properties","ankunftsdatum"],"type":"date","target_type":"item","permissions":{"role":"inventory_manager","owner":true},"group":"Toni
+    Ankunftskontrolle"}'
+  active: true
+  position: 48
+- id: properties_ankunftsnotiz
+  data: '{"label":"Ankunftsnotiz","attribute":["properties","ankunftsnotiz"],"type":"textarea","target_type":"item","permissions":{"role":"inventory_manager","owner":true},"group":"Toni
+    Ankunftskontrolle"}'
+  active: true
+  position: 50
+- id: properties_ankunftszustand
+  data: '{"label":"Ankunftszustand","attribute":["properties","ankunftszustand"],"type":"select","target_type":"item","values":[{"label":"intakt","value":"intakt"},{"label":"transportschaden","value":"transportschaden"}],"default":"intakt","permissions":{"role":"inventory_manager","owner":true},"group":"Toni
+    Ankunftskontrolle"}'
+  active: true
+  position: 49
+- id: properties_anschaffungskategorie
+  data: '{"label":"Beschaffungsgruppe","attribute":["properties","anschaffungskategorie"],"value_label":["properties","anschaffungskategorie"],"required":true,"type":"select","target_type":"item","values":[{"label":"","value":null},{"label":"Werkstatt-Technik","value":"Werkstatt-Technik"},{"label":"Produktionstechnik","value":"Produktionstechnik"},{"label":"AV-Technik","value":"AV-Technik"},{"label":"Musikinstrumente","value":"Musikinstrumente"},{"label":"Facility
+    Management","value":"Facility Management"},{"label":"IC-Technik/Software","value":"IC-Technik/Software"},{"label":"Durch
+    Kunde beschafft","value":"Durch Kunde beschafft"}],"default":null,"visibility_dependency_field_id":"is_inventory_relevant","visibility_dependency_value":"true","permissions":{"role":"inventory_manager","owner":true},"group":"Inventory"}'
+  active: true
+  position: 51
+- id: properties_contract_expiration
+  data: '{"label":"Contract expiration","attribute":["properties","contract_expiration"],"permissions":{"role":"lending_manager","owner":true},"type":"date","target_type":"item","group":"Invoice
+    Information"}'
+  active: true
+  position: 31
+- id: properties_dongle_id
+  data: '{"label":"Dongle ID","attribute":["properties","dongle_id"],"type":"text","target_type":"license","required":true,"permissions":{"role":"inventory_manager","owner":true},"visibility_dependency_field_id":"properties_activation_type","visibility_dependency_value":"dongle","group":"General
+    Information"}'
+  active: true
+  position: 33
+- id: properties_imei_number
+  data: '{"label":"IMEI-Number","attribute":["properties","imei_number"],"permissions":{"role":"lending_manager","owner":true},"type":"text","target_type":"item","group":"General
+    Information"}'
+  active: true
+  position: 6
+- id: properties_installation
+  data: '{"label":"Installation","attribute":["properties","installation"],"type":"checkbox","target_type":"license","values":[{"label":"Citrix","value":"citrix"},{"label":"Local","value":"local"},{"label":"Web","value":"web"}],"permissions":{"role":"inventory_manager","owner":true},"group":"General
+    Information"}'
+  active: true
+  position: 38
+- id: properties_license_expiration
+  data: '{"label":"License expiration","attribute":["properties","license_expiration"],"permissions":{"role":"inventory_manager","owner":true},"type":"date","target_type":"license","group":"General
+    Information"}'
+  active: true
+  position: 39
+- id: properties_license_type
+  data: '{"label":"License Type","attribute":["properties","license_type"],"type":"select","target_type":"license","values":[{"label":"Free","value":"free"},{"label":"Single
+    Workplace","value":"single_workplace"},{"label":"Multiple Workplace","value":"multiple_workplace"},{"label":"Site
+    License","value":"site_license"},{"label":"Concurrent","value":"concurrent"}],"default":"free","permissions":{"role":"inventory_manager","owner":true},"group":"General
+    Information"}'
+  active: true
+  position: 34
+- id: properties_mac_address
+  data: '{"label":"MAC-Address","attribute":["properties","mac_address"],"permissions":{"role":"lending_manager","owner":true},"type":"text","target_type":"item","group":"General
+    Information"}'
+  active: true
+  position: 5
+- id: properties_maintenance_contract
+  data: '{"label":"Maintenance contract","attribute":["properties","maintenance_contract"],"type":"select","target_type":"license","permissions":{"role":"inventory_manager","owner":true},"values":[{"label":"No","value":"false"},{"label":"Yes","value":"true"}],"default":"false","group":"Maintenance"}'
+  active: true
+  position: 40
+- id: properties_maintenance_currency
+  data: '{"label":"Currency","attribute":["properties","maintenance_currency"],"type":"select","values":"all_currencies","default":"CHF","target_type":"license","permissions":{"role":"inventory_manager","owner":true},"visibility_dependency_field_id":"properties_maintenance_expiration","group":"Maintenance"}'
+  active: true
+  position: 42
+- id: properties_maintenance_expiration
+  data: '{"label":"Maintenance expiration","attribute":["properties","maintenance_expiration"],"type":"date","target_type":"license","permissions":{"role":"inventory_manager","owner":true},"visibility_dependency_field_id":"properties_maintenance_contract","visibility_dependency_value":"true","group":"Maintenance"}'
+  active: true
+  position: 41
+- id: properties_maintenance_price
+  data: '{"label":"Price","attribute":["properties","maintenance_price"],"type":"text","currency":true,"target_type":"license","permissions":{"role":"inventory_manager","owner":true},"visibility_dependency_field_id":"properties_maintenance_currency","group":"Maintenance"}'
+  active: true
+  position: 43
+- id: properties_operating_system
+  data: '{"label":"Operating System","attribute":["properties","operating_system"],"type":"checkbox","target_type":"license","values":[{"label":"Windows","value":"windows"},{"label":"Mac
+    OS X","value":"mac_os_x"},{"label":"Linux","value":"linux"},{"label":"iOS","value":"ios"}],"permissions":{"role":"inventory_manager","owner":true},"group":"General
+    Information"}'
+  active: true
+  position: 37
+- id: properties_procured_by
+  data: '{"label":"Procured by","attribute":["properties","procured_by"],"permissions":{"role":"inventory_manager","owner":true},"type":"text","target_type":"license","group":"Invoice
+    Information"}'
+  active: true
+  position: 44
+- id: properties_project_number
+  data: '{"label":"Project Number","attribute":["properties","project_number"],"permissions":{"role":"inventory_manager","owner":true},"type":"text","required":true,"visibility_dependency_field_id":"properties_reference","visibility_dependency_value":"investment","group":"Invoice
+    Information"}'
+  active: true
+  position: 25
+- id: properties_quantity_allocations
+  data: '{"label":"Quantity allocations","attribute":["properties","quantity_allocations"],"type":"composite","target_type":"license","permissions":{"role":"inventory_manager","owner":true},"visibility_dependency_field_id":"properties_total_quantity","data_dependency_field_id":"properties_total_quantity","group":"General
+    Information"}'
+  active: true
+  position: 36
+- id: properties_reference
+  data: '{"label":"Reference","attribute":["properties","reference"],"permissions":{"role":"inventory_manager","owner":true},"required":true,"values":[{"label":"Running
+    Account","value":"invoice"},{"label":"Investment","value":"investment"}],"default":"invoice","type":"radio","group":"Invoice
+    Information"}'
+  active: true
+  position: 24
+- id: properties_total_quantity
+  data: '{"label":"Total quantity","attribute":["properties","total_quantity"],"type":"text","target_type":"license","permissions":{"role":"inventory_manager","owner":true},"visibility_dependency_field_id":"properties_license_type","visibility_dependency_value":["multiple_workplace","site_license","concurrent"],"group":"General
+    Information"}'
+  active: true
+  position: 35
+- id: properties_umzug
+  data: '{"label":"Umzug","attribute":["properties","umzug"],"type":"select","target_type":"item","values":[{"label":"zügeln","value":"zügeln"},{"label":"sofort
+    entsorgen","value":"sofort entsorgen"},{"label":"bei Umzug entsorgen","value":"bei
+    Umzug entsorgen"},{"label":"bei Umzug verkaufen","value":"bei Umzug verkaufen"}],"default":"zügeln","permissions":{"role":"inventory_manager","owner":true},"group":"Umzug"}'
+  active: true
+  position: 46
+- id: properties_warranty_expiration
+  data: '{"label":"Warranty expiration","attribute":["properties","warranty_expiration"],"permissions":{"role":"lending_manager","owner":true},"type":"date","target_type":"item","group":"Invoice
+    Information"}'
+  active: true
+  position: 30
+- id: properties_zielraum
+  data: '{"label":"Zielraum","attribute":["properties","zielraum"],"type":"text","target_type":"item","permissions":{"role":"inventory_manager","owner":true},"group":"Umzug"}'
+  active: true
+  position: 47
+- id: responsible
+  data: '{"label":"Responsible person","attribute":"responsible","permissions":{"role":"lending_manager","owner":true},"type":"text","target_type":"item","group":"Inventory","forPackage":true}'
+  active: true
+  position: 22
+- id: retired
+  data: '{"label":"Retirement","attribute":"retired","type":"select","permissions":{"role":"lending_manager","owner":true},"values":[{"label":"No","value":false},{"label":"Yes","value":true}],"default":false,"group":"Status"}'
+  active: true
+  position: 9
+- id: retired_reason
+  data: '{"label":"Reason for Retirement","attribute":"retired_reason","type":"textarea","required":true,"permissions":{"role":"lending_manager","owner":true},"visibility_dependency_field_id":"retired","visibility_dependency_value":"true","group":"Status"}'
+  active: true
+  position: 10
+- id: serial_number
+  data: '{"label":"Serial Number","attribute":"serial_number","permissions":{"role":"lending_manager","owner":true},"type":"text","group":"General
+    Information"}'
+  active: true
+  position: 4
+- id: software_model_id
+  data: '{"label":"Software","attribute":["model","id"],"value_label":["model","product"],"value_label_ext":["model","version"],"form_name":"model_id","required":true,"type":"autocomplete-search","target_type":"license","search_path":"software","search_attr":"search_term","value_attr":"id","display_attr":"product","display_attr_ext":"version","group":null}'
+  active: true
+  position: 3
+- id: status_note
+  data: '{"label":"Status note","attribute":"status_note","type":"textarea","target_type":"item","group":"Status","forPackage":true}'
+  active: true
+  position: 14
+- id: supplier_id
+  data: '{"label":"Supplier","attribute":["supplier","id"],"type":"autocomplete","extensible":true,"extended_key":["supplier","name"],"permissions":{"role":"lending_manager","owner":true},"values":"all_suppliers","group":"Invoice
+    Information"}'
+  active: true
+  position: 29
+- id: user_name
+  data: '{"label":"User/Typical usage","attribute":"user_name","permissions":{"role":"inventory_manager","owner":true},"type":"text","target_type":"item","group":"Inventory","forPackage":true}'
+  active: true
+  position: 23
+groups: []
+groups_users: []
+hidden_fields: []
+holidays: []
+images: []
+inventory_pools: []
+inventory_pools_model_groups: []
+items: []
+languages:
+- id: 1
+  name: English (UK)
+  locale_name: en-GB
+  default: true
+  active: true
+- id: 2
+  name: English (US)
+  locale_name: en-US
+  default: false
+  active: true
+- id: 3
+  name: Deutsch
+  locale_name: de-CH
+  default: false
+  active: true
+- id: 4
+  name: Züritüütsch
+  locale_name: gsw-CH
+  default: false
+  active: true
+locations: []
+mail_templates: []
+model_group_links: []
+model_groups: []
+model_links: []
+models: []
+models_compatibles: []
+notifications: []
+numerators: []
+options: []
+partitions: []
+procurement_accesses: []
+procurement_attachments: []
+procurement_budget_limits: []
+procurement_budget_periods: []
+procurement_categories:
+- id: 1
+  name: Existing requests
+  main_category_id: 1
+procurement_category_inspectors: []
+procurement_main_categories:
+- id: 1
+  name: Old Groups
+  image_file_name: 
+  image_content_type: 
+  image_file_size: 
+  image_updated_at: 
+procurement_organizations: []
+procurement_requests: []
+procurement_settings: []
+procurement_templates: []
+properties: []
+purposes: []
+reservations: []
+schema_migrations:
+- version: '20151002000000'
+- version: '20151013060621'
+- version: '20160414090545'
+- version: '20160418075339'
+- version: '20160506120000'
+- version: '20160527094851'
+- version: '20161005103353'
+- version: '20161123105950'
+- version: '20161208140156'
+settings:
+- id: 1
+  smtp_address: smtp.zhdk.ch
+  smtp_port: 25
+  smtp_domain: beta.ausleihe.zhdk.ch
+  local_currency_string: CHF
+  contract_terms: Die Benutzerin/der Benutzer ist bei unsachgemässer Handhabung oder
+    Verlust schadenersatzpflichtig. Sie/Er verpflichtet sich, das Material sorgfältig
+    zu behandeln und gereinigt zu retournieren. Bei mangelbehafteter oder verspäteter
+    Rückgabe kann eine Ausleihsperre (bis zu 6 Monaten) verhängt werden. Das geliehene
+    Material bleibt jederzeit uneingeschränktes Eigentum der Zürcher Hochschule der
+    Künste und darf ausschliesslich für schulische Zwecke eingesetzt werden. Mit ihrer/seiner
+    Unterschrift akzeptiert die Benutzerin/der Benutzer diese Bedingungen sowie die
+    'Richtlinie zur Ausleihe von Sachen' der ZHdK und etwaige abteilungsspezifische
+    Ausleih-Richtlinien.
+  contract_lending_party_string: |-
+    Your
+    Address
+    Here
+  email_signature: Das PZ-leihs Team
+  default_email: sender@example.com
+  deliver_order_notifications: false
+  user_image_url: http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}
+  ldap_config: 
+  logo_url: "/assets/image-logo-zhdk.png"
+  mail_delivery_method: test
+  smtp_username: 
+  smtp_password: 
+  smtp_enable_starttls_auto: false
+  smtp_openssl_verify_mode: none
+  time_zone: Bern
+  disable_manage_section: false
+  disable_manage_section_message: 
+  disable_borrow_section: false
+  disable_borrow_section_message: 
+  text: 
+  timeout_minutes: 30
+suppliers: []
+users: []
+workdays: []
