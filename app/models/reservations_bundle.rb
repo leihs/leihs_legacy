@@ -21,10 +21,10 @@ class ReservationsBundle < ActiveRecord::Base
     # there are both 'signed' and 'closed' reservations
     select(<<-SQL)
       COALESCE(reservations.contract_id::text,
-             CONCAT_WS('_',
-                       MAX(reservations.status),
-                       reservations.user_id::text,
-                       reservations.inventory_pool_id::text)) AS id,
+         CONCAT_WS('_',
+                   MAX(reservations.status),
+                   reservations.user_id::text,
+                   reservations.inventory_pool_id::text)) AS id,
       MAX(reservations.status) AS status,
       reservations.user_id,
       reservations.inventory_pool_id,
