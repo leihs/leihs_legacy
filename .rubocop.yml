@@ -5,6 +5,7 @@ AllCops:
     - 'cider-ci/**/*'
     - 'cider-ci_v4/**/*'
     - 'db/**/*'
+    - 'database/**/*'
     - 'doc/**/*'
     - 'engines/**/*'
     - 'features/**/*'

@@ -46,9 +46,6 @@ module Leihs
 
     config.gettext_i18n_rails.use_for_active_record_attributes = false
 
-    config.paths["db/migrate"] << \
-      Rails.root.join('engines', 'procurement', 'db', 'migrate')
-
     config.autoload_paths << Rails.root.join('lib')
   end
 end

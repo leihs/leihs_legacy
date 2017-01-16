@@ -1,20 +1,9 @@
-source 'https://rubygems.org'
+eval_gemfile Pathname(File.dirname(File.absolute_path(__FILE__))).join('database', 'Gemfile')
 
 gem 'leihs_admin', path: "engines/leihs_admin"
 gem 'procurement', path: "engines/procurement"
 
-# NOTE: upgrading from 4.2.7 to 4.2.7.1 will break about 130 specs mostly in mange
-# needs to be investigated, changelog is here:
-# http://weblog.rubyonrails.org/2016/8/11/Rails-5-0-0-1-4-2-7-2-and-3-2-22-3-have-been-released/
-gem 'rails', '4.2.7'
-
 gem 'puma'
-
-gem 'activerecord-jdbcpostgresql-adapter', platform: :jruby
-gem 'jdbc-postgres', platform: :jruby
-gem 'pg', platform: :mri
-gem 'pg_tasks', '= 2.0.0.pre.1'
-#gem 'pg_tasks', path: '/Users/thomas/Programming/ROR/pg_tasks/'
 
 gem 'uuidtools'
 
@@ -106,7 +95,6 @@ group :development, :test do
   gem 'launchy', '~> 2.1'
   gem 'meta_request'
   gem 'phantomjs', '~> 2.1' # headless webdriver (UI & JS tests)
-  gem 'pry'
   gem 'pry-rails'
   gem 'redcarpet' # This isn't being pulled in by yard, but it's required
   gem 'rspec-rails', '~> 3.0', require: false

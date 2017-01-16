@@ -472,6 +472,7 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
+    sequel (4.42.1)
     sexp_processor (4.7.0)
     sixarm_ruby_unaccent (1.1.1)
     slop (3.6.0)
@@ -536,7 +537,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord-jdbcpostgresql-adapter
   audited-activerecord!
   axlsx (~> 2.0, >= 2.0.1)
   barby (~> 0.5.0)
@@ -563,7 +563,6 @@ DEPENDENCIES
   gettext_i18n_rails (~> 1.0)
   haml (~> 4.0)
   haml_assets (~> 0.2)
-  jdbc-postgres
   jquery-tmpl-rails (~> 1.1)
   jruby-openssl
   json (~> 1.8)
@@ -611,6 +610,7 @@ DEPENDENCIES
   sass-rails (~> 4.0)
   scout_apm
   selenium-webdriver (~> 2.53)
+  sequel (~> 4.42, >= 4.42.1)
   spring
   therubyracer
   therubyrhino

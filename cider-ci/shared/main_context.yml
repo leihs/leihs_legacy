@@ -6,6 +6,10 @@ task_defaults:
 
   include: cider-ci/task_components/bundle_rspec_ruby.yml
 
+  git_options:
+    submodules:
+      include_match: ^.*$
+
   environment_variables:
     RUBY_ENGINE: ruby
     RUBY_VERSION: 2.3.0
