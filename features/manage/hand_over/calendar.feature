@@ -3,10 +3,10 @@ Feature: calendar
   Background:
     Given I am Pius
 
-  @personas @javascript @browser @broken
+  @personas @javascript @browser
   Scenario: reached maximum amount of visits of a week day
     Given the current inventory pool has reached maximum amount of visits
-    When I open a hand over
+    When I open a hand over with at least one assigned item
     And I open the booking calendar
     Then the availability number is shown on this specific date
     When I specify this date as start date

@@ -87,7 +87,7 @@ Feature: Manage users
   #  When man die Startseite setzt
   #  Then ist die Liste der Benutzer die Startseite
 
-  @javascript @personas @browser @broken
+  @javascript @personas @browser
   Scenario: Elements of user administration
     Given I am inventory manager or lending manager
     Then I can find the user administration features in the "Manage" area under "Users"

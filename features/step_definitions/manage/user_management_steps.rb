@@ -65,9 +65,9 @@ Then /^I can filter by the following roles:$/ do |table|
               when 'admins'
                 User.admins
               when 'no_access'
-                User.where("users.id NOT IN (#{@inventory_pool.users.select("users.id").to_sql})")
+                User.where("users.id NOT IN (#{@current_inventory_pool.users.select("users.id").to_sql})")
               when 'customers', 'lending_managers', 'inventory_managers'
-                @inventory_pool.users.send(role)
+                @current_inventory_pool.users.send(role)
               else
                 User.all
             end.paginate(page: 1, per_page: 20)
@@ -78,7 +78,9 @@ end
 Then /^I can open the edit view for each user$/ do
   step 'I can filter by the role "%s"' % 'All'
   expect(has_selector?("#user-list [data-type='user-cell']")).to be true
-  all('#user-list > .line').sample(5).each do |line|
+  lines_number = all('#user-list > .line').count
+  lines_number.times do |line_number|
+    line = first("#user-list .line:nth-child(#{line_number + 1})")
     within line.find('.multibutton') do
       if has_selector?('.button', text: _('Edit'))
         find('.button', text: _('Edit'))
