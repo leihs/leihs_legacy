@@ -7,14 +7,6 @@ module PublicAsset
     attr_accessor :file_file_size
   end
 
-  def base64_string=(v)
-    data = StringIO.new(Base64.decode64(v))
-    data.class.class_eval { attr_accessor :original_filename, :content_type }
-    data.original_filename = self.filename
-    data.content_type = self.content_type
-    self.file = data
-  end
-
   # NOTE copied from attachment_fu
   # Gets the thumbnail name for a filename.  'foo.jpg' becomes 'foo_thumbnail.jpg'
   def thumbnail_name_for(thumbnail = nil)
