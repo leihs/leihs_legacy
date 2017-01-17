@@ -1,3 +1,6 @@
 [submodule "database"]
 	path = database
 	url = https://github.com/leihs/leihs_database.git
+[submodule "public/assets"]
+	path = public/assets
+	url = https://github.com/leihs/leihs_legacy_assets.git
