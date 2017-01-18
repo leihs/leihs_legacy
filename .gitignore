@@ -32,7 +32,7 @@ features/reports/*
 jhw.*
 log/*
 public/**/attachments/*
-public/assets
+public/dev-assets
 public/attachments
 public/images/attachments
 public/images/graphs/*

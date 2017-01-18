@@ -26,6 +26,7 @@ module Dataset
     use_test_datetime
     PgTasks.truncate_tables
     PgTasks.data_restore dump_file_name(dataset)
+    ActiveRecord::Base.connection.execute 'UPDATE settings SET logo_url = NULL;'
   end
 
   def use_test_datetime(reset: false, freeze: false)

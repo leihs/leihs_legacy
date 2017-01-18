@@ -43,4 +43,8 @@ Rails.application.configure do
   # Access to rack session
   config.middleware.use RackSessionAccess::Middleware
 
+  # use precompiled assets in test
+  config.assets.compile = true
+  config.assets.digest = true
+
 end

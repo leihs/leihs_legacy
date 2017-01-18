@@ -38,4 +38,11 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  #
+  #
+
+  # Don't use precompiled assets in dev!
+  config.assets.compile = true
+  config.assets.prefix = '/dev-assets'
+
 end

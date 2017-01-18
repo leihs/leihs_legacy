@@ -48,6 +48,6 @@ end
 Then(/^the settings are persisted$/) do
   find('#flash .notice', text: _('Successfully set.'))
   @new_settings.each_pair do |k,v|
-    expect(Setting.send(k)).to eq v
+    expect(Setting.send(k).presence).to eq v.presence
   end
 end
