@@ -28,7 +28,6 @@ gem 'json', '~> 1.8'
 gem 'jsrender-rails', '~> 1.2', git: 'https://github.com/spape/jsrender-rails.git', branch: 'own_template_prefix'
 gem 'liquid', '~> 3.0'
 gem 'mini_magick', '~> 3.4'
-gem 'money-rails', '~>1.4'
 # gem 'mysql2', '~> 0.4', platform: :mri
 gem 'net-ldap', require: 'net/ldap'
 gem 'nilify_blanks', '~> 1.1'
