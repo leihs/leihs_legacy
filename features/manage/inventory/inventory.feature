@@ -96,7 +96,7 @@ Feature: Inventory
       | Choice |
       | All               |
 
-  @personas @javascript @browser
+  @personas @javascript @browser @flapping
   Scenario: The tab 'Models'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
