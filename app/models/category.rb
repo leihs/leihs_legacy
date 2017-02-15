@@ -2,7 +2,10 @@ class Category < ModelGroup
 
   has_many :templates, -> { uniq }, through: :models
 
-  has_many :images, as: :target, dependent: :destroy
+  has_many :images,
+           -> { where(thumbnail: false) },
+           as: :target,
+           dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
 
   def used?

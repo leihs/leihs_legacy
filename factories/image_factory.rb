@@ -3,6 +3,7 @@ FactoryGirl.define do
   trait :shared_attachment_attributes do
     filename { Faker::Lorem.word }
     content_type 'image/jpeg'
+    size 1_000_000
 
     transient do
       filepath 'features/data/images/image1.jpg'
@@ -10,11 +11,7 @@ FactoryGirl.define do
 
     after(:build) do |image, evaluator|
       file = File.open(evaluator.filepath)
-      data = StringIO.new(file.read)
-      data.class.class_eval { attr_accessor :original_filename, :content_type }
-      data.original_filename = image.filename
-      data.content_type = image.content_type
-      image.file = data
+      image.content = Base64.encode64(file.read)
     end
   end
 

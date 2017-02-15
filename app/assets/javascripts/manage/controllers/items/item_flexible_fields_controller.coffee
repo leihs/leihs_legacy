@@ -27,7 +27,8 @@ class window.App.ItemFlexibleFieldsController extends Spine.Controller
     @formRightSide = @el.find "#item-form-right-side"
 
   setupFields: =>
-    fields = _.filter App.Field.all(), (f)-> not f.visibility_dependency_field_id?
+    fields = _.filter App.Field.all(), (f) => not _.contains(@excludeIds, f.id)
+    fields = _.filter fields, (f)-> not f.visibility_dependency_field_id?
     fields = _.filter(fields, (f)-> f.forPackage) if @forPackage
     for groupName, fields of App.Field.grouped fields
       template = $ App.Render "manage/views/items/group_of_fields", {name: groupName}

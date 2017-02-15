@@ -5,7 +5,7 @@
     %input{:type => :hidden, :name => "model[attachments_attributes][#{entry.id}][_destroy]"}
 
   .line-col.col7of10.text-align-left
-    %a.blue{:href => entry.public_filename, :target => "_blank"}
+    %a.blue{:href => get_attachment_path(entry.id), :target => "_blank"}
       = entry.filename
 
   .line-col.col3of10.text-align-right

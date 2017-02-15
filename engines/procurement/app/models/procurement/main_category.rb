@@ -18,13 +18,6 @@ module Procurement
              through: :categories,
              dependent: :restrict_with_exception
 
-    has_attached_file :image,
-                      styles: { normal: '40x40#' },
-                      default_style: :normal
-    validates_attachment_content_type :image, content_type: /.*/
-    attr_accessor :image_delete
-    before_validation { image.clear if image_delete == '1' }
-
     validates_presence_of :name
     validates_uniqueness_of :name
 
@@ -41,5 +34,13 @@ module Procurement
       requests.empty?
     end
 
+    def image
+      Procurement::Image.find_by(main_category_id: id, parent_id: nil)
+    end
+
+    def destroy_image_with_thumbnail!
+      image.thumbnail.destroy!
+      image.destroy!
+    end
   end
 end

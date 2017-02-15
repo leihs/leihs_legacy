@@ -568,8 +568,10 @@ end
 Then /^the images are resized to their thumbnail size when I see them in lists$/ do
   step 'I search for "%s"' % @model.name
   find(".line[data-id='#{@model.id}']").find('.button', text: 'Edit Model').click
-  @images_to_save.each do |image_name|
-    find("a[href*='#{image_name}'] img[src*='#{image_name.split(".").first}_thumb.#{image_name.split(".").last}']")
+  within '#images' do
+    @images_to_save.each do |image_name|
+      find('a', text: "#{image_name}")
+    end
   end
 end
 

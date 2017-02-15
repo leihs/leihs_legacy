@@ -32,7 +32,7 @@ Then(/^I see the following model information:$/) do |table|
       when 'Description'
         expect(has_content?(@model.description)).to be true
       when 'Attachments'
-        @model.attachments.each {|a| find("a[href='#{a.public_filename}']", match: :first)}
+        @model.attachments.each {|a| find("a[href='#{get_attachment_path(a.id)}']", match: :first)}
       when 'Properties'
         @model.properties.each do |p|
           expect(has_content?(p.key)).to be true

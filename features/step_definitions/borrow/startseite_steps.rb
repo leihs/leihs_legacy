@@ -72,7 +72,7 @@ Then(/^I see for each category its image, or if not set, the first image of a mo
     img_el = find('a', match: :first, text: mc.name).find('img')
     response = get img_el[:src]
     if image = mc.image
-      expect(response.location).to match /#{image.public_filename}/
+      expect(response.location).to match /#{image.id}/
     end
   end
 end

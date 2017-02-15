@@ -1,17 +1,17 @@
 class Attachment < ActiveRecord::Base
-  include PublicAsset
   audited
-
-  PATH_PREFIX = '/attachments'
 
   belongs_to :model, inverse_of: :attachments
   belongs_to :item, inverse_of: :attachments
 
-  define_attached_file_specification
-  validates_attachment_size :file, less_than: 100.megabytes
-  validates_attachment_content_type \
-    :file,
-    content_type: %r{^(image\/(png|gif|jpeg)|application\/pdf)}
+  validate do
+    if size >= 100_000_000
+      errors.add(:base, _('Uploaded file must be less than 100MB'))
+    end
+    unless content_type.match %r{^(image\/(png|gif|jpeg)|application\/pdf)}
+      errors.add(:base, _('Unallowed content type'))
+    end
+  end
 
   validate do
     unless model or item
@@ -25,11 +25,6 @@ class Attachment < ActiveRecord::Base
         :base,
         _('Attachment can\'t belong to model and item')
     end
-  end
-
-  # paperclip callback
-  def destroy_attached_files
-    destroy_original_file
   end
 
 end

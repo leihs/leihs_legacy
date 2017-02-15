@@ -126,9 +126,21 @@ module Procurement
 
     private
 
-    def create_or_update_or_destroy
+    def initialize_keys
       keys = Request::REQUESTER_EDIT_KEYS
       keys += Request::INSPECTOR_KEYS if @category.inspectable_by?(current_user)
+      keys
+    end
+
+    def handle_attachments!(params_x)
+      if params_x[:attachments_attributes]
+        transform_attachment_files_into_attributes! \
+          params_x[:attachments_attributes]
+      end
+    end
+
+    def create_or_update_or_destroy
+      keys = initialize_keys
 
       params.require(:requests).values.map do |param|
         if param[:id].blank? or @user == current_user
@@ -140,6 +152,7 @@ module Procurement
           r = update_or_destroy(param, permitted)
         else
           next if permitted[:motivation].blank?
+          handle_attachments! permitted
           r = @category.requests.create(permitted) do |x|
             x.user = @user
             x.budget_period = @budget_period
@@ -151,15 +164,40 @@ module Procurement
 
     def update_or_destroy(param, permitted)
       r = Request.find(param[:id])
-      param[:attachments_delete].each_pair do |k, v|
-        r.attachments.destroy(k) if v == '1'
-      end if param[:attachments_delete]
+      if param[:attachments_delete]
+        param[:attachments_delete].each_pair do |k, v|
+          r.attachments.destroy(k) if v == '1'
+        end
+      end
+      if param[:attachments_attributes]
+        transform_attachment_files_into_attributes! param[:attachments_attributes]
+      end
       if permitted.values.all?(&:blank?)
         r.destroy
       else
         r.update_attributes(permitted)
       end
       r
+    end
+
+    def transform_attachment_files_into_attributes!(array_of_file_hashes)
+      array_of_file_hashes.map! do |h|
+        if h.empty?
+          {}
+        else
+          file = h['file']
+          attachment_attributes(file)
+        end
+      end
+    end
+
+    def attachment_attributes(file)
+      attrs = {}
+      attrs['content'] = Base64.encode64(file.read)
+      attrs['filename'] = file.original_filename
+      attrs['size'] = file.size
+      attrs['content_type'] = file.content_type
+      attrs
     end
 
   end

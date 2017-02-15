@@ -31,18 +31,63 @@ module Procurement
     def create_or_update_or_destroy
       params.require(:main_categories).values.map do |param|
         if param[:id]
-          r = Procurement::MainCategory.find(param[:id])
-          if param.delete(:_destroy) == '1' or param[:name].blank?
-            r.destroy
-          else
-            r.update_attributes(param)
-          end
+          main_category = Procurement::MainCategory.find(param[:id])
+          handle_existing_category(main_category, param)
         else
           next if param[:name].blank?
-          r = Procurement::MainCategory.create(param)
+          main_category = Procurement::MainCategory.new
+          handle_new_category(main_category, param)
         end
-        r.errors.full_messages
+        main_category.errors.full_messages
       end.flatten.compact
+    end
+
+    def handle_existing_category(main_category, param)
+      if param.delete(:_destroy) == '1' or param[:name].blank?
+        main_category.destroy
+      else
+        ActiveRecord::Base.transaction do
+          image_delete = param.delete('image_delete')
+          if image_delete == '1'
+            main_category.destroy_image_with_thumbnail!
+          end
+          if file = param.delete('image')
+            create_image_with_thumbnail!(main_category, file)
+          end
+          main_category.assign_attributes(param)
+          main_category.save!
+        end
+      end
+    end
+
+    def handle_new_category(main_category, param)
+      ActiveRecord::Base.transaction do
+        file = param.delete('image')
+        main_category.assign_attributes(param)
+        main_category.save!
+        if file
+          create_image_with_thumbnail!(main_category, file)
+        end
+      end
+    end
+
+    def create_image_with_thumbnail!(main_category, file)
+      image = Image.create!(main_category_id: main_category.id,
+                            content: Base64.encode64(file.read),
+                            filename: file.original_filename,
+                            size: file.size,
+                            content_type: file.content_type)
+
+      extension = File.extname(file.original_filename)
+      basename = File.basename(file.original_filename, extension)
+      thumbnail_filepath = Procurement::FileUtilities.convert_file(file.path)
+      thumbnail_file = File.open(thumbnail_filepath)
+      Image.create!(main_category_id: main_category.id,
+                    content: Base64.encode64(thumbnail_file.read),
+                    filename: "#{basename}_thumb#{extension}",
+                    size: thumbnail_file.size,
+                    parent_id: image.id,
+                    content_type: file.content_type)
     end
 
   end

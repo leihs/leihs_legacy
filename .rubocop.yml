@@ -11,12 +11,13 @@ AllCops:
     - 'features/**/*'
     - 'Gemfile'
     - 'Guardfile'
-    - 'lib/tasks/leihs.rake'
     - 'lib/leihs/dbio/import.rb'
-    - 'tmp/**/*'
+    - 'lib/leihs/fields.rb'
+    - 'lib/tasks/leihs.rake'
     - 'node_modules/**/*'
     - 'script/**/*'
     - 'spec/**/*'
+    - 'tmp/**/*'
 
 Lint/AmbiguousOperator:
   Enabled: false

@@ -1,0 +1,18 @@
+environment_variables:
+  DATABASE: "leihs_test_{{CIDER_CI_TRIAL_ID}}"
+
+scripts:
+  configure-database:
+    body: |
+      #!/usr/bin/env ruby
+      require 'yaml'
+      db_config = {
+        'adapter' => 'postgresql',
+        'encoding' => 'unicode',
+        'host' => 'localhost',
+        'pool' => 10,
+        'username' => ENV['PGUSER'],
+        'password' =>  ENV['PGPASSWORD'],
+        'database' => ENV['DATABASE']}
+      config = { 'test' => db_config}
+      File.open('config/database.yml','w') { |file| file.write config.to_yaml }

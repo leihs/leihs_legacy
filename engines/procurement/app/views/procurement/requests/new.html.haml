@@ -18,8 +18,8 @@
           %h4
             %span.toggler
               %i.fa.fa-caret-right
-            - if main_category.image.exists?
-              %img.main_category_image{src: main_category.image.url}
+            - if image = main_category.image
+              %img.main_category_image{src: get_image_path(image.thumbnail.id)}
             - else
               %i.fa.fa-outdent.main_category_image
             = main_category.name

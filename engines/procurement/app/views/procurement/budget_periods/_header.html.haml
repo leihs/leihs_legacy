@@ -12,8 +12,8 @@
   .col-xs-4
     - if @category
       %h4
-        - if @category.main_category.image.exists?
-          %img.main_category_image{src: @category.main_category.image.url}
+        - if image = @category.main_category.image
+          %img.main_category_image{src: get_image_path(image.thumbnail.id)}
         - else
           %i.fa.fa-outdent.main_category_image{style: 'font-size: 30px'}
         = @category.name

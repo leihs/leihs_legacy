@@ -1,4 +1,5 @@
 class Manage::CategoriesController < Manage::ApplicationController
+  include FileStorage
 
   def index
     respond_to do |format|
@@ -64,13 +65,7 @@ class Manage::CategoriesController < Manage::ApplicationController
     @category = Category.find params[:id]
     params[:files].each do |file|
       next unless params[:type] == 'image'
-      image = @category.images.build(file: file, filename: file.original_filename)
-      next if image.save
-      render status: :bad_request, text: image.errors.full_messages.uniq.join(', ')
-      # TODO: fix non local exit with return
-      # rubocop:disable Lint/NonLocalExitFromIterator
-      return
-      # rubocop:enable Lint/NonLocalExitFromIterator
+      store_image_with_thumbnail!(file, @category)
     end
     head status: :ok
   end

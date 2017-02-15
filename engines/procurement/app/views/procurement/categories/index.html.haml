@@ -34,10 +34,10 @@
           .col-xs-4
             %h4= _('Image')
             %input{type: :file, name: "main_categories[#{main_category.object_id}][image]", style: "color:transparent;", onchange: "this.style.color = 'black';"}
-            - if main_category.image and main_category.image.content_type =~ /image/
-              %img.main_category_image{src: main_category.image.url}
+            - if image = main_category.image and image.thumbnail
+              %img.main_category_image{src: get_image_path(image.thumbnail.id)}
               %input{type: :hidden, name: "main_categories[#{main_category.object_id}][image_delete]"}
-              %a.delete{href: '#', data: {confirm: _("Are you sure you want to delete '%s'?") % main_category.image.original_filename}}
+              %a.delete{href: '#', data: {confirm: _("Are you sure you want to delete '%s'?") % image.filename}}
                 %i.fa.fa-trash
 
             %h4= _('Budget limits')

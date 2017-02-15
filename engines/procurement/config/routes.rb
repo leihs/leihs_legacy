@@ -49,4 +49,8 @@ Procurement::Engine.routes.draw do
 
   resource :settings, only: [:edit, :create]
 
+  get 'attachments/:id', to: 'attachments#show', as: 'get_attachment'
+
+  get 'images/:id', to: 'images#show', as: 'get_image'
+
 end

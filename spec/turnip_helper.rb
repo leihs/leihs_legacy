@@ -5,6 +5,7 @@ require 'factory_girl'
 
 Dir.glob("engines/procurement/spec/steps/**/*.rb") { |f| load f, true }
 Dir.glob("engines/procurement/spec/factories/**/*factory.rb") { |f| load f, true }
+load "engines/procurement/lib/procurement/file_utilities.rb"
 
 if ENV['FIREFOX_ESR_PATH'].present?
   Selenium::WebDriver::Firefox.path = ENV['FIREFOX_ESR_PATH']

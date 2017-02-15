@@ -14,7 +14,7 @@ module Procurement
     belongs_to :location  # from parent application
 
     has_many :attachments, dependent: :destroy, inverse_of: :request
-    accepts_nested_attributes_for :attachments
+    accepts_nested_attributes_for :attachments, reject_if: :all_blank
 
     monetize :price_cents, allow_nil: true
 
@@ -22,7 +22,10 @@ module Procurement
     REQUESTER_EDIT_KEYS = [:article_name, :model_id, :article_number, :price,
                            :supplier_name, :supplier_id, :motivation, :receiver,
                            :location_name, :location_id, :template_id,
-                           attachments_attributes: [:file]]
+                           attachments_attributes: [:content,
+                                                    :filename,
+                                                    :size,
+                                                    :content_type]]
     INSPECTOR_KEYS = [:requested_quantity,
                       :approved_quantity,
                       :order_quantity,

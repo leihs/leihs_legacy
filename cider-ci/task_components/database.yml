@@ -1,25 +1,11 @@
 traits:
   Ruby: true
 
-environment_variables:
-  DATABASE: "leihs_test_{{CIDER_CI_TRIAL_ID}}"
+include:
+  - cider-ci/task_components/database/configure.yml
+  - cider-ci/task_components/database/delete.yml
 
 scripts:
-
-  configure-database:
-    body: |
-      #!/usr/bin/env ruby
-      require 'yaml'
-      db_config = {
-        'adapter' => 'postgresql',
-        'encoding' => 'unicode',
-        'host' => 'localhost',
-        'pool' => 10,
-        'username' => ENV['PGUSER'],
-        'password' =>  ENV['PGPASSWORD'],
-        'database' => ENV['DATABASE']}
-      config = { 'test' => db_config}
-      File.open('config/database.yml','w') { |file| file.write config.to_yaml }
 
   create-database:
     body: |
@@ -34,17 +20,3 @@ scripts:
         script_key: create-database
       database has been configured:
         script_key: configure-database
-
-  delete-database:
-    body: |
-      #!/usr/bin/env bash
-      set -eux
-      dropdb "$DATABASE"
-    start_when:
-      test is in termial state:
-        script_key: test
-        states: [aborted, defective, passed, failed, skipped]
-
-
-
-

@@ -1,4 +1,5 @@
 class Manage::ModelsController < Manage::ApplicationController
+  include FileStorage
 
   private
 
@@ -69,13 +70,9 @@ class Manage::ModelsController < Manage::ApplicationController
     @model = fetch_model
     params[:files].each do |file|
       if params[:type] == 'image'
-        image = @model.images.build(file: file, filename: file.original_filename)
-        image.save
+        store_image_with_thumbnail!(file, @model)
       elsif params[:type] == 'attachment'
-        attachment = Attachment.new(file: file,
-                                    filename: file.original_filename,
-                                    model_id: @model.id)
-        attachment.save
+        store_attachment!(file, model_id: @model.id)
       end
     end
     head status: :ok

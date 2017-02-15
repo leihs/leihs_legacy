@@ -2,13 +2,13 @@ FactoryGirl.define do
 
   factory :workday do
     inventory_pool
-    monday { random > 0.5 }
-    tuesday { random > 0.5 }
-    wednesday { random > 0.5 }
-    thursday { random > 0.5 }
-    friday { random > 0.5 }
-    saturday { random > 0.5 }
-    sunday { random > 0.5 }
+    monday { rand > 0.5 }
+    tuesday { rand > 0.5 }
+    wednesday { rand > 0.5 }
+    thursday { rand > 0.5 }
+    friday { rand > 0.5 }
+    saturday { rand > 0.5 }
+    sunday { rand > 0.5 }
   end
 
 end

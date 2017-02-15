@@ -5,8 +5,12 @@ class ModelsController < ApplicationController
   end
 
   def image
-    if img = Model.find(params[:id]).image(params[:offset])
-      redirect_to img.public_filename(params[:size])
+    image = Model.find(id_param).image(params[:offset])
+
+    if image and params[:size] == :thumb
+      redirect_to get_image_thumbnail_path(image.id)
+    elsif image
+      redirect_to get_image_path(image.id)
     else
       empty_gif_pixel = \
         "R0lGODlhAQABAIAAAAAAAAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==\n"
@@ -14,6 +18,12 @@ class ModelsController < ApplicationController
                 type: 'image/gif',
                 disposition: 'inline')
     end
+  end
+
+  private
+
+  def id_param
+    params.require(:id)
   end
 
 end

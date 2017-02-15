@@ -33,6 +33,13 @@ Rails.application.routes.draw do
   # Properties
   get "properties", to: "properties#index", as: "properties"
 
+  # Images
+  get 'images/:id', to: 'images#show', as: 'get_image'
+  get 'images/:id/thumbnail', to: 'images#thumbnail', as: 'get_image_thumbnail'
+
+  # Attachments
+  get 'attachments/:id', to: 'attachments#show', as: 'get_attachment'
+
   mount LeihsAdmin::Engine => '/admin', :as => 'admin'
   mount Procurement::Engine => '/procurement', :as => 'procurement'
 
@@ -284,15 +291,8 @@ Rails.application.routes.draw do
       get     'suppliers',          to: 'suppliers#index'
       get     'suppliers/:id',      to: 'suppliers#show',     as: 'inventory_pool_supplier'
       delete  'suppliers/:id',      to: 'suppliers#destroy',  as: 'delete_inventory_pool_supplier'
-
     end
 
-  end
-
-  if Rails.env.test? or Rails.env.development?
-    get "/images/attachments/:dir1/:dir2/:file", to: redirect('/images/test.jpg')
-    get "/images/attachments/:d/:file", to: redirect('/images/test.jpg')
-    get "/attachments/:dir1/:dir2/:file", to: redirect('/images/test.jpg')
   end
 
 end

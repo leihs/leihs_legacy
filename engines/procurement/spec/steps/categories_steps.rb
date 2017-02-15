@@ -12,9 +12,8 @@ steps_for :categories do
   include PersonasSteps
 
   step 'a main category with a picture exists' do
-    path = "#{Rails.root}/features/data/images/image1.jpg"
-    @main_category = FactoryGirl.create :procurement_main_category,
-                                        image: File.open(path)
+    @main_category = \
+      FactoryGirl.create(:procurement_main_category, :with_image)
   end
 
   step 'a sub category exists' do
@@ -317,7 +316,7 @@ steps_for :categories do
   end
 
   step 'the picture was deleted in the database' do
-    expect(@main_category.reload.image).not_to exist
+    expect(@main_category.reload.image).not_to be
   end
 
   step 'the sub category line contains the name of the category' do

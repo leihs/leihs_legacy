@@ -1,4 +1,5 @@
 class Manage::ItemsController < Manage::ApplicationController
+  include FileStorage
 
   def index
     cip = unless params[:current_inventory_pool] == 'false'
@@ -151,10 +152,7 @@ class Manage::ItemsController < Manage::ApplicationController
     @item = fetch_item_by_id
     params[:files].each do |file|
       if params[:type] == 'attachment'
-        attachment = Attachment.new(file: file,
-                                    filename: file.original_filename,
-                                    item_id: @item.id)
-        attachment.save
+        store_attachment!(file, item_id: @item.id)
       else
         raise 'Unknown attachment type'
       end

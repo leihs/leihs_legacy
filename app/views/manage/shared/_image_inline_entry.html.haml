@@ -4,11 +4,11 @@
   %input{:type => :hidden, :name => "#{entry_type}[images_attributes][#{entry.id}][_destroy]"}
 
   .line-col.col1of10.text-align-center
-    %a{:href => entry.public_filename, :target => "_blank"}
-      %img.max-height-xxs.max-width-xxs{:src => entry.public_filename(:thumb)}
+    %a{:href => get_image_thumbnail_path(entry.id), :target => "_blank"}
+      %img.max-height-xxs.max-width-xxs{:src => get_image_thumbnail_path(entry.id)}
 
   .line-col.col6of10.text-align-left
-    %a.blue{:href => entry.public_filename, :target => "_blank"}
+    %a.blue{:href => get_image_path(entry.id), :target => "_blank"}
       = entry.filename
 
   .line-col.col3of10.text-align-right

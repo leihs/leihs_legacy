@@ -9,7 +9,12 @@ namespace :leihs do
     desc 'Import the RDBMS independent dump into PostgreSQL;' \
       ' FILE=tmp/db_data.yml'
     task import: :environment do
-      Leihs::DBIO::Import.import ENV['FILE'].presence
+      Leihs::DBIO::Import.import \
+        ENV['FILE'].presence,
+        attachments_path: ENV['ATTACHMENTS_PATH'].presence,
+        images_path: ENV['IMAGES_PATH'].presence,
+        procurement_attachments_path: ENV['PROCUREMENT_ATTACHMENTS_PATH'].presence,
+        procurement_images_path: ENV['PROCUREMENT_IMAGES_PATH'].presence
     end
 
     desc 'Restore a legacy personas MySQL dump; DATASET=minimal|normal|huge'

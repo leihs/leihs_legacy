@@ -22,7 +22,7 @@ class CategoriesController < ApplicationController
     if category.image.nil?
       render status: :not_found, nothing: true
     else
-      redirect_to category.image.public_filename, status: :moved_permanently
+      redirect_to get_image_path(category.image.id)
     end
   end
 

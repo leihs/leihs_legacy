@@ -80,7 +80,10 @@ class Model < ActiveRecord::Base
   end
   accepts_nested_attributes_for :accessories, allow_destroy: true
 
-  has_many :images, as: :target, dependent: :destroy
+  has_many :images,
+           -> { where(thumbnail: false) },
+           as: :target,
+           dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
 
   has_many :attachments, dependent: :destroy

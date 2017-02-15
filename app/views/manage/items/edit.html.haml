@@ -44,12 +44,17 @@
 
       = render "software_details" if @item.type == "License" and ( not @item.model.technical_detail.blank? or not @item.model.attachments.empty? )
 
+:ruby
+  item = @item.as_json(:include => [:inventory_pool, :location, :model, :owner, :supplier])
+  attachments = @item.attachments.as_json.map { |a| a.except('content').merge(public_filename: get_attachment_path(a['id'])) }
+  item['attachments'] = attachments
+
 :coffeescript
   
   jQuery ->
     new App.ItemEditController
       el: $("#edit-item-view")
-      itemData: #{@item.to_json(:include => [:inventory_pool, :location, :model, :owner, :supplier, { attachments: { methods: :public_filename }}])}
+      itemData: #{item.to_json}
       itemType: "#{@item.type.downcase}"
       item: new App.Item #{@item.to_json}
       writeable: true

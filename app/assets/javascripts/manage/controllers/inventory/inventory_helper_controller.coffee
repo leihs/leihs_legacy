@@ -164,6 +164,7 @@ class App.InventoryHelperController extends Spine.Controller
       itemData: @currentItemData
       writeable: writeable
       hideable: true
+      excludeIds: ['attachments']
   
   fetchItem: (inventoryCode, callback)=>
     App.Item.ajaxFetch

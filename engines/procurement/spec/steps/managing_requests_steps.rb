@@ -63,19 +63,16 @@ steps_for :managing_requests do
   end
 
   step 'for all main categories pictures have been uploaded' do
-    path = "#{Rails.root}/features/data/images/image1.jpg"
-
     Procurement::MainCategory.all.each do |main_category|
-      unless main_category.image.exists?
-        main_category.update_attributes image: File.open(path)
-        expect(main_category.reload.image).to exist
-      end
+      next if main_category.image
+      FactoryGirl.create(:procurement_image, main_category: main_category)
+      expect(main_category.reload.image).to be
     end
   end
 
   step 'no picture for a main category is uploaded' do
-    @main_category.image.destroy
-    expect(@main_category.reload.image).not_to exist
+    @main_category.destroy_image_with_thumbnail!
+    expect(@main_category.reload.image).not_to be
   end
 
   step 'I am navigated to the request containing this template article' do
@@ -200,7 +197,7 @@ steps_for :managing_requests do
     within '.form-group', text: _('Attachments') do
       within 'ul' do
         @attachment = @request.attachments.first
-        within 'li', text: @attachment.file.original_filename do
+        within 'li', text: @attachment.filename do
           find('img').click
         end
       end
@@ -266,7 +263,7 @@ steps_for :managing_requests do
     within '.form-group', text: _('Attachments') do
       within 'ul' do
         @attachment = @request.attachments.first
-        find('li a', text: @attachment.file.original_filename).click
+        find('li a', text: @attachment.filename).click
       end
     end
   end
@@ -347,7 +344,8 @@ steps_for :managing_requests do
                         @category.name]
                      end
     within selector, text: name do
-      find 'img[src*="image1.jpg"]'
+      path = procurement.get_image_path(@main_category.image.thumbnail.id)
+      find "img[src*='#{path}']"
     end
   end
 
@@ -541,7 +539,7 @@ steps_for :managing_requests do
   step 'the content of the file is shown in a viewer' do
     new_window = page.driver.browser.window_handles.last
     page.driver.browser.switch_to.window new_window
-    expect(current_path).to match /#{@attachment.file.original_filename}$/
+    expect(current_path).to be == procurement.get_attachment_path(@attachment.id)
   end
 
   step 'the current date has not yet reached the inspection start date' do
@@ -640,7 +638,7 @@ steps_for :managing_requests do
 
   step 'the file is downloaded' do
     expect(page.driver.browser.switch_to.active_element.text).to eq \
-      @attachment.file.original_filename
+      @attachment.filename
   end
 
   step 'the following fields are mandatory and marked red' do |table|
@@ -734,8 +732,13 @@ steps_for :managing_requests do
                 else
                     raise
                 end
-    @request.update_attributes(attachments_attributes:
-                                   [{ file: File.open(file_path) }])
+    file = File.open(file_path)
+    content_type = Procurement::FileUtilities.content_type(file_path)
+    @request.update_attributes \
+      attachments_attributes: [{ content: Base64.encode64(file.read),
+                                 size: file.size,
+                                 filename: File.basename(file_path),
+                                 content_type: content_type }]
   end
 
   step 'the request is :result in the database' do |result|
