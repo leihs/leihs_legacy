@@ -6,6 +6,7 @@ gem 'procurement', path: "engines/procurement"
 gem 'puma'
 
 gem 'uuidtools'
+gem 'base32-crockford'
 
 # gem 'activerecord-jdbcmysql-adapter', platform: :jruby
 # gem 'acts-as-dag', '~> 4.0' # alternative: 'dagnabit'

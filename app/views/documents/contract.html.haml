@@ -1,17 +1,20 @@
-- content_for :title, "#{_("Lending Contract No.")} #{@contract.id}"
+- content_for :title, "#{_("Lending Contract No.")} #{@contract.compact_id}"
 
 .contract
 
   .barcode
     %img{src: barcode_for_contract(@contract)}
-  
+
   %h1
     = _("Lending Contract No.")
-    = @contract.id
+    - # TODO Merde this doesn't work here :-( @contract is a ReservationBundle
+    - # and contract_id is some stuff comming from it
+    = @contract.compact_id
     = _("from %s") % l(@contract.created_at.to_date)
+    %span.weeknumber W#{@contract.created_at.strftime("%U")}
   .date
     = l Time.now.to_date
-    
+
   %section.parties
     = render "documents/customer"
     = render "documents/inventory_pool"

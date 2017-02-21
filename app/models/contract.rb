@@ -3,6 +3,15 @@ class Contract < ActiveRecord::Base
   include DefaultPagination
   audited
 
+  before_create do
+    id = UUIDTools::UUID.random_create
+    self.id = id
+    b32 = Base32::Crockford.encode(id.to_i)
+    self.compact_id ||= (3..26).lazy.map { |i| b32[0..i] } \
+      .map { |c_id| !Contract.find_by(compact_id: c_id) && c_id } \
+      .find(&:itself)
+  end
+
   ORDER_BY = lambda do
     order('reservations.start_date ASC, ' \
           'reservations.end_date ASC, ' \

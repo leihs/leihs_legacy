@@ -69,6 +69,10 @@ class ReservationsBundle < ActiveRecord::Base
     end
   end
 
+  def compact_id
+    contract.compact_id
+  end
+
   def id
     r = id_before_type_cast
     if r.nil? # it is not persisted

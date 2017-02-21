@@ -1,11 +1,12 @@
-- content_for :title, "#{_("Value List for Lending Contract No.")} #{@contract.id}"
+- content_for :title, "#{_("Value List for Lending Contract No.")} #{@contract.compact_id}"
 
 .value_list
 
   %h1
     = _("Value List for Lending Contract No.")
-    = @contract.id
+    = @contract.compact_id
     = _("from %s") % l(@contract.created_at.to_date)
+    %span.weeknumber W#{@contract.created_at.strftime("%U")}
   .date
     = l Time.now.to_date
 

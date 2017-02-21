@@ -32,7 +32,7 @@ Then /^I want to see the following areas:$/ do |table|
             expect(has_content?(Date.today.day)).to be true
           end
         when 'Title', 'Contract number'
-          expect(find('h1').has_content?(@contract.id)).to be true
+          expect(find('h1').has_content?(@contract.compact_id)).to be true
         when 'Borrower'
           find('.customer')
         when 'Lender'

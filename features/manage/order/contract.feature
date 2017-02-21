@@ -7,6 +7,7 @@ Feature: Contract
   @javascript @browser @personas
   Scenario: What I want to see on the contract
     Given I open a contract during hand over
+    # And I pry
     Then I want to see the following areas:
     | Area                 |
     | Date                 |

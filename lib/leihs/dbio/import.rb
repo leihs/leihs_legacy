@@ -127,19 +127,15 @@ module Leihs
         end
 
         def map_model_group_link(row)
-          begin
-            unless row['direct']
-              nil
-            else
-              table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, 'model_group_links'
-              ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, 'model_groups'
-              { id: UUIDTools::UUID.sha1_create(table_uuid_ns, row[:id].to_s),
-                parent_id: UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:ancestor_id].to_s),
-                child_id: UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:descendant_id].to_s),
-                label: row[:label] }
-            end
-          rescue
-            binding.pry
+          unless row['direct']
+            nil
+          else
+            table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, 'model_group_links'
+            ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, 'model_groups'
+            { id: UUIDTools::UUID.sha1_create(table_uuid_ns, row[:id].to_s),
+              parent_id: UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:ancestor_id].to_s),
+              child_id: UUIDTools::UUID.sha1_create(ref_table_uuid_ns, row[:descendant_id].to_s),
+              label: row[:label] }
           end
         end
 
@@ -168,11 +164,13 @@ module Leihs
             row[:content_type] = `file -b --mime-type #{escape file_path}`.sub("\n", '')
             row[:size] = File.open(file_path).size
             row.merge Hash["#{ref_table.singularize}_id", ref_uuid]
-          else # row[:content].nil? and ref_klass.find_by_id(ref_uuid) and ENV['REPLACE_MISSING_IMAGES'].present?
-            row[:content] = IMAGE_NOT_FOUND_PNG
+          elsif row[:content].blank? and ref_klass.find_by_id(ref_uuid) and ENV['REPLACE_MISSING_IMAGES'].present?
+            row[:content] = DUMMY_IMAGE_PNG
             row[:content_type] = 'image/png'
             row[:size]= 2161
             row.merge Hash["#{ref_table.singularize}_id", ref_uuid]
+          else
+            Rails.logger.warn("Ignoring missing Іmage for #{table_name} #{row.tos}")
           end
         end
 
@@ -221,10 +219,12 @@ module Leihs
           file_path = "#{@v3_images_dir}/#{path_to_file(folder_id, filename)}"
           if row[:content] = read_and_encode_file(file_path)
             row[:content_type] = `file -b --mime-type #{escape file_path}`.sub("\n", '')
-          else # ENV['REPLACE_MISSING_IMAGES'].present?
-            row[:content] = IMAGE_NOT_FOUND_PNG
+          elsif row[:content].blank? and ENV['REPLACE_MISSING_IMAGES'].present?
+            row[:content] = DUMMY_IMAGE_PNG
             row[:content_type] = 'image/png'
             row[:size]= 2161
+          else
+            Rails.logger.warn("Ignoring missing Іmage for #{row.to_s}")
           end
 
           ref_table = row[:target_type].underscore.pluralize
@@ -301,12 +301,18 @@ module Leihs
           row.merge(position: row[:id])
         end
 
+        def map_contract_row row
+          row.merge(compact_id: row[:id].to_s)
+        end
+
         def custom_pre_migrator(table_name, row)
           case table_name
           when 'model_group_links'
             map_model_group_link row
           when 'audits'
             map_audit_row row
+          when 'contracts'
+            map_contract_row row
           when 'images'
             map_images_row row
           when 'attachments'
@@ -327,19 +333,15 @@ module Leihs
         def general_migrator(table_name, row)
           table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, table_name.to_s
           row.map do |k, v|
-            begin
-              if k.to_s == 'id' and v.is_a? Integer
-                [k, UUIDTools::UUID.sha1_create(table_uuid_ns, v.to_s)]
-              elsif k.to_s =~ /_id$/ and v.is_a? Integer
-                ref_table_name = FOREIGN_TABLE_RESOLVERS[table_name].try(:[], k) \
-                  || k.gsub(/_id$/, '').pluralize
-                ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, ref_table_name
-                [k, UUIDTools::UUID.sha1_create(ref_table_uuid_ns, v.to_s)]
-              else
-                [k, v]
-              end
-            rescue
-              binding.pry
+            if k.to_s == 'id' and v.is_a? Integer
+              [k, UUIDTools::UUID.sha1_create(table_uuid_ns, v.to_s)]
+            elsif k.to_s =~ /_id$/ and v.is_a? Integer
+              ref_table_name = FOREIGN_TABLE_RESOLVERS[table_name].try(:[], k) \
+                || k.gsub(/_id$/, '').pluralize
+              ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, ref_table_name
+              [k, UUIDTools::UUID.sha1_create(ref_table_uuid_ns, v.to_s)]
+            else
+              [k, v]
             end
           end.to_h
         end
@@ -467,56 +469,24 @@ module Leihs
         end
 
 
-        IMAGE_NOT_FOUND_PNG = <<-PNG.strip_heredoc
-          iVBORw0KGgoAAAANSUhEUgAAAlgAAAGQBAMAAACAGwOrAAAAG1BMVEX/AAAA
-          AAC/AACfAADfAAAfAAB/AABfAAA/AACZ3P73AAAACXBIWXMAAA7EAAAOxAGV
-          Kw4bAAAH/ElEQVR4nO3azVvbRgLHccWSbY47SRx8tEnJ02ONu+keTSFtj6sm
-          2XCMmgZ6xM0ucERtU/xnd941ejEma2PT8P08TwKyNOPRTy/MjBRFAAAAAAAA
-          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAn43nP99i5a3x5BZr/0QH
-          F6+Pflquiulj/SMer6A5NW0xuI1q/y8doQyWqsOGtS8my7en5i6FNRVv3p3k
-          g+Xq+NzCSsRl08exeKRWTpaq+76E1RZfLV+3D2v5quruUFj7vRXUfV/CGj1Z
-          Qd33Jazs0Qrqvi9hTR+uoG7C+gT3JaycsBqsIawHtxlWcij/nVyZgdmzi7OB
-          W996fj47fzfxiyezs6/lz0O7fHB+9cGvNA4nuorzYJCXPL+4Kuq4WVilMoe+
-          sP5NtVY25apopvpG3fp1hNURg2QqB2Y/yt//KX/2TDOSX/RwTfRtqzqpWvqP
-          7GybD9SmolfuS2Zyn9+rz1+6T+I8rONmYZXL5P9wn+swZGtNU/xXJ5lp2LrC
-          2hVXF0J2oruif54L82d8JFtwNPsohOkCtVLx5vgkFz/asHZF70ou9idhjTKs
-          XVnF/4Q4tTuSy80uUrtZW3hBsan/cLuhTENYsilX56ndWrVELsqGrSmsL9RZ
-          1RGPo6lsoDzL9Mejnr7IWrkZiQzFb+rHe/FOr47F9kA39FVYY/ZQfi5Lfef2
-          ZFe8nOhj/8p84U3CKpdpCGsk/qvXmwPSEn3ZwOS9eLuesHZ1K0fbsf7+jrlS
-          ntv9icW/5f9JavvY074uNbIX47Qf1pg9HJqLeGhvh6k7WXqqttZ4PBYvx0pQ
-          6KlczJ+oD/caytTD2tE3DBmSuXT3xVuz9sl6wkov1c8tsW+amT4ubTZ9pFea
-          JskrVZVKbEvlYnjXyh6JPyJT52lULuWuy4X3rGqZWlgje31mprW5PYpyN2xY
-          qxhn1viwzCGMbWhRVh6oDVWjhv4MSlUpv0eJPu+czFYlt9K7OCpKPXTbXzY1
-          JQirWqYWlrvy28K02lU4FWsJy9zREzdTub9d2uyBan3RxdZXWDFLkIV/xzLh
-          TkqzfXGOurAXh1UtUw9rYha7urlb/vbXXk9Y9uRI7Q5Vvq2tFlPf5AeqVHHy
-          lZLN/EU5Ugeg5S4+tU/6uxaHVStTC8uNuWP9Zfv9ouRawrLNc1d/u3yH3FKL
-          xT7qXcj94W+HTcv8wlDV1S2GCLG9bheGVStTC8td9y29OpivWM89y54O7lLb
-          agrLH2+9N8WdqhtuXDnhgtRdSAvDqpWphfXWrz6NfE9UV3Jnwrp0iyqs4Frp
-          hF2m4jDrsPaDfoW9jheGVStTC8v33HUjivuD75SuOayJ3eLpyez167R6GU78
-          RRVFfvSjFWHpvwrD4H5mD/vCsGpl5oZl2hT8NbZhtTcSVuz61qUmqz5fXLQ4
-          DjtalbDCyWJb+cKwamWuDyusb5NhxanonY33dnZVWEUMo21V5GhmfbxpWK5/
-          ctnUlDlhqTJ/j7Cm4veJWZT/vXC9zUR1FTsiMD+scGY9u2FYtTLXhxXcPTcZ
-          VtcMwWxYsR3HRC9U6zri7NgbFDWuP6zkboTlhmD2j2Nm5o9i3XON5zwTvbf3
-          rNRNvtiwRO/DF99+k6rpkfCvYcndCKs0EbIq14ZV5KG7iS1xbu5Qv0dR+U4R
-          uhNdh85ZY9uWdG1YXd/Z0vND8nAdXKS9N2Z2fc4uV8MKH8qLm3ZKq2WKsPKm
-          sIrVYWd+9a4Nq+jGD9Vvw/Ljl6DfHKqEtZLhztR/VdoUVvDEMd9YWMVtctoQ
-          1pyHopWwgplBN6S7wUC6UsafL2ZWoRpWcI8TmwvLHeFE9+CH5ZcRhs030UpY
-          rSKZtruqS5OFXjhFUynjJ8y6jWEVI8F4c2H5AeKWDqvyAtWc57OVsPz8aDD/
-          uSisWpmhO3WGjWEVZ6Kb/Pth1vQNy7o2LD8Vkh2Zv4a9s71D93zVPsWoqYY1
-          coc98RE03+3CaeVKGXfHT0TjPauY187FGh7fN4fVslPdHfGN/vJd03M4sq9P
-          543XYTUs/5zCz9nPudsFYVXLbNnm7fYbuw5RZlvS7eUbC0vGof5P8m07vffs
-          o4nLDIJeuOFPMghqrIaVpGYYkBTZjhpTDsKqlmmZb4zFq+aw2qYl8jxcx4sh
-          c8LaV886D6bi1M+FJt/uPHUPm5Nc6Gewz/Kwe1oNS2aqnsW2pi5a9aXqYe1e
-          pSnh4/tqmakaNMTy2GWNYSWp+FlvPthgWK1U9FL11kJp4jj63j437grRm81S
-          Ia4NSz1uPvKvACgtIfqztPpWZOldh0qZrlk8jZrDin4Q4rVc/4dZv5mwZCzm
-          DY9yWO5hc/SdflGk92u4rh5WS08gvpkU23ypPqi+FVkKq1pGv4Iiz645YUX/
-          ssOwWw1rkfj4+OuGT10bk/Hx8d5kYS1P5ValDw4WF6uUOSjNA9UdNDb0Tpgz
-          1EGTWx2CfW5udXD/ueHM+gTcs24unjNLigYvmicc4CW+J5jUet+oSIR9tT3J
-          5ky/w0vk8OOnwyh5lovtxVvfd2YkWHr/H3O1ftFx/TnZdEP+HpKd8c5k040A
-          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-          AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACb9ReGvKegrI7sqgAAAABJRU5ErkJg
-          gg==
+        DUMMY_IMAGE_PNG = <<-PNG.strip_heredoc
+          iVBORw0KGgoAAAANSUhEUgAAAPAAAAAoBAMAAAAyFmrjAAAAG1BMVEX/AAAA
+          AAB/AAA/AABfAAC/AADfAAAfAACfAACoVuFXAAAACXBIWXMAAA7EAAAOxAGV
+          Kw4bAAACa0lEQVRYhe2Wz3OaQBTHn6ILx/oj0SOpmdpjHdJ4NSWpPeLBpMel
+          qTFHkRg44iFj/uy+tyAYC4TtOON0hu+4w8J+3Q+7+/axAKVKlSpVqtR/oKpx
+          8e1Wxq8fCFxbfjx3vkv4vxwKjB3Vr4LjgEHrHgkMZ/xIYFVPnkx5WHAJbsPy
+          tz/2PEwtup+FLhb+TwJcXcAJ3YzAv/PasMEC6ovnjDQsUFuQx4z9iafX8Boj
+          gPvWcFmxgA1cL5AD10+34OUK5q/PMAlA7VvM3/B6Fxi1QTf2J54fHOpNYE8c
+          7gcWTHSJaAnB2HUEdizQPE6PVXyyeRYjvcA2bRH7Ew+pH1YQvMTLRg4MMdjF
+          t2gi5gOo2GLrAGv8cQBFj/2JhzThlYAulrhXg38EL8Xwae4p4GyLOg6rPPYn
+          HpLNRZNtia6wCxlwMtW+eAsBxnevhGCMPegl/sQDj6bhcHKhTcxJteh22w+u
+          VDCNz08D19ov0zVXaJRjUF3DMIZy4J3tlAaG621s7YFNTlPNmjgpJ6DeTFGW
+          FBgXMRcczeM+WKzyhNdbrtmyQAy8sEIwhi2BlSywokex9RYsFnTNa/qMUpZc
+          NhVuTBKiNzsLrC16O/634AGPhhpFuQz4TKdlBDbMAsPKTwNriKoOcKo/v1Ky
+          NqTAlw8/xyusYL67O88E9xdpYHA5M3ERHq8N5xJg/hXgV2Fwo+HeUEVzPD8z
+          uEQKSwHPO160+myAu+7KdZ5kRh2K5R29trG1r1n8XHxZZzLHt0Iy33UUzpVS
+          Yu8H7HajH1a7J5QM0Rfs4NLc3Ob5J4Dfxc+LxaV0gtx2bdxx2rk5+g/gjI2n
+          lZi5BgAAAABJRU5ErkJggg==
         PNG
       end
     end

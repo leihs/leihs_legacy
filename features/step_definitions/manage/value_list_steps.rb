@@ -29,7 +29,7 @@ Then /^I want to see the following sections in the (value list|picking list):$/ 
         when 'Title'
           case arg1
             when 'value list'
-              expect(find('h1', text: _('Value List')).has_content? @contract.id).to be true
+              expect(find('h1', text: _('Value List')).has_content? @contract.compact_id).to be true
             when 'picking list'
               find('h1', text: _('Picking List'))
           end
