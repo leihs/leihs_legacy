@@ -238,10 +238,10 @@ class Model < ActiveRecord::Base
                 s1 << "models.#{field}"
               end
             end
-            s << "CONCAT_WS(#{s1.join(', ')}) LIKE :query"
+            s << "CONCAT_WS(#{s1.join(', ')}) ILIKE :query"
             if fields.empty?
-              s << 'mg2.name LIKE :query'
-              s << 'p2.value LIKE :query'
+              s << 'mg2.name ILIKE :query'
+              s << 'p2.value ILIKE :query'
             end
             if fields.empty? or fields.include?(:items)
               model_fields = \
@@ -253,7 +253,7 @@ class Model < ActiveRecord::Base
               s << "CONCAT_WS(' ', " \
                              "#{model_fields}, " \
                              "#{item_fields_2}, " \
-                             "#{item_fields_3}) LIKE :query"
+                             "#{item_fields_3}) ILIKE :query"
             end
 
             sql = sql.where(format('%s', s.join(' OR ')), query: "%#{x}%")
