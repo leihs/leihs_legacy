@@ -12,7 +12,7 @@ class Manage::SuppliersController < Manage::ApplicationController
     @items = \
       @supplier
         .items
-        .where("#{current_inventory_pool.id} IN (inventory_pool_id, owner_id)")
+        .where("'#{current_inventory_pool.id}' IN (inventory_pool_id, owner_id)")
         .includes(:model, :inventory_pool)
   end
 
