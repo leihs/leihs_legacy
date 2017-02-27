@@ -167,10 +167,11 @@ module Leihs
           elsif row[:content].blank? and ref_klass.find_by_id(ref_uuid) and ENV['REPLACE_MISSING_IMAGES'].present?
             row[:content] = DUMMY_IMAGE_PNG
             row[:content_type] = 'image/png'
-            row[:size]= 2161
+            row[:size]= 736
             row.merge Hash["#{ref_table.singularize}_id", ref_uuid]
           else
-            Rails.logger.warn("Ignoring missing Іmage for #{table_name} #{row.tos}")
+            Rails.logger.warn("Ignoring missing attachment #{row.to_s}")
+            nil
           end
         end
 
