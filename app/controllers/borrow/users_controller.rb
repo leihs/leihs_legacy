@@ -8,7 +8,8 @@ class Borrow::UsersController < Borrow::ApplicationController
 
   def documents
     @contracts = current_user.reservations_bundles.signed_or_closed
-    @contracts.to_a.sort! { |a, b| b.time_window_min <=> a.time_window_min }
+    @contracts = \
+      @contracts.to_a.sort { |a, b| a.time_window_min <=> b.time_window_min }
   end
 
   def delegations

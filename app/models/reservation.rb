@@ -25,7 +25,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def dynamic_contract_id
-    [status, user_id, inventory_pool_id, created_at_date_if_submitted]
+    [status, user_id, inventory_pool_id]
       .compact
       .join('_')
   end

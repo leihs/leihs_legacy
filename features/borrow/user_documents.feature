@@ -1,17 +1,15 @@
-
 Feature: User documents
-
-  Background:
-    Given I am a customer with contracts
 
   @javascript @personas
   Scenario: Getting to my documents
+    Given I am a customer with contracts
     When I click on "My Documents" underneath my username
     Then I am on the page showing my documents
 
-  @javascript @personas
+  @javascript @personas @flapping
   Scenario: Document overview
-    Given I go to the page showing my documents
+    Given I am a customer with contracts with different dates
+    And I go to the page showing my documents
     Then my contracts are ordered by the earliest time window
     And I see the following information for each contract:
       | Contract number                    |
@@ -24,17 +22,20 @@ Feature: User documents
 
   @javascript @personas
   Scenario: Person taking back
+    Given I am a customer with contracts
     When I open a contract with returned items from my documents
     Then the relevant reservations show the person taking back the item in the format "F. Lastname"
 
   @javascript @personas
   Scenario: Opening value list
-    Given I go to the page showing my documents
+    Given I am a customer with contracts
+    And I go to the page showing my documents
     And I click the value list link
     Then the value list opens
 
   @javascript @personas
   Scenario: What I want to see on a value list
+    Given I am a customer with contracts
     When I open a value list from my documents
     Then I want to see the following sections in the value list:
       | Section  |
@@ -58,13 +59,15 @@ Feature: User documents
       | Quantity |
       | Value    |
 
-  @javascript @personas
+  @javascript @personas @flapping
   Scenario: Opening a contract
-    Given I go to the page showing my documents
+    Given I am a customer with contracts
+    And I go to the page showing my documents
     And I click the contract link
     Then the contract opens
 
   @javascript @personas
   Scenario: What I want to see on the contract
+    Given I am a customer with contracts
     When I open a contract from my documents
     Then I see the contract and it looks like in the manage section

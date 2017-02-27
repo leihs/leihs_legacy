@@ -116,3 +116,17 @@ Then(/^the relevant reservations show the person taking back the item in the for
     end
   end
 end
+
+Given(/^I am a customer with contracts with different dates$/) do
+  inventory_pool = FactoryGirl.create(:inventory_pool)
+  customer = FactoryGirl.create(:user)
+  customer.access_rights << FactoryGirl.create(:access_right, inventory_pool: inventory_pool)
+  (Date.today..Date.today + 1.week).each do |date|
+    FactoryGirl.create(:signed_contract,
+                       inventory_pool: inventory_pool,
+                       user: customer,
+                       start_date: date,
+                       end_date: date + 1.day)
+  end
+  step 'I am logged in as "%s"' % customer.login
+end

@@ -17,6 +17,8 @@ FactoryGirl.define do
         end
         user
       end
+      start_date nil
+      end_date nil
     end
 
     factory :signed_contract do
@@ -30,6 +32,8 @@ FactoryGirl.define do
               inventory_pool: evaluator.inventory_pool,
               user: evaluator.user,
               contract: c,
+              start_date: evaluator.start_date,
+              end_date: evaluator.end_date,
               item: item,
               model: item.model
             )
@@ -48,6 +52,8 @@ FactoryGirl.define do
               inventory_pool: evaluator.inventory_pool,
               user: evaluator.user,
               contract: c,
+              start_date: evaluator.start_date,
+              end_date: evaluator.end_date,
               item: item,
               model: item.model
             )

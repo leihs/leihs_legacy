@@ -22,16 +22,10 @@ class ReservationsBundle < ActiveRecord::Base
     select(<<-SQL)
       COALESCE(reservations.contract_id::text,
                CONCAT_WS('_',
-                         MAX(reservations.status),
+                         reservations.status,
                          reservations.user_id::text,
-                         reservations.inventory_pool_id::text,
-                         CASE
-                           WHEN
-                             MAX(reservations.status) = 'submitted'
-                           THEN
-                             MAX(reservations.created_at::date)
-                         END)) AS id,
-      MAX(reservations.status) AS status,
+                         reservations.inventory_pool_id::text)) AS id,
+      reservations.status,
       reservations.user_id,
       reservations.inventory_pool_id,
       reservations.delegated_user_id,
@@ -51,10 +45,10 @@ class ReservationsBundle < ActiveRecord::Base
       AND partitions.model_id = reservations.model_id
     SQL
     .group(<<-SQL)
-      reservations.contract_id::text,
+      reservations.contract_id,
+      reservations.status,
       reservations.user_id,
       reservations.inventory_pool_id,
-      reservations.created_at::date,
       reservations.delegated_user_id
     SQL
     .order(nil)
@@ -247,12 +241,14 @@ class ReservationsBundle < ActiveRecord::Base
 
     if r = params[:range]
       if r[:start_date]
-        contracts = contracts.having(
-          'reservations.created_at::date >= ?', r[:start_date])
+        contracts = contracts
+          .group('reservations.created_at::date')
+          .having('reservations.created_at::date >= ?', r[:start_date])
       end
       if r[:end_date]
-        contracts = contracts.having(
-          'reservations.created_at::date <= ?', r[:end_date])
+        contracts = contracts
+          .group('reservations.created_at::date')
+          .having('reservations.created_at::date <= ?', r[:end_date])
       end
     end
 

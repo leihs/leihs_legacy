@@ -154,7 +154,7 @@ Feature: Model list
     And the inventory pool selector is still expanded
     And the filter shows the count of selected inventory pools
 
-  @javascript @personas @browser
+  @javascript @personas @browser @flapping
   Scenario: Deselecting all but one inventory pool
     Given I am Normin
     And I am listing models
