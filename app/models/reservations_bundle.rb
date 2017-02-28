@@ -151,7 +151,7 @@ class ReservationsBundle < ActiveRecord::Base
   scope :no_verification_required, -> { having('COUNT(partitions.id) = 0') }
 
   def to_be_verified?
-    verifiable_user_and_model == 1
+    verifiable_user_and_model
   end
 
   #######################################################
