@@ -77,7 +77,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # By default this is also true, but please leave this line in here
-  # so that Ansible knows which line to switch to false on test servers
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_deliveries = \
+    (YAML.load(ENV['LEIHS_SEND_MAILS'].presence || "no") == true)
 end
