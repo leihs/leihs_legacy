@@ -1,12 +1,12 @@
 ###
-  
+
   Contract
 
 ###
 
 class window.App.Contract extends Spine.Model
 
-  @configure "Contract", "id", "user_id", "inventory_pool_id", "status", "delegated_user_id", "to_be_verified?"
+  @configure "Contract", "id", "user_id", "inventory_pool_id", "status", "delegated_user_id", "to_be_verified?", "compact_id"
 
   @extend Spine.Model.Ajax
   @extend App.Modules.FindOrBuild
