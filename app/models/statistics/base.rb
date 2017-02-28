@@ -124,7 +124,7 @@ module Statistics
 
       private
 
-      def prepare_query_for_item_values(klass, options)
+      def prepare_query_for_item_values(klass, items, options)
         query = klass.unscoped
           .select("#{klass.name.tableize}.id, " \
                   'COUNT(items.id) AS quantity, ' \
@@ -142,10 +142,12 @@ module Statistics
                 when 'InventoryPool'
                   query.joins(:own_items)
                     .group('items.owner_id')
+                    .group('inventory_pools.id')
                     .select('inventory_pools.name AS label')
                 when 'Model'
                   query.joins(:items)
                     .group("items.#{klass.name.foreign_key}")
+                    .group('models.id')
                     .select('models.product AS label')
                 else
                   raise "#{klass} not supported"
@@ -166,10 +168,11 @@ module Statistics
                 Date.parse(options[:start_date]).to_s(:db)
         end
         unless options[:end_date].blank?
-          query.where \
+          query = query.where \
             items[:created_at].lteq \
               Date.parse(options[:end_date]).to_s(:db)
         end
+        query
       end
 
       def get_query_for_contracts(klass, reservations, options)
@@ -184,12 +187,13 @@ module Statistics
                 when 'User'
                   query.joins(reservations: :contract)
                     .group("reservations.#{klass.name.foreign_key}")
+                    .group('users.id')
                     .select("CAST(CONCAT_WS(' ', " \
                             'users.firstname, ' \
                             'users.lastname) AS CHAR) AS label')
                 when 'InventoryPool'
                   query.joins(reservations: :contract)
-                    .group("reservations.#{klass.name.foreign_key}")
+                    .group('inventory_pools.id')
                     .select('inventory_pools.name AS label')
                 else
                   raise "#{klass} not supported"
@@ -235,38 +239,7 @@ module Statistics
 
       def get_query_for_hand_overs(klass, reservations, options)
         query = get_initial_query_for_hand_overs(klass, reservations, options)
-        query = case klass.name
-                when 'User'
-                  query.joins(:reservations)
-                    .group('users.id')
-                    .group("reservations.#{klass.name.foreign_key}")
-                    .select("CAST(CONCAT_WS(' ', " \
-                                           'users.firstname, ' \
-                                           'users.lastname) AS CHAR) AS label')
-                when 'InventoryPool'
-                  query.joins(:reservations)
-                    .group("reservations.#{klass.name.foreign_key}")
-                    .select('inventory_pools.name AS label')
-                when 'Model'
-                  query.joins(:reservations)
-                    .group('models.id')
-                    .group("reservations.#{klass.name.foreign_key}")
-                    .select("CONCAT_WS(' ', " \
-                                      'models.manufacturer, ' \
-                                      'models.product, ' \
-                                      'models.version) AS label')
-                when 'Item'
-                  query.joins(item_lines: :model)
-                    .group('items.id')
-                    .group("reservations.#{klass.name.foreign_key}")
-                    .select("CONCAT_WS(' ', " \
-                                      'items.inventory_code, ' \
-                                      'models.manufacturer, ' \
-                                      'models.product, ' \
-                                      'models.version) AS label')
-                else
-                  raise "#{klass} not supported"
-                end
+        query = extend_query_for_hand_overs(query, klass)
 
         unless options[:user_id].blank?
           query = query.where(reservations: { user_id: options[:user_id] })
@@ -293,6 +266,44 @@ module Statistics
           query.where \
             reservations[:returned_date].lteq \
               Date.parse(options[:end_date]).to_s(:db)
+        end
+      end
+
+      def extend_query_for_hand_overs(query, klass)
+        case klass.name
+        when 'User'
+          query.joins(:reservations)
+            .group('users.id')
+            .group("reservations.#{klass.name.foreign_key}")
+            .select("CAST(CONCAT_WS(' ', " \
+                    'users.firstname, ' \
+                    'users.lastname) AS CHAR) AS label')
+        when 'InventoryPool'
+          query.joins(:reservations)
+            .group('inventory_pools.id')
+            .select('inventory_pools.name AS label')
+        when 'Model'
+          query.joins(:reservations)
+            .group('models.id')
+            .group("reservations.#{klass.name.foreign_key}")
+            .select("CONCAT_WS(' ', " \
+                    'models.manufacturer, ' \
+                    'models.product, ' \
+                    'models.version) AS label')
+        when 'Item'
+          query.joins(item_lines: :model)
+            .group('items.id')
+            .group("reservations.#{klass.name.foreign_key}")
+            .group('models.manufacturer')
+            .group('models.product')
+            .group('models.version')
+            .select("CONCAT_WS(' ', " \
+                    'items.inventory_code, ' \
+                    'models.manufacturer, ' \
+                    'models.product, ' \
+                    'models.version) AS label')
+        else
+          raise "#{klass} not supported"
         end
       end
     end
