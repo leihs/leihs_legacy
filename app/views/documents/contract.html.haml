@@ -7,8 +7,6 @@
 
   %h1
     = _("Lending Contract No.")
-    - # TODO Merde this doesn't work here :-( @contract is a ReservationBundle
-    - # and contract_id is some stuff comming from it
     = @contract.compact_id
     = _("from %s") % l(@contract.created_at.to_date)
     %span.weeknumber W#{@contract.created_at.strftime("%U")}

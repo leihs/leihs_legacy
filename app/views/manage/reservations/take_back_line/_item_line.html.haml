@@ -1,7 +1,7 @@
 .line.light.row.focus-hover-thin{:"data-line-type" => "item_line", :"data-id" => line.id}
 
   .line-info
-  
+
   .line-col.padding-left-xs
     .row
       .col1of4
@@ -36,7 +36,7 @@
             %a.dropdown-item{:href => manage_contract_path(current_inventory_pool, line.contract.id), :target => "_blank"}
               %i.fa.fa-file-alt
               = _("Contract")
-              = line.contract.id
+              = line.contract.compact_id
           %li
             %a.dropdown-item{:"data-open-time-line" => true, :"data-model-id" => line.model.id}
               %i.fa.fa-align-left

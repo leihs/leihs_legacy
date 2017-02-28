@@ -18,7 +18,7 @@ Then(/^I see the following information for each contract:$/) do |table|
       table.raw.flatten.each do |s|
         case s
           when 'Contract number'
-            expect(has_content?(contract.id)).to be true
+            expect(has_content?(contract.compact_id)).to be true
           when 'Time window with its start and end'
             expect(has_content?(contract.time_window_min.strftime('%d/%m/%Y'))).to be true
             expect(has_content?(contract.time_window_max.strftime('%d/%m/%Y'))).to be true
