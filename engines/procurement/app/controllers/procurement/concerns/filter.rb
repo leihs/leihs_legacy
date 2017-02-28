@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module Procurement
   module Filter
     extend ActiveSupport::Concern
@@ -5,7 +6,7 @@ module Procurement
     included do
       def default_filters
         @filter = params[:filter] || begin
-          r = session[:requests_filter] || {}
+          r = get_user_filter(current_user) || {}
           r.delete('search') # NOTE reset on each request
           r
         end
@@ -92,9 +93,20 @@ module Procurement
           @filter['inspector_priorities'] ||= %w(mandatory high medium low)
         end
         @filter['states'] ||= []
-        session[:requests_filter] = @filter
+        create_or_update_user_filter! current_user, @filter
       end
       # rubocop:enable Metrics/MethodLength
+
+      def get_user_filter(user)
+        Procurement::UserFilter.find_by_user_id(user.id).try(:filter)
+      end
+
+      def create_or_update_user_filter!(user, f)
+        user_filter = \
+          Procurement::UserFilter.find_or_initialize_by(user_id: user.id)
+        user_filter.filter = f
+        user_filter.save!
+      end
 
       def sort_requests(requests, sort_by, sort_dir)
         r = requests.sort do |a, b|
@@ -122,3 +134,4 @@ module Procurement
 
   end
 end
+# rubocop:enable Metrics/ModuleLength
