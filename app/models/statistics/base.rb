@@ -275,9 +275,9 @@ module Statistics
           query.joins(:reservations)
             .group('users.id')
             .group("reservations.#{klass.name.foreign_key}")
-            .select("CAST(CONCAT_WS(' ', " \
+            .select("CONCAT_WS(' ', " \
                     'users.firstname, ' \
-                    'users.lastname) AS CHAR) AS label')
+                    'users.lastname) AS label')
         when 'InventoryPool'
           query.joins(:reservations)
             .group('inventory_pools.id')
