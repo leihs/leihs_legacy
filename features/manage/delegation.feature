@@ -174,7 +174,7 @@ Feature: Delegation
     Then I see the delegation's name
     And I see the contact person
 
-  @javascript @personas @browser
+  @javascript @personas @browser @flapping
   Scenario: Definition of the contact person when creating an order
     Given I am Julie
     When I create an order for a delegation
