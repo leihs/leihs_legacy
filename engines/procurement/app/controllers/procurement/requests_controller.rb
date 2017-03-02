@@ -146,13 +146,13 @@ module Procurement
         if param[:id].blank? or @user == current_user
           keys += Request::REQUESTER_NEW_KEYS
         end
+        handle_attachments! param
         permitted = param.permit(keys)
 
         if param[:id]
           r = update_or_destroy(param, permitted)
         else
           next if permitted[:motivation].blank?
-          handle_attachments! permitted
           r = @category.requests.create(permitted) do |x|
             x.user = @user
             x.budget_period = @budget_period
@@ -168,9 +168,6 @@ module Procurement
         param[:attachments_delete].each_pair do |k, v|
           r.attachments.destroy(k) if v == '1'
         end
-      end
-      if param[:attachments_attributes]
-        transform_attachment_files_into_attributes! param[:attachments_attributes]
       end
       if permitted.values.all?(&:blank?)
         r.destroy

@@ -16,6 +16,12 @@ steps_for :categories do
       FactoryGirl.create(:procurement_main_category, :with_image)
   end
 
+  step 'a main category with a picture :filename exists' do |filename|
+    @main_category = \
+      FactoryGirl.create(:procurement_main_category, :with_image,
+                         filename: filename)
+  end
+
   step 'a sub category exists' do
     @category = FactoryGirl.create(:procurement_category)
   end
@@ -129,6 +135,11 @@ steps_for :categories do
   step 'I upload a picture' do
     field = find "input[name*='[image]']"
     attach_file(field[:name], "#{Rails.root}/features/data/images/image1.jpg")
+  end
+
+  step 'I upload picture :filename' do |filename|
+    field = find "input[name*='[image]']"
+    attach_file(field[:name], "#{Rails.root}/features/data/images/#{filename}")
   end
 
   step 'the new main category is not saved to the database' do
@@ -505,6 +516,19 @@ steps_for :categories do
 
   step 'there exists an extra budget period' do
     @extra_budget_period = FactoryGirl.create(:procurement_budget_period)
+  end
+
+  step 'I open the main category' do
+    @main_category_el = find(".panel div[href='#collapse_#{@main_category.id}']")
+    @main_category_el.find('.toggler').click
+  end
+
+  step 'the image of the main category has changed to :filename' do |filename|
+    img_src = find('img.main_category_image')[:src]
+    image_id = img_src.split('/').last
+    thumbnail_filename = \
+      "#{filename.split('.').first}_thumb.#{filename.split('.').second}"
+    expect(Procurement::Image.find(image_id).filename).to be == thumbnail_filename
   end
 
   private

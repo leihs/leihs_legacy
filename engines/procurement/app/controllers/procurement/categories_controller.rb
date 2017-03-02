@@ -52,6 +52,9 @@ module Procurement
             main_category.destroy_image_with_thumbnail!
           end
           if file = param.delete('image')
+            if main_category.image
+              main_category.destroy_image_with_thumbnail!
+            end
             create_image_with_thumbnail!(main_category, file)
           end
           main_category.assign_attributes(param)

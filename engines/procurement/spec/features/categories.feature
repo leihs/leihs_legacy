@@ -43,6 +43,19 @@ Feature: Procurement Categories
     And the default picture of the category is used
 
   @categories
+  Scenario: Changing the picture
+    Given I am Hans Ueli
+    And a budget period exist
+    And a main category with a picture 'image1.jpg' exists
+    When I navigate to the categories page
+    And I open the main category
+    And I upload picture 'image2.jpg'
+    And I click on save
+    Then I see a success message
+    And I open the main category
+    And the image of the main category has changed to 'image2.jpg'
+
+  @categories
   Scenario: Creating the sub categories
     Given I am Hans Ueli
     And a main category exists
