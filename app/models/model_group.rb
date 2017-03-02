@@ -8,17 +8,6 @@ class ModelGroup < ActiveRecord::Base
   has_many :models, -> { uniq }, through: :model_links
   has_many :items, -> { uniq }, through: :models
 
-  # has_many :all_model_links,
-  #          :class_name => "ModelLink",
-  #          :finder_sql => \
-  #            proc { ModelLink.where(["model_group_id IN (?)",
-  #                   descendant_ids]).to_sql }
-  # has_many :all_models,
-  #          -> { uniq },
-  #          :class_name => "Model",
-  #          :through => :all_model_links,
-  #          :source => :model
-
   has_and_belongs_to_many :inventory_pools
 
   validates_presence_of :name
@@ -26,8 +15,6 @@ class ModelGroup < ActiveRecord::Base
   accepts_nested_attributes_for :model_links, allow_destroy: true
 
   ##################################################
-
-  # has_dag_links link_class_name: 'ModelGroupLink'
 
   has_many :parent_links,
            class_name: ::ModelGroupLink,
@@ -46,10 +33,6 @@ class ModelGroup < ActiveRecord::Base
     :parents,
     join_table: :model_group_links, class_name: 'ModelGroup',
     foreign_key: :child_id, association_foreign_key: :parent_id
-
-  # p = FactoryGirl.create :model_group, name: 'Parent', type: 'ModelGroup'
-  # c = FactoryGirl.create :model_group, name: 'Child', type: 'ModelGroup'
-  # ModelGroupLink.create parent: p, child: c
 
   def descendants(found = [])
     more = Set.new(self.children) + found.map(&:children).flatten
@@ -81,9 +64,6 @@ class ModelGroup < ActiveRecord::Base
           'ON mgl.child_id = model_groups.id')
       .where('mgl.child_id IS NULL')
   end)
-
-  # scope :accessible_roots, lambda do |user_id|
-  # end
 
   ################################################
   # Edge Label
