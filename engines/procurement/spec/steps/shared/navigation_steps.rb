@@ -13,10 +13,6 @@ module NavigationSteps
     @user = @current_user
     step 'I am navigated to the new request form for the requester'
   end
-  # alias
-  # step 'I am navigated to the new request form of the specific group' do
-  #   step 'I am navigated to the new request form'
-  # end
 
   step 'I am navigated to the new request form for the requester' do
     # NOTE this doesn't match the query params
@@ -234,5 +230,13 @@ module NavigationSteps
   step 'I type the procurement URL' do
     visit procurement.root_path
   end
+
+  def visit_request(request)
+    visit \
+      procurement.category_budget_period_user_requests_path(request.category,
+                                                            request.budget_period,
+                                                            request.user)
+  end
+
 end
 # rubocop:enable Metrics/ModuleLength

@@ -1,15 +1,21 @@
 require_relative 'shared/common_steps'
 require_relative 'shared/dataset_steps'
+require_relative 'shared/factory_steps'
+require_relative 'shared/file_upload_steps'
 require_relative 'shared/filter_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_steps'
+require_relative 'shared/request_steps'
 
 steps_for :managing_requests do
   include CommonSteps
   include DatasetSteps
+  include FactorySteps
+  include FileUploadSteps
   include FilterSteps
   include NavigationSteps
   include PersonasSteps
+  include RequestSteps
 
   step 'a new line containing this template article is added' do
     find ".request[data-template_id='#{@template.id}']"
@@ -791,7 +797,61 @@ steps_for :managing_requests do
         ".quantities .label[data-original-title='#{_('Order quantity')}']"
   end
 
+  step 'I see the requested amount per budget period' do
+    requests = Procurement::BudgetPeriod.current.requests
+                .where(category_id: displayed_categories)
+    requests = requests.where(user_id: @current_user) if filtered_own_requests?
+    total = requests.map { |r| r.total_price(@current_user) }.sum
+    find '.panel-success > .panel-heading .label-primary.big_total_price',
+         text: number_with_delimiter(total.to_i)
+  end
+
+  step 'I see the requested amount per category of each budget period' do
+    displayed_categories.each do |category|
+      requests = Procurement::BudgetPeriod.current.requests
+                     .where(category_id: category)
+      requests = requests.where(user_id: @current_user) if filtered_own_requests?
+      total = requests.map { |r| r.total_price(@current_user) }.sum
+      within '.panel-success .panel-body' do
+        within '.row', text: category.name do
+          find '.label-primary.big_total_price',
+               text: number_with_delimiter(total.to_i)
+        end
+      end
+    end
+  end
+
+  step 'all budget periods are visible' do
+    # wait till all budget periods are visible
+    Procurement::BudgetPeriod.all.map do |budget_period|
+      find('.panel-heading .h4', text: budget_period.name)
+    end
+  end
+
+  step 'I press on the first main category inside of the last budget period' do
+    @budget_period = Procurement::BudgetPeriod.all.sort_by(&:end_date).first
+    @main_category = Procurement::MainCategory.all.sort_by(&:name).first
+    find('.panel-heading .h4', text: @budget_period.name)
+      .find(:xpath, "../../../div[@class='panel-body']")
+      .find("[href='#collapse_mc_#{@budget_period.id}_#{@main_category.id}']")
+      .click
+  end
+
+  step 'I see the sub-categories of this main category' do
+    within "#collapse_mc_#{@budget_period.id}_#{@main_category.id}" do
+      @main_category.categories.each do |c|
+        find('.row', text: c.name)
+      end
+    end
+  end
+
   private
+
+  def filtered_own_requests?
+    Procurement::Access.requesters.where(user_id: @current_user).exists? and \
+      (has_no_selector?('#filter_panel input[name="user_id"]') or \
+        find('#filter_panel input[name="user_id"]').checked?)
+  end
 
   def get_current_request(user)
     Procurement::Request.find_by \

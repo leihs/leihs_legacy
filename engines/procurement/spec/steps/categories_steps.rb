@@ -1,5 +1,6 @@
 require_relative 'shared/common_steps'
 require_relative 'shared/dataset_steps'
+require_relative 'shared/factory_steps'
 require_relative 'shared/filter_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_steps'
@@ -7,6 +8,7 @@ require_relative 'shared/personas_steps'
 steps_for :categories do
   include CommonSteps
   include DatasetSteps
+  include FactorySteps
   include FilterSteps
   include NavigationSteps
   include PersonasSteps

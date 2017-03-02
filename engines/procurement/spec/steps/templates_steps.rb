@@ -1,11 +1,13 @@
 require_relative 'shared/common_steps'
 require_relative 'shared/dataset_steps'
+require_relative 'shared/factory_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_steps'
 
 steps_for :templates do
   include CommonSteps
   include DatasetSteps
+  include FactorySteps
   include NavigationSteps
   include PersonasSteps
 
@@ -314,6 +316,46 @@ steps_for :templates do
     within(:xpath, "//input[@value='#{@template.article_name}']/ancestor::tr") do
       color = current_scope.native.css_value('background-color')
       expect(color).to eq 'rgba(242, 222, 222, 1)'
+    end
+  end
+
+  step 'I delete the following fields' do |table|
+    el1 = find('.panel-info', text: @template.category.main_category.name)
+
+    within el1 do
+      find('.collapsed').click if el1.has_selector? '.collapsed'
+      el2 = \
+        find(:xpath, "//input[@value='#{@template.article_name}']/ancestor::tr")
+
+      within el2 do
+        table.raw.flatten.each do |value|
+          case value
+          when 'Price'
+            find("input[name*='[price]']").set ''
+          else
+            fill_in _(value), with: ''
+          end
+        end
+      end
+    end
+  end
+
+  def mapped_key(from)
+    case from
+    when 'Article or Project'
+      :article_name
+    when 'Article nr. or Producer nr.'
+      :article_number
+    when 'Replacement / New'
+      :replacement
+    when 'Supplier'
+      :supplier_name
+    when 'Name of receiver'
+      :receiver
+    when 'Point of Delivery'
+      :location_name
+    else
+      from.parameterize.underscore.to_sym
     end
   end
 

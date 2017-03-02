@@ -1,15 +1,21 @@
 require_relative 'shared/common_steps'
 require_relative 'shared/dataset_steps'
+require_relative 'shared/factory_steps'
+require_relative 'shared/file_upload_steps'
 require_relative 'shared/filter_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_steps'
+require_relative 'shared/request_steps'
 
 steps_for :inspection do
   include CommonSteps
   include DatasetSteps
+  include FactorySteps
+  include FileUploadSteps
   include FilterSteps
   include NavigationSteps
   include PersonasSteps
+  include RequestSteps
 
   step 'a point of delivery exists' do
     FactoryGirl.create :location
@@ -309,4 +315,28 @@ steps_for :inspection do
     expect(@request.reload.inspector_priority).to be == 'medium'
   end
 
+  step 'I delete the following fields' do |table|
+    el1 = find('.panel-body')
+
+    within el1 do
+      find('.collapsed').click if el1.has_selector? '.collapsed'
+
+      el2 = if @request
+              ".request[data-request_id='#{@request.id}']"
+            else
+              ".request[data-request_id='new_request']"
+            end
+
+      within el2 do
+        table.raw.flatten.each do |value|
+          case value
+          when 'Price'
+              find("input[name*='[price]']").set ''
+          else
+              fill_in _(value), with: ''
+          end
+        end
+      end
+    end
+  end
 end

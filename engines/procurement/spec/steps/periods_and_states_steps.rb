@@ -1,5 +1,6 @@
 require_relative 'shared/common_steps'
 require_relative 'shared/dataset_steps'
+require_relative 'shared/factory_steps'
 require_relative 'shared/filter_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_steps'
@@ -7,6 +8,7 @@ require_relative 'shared/personas_steps'
 steps_for :periods_and_states do
   include CommonSteps
   include DatasetSteps
+  include FactorySteps
   include FilterSteps
   include NavigationSteps
   include PersonasSteps
@@ -396,6 +398,40 @@ steps_for :periods_and_states do
     end
   end
 
+  step 'I fill in the following fields' do |table|
+    @changes ||= {}
+
+    el = if @template
+           'article .page-content-wrapper ' \
+           ".request[data-template_id='#{@template.id}']"
+         else
+           'article .page-content-wrapper'
+         end
+    table.hashes.each do |hash|
+      within el do
+        hash['value'] = nil if hash['value'] == 'random'
+        case hash['key']
+        when 'Price'
+          v = (hash['value'] || Faker::Number.number(4)).to_i
+          find("input[name*='[price]']").set v
+        when /quantity/
+          v = (hash['value'] || Faker::Number.number(2)).to_i
+          fill_in _(hash['key']), with: v
+        when 'Replacement / New'
+          v = (hash['value'] == 'Replacement' ? 1 : 0) || [0, 1].sample
+          find("input[name*='[replacement]'][value='#{v}']").click
+        else
+          v = hash['value'] || Faker::Lorem.sentence
+          fill_in _(hash['key']), with: v
+        end
+        @changes[mapped_key(hash['key'])] = v
+      end
+
+      # NOTE trigger change event
+      find('body').native.send_keys(:tab) # find('body').click
+    end
+  end
+
   private
 
   def find_budget_period_line_by_name(name)
@@ -406,4 +442,24 @@ steps_for :periods_and_states do
   def format_date(date)
     date.strftime '%d.%m.%Y'
   end
+
+  def mapped_key(from)
+    case from
+    when 'Article or Project'
+      :article_name
+    when 'Article nr. or Producer nr.'
+      :article_number
+    when 'Replacement / New'
+      :replacement
+    when 'Supplier'
+      :supplier_name
+    when 'Name of receiver'
+      :receiver
+    when 'Point of Delivery'
+      :location_name
+    else
+      from.parameterize.underscore.to_sym
+    end
+  end
+
 end
