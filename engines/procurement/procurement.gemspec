@@ -27,7 +27,6 @@ Gem::Specification.new do |s|
   # s.add_dependency 'font-awesome-sass', '~> 4.4'
   s.add_dependency 'money-rails', '~> 1.4'
   s.add_dependency 'acts_as_tree', '~> 2.2'
-  s.add_dependency 'paperclip', '~> 4.3'
   s.add_dependency 'pundit', '~> 1.1'
   s.add_dependency 'remotipart', '~> 1.2'
   s.add_dependency 'rails-assets-jquery-tokeninput', '~> 1.7'

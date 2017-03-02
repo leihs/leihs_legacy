@@ -32,7 +32,6 @@ gem 'mini_magick', '~> 3.4'
 # gem 'mysql2', '~> 0.4', platform: :mri
 gem 'net-ldap', require: 'net/ldap'
 gem 'nilify_blanks', '~> 1.1'
-gem 'paperclip', '~> 4.3'
 gem 'rails_autolink', '~> 1.0'
 gem 'rake' # So that cronjobs work -- otherwise they can't find rake
 gem 'react-rails'
