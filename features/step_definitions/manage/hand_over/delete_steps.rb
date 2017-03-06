@@ -14,7 +14,6 @@ When(/^I delete this line element$/) do
 end
 
 Then(/^this line is deleted$/) do
-  find('.line', match: :first)
   expect(has_no_selector?(".line[data-id='#{@line.id}']")).to be true
   expect { @line.reload }.to raise_error(ActiveRecord::RecordNotFound)
 end
