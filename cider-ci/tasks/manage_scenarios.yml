@@ -216,14 +216,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/availability/availability.feature:48 DEFAULT_BROWSER=firefox
-- name: features/manage/booking_calendar/closed_day_alert.feature:11
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/booking_calendar/closed_day_alert.feature:11 DEFAULT_BROWSER=firefox
 - name: features/manage/booking_calendar/summary_of_lines_in_calendar.feature:11
   scripts:
     test:
@@ -288,6 +280,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/daily_view/daily_view.feature:8 DEFAULT_BROWSER=firefox
+- name: features/manage/daily_view/daily_view.feature:15
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/daily_view/daily_view.feature:15 DEFAULT_BROWSER=firefox
 - name: features/manage/delegation.feature:20
   scripts:
     test:
@@ -728,6 +728,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/delete.feature:30 DEFAULT_BROWSER=firefox
+- name: features/manage/hand_over/edit_reservation.feature:17
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/edit_reservation.feature:17 DEFAULT_BROWSER=firefox
 - name: features/manage/hand_over/edit_reservation.feature:23
   scripts:
     test:
@@ -784,6 +792,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/hand_over.feature:33 DEFAULT_BROWSER=firefox
+- name: features/manage/hand_over/hand_over.feature:39
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/hand_over.feature:39 DEFAULT_BROWSER=firefox
 - name: features/manage/hand_over/hand_over.feature:47
   scripts:
     test:
@@ -840,22 +856,30 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/hand_over.feature:122 DEFAULT_BROWSER=firefox
-- name: features/manage/hand_over/sign_contract.feature:50
+- name: features/manage/hand_over/sign_contract.feature:11
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/sign_contract.feature:50 DEFAULT_BROWSER=firefox
-- name: features/manage/hand_over/sign_contract.feature:62
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/sign_contract.feature:11 DEFAULT_BROWSER=firefox
+- name: features/manage/hand_over/sign_contract.feature:51
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/sign_contract.feature:62 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/sign_contract.feature:51 DEFAULT_BROWSER=firefox
+- name: features/manage/hand_over/sign_contract.feature:63
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/sign_contract.feature:63 DEFAULT_BROWSER=firefox
 - name: features/manage/inventory/categories.feature:9
   scripts:
     test:

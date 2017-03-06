@@ -1,5 +1,21 @@
 # -*- encoding : utf-8 -*-
 
+Given(/^there exists an approved option reservation for a normal user beginning today$/) do
+  @option_line = FactoryGirl.create(:option_line,
+                                    start_date: Date.today,
+                                    end_date: Date.tomorrow,
+                                    status: :approved,
+                                    user: FactoryGirl.create(:customer,
+                                                             inventory_pool: @current_inventory_pool),
+                                    inventory_pool: @current_inventory_pool)
+  @customer = @option_line.user
+end
+
+When(/^I open the hand over page containing this reservation$/) do
+  visit manage_hand_over_path(@current_inventory_pool, @customer)
+  expect(has_selector?('#hand-over-view')).to be true
+end
+
 When(/^I open a hand over( with at least one unassigned line)?( for today)?( with options| with models)?$/) do |unassigned_line, for_today, with_options_or_models|
   @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
 

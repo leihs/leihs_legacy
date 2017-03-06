@@ -51,27 +51,20 @@ end
 
 When(/^I add an option$/) do
   @option = @current_inventory_pool.options.sample
+  start_date = find('input#add-start-date').value
+  end_date = find('input#add-end-date').value
   find('#assign-or-add-input input').set @option.name
   within '.ui-autocomplete' do
     find("a[title='#{@option.name}']", match: :prefer_exact, text: @option.name).click
   end
   find('#flash .notice', text: _('Added %s') % @option.name)
-  within '#lines' do
+  within find('[data-selected-lines-container]', text: /#{start_date}.*#{end_date}/) do
     within ".line[data-line-type='option_line']", match: :prefer_exact, text: @option.name do
       @option_line = OptionLine.find current_scope['data-id']
       @line_css = ".line[data-id='#{@option_line.id}']"
     end
   end
 end
-
-# Which implementation is better?
-#  @option = @current_inventory_pool.options.first
-#  find("input#assign-or-add-input").set @option.inventory_code
-#  find("form#assign-or-add .ui-menu-item a", match: :first).click
-#  find("#flash")
-#  @option_line = @hand_over.user.reservations_bundles.approved.flat_map(&:reservations).find{|l| l.item == @option}
-#  @line_css = ".line[data-id='#{@option_line.id}']"
-#end
 
 When(/^I set the quantity for that option$/) do
   @quantity = rand(2..9)

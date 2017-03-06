@@ -7,9 +7,10 @@ Feature: Sign Contract
   Background:
     Given I am Pius
 
-  @personas @javascript @browser @unstable
+  @personas @javascript @browser
   Scenario: Hand over an not complete quantity of an option line
-    When I open a hand over with options
+    Given there exists an approved option reservation for a normal user beginning today
+    When I open the hand over page containing this reservation
     And I select an option line
     And I set the quantity for that option
     And I click hand over

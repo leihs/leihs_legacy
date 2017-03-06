@@ -35,7 +35,7 @@ Feature: Edit a hand over
     And the user in this hand over is suspended
     Then I see the note 'Suspended!' next to their name
 
-  @javascript @browser @personas @unstable
+  @javascript @browser @personas
   Scenario: System feedback when adding an option
     Given I open a hand over
     When I add an option

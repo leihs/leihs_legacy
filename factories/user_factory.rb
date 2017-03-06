@@ -45,6 +45,18 @@ FactoryGirl.define do
                            password: 'password')
       end
     end
-  end
 
+    factory :customer do
+      transient do
+        inventory_pool nil
+      end
+
+      after(:create) do |user, evaluator|
+        create(:access_right,
+               user: user,
+               inventory_pool: evaluator.inventory_pool,
+               role: :customer)
+      end
+    end
+  end
 end

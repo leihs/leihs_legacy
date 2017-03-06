@@ -223,7 +223,7 @@ Feature: Delegation
     When I try to change the order's contact person
     Then I can choose only those people as contact person for the order that belong to the delegation group
 
-  @javascript @personas @browser
+  @javascript @personas @browser @flapping
   Scenario: Borrow: Creating an order with a delegation
     Given I am Julie
     When I hover over my name
