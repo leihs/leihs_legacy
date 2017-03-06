@@ -52,7 +52,7 @@ end
 Then /^I see any problems displayed on the relevant reservations$/ do
   @problems = []
   @lines.each do |line|
-      hover_for_tooltip line.find("[data-tooltip-template='manage/views/reservations/problems_tooltip']")
+    line.find("[data-tooltip-template='manage/views/reservations/problems_tooltip']").click
     @problems << find('.tooltipster-content strong', match: :first).text
   end
   @reference_line = @lines.first

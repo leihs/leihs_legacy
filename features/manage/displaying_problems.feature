@@ -4,10 +4,15 @@ Feature: Displaying problems
   Background:
     Given I am Pius
 
-  @javascript @browser @personas @flapping
+  @javascript @browser @personas @unstable
   Scenario: Showing problems in an order when a model is not avaiable
     Given I edit an order
     And a model is no longer available
+    ################################################################
+    # on Cider the flash message gets sometimes displaced and covers
+    # other relevant elements, that's why it has to be closed first
+    And I close the flash message if visible
+    ################################################################
     Then I see any problems displayed on the relevant reservations
      And the problem is displayed as: "Nicht verfügbar 2(3)/7"
      And "2" are available for the user, also counting availability from groups the user is member of

@@ -29,6 +29,7 @@ class ReservationsBundle < ActiveRecord::Base
       reservations.user_id,
       reservations.inventory_pool_id,
       reservations.delegated_user_id,
+      ctx.compact_id,
       bool_or(groups.is_verification_required) AS verifiable_user,
       COUNT(partitions.id) > 0 AS verifiable_user_and_model,
       MAX(reservations.created_at) AS created_at
@@ -36,6 +37,7 @@ class ReservationsBundle < ActiveRecord::Base
     .joins(<<-SQL)
       LEFT JOIN groups_users ON reservations.user_id = groups_users.user_id
       LEFT JOIN groups ON groups_users.group_id = groups.id
+      LEFT JOIN contracts AS ctx ON ctx.id = reservations.contract_id
       AND groups.is_verification_required = true
       AND reservations.inventory_pool_id = groups.inventory_pool_id
     SQL
@@ -46,6 +48,7 @@ class ReservationsBundle < ActiveRecord::Base
     SQL
     .group(<<-SQL)
       reservations.contract_id,
+      ctx.compact_id,
       reservations.status,
       reservations.user_id,
       reservations.inventory_pool_id,
@@ -64,7 +67,7 @@ class ReservationsBundle < ActiveRecord::Base
   end
 
   def compact_id
-    contract.compact_id
+    contract.try(&:compact_id)
   end
 
   def id
@@ -171,7 +174,7 @@ class ReservationsBundle < ActiveRecord::Base
             .joins('LEFT JOIN items ON items.id = reservations.item_id')
             .joins('LEFT JOIN purposes ON purposes.id = reservations.purpose_id')
 
-          query.split.each do |q|
+          query.split.map(&:strip).each do |q|
             qq = "%#{q}%"
             sql = sql.where(
               # "reservations.id = '#{q}' OR
@@ -193,6 +196,7 @@ class ReservationsBundle < ActiveRecord::Base
               # and casted to integer, causing wrong matches (contracts.id)
               arel_table[:contract_id]
                 .eq(q.numeric? ? q : 0)
+                .or(Arel::Table.new(:ctx)[:compact_id].eq(q))
                 .or(Contract.arel_table[:note].matches(qq))
                 .or(User.arel_table[:login].matches(qq))
                 .or(User.arel_table[:firstname].matches(qq))

@@ -107,7 +107,7 @@ end
 
 Then(/^I see who placed this order on the order line and can view a popup with user details$/) do
   find(@line_css).has_text? @contract.user.name
-  find("[data-firstname][data-id='#{@contract.user.id}']").hover
+  find("[data-firstname][data-id='#{@contract.user.id}']").click
   expect(has_selector?('.tooltipster-base', text: @contract.user.name)).to be true
 end
 
@@ -124,7 +124,8 @@ Then(/^I see the order's creation date on the order line$/) do
 end
 
 Then(/^I see the number of items on the order line and can view a popup containing the items ordered$/) do
-  find("#{@line_css} [data-type='lines-cell']", text: "#{@contract.reservations.count} #{n_("Item", "Items", @contract.reservations.count)}")
+  sum_quantity = @contract.reservations.map(&:quantity).sum
+  find("#{@line_css} [data-type='lines-cell']", text: "#{sum_quantity} #{n_("Item", "Items", sum_quantity)}")
     .hover
   within find('.tooltipster-base') do
     @contract.models.each do |m|

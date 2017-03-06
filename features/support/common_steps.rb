@@ -51,3 +51,10 @@ Then 'I close the flash message' do
   selector = '#flash .fa-times-circle'
   find(selector).click if has_selector? selector
 end
+
+Then 'I close the flash message if visible' do
+  flash = first("#flash")
+  if flash
+    flash.find(".fa-times-circle").click
+  end
+end

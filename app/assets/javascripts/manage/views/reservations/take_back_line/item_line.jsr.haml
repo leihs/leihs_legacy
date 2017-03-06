@@ -45,7 +45,7 @@
             %a.dropdown-item{:href => "{{>contract().url()}}", :target => "_blank"}
               %i.fa.fa-file-alt
               {{jed "Contract"/}}
-              {{>contract().id}}
+              {{>contract().compact_id}}
           %li
             %a.dropdown-item{:"data-open-time-line" => true, :"data-model-id" => "{{>model().id}}"}
               %i.fa.fa-align-left
