@@ -488,14 +488,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/delegation.feature:273 DEFAULT_BROWSER=firefox
-- name: features/manage/displaying_problems.feature:8
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/displaying_problems.feature:8 DEFAULT_BROWSER=firefox
 - name: features/manage/displaying_problems.feature:18
   scripts:
     test:
@@ -712,6 +704,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/change_borrower.feature:8 DEFAULT_BROWSER=firefox
+- name: features/manage/hand_over/delete.feature:11
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default  --strict features/manage/hand_over/delete.feature:11 DEFAULT_BROWSER=firefox
 - name: features/manage/hand_over/delete.feature:17
   scripts:
     test:
