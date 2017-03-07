@@ -39,7 +39,7 @@ Feature: Search for software
   @javascript @personas
   Scenario: Finding contracts for software by searching for a borrower
     Given a software license exists
-    And this software license is handed over to somebody
+    And this software license is handed over to a normal user
     When I search after the name of that person
     Then the contract of this person appears in the search results
     And this person appears in the search results

@@ -436,6 +436,21 @@ Given(/^this software license is handed over to somebody$/) do
   @contract_with_software_license = line.user.reservations_bundles.signed.find(contract.id)
 end
 
+Given(/^this software license is handed over to a normal user$/) do
+  line = FactoryGirl.create(:item_line,
+                            inventory_pool: @current_inventory_pool,
+                            user: FactoryGirl.create(:customer,
+                                                     inventory_pool: @current_inventory_pool),
+                            status: :approved,
+                            model: @model,
+                            item: @item)
+  @contract_with_software_license = line.user.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)
+  expect(@contract_with_software_license.reservations.reload.empty?).to be false
+  contract = @contract_with_software_license.sign(@current_user, [line])
+  expect(contract).to be_valid
+  @contract_with_software_license = line.user.reservations_bundles.signed.find(contract.id)
+end
+
 When(/^I search after the name of that person$/) do
   search_field = find('#topbar-search input#search_term')
   search_field.set @contract_with_software_license.user.name
