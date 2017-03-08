@@ -16,9 +16,6 @@ class ReservationsBundle < ActiveRecord::Base
   self.table_name = 'reservations'
 
   default_scope do
-    # NOTE: MAX(reservations.status) AS status
-    # this is a trick to get 'signed' in case
-    # there are both 'signed' and 'closed' reservations
     select(<<-SQL)
       COALESCE(reservations.contract_id::text,
                CONCAT_WS('_',
@@ -37,9 +34,9 @@ class ReservationsBundle < ActiveRecord::Base
     .joins(<<-SQL)
       LEFT JOIN groups_users ON reservations.user_id = groups_users.user_id
       LEFT JOIN groups ON groups_users.group_id = groups.id
-      LEFT JOIN contracts AS ctx ON ctx.id = reservations.contract_id
       AND groups.is_verification_required = true
       AND reservations.inventory_pool_id = groups.inventory_pool_id
+      LEFT JOIN contracts AS ctx ON ctx.id = reservations.contract_id
     SQL
     .joins(<<-SQL)
       LEFT JOIN partitions
@@ -177,21 +174,6 @@ class ReservationsBundle < ActiveRecord::Base
           query.split.map(&:strip).each do |q|
             qq = "%#{q}%"
             sql = sql.where(
-              # "reservations.id = '#{q}' OR
-              #  CONCAT_WS(' ',
-              #            contracts.note,
-              #            users.login,
-              #            users.firstname,
-              #            users.lastname,
-              #            users.badge_id,
-              #            models.manufacturer,
-              #            models.product,
-              #            models.version,
-              #            options.product,
-              #            options.version,
-              #            items.inventory_code,
-              #            items.properties) LIKE '%#{qq}%'"
-
               # NOTE we cannot use eq(q) because alphanumeric string is truncated
               # and casted to integer, causing wrong matches (contracts.id)
               arel_table[:contract_id]
@@ -256,12 +238,34 @@ class ReservationsBundle < ActiveRecord::Base
       end
     end
 
-    contracts = contracts.order('created_at DESC')
+    ###############################################################################
+    # NOTE: Same contract may appear multiple times with either 'signed' or
+    # 'closed' state in the result set in case it has mixed reservations ('singed',
+    # 'closed'). We disregard the closed ones in this case with:
+    #
+    # SELECT DISTINCT ON (id)
+    # ...
+    # ORDER BY id ASC, status DESC
+    #
+
+    contracts = contracts.distinct(nil)
+    select_value = contracts.select_values.first
+    contracts.select_values = ["DISTINCT ON (id) #{select_value}"]
+    contracts = contracts.order('id ASC, status ASC')
+    ###############################################################################
+
+    bundles = \
+      ReservationsBundle
+      .unscoped
+      .select('reservations_bundles.*')
+      .from("(#{contracts.to_sql}) AS reservations_bundles")
+
+    bundles = bundles.order('reservations_bundles.created_at DESC')
 
     unless params[:paginate] == 'false'
-      contracts = contracts.default_paginate params
+      bundles = bundles.default_paginate params
     end
-    contracts
+    bundles
   end
 
   ############################################
