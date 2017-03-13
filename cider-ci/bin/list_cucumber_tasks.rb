@@ -127,17 +127,18 @@ end
 ############################## ENGINES ##################################
 
 ENGINES.each do |engine|
-  filepath = "cider-ci/tasks/#{engine}_scenarios.yml"
-  if engine == 'procurement'
-    engine_feature_files_paths = ["engines/#{engine}/spec/features/*.feature"]
-    create_scenario_tasks(filepath, engine_feature_files_paths, framework: :rspec)
+  engine_feature_files_paths = ["engines/#{engine}/spec/features/*.feature"]
 
-    filepath = "cider-ci/tasks/#{engine}_flapping_scenarios.yml"
-    create_scenario_tasks(filepath, engine_feature_files_paths, framework: :rspec, tags: ['@flapping'])
-  else # leihs_admin
-    engine_feature_files_paths = ["engines/#{engine}/spec/features/*.feature"]
-    filepath = "cider-ci/tasks/#{engine}_scenarios.yml"
-    create_scenario_tasks(filepath, engine_feature_files_paths,
-                          framework: :rspec, additional_options: "-r ./engines/#{engine}/spec/load.rb")
-  end
+  filepath = "cider-ci/tasks/#{engine}_scenarios.yml"
+  create_scenario_tasks(filepath,
+                        engine_feature_files_paths,
+                        framework: :rspec,
+                        additional_options: "-r ./engines/#{engine}/spec/load.rb")
+
+  filepath = "cider-ci/tasks/#{engine}_flapping_scenarios.yml"
+  create_scenario_tasks(filepath,
+                        engine_feature_files_paths,
+                        framework: :rspec,
+                        additional_options: "-r ./engines/#{engine}/spec/load.rb",
+                        tags: ['@flapping'])
 end
