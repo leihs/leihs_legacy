@@ -49,7 +49,8 @@ end
 
 EXCLUDE_TAGS = %w(@upcoming @generating_personas @manual @broken @v4stable @flapping @unstable)
 
-def create_scenario_tasks(filepath, feature_files_paths, test_with, tags: nil, exclude_dir: nil)
+def create_scenario_tasks(filepath, feature_files_paths,
+                          framework: nil, additional_options: nil, tags: nil, exclude_dir: nil)
   File.open(filepath,'w') do |f|
     h1 = {}
 
@@ -80,11 +81,11 @@ def create_scenario_tasks(filepath, feature_files_paths, test_with, tags: nil, e
       v.each_slice(CI_SCENARIOS_PER_TASK) do |lines|
         path = ([k] + lines).join(':')
         xvfb = "xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24'"
-        case test_with
+        case framework
         when :cucumber
           exec = "#{xvfb} bundle exec cucumber -p default %s #{STRICT_MODE ? "--strict " : nil}%s DEFAULT_BROWSER=%s" % [require, path, DEFAULT_BROWSER]
         when :rspec
-          exec = "#{xvfb} bundle exec rspec #{path}"
+          exec = [xvfb, 'bundle exec rspec', additional_options, path].compact.join(' ')
         else
           raise 'Undefined testing framework'
         end
@@ -104,11 +105,11 @@ end
 manage_feature_files_paths = ['features/{login,manage,technical}/*']
 
 filepath = 'cider-ci/tasks/manage_scenarios.yml'
-create_scenario_tasks(filepath, manage_feature_files_paths, :cucumber, exclude_dir: 'borrow')
+create_scenario_tasks(filepath, manage_feature_files_paths, framework: :cucumber, exclude_dir: 'borrow')
 
 %w(flapping broken unstable).each do |kind|
   filepath = "cider-ci/tasks/manage_#{kind}_scenarios.yml"
-  create_scenario_tasks(filepath, manage_feature_files_paths, :cucumber, tags: ["@#{kind}"])
+  create_scenario_tasks(filepath, manage_feature_files_paths, framework: :cucumber, tags: ["@#{kind}"])
 end
 
 ############################## BORROW ###################################
@@ -116,11 +117,11 @@ end
 borrow_feature_files_paths = ['features/borrow/*']
 
 filepath = 'cider-ci/tasks/borrow_scenarios.yml'
-create_scenario_tasks(filepath, borrow_feature_files_paths, :cucumber)
+create_scenario_tasks(filepath, borrow_feature_files_paths, framework: :cucumber)
 
 %w(flapping broken unstable).each do |kind|
   filepath = "cider-ci/tasks/borrow_#{kind}_scenarios.yml"
-  create_scenario_tasks(filepath, borrow_feature_files_paths, :cucumber, tags: ["@#{kind}"])
+  create_scenario_tasks(filepath, borrow_feature_files_paths, framework: :cucumber, tags: ["@#{kind}"])
 end
 
 ############################## ENGINES ##################################
@@ -129,15 +130,14 @@ ENGINES.each do |engine|
   filepath = "cider-ci/tasks/#{engine}_scenarios.yml"
   if engine == 'procurement'
     engine_feature_files_paths = ["engines/#{engine}/spec/features/*.feature"]
-    create_scenario_tasks(filepath, engine_feature_files_paths, :rspec)
+    create_scenario_tasks(filepath, engine_feature_files_paths, framework: :rspec)
 
     filepath = "cider-ci/tasks/#{engine}_flapping_scenarios.yml"
-    create_scenario_tasks(filepath, engine_feature_files_paths, :rspec, tags:['@flapping'])
-  else
-    engine_feature_files_paths = ["engines/#{engine}/**/*.feature"]
-    create_scenario_tasks(filepath, engine_feature_files_paths, :cucumber)
-
-    filepath = "cider-ci/tasks/#{engine}_v4stable_scenarios.yml"
-    create_scenario_tasks(filepath, engine_feature_files_paths, :cucumber, tags:['@v4stable'])
+    create_scenario_tasks(filepath, engine_feature_files_paths, framework: :rspec, tags: ['@flapping'])
+  else # leihs_admin
+    engine_feature_files_paths = ["engines/#{engine}/spec/features/*.feature"]
+    filepath = "cider-ci/tasks/#{engine}_scenarios.yml"
+    create_scenario_tasks(filepath, engine_feature_files_paths,
+                          framework: :rspec, additional_options: "-r ./engines/#{engine}/spec/load.rb")
   end
 end

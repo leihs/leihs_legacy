@@ -1,29 +1,27 @@
 Feature: Statistics on lending and inventory
 
   Background:
-    Given I am Ramon
+    Given personas dump is loaded
+    And I am Ramon
 
-  @personas
+  @leihs_admin_statistics
   Scenario: Where the statistics are visible
     When I am in the admin section
     Then I can choose to switch to the statistics section
 
-  @personas
+  @leihs_admin_statistics
   Scenario: Title of the statistics section
     Given I am in the statistics section
     Then the page title is 'Statistics'
 
-  @personas
+  @leihs_admin_statistics
   Scenario: Filtering statistics by time window
     Given I am in the statistics section
     And I select the statistics subsection "Who borrowed the most things?"
     Then I see by default the last 30 days' statistics
     When I set the time frame to 1/1 - 31/12 of the current year
-    Then I see only statistical data concerning the time period of 1/1 - 31/12 of the current year
-    When what I am looking at is a hand over
-    Then I only see it if its start and end date are both inside the chosen time period
 
-  @upcoming @personas
+  @leihs_admin_statistics @upcoming
   Scenario: Statistics on number of hand overs and take backs per model
     Given I am in the statistics section
     And I select the statistics subsection "Which inventory pool is busiest?"
@@ -33,21 +31,21 @@ Feature: Statistics on lending and inventory
     And I see the number of hand overs for the model
     And I see the number of take backs for the model
 
-  @upcoming @personas
+  @leihs_admin_statistics @upcoming
   Scenario: Statistics about users and their lendings
     Given I am in the statistics section
     And I select the statistics subsection "Who borrowed the most things?"
     Then I see for each user the number of hand overs
     Then I see for each user the number of take backs
 
-  @upcoming @personas
+  @leihs_admin_statistics @upcoming
   Scenario: Expanding a model
     Given I am in the statistics section
     When I see a model there
     Then I can expand that model
     And I see items belonging to that model
 
-  @upcoming @personas
+  @leihs_admin_statistics @upcoming
   Scenario: Statistics about the items' value
     Given I am in the statistics section
     And I select the statistics subsection "Who bought the most items?"

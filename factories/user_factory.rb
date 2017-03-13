@@ -46,6 +46,10 @@ FactoryGirl.define do
       end
     end
 
+    factory :delegation do
+      delegator_user { FactoryGirl.create(:user) }
+    end
+
     factory :customer do
       transient do
         inventory_pool nil

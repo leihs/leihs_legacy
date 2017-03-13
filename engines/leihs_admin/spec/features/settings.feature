@@ -1,6 +1,9 @@
 Feature: Defining application settings through web interface
 
-  @javascript @personas
+  Background:
+    Given personas dump is loaded
+
+  @leihs_admin_settings @javascript
   Scenario: Editing the settings
     Given I am Ramon
     When I go to the settings page

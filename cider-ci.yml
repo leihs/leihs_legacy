@@ -22,7 +22,6 @@ include:
   # - cider-ci/jobs/manage_broken_scenarios.yml
 
   ## ADMIN - on branches foo/admin_bar
-  # - cider-ci/jobs/leihs_admin_v4stable_scenarios.yml
   - cider-ci/jobs/leihs_admin_scenarios.yml
   - cider-ci/jobs/leihs_admin_code_checks.yml
 

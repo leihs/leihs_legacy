@@ -1,13 +1,14 @@
 
-Feature: Wartungsmodus
+Feature: Maintenance mode
 
-Als Administrator möchte ich die Möglichkeit haben,
-für die Bereiche "Verwalten" und "Verleih" bei Wartungsarbeiten das System zu sperren und dem Benutzer eine Meldung anzuzeigen
+  As admin I want to have the possibility to disable the sections "Manage" and "Lending"
+  in case of maintenance work and to display a corresponding message to the user.
 
   Background:
-    Given I am Gino
+    Given personas dump is loaded
+    And I am Gino
 
-  @javascript @personas
+  @leihs_admin_maintenance_mode @javascript
   Scenario: Disabling the manage section
     Given I am in the system-wide settings
     When I choose the function "Disable manage section"
@@ -18,7 +19,7 @@ für die Bereiche "Verwalten" und "Verleih" bei Wartungsarbeiten das System zu s
     And the "manage section" is disabled for users
     And users see the note that was defined
 
-  @javascript @personas
+  @leihs_admin_maintenance_mode @javascript
   Scenario: Disabling the borrow section
     Given I am in the system-wide settings
     When I choose the function "Disable borrow section"
@@ -29,7 +30,7 @@ für die Bereiche "Verwalten" und "Verleih" bei Wartungsarbeiten das System zu s
     And the "borrow section" is disabled for users
     And users see the note that was defined
 
-  @javascript @personas
+  @leihs_admin_maintenance_mode @javascript
   Scenario: Enabling the manage section
     Given the "manage section" is disabled
     And I am in the system-wide settings
@@ -38,7 +39,7 @@ für die Bereiche "Verwalten" und "Verleih" bei Wartungsarbeiten das System zu s
     Then the "manage section" is not disabled for users
     And the note entered for the "manage section" is still saved
 
-  @javascript @personas
+  @leihs_admin_maintenance_mode @javascript
   Scenario: Enabling the borrow section
     Given the "borrow section" is disabled
     And I am in the system-wide settings
