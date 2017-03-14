@@ -22,10 +22,12 @@ class Authenticator::ZhdkController < Authenticator::AuthenticatorController
   end
 
   def target
+    Rails.logger.info "HTTP_REFERER: #{request.env['HTTP_REFERER']}"
+    Rails.logger.info "request.base_url: #{request.base_url}"
     AUTHENTICATION_URL \
       + '&url_postlogin=' \
-      + CGI::escape("#{request.protocol}#{request.host}:#{request.port}" \
-                    "/#{url_for('authenticator/zhdk/login_successful/%s')}")
+      + CGI::escape("#{request.env['HTTP_REFERER']}" \
+                    "#{url_for('authenticator/zhdk/login_successful/%s')}")
   end
 
   def login_successful(session_id = params[:id])
