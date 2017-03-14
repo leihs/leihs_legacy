@@ -405,28 +405,36 @@ class ReservationsBundle < ActiveRecord::Base
     reservations.all?(&:approvable?)
   end
 
+  def send_approved_notification(comment, send_mail, current_user)
+    begin
+      Notification.order_approved(self, comment, send_mail, current_user)
+    rescue Exception => exception
+      # archive problem in the log, so the admin/developper
+      # can look up what happened
+      logger.error "#{exception}\n    #{exception.backtrace.join("\n    ")}"
+      message = \
+        _('The following error happened while sending ' \
+          "a notification email to %{email}:\n") \
+        % { email: target_user.email } \
+        + "#{exception}.\n" \
+        + _('That means that the user probably did not get the approval mail ' \
+            'and you need to contact him/her in a different way.')
+
+      self.errors.add(:base, message)
+    end
+  end
+
   def approve(comment, send_mail = true, current_user = nil, force = false)
     if approvable? \
         or (force and current_user.has_role?(:lending_manager, inventory_pool))
       reservations.each { |cl| cl.update_attributes(status: :approved) }
-      begin
-        Notification.order_approved(self, comment, send_mail, current_user)
-      rescue Exception => exception
-        # archive problem in the log, so the admin/developper
-        # can look up what happened
-        logger.error "#{exception}\n    #{exception.backtrace.join("\n    ")}"
-        message = \
-          _('The following error happened while sending ' \
-            "a notification email to %{email}:\n") \
-          % { email: target_user.email } \
-          + "#{exception}.\n" \
-          + _('That means that the user probably did not get the approval mail ' \
-              'and you need to contact him/her in a different way.')
-
-        self.errors.add(:base, message)
-      end
+      send_approved_notification(comment, send_mail, current_user)
       true
     else
+      self.errors.add \
+        :base,
+        _('This order cannot be approved. ' \
+          'One or more of its reservations are faulty.')
       false
     end
   end

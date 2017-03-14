@@ -426,6 +426,10 @@ window.i18n.locale_data = {
          null,
          "CSV-Export"
       ],
+      "Excel export": [
+         null,
+         "Excel-Export"
+      ],
       "Cancel": [
          null,
          "Abbrechen"
@@ -4001,6 +4005,10 @@ window.i18n.locale_data = {
          null,
          "Priorität"
       ],
+      "Inspector's priority": [
+         null,
+         "Priorität des Prüfers"
+      ],
       "Name of receiver": [
          null,
          "Name des Empfängers"
@@ -4109,6 +4117,10 @@ window.i18n.locale_data = {
          null,
          "Antrag verschoben"
       ],
+      "Mandatory": [
+         null,
+         "Zwingend"
+      ],
       "High": [
          null,
          "Hoch"
@@ -4116,6 +4128,14 @@ window.i18n.locale_data = {
       "Normal": [
          null,
          "Normal"
+      ],
+      "Medium": [
+         null,
+         "Mittel"
+      ],
+      "Low": [
+         null,
+         "Tief"
       ],
       "Are you sure you want to delete '%s'?": [
          null,
@@ -4296,6 +4316,10 @@ window.i18n.locale_data = {
       "You do not have the responsibility to lend this item. Responsible for this item is the pool \"%s\".": [
          null,
          "Sie sind nicht befugt, diesen Gegenstand auszuleihen. Verantwortlich für diesen Gegenstand ist der Gerätepark \"%s\"."
+      ],
+      "This order cannot be approved. One or more of its reservations are faulty.": [
+         null,
+         "Diese Bestellung kann nicht genehmigt werden. Eine oder mehrere Reservationen sind fehlerhaft."
       ]
    }
 }

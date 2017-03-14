@@ -36,7 +36,10 @@ Given /^I try to approve a contract that has problems$/ do
 end
 
 Then /^I got an information that this contract has problems$/ do
-  find('.modal .row.emboss.red')
+  error = find('.modal .row.emboss.red')
+  expect(error.text)
+    .to be == \
+      _("This order cannot be approved. One or more of its reservations are faulty.")
 end
 
 When /^I approve anyway$/ do
