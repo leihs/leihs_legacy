@@ -222,6 +222,9 @@ Feature: Delegation
     And I am editing a delegation's order
     When I try to change the order's contact person
     Then I can choose only those people as contact person for the order that belong to the delegation group
+    When I choose another contact person for the order
+    And I confirm the user change
+    Then the contact person for the order has been changed accordingly
 
   @javascript @personas @browser @flapping
   Scenario: Borrow: Creating an order with a delegation

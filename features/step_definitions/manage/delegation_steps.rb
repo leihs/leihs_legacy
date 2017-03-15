@@ -267,11 +267,9 @@ end
 
 Then(/^I can choose only those people as contact person for the order that belong to the delegation group$/) do
   within '#contact-person' do
-    find('input#user-id', match: :first).set @not_contact.name
-    expect(has_no_selector?('.ui-menu-item a')).to be true
-    find('input#user-id', match: :first).set @contact.name
-    find('.ui-menu-item a', match: :first, text: @contact.name).click
-    find('#selected-user', text: @contact.name)
+    find('input#user-id', match: :first).click
+    expect(has_no_selector?('.ui-menu-item a', text: @not_contact.name)).to be true
+    expect(has_selector?('.ui-menu-item a', text: @contact.name)).to be true
   end
 end
 
@@ -668,3 +666,17 @@ Then(/^I see all results in delegations box for delegations matching Julie or de
     end
   end
 end
+
+When(/^I choose another contact person for the order$/) do
+  @new_contact = \
+    @delegation.delegated_users.find { |du| du != @contract.delegated_user }
+  within '#contact-person' do
+    find('input#user-id', match: :first).set @new_contact.name
+    find('.ui-menu-item a', match: :first, text: @new_contact.name).click
+  end
+end
+
+Then(/^the contact person for the order has been changed accordingly$/) do
+  expect(page).to have_content "(#{@new_contact.name})"
+end
+

@@ -36,7 +36,8 @@ class window.App.SwapUsersController extends Spine.Controller
       do @swapContract
 
   swapContract: =>
-    @contract.swapUser(@searchSetUserController.selectedUserId, @searchSetContactPersonController?.selectedUserId)
+    userId = @searchSetUserController.selectedUserId ? @contract.user().id
+    @contract.swapUser(userId, @searchSetContactPersonController?.selectedUserId)
     .done (data)=>
       contract = new App.Contract data
       window.location = contract.editPath()
