@@ -11,8 +11,8 @@
 # and two which are still available to be taken out for
 # riding pleasure.
 #
-# rubocop:disable Metrics/ClassLength
 class Item < ActiveRecord::Base
+  include Concerns::InventoryCode
   include DefaultPagination
   audited
 
@@ -388,117 +388,6 @@ class Item < ActiveRecord::Base
 
   ####################################################################
 
-  def lowest_proposed_inventory_code
-    Item.proposed_inventory_code(owner, :lowest)
-  end
-
-  def highest_proposed_inventory_code
-    Item.proposed_inventory_code(owner, :highest)
-  end
-
-  ####################################################################
-
-  # extract *last* number sequence in string
-  def self.last_number(inventory_code)
-    inventory_code ||= ''
-    inventory_code.reverse.sub(/[^\d]*/, '').sub(/[^\d]+.*/, '').reverse.to_i
-  end
-
-  # proposes the next available number based on the owner inventory_pool
-  # tries to take the next free inventory code after the previously created Item
-  def self.proposed_inventory_code(inventory_pool, type = :last)
-    next_num = case type
-               when :lowest
-                 free_inventory_code_ranges(from: 0).first.first
-               when :highest
-                 free_inventory_code_ranges(from: 0).last.first
-               else # :last
-                 num = \
-                   last_number \
-                     Item
-                       .where(owner_id: inventory_pool)
-                       .order('created_at DESC')
-                       .first
-                       .try(:inventory_code)
-                 free_inventory_code_ranges(from: num).first.first
-               end
-    "#{inventory_pool.shortname}#{next_num}"
-  end
-
-  # if argument is false returns { 1 => 3, 2 => 1, 77 => 1, 79 => 2, ... }
-  # the key is the allocated inventory_code_number
-  # the value is the count of the allocated items
-  # if the value is larger than 1, then there is a allocation conflict
-  #
-  # if argument is true returns
-  # { 1 => ["AVZ1", "ITZ1", "VMK1"],
-  #   2 => "AVZ2",
-  #   77 => "AVZ77",
-  #   79 => ["AVZ79", "ITZ79"], ... }
-  # the key is the allocated inventory_code_number
-  # the value is/are the inventory_code/s of the allocated items
-  # if the value is an Array, then there is a allocation conflict
-  #
-  def self.allocated_inventory_code_numbers(with_allocated_codes = false)
-    h = {}
-    inventory_codes = \
-      ActiveRecord::Base
-        .connection
-        .select_values('SELECT inventory_code FROM items')
-    inventory_codes.each do |code|
-      num = last_number(code)
-      h[num] = if with_allocated_codes
-                 (h[num].nil? ? code : Array(h[num]) << code)
-               else
-                 Integer(h[num].presence || 0) + 1
-               end
-    end
-    h
-  end
-
-  def self.inventory_code_conflicts
-    allocated_inventory_code_numbers(true).delete_if { |k, v| not v.is_a? Array }
-  end
-
-  # returns [ [1, 2], [5, 23], [28, 29], ... [9990, Infinity] ]
-  # all displayed numbers [from, to] included are available
-  #
-  # Attention: params could be negative!
-  #
-  def self.free_inventory_code_ranges(params)
-    infinity = 1 / 0.0
-    default_params = { from: 1, to: infinity, min_gap: 1 }
-    params.reverse_merge!(default_params)
-
-    from = [Integer(params[:from].presence || 0), 1].max
-    if params[:to] == infinity
-      to = infinity
-    else
-      to = [[Integer(params[:to].presence || 0), from].max, infinity].min
-    end
-    min_gap = [[Integer(params[:min_gap].presence || 0), 1].max, to].min
-
-    ranges = []
-    last_n = from - 1
-
-    sorted_numbers = \
-      allocated_inventory_code_numbers
-        .keys
-        .select { |n| n >= from and n <= to }
-        .sort
-    sorted_numbers.each do |n|
-      if n - 1 != last_n and (n - 1 - last_n >= min_gap)
-        ranges << [last_n + 1, n - 1]
-      end
-      last_n = n
-    end
-    ranges << [last_n + 1, to] if last_n + 1 <= to and (to - last_n >= min_gap)
-
-    ranges
-  end
-
-  ####################################################################
-
   # an item is in stock if it's not handed over or
   # it's not assigned to an approved reservation
   def in_stock?
@@ -718,4 +607,3 @@ class Item < ActiveRecord::Base
   end
 
 end
-# rubocop:enable Metrics/ClassLength
