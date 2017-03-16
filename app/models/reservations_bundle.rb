@@ -120,11 +120,11 @@ class ReservationsBundle < ActiveRecord::Base
   #######################################################
 
   def models
-    Model.where(id: item_lines.pluck(&:model_id)).order('product ASC').uniq
+    Model.where(id: item_lines.map(&:model_id)).order('product ASC').uniq
   end
 
   def options
-    Option.where(id: option_lines.pluck(&:option_id)).uniq
+    Option.where(id: option_lines.map(&:option_id)).uniq
   end
 
   #######################################################

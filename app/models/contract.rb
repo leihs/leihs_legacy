@@ -33,7 +33,7 @@ class Contract < ActiveRecord::Base
   #########################################################################
 
   def models
-    Model.where(id: item_lines.pluck(&:model_id)).order('product ASC').uniq
+    Model.where(id: item_lines.map(&:model_id)).order('product ASC').uniq
   end
 
   #########################################################################

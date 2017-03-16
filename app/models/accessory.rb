@@ -20,10 +20,11 @@ class Accessory < ActiveRecord::Base
   validates_presence_of :name
 
   def inventory_pool_toggle=(val)
+    ip = InventoryPool.find(val.split(',')[1])
     if val.split(',')[0] == '1'
-      self.inventory_pool_ids += [val.split(',')[1]]
+      self.inventory_pools = self.inventory_pools + [ip]
     else
-      self.inventory_pool_ids -= [val.split(',')[1]]
+      self.inventory_pools = self.inventory_pools - [ip]
     end
   end
 

@@ -26,7 +26,7 @@ end
 
 Then /^the model is added to the contract$/ do
   find('.line', text: @item.model.name)
-  expect(@contract.models.include?(@item.model)).to be true
+  expect(@contract.reload.models.include?(@item.model)).to be true
 end
 
 When /^I start to type the name of a model( which is not yet in the contract)?$/ do |arg1|
