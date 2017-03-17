@@ -16,31 +16,55 @@ When(/^I open the hand over page containing this reservation$/) do
   expect(has_selector?('#hand-over-view')).to be true
 end
 
-When(/^I open a hand over( with at least one unassigned line)?( for today)?( with options| with models)?$/) do |unassigned_line, for_today, with_options_or_models|
+When(/^I open a hand over$/) do
   @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
-
     @customer = ip.users.not_as_delegations.detect do |user|
-      if unassigned_line and for_today
-        user.visits.hand_over.any?{ |v| v.reservations.size >= 3 and v.reservations.any? { |l| not l.item and l.start_date == ip.next_open_date(Time.zone.today) } }
-      elsif for_today
-        user.visits.hand_over.find { |ho| ho.date == Date.today}
-      elsif with_options_or_models
-        user.visits.hand_over.any?{ |v| v.reservations.any? do |l|
-          l.is_a?(
-            case with_options_or_models
-            when ' with options'
-              OptionLine
-            when ' with models'
-              ItemLine
-            end
-          )
+      user.visits.hand_over.any? { |v| v.reservations.size >= 3 }
+    end
+  end
+  open_hand_over_and_set_contract
+end
+
+When(/^I open a hand over with at least one unassigned line for today$/) do
+  @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
+    @customer = ip.users.not_as_delegations.detect do |user|
+      user.visits.hand_over.any? do |v|
+        v.reservations.size >= 3 and v.reservations.any? do |l|
+          not l.item and l.start_date == ip.next_open_date(Time.zone.today)
         end
-        }
-      else
-        user.visits.hand_over.any? { |v| v.reservations.size >= 3 }
       end
     end
   end
+  open_hand_over_and_set_contract
+end
+
+When(/^I open a hand over for today$/) do
+  @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
+    @customer = ip.users.not_as_delegations.detect do |user|
+      user.visits.hand_over.find { |ho| ho.date == Date.today}
+    end
+  end
+  open_hand_over_and_set_contract
+end
+
+When(/^I open a hand over( with options| with models)$/) do |with_options_or_models|
+  @customer = @current_inventory_pool.users.not_as_delegations.detect do |user|
+    user.visits.hand_over.where(inventory_pool_id: @current_inventory_pool.id).any? do |v|
+      v.reservations.any? do |l|
+        l.is_a? \
+          case with_options_or_models
+          when ' with options'
+            OptionLine
+          when ' with models'
+            ItemLine
+          end
+      end
+    end
+  end
+  open_hand_over_and_set_contract
+end
+
+def open_hand_over_and_set_contract
   expect(@customer).not_to be_nil
 
   step 'I open a hand over for this customer'

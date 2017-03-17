@@ -78,14 +78,8 @@ Then /^I set all their initial values$/ do
         raise 'field type not found'
       end
 
-    if field.id == 'inventory_pool_id'
-      # remove flash which gets displaced on cider and covers other elements
-      begin
-        find('#flash .fa-times-circle').click
-      rescue
-        # do nothing
-      end
-    end
+    # if present, remove flash which gets displaced on cider and covers other elements
+    first('#flash .fa-times-circle').try(:click)
   end
 end
 

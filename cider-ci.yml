@@ -35,4 +35,4 @@ include:
   # - cider-ci/jobs/good_to_merge.yml
 
   # run manually
-  - cider-ci/jobs/hot_spot_scenarios.yml
+  - cider-ci/jobs/hotspots.yml

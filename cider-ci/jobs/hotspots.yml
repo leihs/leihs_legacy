@@ -1,11 +1,11 @@
 jobs:
 
-  hot_spot_scenarios:
+  hotspots:
 
-    name: Hot Spot Scenarios
+    name: Hotspot Scenarios
 
     description: |
-      Manually run hot spot scenarios under MRI
+      Manually run hotspot scenarios under MRI
 
     run_when:
       branch name matches hotspot:
@@ -22,4 +22,4 @@ jobs:
 
       include:
         - cider-ci/shared/main_context.yml
-        - cider-ci/tasks/hot_spot_scenarios.yml
+        - cider-ci/tasks/hotspots.yml

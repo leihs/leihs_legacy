@@ -87,9 +87,9 @@ Feature: Lending
     And I save the inspection
     Then the item is saved with the currently set states
 
-  @javascript @browser @personas @unstable
+  @javascript @browser @personas @hotspot
   Scenario: Automatic printing during hand over
-    When I open a hand over
+    When I open a hand over with models
     Then the print dialog opens automatically
 
   @javascript @personas
