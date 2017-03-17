@@ -1,6 +1,6 @@
 Feature: Retire item
 
-  @javascript @personas
+  @javascript 
   Scenario Outline: Retire
     Given I am Matti
     And I pick a <object> that is in stock and that the current inventory pool is the owner of
@@ -11,7 +11,7 @@ Feature: Retire item
       | item    |
       | license |
 
-  @javascript @personas
+  @javascript 
   Scenario Outline: Preventing retiring an object that isn't in stock
     Given I am Mike
     And I pick a <object> that is not in stock
@@ -21,7 +21,7 @@ Feature: Retire item
       | item    |
       | license |
 
-  @javascript @personas
+  @javascript 
   Scenario Outline: Preventing retiring an object I'm not the owner of
     Given I am Matti
     And I pick a <object> the current inventory pool is not the owner of
@@ -31,7 +31,7 @@ Feature: Retire item
       | item |
       | license     |
 
-  @javascript @personas
+  @javascript 
   Scenario Outline: Error when trying to retire without giving a reason
     Given I am Matti
     And I pick a <object> that is in stock and that the current inventory pool is the owner of
@@ -42,7 +42,7 @@ Feature: Retire item
       | item |
       | license     |
 
-  @javascript @personas
+  @javascript 
   Scenario Outline: Unretiring an item
     Given I am Mike
     And I pick a retired <object> that the current inventory pool is the owner of
@@ -61,7 +61,6 @@ Feature: Retire item
   # Not really sure what this scenario is supposed to tell us. Why are we on
   # an edit page? We would end up on that page anyway after picking one
   # of those items, which is what we do explicitly in this scenario.
-  @personas
   Scenario Outline: How retired items are displayed in a responsible department/inventory pool
     Given I am Mike
     And I pick a retired <object> that the current inventory pool is responsible for but not the owner of

@@ -7,7 +7,7 @@ Feature: Calendar
   Background:
     Given I am Normin
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: reached maximum amount of visits of a week day
     When I open the calendar of a model related to an inventory pool for which has reached maximum amount of visits
     And I select that inventory pool
@@ -22,7 +22,7 @@ Feature: Calendar
     Then I receive an error message within the modal
     And the booking calendar is not closed
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: hand over not possible according to days between submission and hand over
     When I open the calendar of a model related to an inventory pool for which the number of days between order submission and hand over is defined as 2
     And I select that inventory pool

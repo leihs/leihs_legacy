@@ -4,13 +4,13 @@ Feature: Calendar
   Background:
     Given I am Normin
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Calendar components
     When I add an item from the model list
     Then the calendar opens
     And the calendar contains all necessary interface elements
 
-  @javascript @personas
+  @javascript 
   Scenario: Default appearance of the calendar
     When I add an item from the model list
     Then the calendar opens
@@ -19,7 +19,7 @@ Feature: Calendar
     And the quantity is 1
     And all inventory pools are shown that have items of this model
 
-  @javascript @personas @browser @flapping
+  @javascript @browser @flapping
   Scenario: Calendar appearance with date already set
     Given I am listing models
     And I have set a time span
@@ -28,7 +28,7 @@ Feature: Calendar
     And the start date is equal to the preselected start date
     And the end date is equal to the preselected end date
 
-  @javascript @personas
+  @javascript 
   Scenario: Calendar appearance with inventory pools already set
     Given I am listing models
     And I reduce the selected inventory pools
@@ -37,13 +37,13 @@ Feature: Calendar
     And that inventory pool which comes alphabetically first is selected
     Then any closed days of the selected inventory pool are shown
 
-  @javascript  @browser @personas
+  @javascript  @browser 
   Scenario: Jumping back and forth between months in the calendar
     Given I have opened the booking calendar
     When I jump back and forth between months
     Then the calendar shows the currently selected month
 
-  @javascript @personas
+  @javascript 
   Scenario: Jumping to start and end date in the calendar
     Given I have opened the booking calendar
     When I use the jump button to jump to the current start date
@@ -51,7 +51,7 @@ Feature: Calendar
     When I use the jump button to jump to the current end date
     Then the end date is shown in the calendar
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Adding an item to my order
     When I am listing some available models
     And I add an existing model to the order
@@ -59,23 +59,23 @@ Feature: Calendar
     When everything I input into the calendar is valid
     Then the model has been added to the order with the respective start and end date, quantity and inventory pool
 
-  @javascript @personas
+  @javascript 
   Scenario: Maximal quantity available in the calendar
     Given I have opened the booking calendar
     Then the maximum available quantity of the chosen model is displayed
     And I can enter at most this maximum quantity
 
-  @javascript @personas
+  @javascript 
   Scenario: Inventory pools that are available in the calendar
     Given I have opened the booking calendar
     Then only those inventory pools are selectable that have capacities for the chosen model
     And the inventory pools are sorted alphabetically
 
-  @javascript @personas
+  @javascript 
   Scenario: Showing closed days in the calendar
     Given I have opened the booking calendar
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Using the calendar after resetting all filters
     When I add a model to an order
     And I am listing models
@@ -86,18 +86,18 @@ Feature: Calendar
     When everything I input into the calendar is valid
     Then the model has been added to the order with the respective start and end date, quantity and inventory pool
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Ordering something that only groups may have
     When a model exists that is only available to a group
     Then I cannot order that model unless I am part of that group
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Ordering not possible when selection isn't available
     When I try to add a model to the order that is not available
     Then my attempt to add it fails
     And the error lets me know that the chosen model is not available in that time range
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Closing the calendar
     When I am listing models
     And I press "Add to order" on a model
@@ -105,14 +105,14 @@ Feature: Calendar
     When I close the calendar
     Then the dialog window closes
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Availability display on the calendar
     Given there is a model for which an order exists
     When I add this model from the model list
     Then the calendar opens
     And that model's availability is shown in the calendar
 
-  @javascript @personas
+  @javascript 
   Scenario: Availability display on the calendar after changing calendar dates
     Given there is a model for which an order exists
     When I add this model from the model list

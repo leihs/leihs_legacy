@@ -4,7 +4,6 @@ Feature: User passwords
   As inventory manager, lending manager or admin I want to be able to
   manage users' passwords, so that they can log in.
 
-  @personas
   Scenario Outline: Creating a user with username and password
     Given I am <Person>
     And I am listing users
@@ -18,7 +17,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Chaging username and password
     Given I am <Person>
     And I am editing the user "Normin"
@@ -32,7 +30,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Creating a user with the wrong password confirmation
     Given I am <Person>
     And I am listing users
@@ -45,7 +42,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Trying to edit a user with missing password
     Given I am <Person>
     And I am editing the user "Normin"
@@ -58,7 +54,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Creating a user without username
     Given I am <Person>
     And I am listing users
@@ -71,7 +66,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Change password
     Given I am <Person>
     And I am editing the user "Normin"
@@ -85,7 +79,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Trying to create a user without a password
     Given I am <Person>
     And I am listing users
@@ -98,7 +91,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Editing user without username
     Given I am <Person>
     And I am editing the user "Normin"
@@ -111,7 +103,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Editing user with wrong password confirmation
     Given I am <Person>
     And I am editing the user "Normin"
@@ -124,7 +115,6 @@ Feature: User passwords
       | Pius   |
       | Gino   |
 
-  @personas
   Scenario Outline: Chaging username
     Given I am <Person>
     And I am editing the user "Normin"

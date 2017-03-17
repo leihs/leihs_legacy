@@ -6,7 +6,7 @@ Feature: Basic information for inventory pools
   So that each inventory pool has all the information and settings they
   need to work efficiently (e.g. opening hours, proper addresses, etc.)
 
-  @javascript @personas
+  @javascript 
   Scenario: Make basic settings
     Given I am Mike
     When I navigate to the inventory pool manage section
@@ -24,7 +24,6 @@ Feature: Basic information for inventory pools
     And the settings are updated
     And I am still on the same page
 
-  @personas
   Scenario: Pflichtfelder der Grundinformationen zusammen prüfen
     Given I am Mike
     When I edit the current inventory pool
@@ -35,7 +34,6 @@ Feature: Basic information for inventory pools
     And I save
     Then I see an error message
 
-  @personas
   Scenario: Automatically grant access to new users from within my own inventory pool's settings
     Given I am Mike
     And multiple inventory pools are granting automatic access
@@ -45,7 +43,7 @@ Feature: Basic information for inventory pools
     And in my inventory pool the user gets the role 'inventory manager'
 
   #72676850
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: Remove automatic access
     Given I am Mike
     And multiple inventory pools are granting automatic access
@@ -58,7 +56,6 @@ Feature: Basic information for inventory pools
     When I have created a user with login "username" and password "password"
     Then the newly created user does not have access to that inventory pool
 
-  @personas
   Scenario: Enable automatic access to a new inventory pool
     Given I am Mike
     And I edit an inventory pool that is not granting automatic access
@@ -69,7 +66,6 @@ Feature: Basic information for inventory pools
     And there are no users without access right to this inventory pool
 
   #72676850
-  @personas
   Scenario Outline: Deselect checkboxes
     Given I am Mike
     And I edit an inventory pool
@@ -85,7 +81,6 @@ Feature: Basic information for inventory pools
       | Automatic suspension   |
       | Automatic access   |
 
-  @personas
   Scenario: Manage workdays
    Given I am Mike
    And I edit my inventory pool settings
@@ -93,7 +88,7 @@ Feature: Basic information for inventory pools
    And I save
    Then those randomly chosen workdays are saved
 
-  @javascript @personas
+  @javascript 
   Scenario: Manage holidays
    Given I am Mike
    And I edit my inventory pool settings
@@ -102,7 +97,6 @@ Feature: Basic information for inventory pools
    Then the holidays are saved
    And I can delete the holidays
 
-  @personas
   Scenario Outline: Validate each field in inventory pool settings separately
     Given I am Mike
     When I edit the current inventory pool
@@ -120,7 +114,6 @@ Feature: Basic information for inventory pools
       | Short Name |
       | E-Mail     |
 
-  @personas
   Scenario: Automatically suspend users with late contracts
     Given I am Mike
     When I edit the current inventory pool
@@ -135,7 +128,6 @@ Feature: Basic information for inventory pools
     And I save
     Then "Automatic suspension" is disabled
 
-  @personas
   Scenario: Suspend users automatically only if they aren't already suspended
     Given I am Mike
     When on the inventory pool I enable the automatic suspension for users with overdue take backs

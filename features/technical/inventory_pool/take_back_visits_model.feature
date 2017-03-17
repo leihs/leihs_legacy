@@ -3,7 +3,8 @@ Feature: Take back visits
   Model test
 
   Background:
-    Given inventory pool model test data setup
+    Given the database is empty
+    And inventory pool model test data setup
     And all contracts and contract reservations are deleted
 
   Scenario: Inventory pool should return a list of take back visits per user

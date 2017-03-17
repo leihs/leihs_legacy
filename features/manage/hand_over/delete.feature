@@ -7,26 +7,26 @@ Feature: Sign Contract
   Background:
     Given I am Pius
 
-  @javascript @personas
+  @javascript 
   Scenario: Delete a single line during the hand over
     When I open a hand over
     And I delete a line
     Then this line is deleted
 
-  @javascript @personas
+  @javascript 
   Scenario: Delete multiple reservations during the hand over
     When I open a hand over which has multiple reservations
     And I select multiple reservations
     And I delete the seleted reservations
     Then these seleted reservations are deleted
 
-  @javascript @personas @browser @flapping
+  @javascript @browser @flapping
   Scenario: Delete reservations which changes other reservations availability
     When I open a hand over
     And I delete all reservations of a model thats availability is blocked by these reservations
     Then the availability of the keeped line is updated
 
-  @javascript @personas
+  @javascript 
   Scenario: Delete a hand over from the daily view
     Given I navigate to the hand over visits
     When I delete a hand over

@@ -32,22 +32,22 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/manage/contract/contracts.feature:16 DEFAULT_BROWSER=firefox
-- name: features/manage/delegation.feature:178
+- name: features/manage/delegation.feature:177
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/manage/delegation.feature:178 DEFAULT_BROWSER=firefox
-- name: features/manage/delegation.feature:230
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/manage/delegation.feature:177 DEFAULT_BROWSER=firefox
+- name: features/manage/delegation.feature:228
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/manage/delegation.feature:230 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/manage/delegation.feature:228 DEFAULT_BROWSER=firefox
 - name: features/manage/hand_over/delete.feature:24
   scripts:
     test:
@@ -88,14 +88,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/manage/inventory/copy_item.feature:83 DEFAULT_BROWSER=firefox
-- name: features/manage/inventory/create_model_with_packages.feature:132
+- name: features/manage/inventory/create_model_with_packages.feature:131
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/manage/inventory/create_model_with_packages.feature:132 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/manage/inventory/create_model_with_packages.feature:131 DEFAULT_BROWSER=firefox
 - name: features/manage/inventory/edit_item.feature:103
   scripts:
     test:

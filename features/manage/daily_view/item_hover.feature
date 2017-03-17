@@ -7,7 +7,7 @@ Feature: Item Hover on daily view
   Background:
     Given I am Pius
 
-  @personas @upcoming
+  @upcoming
   Scenario Outline: Hover item cell to see reservations
     When I navigate to the <target>
     And I hover an item's cell

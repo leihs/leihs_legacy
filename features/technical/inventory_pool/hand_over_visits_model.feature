@@ -3,7 +3,8 @@ Feature: Hand over visits
   Model test
 
   Background:
-    Given inventory pool model test data setup
+    Given the database is empty
+    And inventory pool model test data setup
     And all contracts and contract reservations are deleted
 
   Scenario: Inventory pool returns a list of hand over visits per user

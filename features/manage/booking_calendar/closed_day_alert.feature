@@ -7,7 +7,7 @@ Feature: Closed day alert feature
   Background:
     Given I am Pius
 
-  @javascript @browser @personas @flapping
+  @javascript @browser @flapping
   Scenario: Pick a closed day in the calendar
     When I open a booking calendar to edit a singe line
      And I pick a closed day for beeing the start date

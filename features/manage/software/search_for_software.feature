@@ -4,7 +4,7 @@ Feature: Search for software
   Background:
     Given I am Mike
 
-  @javascript @personas
+  @javascript 
   Scenario: Finding software according to a search term
     Given there is a software product with the following properties:
       | Product | suchbegriff1 |
@@ -23,7 +23,7 @@ Feature: Search for software
     Then all matching software licenses appear
     And all contracts containing this software product appear
 
-    @javascript @personas @browser
+    @javascript @browser
     Scenario: Displaying licenses from another inventory pool in closed contracts
       Given there exists a closed contract with a license, for which an other inventory pool is responsible and owner
       When I search globally after this license with its inventory code
@@ -36,7 +36,7 @@ Feature: Search for software
       And I hover over the list of licenses on the contract line
       Then I see in the tooltip the software name of this license
 
-  @javascript @personas
+  @javascript 
   Scenario: Finding contracts for software by searching for a borrower
     Given a software license exists
     And this software license is handed over to a normal user
@@ -44,7 +44,7 @@ Feature: Search for software
     Then the contract of this person appears in the search results
     And this person appears in the search results
 
-  @javascript @personas
+  @javascript 
   Scenario: How search results are displayed
     Given a software product exists
     And there exist licenses for this software product

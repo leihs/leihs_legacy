@@ -4,7 +4,7 @@ Feature: Copying software
   Background:
     Given I am Mike
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: Copying software
     Given a software license exists
     When I copy an existing software license
@@ -35,7 +35,7 @@ Feature: Copying software
       | Currency               |
       | Price                  |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: Where can software be copied
     Given a software license exists
     When I open the inventory

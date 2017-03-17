@@ -6,6 +6,10 @@ Feature: Availability depending on Pools
   I want to be sure that a customer only gets to see models from inventory pools he has access to
   In order to prevent a customer from ordering things he cannot borrow
 
+  Background:
+    Given the database is empty
+    And settings exist
+
   Scenario: Basic
     Given 2 inventory pools
     And a model 'Coffee Mug' exists

@@ -1,7 +1,7 @@
 
 Feature: Create item
 
-  @javascript @personas
+  @javascript 
   Scenario: Order of the fields when creating an item
     Given I am Matti
     And I create an item
@@ -57,7 +57,7 @@ Feature: Create item
       | Warranty expiration        |
       | Contract expiration        |
 
-  @javascript @personas
+  @javascript 
   Scenario: Forgetting to fill out the required fields when creating an item
     Given I am Matti
     And I create an item
@@ -70,7 +70,7 @@ Feature: Create item
     Then the model cannot be created
     And I see an error message
 
-  @javascript @personas
+  @javascript 
   Scenario Outline: Forgetting to fill out just one required field when creating an item
     Given I am Matti
     And I create an item
@@ -91,13 +91,13 @@ Feature: Create item
       | Project Number  |
       | Supply Category |
 
-  @javascript @personas
+  @javascript 
   Scenario: Areas where you can create an item
     Given I am Matti
     And I open the inventory
     Then I can create an item
 
-  @javascript @personas
+  @javascript 
   Scenario: Creating a new supplier if it does not already exist
     Given I am Mike
     And I create an item
@@ -112,7 +112,7 @@ Feature: Create item
     Then a new supplier is created
     And the created item has the new supplier
 
-  @javascript @personas
+  @javascript 
   Scenario: Creating an item with all its information
     Given I am Matti
     And I create an item
@@ -150,7 +150,7 @@ Feature: Create item
     Then I am redirected to the inventory list
     And the item is saved with all the entered information
 
-  @javascript @personas
+  @javascript 
   Scenario: Fields that are already filled in
     Given I am Matti
     And I create an item
@@ -164,7 +164,7 @@ Feature: Create item
     | Completeness           | radio  | OK           |
     | Supply Category        | select |              |
 
-  @javascript @personas
+  @javascript 
   Scenario: Specifying values for supply category
     Given I am Matti
     And I create an item
@@ -177,7 +177,7 @@ Feature: Create item
     | IT/Software           |
     | Durch Kunde beschafft |
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Add and remove attachments (attachments field is writable)
     Given I am Matti
     When I create an item

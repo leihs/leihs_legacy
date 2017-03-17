@@ -2,6 +2,9 @@ Feature: Inventory
 
   Describing Inventory Pools, Items, Models and Categories
 
+  Background:
+    Given the database is empty
+
   Scenario: Categories structure
        Given inventory pool 'ABC'
        And inventory pool short name 'ABC'

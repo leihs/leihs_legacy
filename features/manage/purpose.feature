@@ -4,25 +4,24 @@ Feature: Purpose
   Background:
     Given I am Pius
 
-  @personas
   Scenario: Independence
     When a purpose is saved, it is independent of its orders
      And each entry of a submitted order refers to a purpose
      And each entry of an order can refer to a purpose
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Places where I see the purpose
     When I edit an order
     Then I see the purpose
     When I open a hand over
     Then I see the assigned purpose on each line
 
-  @javascript @personas @unstable
+  @javascript @unstable
   Scenario: Places where I can edit the purpose
     When I edit an order
     Then I can edit the purpose
 
-  @javascript @browser @personas @unstable
+  @javascript @browser @unstable
   Scenario: Handing over items will copy the existing purposes to any blank purposes
     When I open a hand over
      And I click an inventory code input field of an item line
@@ -32,13 +31,13 @@ Feature: Purpose
     And I define a purpose
     Then only items without purpose are assigned that purpose
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Handing over items that all have a purpose
     When I open a hand over
     And all selected items have an assigned purpose
     Then I cannot assign any more purposes
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Handing over without purpose with required purpose
     Given the current inventory pool requires purpose
     When I open a hand over
@@ -47,7 +46,7 @@ Feature: Purpose
     And only when I assign a purpose
     Then I can finish the hand over
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Handing over without purpose without required purpose
     Given the current inventory pool doesn't require purpose
     When I open a hand over
@@ -56,7 +55,7 @@ Feature: Purpose
     But I do not assign a purpose
     Then I can finish the hand over
 
-  @javascript @browser @personas @unstable
+  @javascript @browser @unstable
   Scenario: Hand overs with a few items that don't have a purpose are possible
     When I open a hand over
     And I click an inventory code input field of an item line

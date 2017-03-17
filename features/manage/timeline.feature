@@ -1,6 +1,6 @@
 Feature: Model availability Timeline
 
-  @javascript @browser @personas @flapping
+  @javascript @browser @flapping
   Scenario: Where is visible the timeline
     Given I am Mike
     When I open a contract for acknowledgement
@@ -14,13 +14,13 @@ Feature: Model availability Timeline
     When I open the inventory
     Then for each visible model I can see the Timeline
 
-  @javascript @browser @personas @flapping
+  @javascript @browser @flapping
   Scenario: open timeline in pending orders as group-manager
     Given I am Andi
     When I open a contract for acknowledgement
     Then for each visible model I can see the Timeline
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: open timeline in hand-over as group-manager
     Given I am Andi
     When I open a hand over with models

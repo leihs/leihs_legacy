@@ -4,7 +4,7 @@ Feature: Inventory
     Given I am Mike
     And I open the inventory
 
-  @javascript @personas
+  @javascript 
   Scenario: Finding inventory using a search term
     Given there is a model with the following properties:
       | Name       | suchbegriff1 |
@@ -15,7 +15,7 @@ Feature: Inventory
     Then all matching models appear
     And all matching items appear
 
-  @javascript @personas
+  @javascript 
   Scenario: Finding packages using search term
     Given there is a model with the following properties:
       | Name | Package Model |
@@ -33,7 +33,7 @@ Feature: Inventory
     And all matching package items appear
     And all matching items appear
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: Finding model and item in the inventory pool that owns them
     Given there is a model with the following properties:
       | Name | Package Model |
@@ -59,7 +59,7 @@ Feature: Inventory
     Then the item corresponding to the model appears
     And the item appears
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario Outline: Finding a package's models and items in its responsible inventory pool
     Given there is a model with the following properties:
       | Name | Package Model |
@@ -90,37 +90,37 @@ Feature: Inventory
 
     # this one is not really flapping but slow, so we make sure
     # it runs on the newest hardware
-  @personas @javascript @browser @flapping
+  @javascript @browser @flapping
   Scenario: The tab 'All'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
       | All               |
 
-  @personas @javascript @browser @flapping
+  @javascript @browser @flapping
   Scenario: The tab 'Models'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
       | Models            |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: The tab 'Packages'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
       | Packages          |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: The tab 'Options'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
       | Options           |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: The tab 'Software'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
       | Software           |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario Outline: Filtering used and unused inventory
     Given I see retired and not retired inventory
     When I choose inside all inventory as "<dropdown>" the option "<property>"
@@ -130,7 +130,7 @@ Feature: Inventory
     | used & not used | used     |
     | used & not used | not used |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario Outline: Filtering borrowable and not borrowable inventory
     Given I see retired and not retired inventory
     When I choose inside all inventory as "<dropdown>" the option "<property>"
@@ -140,7 +140,7 @@ Feature: Inventory
     | borrowable & unborrowable | borrowable     |
     | borrowable & unborrowable | unborrowable   |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario Outline: Filtering retired and not retired inventory
     Given I see retired and not retired inventory
     When I choose inside all inventory as "<dropdown>" the option "<property>"
@@ -150,7 +150,7 @@ Feature: Inventory
     | retired & not retired | retired     |
     | retired & not retired | not retired |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario Outline: Filter inventory by owner, stock, completeness and defective status
     Given I see retired and not retired inventory
     When I set the option "<filter>" inside of the full inventory
@@ -162,31 +162,31 @@ Feature: Inventory
     | Incomplete |
     | Broken     |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: Filtering by responsible department
     Given I see retired and not retired inventory
     When I choose a certain responsible pool inside the whole inventory
     Then only the inventory is shown for which this pool is responsible
 
-  @personas @javascript
+  @javascript
   Scenario: The default filter is "not retired"
     Then for the following inventory groups the filter "not retired" is set
       | All     |
       | Models  |
       | Software |
 
-  @personas @javascript
+  @javascript
   Scenario: Default setting for the list view
     Then the tab "All" is active
 
   # # Not implemented
-  # @personas
+  # 
   # Scenario: Default setting for the "Software" view
   #   # Undefined
   #   Then enthält die Auswahl "Software" Software und Software-Lizenzen
   #   And der Filter "Nicht Ausgemustert" ist aktiviert
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: What an option line contains
     Given one is on the list of the options
     Then the option line contains:
@@ -195,7 +195,7 @@ Feature: Inventory
       | Name        |
       | Price       |
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Expand package models
     Then I can expand each package model line
     And I see the packages contained in this package model
@@ -204,7 +204,7 @@ Feature: Inventory
     And I see the components of this package
     And such a line shows only inventory code and model name of the component
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Look of a model line
     When I see a model line
     Then the model line contains:
@@ -214,7 +214,7 @@ Feature: Inventory
       | Number available (now)   |
       | Number available (total) |
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Look of an item line
     When I view the tab "Models"
     And the item is in stock and my department is responsible for it
@@ -237,7 +237,7 @@ Feature: Inventory
       | Current borrower       |
       | End date of contract   |
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Look of a software license line
     Given there exists a software license
     And I see retired and not retired inventory
@@ -274,12 +274,12 @@ Feature: Inventory
       | Operating system       |
       | License type           |
 
-  @javascript @personas
+  @javascript 
   Scenario: How to display no results after a search
     When I make a search without any results
     Then I see 'No entries found'
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Expand model
     Then I can expand each model line
     And I see the items belonging to the model
@@ -288,7 +288,7 @@ Feature: Inventory
   # # Not implemented
   # #73278620
   # # No steps for this seem to be defined?
-  #  @personas
+  #  
   # Scenario: Verhalten nach Speichern
   #   When ich einen Reiter auswähle
   #   And ich eine oder mehrere Filtermöglichkeiten verwende
@@ -296,7 +296,7 @@ Feature: Inventory
   #   And I save
   #   Then werde ich zur Liste des eben gewählten Reiters mit den eben ausgewählten Filtern zurueckgefuehrt
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario Outline: Labeling of broken, retired, incomplete and unborrowable items
     Given I see the list of "<condition>" inventory
     When I open a model line
@@ -308,7 +308,7 @@ Feature: Inventory
       | Incomplete   |
       | Unborrowable |
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: Displaying multiple problems on an item line
     Given I see retired and not retired inventory
     And there exists an item with many problems

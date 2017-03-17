@@ -4,7 +4,6 @@ Feature: Login through database authentication
   As a normal user
   I want to be able to login using a database authentication
 
-  @personas
   Scenario: Login through database authentication
     Given I log out
     When I visit the homepage
@@ -12,7 +11,7 @@ Feature: Login through database authentication
     Then I am logged in
 
   #80098490
-  @personas @javascript
+  @javascript
   Scenario: Changing my own password
     Given I am Normin
     And my authentication system is "DatabaseAuthentication"

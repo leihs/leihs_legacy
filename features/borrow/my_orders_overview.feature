@@ -6,7 +6,6 @@ Feature: Viewing my orders
     And I have added items to an order
     When I open my list of orders
 
-  @personas
   Scenario: Listing items in an order
     Then I see entries grouped by start date and inventory pool
     And the models are ordered alphabetically
@@ -19,13 +18,13 @@ Feature: Viewing my orders
     |End date|
     |the various actions|
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Deleting things in my order overview
     When I delete an entry
     Then the items are available for borrowing again
      And the entry is removed from the order
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Timeout
     Given the timeout is set to 1 minute
     When I add a model to an order
@@ -35,7 +34,7 @@ Feature: Viewing my orders
     When the timer has run down
     Then I am redirected to the timeout page
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Changing one of my orders
     When I change the entry
     Then the calendar opens
@@ -44,7 +43,7 @@ Feature: Viewing my orders
     Then the entry's date is changed accordingly
     And the entry is grouped based on its current start date and inventory pool
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Deleting an order from my order overview
     When I delete the order
     Then I am asked whether I really want to delete
@@ -52,7 +51,6 @@ Feature: Viewing my orders
     And all entries are deleted from the order
     And the items are available for borrowing again
 
-  @personas
   Scenario: Ordering
     When I enter a purpose
     And I submit the order
@@ -62,7 +60,6 @@ Feature: Viewing my orders
     And the order confirmation lets me know that my order will be handled soon
     And I am again on the borrow section's start page
 
-  @personas
   Scenario: Forgetting to fill in the purpose
     When I don't fill in the purpose
     Then I can't submit my order

@@ -1,7 +1,6 @@
 
 Feature: Navigation
 
-  @personas
   Scenario: Navigation für Gruppen-Verwalter
     Given I am Andi
     And I visit the lending section
@@ -10,7 +9,6 @@ Feature: Navigation
     And the navigation contains "Borrow"
     And the navigation contains "User"
 
-  @personas
   Scenario: Navigation für Gruppen-Verwalter in Verleih-Bereich
     Given I am Andi
     And I visit the lending section
@@ -18,7 +16,7 @@ Feature: Navigation
     And I open the tab "Orders"
     And I open the tab "Contracts"
 
-  @personas @javascript
+  @javascript
   Scenario: Aufklappen der Geraeteparkauswahl und Wechsel des Geraeteparks
     Given I am Mike
     When I hover over the navigation toggler

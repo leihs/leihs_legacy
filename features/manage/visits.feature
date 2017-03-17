@@ -1,7 +1,7 @@
 
 Feature: Visits
 
-  @javascript @personas
+  @javascript 
   Scenario: Human-readable display of dates on visits
     Given I am Pius
       And I am listing visits

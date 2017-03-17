@@ -2,7 +2,6 @@ Feature: Suspend all users
 
   Model test (instance methods)
 
-  @personas
   Scenario: Suspend all users with late take backs
     Given there are at least 2 users with late take backs from at least 2 inventory pools where automatic suspension is activated
     When the cronjob executes the rake task for reminding and suspending all late users

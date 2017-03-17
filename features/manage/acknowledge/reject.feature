@@ -8,7 +8,7 @@ Feature: Reject Order
     Given the system is configured for the mail delivery as test mode
     Given I am Pius
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Reject a contract on the daily view
     When I navigate to the open orders
      And I reject a contract
@@ -17,7 +17,7 @@ Feature: Reject Order
     When I confirm the contract rejection
     Then the contract is rejected
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Reject a contract on the edit view
     When I navigate to the open orders
     And I open a contract for acknowledgement

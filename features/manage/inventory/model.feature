@@ -5,7 +5,7 @@ Feature: Model
     Given I am Mike
     And I open the inventory
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Overview when adding a new model
     When I add a new Model
     Then I can enter the following information:
@@ -14,7 +14,7 @@ Feature: Model
       | Attachments |
       | Accessories |
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Filling in model details
     When I add a new Model
     And I enter the following details
@@ -28,7 +28,7 @@ Feature: Model
     And I save
     Then the new model is created and can be found in the list of unused models
 
-  @javascript @personas
+  @javascript 
   Scenario: Editing model accessories
     When I edit a model that exists, is in use and already has activated accessories
     Then I see all the accessories for this model
@@ -37,24 +37,24 @@ Feature: Model
     And I save
     Then accessories are added to the model
 
-  @javascript @personas
+  @javascript 
   Scenario: Deleting model accessories
     When I edit a model that exists, is in use and already has accessories
     Then I can delete a single accessory if it is not active in any other pool
 
-  @javascript @personas
+  @javascript 
   Scenario: Deactivating model accessories
     When I edit a model that exists, is in use and already has activated accessories
     Then I can deactivate an accessory for my pool
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Remove compatible models
     When I open a model that already has compatible models
     And I remove a compatible model
     And I save
     Then the model is saved without the compatible model that I removed
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Editing group capacities
     Given I edit a model that exists and has group capacities allocated to it
     When I remove existing allocations
@@ -62,7 +62,7 @@ Feature: Model
     And I save
     Then the changed allocations are saved
 
-  @javascript @personas
+  @javascript 
   Scenario: Delete model
     Given there is a model with the following conditions:
       | not in any contract |
@@ -72,14 +72,14 @@ Feature: Model
     Then the model was deleted from the list
     And the model is deleted
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Add compatible models
     When I edit a model that exists and is in use
     And I use the autocomplete field to add a compatible model
     And I save
     Then a compatible model has been added to the model I am editing
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Adding a compatible model twice in a row
     When I open a model that already has compatible models
     And I add an already existing compatible model using the autocomplete field
@@ -87,7 +87,7 @@ Feature: Model
     When I save
     Then the redundant compatible model was not added to this one
 
-  @javascript @personas
+  @javascript 
   Scenario: Delete model associations
     Given there is a model with the following conditions:
       | not in any contract       |
@@ -104,7 +104,7 @@ Feature: Model
     Then the model is deleted
     And all associations have been deleted as well
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Editing model details
     When I edit a model that exists and is in use
     And I edit the following details
@@ -119,7 +119,7 @@ Feature: Model
     Then the information is saved
     And the data has been updated
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario Outline: Create attachments
     Given I add or edit a <object>
     Then I add one or more attachments
@@ -131,7 +131,7 @@ Feature: Model
     | model    |
     | software |
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario Outline: Preventing deletion of a model
     Given the model has an assigned <assignment>
     Then I cannot delete the model from the list
@@ -142,7 +142,7 @@ Feature: Model
     | item       |
 
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Create a model with only a name
     When I add a new Model
     And I save
@@ -158,7 +158,7 @@ Feature: Model
     And I save
     Then the new model is created and can be found in the list of unused models
 
-  @javascript @personas
+  @javascript 
   Scenario: Images
     When I edit a model that exists and is in use
     And I add multiple images

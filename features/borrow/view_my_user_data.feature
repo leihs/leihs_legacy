@@ -4,7 +4,7 @@ Feature: Viewing my user data
   Background:
     Given I am Normin
 
-  @personas @javascript
+  @javascript
   Scenario: Viewing my own user data
     When I hover over my name
     And I click "User data"

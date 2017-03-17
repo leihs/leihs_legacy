@@ -18,7 +18,6 @@ Feature: Mail templates
     | reminder               | user      | reminder.text.liquid               |
 
 
-  @personas
   Scenario Outline: Specifying system-wide default templates
     Given I am Gino
     When I specify a mail template for the <template name> action for the whole system for each active language
@@ -33,7 +32,6 @@ Feature: Mail templates
     | deadline soon reminder |
     | reminder               |
 
-  @personas
   Scenario Outline: Specifying mail templates specific to an inventory pool
     Given I am Mike
     When I specify a mail template for the <template name> action in the current inventory pool for each active language
@@ -48,7 +46,6 @@ Feature: Mail templates
     | deadline soon reminder |
     | reminder               |
 
-  @personas
   Scenario Outline: Multilingual mail templates
     Given I am Normin
     And there is a system-wide approved mail template defined for the language "<language>"
@@ -60,7 +57,6 @@ Feature: Mail templates
     | de-CH    |
     | en-GB    |
 
-  @personas
   Scenario Outline: Receiving reminders using the correct mail template
     Given I am Normin
     And I have a contract with deadline <deadline>
@@ -78,7 +74,6 @@ Feature: Mail templates
     | deadline soon reminder | tomorrow  | is not | is     | is      | system-wide       |
     | deadline soon reminder | tomorrow  | is not | is not | is      | default           |
 
-  @personas
   Scenario Outline: Mail template language precendence
     Given I am Normin
     And my language is set to "<language>"
@@ -98,7 +93,6 @@ Feature: Mail templates
   @upcoming
   Scenario: Receiving mails using order templates
 
-  @personas
   Scenario: How an email template is parsed
     Given I am Normin
     And I have a contract with deadline yesterday for the inventory pool "A-Ausleihe"
@@ -120,7 +114,7 @@ Kind regards,
 A-Ausleihe
     """
 
-  @personas @javascript
+  @javascript
   Scenario Outline: Reporting errors on mail templates
     Given I am <persona>
     When I specify a mail template for the <template name> action <scope> for each active language
@@ -135,7 +129,6 @@ A-Ausleihe
     | Gino    | for the whole system          | reminder      | Hi {{{ user.name }} |
     | Mike    | in the current inventory pool | reminder      | Hi {{{ user.name }} |
 
-  @personas
   Scenario: Mail templates edit permissions
     Given I am Pius
     When I navigate to the mail templates list in the current inventory pool

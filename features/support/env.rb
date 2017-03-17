@@ -58,10 +58,6 @@ end
 
 ##################################################################################
 
-Before('@personas') do
-  @use_personas = true
-end
-
 Before('@ldap') do
   ENV['TMPDIR'] = File.join(Rails.root, 'tmp')
   # TODO: Move this out to something that runs *before* the test suite itself?
@@ -128,7 +124,7 @@ Before('~@generating_personas') do
 
   Cucumber.logger.info "Current capybara driver: %s\n" % Capybara.current_driver
 
-  Dataset.restore_random_dump(@use_personas ? 'normal' : 'minimal')
+  Dataset.restore_random_dump('normal')
 end
 
 ##################################################################################

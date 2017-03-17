@@ -4,7 +4,7 @@ Feature: Copy item
   Background:
     Given I am Mike
 
-  @javascript @personas
+  @javascript 
   Scenario: Create and copy items
     Given I create an item
     And I choose "Investment"
@@ -56,21 +56,21 @@ Feature: Copy item
     Then the copied item is saved
     And I am redirected to the inventory list
 
-  @javascript @personas
+  @javascript 
   Scenario: Copying an item selected from a list
     Given I open the inventory
     When I copy an item
     Then an item copy screen is shown
     And all fields except inventory code, serial number and name are copied
 
-  @javascript @personas
+  @javascript 
   Scenario: Copying an item from the edit view
     When I am editing an item
     And I save and copy
     Then an item copy screen is shown
     And all fields except inventory code, serial number and name are copied
 
-  @javascript @personas
+  @javascript 
   Scenario: Copying an item from another inventory pool
     Given I go to logout
     And I am Matti
@@ -79,7 +79,7 @@ Feature: Copy item
     Then an item copy screen is shown
     And all fields are editable, because the current inventory pool owns this new item
 
-  @javascript @browser @personas @flapping
+  @javascript @browser @flapping
   Scenario: Creating a new supplier while copying an item
     Given I copy an item
     Then an item copy screen is shown

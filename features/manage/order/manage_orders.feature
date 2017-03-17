@@ -1,13 +1,13 @@
 Feature: Edit order
 
-  @javascript @personas
+  @javascript 
   Scenario: View suspended status of a user
     Given I am Pius
     When I navigate to the open orders
     And I open a take back for a suspended user
     Then I see the note 'Suspended!' next to their name
 
-  @javascript @personas @flapping
+  @javascript @flapping
   Scenario: Prevent 'approve anyway' for group managers
     Given I am Andi
     And an order contains overbooked models
@@ -15,24 +15,22 @@ Feature: Edit order
     And I approve the order
     Then I cannot force the order to be approved
 
-  @personas @javascript
+  @javascript
   Scenario: No empty orders in the order list
     Given I am Pius
     Then I don't see empty orders in the list of orders
 
-  @personas
   Scenario: Visible tabs
     Given I am Andi
     When I am listing the orders
     Then I see the tabs "All, Pending, Approved, Rejected"
 
-  @personas
   Scenario: Definition of orders requiring verification
     Given a verifiable order exists
     Then this order was created by a user that is in a group whose orders require verification
     And this order contains a model from a group whose orders require verification
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Show all orders - tab 'All orders'
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -41,7 +39,7 @@ Feature: Edit order
     Then I see all verifiable orders
     And these orders are ordered by creation date
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Displaying the tab of pending orders
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -58,7 +56,7 @@ Feature: Edit order
     And I can edit the order
     And I cannot hand over orders
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Displaying the tab of approved orders
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -71,7 +69,7 @@ Feature: Edit order
     And I see the duration of the order on the order line
     And I see the order's status on the order line
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Displaying the tab of rejected orders
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -84,7 +82,7 @@ Feature: Edit order
     And I see the duration of the order on the order line
     And I see the order's status on the order line
 
-  @javascript @personas
+  @javascript 
   Scenario: Remove filter that shows orders to be verified
     Given I am Andi
     And I am in an inventory pool with verifiable orders
@@ -93,7 +91,7 @@ Feature: Edit order
     When I uncheck the filter "To be verified"
     Then I see orders placed by users in groups requiring verification
 
-  @javascript @browser @personas @unstable
+  @javascript @browser @unstable
   Scenario: Reset order that is already approved
     Given I am Andi
     And I am in an inventory pool with verifiable orders

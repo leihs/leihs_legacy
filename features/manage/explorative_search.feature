@@ -8,7 +8,7 @@ Feature: Explorative search
   Background:
     Given I am Pius
 
-  @javascript @personas
+  @javascript 
   Scenario: Explorative search in the inventory list
     Given I open the inventory
     And I open the category filter
@@ -22,7 +22,7 @@ Feature: Explorative search
     When I collapse the category filter
     Then I see only the list of inventory
 
-  @javascript @personas
+  @javascript 
   Scenario: Find a category using explorative search
     Given I open the inventory
     And I open the category filter
@@ -34,7 +34,7 @@ Feature: Explorative search
     And I see a search indicator with the current search term as well the currently selected category and its children
     And the inventory I see is filtered by this category
 
-  @javascript @personas
+  @javascript 
   Scenario: Navigating back in the explorative search
     Given I used the explorative search to get to a subcategory
     Then I can navigate to the parent category
@@ -42,7 +42,7 @@ Feature: Explorative search
   # This is already covered by 'Explorative search in the inventory list', waste of CPU to cover it again
   # For some reason, there are steps talking about models in explorative_suche_steps.rb,
   # but they are never used anywhere?
-  #@javascript @personas
+  #@javascript 
   #Scenario: Explorative search in the model list
   #  Given I open the inventory
   #  And I open the category filter
@@ -52,7 +52,7 @@ Feature: Explorative search
   #  And I see the top-level category as well as the currently selected one and its children
   #  And the inventory I see is filtered by this category
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Filter not categorized models
     Given I open the inventory
     And I see retired and not retired inventory

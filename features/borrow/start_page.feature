@@ -1,7 +1,6 @@
 
 Feature: Start page
 
-  @personas
   Scenario: Start page
     Given I am Normin
     And there exists a main category with own image
@@ -12,7 +11,7 @@ Feature: Start page
     When I enter to a main category
     Then I see the model list for this main category
 
-  @javascript @personas
+  @javascript 
   Scenario: Expanding main categories
     Given I am Normin
     And I am listing the main categories
@@ -21,7 +20,6 @@ Feature: Start page
     When I choose one of these child categories
     Then I see the model list for this category
 
-  @personas
   Scenario: Child categories not visible in the dropdown
     Given I am Normin
     And I am listing the main categories

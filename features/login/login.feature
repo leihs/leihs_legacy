@@ -4,7 +4,6 @@ Feature: Login
   As a normal user
   I want to be able to login
 
-  @personas
   Scenario: Redirection after successful login
     When I login as "Ramon" via web interface
     Then I am redirected to the "Admin" section

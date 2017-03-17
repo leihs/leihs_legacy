@@ -1,6 +1,6 @@
 Feature: Inventory (CSV export)
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Export the current inventory list as CSV
     Given I am Mike
     And I open the inventory

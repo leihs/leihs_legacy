@@ -1,18 +1,15 @@
 
 Feature: Returns
 
-  @personas
   Scenario: Quantities and return button
     Given I am Normin
     Then I see the number of "Returns" on each page
 
-  @personas
   Scenario: No return button if you don't have anything to return
     Given I am Ramon
     And I am in the borrow section
     Then I don't see the "Returns" button
 
-  @personas
   Scenario: Return overview
     Given I am Normin
     When I press the "Returns" link

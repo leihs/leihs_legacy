@@ -7,7 +7,7 @@ Feature: Sign Contract
   Background:
     Given I am Pius
 
-  @personas @javascript @browser
+  @javascript @browser
   Scenario: Hand over an not complete quantity of an option line
     Given there exists an approved option reservation for a normal user beginning today
     When I open the hand over page containing this reservation
@@ -19,7 +19,7 @@ Feature: Sign Contract
     When I click hand over inside the dialog
     Then the quantity of options is handed over
 
-  @javascript @browser @personas @flapping
+  @javascript @browser @flapping
   Scenario: Hand over reservations which start in the history
     When I open a hand over with overdue reservations
     And I select an overdue item line and assign an inventory code
@@ -28,7 +28,7 @@ Feature: Sign Contract
     When I click hand over inside the dialog
     Then the reservations start date is today
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Hand over a selection of items
     When I open a hand over with models
     And I select an item line and assign an inventory code
@@ -37,7 +37,7 @@ Feature: Sign Contract
     When I click hand over inside the dialog
     Then the contract is signed for the selected items
 
-  @javascript @personas
+  @javascript 
   Scenario: Try to hand over unassigned items
     When I open a hand over with models
     # travel in time in case today is not an open day of the pool
@@ -47,7 +47,7 @@ Feature: Sign Contract
     And I click hand over
     Then I got an error that i have to assign all selected item reservations
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Model with accessories
     Given I open a hand over which has model which not all accessories are activated for this inventory pool
     Then I see only the active accessories for that model
@@ -59,7 +59,7 @@ Feature: Sign Contract
     When I open a take back for this user
     Then I see only the active accessories for that model
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Add model with accessories
     Given I open a hand over which has model which not all accessories are activated for this inventory pool
     Then I see only the active accessories for that model

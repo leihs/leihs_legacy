@@ -4,7 +4,7 @@ Feature: Editing software
   Background:
     Given I am Mike
 
-  @javascript @personas
+  @javascript 
   Scenario: Editing a software product
     When I edit software
     And I edit the following details
@@ -19,7 +19,7 @@ Feature: Editing software
     And the data has been updated
 
   #73278586
-  @javascript @personas
+  @javascript 
   Scenario: Size of the software information field
     Given a software product with more than 6 text rows in field "Software Informationen" exists
     When I edit this software
@@ -28,7 +28,7 @@ Feature: Editing software
     When I release the focus from this field
     Then this field shrinks back to the original size
 
-  @javascript @personas
+  @javascript 
   Scenario: Editing a software license
     When I edit a software license with software information, quantity allocations and attachments
     Then I see the "Software Information"
@@ -57,7 +57,7 @@ Feature: Editing software
     When I save
     Then this software license's information has been updated successfully
 
-  @javascript @personas
+  @javascript 
   Scenario: Edit software license, deleting values from the fields
     When I edit a license with set dates for maintenance expiration, license expiration and invoice date
     And I delete the data for the following fields:
@@ -72,7 +72,7 @@ Feature: Editing software
       | License expiration     |
       | Invoice Date           |
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: View attachments (attachments field is readonly)
     Given the attachments field is configured to be editable only by the owner
     And exists a license that belongs to the current inventory pool but is not owned by it

@@ -5,17 +5,14 @@ Feature: Order window
   Background:
     Given I am Normin
 
-  @personas
   Scenario: Order window
     Given I am on the main category list
     Then I see the order window
 
-  @personas
   Scenario: No order window
     Given I am viewing my current order
     Then I do not see the order window
 
-  @personas
   Scenario: Content of the order window
     When I add a model to an order
     Then it appears in the order window
@@ -27,12 +24,12 @@ Feature: Order window
     And identical models are collapsed
     And I can go to the detailed order overview
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: Updating the order window from the calendar
     When I add a model to the order using the calendar
     Then the order window is updated
 
-  @javascript @personas
+  @javascript 
   Scenario: Showing how much time is left for ordering
     Given my order is empty
     When I am listing the main categories
@@ -42,7 +39,6 @@ Feature: Order window
     And the timer is near the basket
     And the timer counts down from 30 minutes
 
-  @personas
   Scenario: Reset timer
     Given my order is not empty
     Then I see a timer

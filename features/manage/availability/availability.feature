@@ -1,6 +1,5 @@
 Feature: Availability
 
-  @personas
   Scenario: Maximum availability considering groups
     Given I am Normin
     And the model "Kamera Nikon X12" has following partitioning in inventory pool "A-Ausleihe":
@@ -16,7 +15,6 @@ Feature: Availability
     When I am not member of any group
     Then the maximum available quantity of this model for me is 3
 
-  @personas
   Scenario: Group priorities when assigning
     Given I am Normin
     And the model "Kamera Nikon X12" has following partitioning in inventory pool "A-Ausleihe":
@@ -28,7 +26,6 @@ Feature: Availability
     And I am member of group "IAD"
     Then the general group is used last in assignments
 
-  @personas
   Scenario: Splitting capacities (Group General / Another Group)
     Given I am Normin
     And the model "Kamera Nikon X12" has following partitioning in inventory pool "A-Ausleihe":
@@ -44,7 +41,7 @@ Feature: Availability
     And 3 of these reservations are allocated to group "General"
     And all these reservations are available
 
-  @javascript @browser @personas
+  @javascript @browser 
   Scenario: No availability for options
     Given I am Pius
     When a take back contains only options

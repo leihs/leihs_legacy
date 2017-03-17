@@ -7,14 +7,14 @@ Feature: Quick Approve orders
   Background:
     Given I am Pius
 
-  @javascript @personas
+  @javascript 
   Scenario: Quick approve an order with no problems
     Given I navigate to the open orders
     When I quick approve a submitted order
     Then this contract is approved
     And I see a link to the hand over process of that order
 
-  @javascript @personas @browser
+  @javascript @browser
   Scenario: Approve anyway on daily view
     Given I navigate to the open orders
     And the checkbox "No verification required" is already checked and I can uncheck
