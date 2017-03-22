@@ -10,6 +10,9 @@ scripts:
     body: |
       #!/usr/bin/env bash
       set -eux
+
+      if [ -d legacy ]; then cd legacy; fi
+
       export PATH=~/.rubies/$RUBY/bin:$PATH
 
       if [ ! -d ~/.rubies/$RUBY ]; then

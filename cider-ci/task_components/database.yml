@@ -11,6 +11,7 @@ scripts:
     body: |
       #!/usr/bin/env bash
       set -eux
+      if [ -d legacy ]; then cd legacy; fi
       createdb "$DATABASE"
       psql -d "$DATABASE" -f db/structure.sql
 
