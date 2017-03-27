@@ -178,7 +178,7 @@ class ReservationsBundle < ActiveRecord::Base
               # and casted to integer, causing wrong matches (contracts.id)
               arel_table[:contract_id]
                 .eq(q.numeric? ? q : 0)
-                .or(Arel::Table.new(:ctx)[:compact_id].eq(q))
+                .or(Arel::Table.new(:ctx)[:compact_id].matches(q))
                 .or(Contract.arel_table[:note].matches(qq))
                 .or(User.arel_table[:login].matches(qq))
                 .or(User.arel_table[:firstname].matches(qq))
