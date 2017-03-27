@@ -158,19 +158,24 @@ module Leihs
           ref_table_uuid_ns = UUIDTools::UUID.sha1_create LEIHS_UUID_NS, ref_table
           ref_uuid = UUIDTools::UUID.sha1_create(ref_table_uuid_ns, ref_id.to_s)
 
-          file_path = "#{@v3_attachments_dir}/#{path_to_file(row[:id], row[:filename])}"
-          row[:content] = read_and_encode_file(file_path)
-          if row[:content] and ref_klass.find_by_id(ref_uuid)
-            row[:content_type] = `file -b --mime-type #{escape file_path}`.sub("\n", '')
-            row[:size] = File.open(file_path).size
-            row.merge Hash["#{ref_table.singularize}_id", ref_uuid]
-          elsif row[:content].blank? and ref_klass.find_by_id(ref_uuid) and ENV['REPLACE_MISSING_IMAGES'].present?
-            row[:content] = DUMMY_IMAGE_PNG
-            row[:content_type] = 'image/png'
-            row[:size]= 736
-            row.merge Hash["#{ref_table.singularize}_id", ref_uuid]
+          if row[:filename].presence
+            file_path = "#{@v3_attachments_dir}/#{path_to_file(row[:id], row[:filename])}"
+            row[:content] = read_and_encode_file(file_path)
+            if row[:content] and ref_klass.find_by_id(ref_uuid)
+              row[:content_type] = `file -b --mime-type #{escape file_path}`.sub("\n", '')
+              row[:size] = File.open(file_path).size
+              row.merge Hash["#{ref_table.singularize}_id", ref_uuid]
+            elsif row[:content].blank? and ref_klass.find_by_id(ref_uuid) and ENV['REPLACE_MISSING_IMAGES'].present?
+              row[:content] = DUMMY_IMAGE_PNG
+              row[:content_type] = 'image/png'
+              row[:size]= 736
+              row.merge Hash["#{ref_table.singularize}_id", ref_uuid]
+            else
+              Rails.logger.warn("Ignoring missing attachment #{row.to_s}")
+              nil
+            end
           else
-            Rails.logger.warn("Ignoring missing attachment #{row.to_s}")
+            Rails.logger.warn("Ignoring attachment with missing filename. ID: #{row[:id]}")
             nil
           end
         end
