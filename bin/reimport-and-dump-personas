@@ -1,5 +1,9 @@
 set -eux
 
+if [ -z ${RAILS_ENV-} ]; then
+  export RAILS_ENV=test
+fi
+
 bundle exec rake db:pg:terminate_connections db:drop db:create db:migrate VERSION=100
 bundle exec rake leihs:dbio:import FILE=features/personas/dumps/minimal.yml REPLACE_MISSING_IMAGES=yes
 bundle exec rake db:migrate

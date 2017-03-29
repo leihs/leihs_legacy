@@ -36,6 +36,8 @@
         Timecop.install();
         Timecop.travel(new Date("#{Time.now.iso8601}"));
 
+    = render partial: "layouts/custom_head_tag"
+
   %body
     = render partial: 'layouts/procurement/header'
 
