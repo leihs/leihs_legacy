@@ -1,6 +1,7 @@
 
 Feature: Inventory pools
 
+  @rack
   Scenario: Inventory pool information
     Given I am Normin
     When I click on the inventory pool link

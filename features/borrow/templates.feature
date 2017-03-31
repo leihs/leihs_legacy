@@ -4,17 +4,19 @@ Feature: Templates
   Background:
     Given I am Normin
 
+  @rack
   Scenario: Finding the list of templates in the borrow section
     Given I am listing the main categories
     Then I see a link to the templates underneath the categories
 
+  @rack
   Scenario: List of templates
     When I am listing templates in the borrow section
     Then I see the templates
     And the templates are sorted alphabetically by name
     And I can look at one of the templates in detail
 
-  @javascript @browser @flapping
+  @flapping
   Scenario: Viewing a template in the borrow section
     Given I am looking at a template
     Then I see all models that template contains
@@ -24,12 +26,12 @@ Feature: Templates
     And I can specify at most the maximum available quantity per model
     And I have to continue the process of specifying start and end dates
 
+  @rack
   Scenario: Warning when looking at uncompletable templates
     Given I am looking at a template
     And this template contains models that don't have enough items to satisfy the quantity required by the template
     Then I see a warning on the page itself and on every affected model
 
-  @javascript 
   Scenario: Entering a date after entering a quantity
     Given I have chosen the quantities mentioned in the template
     Then the start date is today and the end date is tomorrow
@@ -37,7 +39,6 @@ Feature: Templates
     And I have to follow the process to the availability display of the template
     And all entries get the chosen start and end date
 
-  @javascript @browser 
   Scenario: Availability display of a template
     Given I am looking at a template
     And I am looking at the availability of a template that contains unavailable models
@@ -49,6 +50,7 @@ Feature: Templates
     When I have solved all availability problems
     Then I can continue in the process and add all models to the order at once
 
+  @rack
   Scenario: Only ordering those models from a template that are available
     Given I see the availability of a template that has items that are not available
     Then I can follow the process to the availability display of the template

@@ -2,6 +2,7 @@ Feature: User model
 
   Model test (instance methods)
 
+  @rack
   Scenario: Create a user with long lastname
     Given the following users exist
       | firstname        | lastname                                    | email                        | login                                                        |

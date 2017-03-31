@@ -53,7 +53,9 @@ When(/^I select a specific inventory pool from the choices offered$/) do
 end
 
 Then(/^all other inventory pools are deselected$/) do
-  find('#ip-selector').click
+  unless first('#ip-selector .dropdown-item')
+    find('#ip-selector').click
+  end
   (@current_user.inventory_pools - [@current_inventory_pool]).each do |ip|
     expect(find('#ip-selector .dropdown-item', text: ip.name).find('input', match: :first).checked?).to be false
   end
@@ -149,7 +151,9 @@ Then(/^the filter shows the count of selected inventory pools$/) do
 end
 
 When(/^I sort the list by "(.*?)"$/) do |sort_order|
-  find('#model-sorting').click
+  unless first('#model-sorting .dropdown')
+    find('#model-sorting').click
+  end
   text = case sort_order
     when 'Model, ascending'
       "#{_("Model")} (#{_("ascending")})"

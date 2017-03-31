@@ -1,173 +1,189 @@
 ---
 tasks:
-- name: features/borrow/availability.feature:9
+- name: features/borrow/availability.feature:10
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/availability.feature:9 DEFAULT_BROWSER=firefox
-- name: features/borrow/availability.feature:21
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/availability.feature:10
+- name: features/borrow/availability.feature:23
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/availability.feature:21 DEFAULT_BROWSER=firefox
-- name: features/borrow/availability.feature:25
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/availability.feature:23
+- name: features/borrow/availability.feature:28
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/availability.feature:25 DEFAULT_BROWSER=firefox
-- name: features/borrow/availability.feature:29
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/availability.feature:28
+- name: features/borrow/availability.feature:33
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/availability.feature:29 DEFAULT_BROWSER=firefox
-- name: features/borrow/availability.feature:36
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/availability.feature:33
+- name: features/borrow/availability.feature:41
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/availability.feature:36 DEFAULT_BROWSER=firefox
-- name: features/borrow/breadcrumb_navigation.feature:7
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/availability.feature:41
+- name: features/borrow/breadcrumb_navigation.feature:8
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/breadcrumb_navigation.feature:7 DEFAULT_BROWSER=firefox
-- name: features/borrow/breadcrumb_navigation.feature:11
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/breadcrumb_navigation.feature:8
+- name: features/borrow/breadcrumb_navigation.feature:13
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/breadcrumb_navigation.feature:11 DEFAULT_BROWSER=firefox
-- name: features/borrow/breadcrumb_navigation.feature:17
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/breadcrumb_navigation.feature:13
+- name: features/borrow/breadcrumb_navigation.feature:20
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/breadcrumb_navigation.feature:17 DEFAULT_BROWSER=firefox
-- name: features/borrow/breadcrumb_navigation.feature:24
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/breadcrumb_navigation.feature:20
+- name: features/borrow/breadcrumb_navigation.feature:26
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/breadcrumb_navigation.feature:24 DEFAULT_BROWSER=firefox
-- name: features/borrow/breadcrumb_navigation.feature:30
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/breadcrumb_navigation.feature:26
+- name: features/borrow/breadcrumb_navigation.feature:33
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/breadcrumb_navigation.feature:30 DEFAULT_BROWSER=firefox
-- name: features/borrow/breadcrumb_navigation.feature:39
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/breadcrumb_navigation.feature:33
+- name: features/borrow/breadcrumb_navigation.feature:43
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/breadcrumb_navigation.feature:39 DEFAULT_BROWSER=firefox
-- name: features/borrow/breadcrumb_navigation.feature:45
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/breadcrumb_navigation.feature:43
+- name: features/borrow/breadcrumb_navigation.feature:50
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/breadcrumb_navigation.feature:45 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar.feature:11
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/breadcrumb_navigation.feature:50
+- name: features/borrow/calendar.feature:10
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar.feature:11 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar.feature:26
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar.feature:10
+- name: features/borrow/calendar.feature:24
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar.feature:26 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:8
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar.feature:24
+- name: features/borrow/calendar2.feature:7
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:8 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:14
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:7
+- name: features/borrow/calendar2.feature:12
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:14 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:32
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:12
+- name: features/borrow/calendar2.feature:29
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:32 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:41
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:29
+- name: features/borrow/calendar2.feature:37
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:41 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:47
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:37
+- name: features/borrow/calendar2.feature:42
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:47 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:55
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:42
+- name: features/borrow/calendar2.feature:49
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:55 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:63
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:49
+- name: features/borrow/calendar2.feature:56
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:63 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:56
+- name: features/borrow/calendar2.feature:61
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:61
+- name: features/borrow/calendar2.feature:66
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:66
 - name: features/borrow/calendar2.feature:69
   scripts:
     test:
@@ -175,15 +191,7 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:69 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:75
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:75 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:69
 - name: features/borrow/calendar2.feature:79
   scripts:
     test:
@@ -191,15 +199,23 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:79 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:90
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:79
+- name: features/borrow/calendar2.feature:83
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:90 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:83
+- name: features/borrow/calendar2.feature:88
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:88
 - name: features/borrow/calendar2.feature:95
   scripts:
     test:
@@ -207,7 +223,7 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:95 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:95
 - name: features/borrow/calendar2.feature:101
   scripts:
     test:
@@ -215,111 +231,95 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:101 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:109
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar2.feature:101
+- name: features/borrow/explorative_search.feature:8
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:109 DEFAULT_BROWSER=firefox
-- name: features/borrow/calendar2.feature:116
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/explorative_search.feature:8
+- name: features/borrow/explorative_search.feature:15
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/calendar2.feature:116 DEFAULT_BROWSER=firefox
-- name: features/borrow/explorative_search.feature:7
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/explorative_search.feature:15
+- name: features/borrow/explorative_search.feature:21
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/explorative_search.feature:7 DEFAULT_BROWSER=firefox
-- name: features/borrow/explorative_search.feature:13
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/explorative_search.feature:21
+- name: features/borrow/inventory_pools.feature:5
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/explorative_search.feature:13 DEFAULT_BROWSER=firefox
-- name: features/borrow/explorative_search.feature:18
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/inventory_pools.feature:5
+- name: features/borrow/model_list.feature:5
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/explorative_search.feature:18 DEFAULT_BROWSER=firefox
-- name: features/borrow/inventory_pools.feature:4
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:5
+- name: features/borrow/model_list.feature:15
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/inventory_pools.feature:4 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:4
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:15
+- name: features/borrow/model_list.feature:33
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:4 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:13
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:33
+- name: features/borrow/model_list.feature:46
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:13 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:32
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:46
+- name: features/borrow/model_list.feature:51
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:32 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:44
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:51
+- name: features/borrow/model_list.feature:57
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:44 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:50
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:57
+- name: features/borrow/model_list.feature:62
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:50 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:55
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:55 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:61
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:61 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:62
 - name: features/borrow/model_list.feature:71
   scripts:
     test:
@@ -327,95 +327,95 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:71 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:77
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:71
+- name: features/borrow/model_list.feature:76
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:77 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:85
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:76
+- name: features/borrow/model_list.feature:83
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:85 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:93
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:83
+- name: features/borrow/model_list.feature:90
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:93 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:102
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:90
+- name: features/borrow/model_list.feature:98
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:102 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:108
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:98
+- name: features/borrow/model_list.feature:103
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:108 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:116
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:103
+- name: features/borrow/model_list.feature:110
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:116 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:126
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:110
+- name: features/borrow/model_list.feature:121
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:126 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:134
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:121
+- name: features/borrow/model_list.feature:128
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:134 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:144
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:128
+- name: features/borrow/model_list.feature:137
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:144 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_list.feature:177
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:137
+- name: features/borrow/model_list.feature:169
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_list.feature:177 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_overview.feature:8
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_list.feature:169
+- name: features/borrow/model_overview.feature:9
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_overview.feature:8 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_overview.feature:9
 - name: features/borrow/model_overview.feature:23
   scripts:
     test:
@@ -423,23 +423,23 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_overview.feature:23 DEFAULT_BROWSER=firefox
-- name: features/borrow/model_overview.feature:34
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_overview.feature:23
+- name: features/borrow/model_overview.feature:33
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/model_overview.feature:34 DEFAULT_BROWSER=firefox
-- name: features/borrow/my_orders_overview.feature:9
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/model_overview.feature:33
+- name: features/borrow/my_orders_overview.feature:10
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/my_orders_overview.feature:9 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:10
 - name: features/borrow/my_orders_overview.feature:22
   scripts:
     test:
@@ -447,199 +447,199 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/my_orders_overview.feature:22 DEFAULT_BROWSER=firefox
-- name: features/borrow/my_orders_overview.feature:28
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:22
+- name: features/borrow/my_orders_overview.feature:27
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/my_orders_overview.feature:28 DEFAULT_BROWSER=firefox
-- name: features/borrow/my_orders_overview.feature:38
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:27
+- name: features/borrow/my_orders_overview.feature:36
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/my_orders_overview.feature:38 DEFAULT_BROWSER=firefox
-- name: features/borrow/my_orders_overview.feature:47
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:36
+- name: features/borrow/my_orders_overview.feature:44
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/my_orders_overview.feature:47 DEFAULT_BROWSER=firefox
-- name: features/borrow/my_orders_overview.feature:54
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:44
+- name: features/borrow/my_orders_overview.feature:52
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/my_orders_overview.feature:54 DEFAULT_BROWSER=firefox
-- name: features/borrow/my_orders_overview.feature:63
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:52
+- name: features/borrow/my_orders_overview.feature:62
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/my_orders_overview.feature:63 DEFAULT_BROWSER=firefox
-- name: features/borrow/navigation.feature:9
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:62
+- name: features/borrow/navigation.feature:8
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/navigation.feature:9 DEFAULT_BROWSER=firefox
-- name: features/borrow/navigation.feature:21
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/navigation.feature:8
+- name: features/borrow/navigation.feature:19
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/navigation.feature:21 DEFAULT_BROWSER=firefox
-- name: features/borrow/navigation.feature:34
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/navigation.feature:19
+- name: features/borrow/navigation.feature:31
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/navigation.feature:34 DEFAULT_BROWSER=firefox
-- name: features/borrow/navigation.feature:46
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/navigation.feature:31
+- name: features/borrow/navigation.feature:44
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/navigation.feature:46 DEFAULT_BROWSER=firefox
-- name: features/borrow/order_window.feature:8
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/navigation.feature:44
+- name: features/borrow/order_window.feature:9
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/order_window.feature:8 DEFAULT_BROWSER=firefox
-- name: features/borrow/order_window.feature:12
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/order_window.feature:9
+- name: features/borrow/order_window.feature:14
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/order_window.feature:12 DEFAULT_BROWSER=firefox
-- name: features/borrow/order_window.feature:16
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/order_window.feature:14
+- name: features/borrow/order_window.feature:19
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/order_window.feature:16 DEFAULT_BROWSER=firefox
-- name: features/borrow/order_window.feature:28
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/order_window.feature:19
+- name: features/borrow/order_window.feature:30
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/order_window.feature:28 DEFAULT_BROWSER=firefox
-- name: features/borrow/order_window.feature:33
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/order_window.feature:30
+- name: features/borrow/order_window.feature:34
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/order_window.feature:33 DEFAULT_BROWSER=firefox
-- name: features/borrow/order_window.feature:42
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/order_window.feature:34
+- name: features/borrow/order_window.feature:44
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/order_window.feature:42 DEFAULT_BROWSER=firefox
-- name: features/borrow/orders.feature:7
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/order_window.feature:44
+- name: features/borrow/orders.feature:8
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/orders.feature:7 DEFAULT_BROWSER=firefox
-- name: features/borrow/orders.feature:10
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/orders.feature:8
+- name: features/borrow/orders.feature:12
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/orders.feature:10 DEFAULT_BROWSER=firefox
-- name: features/borrow/pick_ups.feature:4
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/orders.feature:12
+- name: features/borrow/pick_ups.feature:5
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/pick_ups.feature:4 DEFAULT_BROWSER=firefox
-- name: features/borrow/pick_ups.feature:8
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/pick_ups.feature:5
+- name: features/borrow/pick_ups.feature:10
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/pick_ups.feature:8 DEFAULT_BROWSER=firefox
-- name: features/borrow/pick_ups.feature:13
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/pick_ups.feature:10
+- name: features/borrow/pick_ups.feature:16
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/pick_ups.feature:13 DEFAULT_BROWSER=firefox
-- name: features/borrow/returns.feature:4
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/pick_ups.feature:16
+- name: features/borrow/returns.feature:5
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/returns.feature:4 DEFAULT_BROWSER=firefox
-- name: features/borrow/returns.feature:8
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/returns.feature:5
+- name: features/borrow/returns.feature:10
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/returns.feature:8 DEFAULT_BROWSER=firefox
-- name: features/borrow/returns.feature:13
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/returns.feature:10
+- name: features/borrow/returns.feature:16
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/returns.feature:13 DEFAULT_BROWSER=firefox
-- name: features/borrow/search.feature:7
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/returns.feature:16
+- name: features/borrow/search.feature:8
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/search.feature:7 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/search.feature:8
 - name: features/borrow/search.feature:12
   scripts:
     test:
@@ -647,47 +647,47 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/search.feature:12 DEFAULT_BROWSER=firefox
-- name: features/borrow/search.feature:19
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/search.feature:12
+- name: features/borrow/search.feature:18
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/search.feature:19 DEFAULT_BROWSER=firefox
-- name: features/borrow/search.feature:24
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/search.feature:18
+- name: features/borrow/search.feature:22
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/search.feature:24 DEFAULT_BROWSER=firefox
-- name: features/borrow/search.feature:30
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/search.feature:22
+- name: features/borrow/search.feature:27
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/search.feature:30 DEFAULT_BROWSER=firefox
-- name: features/borrow/search.feature:42
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/search.feature:27
+- name: features/borrow/search.feature:38
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/search.feature:42 DEFAULT_BROWSER=firefox
-- name: features/borrow/start_page.feature:4
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/search.feature:38
+- name: features/borrow/start_page.feature:5
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/start_page.feature:4 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/start_page.feature:5
 - name: features/borrow/start_page.feature:15
   scripts:
     test:
@@ -695,71 +695,71 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/start_page.feature:15 DEFAULT_BROWSER=firefox
-- name: features/borrow/start_page.feature:23
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/start_page.feature:15
+- name: features/borrow/start_page.feature:24
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/start_page.feature:23 DEFAULT_BROWSER=firefox
-- name: features/borrow/templates.feature:7
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/start_page.feature:24
+- name: features/borrow/templates.feature:8
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/templates.feature:7 DEFAULT_BROWSER=firefox
-- name: features/borrow/templates.feature:11
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/templates.feature:8
+- name: features/borrow/templates.feature:13
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/templates.feature:11 DEFAULT_BROWSER=firefox
-- name: features/borrow/templates.feature:27
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/templates.feature:13
+- name: features/borrow/templates.feature:30
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/templates.feature:27 DEFAULT_BROWSER=firefox
-- name: features/borrow/templates.feature:33
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/templates.feature:30
+- name: features/borrow/templates.feature:35
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/templates.feature:33 DEFAULT_BROWSER=firefox
-- name: features/borrow/templates.feature:41
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/templates.feature:35
+- name: features/borrow/templates.feature:42
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/templates.feature:41 DEFAULT_BROWSER=firefox
-- name: features/borrow/templates.feature:52
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/templates.feature:42
+- name: features/borrow/templates.feature:54
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/templates.feature:52 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:6
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/templates.feature:54
+- name: features/borrow/timeoutpage.feature:7
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/timeoutpage.feature:6 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/timeoutpage.feature:7
 - name: features/borrow/timeoutpage.feature:15
   scripts:
     test:
@@ -767,100 +767,108 @@ tasks:
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/timeoutpage.feature:15 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:24
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/timeoutpage.feature:15
+- name: features/borrow/timeoutpage.feature:23
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/timeoutpage.feature:24 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:30
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/timeoutpage.feature:23
+- name: features/borrow/timeoutpage.feature:28
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/timeoutpage.feature:30 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:43
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/timeoutpage.feature:28
+- name: features/borrow/timeoutpage.feature:40
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/timeoutpage.feature:43 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:51
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/timeoutpage.feature:40
+- name: features/borrow/timeoutpage.feature:49
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/timeoutpage.feature:51 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:60
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/timeoutpage.feature:49
+- name: features/borrow/timeoutpage.feature:57
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/timeoutpage.feature:60 DEFAULT_BROWSER=firefox
-- name: features/borrow/timeoutpage.feature:71
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/timeoutpage.feature:57
+- name: features/borrow/timeoutpage.feature:67
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/timeoutpage.feature:71 DEFAULT_BROWSER=firefox
-- name: features/borrow/user_documents.feature:4
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/timeoutpage.feature:67
+- name: features/borrow/user_documents.feature:3
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/user_documents.feature:4 DEFAULT_BROWSER=firefox
-- name: features/borrow/user_documents.feature:24
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/user_documents.feature:3
+- name: features/borrow/user_documents.feature:8
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/user_documents.feature:24 DEFAULT_BROWSER=firefox
-- name: features/borrow/user_documents.feature:30
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/user_documents.feature:8
+- name: features/borrow/user_documents.feature:21
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/user_documents.feature:30 DEFAULT_BROWSER=firefox
-- name: features/borrow/user_documents.feature:37
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/user_documents.feature:21
+- name: features/borrow/user_documents.feature:26
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/user_documents.feature:37 DEFAULT_BROWSER=firefox
-- name: features/borrow/user_documents.feature:70
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/user_documents.feature:26
+- name: features/borrow/user_documents.feature:32
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/user_documents.feature:70 DEFAULT_BROWSER=firefox
-- name: features/borrow/view_my_user_data.feature:8
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/user_documents.feature:32
+- name: features/borrow/user_documents.feature:64
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber -p default --strict features/borrow/view_my_user_data.feature:8 DEFAULT_BROWSER=firefox
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/user_documents.feature:64
+- name: features/borrow/view_my_user_data.feature:7
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/view_my_user_data.feature:7

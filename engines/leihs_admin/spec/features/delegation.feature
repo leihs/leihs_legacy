@@ -3,7 +3,7 @@ Feature: Delegation
   Background:
     Given personas dump is loaded
 
-  @leihs_admin_delegation @javascript @browser
+  @leihs_admin_delegation 
   Scenario: Delete delegation
     Given I am Gino
     And there is a delegation

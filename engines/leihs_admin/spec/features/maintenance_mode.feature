@@ -8,7 +8,7 @@ Feature: Maintenance mode
     Given personas dump is loaded
     And I am Gino
 
-  @leihs_admin_maintenance_mode @javascript
+  @leihs_admin_maintenance_mode 
   Scenario: Disabling the manage section
     Given I am in the system-wide settings
     When I choose the function "Disable manage section"
@@ -19,7 +19,7 @@ Feature: Maintenance mode
     And the "manage section" is disabled for users
     And users see the note that was defined
 
-  @leihs_admin_maintenance_mode @javascript
+  @leihs_admin_maintenance_mode 
   Scenario: Disabling the borrow section
     Given I am in the system-wide settings
     When I choose the function "Disable borrow section"
@@ -30,7 +30,7 @@ Feature: Maintenance mode
     And the "borrow section" is disabled for users
     And users see the note that was defined
 
-  @leihs_admin_maintenance_mode @javascript
+  @leihs_admin_maintenance_mode 
   Scenario: Enabling the manage section
     Given the "manage section" is disabled
     And I am in the system-wide settings
@@ -39,7 +39,7 @@ Feature: Maintenance mode
     Then the "manage section" is not disabled for users
     And the note entered for the "manage section" is still saved
 
-  @leihs_admin_maintenance_mode @javascript
+  @leihs_admin_maintenance_mode 
   Scenario: Enabling the borrow section
     Given the "borrow section" is disabled
     And I am in the system-wide settings

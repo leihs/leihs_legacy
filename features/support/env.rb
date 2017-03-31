@@ -40,20 +40,12 @@ ActionController::Base.allow_rescue = false
 
 require 'selenium/webdriver'
 
-Capybara.register_driver :selenium_phantomjs do |app|
-  Capybara::Selenium::Driver.new app, browser: :phantomjs
-end
-
 Capybara.register_driver :selenium_firefox do |app|
   if ENV['FIREFOX_ESR_PATH'].present?
     Selenium::WebDriver::Firefox.path = ENV['FIREFOX_ESR_PATH']
   end
   profile = Selenium::WebDriver::Firefox::Profile.new
   Capybara::Selenium::Driver.new app, browser: :firefox, profile: profile
-end
-
-Capybara.register_driver :selenium_chrome do |app|
-  Capybara::Selenium::Driver.new app, browser: :chrome
 end
 
 ##################################################################################
@@ -73,58 +65,15 @@ Before('@ldap') do
   @ldap_server.start
 end
 
-Before('@javascript') do
-  @use_phantomjs = true
+Before('~@rack') do
+  Capybara.current_driver = :selenium_firefox
+  # to prevent Selenium::WebDriver::Error::MoveTargetOutOfBoundsError: Element cannot be scrolled into view
+  page.driver.browser.manage.window.maximize
 end
 
-Before('@browser', '@firefox') do
-  @use_browser = :firefox
-end
-
-Before('@browser', '@chrome') do
-  @use_browser = :chrome
-end
-
-Before('@browser') do
-  @use_browser = case ENV['BROWSER']
-                   when '0'
-                     false
-                   when 'chrome'
-                     :chrome
-                   when 'firefox'
-                     :firefox
-                   else
-                     @use_browser || ENV['DEFAULT_BROWSER'].try(:to_sym) || :firefox
-                 end
-end
-
-Before('~@browser') do
-  @use_browser = case ENV['BROWSER']
-                   when 'chrome'
-                     :chrome
-                   when 'firefox'
-                     :firefox
-                   else
-                     false
-                 end
-end
-
-Before('~@generating_personas') do
-  if @use_browser
-    case @use_browser
-      when :firefox
-        Capybara.current_driver = :selenium_firefox
-      when :chrome
-        Capybara.current_driver = :selenium_chrome
-    end
-    page.driver.browser.manage.window.maximize # to prevent Selenium::WebDriver::Error::MoveTargetOutOfBoundsError: Element cannot be scrolled into view
-  elsif @use_phantomjs
-    Capybara.current_driver = :selenium_phantomjs
-  end
-
+Before do
   Cucumber.logger.info "Current capybara driver: %s\n" % Capybara.current_driver
-
-  Dataset.restore_random_dump('normal')
+  Dataset.restore_dump
 end
 
 ##################################################################################

@@ -8,6 +8,7 @@ Feature: Picking list
   Background:
     Given I am Pius
 
+  @rack
   Scenario: What I want to see on the picking list
     When I open a picking list
     Then I want to see the following sections in the picking list:
@@ -18,7 +19,6 @@ Feature: Picking list
     | Lender   |
     | List     |
 
-  @javascript @browser
   Scenario: Content of a picking list before hand over -- unassigned inventory codes
     Given there is a hand over with at least one unproblematic model and an option
     And I open the hand over
@@ -40,7 +40,6 @@ Feature: Picking list
     And items without assigned room or shelf are shown with their available quantity for the customer and "x Location not defined"
     And the missing location information for options, are displayed with "Location not defined"
 
-  @javascript @browser
   Scenario: Content of a picking list before hand over -- unavailable items
     Given there is a hand over with at least one problematic line
     And I open the hand over
@@ -49,7 +48,6 @@ Feature: Picking list
     Then the lists are sorted by hand over date
     And the unavailable items are displayed with "Not available"
 
-  @javascript @browser
   Scenario: Content of a picking list before hand over -- Unassigned room and shelf
   Given there is a hand over with at least an item without room or shelf
     And I open the hand over
@@ -57,7 +55,6 @@ Feature: Picking list
     When I open the picking list
     Then items without assigned room or shelf are shown with "Location not defined"
 
-  @javascript
   Scenario: Inhalt der Rüstliste nach Aushändigung - Inventarcodes sind bekannt
     When I open the picking list for a signed contract
     Then the lists are sorted by take back date
@@ -71,7 +68,6 @@ Feature: Picking list
      And items without assigned room or shelf are shown with "Location not defined"
      And the missing location information for options, are displayed with "Location not defined"
 
-  @javascript
   Scenario: Wo wird die Rüstliste aufgerufen
   	When I visit the lending section on the list of all contracts
     And I see at least a contract

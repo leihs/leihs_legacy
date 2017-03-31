@@ -5,6 +5,7 @@ Feature: Provision of accessible fields
   Background:
     Given test data setup for =Provision of accessible fields= feature
 
+  @rack
   Scenario Outline: Accessible fields should be provided according to user's access level
     Given a user with role <a manager role> exists
     When you get the accessible fields for this user

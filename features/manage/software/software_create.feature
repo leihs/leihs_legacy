@@ -7,7 +7,6 @@ Feature: create a software license
   Background:
     Given I am Mike
 
-  @javascript
   Scenario: create Software license with maintenance value with 2 decimal
     Given a software product exists
     When I create a new software license

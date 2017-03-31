@@ -19,3 +19,12 @@ def get_rails_model_name_from_url
   model_name = 'software' if model_name == 'model' and ( current_url =~ /type=software/ or Model.where(id: id, type: 'Software').first )
   model_name
 end
+
+def rescue_displaced_flash
+  begin
+    yield
+  rescue Selenium::WebDriver::Error::UnknownError
+    find("#flash .fa-times-circle").click
+    retry
+  end
+end

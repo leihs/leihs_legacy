@@ -7,6 +7,7 @@ Feature: Allocating of capacities inside the availability
   Background:
     Given I am Pius
 
+  @rack
   Scenario: Allocating should be always the same
     Given a list of changes/availabilities
     When I request that list multiple times the allocation of the reservations should always be the same

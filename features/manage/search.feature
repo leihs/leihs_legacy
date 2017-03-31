@@ -1,12 +1,12 @@
 
 Feature: Search
 
+  @rack
   Scenario: Searching for contracts by inventory code of an item that is assigned to a contract
     Given I am Mike
     And I search for the inventory code of an item that is in a contract
     Then I see the contract this item is assigned to in the list of results
 
-  @javascript @browser
   Scenario: Searching for a user that has contracts but no longer has access to the current inventory pool
     Given I am Mike
     And there is a user with contracts who no longer has access to the current inventory pool
@@ -15,14 +15,12 @@ Feature: Search
     And the name of that user is shown on each contract line
     And that user's personal details are shown in the tooltip
 
-  @javascript 
   Scenario: No hand over without approval
     Given I am Pius
     And there is a user with an unapproved order
     When I search for that user
     Then I cannot hand over the unapproved order unless I approve it first
 
-  @javascript 
   Scenario: No link to show all matching contracts
     Given I am Mike
     And there is a user with at least 3 and less than 5 contracts
@@ -30,7 +28,6 @@ Feature: Search
     Then I see that user's signed and closed contracts
     Then I don't see a link labeled 'Show all matching contracts'
 
-  @javascript 
   Scenario: Displaying retired items
     Given I am Mike
     And there exists a closed contract with a retired item
@@ -39,7 +36,6 @@ Feature: Search
     And I hover over the list of items on the contract line
     Then I see in the tooltip the model name of this item
 
-  @javascript @browser
   Scenario: Displaying items from another inventory pool in closed contracts
     Given I am Mike
     And there exists a closed contract with an item, for which an other inventory pool is responsible and owner
@@ -53,7 +49,7 @@ Feature: Search
     And I hover over the list of items on the contract line
     Then I see in the tooltip the model name of this item
 
-  @javascript @browser @unstable
+  @unstable
   Scenario Outline: Showing items' problems in global search
     Given I am Mike
     And there is a "<state>" item in my inventory pool
@@ -69,7 +65,7 @@ Feature: Search
 
   # this outline split into individual scenarios due to duration of execution
   #
-  # @javascript @browser
+  #
   # Scenario Outline: Checking the subsection tabs
   #   Given I am Mike
   #   And enough data for "<subsection>" having "search string" exists
@@ -90,7 +86,6 @@ Feature: Search
   #     | Contracts  |
   #     | Orders     |
 
-  @javascript @browser
   Scenario: Checking the 'Models' subsection tab
     Given I am Mike
     And enough data for "Models" having "search string" exists
@@ -101,7 +96,6 @@ Feature: Search
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Models"
 
-  @javascript @browser
   Scenario: Checking the 'Software' subsection tab
     Given I am Mike
     And enough data for "Software" having "search string" exists
@@ -112,7 +106,6 @@ Feature: Search
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Software"
 
-  @javascript @browser
   Scenario: Checking the 'Items' subsection tab
     Given I am Mike
     And enough data for "Items" having "search string" exists
@@ -123,7 +116,6 @@ Feature: Search
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Items"
 
-  @javascript @browser
   Scenario: Checking the 'Licenses' subsection tabs
     Given I am Mike
     And enough data for "Licenses" having "search string" exists
@@ -134,7 +126,6 @@ Feature: Search
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Licenses"
 
-  @javascript @browser
   Scenario: Checking the 'Options' subsection tabs
     Given I am Mike
     And enough data for "Options" having "search string" exists
@@ -145,7 +136,6 @@ Feature: Search
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Options"
 
-  @javascript @browser
   Scenario: Checking the 'Users' subsection tabs
     Given I am Mike
     And enough data for "Users" having "search string" exists
@@ -156,7 +146,6 @@ Feature: Search
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Users"
 
-  @javascript @browser
   Scenario: Checking the 'Contracts' subsection tabs
     Given I am Mike
     And enough data for "Contracts" having "search string" exists
@@ -167,7 +156,6 @@ Feature: Search
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Contracts"
 
-  @javascript @browser
   Scenario: Checking the 'Orders' subsection tabs
     Given I am Mike
     And enough data for "Orders" having "search string" exists

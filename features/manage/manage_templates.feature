@@ -4,12 +4,12 @@ Feature: Managing templates
   Background:
     Given I am Mike
 
+  @rack
   Scenario: Show list of all templates
     When I click on "Templates" in the inventory area
     Then I see a list of currently available templates for the current inventory pool
     And the templates are ordered alphabetically by their names
 
-  @javascript 
   Scenario: Create template
     Given I am listing templates 
     When I click the button "New Template"
@@ -24,7 +24,6 @@ Feature: Managing templates
     Then I am listing templates
     And the new template and all the entered information are saved
 
-  @javascript 
   Scenario: Check whether a model's maximum quantity is exhausted
     Given I am creating a new template
     And I enter the template's name
@@ -41,13 +40,11 @@ Feature: Managing templates
     And the edited template and all the entered information are saved
     And the template is not marked as unaccomplishable in the list
 
-  @javascript 
   Scenario: Delete template
     Given I am listing templates
     Then I can delete any template directly from this list
     And the template has been deleted from the database
 
-  @javascript 
   Scenario: Change template
     Given I am listing templates
     And a template with at least two models exists
@@ -63,7 +60,6 @@ Feature: Managing templates
     And I am listing templates
     And the edited template and all the entered information are saved
 
-  @javascript 
   Scenario: Required information when editing a template
     Given I am editing a template
     When the name is not filled in
@@ -75,7 +71,6 @@ Feature: Managing templates
     And I save
     Then I see an error message
 
-  @javascript 
   Scenario: Required information when creating a template
     Given I am creating a template
     When the name is not filled in

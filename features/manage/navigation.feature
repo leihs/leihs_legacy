@@ -1,6 +1,7 @@
 
 Feature: Navigation
 
+  @rack
   Scenario: Navigation für Gruppen-Verwalter
     Given I am Andi
     And I visit the lending section
@@ -9,6 +10,7 @@ Feature: Navigation
     And the navigation contains "Borrow"
     And the navigation contains "User"
 
+  @rack
   Scenario: Navigation für Gruppen-Verwalter in Verleih-Bereich
     Given I am Andi
     And I visit the lending section
@@ -16,7 +18,6 @@ Feature: Navigation
     And I open the tab "Orders"
     And I open the tab "Contracts"
 
-  @javascript
   Scenario: Aufklappen der Geraeteparkauswahl und Wechsel des Geraeteparks
     Given I am Mike
     When I hover over the navigation toggler

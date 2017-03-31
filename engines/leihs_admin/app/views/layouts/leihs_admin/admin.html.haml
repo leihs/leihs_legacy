@@ -23,7 +23,7 @@
 
     = yield :head
 
-    - if Rails.env.test? or (Rails.env.development? and ENV['TEST_DATETIME'])
+    - if Rails.env.test?
       = javascript_include_tag "timecop/timecop-0.1.1"
       :javascript
         Timecop.install();

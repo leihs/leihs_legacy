@@ -93,7 +93,6 @@ group :development, :test do
   gem 'flay'
   gem 'launchy', '~> 2.1'
   gem 'meta_request'
-  gem 'phantomjs', '~> 2.1' # headless webdriver (UI & JS tests)
   gem 'pry-rails'
   gem 'redcarpet' # This isn't being pulled in by yard, but it's required
   gem 'rspec-rails', '~> 3.0', require: false

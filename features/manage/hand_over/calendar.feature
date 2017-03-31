@@ -3,7 +3,6 @@ Feature: calendar
   Background:
     Given I am Pius
 
-  @javascript @browser
   Scenario: reached maximum amount of visits of a week day
     Given the current inventory pool has reached maximum amount of visits
     When I open a hand over with at least one assigned item

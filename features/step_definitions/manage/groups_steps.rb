@@ -46,7 +46,10 @@ When(/^I add users to the group$/) do
   @users = @current_inventory_pool.users.customers
   @users.each do |user|
     find('input[data-search-users]').set user.name
-    find('.ui-menu-item a', match: :prefer_exact, text: user.name).click
+    within('.ui-autocomplete') do
+      find('.ui-menu-item', text: user.name)
+    end
+    page.execute_script %[ $(".ui-menu-item:contains('#{user.name}')").click() ]
   end
 end
 

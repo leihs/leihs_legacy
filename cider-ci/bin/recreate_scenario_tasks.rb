@@ -2,14 +2,10 @@
 require 'yaml'
 require 'pry'
 
-DEFAULT_BROWSER = \
-  ENV['DEFAULT_BROWSER'] ? ENV['DEFAULT_BROWSER'] : :firefox
-CI_SCENARIOS_PER_TASK = Integer(ENV['CI_SCENARIOS_PER_TASK'] || 1)
 STRICT_MODE = true
 ENGINES = ['leihs_admin',
            'procurement']
 EXCLUDE_TAGS = %w(@upcoming
-                  @generating_personas
                   @manual
                   @broken
                   @v4stable
@@ -17,14 +13,13 @@ EXCLUDE_TAGS = %w(@upcoming
                   @unstable)
 
 def task_hash(name, exec)
-  h = { 'name' => name,
+  { 'name' => name,
         'scripts' => {
           'test' => {
             'body' => "set -eux\nexport PATH=~/.rubies/$RUBY/bin:$PATH\nmkdir -p log\n#{exec}"
-          }
-        }
       }
-  h
+    }
+  }
 end
 
 def create_scenario_tasks(filepath,
@@ -33,7 +28,7 @@ def create_scenario_tasks(filepath,
                           additional_options: nil,
                           tags: nil)
   File.open(filepath,'w') do |f|
-    h1 = {}
+    tasks = []
 
     egrep_cmd = \
       "egrep -R -n -B 1 -H '^\s*(Scenario|Szenario)' #{feature_dir_paths.join(' ')}"
@@ -51,34 +46,42 @@ def create_scenario_tasks(filepath,
         next
       end
 
-      splitted_string = \
-        s.split(/:\s*(Scenario|Szenario)( Outline| Template|grundriss)?: /)
-      k, v = splitted_string.first.split(':')
-      h1[k] ||= []
-      h1[k] << v
+      path = get_path(s)
+      exec = get_exec_command(path, framework, additional_options)
+      task_extensions = get_task_extensions(t)
+      tasks << task_hash(path, exec).merge(task_extensions)
     end
 
-    h2 = []
-    h1.map do |k,v|
-      v.each_slice(CI_SCENARIOS_PER_TASK) do |lines|
-        path = ([k] + lines).join(':')
-        xvfb = "xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24'"
-        case framework
-        when :cucumber
-          exec = "#{xvfb} bundle exec cucumber -p default #{STRICT_MODE ? "--strict " : nil}%s DEFAULT_BROWSER=%s" % [path, DEFAULT_BROWSER]
-        when :rspec
-          exec = [xvfb, 'bundle exec rspec', additional_options, path].compact.join(' ')
-        else
-          raise 'Undefined testing framework'
-        end
+    result = {'tasks' => tasks}
+    f.write result.to_yaml
+  end
+end
 
-        h2 << task_hash(path, exec)
-      end
-    end
+def get_task_extensions(t)
+  task_hash_extension = {}
+  if m = t.match(/@eager_trials_(\d+)/)
+    task_hash_extension['eager_trials'] = m[1].to_i
+  end
+  task_hash_extension
+end
 
-    h3 = {'tasks' => h2}
+def get_path(s)
+  splitted_string = \
+    s.split(/:\s*(Scenario|Szenario)( Outline| Template|grundriss)?: /)
+  k, v = splitted_string.first.split(':')
+  "#{k}:#{v}"
+end
 
-    f.write h3.to_yaml
+def get_exec_command(path, framework, additional_options)
+  xvfb = "xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24'"
+
+  case framework
+  when :cucumber
+    exec = "#{xvfb} bundle exec cucumber #{STRICT_MODE ? "--strict " : nil}#{path}"
+  when :rspec
+    exec = [xvfb, 'bundle exec rspec', additional_options, path].compact.join(' ')
+  else
+    raise 'Undefined testing framework'
   end
 end
 

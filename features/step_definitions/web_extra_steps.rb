@@ -62,3 +62,7 @@ When 'I wait for the spinner to disappear' do
   # capybara black magic - wait for div to become invisible
   expect(has_xpath?( "//div[@id='loading_panel']", visible: false)).to be true
 end
+
+When 'I remove the flash' do
+  find("#flash .fa-times-circle").click
+end

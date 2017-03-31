@@ -16,7 +16,6 @@ Feature: Daily View Day Navigation
   #
   # Scenario: Go to today
 
-  @javascript 
   Scenario: Jump to a specific date
     When I open the daily view
      And I open the datepicker

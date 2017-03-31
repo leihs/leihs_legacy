@@ -5,6 +5,7 @@ Feature: Inventory
   Background:
     Given the database is empty
 
+  @rack
   Scenario: Categories structure
        Given inventory pool 'ABC'
        And inventory pool short name 'ABC'
@@ -32,6 +33,7 @@ Feature: Inventory
        Then there are 0 direct children and 0 total children
 
 
+  @rack
   Scenario: Models organized in categories
        Given inventory pool 'ABC'
        And inventory pool short name 'ABC'
@@ -48,6 +50,7 @@ Feature: Inventory
        When the category 'Video' is selected
        Then there are 1 models belonging to that category
 
+  @rack
   Scenario Outline: What we want new generated inventory codes to look like
       Given inventory pool 'ABC'
       And inventory pool short name 'ABC'
@@ -64,6 +67,7 @@ Feature: Inventory
        | ABC2008012     | ABC2008013 |
        | ABC            | ABC1       |
 
+  @rack
   Scenario: Fill in holes in existing inventory code ranges when proposing new codes
       Given inventory pool 'ABC'
       And inventory pool short name 'ABC'

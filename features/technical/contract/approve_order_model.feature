@@ -5,7 +5,6 @@ Feature: Send email upon confirmation
   Background:
     Given required test data for contract tests existing
 
-  @javascript
   Scenario: A confirmation email should be sent when a contract is confirmed
     Given I am Pius
     And a submitted contract with approvable reservations exists

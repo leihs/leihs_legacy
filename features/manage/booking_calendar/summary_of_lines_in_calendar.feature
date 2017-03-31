@@ -7,7 +7,6 @@ Feature: Summary of reservations in calendar
   Background:
     Given I am Pius
 
-  @javascript 
   Scenario: Automatic update of quantity for line summary in calendar 
     When I open a booking calendar to edit a singe line
      And I change the quantity

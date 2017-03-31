@@ -7,19 +7,16 @@ Feature: Delete reservations of an open order
   Background:
     Given I am Pius
 
-  @javascript 
   Scenario: Delete a single line of an open contract
     When I open a contract for acknowledgement with more then one line
     And I delete a line of this contract
     Then this reservation is deleted
 
-  @javascript 
   Scenario: Delete multiple reservations of an open contract
     When I open a contract for acknowledgement with more then one line
     And I delete multiple reservations of this contract
     Then these reservations are deleted
 
-  @javascript 
   Scenario: Delete all reservations of an open contract
     When I open a contract for acknowledgement with more then one line
     And I delete all reservations of this contract

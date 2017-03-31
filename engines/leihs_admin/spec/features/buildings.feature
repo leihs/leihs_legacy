@@ -30,7 +30,7 @@ Feature: Buildings
     Then I see a list of buildings
     And I see the edited building
 
-  @leihs_admin_buildings @javascript @browser
+  @leihs_admin_buildings 
   Scenario: Deleting existing buildings
     Given there is a deletable building
     When I visit "/admin/buildings"

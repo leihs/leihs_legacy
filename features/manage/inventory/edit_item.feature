@@ -3,7 +3,6 @@ Feature: Editing an item
   Background:
     Given I am Matti
 
-  @javascript 
   Scenario: Order of the fields when editing an item
     Given I edit an item that belongs to the current inventory pool
     # TODO: Remove web_steps.rb
@@ -56,7 +55,6 @@ Feature: Editing an item
       | Warranty expiration        |
       | Contract expiration        |
 
-  @javascript 
   Scenario: Delete supplier
     Given I edit an item that belongs to the current inventory pool
     And I navigate to the edit page of an item that has a supplier
@@ -64,7 +62,6 @@ Feature: Editing an item
     And I save
     Then the item has no supplier
 
-  @javascript 
   Scenario: Edit all an item's information
     Given I edit an item that belongs to the current inventory pool and is in stock and is not part of any contract
     When I enter the following item information
@@ -85,28 +82,25 @@ Feature: Editing an item
     Then I am redirected to the inventory list
     And the item is saved with all the entered information
 
-  @javascript 
   Scenario: Choosing a model without a version
     Given I edit an item that belongs to the current inventory pool
     And there is a model without a version
     When I assign this model to the item
     Then there is only product name in the input field of the model
 
-  @javascript 
   Scenario: Change supplier
     Given I edit an item that belongs to the current inventory pool
     When I change the supplier
     And I save
     Then the edited item has the new supplier
 
-  @javascript @browser @flapping
+  @flapping
   Scenario: You can't change the responsible department for items that are not in stock
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I change the responsible department
     And I save
     Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
-  @javascript 
   Scenario: Editing an item an all its information
     Given I edit an item that belongs to the current inventory pool and is in stock and is not part of any contract
     When I enter the following item information
@@ -143,7 +137,6 @@ Feature: Editing an item
     Then I am redirected to the inventory list
     And the item is saved with all the entered information
 
-  @javascript 
   Scenario: Required fields
     Given I edit an item that belongs to the current inventory pool
     Then "Reference" must be selected in the "Invoice Information" section
@@ -155,7 +148,6 @@ Feature: Editing an item
     And I see an error message
     And the required fields are highlighted in red
 
-  @javascript 
   Scenario: Create new supplier if it does not already exist
     Given I edit an item that belongs to the current inventory pool
     When I enter a supplier that does not exist
@@ -163,7 +155,6 @@ Feature: Editing an item
     Then a new supplier is created
     And the edited item has the new supplier
 
-  @javascript 
   Scenario: Do not create a new supplier if one of the same name already exists
     Given I edit an item that belongs to the current inventory pool
     When I enter a supplier
@@ -171,21 +162,18 @@ Feature: Editing an item
     Then no new supplier is created
     And the edited item has the existing supplier
 
-  @javascript 
   Scenario: Can't change the model for items that are in contracts
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I change the model
     And I save
     Then I see an error message that I can't change the model because the item is already handed over or assigned to a contract
 
-  @javascript 
   Scenario: Can't retire an item that is not in stock
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I retire the item
     And I save
     Then I see an error message that I can't retire the item because it's already handed over or assigned to a contract
 
-  @javascript @browser
   Scenario: View attachments (attachments field is readonly)
     Given the attachments field is configured to be editable only by the owner
     And exists an item that belongs to the current inventory pool but is not owned by it

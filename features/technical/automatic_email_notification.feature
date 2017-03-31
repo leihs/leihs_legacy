@@ -4,10 +4,12 @@ Feature: Automatic email notification
     Given the system is configured for the mail delivery as test mode
     And I am Normin
 
+  @rack
   Scenario: Automatic return notification
     Given I have a non overdue take back
     Then the day before the take back I receive a deadline soon email
 
+  @rack
   Scenario: Automatic return notification if delayed
     Given I have an overdue take back
     Then the day after the take back I receive a remember email

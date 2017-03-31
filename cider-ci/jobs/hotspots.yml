@@ -7,6 +7,8 @@ jobs:
     description: |
       Manually run hotspot scenarios under MRI
 
+    priority: 1
+
     run_when:
       branch name matches hotspot:
         type: branch

@@ -30,7 +30,7 @@ Feature: Suppliers
     Then I see a list of suppliers
     And I see the edited supplier
 
-  @leihs_admin_suppliers @javascript @browser
+  @leihs_admin_suppliers 
   Scenario: Deleting existing suppliers
     Given there is a deletable supplier
     When I visit "/admin/suppliers"

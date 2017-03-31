@@ -4,7 +4,6 @@ Feature: Verification
     Given I am Andi
 
 
-  @javascript @browser
   Scenario: Show inventory to group-manager
     When I open the inventory
     Then for each visible model I can see the Timeline
@@ -13,7 +12,6 @@ Feature: Verification
     But I can not edit models, items, options, software or licenses
     And I can not add models, items, options, software or licenses
 
-  @javascript @browser
   Scenario: take-back in timeline not valid
     When I open the inventory
     When I enter the timeline of a model with hand overs, take backs or pending orders
@@ -23,13 +21,11 @@ Feature: Verification
       | hand over   |
       | take back   |
 
-  @javascript @browser
   Scenario: Overbooking in orders not possible for Group Managers in overview
     When I open a submitted order to be verified by a Group Manager
     And I add a model which leads to an overbooking
     Then I see an error message
 
-  @javascript @browser
   Scenario: Overbooking in orders not possible for Group Managers in calendar
     When I open a submitted order to be verified by a Group Manager
     And I open the booking calendar
@@ -37,13 +33,11 @@ Feature: Verification
     And I save the booking calendar
     Then I see an error message within the booking calendar
 
-  @javascript @browser
   Scenario: Overbooking in hand overs not possible for Group Managers in overview
     When I open a hand over editable by the Group Manager
     And I add a model which leads to an overbooking
     Then I see an error message
 
-  @javascript @browser
   Scenario: Overbooking in orders not possible for Group Managers in calendar
     When I open a hand over editable by the Group Manager
     And I open the booking calendar

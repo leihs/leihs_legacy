@@ -6,6 +6,7 @@ Feature: Availability
     And I have an unsubmitted order with models
     And the contract timeout is set to 30 minutes
 
+  @rack
   Scenario: Overbooking by lending managers
     When I add a model to an order
     Given I am Pius
@@ -18,14 +19,17 @@ Feature: Availability
     And I am redirected to my current order
     And I see an error message
 
+  @rack
   Scenario: Blocking models
     When I perform some activity
     Then the models in my order remain blocked
 
+  @rack
   Scenario: Releasing blocked models
     When I have performed no activity for more than 30 minutes
     Then the models in my order are released
 
+  @rack
   Scenario: Reblocking after inactivity
     When I have performed no activity for more than 30 minutes
     And all models are available
@@ -33,6 +37,7 @@ Feature: Availability
     Then I can continue my order process
     And the models in my order remain blocked
 
+  @rack
   Scenario: Models become unavailable after long inactivity
     Given a model is not available
     When I have performed no activity for more than 30 minutes

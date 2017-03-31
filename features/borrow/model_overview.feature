@@ -5,6 +5,7 @@ Feature: Model overview
   möchte ich als Ausleihender
   die Möglichkeit haben ausführliche Informationen über ein Modell zu sehen
 
+  @rack
   Scenario: Model overview
     Given I am Normin
     And I am listing a category of models of which at least one is borrowable by me
@@ -19,7 +20,6 @@ Feature: Model overview
     | Properties        |
     | Compatible models |
 
-  @javascript 
   Scenario: Zoom in on images
     Given I am Normin
     And I see a model's detail page that includes images of the model
@@ -30,7 +30,6 @@ Feature: Model overview
     When I click on an image
     Then that image remains the main image even when I'm not hovering over it
 
-  @javascript 
   Scenario: Showing properties
     Given I am Normin
     And I see a model's detail page that includes properties

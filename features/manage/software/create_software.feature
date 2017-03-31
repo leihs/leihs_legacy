@@ -4,7 +4,6 @@ Feature: Creating software
   Background:
     Given I am Mike
 
-  @javascript @browser
   Scenario: Creating a software product
     When I add a new Software
     And I enter the following details
@@ -22,7 +21,7 @@ Feature: Creating software
     And the new manufacturer can be found in the manufacturer list
 
   # marked as upcoming due to ticket 71745006
-  @upcoming @javascript 
+  @upcoming
   Scenario: Mögliche Werte in Software-Lizenz erfassen
     Given ich befinde mich auf der Lizenz-Erstellungsseite
     Then die mögliche Werte für Aktivierungstyp sind in der folgenden Reihenfolge:
@@ -69,7 +68,7 @@ Feature: Creating software
     Then for "Notiz" one can enter some text
     And die Option "Ausleihbar" ist standardmässig auf "Nicht ausleihbar" gesetzt
 
-  @javascript @upcoming
+  @upcoming
   Scenario: Software-Lizenz erfassen
     Given es existiert ein Software-Produkt
     When ich eine neue Software-Lizenz hinzufüge
@@ -99,7 +98,6 @@ Feature: Creating software
     And I save
     Then sind die Informationen dieser Software-Lizenz gespeichert
 
-  @javascript @browser
   Scenario: Choosing a license for multiple/concurrent/site licenses
     Given a software product exists
     When I add a new Software License
@@ -124,7 +122,6 @@ Feature: Creating software
       | 1        | Christina Meier|
     Then I see the remaining number of licenses shown as follows "remaining 0"
 
-  @javascript @browser
   Scenario: Software-Lizenz Anschaffungswert mit 2 Dezimalstellen erfassen
     Given a software product exists
     When I add a new Software License
@@ -134,7 +131,6 @@ Feature: Creating software
     And I save
     Then "Initial Price" is saved as "1,200.00"
 
-  @javascript @browser
   Scenario: Add and remove attachments (attachments field is writable)
     When I add a new Software License
     And I fill in all the required fields for the license

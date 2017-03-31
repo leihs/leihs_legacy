@@ -5,6 +5,7 @@ Feature: Add reservations
   Background:
     Given required test data for contract tests existing
 
+  @rack
   Scenario Outline: Adding reservations is successful
     Given an empty contract of <allowed type> existing
     And I log in as 'ramon' with password 'password'

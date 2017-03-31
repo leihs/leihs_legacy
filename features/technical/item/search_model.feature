@@ -2,6 +2,7 @@ Feature: Item search
 
   Model test
 
+  @rack
   Scenario: Search in properties' fields
     Given there are some items
      When I search for a text not present anywhere

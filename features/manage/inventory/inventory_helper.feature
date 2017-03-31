@@ -4,11 +4,12 @@ Feature: Inventory helper
   Background:
     Given I am Matti
 
+  @rack
   Scenario: Wie man den Helferschirm erreicht
     When I open the inventory
     Then I see a tab where I can change to the inventory helper
 
-  @javascript 
+  @flapping
   Scenario: Changing the shelf when the location already exists
     Given I go to the inventory helper screen
     And there is an item that shares its location with another
@@ -20,19 +21,16 @@ Feature: Inventory helper
     And the changed values are highlighted
     And the location of the other item has remained the same
 
-  @javascript 
   Scenario: You can't change the responsible department while something is not in stock
     Given I go to the inventory helper screen
     And I edit the field "Responsible department" of an item that isn't in stock and belongs to the current inventory pool
     Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
-  @javascript 
   Scenario: You can't retire something that is not in stock
     Given I go to the inventory helper screen
     And I retire an item that is not in stock
     Then I see an error message that I can't retire the item because it's already handed over or assigned to a contract
 
-  @javascript @browser
   Scenario: Editing items on the helper screen using a complete inventory code (barcode scanner)
     Given I go to the inventory helper screen
     When I choose all fields through a list or by name
@@ -41,7 +39,6 @@ Feature: Inventory helper
     Then I see all the values of the item in an overview with model name and the modified values are already saved
     And the changed values are highlighted
 
-  @javascript 
   Scenario: Required fields
     Given I go to the inventory helper screen
     When "Reference" is selected and set to "Investment", then "Project Number" must also be filled in
@@ -52,7 +49,6 @@ Feature: Inventory helper
     And I see an error message
     And the required fields are highlighted in red
 
-  @javascript 
   Scenario: Trying to edit an inexistant item through the inventory helper
     Given I go to the inventory helper screen
     And I choose the fields from a list or by name
@@ -60,7 +56,6 @@ Feature: Inventory helper
     Then I scan or enter the inventory code of an item that can't be found
     Then I see an error message
 
-  @javascript 
   Scenario: Using autocomplete to edit items on the inventory helper
     Given I go to the inventory helper screen
     And I choose the fields from a list or by name
@@ -70,7 +65,7 @@ Feature: Inventory helper
     Then I see all the values of the item in an overview with model name and the modified values are already saved
     And the changed values are highlighted
 
-  @javascript @browser @unstable
+  @unstable
   Scenario: Editing after automatic save
     Given I edit an item through the inventory helper using an inventory code
     When I use the edit feature
@@ -78,7 +73,6 @@ Feature: Inventory helper
     When I save
     Then my changes are saved
 
-  @javascript 
   Scenario: Canceling an edit after automatic save
     Given I edit an item through the inventory helper using an inventory code
     When I use the edit feature
@@ -87,7 +81,6 @@ Feature: Inventory helper
     Then the changes are reverted
     And I see all the values of the item in an overview with model name and the modified values are already saved
 
-  @javascript 
   Scenario: You can't edit certain fields for items that are in contracts
     Given I go to the inventory helper screen
     And I edit the field "Model" of an item that is part of a contract

@@ -7,7 +7,6 @@ Feature: Take back
   Background:
   Given I am Pius
 
-  @javascript 
   Scenario: Taking back an item
     Given I am taking something back
     When I take back an item using the assignment field
@@ -15,14 +14,12 @@ Feature: Take back
     And the line is highlighted in green
     And I receive a notification of success
 
-  @javascript
   Scenario: Deselecting a line
     Given I am taking something back
     When I take back an item using the assignment field
     And I deselect the line
     Then the line is no longer highlighted in green
 
-  @javascript 
   Scenario: Item to return is overdue
     Given I am taking back at least one overdue item
     When I take back an overdue item using the assignment field
@@ -31,7 +28,6 @@ Feature: Take back
     And the problem indicator for the line is displayed
     Then I receive a notification of success
 
-  @javascript @browser 
   Scenario: Making a note of who took back an item
     When I open a take back
     And I select all reservations of an open contract
@@ -41,13 +37,11 @@ Feature: Take back
     And the contract is closed and all items are returned
     Then a note is made that it was me who took back the item
 
-  @javascript @browser
   Scenario: Showing whether a user is suspended
     Given I navigate to the open orders
     And I open a suspended user's order
     Then I see the note 'Suspended!' next to their name
 
-  @javascript 
   Scenario: Returning an option
     Given I open a take back with at least two of the same options
     When I take back an option using the assignment field
@@ -57,7 +51,6 @@ Feature: Take back
     Then the line is highlighted in green
     And I receive a notification of success
 
-  @javascript @browser
   Scenario: Returning partial quantity of options
     Given I open a take back with at least two of the same options
     When I take back an option using the assignment field
@@ -69,12 +62,12 @@ Feature: Take back
     Then the contract is not closed yet
     And not all reservations of that option are closed and returned
 
+  @rack
   Scenario: Correct order for contracts
     Given there is a user with at least 2 take back s on 2 different days
     When I open a take back for this user
     Then the take backs are ordered by date in ascending order
 
-  @javascript 
   Scenario: Treating options with multiple time windows
     Given there is a user with an option to return in two different time windows
     And I open a take back for this user

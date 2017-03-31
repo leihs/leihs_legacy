@@ -6,16 +6,19 @@ Feature: Configuring the system timezone through the database
   Background:
     Given a settings object
 
+  @rack
   Scenario: Configuring leihs' time zone to be UTC
     When leihs' time zone is set to "UTC"
     Then ActiveSupport thinks the time zone is "UTC"
     And Time.zone is "(GMT+00:00) UTC"
 
+  @rack
   Scenario: Configuring leihs' time zone to be CET
     When leihs' time zone is set to "CET"
     Then ActiveSupport thinks the time zone is "CET"
     And Time.zone is "(GMT+01:00) CET"
 
+  @rack
   Scenario: Representing a date and time on automatically managed time fields (created_at)
     When leihs' time zone is set to "UTC"
     And a record with created_at is created

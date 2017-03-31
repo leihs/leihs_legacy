@@ -213,8 +213,8 @@ end
 
 Then /^I choose the item from the list of results$/ do
   expect(has_selector?('.ui-menu-item')).to be true
-  # This sometimes finds multiple results. How is that even possible?
-  find('.ui-menu-item a', text: @item.inventory_code).click
+  find('.ui-menu-item a', text: @item.inventory_code)
+  page.execute_script %[ $(".ui-menu-item a:contains('#{@item.inventory_code}')").click() ]
 end
 
 Given /^I edit an item through the inventory helper using an inventory code$/ do

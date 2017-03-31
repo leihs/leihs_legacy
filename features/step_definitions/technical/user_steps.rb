@@ -34,3 +34,17 @@ end
 Then(/^the login of this user is longer than (\d+) chars$/) do |arg1|
   expect(@user.login.size).to be > 40
 end
+
+Given(/^the following users exist$/) do |table|
+  hashes_with_evaled_and_nilified_values(table).each do |hash_row|
+
+    attrs = {language: Language.find_by_locale_name(hash_row['language']),
+             firstname: hash_row['firstname'],
+             lastname: hash_row['lastname'],
+             login: hash_row['login'] || hash_row['firstname'].downcase,
+             email: hash_row['email'],
+             address: hash_row['address']}
+
+    FactoryGirl.create(:user, attrs)
+  end
+end

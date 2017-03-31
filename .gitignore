@@ -15,7 +15,6 @@
 /database
 /tags
 Gemfile.local*
-chrome*
 config/cucumber.sphinx.conf
 config/culerity.sphinx.conf
 config/database.yml

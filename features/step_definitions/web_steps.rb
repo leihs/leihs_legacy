@@ -123,3 +123,7 @@ end
 Then(/^show me the page$/) do
   save_and_open_page # rubocop:disable Lint/Debugger
 end
+
+Then(/^I accept the flash message$/) do
+  find("#flash .fa-times-circle").click
+end

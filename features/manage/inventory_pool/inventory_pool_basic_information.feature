@@ -6,7 +6,6 @@ Feature: Basic information for inventory pools
   So that each inventory pool has all the information and settings they
   need to work efficiently (e.g. opening hours, proper addresses, etc.)
 
-  @javascript 
   Scenario: Make basic settings
     Given I am Mike
     When I navigate to the inventory pool manage section
@@ -24,6 +23,7 @@ Feature: Basic information for inventory pools
     And the settings are updated
     And I am still on the same page
 
+  @rack
   Scenario: Pflichtfelder der Grundinformationen zusammen prüfen
     Given I am Mike
     When I edit the current inventory pool
@@ -34,6 +34,7 @@ Feature: Basic information for inventory pools
     And I save
     Then I see an error message
 
+  @rack
   Scenario: Automatically grant access to new users from within my own inventory pool's settings
     Given I am Mike
     And multiple inventory pools are granting automatic access
@@ -43,7 +44,6 @@ Feature: Basic information for inventory pools
     And in my inventory pool the user gets the role 'inventory manager'
 
   #72676850
-  @javascript @browser
   Scenario: Remove automatic access
     Given I am Mike
     And multiple inventory pools are granting automatic access
@@ -56,6 +56,7 @@ Feature: Basic information for inventory pools
     When I have created a user with login "username" and password "password"
     Then the newly created user does not have access to that inventory pool
 
+  @rack
   Scenario: Enable automatic access to a new inventory pool
     Given I am Mike
     And I edit an inventory pool that is not granting automatic access
@@ -65,15 +66,20 @@ Feature: Basic information for inventory pools
     Then automatic access is enabled
     And there are no users without access right to this inventory pool
 
-  #72676850
   Scenario Outline: Deselect checkboxes
     Given I am Mike
     And I edit an inventory pool
     When I enable "<checkbox>"
     And I save
+    # because of cider (wierd flash displacement)
+    And I remove the flash
+    ###
     Then "<checkbox>" is enabled
     When I disable "<checkbox>"
     And I save
+    # because of cider (wierd flash displacement)
+    And I remove the flash
+    ###
     Then "<checkbox>" is disabled
     Examples:
       | checkbox                |
@@ -81,6 +87,7 @@ Feature: Basic information for inventory pools
       | Automatic suspension   |
       | Automatic access   |
 
+  @rack
   Scenario: Manage workdays
    Given I am Mike
    And I edit my inventory pool settings
@@ -88,7 +95,6 @@ Feature: Basic information for inventory pools
    And I save
    Then those randomly chosen workdays are saved
 
-  @javascript 
   Scenario: Manage holidays
    Given I am Mike
    And I edit my inventory pool settings
@@ -97,6 +103,7 @@ Feature: Basic information for inventory pools
    Then the holidays are saved
    And I can delete the holidays
 
+  @rack
   Scenario Outline: Validate each field in inventory pool settings separately
     Given I am Mike
     When I edit the current inventory pool
@@ -114,6 +121,7 @@ Feature: Basic information for inventory pools
       | Short Name |
       | E-Mail     |
 
+  @rack
   Scenario: Automatically suspend users with late contracts
     Given I am Mike
     When I edit the current inventory pool
@@ -128,6 +136,7 @@ Feature: Basic information for inventory pools
     And I save
     Then "Automatic suspension" is disabled
 
+  @rack
   Scenario: Suspend users automatically only if they aren't already suspended
     Given I am Mike
     When on the inventory pool I enable the automatic suspension for users with overdue take backs

@@ -7,22 +7,26 @@ Feature: LDAP logins using the HSLU custom adapter
     And a group called "Video" exists
 
 
+  @rack
   Scenario: Logging in via LDAP-HSLU as a normal user
     When I log in as HSLU-LDAP user "normal_user"
     Then a leihs user should exist for "normal_user"
     And the user "normal_user" should have HSLU-LDAP as an authentication system
     And the user "normal_user" should not have any admin privileges
 
+  @rack
   Scenario: Logging in via LDAP-HSLU as admin user
     When I log in as HSLU-LDAP user "admin_user"
     Then a leihs user should exist for "admin_user"
     And the user "admin_user" should have HSLU-LDAP as an authentication system
     And the user "admin_user" should have admin privileges
 
+  @rack
   Scenario: Logging in an LDAP-HSLU user with an alphanumeric unique id
     When I log in as HSLU-LDAP user "normal_user"
     Then the user "normal_user" should have a badge ID of "L9999"
 
+  @rack
   Scenario: Logging in an LDAP-HSLU user with a numeric unique id
     When I log in as HSLU-LDAP user "numeric_unique_id_user"
     Then the user "numeric_unique_id_user" should have a badge ID of "L1234"

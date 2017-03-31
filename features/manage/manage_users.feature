@@ -1,6 +1,5 @@
 Feature: Manage users
 
-  @javascript 
   Scenario Outline: Suspend feature for users and delegations
     Given I am inventory manager or lending manager
     And I edit a <user_type>
@@ -34,6 +33,7 @@ Feature: Manage users
     And I see the user's role and can change them depending on my own role
     And my changes are saved if I save the user
 
+  @rack
   Scenario Outline: As lending or inventory manager I can't access the admin area
     Given I am <person>
     When I try to access the admin area's user editing page
@@ -45,7 +45,6 @@ Feature: Manage users
       | Pius   |
       | Mike   |
 
-  @javascript @browser
   Scenario: Add new user as inventory manager to an inventory pool
     Given I am Pius
     When I am looking at the user list
@@ -70,6 +69,7 @@ Feature: Manage users
     And I save
     Then the user and all their information is saved
 
+  @rack
   Scenario: Remove access as an inventory manager
     Given I am Pius
     And I am editing a user who has access to and no items from the current inventory pool
@@ -85,7 +85,6 @@ Feature: Manage users
   #  When man die Startseite setzt
   #  Then ist die Liste der Benutzer die Startseite
 
-  @javascript @browser
   Scenario: Elements of user administration
     Given I am inventory manager or lending manager
     Then I can find the user administration features in the "Manage" area under "Users"
@@ -98,7 +97,6 @@ Feature: Manage users
       | Inventory manager | inventory_managers |
     And I can open the edit view for each user
 
-  @javascript @browser
   Scenario: Displaying a user and their roles in lists
     Given I am inventory manager or lending manager
     And a user with assigned role appears in the user list
@@ -108,7 +106,6 @@ Feature: Manage users
       |Phone number|
       |Role|
 
-  @javascript @browser
   Scenario: Not displaying a user's role in lists if that user doesn't have a role
     Given I am inventory manager or lending manager
     And a user without assigned role appears in the user list
@@ -118,7 +115,6 @@ Feature: Manage users
       |Phone number|
       |Role|
 
-  @javascript @browser
   Scenario: Displaying a user in a list with their assigned roles and suspension status
     Given I am inventory manager or lending manager
     And a suspended user with assigned role appears in the user list
@@ -129,7 +125,7 @@ Feature: Manage users
       |Role|
       |Suspended until dd.mm.yyyy|
 
-  # English: lending manager
+  @rack
   Scenario: Role 'lending manager'
     Given I am a lending manager
     When I open the inventory
@@ -139,7 +135,7 @@ Feature: Manage users
     And I can create and suspend users
     And I can retire items if my inventory pool is their owner and they are not inventory relevant
 
-  # English: inventory manager
+  @rack
   Scenario: Role 'inventory manager'
     Given I am an inventory manager
     Then I can create new models
@@ -160,6 +156,7 @@ Feature: Manage users
     When I don't choose a responsible department when creating or editing items
     Then the responsible department is the same as the owner
 
+  @rack
   Scenario: Remove access as inventory manager
     Given I am Mike
     And I am editing a user who has access to and no items from the current inventory pool
@@ -167,6 +164,7 @@ Feature: Manage users
     And I save
     Then the user has no access to the inventory pool
 
+  @rack
   Scenario Outline: Remove access for a user with open contracts
     Given I am <persona>
     And there exists a contract with status "<contract_status>" for a user without any other contracts
@@ -193,7 +191,6 @@ Feature: Manage users
     And I save the user
     Then their group membership is saved
 
-  @javascript @browser
   Scenario: As an inventory manager, add a new user to the inventory pool
     Given I am Mike
     When I am looking at the user list
@@ -225,6 +222,7 @@ Feature: Manage users
     And I save
     Then the user and all their information is saved
 
+  @rack
   Scenario: Access rights available when editing a user as a lending manager
     Given I am Pius
     And I edit a user who has access as customer
@@ -237,6 +235,7 @@ Feature: Manage users
     And I save
     Then the user has the role "lending manager"
 
+  @rack
   Scenario: Switching a user to "customer"
     Given I am Pius
     And I edit a user who has access as lending manager
@@ -244,6 +243,7 @@ Feature: Manage users
     And I save
     Then the user has the role "customer"
 
+  @rack
   Scenario: Access rights available when editing a user as an inventory manager
     Given I am Mike
     And I edit a user who has access as customer
@@ -257,6 +257,7 @@ Feature: Manage users
     And I save
     Then the user has the role "inventory manager"
 
+  @rack
   Scenario: Grant access to an inventory pool as an inventory manager
     Given I am Mike
     And I edit a user who doesn't have access to the current inventory pool
@@ -265,6 +266,7 @@ Feature: Manage users
     Then I see a confirmation of success on the list of users
     And the user has the role "customer"
 
+  @rack
   Scenario: Editing a user who has no access rights without granting them any
     Given I am Pius
     And I edit a user who doesn't have access to the current inventory pool
@@ -274,6 +276,7 @@ Feature: Manage users
     And the user's new email address is saved
     And the user still has access to the current inventory pool
 
+  @rack
   Scenario Outline: Adding a new user without supplying require information
     Given I am Pius
     When I am looking at the user list
@@ -288,6 +291,7 @@ Feature: Manage users
       | first name     |
       | email address      |
 
+  @rack
   Scenario: Reactivate a user's access to an inventory pool
     Given I am Mike
     And I edit a user who used to have access to the current inventory pool

@@ -102,9 +102,22 @@ end
 
 Then(/^I can delete the holidays$/) do
   holiday = @holidays.last
-  find('.row[data-holidays-list] .line', text: holiday[:name]).find('.button[data-remove-holiday]').click
-  step 'I save'
-  expect(@current_inventory_pool.holidays.where(start_date: holiday[:start_date], end_date: holiday[:end_date], name: holiday[:name]).empty?).to be true
+  rescue_displaced_flash do
+    within find('.row[data-holidays-list] .line', text: holiday[:name]) do
+      page.execute_script %[ $('.button[data-remove-holiday]').click() ]
+    end
+    step 'I save'
+  end
+  expect(
+    @current_inventory_pool
+    .reload
+    .holidays
+    .where(start_date: holiday[:start_date],
+           end_date: holiday[:end_date],
+           name: holiday[:name])
+    .empty?
+  )
+    .to be true
 end
 
 # there is nothing in the test that relates to required fields

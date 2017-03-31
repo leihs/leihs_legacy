@@ -6,6 +6,7 @@ Feature: Email templates
   and so that my leihs instance is unique and matches the rest
   of my organization.
 
+  @rack
   Scenario: How an email template is parsed
     # TBD
 

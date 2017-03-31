@@ -1,6 +1,6 @@
 Feature: Delegation
 
-  @upcoming @javascript 
+  @upcoming
   Scenario: Assigning a suspended responsible person to a delegation
     Given I am Pius
     And I am editing a delegation
@@ -8,7 +8,7 @@ Feature: Delegation
     Then on the selection he is highlighted in red
     And I see the note 'Suspended!' next to their name
 
-  @upcoming @javascript 
+  @upcoming
   Scenario: Adding a suspended user to a delegation
     Given I am Pius
     And I am editing a delegation
@@ -16,7 +16,6 @@ Feature: Delegation
     Then on the selection he is highlighted in red
     And I see the note 'Suspended!' next to their name
 
-  @javascript @browser
   Scenario: Choosing contact person when handing over
     Given I am Pius
     And there is a hand over for a delegation with assigned items
@@ -24,7 +23,7 @@ Feature: Delegation
     When I finish this hand over
     Then I have to specify a contact person
 
-  @upcoming @javascript @browser
+  @upcoming
   Scenario: Displaying a suspended contact person while handing over
     Given I am Pius
     And there is a hand over for a delegation with assigned items
@@ -35,7 +34,7 @@ Feature: Delegation
     Then this contact person is highlighted in red
     And I see the note 'Suspended!' next to their name
 
-  @upcoming @javascript @browser
+  @upcoming
   Scenario: Picking a suspended contact person while ordering
     Given I am Pius
     And I open an order
@@ -45,28 +44,24 @@ Feature: Delegation
     Then that person is highlighted in red
     And I see the note 'Suspended!' next to their name
 
-  @javascript @browser
   Scenario: Switching an order from a delegation to a normal user while handing over
     Given I am Pius
     And I open a hand over for a delegation
     When I pick a user instead of a delegation
     Then the hand over shows the user
 
-  @javascript 
   Scenario: Switching an order from a normal user to a delegation when handing over
     Given I am Pius
     And I open a hand over
     When I pick a delegation instead of a user
     Then the order shows the delegation
 
-  @javascript @browser
   Scenario: Tooltip display
     Given I am Pius
     When I search for a delegation
     And I hover over the delegation name
     Then the tooltip shows name and responsible person for the delegation
 
-  @javascript @browser
   Scenario: Global search
     Given I am Pius
     And there exists a delegation with 'Julie' in its name
@@ -75,7 +70,6 @@ Feature: Delegation
     Then I see all results in the users box for users matching Julie
     And I see all results in delegations box for delegations matching Julie or delegations having members matching Julie
 
-  @javascript
   Scenario: Suspended users can't submit orders
     Given I am Julie
     When I switch from my user to a delegation
@@ -83,7 +77,6 @@ Feature: Delegation
     But I am suspended in that inventory pool
     Then I cannot place any reservations in this inventory pool
 
-  @javascript @browser
   Scenario: Filter der Delegationen
     Given I am Pius
     When I can find the user administration features in the "Manage" area under "Users"
@@ -91,7 +84,6 @@ Feature: Delegation
     Then I can restrict the user list to show only delegations
     And I can restrict the user list to show only users
 
-  @javascript @browser
   Scenario: Creating a delegation
     Given I am Pius
     And I can find the user administration features in the "Manage" area under "Users"
@@ -105,14 +97,12 @@ Feature: Delegation
     And I save
     Then the new delegation is saved with the current information
 
-  @javascript @browser
   Scenario: Delegation gets access as a customer
     Given I am Pius
     And I can find the user administration features in the "Manage" area under "Users"
     When I create a new delegation
     Then I can at most give the delegation access on the customer level
 
-  @javascript @browser
   Scenario: Switching delegation to a user in an order
     Given I am Pius
     And there is an order for a delegation
@@ -121,7 +111,6 @@ Feature: Delegation
     Then the order shows the user
     And no contact person is shown
 
-  @javascript @browser
   Scenario: Trying to create a delegation without filling in required fields
     Given I am Pius
     And I can find the user administration features in the "Manage" area under "Users"
@@ -135,7 +124,6 @@ Feature: Delegation
     And I save
     Then I see an error message
 
-  @javascript @browser
   Scenario: Editing a delegation
     Given I am Pius
     And I can find the user administration features in the "Manage" area under "Users"
@@ -148,7 +136,6 @@ Feature: Delegation
     Then I see a confirmation of success on the list of users
     And the edited delegation is saved with its current information
 
-  @javascript 
   Scenario: Removing access from a delegation
     Given I am Pius
     When I edit a delegation that has access to the current inventory pool
@@ -156,7 +143,6 @@ Feature: Delegation
     And I save
     Then no orders can be created for this delegation in the current inventory pool
 
-  @javascript @browser
   Scenario: Persönliche Bestellung in Delegationsbestellung ändern in Bestellung
     Given I am Pius
     And I open an order
@@ -166,6 +152,7 @@ Feature: Delegation
     Then the order shows the name of the user
     And the order shows the name of the contact person
 
+  @rack
   Scenario: Listing orders for a delegation
     Given I am Pius
     And there is an order for a delegation
@@ -173,7 +160,7 @@ Feature: Delegation
     Then I see the delegation's name
     And I see the contact person
 
-  @javascript @browser @flapping
+  @flapping
   Scenario: Definition of the contact person when creating an order
     Given I am Julie
     When I create an order for a delegation
@@ -183,6 +170,7 @@ Feature: Delegation
     When I hand over the items ordered for this delegation to "Mina"
     Then "Mina" is the new contact person for this contract
 
+  @rack
   Scenario: Showing me my own orders
     Given I am Pius
     And there is an order placed by me personally
@@ -190,7 +178,6 @@ Feature: Delegation
     Then the order shows the name of the user
     And I don't see any contact person
 
-  @javascript @browser
   Scenario: Changing the delegation during hand over
     Given I am Pius
     And there is a hand over for a delegation with assigned items
@@ -199,14 +186,12 @@ Feature: Delegation
     And I confirm the user change
     Then the hand over goes to the new delegation
 
-  @javascript 
   Scenario: Which delegations are shown when changing during hand over
     Given I am Pius
     And I open a hand over
     When I try to change the delegation
     Then I can choose only those delegations that have access to this inventory pool
 
-  @javascript @browser
   Scenario: Changing contact person during hand over
     Given I am Pius
     And there is a hand over for a delegation with assigned items
@@ -214,7 +199,6 @@ Feature: Delegation
     When I try to change the contact person
     Then I can choose only those people that belong to the delegation group
 
-  @javascript @browser
   Scenario: Changing contact person while editing an order
     Given I am Pius
     And I am editing a delegation's order
@@ -224,7 +208,7 @@ Feature: Delegation
     And I confirm the user change
     Then the contact person for the order has been changed accordingly
 
-  @javascript @browser @flapping
+  @flapping
   Scenario: Borrow: Creating an order with a delegation
     Given I am Julie
     When I hover over my name
@@ -246,7 +230,6 @@ Feature: Delegation
     And the delegation is saved as borrower
     And I am saved as contact person
 
-  @javascript @browser
   Scenario: Changing delegation in an order
     Given I am Pius
     And I open an order
@@ -256,21 +239,18 @@ Feature: Delegation
     Then the hand over goes to the new delegation
     And the newly selected contact person is saved
 
-  @javascript 
   Scenario: Which delegations are shown when changing delegation in an order
     Given I am Pius
     And I open an order
     When I try to change the delegation
     Then I can choose only those delegations that have access to this inventory pool
 
-  @javascript @browser
   Scenario: Changing delegation - only one contact person field
     Given I am Pius
     And I am editing a delegation's order
     When I change the delegation
     Then I see exactly one contact person field
 
-  @javascript 
   Scenario: Changing delegation - contact person is required
     Given I am Pius
     And I open an order

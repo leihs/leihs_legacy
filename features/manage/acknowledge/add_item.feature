@@ -7,13 +7,11 @@ Feature: Add Item during acknowledge process
   Background:
     Given I am Pius
 
-  @javascript 
   Scenario: Adding a model quickly to a contract by just typing in the inventory_number
     Given I open a contract for acknowledgement
     When I add a model by typing in the inventory code of an item of that model to the quick add
     Then the model is added to the contract
 
-  @javascript @browser
   Scenario: Autocompletion of the quick add input by model name
     Given I open a contract for acknowledgement
     When I start to type the name of a model which is not yet in the contract
@@ -23,7 +21,6 @@ Feature: Add Item during acknowledge process
     When I select one of the matched models
     Then the model is added to the contract
 
-  @javascript 
   Scenario: Increase the quantity of a contract line by adding an model from the same type and date range to the contract
     Given I open a contract for acknowledgement, whose start date is not in the past
     When I add a model to the acknowledge which is already existing in the selected date range by providing an inventory code
@@ -31,7 +28,6 @@ Feature: Add Item during acknowledge process
     And an additional line has been created in the backend system
     And the new line is getting visually merged with the existing line
 
-  @javascript @browser
   Scenario: Search results should conform to the actual start and end date
     Given I open a contract for acknowledgement
     And I search for a model with default dates and note the current availability
@@ -41,7 +37,6 @@ Feature: Add Item during acknowledge process
     And I wait until the autocompletion is loaded
     Then the model's availability has changed
 
-  @javascript @browser
   Scenario: Show autocomplete also on frenzied interaction
     Given I open a contract for acknowledgement
     When I start searching some model for adding it

@@ -7,7 +7,6 @@ Feature: Close Contract
   Background:
     Given I am Pius
 
-  @javascript @browser 
   Scenario: Take back all items of a contract
      When I open a take back
       And I select all reservations of an open contract

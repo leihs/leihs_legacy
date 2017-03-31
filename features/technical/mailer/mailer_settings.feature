@@ -7,14 +7,17 @@ Feature: Configuring ActionMailer from the database
   Background:
     Given a settings object
 
+  @rack
   Scenario: Configuring ActionMailer for test mode through the database
     When the mail delivery method is set to "test"
     Then ActionMailer's delivery method is "test"
 
+  @rack
   Scenario: Configuring ActionMailer to use sendmail 
     When the mail delivery method is set to "sendmail"
     Then ActionMailer's delivery method is "sendmail"
 
+  @rack
   Scenario: Setting SMTP authentication
     When the mail delivery method is set to "smtp"
     And the SMTP username is set to "user"
@@ -23,6 +26,7 @@ Feature: Configuring ActionMailer from the database
     And ActionMailer's SMTP username is "user"
     And ActionMailer's SMTP password is "password"
 
+  @rack
   Scenario: Forgetting to specify password when specifying SMTP username (we cleverly rescue this)
     When the mail delivery method is set to "smtp"
     And the SMTP username is set to "user"
@@ -30,6 +34,7 @@ Feature: Configuring ActionMailer from the database
     And ActionMailer's SMTP username is nil
     And ActionMailer's SMTP password is nil
 
+  @rack
   Scenario: Forgetting to specify username when specifying SMTP password (we cleverly rescue this)
     When the mail delivery method is set to "smtp"
     And the SMTP password is set to "password"

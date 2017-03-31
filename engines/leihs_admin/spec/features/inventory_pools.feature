@@ -8,7 +8,7 @@ Feature: Administer inventory pools
   Background:
     Given personas dump is loaded
 
-  @leihs_admin_inventory_pools @javascript @personas
+  @leihs_admin_inventory_pools
   Scenario: Choosing an inventory pool
     Given I am Gino
     When I navigate to the admin area
@@ -17,7 +17,7 @@ Feature: Administer inventory pools
     Then I see all managed inventory pools
     And the list of inventory pools is sorted alphabetically
 
-  @leihs_admin_inventory_pools @personas
+  @leihs_admin_inventory_pools
   Scenario: Creating an initial inventory pool
     Given I am Gino
     When I create a new inventory pool in the admin area's inventory pool tab
@@ -27,7 +27,7 @@ Feature: Administer inventory pools
     And I see a notification message
     And the inventory pool is saved
 
-  @leihs_admin_inventory_pools @personas
+  @leihs_admin_inventory_pools
   Scenario Outline: Required fields when creating an inventory pool
     Given I am Ramon
     When I create a new inventory pool in the admin area's inventory pool tab
@@ -41,7 +41,7 @@ Feature: Administer inventory pools
       | Short Name     |
       | E-Mail         |
 
-  @leihs_admin_inventory_pools @personas
+  @leihs_admin_inventory_pools
   Scenario: Editing inventory pool
     Given I am Ramon
     When I edit in the admin area's inventory pool tab an existing inventory pool
@@ -49,14 +49,14 @@ Feature: Administer inventory pools
     And I save
     Then the inventory pool is saved
 
-  @leihs_admin_inventory_pools @javascript @personas
+  @leihs_admin_inventory_pools
   Scenario: Delete inventory pool
     Given I am Ramon
     When I delete an existing inventory pool in the admin area's inventory pool tab
     Then the inventory pool is removed from the list
     And the inventory pool is deleted from the database
 
-  @leihs_admin_inventory_pools @personas
+  @leihs_admin_inventory_pools
   Scenario: Automatically grant access to new users
     Given I am Gino
     And multiple inventory pools are granting automatic access

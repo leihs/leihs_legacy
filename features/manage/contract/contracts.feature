@@ -3,7 +3,7 @@ Feature: List of contracts
   Background:
     Given I am Andi
 
-  @javascript @flapping
+  @flapping
   Scenario: Visible tabs
     When I open the tab "Contracts"
     Then I see the tabs:
@@ -12,7 +12,7 @@ Feature: List of contracts
       | Closed |
     And the checkbox "To be verified" is already checked and I can uncheck
 
-  @javascript @flapping
+  @flapping
   Scenario: View contracts
     When I open the tab "Contracts"
     Then I can view "open" contracts

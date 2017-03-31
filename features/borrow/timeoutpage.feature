@@ -3,6 +3,7 @@ Feature: Timeout page
   Background:
     Given I am Normin
 
+  @rack
   Scenario: Order timed out
     Given I hit the timeout page with a model that has conflicts
     And I have added items to an order
@@ -11,7 +12,6 @@ Feature: Timeout page
     Then I am redirected to the timeout page
     And I am informed that my items are no longer reserved for me
 
-  @javascript @browser
   Scenario: View
     Given I hit the timeout page with a model that has conflicts
     Then I see my order
@@ -20,13 +20,11 @@ Feature: Timeout page
     And I can edit entries
     And I can return to the main order overview
 
-  @javascript @browser 
   Scenario: Deleting an entry
     Given I hit the timeout page with a model that has conflicts
     And I delete one entry
     Then the entry is deleted from the order
 
-  @javascript @browser 
   Scenario: Can't add to order
     Given I hit the timeout page with 2 models that have conflicts
     When I click on "Continue this order"
@@ -39,7 +37,6 @@ Feature: Timeout page
     When I correct all errors
     Then the error message appears
 
-  @javascript @browser
   Scenario: Delete an order
     Given I hit the timeout page with a model that has conflicts
     When I delete the order
@@ -48,6 +45,7 @@ Feature: Timeout page
     And the models in my order are released
     And the user's order has been deleted
 
+  @rack
   Scenario: Only use those models that are available to continue with your order
     Given I hit the timeout page with a model that has conflicts
     When a model is not available
@@ -56,7 +54,6 @@ Feature: Timeout page
     And I am redirected to my current order
     And I am informed that the remaining models are all available
 
-  @javascript @browser 
   Scenario: Modifying an entry
     Given I hit the timeout page with a model that has conflicts
     And I change the entry
@@ -67,7 +64,6 @@ Feature: Timeout page
     And the entry is grouped based on its current start date and inventory pool
     And I am redirected to the timeout page
 
-  @javascript @browser 
   Scenario: Decreasing the quantity of one entry
     Given I hit the timeout page with a model that has conflicts
     When I increase the quantity of one entry

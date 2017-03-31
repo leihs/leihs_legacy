@@ -7,7 +7,6 @@ Feature: Add reservations during hand over
   Background:
     Given I am Pius
 
-  @javascript 
   Scenario: Add an item to the hand over providing an inventory code
     Given I open a hand over
     When I add a borrowable item to the hand over by providing an inventory code
@@ -15,13 +14,11 @@ Feature: Add reservations during hand over
     When I add an unborrowable item to the hand over by providing an inventory code
     Then the item is added to the hand over for the provided date range and the inventory code is already assigend
 
-  @javascript 
   Scenario: Add an option to the hand over providing an inventory code
     Given I open a hand over
     And I add an option to the hand over by providing an inventory code
     Then the option is added to the hand over
 
-  @javascript @browser
   Scenario: Increase the quantity of an option of the hand over by adding an option providing an inventory code
     Given I open a hand over with options
     When I add an option to the hand over by providing an inventory code
@@ -29,7 +26,6 @@ Feature: Add reservations during hand over
     And I add an option to the hand over by providing an inventory code
     Then the quantity on the option line is 2
 
-  @javascript @browser
   Scenario: Add a template to the hand over picking an autocomplete element
     Given I open a hand over
     And I type the beginning of a template name to the add/assign input field
@@ -37,13 +33,11 @@ Feature: Add reservations during hand over
     When I select the template from the list
     Then each model of the template is added to the hand over for the provided date range
 
-  @javascript @browser
   Scenario: Add reservations which changes other reservations availability
     Given I open a hand over for today
     And I add so many reservations that I break the maximal quantity of a model
     Then I see that all reservations of that model have availability problems
 
-  @javascript @browser
   Scenario: Add an option to the hand over picking an autocomplete element
     Given I open a hand over
     And I type the beginning of an option name to the add/assign input field
@@ -51,7 +45,6 @@ Feature: Add reservations during hand over
     When I select the option from the list
     Then the option is added to the hand over
 
-  @javascript @browser
   Scenario: Add an model to the hand over picking an autocomplete element
     Given I open a hand over
     And I type the beginning of a model name to the add/assign input field
@@ -59,7 +52,6 @@ Feature: Add reservations during hand over
     When I select the model from the list
     Then the model is added to the hand over
 
-  @javascript @browser
   Scenario: hand over items even if not borrowable
     Given I open a hand over
     And there is a model or software which all items are set to "not borrowable"
@@ -69,7 +61,6 @@ Feature: Add reservations during hand over
     When I select the model from the list
     Then the model is added to the hand over
 
-  @javascript 
   Scenario: Add a line to the hand over providing a model name
     Given I open a hand over
     When I enter a model name which is not related to my current pool

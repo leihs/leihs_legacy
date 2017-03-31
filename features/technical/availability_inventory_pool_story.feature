@@ -10,6 +10,7 @@ Feature: Availability depending on Pools
     Given the database is empty
     And settings exist
 
+  @rack
   Scenario: Basic
     Given 2 inventory pools
     And a model 'Coffee Mug' exists
@@ -22,6 +23,7 @@ Feature: Availability depending on Pools
     And the maximum number of available 'Coffee Mug' for 'jack' is 5
     And the maximum number of available 'Coffee Mug' for 'john' is 3
 
+  @rack
   Scenario: Items available in different pools
     Given 2 inventory pools
     And a model 'Coffee Mug' exists
@@ -65,6 +67,7 @@ Feature: Availability depending on Pools
 #        When 'jack' searches for 'Coffee' on frontend
 #        Then he sees the 'Coffee Machine' model
 
+  @rack
   Scenario: Customer orders the same item multiple times, thus exceeding maximum quantity
     Given 1 inventory pool
     And a model 'Pink Hairbrush' exists
@@ -75,6 +78,7 @@ Feature: Availability depending on Pools
     When 'samantha' orders 2 'Pink Hairbrush' from inventory pool 1 for the same time
     Then this user has 5 unsubmitted reservations, which 0 are available
 
+  @rack
   Scenario: Customer can decide from which pool he orders
     Given 2 inventory pools
     And a model 'Coffee Mug' exists

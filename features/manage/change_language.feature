@@ -5,12 +5,14 @@ Feature: Changing interface language
   As any user
   I want to switch the interface language to a language I know
 
+  @rack
   Scenario: Changing my interface language
     Given I am Mike
     And I see the language list
     When I change the language to "English (US)"
     Then the language is "English (US)"
 
+  @rack
   Scenario: Changing the language as normal user
     Given I am Normin
     And I am listing models

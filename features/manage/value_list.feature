@@ -4,7 +4,6 @@ Feature: Value list
   Background:
     Given I am Pius
 
-  @javascript @browser 
   Scenario: What I want to see on the value list
     Given I open a value list
     Then I want to see the following sections in the value list:
@@ -15,7 +14,6 @@ Feature: Value list
     | Lender   |
     | List     |
 
-  @javascript @browser 
   Scenario: Content of a value list
     Given I open a value list
     Then the list contains the following columns:
@@ -28,7 +26,6 @@ Feature: Value list
     | Price              |
     And the models in the value list are sorted alphabetically
 
-  @javascript 
   Scenario: Printing value lists from the list of orders
     Given there is an order with at least two models and at least two items per model were ordered
     When I open an order
@@ -38,7 +35,6 @@ Feature: Value list
     And the unassigned reservations are summarized
     And the price shown for the unassigned reservations is equal to the highest price of any of the items of that model within this inventory pool
 
-  @javascript 
   Scenario: Printing a value list from the handover view
     Given there is an order with at least two models and at least two items per model were ordered
     And each model has exactly one assigned item
@@ -51,7 +47,6 @@ Feature: Value list
     And the unassigned reservations are summarized
     And any options are priced according to their price set in the inventory pool
 
-  @javascript @browser 
   Scenario: Totals
     Given I open a value list
     Then one line shows the grand total

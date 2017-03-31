@@ -4,7 +4,7 @@ Feature: Displaying problems
   Background:
     Given I am Pius
 
-  @javascript @browser @unstable
+  @unstable
   Scenario: Showing problems in an order when a model is not avaiable
     Given I edit an order
     And a model is no longer available
@@ -19,42 +19,36 @@ Feature: Displaying problems
      And "3" are available in total, also counting availability from groups the user is not member of
      And "7" are in this inventory pool (and borrowable)
 
-  @javascript @browser 
   Scenario: Showing problems in an order when taking back a defective item
     Given I take back an item
     And one item is defective
      Then the affected item's line shows the item's problems
      And the problem is displayed as: "Gegenstand ist defekt"
 
-  @javascript 
   Scenario: Showing problems when handing over a defective item
     Given I am doing a hand over
     And one item is defective
      Then the affected item's line shows the item's problems
      And the problem is displayed as: "Gegenstand ist defekt"
 
-  @javascript @browser 
   Scenario: Displaying problems with incomplete items during take back
     Given I take back an item
      And one item is incomplete
      Then the affected item's line shows the item's problems
      And the problem is displayed as: "Gegenstand ist unvollständig"
 
-  @javascript 
   Scenario: Showing problems when handing over an item that is not borrowable
     Given I am doing a hand over
     And one item is not borrowable
      Then the affected item's line shows the item's problems
      And the problem is displayed as: "Gegenstand nicht ausleihbar"
 
-  @javascript @browser 
   Scenario: Showing problems when taking back an item that is not borrowable
     Given I take back an item
     And one item is not borrowable
     Then the affected item's line shows the item's problems
     And the problem is displayed as: "Gegenstand nicht ausleihbar"
 
-  @javascript @browser
   Scenario: Showing problems when item is not available while handing over
     # this cucumber global spaghetti steps drive me CRAZY!!! #############
     # please don't change for your own sake, until we trash this cucumber shit
@@ -68,7 +62,6 @@ Feature: Displaying problems
       And "3" are available in total, also counting availability from groups the user is not member of
       And "7" are in this inventory pool (and borrowable)
 
-  @javascript @browser
   Scenario: Showing problems when item is not available while taking back
     Given I open a take back, not overdue
      And a model is no longer available
@@ -78,14 +71,12 @@ Feature: Displaying problems
       And "3" are available in total, also counting availability from groups the user is not member of
       And "7" are in this inventory pool (and borrowable)
 
-  @javascript 
   Scenario: Problemanzeige bei Aushändigung wenn Gegenstand unvollständig
     Given I am doing a hand over
     And one item is incomplete
     Then the affected item's line shows the item's problems
     And the problem is displayed as: "Gegenstand ist unvollständig"
 
-  @javascript 
   Scenario: Showing problems during take back if overdue
     Given I take back a late item
     Then the affected item's line shows the item's problems

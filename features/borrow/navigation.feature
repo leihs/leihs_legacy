@@ -5,7 +5,6 @@ Feature: Navigation
   möchte ich als Ausleiher
   Navigationsmöglichkeiten haben
 
-  @javascript
   Scenario: Navigation for borrowers
     Given I am Normin
     And I am listing the main categories
@@ -17,7 +16,6 @@ Feature: Navigation
     And the navigation contains "User"
     And the navigation contains "Log out"
 
-  @javascript
   Scenario: Navigation for managers
     Given I am Pius
     And I am listing the main categories
@@ -30,7 +28,6 @@ Feature: Navigation
     And the navigation contains "User"
     And the navigation contains "Log out"
 
-  @javascript
   Scenario: Navigation for validators
     Given I am Andi
     And I am listing the main categories
@@ -43,6 +40,7 @@ Feature: Navigation
     And the navigation contains "User"
     And the navigation contains "Log out"
 
+  @rack
   Scenario: Home button
     Given I am Normin
     Then I see a home button in the navigation bars

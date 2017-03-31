@@ -4,9 +4,11 @@ Feature: Orders
   Background:
     Given I am Normin
 
+  @rack
   Scenario: Order counters
     Then I see the number of submitted, unapproved orders on every page
 
+  @rack
   Scenario: Overview page for my orders
     When I am listing my orders
     Then I see my submitted, unapproved orders

@@ -32,6 +32,9 @@ Then(/^I see the following information for each contract:$/) do |table|
           when 'Link to the contract'
             expect(has_selector?("a[href='#{borrow_user_contract_path(contract.id)}']", text: _('Contract'))).to be true
           when 'Link to the value list'
+            unless first('.dropdown')
+              find('.dropdown-holder').click
+            end
             find("a[href='#{borrow_user_contract_path(contract.id)}'] + .dropdown-holder > .dropdown-toggle").click
             expect(has_selector?("a[href='#{borrow_user_value_list_path(contract.id)}']")).to be true
             find("a[href='#{borrow_user_contract_path(contract.id)}']").click # release the previous click

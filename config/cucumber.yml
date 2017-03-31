@@ -1,5 +1,3 @@
 reports: -p base
 default: -p base -e features/reports
 base: -r features --format pretty --tags=~@upcoming --tags=~@ldap
-nojs: -p base -t ~@javascript
-headless: -p base -t @javascript -t ~@browser

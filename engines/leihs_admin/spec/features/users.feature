@@ -36,7 +36,7 @@ Feature: Admin users
     And the new user has been created
     And he does not have access to any inventory pools and is not an administrator
 
-  @leihs_admin_users @javascript @browser
+  @leihs_admin_users 
   Scenario: Deleting a user as an administrator
     Given I open the list of users
     And I pick a user without access rights, orders or contracts
@@ -57,7 +57,7 @@ Feature: Admin users
     And I edit a user that has access rights
     Then inventory pools they have access to are listed with the respective role
 
-  @leihs_admin_users @javascript @browser
+  @leihs_admin_users 
   Scenario: Requirements for deleting a user
     Given I open the list of users
     When I pick one user with access rights, one with orders and one with contracts

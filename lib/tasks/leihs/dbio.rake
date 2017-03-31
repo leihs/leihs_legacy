@@ -17,10 +17,10 @@ namespace :leihs do
         procurement_images_path: ENV['PROCUREMENT_IMAGES_PATH'].presence
     end
 
-    desc 'Restore a legacy personas MySQL dump; DATASET=minimal|normal|huge'
+    desc 'Restore a legacy personas MySQL dump'
     task restore_legacy: :environment do
       load 'features/support/dataset.rb'
-      Dataset.restore_random_dump(ENV['DATASET'].presence || 'normal')
+      Dataset.restore_dump
     end
   end
 end

@@ -4,7 +4,6 @@ Feature: Deleting software
   Background:
     Given I am Mike
 
-  @javascript @browser 
   Scenario: Deleting a software product
     Given there is a software with the following conditions:
       | not in any contract |
@@ -14,7 +13,6 @@ Feature: Deleting software
     Then the software was deleted from the list
     And the software is deleted
 
-  @javascript @browser 
   Scenario: Deleting associated records when deleting software
     Given there is a software with the following conditions:
       | not in any contract |
