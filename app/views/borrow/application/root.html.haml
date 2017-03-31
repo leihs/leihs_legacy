@@ -5,7 +5,7 @@
   .col4of5
     = render :partial => 'borrow/tabs', :locals => {:tabs => nil}
 
-    .content-wrapper.straight-top-left.padding-inset-s
+    .content-wrapper.straight-top-left.padding-inset-s#categories
       .emboss.row
         - @categories.each_with_index do |category, i|
           .col1of3.padding-inset-m.text-align-center.height-m
@@ -33,6 +33,10 @@
                     %i.stamp.fa.fa-list.icon-xxxxl
                   .row.padding-top-m
                     %h2.headline-m.text-align-center.text-ellipsis.max-width-full= _("Templates")
-        
-                    
+
+
   .col1of5= render :partial => "borrow/basket"
+
+:coffeescript
+  jQuery ->
+    new App.SessionStorageUrlController {el: "#categories"}

@@ -109,6 +109,19 @@ create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber)
   create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
 end
 
+filepath = "cider-ci/tasks/borrow_rspec_scenarios.yml"
+create_scenario_tasks(filepath,
+                      ['spec/features/borrow'],
+                      framework: :rspec,
+                      additional_options: "-r ./spec/steps/borrow/load.rb")
+
+filepath = "cider-ci/tasks/borrow_rspec_flapping_scenarios.yml"
+create_scenario_tasks(filepath,
+                      ['spec/features/borrow'],
+                      framework: :rspec,
+                      additional_options: "-r ./spec/steps/borrow/load.rb",
+                      tags: ['@flapping'])
+
 ############################## ENGINES ##################################
 
 ENGINES.each do |engine|

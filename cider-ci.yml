@@ -11,6 +11,8 @@ include:
   ## BORROW - on branches foo/borrow_bar
   - cider-ci/jobs/borrow_scenarios.yml
   - cider-ci/jobs/borrow_flapping_scenarios.yml
+  - cider-ci/jobs/borrow_rspec_scenarios.yml
+  - cider-ci/jobs/borrow_rspec_flapping_scenarios.yml
   # no broken ones right now
   # - cider-ci/jobs/borrow_broken_scenarios.yml
 

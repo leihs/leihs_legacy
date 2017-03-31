@@ -1,0 +1,26 @@
+jobs:
+
+  borrow_rspec_scenarios:
+
+    name: 'Borrow: Rspec Scenarios'
+
+    description: |
+      Run Borrow rspec scenarios under MRI
+
+    run_when:
+      branch name matches master or borrow:
+        type: branch
+        include_match: '^.*(master|borrow).*$'
+        exclude_match: '^.*(no-ci|hotspot).*$'
+
+    context:
+
+      task_defaults:
+        load: 1.5
+        max_trials: 3
+        include:
+          - cider-ci/task_components/database.yml
+
+      include:
+        - cider-ci/shared/main_context.yml
+        - cider-ci/tasks/borrow_rspec_scenarios.yml

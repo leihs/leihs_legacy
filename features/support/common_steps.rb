@@ -58,3 +58,14 @@ Then 'I close the flash message if visible' do
     flash.find(".fa-times-circle").click
   end
 end
+
+When 'I scroll loading all pages' do
+  all('.page[data-page]').each do |data_page|
+    data_page.click
+    data_page.find('.line div', match: :first)
+  end
+end
+
+Then 'I scroll to the end of the list' do
+  page.execute_script "window.scrollBy(0,10000)"
+end

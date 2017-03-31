@@ -67,7 +67,9 @@ end
 Then(/^I can specify at most the maximum available quantity per model$/) do
   max = find('.row', match: :first, text: @model_link.model.name).find("input[name='reservations[][quantity]']", match: :first)[:max].to_i
   find('.row', match: :first, text: @model_link.model.name).find("input[name='reservations[][quantity]']", match: :first).set max+1
-  expect(find('.row', match: :first, text: @model_link.model.name).find("input[name='reservations[][quantity]']", match: :first).value.to_i).to eq max
+  wait_until do
+    find('.row', match: :first, text: @model_link.model.name).find("input[name='reservations[][quantity]']", match: :first).value.to_i == max
+  end
 end
 
 Then(/^I see a warning on the page itself and on every affected model$/) do

@@ -1,0 +1,154 @@
+---
+tasks:
+- name: spec/features/borrow/model_list.feature:7
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:7
+- name: spec/features/borrow/model_list.feature:18
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:18
+- name: spec/features/borrow/model_list.feature:37
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:37
+- name: spec/features/borrow/model_list.feature:50
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:50
+- name: spec/features/borrow/model_list.feature:56
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:56
+- name: spec/features/borrow/model_list.feature:62
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:62
+- name: spec/features/borrow/model_list.feature:68
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:68
+- name: spec/features/borrow/model_list.feature:78
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:78
+- name: spec/features/borrow/model_list.feature:84
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:84
+- name: spec/features/borrow/model_list.feature:92
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:92
+- name: spec/features/borrow/model_list.feature:100
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:100
+- name: spec/features/borrow/model_list.feature:109
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:109
+- name: spec/features/borrow/model_list.feature:115
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:115
+- name: spec/features/borrow/model_list.feature:123
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:123
+- name: spec/features/borrow/model_list.feature:134
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:134
+- name: spec/features/borrow/model_list.feature:142
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:142
+- name: spec/features/borrow/model_list.feature:152
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:152
+- name: spec/features/borrow/model_list.feature:185
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:185
+- name: spec/features/borrow/model_list.feature:194
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:194

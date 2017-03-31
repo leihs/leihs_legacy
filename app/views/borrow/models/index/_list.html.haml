@@ -9,4 +9,5 @@
       .col1of2.text-align-center= render :partial => "borrow/models/index/ip_selector"
       .col1of2.text-align-center= render :partial => "borrow/models/index/sorting"
 #model-list.row{:data => {:pagination => {:page => @models.current_page, :total_count => @models.count, :per_page => @models.per_page}.to_json}}
-  = render :partial => "borrow/models/index/line", :collection => @models, :as => :model
+  - unless params[:session_storage] == 'true'
+    = render :partial => "borrow/models/index/line", :collection => @models, :as => :model

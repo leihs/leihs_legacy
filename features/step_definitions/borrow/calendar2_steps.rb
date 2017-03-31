@@ -163,6 +163,7 @@ Given(/^I have set a time span$/) do
   find('#start-date').set I18n.l(Date.today + 1)
   find('#end-date').click
   find('#end-date').set I18n.l(Date.today + 2)
+  sleep 2 # needed because cider flappiness
 end
 
 When(/^I add an item to my order that is available in the selected time span$/) do
@@ -400,4 +401,39 @@ Then(/^I cannot order that model unless I am part of that group$/) do
   step 'I save the booking calendar'
   expect(find('#current-order-lines').has_content?(@model.name)).to be true
   expect(@current_user.reservations.unsubmitted.map(&:model).include?(@model)).to be true
+end
+
+When(/^I choose a start date$/) do
+  @start_date ||= Date.today
+  find('#start-date').set I18n.l @start_date
+  find('.ui-state-active').click
+end
+
+When(/^I select a specific inventory pool from the choices offered$/) do
+  find('#ip-selector').click
+  expect(has_selector?('#ip-selector .dropdown .dropdown-item', visible: true)).to be true
+  @current_inventory_pool ||= @current_user.inventory_pools.first
+  find('#ip-selector .dropdown .dropdown-item', text: @current_inventory_pool.name).click
+end
+
+When(/^I reset all filters$/) do
+  find('#reset-all-filter').click
+  find('#model-list .line', match: :first)
+end
+
+Then(/^I see the sort options$/) do
+  within '#model-sorting' do
+    expect(has_selector?('.dropdown *[data-sort]', visible: false)).to be true
+  end
+end
+
+Then(/^I see the inventory pool selector$/) do
+  within '#ip-selector' do
+    expect(has_selector?('.dropdown', visible: false)).to be true
+  end
+end
+
+Then(/^I see filters for start and end date$/) do
+  expect(has_selector?('#start-date')).to be true
+  expect(has_selector?('#end-date')).to be true
 end

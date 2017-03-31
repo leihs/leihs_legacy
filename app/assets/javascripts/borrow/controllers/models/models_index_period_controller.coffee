@@ -19,6 +19,11 @@ class window.App.ModelsIndexPeriodController extends Spine.Controller
     do @setupStartDate
     do @setupEndDate
 
+  setStartDate: (date) -> @setDateFor(@startDate, date)
+  setEndDate: (date) -> @setDateFor(@endDate, date)
+
+  setDateFor: (dpElement, date) -> dpElement.datepicker("setDate", date)
+
   setupStartDate: ->
     @startDate.datepicker
       onSelect: @selectStartDate

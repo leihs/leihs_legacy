@@ -22,6 +22,12 @@ class window.App.ModelsIndexIpSelectorController extends Spine.Controller
       @el.find("input:checkbox").prop("checked", false)
       target.find("input:checkbox").prop("checked", true).change()
 
+  selectMultipleInventoryPools: (ipIds) =>
+    _.each @el.find("a[data-id]"),
+      (ipLink) ->
+        isChecked = _.contains ipIds, $(ipLink).data("id")
+        $(ipLink).find("input:checkbox").prop "checked", isChecked
+
   changeInventoryPools: (e)=>
     unless @el.find("input:checkbox:checked").length
       $(e.currentTarget).prop "checked", true
