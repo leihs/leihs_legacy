@@ -6,12 +6,6 @@ jobs:
     description: |
       Various superordinate quality assurance tasks
 
-    run_when:
-      any branch name:
-        type: branch
-        include_match: '^.*$'
-        exclude_match: '^.*(no-ci|hotspot).*$'
-
     context:
       task_defaults:
         max_trials: 1
