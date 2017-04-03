@@ -12,36 +12,6 @@ jobs:
         include_match: '^.*$'
         exclude_match: '^.*(no-ci|hotspot).*$'
 
-    depends_on:
-      borrow_manage_code_checks:
-        type: job
-        job_key: borrow_manage_code_checks
-        states: [passed]
-      borrow_scenarios:
-        type: job
-        job_key: borrow_scenarios
-        states: [passed]
-      manage_scenarios:
-        type: job
-        job_key: manage_scenarios
-        states: [passed]
-      leihs_admin_code_checks:
-        type: job
-        job_key: leihs_admin_code_checks
-        states: [passed]
-      leihs_admin_scenarios:
-        type: job
-        job_key: leihs_admin_scenarios
-        states: [passed]
-      procurement_code_checks:
-        type: job
-        job_key: procurement_code_checks
-        states: [passed]
-      procurement_scenarios:
-        type: job
-        job_key: procurement_scenarios
-        states: [passed]
-
     context:
       task_defaults:
         max_trials: 1
