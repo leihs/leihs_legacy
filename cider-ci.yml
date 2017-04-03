@@ -34,7 +34,7 @@ include:
 
   # always runs, but depends on other jobs
   - cider-ci/jobs/meta.yml
-  # - cider-ci/jobs/good_to_merge.yml
+  - cider-ci/jobs/good_to_merge.yml
 
   # run manually
   - cider-ci/jobs/hotspots.yml
