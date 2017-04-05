@@ -24,7 +24,28 @@ class window.App.LinesCellTooltipController extends Spine.Controller
         modelIds.push(line.model_id) unless App.Model.exists(line.model_id)?
       else if line.option_id?
         optionIds.push(line.option_id) unless App.Option.exists(line.option_id)?
-    @fetchModels(modelIds).done => @fetchOptions(optionIds).done => do callback
+    if modelIds.length > 0
+      @sliceFetchModels modelIds, =>
+        if optionIds.length > 0
+          @sliceFetchOptions optionIds, callback
+        else
+          @fetchOptions(optionIds).done => do callback
+    else
+      @fetchModels(modelIds).done =>
+        if optionIds.length > 0
+          @sliceFetchOptions optionIds, callback
+        else
+          @fetchOptions(optionIds).done => do callback
+
+  sliceFetchModels: (modelIds, callback) =>
+    callback_after = _.after(Math.ceil(modelIds.length / 50), callback)
+    _(modelIds).each_slice 50, (slice) =>
+      @fetchModels(slice).done callback_after
+
+  sliceFetchOptions: (optionIds, callback) =>
+    callback_after = _.after(Math.ceil(optionIds.length / 50), callback)
+    _(optionIds).each_slice 50, (slice) =>
+      @fetchOptions(slice).done callback_after
 
   fetchModels: (ids)=>
     if ids.length

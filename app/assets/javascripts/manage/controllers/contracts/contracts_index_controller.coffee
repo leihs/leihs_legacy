@@ -44,8 +44,8 @@ class window.App.ContractsIndexController extends Spine.Controller
   fetchReservations: (page, callback)=>
     ids = _.map @contracts[page], (o) -> o.id
     do callback unless ids.length
-    done = _.after Math.ceil(ids.length/300), callback
-    _(ids).each_slice 300, (slice)=>
+    done = _.after Math.ceil(ids.length/50), callback
+    _(ids).each_slice 50, (slice)=>
       App.Reservation.ajaxFetch
         data: $.param
           contract_ids: slice
@@ -66,8 +66,8 @@ class window.App.ContractsIndexController extends Spine.Controller
     ids = _.compact _.filter (_.map (_.flatten (_.map @contracts[page], (o) -> o.reservations().all())), (l) -> l.purpose_id), (id) -> not App.Purpose.exists(id)?
 
     do callback unless ids.length
-    done = _.after Math.ceil(ids.length/300), callback
-    _(ids).each_slice 300, (slice)=>
+    done = _.after Math.ceil(ids.length/50), callback
+    _(ids).each_slice 50, (slice)=>
       App.Purpose.ajaxFetch
         data: $.param
           purpose_ids: _.uniq(slice)
