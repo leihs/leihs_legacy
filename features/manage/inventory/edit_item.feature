@@ -168,6 +168,7 @@ Feature: Editing an item
     And I save
     Then I see an error message that I can't change the model because the item is already handed over or assigned to a contract
 
+  @flapping
   Scenario: Can't retire an item that is not in stock
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I retire the item
