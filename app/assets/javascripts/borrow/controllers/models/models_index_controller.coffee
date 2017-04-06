@@ -19,24 +19,11 @@ class window.App.ModelsIndexController extends Spine.Controller
     @tooltips = new App.ModelsIndexTooltipController {el: @list}
     do @delegateEvents
 
-    @sessionStorage = new App.SessionStorageController
-      el: @el
-      ipSelector: @ipSelector
-      sorting: @sorting
-      search: @search
-      period: @period
-    unless @sessionStorage.isEmpty()
-      @sessionStorage.restoreFilters(callback: @resetAndFetchModels)
-
   delegateEvents: =>
     super
     App.PlainAvailability.on "refresh", @render
-    App.Model.on(
-      "ajaxSuccess",
-      (e,status,xhr) =>
-        @pagination.setData JSON.parse(xhr.getResponseHeader("X-Pagination"))
-    )
-
+    App.Model.on "ajaxSuccess", (e,status,xhr)=> @pagination.setData JSON.parse(xhr.getResponseHeader("X-Pagination"))
+    
   createReservation: (e)=>
     do e.preventDefault
     new App.ReservationsCreateController
@@ -49,20 +36,17 @@ class window.App.ModelsIndexController extends Spine.Controller
     do @reset.validate
     @tooltips.tooltips = {}
     if @period.getPeriod()?
-      @sessionStorage.update()
+      sessionStorage.startDate = @period.getPeriod().start_date
+      sessionStorage.endDate = @period.getPeriod().end_date
       do @loading
       do @fetchAvailability
     else
       App.PlainAvailability.deleteAll()
       do @render
 
-  resetAndFetchModels: ({clearSessionStorage} = {clearSessionStorage: false}) =>
+  resetAndFetchModels: =>
     do @reset.validate
     do @loading
-    if clearSessionStorage
-      @sessionStorage.clear()
-    else
-      @sessionStorage.update()
     @models = []
     @pagination.page = 1
     @tooltips.tooltips = {}
@@ -76,7 +60,7 @@ class window.App.ModelsIndexController extends Spine.Controller
     @sorting.reset()
     @search.reset()
     @period.reset()
-    @resetAndFetchModels(clearSessionStorage: true)
+    @resetAndFetchModels()
 
   fetchModels: (page)=>
     $.extend @params, {inventory_pool_ids: @ipSelector.activeInventoryPoolIds()}
@@ -110,10 +94,10 @@ class window.App.ModelsIndexController extends Spine.Controller
     @list.html App.Render "borrow/views/models/index/loading"
 
   extendParamsWithSearchTerm: =>
-    if @searchTerm?
+    if @searchTerm? 
       if @search.getInputText().search_term?
         @params.search_term = "#{@searchTerm} #{@search.getInputText().search_term}"
       else
         @params.search_term = @searchTerm
-    else
+    else 
       $.extend @params, @search.getInputText()

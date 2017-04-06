@@ -190,39 +190,39 @@ Feature: Model list
     When I set all filters to their default values by hand
     Then the button "Reset all filters" is not visible
 
-  @borrow_model_list
-  Scenario: Persistence of filter settings between navigation
-    Given I am Normin
-    And I am listing models
-    And I see the explorative search
-    When I enter a search term
-    And I choose a start date
-    And I choose a end date
-    And I select a specific inventory pool from the choices offered
-    And I select a sorting option
-    And I click on a category from explorative search
-    Then I see the models of the selected category
-    And the filter has previously entered search term
-    And the filter has previously selected start date
-    And the filter has previously selected end date
-    And the filter has previously selected inventory pool
-    And the filter has previously selected sorting option
-    When I switch to another language
-    Then the filter has previously selected start date
-    And the filter has previously selected end date
-    Then I switch back to original language
-    When I visit the start page
-    And I click on a root category
-    Then I see the models of the selected category
-    And the filter has previously entered search term
-    And the filter has previously selected start date
-    And the filter has previously selected end date
-    And the filter has previously selected inventory pool
-    And the filter has previously selected sorting option
-    When I reset all filters
-    Then all inventory pools are selected again in the inventory pool filter
-    And start and end date are both blank
-    And the list is sorted by "Model", "ascending"
-    And the search query field is blank
-    And the model list is unfiltered
-    And the button "Reset all filters" is not visible
+  # @borrow_model_list
+  # Scenario: Persistence of filter settings between navigation
+  #   Given I am Normin
+  #   And I am listing models
+  #   And I see the explorative search
+  #   When I enter a search term
+  #   And I choose a start date
+  #   And I choose a end date
+  #   And I select a specific inventory pool from the choices offered
+  #   And I select a sorting option
+  #   And I click on a category from explorative search
+  #   Then I see the models of the selected category
+  #   And the filter has previously entered search term
+  #   And the filter has previously selected start date
+  #   And the filter has previously selected end date
+  #   And the filter has previously selected inventory pool
+  #   And the filter has previously selected sorting option
+  #   When I switch to another language
+  #   Then the filter has previously selected start date
+  #   And the filter has previously selected end date
+  #   Then I switch back to original language
+  #   When I visit the start page
+  #   And I click on a root category
+  #   Then I see the models of the selected category
+  #   And the filter has previously entered search term
+  #   And the filter has previously selected start date
+  #   And the filter has previously selected end date
+  #   And the filter has previously selected inventory pool
+  #   And the filter has previously selected sorting option
+  #   When I reset all filters
+  #   Then all inventory pools are selected again in the inventory pool filter
+  #   And start and end date are both blank
+  #   And the list is sorted by "Model", "ascending"
+  #   And the search query field is blank
+  #   And the model list is unfiltered
+  #   And the button "Reset all filters" is not visible

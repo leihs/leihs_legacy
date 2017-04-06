@@ -18,15 +18,11 @@ class window.App.ReservationsCreateController extends window.App.ReservationsCha
   # @override
   setupDates: =>
     if sessionStorage.startDate?
-      @startDateEl.val(
-        moment(sessionStorage.startDate, "DD.MM.YYYY").format("YYYY-MM-DD")
-      )
+      @startDateEl.val sessionStorage.startDate
     else
       @startDateEl.val moment().format("YYYY-MM-DD")
     if sessionStorage.endDate?
-      @endDateEl.val(
-        moment(sessionStorage.endDate, "DD.MM.YYYY").format("YYYY-MM-DD")
-      )
+      @endDateEl.val sessionStorage.endDate
     else
       @endDateEl.val moment().add(1, "days").format("YYYY-MM-DD")
 

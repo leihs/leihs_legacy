@@ -1,10 +1,10 @@
-.row#breadcrumbs
+.row
 
   %nav
     %ul
 
       %li{:style => "z-index: 800; position: relative"}
-        %a#start.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => borrow_root_path,
+        %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => borrow_root_path,
         :class => tabs.blank? ? "active" : "straight-right"}
           %i.fa.fa-home
           = _("Start")
