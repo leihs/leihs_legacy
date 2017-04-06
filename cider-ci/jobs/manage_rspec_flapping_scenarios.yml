@@ -1,0 +1,20 @@
+jobs:
+
+  manage_rspec_flapping_scenarios:
+
+    name: 'Manage: Rspec Flapping Scenarios'
+
+    description: |
+      Run manage rspec flapping scenarios under MRI
+
+    run_when:
+      branch name matches master or manage:
+        type: branch
+        include_match: '^.*(master|manage).*$'
+        exclude_match: '^.*(no-ci|hotspot).*$'
+
+    context:
+      include:
+        - cider-ci/shared/main_context.yml
+        - cider-ci/shared/flapping_context_configuration.yml
+        - cider-ci/tasks/manage_rspec_flapping_scenarios.yml

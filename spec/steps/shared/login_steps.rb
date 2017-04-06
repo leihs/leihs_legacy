@@ -16,9 +16,7 @@ module Spec
     private
 
     def set_current_inventory_pool
-      if @current_user.has_role?(:inventory_manager)
-        @current_inventory_pool = @current_user.inventory_pools.managed.first
-      end
+      @current_inventory_pool = @current_user.inventory_pools.managed.first
     end
 
     def set_current_user(persona)

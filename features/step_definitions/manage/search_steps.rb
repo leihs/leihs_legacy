@@ -64,7 +64,7 @@ Then(/^I don't see a link labeled 'Show all matching contracts'$/) do
 end
 
 Given(/^there is a "(.*?)" item in my inventory pool$/) do |arg1|
-  items = @current_inventory_pool.items
+  items = @current_inventory_pool.items.items
   @item = case arg1
           when 'Broken'
             items.find &:is_broken
@@ -76,6 +76,7 @@ Given(/^there is a "(.*?)" item in my inventory pool$/) do |arg1|
             items.find {|i| not i.is_borrowable}
           end
   expect(@item).not_to be_nil
+  expect(@item.type).to be == 'Item'
 end
 
 When(/^I search globally after this (?:item|license) with its inventory code$/) do

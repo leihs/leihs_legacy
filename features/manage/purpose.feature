@@ -16,7 +16,7 @@ Feature: Purpose
     When I open a hand over
     Then I see the assigned purpose on each line
 
-  @unstable
+  @flapping
   Scenario: Places where I can edit the purpose
     When I edit an order
     Then I can edit the purpose
