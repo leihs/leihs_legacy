@@ -1,0 +1,48 @@
+borrow_manage_code_checks:
+  type: job
+  job_key: borrow_manage_code_checks
+  states: [passed]
+borrow_scenarios:
+  type: job
+  job_key: borrow_scenarios
+  states: [passed]
+borrow_flapping_scenarios:
+  type: job
+  job_key: borrow_flapping_scenarios
+  states: [passed]
+borrow_rspec_scenarios:
+  type: job
+  job_key: borrow_rspec_scenarios
+  states: [passed]
+borrow_rspec_flapping_scenarios:
+  type: job
+  job_key: borrow_rspec_flapping_scenarios
+  states: [passed]
+manage_scenarios:
+  type: job
+  job_key: manage_scenarios
+  states: [passed]
+manage_flapping_scenarios:
+  type: job
+  job_key: manage_flapping_scenarios
+  states: [passed]
+leihs_admin_code_checks:
+  type: job
+  job_key: leihs_admin_code_checks
+  states: [passed]
+leihs_admin_scenarios:
+  type: job
+  job_key: leihs_admin_scenarios
+  states: [passed]
+procurement_code_checks:
+  type: job
+  job_key: procurement_code_checks
+  states: [passed]
+procurement_scenarios:
+  type: job
+  job_key: procurement_scenarios
+  states: [passed]
+procurement_flapping_scenarios:
+  type: job
+  job_key: procurement_flapping_scenarios
+  states: [passed]

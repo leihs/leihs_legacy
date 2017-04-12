@@ -6,6 +6,18 @@ jobs:
     description: |
       Various superordinate quality assurance tasks
 
+    depends_on:
+      all tests passed:
+        type: job
+        job_key: all-tests
+        states: [passed]
+
+    run_when:
+      all tests passed:
+        type: job
+        job_key: all-tests
+        states: [passed]
+
     context:
       task_defaults:
         max_trials: 1

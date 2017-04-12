@@ -79,7 +79,7 @@ Feature: Lending
     And I save the inspection
     Then the item is saved with the currently set states
 
-  @flapping @eager_trials_8
+  @unstable
   Scenario: Automatic printing during hand over
     When I open a hand over with models
     Then the print dialog opens automatically

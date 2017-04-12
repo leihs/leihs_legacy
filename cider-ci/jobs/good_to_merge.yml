@@ -10,55 +10,17 @@ jobs:
       Status of this job is **used by github's "branch protection"**!
 
     depends_on:
-      borrow_manage_code_checks:
+      meta passed:
         type: job
-        job_key: borrow_manage_code_checks
+        job_key: meta
         states: [passed]
-      borrow_scenarios:
+      all tests passed:
         type: job
-        job_key: borrow_scenarios
+        job_key: all-tests
         states: [passed]
-      borrow_flapping_scenarios:
-        type: job
-        job_key: borrow_flapping_scenarios
-        states: [passed]
-      borrow_rspec_scenarios:
-        type: job
-        job_key: borrow_rspec_scenarios
-        states: [passed]
-      borrow_rspec_flapping_scenarios:
-        type: job
-        job_key: borrow_rspec_flapping_scenarios
-        states: [passed]
-      manage_scenarios:
-        type: job
-        job_key: manage_scenarios
-        states: [passed]
-      manage_flapping_scenarios:
-        type: job
-        job_key: manage_flapping_scenarios
-        states: [passed]
-      leihs_admin_code_checks:
-        type: job
-        job_key: leihs_admin_code_checks
-        states: [passed]
-      leihs_admin_scenarios:
-        type: job
-        job_key: leihs_admin_scenarios
-        states: [passed]
-      procurement_code_checks:
-        type: job
-        job_key: procurement_code_checks
-        states: [passed]
-      procurement_scenarios:
-        type: job
-        job_key: procurement_scenarios
-        states: [passed]
-      procurement_flapping_scenarios:
-        type: job
-        job_key: procurement_flapping_scenarios
-        states: [passed]
-      meta:
+
+    run_when:
+      meta passed:
         type: job
         job_key: meta
         states: [passed]
@@ -68,7 +30,7 @@ jobs:
         max_trials: 1
       tasks:
         all relevant tests have passed:
-          name: "All relevant tests have passed, thus good to merge"
+          name: "All tests and meta checks have passed, thus good to merge"
           scripts:
             main:
-              body: echo 'All relevant tests have passed' ; exit 0
+              body: echo 'All relevant tests and meta checks have passed' ; exit 0

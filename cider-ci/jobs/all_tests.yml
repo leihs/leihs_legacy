@@ -1,0 +1,24 @@
+jobs:
+
+  all-tests:
+
+    name: All Tests
+
+    description: |
+      This job checks if all tests have passed
+
+    depends_on:
+      include: cider-ci/task_components/all_tests_passed.yml
+
+    run_when:
+      include: cider-ci/task_components/all_tests_passed.yml
+
+    context:
+      task_defaults:
+        max_trials: 1
+      tasks:
+        all relevant tests have passed:
+          name: "All tests have passed"
+          scripts:
+            main:
+              body: echo 'All tests have passed' ; exit 0
