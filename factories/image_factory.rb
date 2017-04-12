@@ -27,5 +27,14 @@ FactoryGirl.define do
         filepath 'features/data/images/image2.jpg'
       end
     end
+
+    trait :with_thumbnail do
+      after(:create) do |image, evaluator|
+        create(:image,
+               thumbnail: true,
+               filepath: evaluator.filepath,
+               parent_id: image.id)
+      end
+    end
   end
 end
