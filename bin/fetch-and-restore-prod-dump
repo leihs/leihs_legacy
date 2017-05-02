@@ -1,0 +1,4 @@
+set -eux
+
+ansible-playbook -v -i ../zhdk-inventory/prod-hosts ../deploy/fetch-latest-dump_play.yml
+./bin/restore-prod-dump
