@@ -20,8 +20,7 @@ include:
   - cider-ci/jobs/manage_scenarios.yml
   - cider-ci/jobs/manage_flapping_scenarios.yml
   - cider-ci/jobs/manage_unstable_scenarios.yml
-  # wip
-  # - cider-ci/jobs/manage_rspec_scenarios.yml
+  - cider-ci/jobs/manage_rspec_scenarios.yml
   # - cider-ci/jobs/manage_rspec_flapping_scenarios.yml
   # no broken ones right now
   # - cider-ci/jobs/manage_broken_scenarios.yml

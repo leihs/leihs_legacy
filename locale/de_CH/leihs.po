@@ -3325,3 +3325,18 @@ msgstr "Sie sind nicht befugt, diesen Gegenstand auszuleihen. Verantwortlich fü
 
 msgid "This order cannot be approved. One or more of its reservations are faulty."
 msgstr "Diese Bestellung kann nicht genehmigt werden. Eine oder mehrere Reservationen sind fehlerhaft."
+
+msgid "First admin user"
+msgstr "Erster Admin-Benutzer"
+
+msgid "First admin user has been created. Default database authentication system has been configured."
+msgstr "Erster Admin-User wurde erstellt. Default Database-Authentifizierungssystem wurde konfiguriert."
+
+msgid "Authentication System"
+msgstr "Authentifizierungssystem"
+
+msgid "Authentication Systems"
+msgstr "Authentifizierungssysteme"
+
+msgid "List of Authentication Systems"
+msgstr "Liste der Authentifizierungssysteme"

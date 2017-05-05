@@ -1,5 +1,13 @@
 ---
 tasks:
+- name: engines/leihs_admin/spec/features/authentication_systems.feature:9
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/authentication_systems.feature:9
 - name: engines/leihs_admin/spec/features/buildings.feature:9
   scripts:
     test:

@@ -4320,6 +4320,26 @@ window.i18n.locale_data = {
       "This order cannot be approved. One or more of its reservations are faulty.": [
          null,
          "Diese Bestellung kann nicht genehmigt werden. Eine oder mehrere Reservationen sind fehlerhaft."
+      ],
+      "First admin user": [
+         null,
+         "Erster Admin-Benutzer"
+      ],
+      "First admin user has been created. Default database authentication system has been configured.": [
+         null,
+         "Erster Admin-User wurde erstellt. Default Database-Authentifizierungssystem wurde konfiguriert."
+      ],
+      "Authentication System": [
+         null,
+         "Authentifizierungssystem"
+      ],
+      "Authentication Systems": [
+         null,
+         "Authentifizierungssysteme"
+      ],
+      "List of Authentication Systems": [
+         null,
+         "Liste der Authentifizierungssysteme"
       ]
    }
 }

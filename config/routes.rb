@@ -2,6 +2,10 @@ Rails.application.routes.draw do
 
   root to: "application#root"
 
+  # New first admin user
+  get 'first_admin_user', to: 'application#new_first_admin_user', as: 'new_first_admin_user'
+  post 'first_admin_user', to: 'application#create_first_admin_user', as: 'create_first_admin_user'
+
   # Authenticator
   match 'authenticator/zhdk/login', to: 'authenticator/zhdk#login', via: [:get, :post]
   match 'authenticator/zhdk/login_successful/:id', to: 'authenticator/zhdk#login_successful', via: [:get, :post]

@@ -26,6 +26,10 @@ manage_flapping_scenarios:
   type: job
   job_key: manage_flapping_scenarios
   states: [passed]
+manage_rspec_scenarios:
+  type: job
+  job_key: manage_rspec_scenarios
+  states: [passed]
 leihs_admin_code_checks:
   type: job
   job_key: leihs_admin_code_checks

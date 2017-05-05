@@ -1,0 +1,15 @@
+- content_for :title, _("List of Authentication Systems")
+- content_for :manage_section, "active"
+
+.row
+  %h1= yield :title
+
+%table.table.table-stripped
+  %thead
+    %tr
+      %th= 'name'
+      %th= 'class_name'
+      %th= 'is_default?'
+      %th= 'is_active?'
+  %tbody
+    = render @authentication_systems

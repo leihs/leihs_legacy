@@ -3228,3 +3228,18 @@ msgstr ""
 
 msgid "This order cannot be approved. One or more of its reservations are faulty."
 msgstr ""
+
+msgid "First admin user"
+msgstr ""
+
+msgid "First admin user has been created. Default database authentication system has been configured."
+msgstr ""
+
+msgid "Authentication System"
+msgstr ""
+
+msgid "Authentication Systems"
+msgstr ""
+
+msgid "List of Authentication Systems"
+msgstr ""

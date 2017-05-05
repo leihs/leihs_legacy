@@ -19,6 +19,10 @@
     %a{:href => admin.settings_path}
       = _('Settings')
 
+  %li{role: 'presentation', class: params[:controller] == 'leihs_admin/authentication_systems' ? 'active' : nil}
+    %a{:href => admin.authentication_systems_path}
+      = _('Authentication Systems')
+
   %li{role: 'presentation', class: params[:controller] == 'leihs_admin/fields' ? 'active' : nil}
     %a{:href => admin.fields_path}
       = _('Fields')
