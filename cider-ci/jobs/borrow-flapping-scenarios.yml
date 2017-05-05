@@ -1,6 +1,6 @@
 jobs:
 
-  borrow_flapping_scenarios:
+  borrow-flapping-scenarios:
 
     name: 'Borrow: Flapping Scenarios'
 
@@ -15,6 +15,6 @@ jobs:
 
     context:
       include:
-        - cider-ci/shared/main_context.yml
-        - cider-ci/shared/flapping_context_configuration.yml
-        - cider-ci/tasks/borrow_flapping_scenarios.yml
+        - cider-ci/shared/main-context.yml
+        - cider-ci/shared/flapping-context-configuration.yml
+        - cider-ci/tasks/borrow-flapping-scenarios.yml

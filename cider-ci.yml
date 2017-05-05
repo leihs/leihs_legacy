@@ -5,38 +5,38 @@ jobs:
 include:
   # per-engine jobs:
 
-  ## BORROW/MANAGE - on branches foo/borrow_bar or foo/manage_bar
-  - cider-ci/jobs/borrow_manage_code_checks.yml
+  ## BORROW/MANAGE - on branches foo/borrow-bar or foo/manage-bar
+  - cider-ci/jobs/borrow-manage-code-checks.yml
 
-  ## BORROW - on branches foo/borrow_bar
-  - cider-ci/jobs/borrow_scenarios.yml
-  - cider-ci/jobs/borrow_flapping_scenarios.yml
-  - cider-ci/jobs/borrow_rspec_scenarios.yml
-  - cider-ci/jobs/borrow_rspec_flapping_scenarios.yml
+  ## BORROW - on branches foo/borrow-bar
+  - cider-ci/jobs/borrow-scenarios.yml
+  - cider-ci/jobs/borrow-flapping-scenarios.yml
+  - cider-ci/jobs/borrow-rspec-scenarios.yml
+  - cider-ci/jobs/borrow-rspec-flapping-scenarios.yml
   # no broken ones right now
-  # - cider-ci/jobs/borrow_broken_scenarios.yml
+  # - cider-ci/jobs/borrow-broken-scenarios.yml
 
-  ## MANAGE - on branches foo/manage_bar
-  - cider-ci/jobs/manage_scenarios.yml
-  - cider-ci/jobs/manage_flapping_scenarios.yml
-  - cider-ci/jobs/manage_unstable_scenarios.yml
-  - cider-ci/jobs/manage_rspec_scenarios.yml
-  # - cider-ci/jobs/manage_rspec_flapping_scenarios.yml
+  ## MANAGE - on branches foo/manage-bar
+  - cider-ci/jobs/manage-scenarios.yml
+  - cider-ci/jobs/manage-flapping-scenarios.yml
+  - cider-ci/jobs/manage-unstable-scenarios.yml
+  - cider-ci/jobs/manage-rspec-scenarios.yml
+  # - cider-ci/jobs/manage-rspec-flapping-scenarios.yml
   # no broken ones right now
-  # - cider-ci/jobs/manage_broken_scenarios.yml
+  # - cider-ci/jobs/manage-broken-scenarios.yml
 
-  ## ADMIN - on branches foo/admin_bar
-  - cider-ci/jobs/leihs_admin_scenarios.yml
-  - cider-ci/jobs/leihs_admin_code_checks.yml
+  ## ADMIN - on branches foo/admin-bar
+  - cider-ci/jobs/leihs-admin-scenarios.yml
+  - cider-ci/jobs/leihs-admin-code-checks.yml
 
-  ## PROCUREMENT - on branches foo/procurement_bar
-  - cider-ci/jobs/procurement_scenarios.yml
-  - cider-ci/jobs/procurement_flapping_scenarios.yml
-  - cider-ci/jobs/procurement_code_checks.yml
+  ## PROCUREMENT - on branches foo/procurement-bar
+  - cider-ci/jobs/procurement-scenarios.yml
+  - cider-ci/jobs/procurement-flapping-scenarios.yml
+  - cider-ci/jobs/procurement-code-checks.yml
 
-  - cider-ci/jobs/all_tests.yml
+  - cider-ci/jobs/all-tests.yml
   - cider-ci/jobs/meta.yml
-  - cider-ci/jobs/good_to_merge.yml
+  - cider-ci/jobs/good-to-merge.yml
 
   # run manually
   - cider-ci/jobs/hotspots.yml

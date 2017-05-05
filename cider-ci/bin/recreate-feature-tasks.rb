@@ -36,11 +36,11 @@ leihs_feature_files = \
   Dir.glob('features/personas/*.feature') -
   Dir.glob('features/**/*.feature.disabled') -
   Dir.glob('engines/**/features/*')
-filepath = 'cider-ci/tasks/all_features.yml'
+filepath = 'cider-ci/tasks/all-features.yml'
 create_feature_tasks(filepath, leihs_feature_files)
 
 ENGINES.each do |engine|
   engine_feature_files = Dir.glob("engines/#{engine}/features/**/*.feature")
-  filepath = "cider-ci/tasks/#{engine}_features.yml"
+  filepath = "cider-ci/tasks/#{engine}-features.yml"
   create_feature_tasks(filepath, engine_feature_files)
 end

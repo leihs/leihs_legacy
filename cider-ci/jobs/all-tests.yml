@@ -8,10 +8,10 @@ jobs:
       This job checks if all tests have passed
 
     depends_on:
-      include: cider-ci/task_components/all_tests_passed.yml
+      include: cider-ci/task-components/all-tests-passed.yml
 
     run_when:
-      include: cider-ci/task_components/all_tests_passed.yml
+      include: cider-ci/task-components/all-tests-passed.yml
 
     context:
       task_defaults:

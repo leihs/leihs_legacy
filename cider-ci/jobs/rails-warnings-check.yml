@@ -1,6 +1,6 @@
 jobs:
 
-  rails_warnings_check:
+  rails-warnings-check:
 
     name: 'Rails warnings check'
 
@@ -16,16 +16,16 @@ jobs:
     context:
 
       include:
-        - cider-ci/shared/main_context.yml
+        - cider-ci/shared/main-context.yml
 
       task_defaults:
         include:
-          - cider-ci/task_components/database.yml
+          - cider-ci/task-components/database.yml
 
       tasks:
-        count_stderr_lines:
+        count-stderr-lines:
           max_trials: 2
           name: 'Count if number of STDERR lines greater than 0'
           scripts:
             test:
-              body: cider-ci/bin/check_rails_warnings.rb
+              body: cider-ci/bin/check-rails-warnings.rb

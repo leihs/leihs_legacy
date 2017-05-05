@@ -2,8 +2,8 @@ traits:
   Ruby: true
 
 include:
-  - cider-ci/task_components/database/configure.yml
-  - cider-ci/task_components/database/delete.yml
+  - cider-ci/task-components/database/configure.yml
+  - cider-ci/task-components/database/delete.yml
 
 scripts:
 

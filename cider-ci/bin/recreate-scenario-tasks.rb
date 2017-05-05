@@ -89,22 +89,22 @@ end
 
 manage_feature_dir_paths = ['features/{login,manage,technical}']
 
-filepath = 'cider-ci/tasks/manage_scenarios.yml'
+filepath = 'cider-ci/tasks/manage-scenarios.yml'
 create_scenario_tasks(filepath, manage_feature_dir_paths, framework: :cucumber)
 
 %w(flapping broken unstable).each do |kind|
-  filepath = "cider-ci/tasks/manage_#{kind}_scenarios.yml"
+  filepath = "cider-ci/tasks/manage-#{kind}-scenarios.yml"
   create_scenario_tasks(filepath, manage_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
 end
 
 
-filepath = "cider-ci/tasks/manage_rspec_scenarios.yml"
+filepath = "cider-ci/tasks/manage-rspec-scenarios.yml"
 create_scenario_tasks(filepath,
                       ['spec/features/manage'],
                       framework: :rspec,
                       additional_options: "-r ./spec/steps/manage/load.rb")
 
-filepath = "cider-ci/tasks/manage_rspec_flapping_scenarios.yml"
+filepath = "cider-ci/tasks/manage-rspec-flapping-scenarios.yml"
 create_scenario_tasks(filepath,
                       ['spec/features/manage'],
                       framework: :rspec,
@@ -115,21 +115,21 @@ create_scenario_tasks(filepath,
 
 borrow_feature_dir_paths = ['features/borrow']
 
-filepath = 'cider-ci/tasks/borrow_scenarios.yml'
+filepath = 'cider-ci/tasks/borrow-scenarios.yml'
 create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber)
 
 %w(flapping broken unstable).each do |kind|
-  filepath = "cider-ci/tasks/borrow_#{kind}_scenarios.yml"
+  filepath = "cider-ci/tasks/borrow-#{kind}-scenarios.yml"
   create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
 end
 
-filepath = "cider-ci/tasks/borrow_rspec_scenarios.yml"
+filepath = "cider-ci/tasks/borrow-rspec-scenarios.yml"
 create_scenario_tasks(filepath,
                       ['spec/features/borrow'],
                       framework: :rspec,
                       additional_options: "-r ./spec/steps/borrow/load.rb")
 
-filepath = "cider-ci/tasks/borrow_rspec_flapping_scenarios.yml"
+filepath = "cider-ci/tasks/borrow-rspec-flapping-scenarios.yml"
 create_scenario_tasks(filepath,
                       ['spec/features/borrow'],
                       framework: :rspec,
@@ -141,13 +141,13 @@ create_scenario_tasks(filepath,
 ENGINES.each do |engine|
   engine_feature_dir_paths = ["engines/#{engine}/spec/features"]
 
-  filepath = "cider-ci/tasks/#{engine}_scenarios.yml"
+  filepath = "cider-ci/tasks/#{engine}-scenarios.yml"
   create_scenario_tasks(filepath,
                         engine_feature_dir_paths,
                         framework: :rspec,
                         additional_options: "-r ./engines/#{engine}/spec/load.rb")
 
-  filepath = "cider-ci/tasks/#{engine}_flapping_scenarios.yml"
+  filepath = "cider-ci/tasks/#{engine}-flapping-scenarios.yml"
   create_scenario_tasks(filepath,
                         engine_feature_dir_paths,
                         framework: :rspec,

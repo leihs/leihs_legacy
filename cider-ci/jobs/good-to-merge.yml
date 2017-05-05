@@ -1,6 +1,6 @@
 jobs:
 
-  good_to_merge:
+  good-to-merge:
 
     name: Good To Merge
 

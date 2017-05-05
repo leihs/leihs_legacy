@@ -1,13 +1,13 @@
 name: Test Import Production-DB
 
 context:
-  include: cider-ci/shared/main_context.yml
+  include: cider-ci/shared/main-context.yml
   tasks:
     test-import:
       include:
-        - cider-ci/task_components/database/configure.yml
-        - cider-ci/task_components/database/delete.yml
-        - cider-ci/task_components/bundle_rspec_ruby.yml
+        - cider-ci/task-components/database/configure.yml
+        - cider-ci/task-components/database/delete.yml
+        - cider-ci/task-components/bundle-rspec-ruby.yml
 
       load: 5 # we need lots of RAM
       max_trials: 1
@@ -33,7 +33,7 @@ context:
             set -euxo
             createdb "$DATABASE"
 
-        unpack_images:
+        unpack-images:
           body: |
             set -euxo
             tar xvfz /tmp/leihs-v3-data/files.tar.gz
@@ -43,7 +43,7 @@ context:
             pre-check_passed:
               script_key: pre-check
             images-unpacked:
-              script_key: unpack_images
+              script_key: unpack-images
             database created:
               script_key: create-database
           timeout: 5 hours

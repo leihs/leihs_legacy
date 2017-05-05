@@ -1,6 +1,6 @@
 jobs:
 
-  borrow_broken_scenarios:
+  borrow-broken-scenarios:
 
     name: 'Borrow: Broken Scenarios'
 
@@ -20,8 +20,8 @@ jobs:
         max_trials: 2
         eager_trials: 1
         include:
-          - cider-ci/task_components/database.yml
+          - cider-ci/task-components/database.yml
 
       include:
-        - cider-ci/shared/main_context.yml
-        - cider-ci/tasks/borrow_broken_scenarios.yml
+        - cider-ci/shared/main-context.yml
+        - cider-ci/tasks/borrow-broken-scenarios.yml

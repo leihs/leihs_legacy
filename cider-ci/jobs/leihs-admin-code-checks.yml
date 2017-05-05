@@ -1,25 +1,25 @@
 jobs:
-  procurement_code_checks:
+  leihs-admin-code-checks:
 
-    name: 'Procurement: Code Checks'
+    name: 'Admin: Code Checks'
 
     description: 'Run static checks and metrics: complexity, duplication, code format'
 
     run_when:
-      branch name matches master or procurement:
+      branch name matches master or admin:
         type: branch
-        include_match: '^.*(master|procurement).*$'
+        include_match: '^.*(master|admin).*$'
         exclude_match: '^.*(no-ci|hotspot).*$'
 
     context:
-      include: cider-ci/shared/main_context.yml
+      include: cider-ci/shared/main-context.yml
 
       tasks:
-        lint_ruby:
+        lint-ruby:
           name: Lint/Stylecheck with Rubocop
           scripts:
             test:
               body: |
                 set -eux
                 export PATH=~/.rubies/$RUBY/bin:$PATH
-                bundle exec rubocop engines/procurement/ -c engines/procurement/.rubocop.yml
+                bundle exec rubocop engines/leihs_admin/ -c engines/leihs_admin/.rubocop.yml

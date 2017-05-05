@@ -1,6 +1,6 @@
 jobs:
 
-  borrow_rspec_scenarios:
+  borrow-rspec-scenarios:
 
     name: 'Borrow: Rspec Scenarios'
 
@@ -19,8 +19,8 @@ jobs:
         load: 1.5
         max_trials: 3
         include:
-          - cider-ci/task_components/database.yml
+          - cider-ci/task-components/database.yml
 
       include:
-        - cider-ci/shared/main_context.yml
-        - cider-ci/tasks/borrow_rspec_scenarios.yml
+        - cider-ci/shared/main-context.yml
+        - cider-ci/tasks/borrow-rspec-scenarios.yml

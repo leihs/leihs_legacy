@@ -1,6 +1,6 @@
 jobs:
 
-  manage_broken_scenarios:
+  manage-broken-scenarios:
 
     name: 'Manage: Broken Scenarios'
 
@@ -22,8 +22,8 @@ jobs:
         max_trials: 25
         eager_trials: 1
         include:
-          - cider-ci/task_components/database.yml
+          - cider-ci/task-components/database.yml
 
       include:
-        - cider-ci/shared/main_context.yml
-        - cider-ci/tasks/manage_broken_scenarios.yml
+        - cider-ci/shared/main-context.yml
+        - cider-ci/tasks/manage-broken-scenarios.yml
