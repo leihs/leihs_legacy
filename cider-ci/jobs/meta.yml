@@ -36,3 +36,6 @@ jobs:
                 #
                 # check if your tree still contains the current commit from master
                 git rev-list --children HEAD | grep -q "$(git rev-parse origin/master)"
+
+      include:
+        - path: cider-ci/context_components/merged_submodules_check.yml
