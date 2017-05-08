@@ -48,16 +48,6 @@ class BookingCalendar
 
   setupDates: =>
     _.each [@startDate_el, @endDate_el], (el)=> 
-      el.bind "keyup", (e) =>
-        if e.keyCode is 38 then @increaseDate(el) else if e.keyCode is 40 then @decreaseDate(el)
-        clearTimeout el.data "keyup_timer" if el.data("keyup_timer")?
-        el.data "keyup_timer", window.setTimeout =>
-          if @validateDate el
-            @goToDate moment(el.val(), df)
-            do @render
-          else 
-            @resetDate el
-        , 600
       el.bind "change", (e) => 
         if @validateDate el
           do @render

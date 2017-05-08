@@ -10,7 +10,6 @@ class window.App.BookingCalendarDialogController extends Spine.Controller
 
   delegateEvents: =>
     @submitButton.on "click", @submit
-    @dialog.on "change", "input", => @errorsContainer.html ""
     @dialog.on "validation-alert", => do @validationAlerts
 
   done: =>
