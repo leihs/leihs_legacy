@@ -40,7 +40,7 @@ class Setting < ActiveRecord::Base
       # in case the migration for time_zone has not run yet
       if self.time_zone_changed?
         Rails.configuration.time_zone = self.time_zone
-        Time.zone = self.time_zone
+        Time.zone_default = ActiveSupport::TimeZone.new(self.time_zone)
       end
     rescue
       logger.info 'Timezone setting could not be loaded. Did the migrations run?'

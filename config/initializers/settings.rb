@@ -2,7 +2,7 @@ if ActiveRecord::Base.connection.tables.include?("settings") and not Rails.env.t
 
   if time_zone = Setting.time_zone
     Rails.configuration.time_zone = time_zone
-    Time.zone = Rails.configuration.time_zone
+    Time.zone_default = ActiveSupport::TimeZone.new(time_zone)
   end
 
   unless Setting.exists?

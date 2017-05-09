@@ -29,23 +29,30 @@ module LeihsAdmin
     private
 
     def get_requests(table)
+      get_initial_query
+        .where(
+          table[:created_at].gteq(
+            Date.parse(params[:start_date]).to_s(:db)
+          )
+        )
+        .where(
+          table[:created_at].lteq(
+            Date.parse(params[:end_date]).tomorrow.to_s(:db)
+          )
+        )
+        .reorder(created_at: :desc, id: :desc)
+        .joins('LEFT JOIN users ON users.id = audits.user_id')
+        .select("audits.*, CONCAT_WS(' ', users.firstname, users.lastname) " \
+                'AS user_name')
+    end
+
+    def get_initial_query
       if params[:type] and params[:id]
         auditable = params[:type].camelize.constantize.find(params[:id])
         auditable.audits
       else
         Audited::Adapters::ActiveRecord::Audit
       end
-        .where(table[:created_at]
-        .gteq(Date.parse(params[:start_date])
-        .to_s(:db)))
-        .where(table[:created_at]
-                   .lteq(Date.parse(params[:end_date])
-                   .tomorrow
-                   .to_s(:db)))
-          .order(created_at: :desc, id: :desc)
-          .joins('LEFT JOIN users ON users.id = audits.user_id')
-          .select("audits.*, CONCAT_WS(' ', users.firstname, users.lastname) " \
-                  'AS user_name')
     end
   end
 end
