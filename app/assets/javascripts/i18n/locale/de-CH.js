@@ -2909,6 +2909,10 @@ window.i18n.locale_data = {
          "%s Rückgabe",
          "%s Rückgaben"
       ],
+      "Returns": [
+         null,
+         "Rückgaben"
+      ],
       "not yet saved": [
          null,
          "noch nicht gespeichert"
@@ -3170,7 +3174,7 @@ window.i18n.locale_data = {
          null,
          "Offene Bestellungen"
       ],
-      "These orders have been successfully submitted, but are NOT YET APPROVED": [
+      "These orders have been successfully submitted, but are NOT YET APPROVED.": [
          null,
          "Diese Bestellungen wurden abgeschickt. Sie sind allerdings NOCH NICHT GENEHMIGT."
       ],
@@ -3178,7 +3182,7 @@ window.i18n.locale_data = {
          null,
          "Suche nach '%s'"
       ],
-      "Your order has been successfully submitted, but is NOT YET APPROVED": [
+      "Your order has been successfully submitted, but is NOT YET APPROVED.": [
          null,
          "Ihre Bestellungen wurden abgeschickt. Sie ist allerdings NOCH NICHT GENEHMIGT."
       ],

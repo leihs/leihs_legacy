@@ -3197,7 +3197,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "These orders have been successfully submitted, but are NOT YET APPROVED": [
+      "These orders have been successfully submitted, but are NOT YET APPROVED.": [
          null,
          ""
       ],
@@ -3205,7 +3205,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Your order has been successfully submitted, but is NOT YET APPROVED": [
+      "Your order has been successfully submitted, but is NOT YET APPROVED.": [
          null,
          ""
       ],

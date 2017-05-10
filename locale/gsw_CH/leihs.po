@@ -2374,13 +2374,13 @@ msgstr "für"
 msgid "Open orders"
 msgstr "Offni Bschtellige"
 
-msgid "These orders have been successfully submitted, but are NOT YET APPROVED"
+msgid "These orders have been successfully submitted, but are NOT YET APPROVED."
 msgstr "Die Bschtelige sind abgschickt worde, si sind aber NONIG BEWILLIGT."
 
 msgid "Search for '%s'"
 msgstr "Suechi nach '%s'"
 
-msgid "Your order has been successfully submitted, but is NOT YET APPROVED"
+msgid "Your order has been successfully submitted, but is NOT YET APPROVED."
 msgstr "Ihri Bschtelig isch abgickt worde, si isch aber NONIG BEWILIGT."
 
 msgid "Continue with available models only"

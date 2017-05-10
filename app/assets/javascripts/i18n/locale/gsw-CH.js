@@ -3129,7 +3129,7 @@ window.i18n.locale_data = {
          null,
          "Offni Bschtellige"
       ],
-      "These orders have been successfully submitted, but are NOT YET APPROVED": [
+      "These orders have been successfully submitted, but are NOT YET APPROVED.": [
          null,
          "Die Bschtelige sind abgschickt worde, si sind aber NONIG BEWILLIGT."
       ],
@@ -3137,7 +3137,7 @@ window.i18n.locale_data = {
          null,
          "Suechi nach '%s'"
       ],
-      "Your order has been successfully submitted, but is NOT YET APPROVED": [
+      "Your order has been successfully submitted, but is NOT YET APPROVED.": [
          null,
          "Ihri Bschtelig isch abgickt worde, si isch aber NONIG BEWILIGT."
       ],

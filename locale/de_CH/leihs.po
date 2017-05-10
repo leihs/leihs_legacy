@@ -2233,6 +2233,9 @@ msgid_plural "%s Returns"
 msgstr[0] "%s Rückgabe"
 msgstr[1] "%s Rückgaben"
 
+msgid "Returns"
+msgstr "Rückgaben"
+
 msgid "not yet saved"
 msgstr "noch nicht gespeichert"
 
@@ -2434,7 +2437,7 @@ msgstr "für"
 msgid "Open orders"
 msgstr "Offene Bestellungen"
 
-msgid "These orders have been successfully submitted, but are NOT YET APPROVED"
+msgid "These orders have been successfully submitted, but are NOT YET APPROVED."
 msgstr ""
 "Diese Bestellungen wurden abgeschickt. Sie sind allerdings NOCH NICHT "
 "GENEHMIGT."
@@ -2442,7 +2445,7 @@ msgstr ""
 msgid "Search for '%s'"
 msgstr "Suche nach '%s'"
 
-msgid "Your order has been successfully submitted, but is NOT YET APPROVED"
+msgid "Your order has been successfully submitted, but is NOT YET APPROVED."
 msgstr ""
 "Ihre Bestellungen wurden abgeschickt. Sie ist allerdings NOCH NICHT "
 "GENEHMIGT."
