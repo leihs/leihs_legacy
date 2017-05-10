@@ -335,70 +335,85 @@ class Manage::ReservationsController < Manage::ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def create_new_line_or_assign(model, item, option, contract)
     error = nil
-    # error if item already assigned to some reservation of this contract
-    if contract && item && line = contract.reservations.find_by(item_id: item.id)
-      error = _('%s is already assigned to this contract') % item.inventory_code
-    # create new line or assign
-    elsif model
-      # try to assign for (selected)line_ids first
-      if line_ids_param and code_param
-        line = contract.reservations.where(id: line_ids_param,
-                                           model_id: item.model.id,
-                                           item_id: nil).first
-      end
-      # try to assign to contract reservations of the customer
-      if code_param
-        line ||= \
-          contract
-            .reservations
-            .where(model_id: model.id, item_id: nil)
-            .order(:id)
-            .first
-      end
-      # add new line
-      line ||= model.add_to_contract(contract,
-                                     contract.user,
-                                     quantity_param,
-                                     start_date_param,
-                                     end_date_param).first
-      if model_group_id_param.nil? \
-        and item \
-        and line \
-        and not line.update_attributes(item: item)
-        error = line.errors.values.join
-      end
-    elsif option
-      if line = contract.reservations.where(option_id: option.id,
-                                            start_date: start_date_param,
-                                            end_date: end_date_param).first
-        line.quantity += quantity_param
-        line.save
-      # FIXME: go through contract.add_lines ??
-      elsif not line = contract.user.option_lines.create(
-        status: contract.status,
-        inventory_pool: contract.inventory_pool,
-        option: option,
-        quantity: quantity_param,
-        start_date: start_date_param,
-        end_date: end_date_param)
-        error = _('The option could not be added')
-      end
-    else
-      error =
-        if code
-          _('A model for the Inventory Code / ' \
-            "Serial Number '%s' was not found") % \
-           code_param
-        elsif model_id_param
-          _("A model with the ID '%s' was not found") % \
-            model_id_param
-        elsif model_group_id_param
-          _("A template with the ID '%s' was not found") % \
-            model_group_id_param
+    line = nil
+
+    ActiveRecord::Base.transaction do
+      begin
+        # error if item already assigned to some reservation of this contract
+        if contract \
+          && item \
+          && line = contract.reservations.find_by(item_id: item.id)
+          error = \
+            _('%s is already assigned to this contract') % item.inventory_code
+        # create new line or assign
+        elsif model
+          # try to assign for (selected)line_ids first
+          if line_ids_param and code_param
+            line = contract.reservations.where(id: line_ids_param,
+                                               model_id: item.model.id,
+                                               item_id: nil).first
+          end
+          # try to assign to contract reservations of the customer
+          if code_param
+            line ||= \
+              contract
+                .reservations
+                .where(model_id: model.id, item_id: nil)
+                .order(:id)
+                .first
+          end
+          # add new line
+          line ||= model.add_to_contract(contract,
+                                         contract.user,
+                                         quantity_param,
+                                         start_date_param,
+                                         end_date_param).first
+          if model_group_id_param.nil? \
+            and item \
+            and line \
+            and not line.update_attributes!(item: item)
+            error = line.errors.values.join
+          end
+        elsif option
+          if line = contract.reservations.where(option_id: option.id,
+                                                start_date: start_date_param,
+                                                end_date: end_date_param).first
+            line.quantity += quantity_param
+            line.save
+          # FIXME: go through contract.add_lines ??
+          elsif not line = contract.user.option_lines.create(
+            status: contract.status,
+            inventory_pool: contract.inventory_pool,
+            option: option,
+            quantity: quantity_param,
+            start_date: start_date_param,
+            end_date: end_date_param)
+            error = _('The option could not be added')
+          end
+        else
+          error =
+            if code
+              _('A model for the Inventory Code / ' \
+                "Serial Number '%s' was not found") % \
+               code_param
+            elsif model_id_param
+              _("A model with the ID '%s' was not found") % \
+                model_id_param
+            elsif model_group_id_param
+              _("A template with the ID '%s' was not found") % \
+                model_group_id_param
+            end
         end
+      rescue => e
+        error = e.message
+        raise ActiveRecord::Rollback
+      end
     end
+
     [line, error]
   end
+  # rubocop:enable Metrics/MethodLength
 end

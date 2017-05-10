@@ -73,7 +73,7 @@ class ItemLine < Reservation
       elsif item \
         .reservations
         .handed_over_or_assigned_but_not_returned
-        .where(['id != ? AND user_id != ?', id, user_id])
+        .where.not(id: id)
         .exists?
         # check if available
         errors.add(:base,

@@ -17,14 +17,16 @@ FactoryGirl.define do
         end
         user
       end
+      items do
+        Array.new(3).map { |_| FactoryGirl.create(:item) }
+      end
       start_date nil
       end_date nil
     end
 
     factory :signed_contract do
       after :build do |c, evaluator|
-        3.times do
-          item = FactoryGirl.create(:item)
+        evaluator.items.each do |item|
           c.reservations << \
             FactoryGirl.create(
               :reservation,
@@ -43,8 +45,7 @@ FactoryGirl.define do
 
     factory :closed_contract do
       after :build do |c, evaluator|
-        3.times do
-          item = FactoryGirl.create(:item)
+        evaluator.items.each do |item|
           c.reservations << \
             FactoryGirl.create(
               :reservation,
