@@ -10,6 +10,13 @@ module Procurement
     validates_presence_of :organization, unless: proc { |r| r.is_admin }
     validates_uniqueness_of :user, scope: :is_admin
 
+    validate do
+      if user.delegation?
+        errors.add(:base,
+                   'Procurement access is not granted to delegations.')
+      end
+    end
+
     scope :requesters, -> { where(is_admin: [nil, false]) }
     scope :admins, -> { where(is_admin: true) }
 
