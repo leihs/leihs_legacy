@@ -43,7 +43,7 @@ if ActiveRecord::Base.connection.tables.include?("settings") and not Rails.env.t
 
   end
 
-  if Rails.env.development?
+  if Rails.env.development? and not Setting.mail_delivery_method == 'test'
     Setting.first.update_attributes(mail_delivery_method: :test)
     puts "Mail delivery method set to :test"
   end
