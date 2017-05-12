@@ -4,6 +4,7 @@ Feature: Copy item
   Background:
     Given I am Mike
 
+  @flapping
   Scenario: Create and copy items
     Given I create an item
     And I choose "Investment"
