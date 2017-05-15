@@ -16,14 +16,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/booking_calendar/closed_day_alert.feature:11
-- name: features/manage/contract/contracts.feature:7
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/contract/contracts.feature:7
 - name: features/manage/contract/contracts.feature:16
   scripts:
     test:
@@ -32,6 +24,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/contract/contracts.feature:16
+- name: features/manage/contract/contracts.feature:7
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/contract/contracts.feature:7
 - name: features/manage/delegation.feature:164
   scripts:
     test:
@@ -144,14 +144,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/create_model_with_packages.feature:123
-- name: features/manage/inventory/edit_item.feature:98
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:98
 - name: features/manage/inventory/edit_item.feature:172
   scripts:
     test:
@@ -160,6 +152,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:172
+- name: features/manage/inventory/edit_item.feature:98
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:98
 - name: features/manage/inventory/inventory.feature:90
   scripts:
     test:
@@ -200,14 +200,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/option.feature:19
-- name: features/manage/lending/lending.feature:70
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:70
 - name: features/manage/lending/lending.feature:118
   scripts:
     test:
@@ -216,6 +208,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:118
+- name: features/manage/lending/lending.feature:70
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:70
 - name: features/manage/order/contract.feature:67
   scripts:
     test:

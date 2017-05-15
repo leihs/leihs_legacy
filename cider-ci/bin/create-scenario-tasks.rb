@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require 'yaml'
-require 'pry'
 
 STRICT_MODE = true
 ENGINES = ['leihs_admin',
@@ -36,6 +35,7 @@ def create_scenario_tasks(filepath,
     `#{egrep_cmd}`
       .split("--\n")
       .map { |x| x.split("\n") }
+      .sort { |a, b| a.first <=> b.first }
       .each do |t, s|
 
       if tags and not t.match /#{tags.join("|")}/
@@ -87,7 +87,7 @@ end
 
 ############################## MANAGE ###################################
 
-manage_feature_dir_paths = ['features/{login,manage,technical}']
+manage_feature_dir_paths = ['features/login', 'features/manage', 'features/technical']
 
 filepath = 'cider-ci/tasks/manage-scenarios.yml'
 create_scenario_tasks(filepath, manage_feature_dir_paths, framework: :cucumber)

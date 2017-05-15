@@ -1,6 +1,6 @@
 tasks:
   git-submodules-merged:
-    name: "git submodules are all merged to origin/master"
+    name: "Git submodules are all merged to origin/master"
     scripts:
       test:
         body:
