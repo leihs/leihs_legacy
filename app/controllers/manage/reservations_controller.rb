@@ -108,7 +108,9 @@ class Manage::ReservationsController < Manage::ApplicationController
 
   def assign
     item = \
-      current_inventory_pool.items.find_by_inventory_code params[:inventory_code]
+      current_inventory_pool
+      .items
+      .find_by('UPPER(inventory_code) = ?', params[:inventory_code].upcase)
     line = current_inventory_pool.reservations.approved.find params[:id]
 
     if item and line and line.model_id == item.model_id
@@ -152,7 +154,11 @@ class Manage::ReservationsController < Manage::ApplicationController
         .reservations_bundles
         .new(inventory_pool: current_inventory_pool, status: @status)
 
-    item = current_inventory_pool.items.where(inventory_code: code_param).first
+    item = \
+      current_inventory_pool
+      .items
+      .where('UPPER(inventory_code) = ?', code_param.upcase)
+      .first
     model = find_model(item)
     option = find_option unless model
 

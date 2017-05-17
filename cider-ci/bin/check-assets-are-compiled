@@ -3,9 +3,9 @@ set -eux
 
 git fetch --all
 
-COMMON_COMMIT=$(git merge-base HEAD origin/master)
+# COMMON_COMMIT=$(git merge-base HEAD origin/master)
 
-if [ -z $(git diff HEAD..$COMMON_COMMIT app/assets) ]; then
+if [ -z $(git diff HEAD..HEAD^1 app/assets) ]; then
   exit 0
 else
   git show --pretty="" --name-only HEAD | grep public/assets

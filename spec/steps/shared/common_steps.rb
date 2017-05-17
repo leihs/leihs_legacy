@@ -28,6 +28,13 @@ module Spec
       find('.ui-autocomplete')
     end
 
+    def type_into_and_select_from_autocomplete(selector, value)
+      type_into_autocomplete(selector, value)
+      within '.ui-autocomplete' do
+        find('.ui-menu-item', text: value).click
+      end
+    end
+
     step 'I close the flash message if visible' do
       flash = first("#flash")
       if flash
@@ -37,6 +44,10 @@ module Spec
 
     step 'I release the focus from this field' do
       find('body').click # blur all possible focused autocomplete inputs
+    end
+
+    step 'I save' do
+      find('#save').click
     end
   end
 end

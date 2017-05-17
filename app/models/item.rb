@@ -50,7 +50,7 @@ class Item < ActiveRecord::Base
 
   ####################################################################
 
-  validates_uniqueness_of :inventory_code
+  validates_uniqueness_of :inventory_code, case_sensitive: false
   validates_presence_of :inventory_code, :model, :owner, :inventory_pool
 
   validate :validates_package, :validates_changes
