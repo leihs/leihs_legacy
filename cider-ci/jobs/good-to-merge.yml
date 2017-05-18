@@ -20,9 +20,9 @@ jobs:
         states: [passed]
 
     run_when:
-      meta passed:
+      all tests passed:
         type: job
-        job_key: meta
+        job_key: all-tests
         states: [passed]
 
     context:
