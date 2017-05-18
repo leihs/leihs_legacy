@@ -4,7 +4,7 @@ class Manage::InventoryController < Manage::ApplicationController
 
   # NOTE overriding super controller
   def required_manager_role
-    open_actions = [:index]
+    open_actions = [:index, :csv_export, :excel_export]
     if open_actions.include?(action_name.to_sym)
       require_role :group_manager, current_inventory_pool
     else
