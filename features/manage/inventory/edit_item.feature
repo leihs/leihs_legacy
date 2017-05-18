@@ -162,6 +162,7 @@ Feature: Editing an item
     Then no new supplier is created
     And the edited item has the existing supplier
 
+  @flapping
   Scenario: Can't change the model for items that are in contracts
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I change the model
