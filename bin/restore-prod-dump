@@ -2,4 +2,5 @@ set -eux
 
 bundle exec rake db:drop db:create
 bundle exec rake db:pg:structure_and_data:restore FILE=tmp/db_production.pgbin
+bundle exec rake db:migrate
 bundle exec rails runner "Setting.first.update_attributes(external_base_url: 'http://localhost:3000')"
