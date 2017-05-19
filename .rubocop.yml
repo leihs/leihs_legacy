@@ -16,7 +16,9 @@ AllCops:
     - 'lib/tasks/leihs.rake'
     - 'node_modules/**/*'
     - 'script/**/*'
-    - 'spec/**/*'
+    - 'spec/rails_helper.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/turnip_helper.rb'
     - 'tmp/**/*'
 
 Lint/AmbiguousOperator:
@@ -65,6 +67,10 @@ Metrics/LineLength:
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
   Max: 60
+
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*'
 
 Metrics/ParameterLists:
   Max: 12

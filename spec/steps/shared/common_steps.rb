@@ -1,5 +1,11 @@
 module Spec
   module CommonSteps
+    step 'I pry' do
+      # rubocop:disable Lint/Debugger
+      binding.pry
+      # rubocop:enable Lint/Debugger
+    end
+
     def wait_until(wait_time = 60, &block)
       begin
         Timeout.timeout(wait_time) do
@@ -36,9 +42,9 @@ module Spec
     end
 
     step 'I close the flash message if visible' do
-      flash = first("#flash")
+      flash = first('#flash')
       if flash
-        flash.find(".fa-times-circle").click
+        flash.find('.fa-times-circle').click
       end
     end
 

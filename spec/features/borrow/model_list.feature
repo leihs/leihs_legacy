@@ -126,9 +126,6 @@ Feature: Model list
     And the model list contains that model
     When I hover over that model
     Then I see the model's name, images, description, list of properties
-    When I open the calendar for this model
-    And I hover over that model
-    Then I see the model's name, images, description, list of properties
 
   @borrow_model_list @rack
   Scenario: Default values for inventory pool selection

@@ -1,0 +1,6 @@
+set -eux
+
+cd public/assets
+git rm -r *
+cd -
+RAILS_ENV=production bundle exec rake assets:precompile

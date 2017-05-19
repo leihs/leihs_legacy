@@ -39,7 +39,7 @@ module Manage
       end
 
       step 'the root page with the login button is displayed' do
-        find("a.button", text: _('Login'))
+        find('a.button', text: _('Login'))
       end
 
       step 'the create first admin user page is displayed' do
@@ -80,10 +80,10 @@ module Manage
       step 'there is notice about successful creation of the admin user and ' \
            'the database authentication system' do
         find '#flash',
-          text: _(
-            'First admin user has been created. ' \
-            'Default database authentication system has been configured.'
-          )
+             text: _(
+               'First admin user has been created. ' \
+               'Default database authentication system has been configured.'
+             )
       end
 
       step 'I click on login' do

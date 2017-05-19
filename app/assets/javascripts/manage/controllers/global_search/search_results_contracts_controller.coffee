@@ -20,6 +20,7 @@ class window.App.SearchResultsContractsController extends App.SearchResultsContr
     App.Contract.ajaxFetch
       data: $.param
         search_term: @searchTerm
+        global_contracts_search: true
         page: page
         status: ["signed", "closed"]
 
@@ -29,6 +30,7 @@ class window.App.SearchResultsContractsController extends App.SearchResultsContr
     App.User.ajaxFetch
       data: $.param
         ids: ids
+        all: true
         paginate: false
     .done (data)=>
       users = (App.User.find datum.id for datum in data)

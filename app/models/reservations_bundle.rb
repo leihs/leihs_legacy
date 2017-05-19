@@ -161,7 +161,11 @@ class ReservationsBundle < ActiveRecord::Base
           return all if query.blank?
 
           sql = uniq
-            .joins('INNER JOIN users ON users.id = reservations.user_id')
+            .joins(<<-SQL)
+              LEFT JOIN users ON users.id = reservations.user_id
+              LEFT JOIN users delegated_users
+              ON delegated_users.id = reservations.delegated_user_id
+            SQL
             .joins(<<-SQL)
               LEFT JOIN contracts ON reservations.id = contracts.id
               AND reservations.status IN ('signed', 'closed')
@@ -184,6 +188,10 @@ class ReservationsBundle < ActiveRecord::Base
                 .or(User.arel_table[:firstname].matches(qq))
                 .or(User.arel_table[:lastname].matches(qq))
                 .or(User.arel_table[:badge_id].matches(qq))
+                .or(Arel::Table.new('delegated_users')[:login].matches(qq))
+                .or(Arel::Table.new('delegated_users')[:firstname].matches(qq))
+                .or(Arel::Table.new('delegated_users')[:lastname].matches(qq))
+                .or(Arel::Table.new('delegated_users')[:badge_id].matches(qq))
                 .or(Model.arel_table[:manufacturer].matches(qq))
                 .or(Model.arel_table[:product].matches(qq))
                 .or(Model.arel_table[:version].matches(qq))
@@ -250,8 +258,11 @@ class ReservationsBundle < ActiveRecord::Base
 
     contracts = contracts.distinct(nil)
     select_value = contracts.select_values.first
+    if params[:global_contracts_search]
+      contracts = contracts.group('users.firstname')
+      select_value += ', users.firstname'
+    end
     contracts.select_values = ["DISTINCT ON (id) #{select_value}"]
-    contracts = contracts.order('id ASC, status ASC')
     ###############################################################################
 
     bundles = \
@@ -260,7 +271,15 @@ class ReservationsBundle < ActiveRecord::Base
       .select('reservations_bundles.*')
       .from("(#{contracts.to_sql}) AS reservations_bundles")
 
-    bundles = bundles.order('reservations_bundles.created_at DESC')
+    if params[:global_contracts_search]
+      bundles = \
+        bundles
+        .order('reservations_bundles.delegated_user_id IS NULL DESC')
+        .order('reservations_bundles.status ASC')
+        .order('reservations_bundles.firstname ASC')
+    else
+      bundles = bundles.order('reservations_bundles.created_at DESC')
+    end
 
     unless params[:paginate] == 'false'
       bundles = bundles.default_paginate params

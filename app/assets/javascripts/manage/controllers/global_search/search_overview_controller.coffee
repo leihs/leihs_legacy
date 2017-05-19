@@ -152,6 +152,7 @@ class window.App.SearchOverviewController extends Spine.Controller
     App.Contract.ajaxFetch
       data: $.param
         per_page: @previewAmount
+        global_contracts_search: true
         search_term: @searchTerm
         status: ["signed", "closed"]
     .done (data, status, xhr)=>

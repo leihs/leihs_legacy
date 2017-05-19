@@ -20,6 +20,7 @@ FactoryGirl.define do
       items do
         Array.new(3).map { |_| FactoryGirl.create(:item) }
       end
+      contact_person nil
       start_date nil
       end_date nil
     end
@@ -37,7 +38,8 @@ FactoryGirl.define do
               start_date: evaluator.start_date,
               end_date: evaluator.end_date,
               item: item,
-              model: item.model
+              model: item.model,
+              delegated_user: evaluator.contact_person
             )
         end
       end
@@ -56,7 +58,8 @@ FactoryGirl.define do
               start_date: evaluator.start_date,
               end_date: evaluator.end_date,
               item: item,
-              model: item.model
+              model: item.model,
+              delegated_user: evaluator.contact_person
             )
         end
       end

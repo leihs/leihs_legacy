@@ -20,6 +20,10 @@ jobs:
         states: [passed]
 
     run_when:
+      meta passed:
+        type: job
+        job_key: meta
+        states: [passed]
       all tests passed:
         type: job
         job_key: all-tests
