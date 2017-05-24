@@ -42,6 +42,7 @@ class Manage::ItemsController < Manage::ApplicationController
 
   def create
     @item = Item.new(owner: current_inventory_pool)
+    @item.skip_serial_number_validation = skip_serial_number_validation_param
 
     check_fields_for_write_permissions
 
@@ -68,8 +69,12 @@ class Manage::ItemsController < Manage::ApplicationController
           end
         else
           if @item
-            render text: @item.errors.full_messages.uniq.join(', '),
-                   status: :bad_request
+            render \
+              json: {
+                message: @item.errors.full_messages.uniq.join(', '),
+                unique_serial_number: @item.unique_serial_number?
+              },
+              status: :bad_request
           else
             render json: {}, status: :not_found
           end
@@ -82,6 +87,7 @@ class Manage::ItemsController < Manage::ApplicationController
     fetch_item_by_id
 
     if @item
+      @item.skip_serial_number_validation = skip_serial_number_validation_param
 
       check_fields_for_write_permissions
 
@@ -114,8 +120,12 @@ class Manage::ItemsController < Manage::ApplicationController
           end
         else
           if @item
-            render text: @item.errors.full_messages.uniq.join(', '),
-                   status: :bad_request
+            render \
+              json: {
+                message: @item.errors.full_messages.uniq.join(', '),
+                unique_serial_number: @item.unique_serial_number?
+              },
+              status: :bad_request
           else
             render json: {}, status: :not_found
           end
@@ -177,6 +187,15 @@ class Manage::ItemsController < Manage::ApplicationController
              _('You are not the owner of this item') \
              + ', ' \
              + _('therefore you may not be able to change some of these fields'))
+    end
+  end
+
+  def skip_serial_number_validation_param
+    ssnv = params.require(:item).delete(:skip_serial_number_validation)
+    if ssnv.try(:==, 'true')
+      true
+    else
+      false
     end
   end
 

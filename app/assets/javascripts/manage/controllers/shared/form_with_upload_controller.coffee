@@ -10,13 +10,15 @@ class window.App.FormWithUploadController extends Spine.Controller
 
   preventDefaultSubmit: (e)=> e.preventDefault()
 
-  submit: (event, saveAction = @save) =>
+  submit: (event, saveAction = @save, errorHandler = @errorHandler) =>
     do @showLoading
     saveAction()
-    .fail (e) =>
-      @showError e.responseText
-      do @hideLoading
+    .fail (e) => errorHandler(e)
     .done (data) => @done(data)
+
+  errorHandler: (e) =>
+    @showError e.responseText
+    do @hideLoading
 
   done: => # virtual
 

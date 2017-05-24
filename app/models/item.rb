@@ -13,6 +13,8 @@
 #
 class Item < ActiveRecord::Base
   include Concerns::InventoryCode
+  include Concerns::ItemCsv
+  include Concerns::SerialNumberValidation
   include DefaultPagination
   audited
 
@@ -252,142 +254,6 @@ class Item < ActiveRecord::Base
     "#{model.name} #{inventory_code}"
   end
 
-  private
-
-  def get_model_manufacturer
-    if self.model.nil? or self.model.name.blank?
-      # FIXME: using model.try because database inconsistency
-      'UNKNOWN' if self.model.try(:manufacturer).blank?
-    else
-      unless self.model.manufacturer.blank?
-        self.model.manufacturer.gsub(/\"/, '""')
-      end
-    end
-  end
-
-  def get_categories(global = false)
-    categories = []
-    unless global
-      # FIXME: using model.try because database inconsistency
-      unless self.model.try(:categories).nil? or self.model.categories.count == 0
-        self.model.categories.each do |c|
-          categories << c.name
-        end
-      end
-    end
-    categories
-  end
-
-  def get_fields
-    # we use select instead of multiple where because we need to keep the sorting
-    # we exclude what is already hardcoded before (model_id as product and version)
-    Field.all.select do |f|
-      [nil, type.downcase].include?(f.data['target_type']) \
-        and not ['model_id'].include?(f.data['form_name'])
-    end.sort_by do |f|
-      [Field::GROUPS_ORDER.index(f.data['group']) || 999, f.position]
-    end.group_by { |f| f.data['group'] }.values.flatten
-  end
-
-  public
-
-  # Generates an array suitable for outputting a line of CSV using CSV
-  def to_csv_array(options = { global: false })
-    model_manufacturer = get_model_manufacturer
-    categories = get_categories options[:global]
-
-    # retired = if options[:global] and self.retired? then
-    #             "X"
-    #           else
-    #             self.retired
-    #           end
-    #
-    # if self.parent
-    #   part_of_package = "#{self.parent.id} #{self.parent.model.name}"
-    # else
-    #   part_of_package = "NONE"
-    # end
-    #
-    # if ref = self.properties[:reference]
-    #   case ref
-    #     when "invoice"
-    #       invoice = "X"
-    #     when "investment"
-    #       investment = "X"
-    #   end
-    # end
-
-    # Using #{} notation to catch nils gracefully and silently
-    # FIXME: using model.try because database inconsistency
-    h1 = {
-      _('Created at') => "#{self.created_at}",
-      _('Updated at') => "#{self.updated_at}",
-      _('Product') => model.try(:product),
-      _('Version') => model.try(:version),
-      _('Manufacturer') => model_manufacturer
-    }
-    if type == 'Item'
-      h1.merge!(
-        # FIXME: using model.try because database inconsistency
-        _('Description') => model.try(:description)
-      )
-    end
-    h1.merge!(
-      # FIXME: using model.try because database inconsistency
-      case model.try(:type)
-      when 'Software'
-        _('Software Information')
-      else
-        _('Technical Details')
-      end => model.try(:technical_detail)
-    )
-    if type == 'Item'
-      # FIXME: using model.try because database inconsistency
-      h1.merge!(
-        _('Internal Description') => model.try(:internal_description),
-        _('Important notes for hand over') => model.try(:hand_over_note),
-        _('Categories') => categories.join('; '),
-        _('Accessories') => \
-          (model ? model.accessories.map(&:to_s) : []).join('; '),
-        _('Compatibles') => \
-          (model ? model.compatibles.map(&:to_s) : []).join('; '),
-        _('Properties') => (model ? model.properties.map(&:to_s) : []).join('; '),
-      # part_of_package: part_of_package,
-      # needs_permission: "#{self.needs_permission}",
-      # responsible: "#{self.responsible}",
-      # location: "#{self.location}",
-      # invoice: invoice,
-      # investment: investment
-      )
-    end
-
-    fields = get_fields
-
-    h2 = {}
-    fields.each do |field|
-      next if field.id == 'attachments'
-
-      h2[_(field.data['label'])] = if field.id == 'location_building_id'
-                                     location.try(:building).try(:to_s)
-                                   else
-                                     field.value(self)
-                                   end
-    end
-    h1.merge! h2
-
-    h1.merge!(
-      "#{_('Borrower')} #{_('First name')}" => current_borrower.try(:firstname),
-      "#{_('Borrower')} #{_('Last name')}" => current_borrower.try(:lastname),
-      "#{_('Borrower')} #{_('Personal ID')}" => \
-        current_borrower.try(:extended_info).try(:fetch, 'id', nil) \
-          || current_borrower.try(:unique_id),
-      "#{_('Borrowed until')}" => current_reservation.try(:end_date)
-    )
-    h1
-  end
-
-  ####################################################################
-
   # an item is in stock if it's not handed over or
   # it's not assigned to an approved reservation
   def in_stock?
@@ -434,15 +300,6 @@ class Item < ActiveRecord::Base
   # TODO: statistics
   def latest_take_back_manager
   end
-
-  private
-
-  # TODO: has_one/has_many
-  def latest_reservation
-    reservations.where.not(returned_date: nil).order('returned_date').last
-  end
-
-  public
 
   ####################################################################
 
@@ -546,6 +403,46 @@ class Item < ActiveRecord::Base
   ####################################################################
 
   private
+
+  def get_model_manufacturer
+    if self.model.nil? or self.model.name.blank?
+      # FIXME: using model.try because database inconsistency
+      'UNKNOWN' if self.model.try(:manufacturer).blank?
+    else
+      unless self.model.manufacturer.blank?
+        self.model.manufacturer.gsub(/\"/, '""')
+      end
+    end
+  end
+
+  def get_categories(global = false)
+    categories = []
+    unless global
+      # FIXME: using model.try because database inconsistency
+      unless self.model.try(:categories).nil? or self.model.categories.count == 0
+        self.model.categories.each do |c|
+          categories << c.name
+        end
+      end
+    end
+    categories
+  end
+
+  def get_fields
+    # we use select instead of multiple where because we need to keep the sorting
+    # we exclude what is already hardcoded before (model_id as product and version)
+    Field.all.select do |f|
+      [nil, type.downcase].include?(f.data['target_type']) \
+        and not ['model_id'].include?(f.data['form_name'])
+    end.sort_by do |f|
+      [Field::GROUPS_ORDER.index(f.data['group']) || 999, f.position]
+    end.group_by { |f| f.data['group'] }.values.flatten
+  end
+
+  # TODO: has_one/has_many
+  def latest_reservation
+    reservations.where.not(returned_date: nil).order('returned_date').last
+  end
 
   def validates_package
     if parent_id

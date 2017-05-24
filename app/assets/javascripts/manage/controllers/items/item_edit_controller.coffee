@@ -21,11 +21,12 @@ class window.App.ItemEditController extends App.FormWithUploadController
       callback: =>
         @attachmentsController = new App.ItemAttachmentsController {el: @el.find("#attachments")}
 
-  save: =>
+  save: ({skipSerialNumberValidation = false} = {}) =>
     if @flexibleFieldsController.validate()
       $.ajax
         url: @url
-        data: @itemForm.serializeArray()
+        data: @itemForm.serializeArray().concat \
+          [{name: "item[skip_serial_number_validation]", value: skipSerialNumberValidation}]
         type: @method
     else
       do @hideLoading
@@ -47,8 +48,19 @@ class window.App.ItemEditController extends App.FormWithUploadController
       url = redirectUrl ? App.Inventory.url()
       window.location = "#{url}?flash[success]=#{_jed('Item saved')}"
 
-  submit: (event, saveAction = @save) =>
-    super(event, saveAction)
+  errorHandler: (e) =>
+    unless e.responseJSON.unique_serial_number
+      saveAnyway = confirm("#{e.responseJSON.message} #{_jed('Save anyway')}?")
+      if saveAnyway
+        @submit e, => @save(skipSerialNumberValidation: true)
+      else
+        @hideLoading()
+    else
+      @showError e.responseJSON.message
+      do @hideLoading
+
+  submit: (event, saveAction = @save, errorHandler = @errorHandler) =>
+    super(event, saveAction, errorHandler)
 
   submitCopy: (event) => @submit(event, @saveAndCopy)
 

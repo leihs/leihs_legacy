@@ -188,6 +188,9 @@ msgstr "Bestellung genehmigen"
 msgid "Approve anyway"
 msgstr "Trotzdem genehmigen"
 
+msgid "Save anyway"
+msgstr "Trotzdem speichern"
+
 msgid "Approved"
 msgstr "Genehmigt"
 
@@ -3341,3 +3344,6 @@ msgstr "Authentifizierungssysteme"
 
 msgid "List of Authentication Systems"
 msgstr "Liste der Authentifizierungssysteme"
+
+msgid "Same or similar serial number already exists."
+msgstr "Es existiert bereits die gleiche oder eine ähnliche Seriennummer."

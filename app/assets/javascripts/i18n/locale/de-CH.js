@@ -301,6 +301,10 @@ window.i18n.locale_data = {
          null,
          "Trotzdem genehmigen"
       ],
+      "Save anyway": [
+         null,
+         "Trotzdem speichern"
+      ],
       "Approved": [
          null,
          "Genehmigt"
@@ -4344,6 +4348,10 @@ window.i18n.locale_data = {
       "List of Authentication Systems": [
          null,
          "Liste der Authentifizierungssysteme"
+      ],
+      "Same or similar serial number already exists.": [
+         null,
+         "Es existiert bereits die gleiche oder eine ähnliche Seriennummer."
       ]
    }
 }

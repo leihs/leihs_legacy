@@ -55,5 +55,17 @@ module Spec
     step 'I save' do
       find('#save').click
     end
+
+    step 'I accept the confirmation dialog' do
+      page.driver.browser.switch_to.alert.accept
+    end
+
+    step 'I cancel the confirmation dialog' do
+      page.driver.browser.switch_to.alert.dismiss
+    end
+
+    step 'I see a success message' do
+      find('#flash .success')
+    end
   end
 end

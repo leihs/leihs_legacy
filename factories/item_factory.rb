@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   trait :shared_item_license_attributes do
     sequence(:inventory_code) { |n| "#{Faker::Lorem.characters(20)}#{n}" }
-    serial_number { 3.times.map { Faker::Internet.mac_address }.join('-') }
+    serial_number { Faker::Lorem.characters(20) }
     owner do
       if InventoryPool.count > rand(3..10)
         InventoryPool.all.sample

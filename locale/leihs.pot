@@ -180,6 +180,9 @@ msgstr ""
 msgid "Approve anyway"
 msgstr ""
 
+msgid "Save anyway"
+msgstr ""
+
 msgid "Approved"
 msgstr ""
 
@@ -3245,4 +3248,7 @@ msgid "Authentication Systems"
 msgstr ""
 
 msgid "List of Authentication Systems"
+msgstr ""
+
+msgid "Same or similar serial number already exists."
 msgstr ""
