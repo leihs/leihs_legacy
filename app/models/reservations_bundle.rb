@@ -274,8 +274,8 @@ class ReservationsBundle < ActiveRecord::Base
     if params[:global_contracts_search]
       bundles = \
         bundles
-        .order('reservations_bundles.delegated_user_id IS NULL DESC')
         .order('reservations_bundles.status ASC')
+        .order('reservations_bundles.delegated_user_id IS NULL DESC')
         .order('reservations_bundles.firstname ASC')
     else
       bundles = bundles.order('reservations_bundles.created_at DESC')

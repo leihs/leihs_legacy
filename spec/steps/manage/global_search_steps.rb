@@ -29,16 +29,6 @@ module Manage
                                          inventory_pool: @current_inventory_pool)
       end
 
-      step 'a closed contract for a user matching :search_string exists' \
-        do |search_string|
-        user = FactoryGirl.create(:customer,
-                                  inventory_pool: @current_inventory_pool,
-                                  firstname: search_string)
-        @contract_3 = FactoryGirl.create(:closed_contract,
-                                         user: user,
-                                         inventory_pool: @current_inventory_pool)
-      end
-
       step 'a signed contract for a delegation matching :search_string exists' \
         do |search_string|
         delegator_user = \
@@ -48,8 +38,18 @@ module Manage
                                         inventory_pool: @current_inventory_pool,
                                         delegator_user: delegator_user,
                                         firstname: search_string)
-        @contract_4 = FactoryGirl.create(:signed_contract,
+        @contract_3 = FactoryGirl.create(:signed_contract,
                                          user: delegation,
+                                         inventory_pool: @current_inventory_pool)
+      end
+
+      step 'a closed contract for a user matching :search_string exists' \
+        do |search_string|
+        user = FactoryGirl.create(:customer,
+                                  inventory_pool: @current_inventory_pool,
+                                  firstname: search_string)
+        @contract_4 = FactoryGirl.create(:closed_contract,
+                                         user: user,
                                          inventory_pool: @current_inventory_pool)
       end
 
@@ -112,14 +112,14 @@ module Manage
       end
 
       step 'within the contracts box on the 3rd position I see ' \
-           'the closed contract for the user' do
+           'the signed contract for the delegation' do
         within '#contracts .list-of-lines' do
           expect(all('.line[data-id]')[2]['data-id']).to be == @contract_3.id
         end
       end
 
       step 'within the contracts box on the 4th position I see ' \
-           'the signed contract for the delegation' do
+           'the closed contract for the user' do
         within '#contracts .list-of-lines' do
           expect(all('.line[data-id]')[3]['data-id']).to be == @contract_4.id
         end
@@ -147,14 +147,14 @@ module Manage
       end
 
       step 'on the 3rd position I see ' \
-           'the closed contract for the user' do
+           'the signed contract for the delegation' do
         within '.list-of-lines' do
           expect(all('.line[data-id]')[2]['data-id']).to be == @contract_3.id
         end
       end
 
       step 'on the 4th position I see ' \
-           'the signed contract for the delegation' do
+           'the closed contract for the user' do
         within '.list-of-lines' do
           expect(all('.line[data-id]')[3]['data-id']).to be == @contract_4.id
         end
