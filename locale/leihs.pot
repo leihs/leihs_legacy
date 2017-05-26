@@ -3232,9 +3232,6 @@ msgstr ""
 msgid "You do not have the responsibility to lend this item. Responsible for this item is the pool \"%s\"."
 msgstr ""
 
-msgid "This order cannot be approved. One or more of its reservations are faulty."
-msgstr ""
-
 msgid "First admin user"
 msgstr ""
 

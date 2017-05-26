@@ -2,7 +2,7 @@ module Spec
   module LoginSteps
     step 'I am :persona' do |persona|
       step 'I log out'
-      set_current_user(persona)
+      @current_user = User.where(login: persona.downcase).first
       set_locale
       login_as_current_user
       set_current_inventory_pool
@@ -13,14 +13,19 @@ module Spec
       find('#flash')
     end
 
+    step 'I am logged in as a customer' do
+      @inventory_pool = FactoryGirl.create(:inventory_pool)
+      @current_user = @customer = \
+        FactoryGirl.create(:customer, inventory_pool: @inventory_pool)
+      step 'I log out'
+      set_locale
+      login_as_current_user
+    end
+
     private
 
     def set_current_inventory_pool
       @current_inventory_pool = @current_user.inventory_pools.managed.first
-    end
-
-    def set_current_user(persona)
-      @current_user = User.where(login: persona.downcase).first
     end
 
     def set_locale

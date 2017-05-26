@@ -38,8 +38,7 @@ end
 Then /^I got an information that this contract has problems$/ do
   error = find('.modal .row.emboss.red')
   expect(error.text)
-    .to be == \
-      _("This order cannot be approved. One or more of its reservations are faulty.")
+    .to be == @contract.errors.full_messages.join(' ')
 end
 
 When /^I approve anyway$/ do

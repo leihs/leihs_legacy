@@ -421,7 +421,16 @@ class ReservationsBundle < ActiveRecord::Base
   ############################################
 
   def approvable?
-    reservations.all?(&:approvable?)
+    if reservations.all?(&:approvable?)
+      true
+    else
+      uniq_reservations_error_messages.each { |m| errors.add(:base, m) }
+      false
+    end
+  end
+
+  def uniq_reservations_error_messages
+    reservations.flat_map { |r| r.errors.full_messages }.uniq
   end
 
   def send_approved_notification(comment, send_mail, current_user)
@@ -450,10 +459,6 @@ class ReservationsBundle < ActiveRecord::Base
       send_approved_notification(comment, send_mail, current_user)
       true
     else
-      self.errors.add \
-        :base,
-        _('This order cannot be approved. ' \
-          'One or more of its reservations are faulty.')
       false
     end
   end

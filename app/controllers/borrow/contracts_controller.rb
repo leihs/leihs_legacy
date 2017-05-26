@@ -30,21 +30,14 @@ class Borrow::ContractsController < Borrow::ApplicationController
             c.user.delegated_users.find(session[:delegated_user_id])
         end
       end
-      if current_user \
-          .reservations_bundles
-          .unsubmitted
-          .all? { |c| c.submit(params[:purpose]) }
+      bundles = current_user.reservations_bundles.unsubmitted
+      if bundles.all? { |c| c.submit(params[:purpose]) }
         flash[:notice] = _('Your order has been successfully submitted, ' \
                            'but is NOT YET APPROVED.')
         redirect_to borrow_root_path
       else
         flash[:error] = \
-          current_user
-            .reservations
-            .unsubmitted
-            .flat_map { |c| c.errors.full_messages }
-            .uniq
-            .join("\n")
+          bundles.flat_map { |c| c.errors.full_messages }.uniq.join(' ')
         redirect_to borrow_current_order_path
         raise ActiveRecord::Rollback
       end

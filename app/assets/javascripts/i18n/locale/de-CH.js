@@ -2833,7 +2833,7 @@ window.i18n.locale_data = {
       ],
       "This user is suspended.": [
          null,
-         "Dieser Benutzer ist gesperrt"
+         "Dieser Benutzer ist gesperrt."
       ],
       "Email": [
          null,
@@ -4324,10 +4324,6 @@ window.i18n.locale_data = {
       "You do not have the responsibility to lend this item. Responsible for this item is the pool \"%s\".": [
          null,
          "Sie sind nicht befugt, diesen Gegenstand auszuleihen. Verantwortlich für diesen Gegenstand ist der Gerätepark \"%s\"."
-      ],
-      "This order cannot be approved. One or more of its reservations are faulty.": [
-         null,
-         "Diese Bestellung kann nicht genehmigt werden. Eine oder mehrere Reservationen sind fehlerhaft."
       ],
       "First admin user": [
          null,

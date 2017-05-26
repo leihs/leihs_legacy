@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -eux
+
+git fetch --all
+
+BACKEND_LOCALES=$(git diff HEAD..HEAD^1 locale)
+FRONTEND_LOCALES=$(git diff HEAD..HEAD^1 app/assets/javascripts/i18n/locale)
+
+if [ -n "$BACKEND_LOCALES" -a -z "$FRONTEND_LOCALES" ]; then
+  exit 1
+else
+  exit 0
+fi

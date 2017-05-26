@@ -1,30 +1,5 @@
 class SessionsController < ApplicationController
 
-  AUTHENTICATION_URL = 'http://localhost:3000/manage/temporary/login'
-
-  def new
-    if Rails.env.test? and params[:login]
-      self.current_user = User.find_by_login(params[:login])
-      if logged_in?
-        if current_user.access_rights.active.size == 0
-          render text: _("You don't have any rights to access this application.")
-          return
-        end
-        redirect_back_or_default('/')
-        flash[:notice] = _('Logged in successfully')
-      else
-        render action: 'new'
-      end
-    elsif Rails.env.development? \
-      and params['bypass'] \
-      and self.current_user = User.find_by_login(params['bypass'])
-      redirect_back_or_default('/')
-      flash[:notice] = _('Logged in successfully')
-    else
-      redirect_to action: 'authenticate'
-    end
-  end
-
   def authenticate(id = params[:id])
     @selected_system = AuthenticationSystem.active_systems.find(id) if id
     @selected_system ||= AuthenticationSystem.default_system.first
@@ -41,6 +16,14 @@ class SessionsController < ApplicationController
     raise 'No system selected.' unless @selected_system
     raise 'Class not found or missing login_form_path method: ' \
       + @selected_system.class_name
+  end
+
+  def authenticate_as
+    if Rails.env.development? \
+      and self.current_user = User.find(params[:id])
+      redirect_back_or_default('/')
+      flash[:notice] = _('Logged in successfully')
+    end
   end
 
   def destroy

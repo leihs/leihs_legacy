@@ -48,5 +48,12 @@ jobs:
               body:
                 read_and_replace_with: cider-ci/bin/check-assets-are-compiled
 
+        backend and frontend locales are synchronised:
+          name: "Backend and frontend locales are synchronised"
+          scripts:
+            test:
+              body:
+                read_and_replace_with: cider-ci/bin/check-locales-are-synchronised
+
       include:
         - path: cider-ci/context-components/merged-submodules-check.yml

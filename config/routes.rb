@@ -16,8 +16,12 @@ Rails.application.routes.draw do
   match 'authenticator/login', to: "authenticator/database_authentication#login", via: [:get, :post]
 
   # For RESTful_Authentication
-  match 'login',                      to: 'sessions#new', as: :login,                via: [:get, :post]
-  match 'logout',                     to: 'sessions#destroy',                        via: [:get, :post]
+  match 'login', to: 'sessions#authenticate', via: [:get, :post], as: :login
+  match 'logout', to: 'sessions#destroy', via: [:get, :post]
+
+  if Rails.env.development?
+    get 'login_as/:id', to: 'sessions#authenticate_as'
+  end
 
   # Session
   get 'session/authenticate', to: 'sessions#authenticate'
