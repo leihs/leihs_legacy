@@ -3184,7 +3184,7 @@ window.i18n.locale_data = {
       ],
       "Your order has been successfully submitted, but is NOT YET APPROVED.": [
          null,
-         "Ihre Bestellungen wurden abgeschickt. Sie ist allerdings NOCH NICHT GENEHMIGT."
+         "Ihre Bestellung wurde übermittelt. Sie ist allerdings NOCH NICHT GENEHMIGT."
       ],
       "Continue with available models only": [
          null,
