@@ -18,9 +18,9 @@
     %strong.col2of10.text-ellipsis.padding-left-m{:title => "#{line[:model].manufacturer}"}= line[:model].manufacturer
 
   .line-col.col2of9.text-align-left
-    = interval(line[:start_date], line[:end_date])
-    = _("until")
-    = l(line[:end_date])
+    = l line[:start_date]
+    = "-"
+    = l line[:end_date]
 
   .line-col.line-actions.col2of9
 
