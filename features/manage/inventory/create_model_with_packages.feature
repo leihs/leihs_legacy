@@ -119,7 +119,7 @@ Feature: Create model with packages
     When the package is currently not in stock
     Then I can't delete the package
 
-  @flapping
+  @unstable
   Scenario: A model shows only packages owned by me
     When I edit a model that already has packages in mine and other inventory pools
     Then I only see packages which I am responsible for
