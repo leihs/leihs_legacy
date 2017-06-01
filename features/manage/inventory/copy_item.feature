@@ -44,14 +44,14 @@ Feature: Copy item
     When I save and copy
     Then the item is saved
     And I can create a new item
-    # This is not the case in the system
-    #And the page title is 'Create copied item'
     And I can cancel
     And all fields except the following were copied:
     | Inventory Code |
     | Name           |
     | Serial Number  |
+    | Last Checked   |
     And the inventory code is already filled in
+    And the last check date is set to today
     When I save
     Then the copied item is saved
     And I am redirected to the inventory list
@@ -61,12 +61,14 @@ Feature: Copy item
     When I copy an item
     Then an item copy screen is shown
     And all fields except inventory code, serial number and name are copied
+    And the last check date is set to today
 
   Scenario: Copying an item from the edit view
     When I am editing an item
     And I save and copy
     Then an item copy screen is shown
     And all fields except inventory code, serial number and name are copied
+    And the last check date is set to today
 
   Scenario: Copying an item from another inventory pool
     Given I go to logout

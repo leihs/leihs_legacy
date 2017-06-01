@@ -142,6 +142,7 @@ class Manage::ItemsController < Manage::ApplicationController
     @item.inventory_code = Item.proposed_inventory_code(current_inventory_pool)
     @item.serial_number = nil
     @item.name = nil
+    @item.last_check = Date.today
     render :new
   end
 

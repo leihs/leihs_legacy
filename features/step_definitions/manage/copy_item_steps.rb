@@ -49,6 +49,8 @@ Then(/^all fields except the following were copied:$/) do |table|
         if not_copied_fields.include? field_name
           if field_name == _('Inventory Code')
             expect(find('input,textarea', match: :first).value).not_to eq @inventory_code_original
+          elsif field_name == _('Last Checked')
+            # don't expect nothing; this field is tested in a separate step
           else
             expect(find('input,textarea', match: :first).value.blank?).to be true
           end
@@ -129,4 +131,8 @@ end
 
 When(/^I make a note of the inventory code for further steps$/) do
   @inventory_code = find('.row.emboss', match: :prefer_exact, text: _('Inventory Code')).find('input,textarea').value
+end
+
+Then(/^the last check date is set to today$/) do
+  find("[data-id='last_check'] input[value='#{I18n.l(Date.today)}']")
 end

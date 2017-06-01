@@ -26,6 +26,14 @@ When(/^I type the amount "(.*?)" into the field "(.*?)"$/) do |arg1, arg2|
 end
 
 When /^I save$/ do
+  # if some dropdown is covering the save button we need to get rid of it
+  # in a begin/rescue, because rack driver does not implement hover method
+  begin
+    find('#topbar').hover
+    sleep 1
+  rescue NotImplementedError
+    # do nothing
+  end
   find('button', text: /#{_("Save")}/i).click
 end
 
