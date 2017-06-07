@@ -49,7 +49,7 @@ class window.App.ItemEditController extends App.FormWithUploadController
       window.location = "#{url}?flash[success]=#{_jed('Item saved')}"
 
   errorHandler: (e) =>
-    unless e.responseJSON.unique_serial_number
+    if e.responseJSON.can_bypass_unique_serial_number_validation
       saveAnyway = confirm("#{e.responseJSON.message} #{_jed('Save anyway')}?")
       if saveAnyway
         @submit e, => @save(skipSerialNumberValidation: true)

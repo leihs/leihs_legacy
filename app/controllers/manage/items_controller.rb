@@ -71,8 +71,9 @@ class Manage::ItemsController < Manage::ApplicationController
           if @item
             render \
               json: {
-                message: @item.errors.full_messages.uniq.join(', '),
-                unique_serial_number: @item.unique_serial_number?
+                message: item_errors_full_messages,
+                can_bypass_unique_serial_number_validation: \
+                  can_bypass_unique_serial_number_validation?(@item)
               },
               status: :bad_request
           else
@@ -122,8 +123,9 @@ class Manage::ItemsController < Manage::ApplicationController
           if @item
             render \
               json: {
-                message: @item.errors.full_messages.uniq.join(', '),
-                unique_serial_number: @item.unique_serial_number?
+                message: item_errors_full_messages,
+                can_bypass_unique_serial_number_validation: \
+                  can_bypass_unique_serial_number_validation?(@item)
               },
               status: :bad_request
           else
@@ -200,4 +202,13 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
+  def can_bypass_unique_serial_number_validation?(item)
+    not item.unique_serial_number? and item.errors.size == 1
+  end
+
+  def item_errors_full_messages
+    # `reverse` because the error message for the serial number
+    # should be displayed as last.
+    @item.errors.full_messages.reverse.uniq.join(' ')
+  end
 end
