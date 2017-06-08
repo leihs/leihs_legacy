@@ -3,7 +3,6 @@ AllCops:
     - 'bin/**/*'
     - 'config/**/*'
     - 'cider-ci/**/*'
-    - 'cider-ci_v4/**/*'
     - 'db/**/*'
     - 'database/**/*'
     - 'doc/**/*'

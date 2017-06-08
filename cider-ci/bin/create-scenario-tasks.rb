@@ -7,7 +7,6 @@ ENGINES = ['leihs_admin',
 EXCLUDE_TAGS = %w(@upcoming
                   @manual
                   @broken
-                  @v4stable
                   @flapping
                   @unstable)
 
