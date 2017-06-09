@@ -64,6 +64,7 @@ group :development do
   gem 'capistrano-ext'
   gem 'capistrano-rbenv', '~> 1.0'
   gem 'metric_fu'
+  gem 'relish'
   gem 'thin', platform: :mri # web server (Webrick do not support keep-alive connections)
   gem 'traceroute'
   gem 'trinidad', platform: :jruby # web server (Webrick do not support keep-alive connections)

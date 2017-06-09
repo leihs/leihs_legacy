@@ -1,0 +1,49 @@
+jobs:
+
+  push-to-relish:
+
+    name: Push features to Relish
+    description: |
+      This job pushes all features (including from engines) to Relish
+
+    run_when:
+      always:
+        type: branch
+        include_match: ^master$
+
+    context:
+      script_defaults:
+        template_environment_variables: true
+
+      task_defaults:
+        include: cider-ci/task-components/bundle-rspec-ruby.yml
+
+        git_options:
+          submodules:
+            include_match: ^.*$
+
+        environment_variables:
+          RUBY_ENGINE: ruby
+          RUBY_VERSION: 2.3.0
+          RUBY: '{{RUBY_ENGINE}}-{{RUBY_VERSION}}'
+          RAILS_ENV: development
+
+        max_trials: 1
+        traits:
+          Ruby: true
+          git-crypt: yes
+
+      tasks:
+        push all features to relish:
+          name: "Push all features to relish"
+          scripts:
+            unlock:
+              body: |
+                git crypt unlock || exit 0
+            test:
+              body:
+                read_and_replace_with: cider-ci/bin/push-to-relish
+              start_when:
+                git crypt unlocked:
+                  script_key: unlock
+                  states: [passed]
