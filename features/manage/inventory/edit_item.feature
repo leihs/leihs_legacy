@@ -55,6 +55,7 @@ Feature: Editing an item
       | Warranty expiration        |
       | Contract expiration        |
 
+  @flapping
   Scenario: Delete supplier
     Given I edit an item that belongs to the current inventory pool
     And I navigate to the edit page of an item that has a supplier
@@ -148,6 +149,7 @@ Feature: Editing an item
     And I see an error message
     And the required fields are highlighted in red
 
+  @flapping
   Scenario: Create new supplier if it does not already exist
     Given I edit an item that belongs to the current inventory pool
     When I enter a supplier that does not exist

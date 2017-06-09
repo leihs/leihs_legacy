@@ -96,9 +96,6 @@ Feature: Mail templates
     | de-CH    | none              | en-GB,en-US       | system-wide       | en-GB,en-US       |
     | de-CH    | none              | none              | default           | default           |
 
-  @upcoming
-  Scenario: Receiving mails using order templates
-
   @rack
   Scenario: How an email template is parsed
     Given I am Normin
