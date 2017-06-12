@@ -5,7 +5,7 @@ export RELISH_GLOBAL_OPTIONS_FILE="$(pwd)/secrets/relish"
 export BUNDLE_GEMFILE="$(pwd)/Gemfile"
 bundle exec relish push leihs/main
 cd spec/
-bundle exec relish push leihs/main
+bundle exec relish push leihs/main-2
 cd ../engines/leihs_admin/spec
 bundle exec relish push leihs/admin
 cd ../../procurement/spec
