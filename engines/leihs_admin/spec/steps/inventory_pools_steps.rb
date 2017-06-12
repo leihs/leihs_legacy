@@ -44,13 +44,17 @@ module LeihsAdmin
         ).not_to be_nil
       end
 
-      step 'I see the list of all inventory pools' do
+      step 'I see the list of all inventory pools sorted alphabetically' do
         expect(has_content?(_('List of Inventory Pools'))).to be true
         within '.list-of-lines' do
-          InventoryPool.all.each do |ip|
-            find '.row', match: :prefer_exact, text: ip.name
-          end
+          expect(InventoryPool.all.sort.map(&:name))
+            .to be == all('.row > .col-sm-6').map(&:text)
         end
+      end
+
+      step 'I see the list of all inventory pools' do
+        expect(has_content?(_('List of Inventory Pools'))).to be true
+        find '.list-of-lines'
       end
 
       step 'I don\'t enter :must_field' do |must_field|
@@ -173,6 +177,95 @@ module LeihsAdmin
         expect(@user.access_rights.pluck(:inventory_pool_id))
           .to eq @inventory_pools_with_automatic_access.pluck(:id)
         expect(@user.access_rights.all? { |ar| ar.role == :customer }).to be true
+      end
+
+      step "each line displays the inventory pool's name" do
+        within '.list-of-lines' do
+          InventoryPool.all.each do |ip|
+            find '.row', match: :prefer_exact, text: ip.name
+          end
+        end
+      end
+
+      step "each line displays the inventory pool's short name" do
+        within '.list-of-lines' do
+          InventoryPool.all.each do |ip|
+            find '.row', match: :prefer_exact, text: ip.shortname
+          end
+        end
+      end
+
+      step "each line displays the inventory pool's active state" do
+        within '.list-of-lines' do
+          InventoryPool.all.each do |ip|
+            text = ip.is_active? ? _('active') : _('inactive')
+            find '.row', match: :prefer_exact, text: text
+          end
+        end
+      end
+
+      step 'there exists an inventory pool' do
+        @inventory_pool = FactoryGirl.create(:inventory_pool)
+      end
+
+      step 'the inventory pool has ' \
+           "but doesn't own an unretired item" do
+        FactoryGirl.create(:item,
+                           inventory_pool: @inventory_pool,
+                           owner: FactoryGirl.create(:inventory_pool))
+      end
+
+      step 'the inventory pool owns ' \
+           "but doesn't have an unretired item" do
+        FactoryGirl.create(:item,
+                           inventory_pool: FactoryGirl.create(:inventory_pool),
+                           owner: @inventory_pool)
+      end
+
+      step 'there exists an inventory pool with :order_type' do |order_type|
+        @inventory_pool = FactoryGirl.create(:inventory_pool)
+        case order_type
+        when 'unsubmitted order'
+          FactoryGirl.create(:reservation,
+                             status: :unsubmitted,
+                             inventory_pool: @inventory_pool)
+        when 'submitted order'
+          FactoryGirl.create(:reservation,
+                             status: :submitted,
+                             inventory_pool: @inventory_pool)
+        when 'approved order'
+          FactoryGirl.create(:reservation,
+                             status: :approved,
+                             inventory_pool: @inventory_pool)
+        when 'signed contract'
+          FactoryGirl.create(:signed_contract,
+                             inventory_pool: @inventory_pool)
+        end
+      end
+
+      step 'I open the edit page for an inventory pool' do
+        visit admin.edit_inventory_pool_path(@inventory_pool)
+      end
+
+      step 'I select :yes_no from "Active?"' do |yes_no|
+        select _(yes_no), from: 'inventory_pool_is_active'
+      end
+
+      step 'I see an error message regarding the deactivation of inventory pool' do
+        expect(find('#flash .error').text)
+          .to match /Inventory pool can't be deactivated/
+      end
+
+      step 'the inventory pool remains active' do
+        expect(@inventory_pool.reload.is_active?).to be true
+      end
+
+      step 'I see a success message' do
+        find('#flash .notice')
+      end
+
+      step 'the inventory pool became inactive' do
+        expect(@inventory_pool.reload.is_active?).to be false
       end
 
       private

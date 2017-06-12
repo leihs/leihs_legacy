@@ -57,8 +57,10 @@ When(/^I delete all reservations of a model thats availability is blocked by the
   line_ids = target_linegroup.all('.line', text: @model.name).select{|line| line.find('.line-info.red')}.map{|line| line['data-id']}
   line_ids.each do |id|
     if id != @reference_id
-      find(".line[data-id='#{id}'] .multibutton .dropdown-toggle").click
-      find(".line[data-id='#{id}'] .dropdown-item.red", text: _('Delete')).click
+      rescue_displaced_flash do
+        find(".line[data-id='#{id}'] .multibutton .dropdown-toggle").click
+        find(".line[data-id='#{id}'] .dropdown-item.red", text: _('Delete')).click
+      end
     end
   end
 end

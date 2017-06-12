@@ -13,13 +13,19 @@ module Spec
       find('#flash')
     end
 
-    step 'I am logged in as a customer' do
-      @inventory_pool = FactoryGirl.create(:inventory_pool)
-      @current_user = @customer = \
-        FactoryGirl.create(:customer, inventory_pool: @inventory_pool)
-      step 'I log out'
-      set_locale
-      login_as_current_user
+    [:customer,
+     :group_manager,
+     :lending_manager,
+     :inventory_manager].each do |role|
+       step "I am logged in as #{role.to_s.sub('_', ' ')}" do
+         ip = FactoryGirl.create(:inventory_pool)
+         role == :customer ? @inventory_pool = ip : @current_inventory_pool = ip
+         @current_user = @customer = \
+           FactoryGirl.create(role, inventory_pool: ip)
+         step 'I log out'
+         set_locale
+         login_as_current_user
+       end
     end
 
     private

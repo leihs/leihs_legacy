@@ -157,6 +157,7 @@ Feature: Editing an item
     Then a new supplier is created
     And the edited item has the new supplier
 
+  @flapping
   Scenario: Do not create a new supplier if one of the same name already exists
     Given I edit an item that belongs to the current inventory pool
     When I enter a supplier

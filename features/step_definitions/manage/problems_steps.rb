@@ -221,6 +221,9 @@ Then(/^the last added model line shows the line's problem$/) do
 end
 
 Then /^the affected item's line shows the item's problems$/ do
+  # close the flash which may be covering the element on Cider
+  first("#flash .fa-times-circle").try(&:click)
+  ###
   target = find(".line[data-id='#{@line_id}'] .emboss.red")
   hover_for_tooltip target
   @problems = []

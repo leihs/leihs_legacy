@@ -3249,3 +3249,18 @@ msgstr ""
 
 msgid "Same or similar serial number already exists."
 msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "inactive"
+msgstr ""
+
+msgid "Inventory pool can't be deactivated due to existing orders or signed contracts."
+msgstr ""
+
+msgid "Inventory pool can't be deactivated due to existing items which are not yet retired."
+msgstr ""

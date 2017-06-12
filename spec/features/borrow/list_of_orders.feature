@@ -5,7 +5,7 @@ Feature: List of orders
 
   @borrow_list_of_orders
   Scenario: Each reservation line should display start and end date
-    Given I am logged in as a customer
+    Given I am logged in as customer
     And I have a submitted order
     When I open the list of orders page
     Then each reservation line displays start and end date

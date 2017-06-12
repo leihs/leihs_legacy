@@ -9,6 +9,15 @@ Feature: Administer inventory pools
     Given personas dump is loaded
 
   @leihs_admin_inventory_pools
+  Scenario: List of inventory pools
+    Given I am Gino
+    When I navigate to the admin area
+    Then I see the list of all inventory pools sorted alphabetically
+    And each line displays the inventory pool's name
+    And each line displays the inventory pool's short name
+    And each line displays the inventory pool's active state
+
+  @leihs_admin_inventory_pools
   Scenario: Choosing an inventory pool
     Given I am Gino
     When I navigate to the admin area
@@ -64,3 +73,47 @@ Feature: Administer inventory pools
     When I have created a user with login "username" and password "password"
     Then the newly created user has 'customer'-level access to all inventory pools that grant automatic access
 
+  @leihs_admin_inventory_pools
+  Scenario Outline: Deactivating an inventory pool is not possible if there are orders or signed contracts
+    Given I am Ramon
+    And there exists an inventory pool with "<order type>"
+    When I open the edit page for an inventory pool
+    And I select "No" from "Active?"
+    And I save
+    Then I see an error message regarding the deactivation of inventory pool
+    And the inventory pool remains active
+    Examples:
+      | order type        |
+      | unsubmitted order |
+      | submitted order   |
+      | approved order    |
+      | signed contract   |
+
+  @leihs_admin_inventory_pools
+  Scenario Outline: Deactivating an inventory pool is possible if there are only rejected orders or closed contracts
+    Given I am Ramon
+    And there exists an inventory pool with "<order type>"
+    When I open the edit page for an inventory pool
+    And I select "No" from "Active?"
+    And I save
+    Then I see a success message
+    And the inventory pool became inactive
+    Examples:
+      | order type      |
+      | rejected order  |
+      | closed contract |
+
+  @leihs_admin_inventory_pools
+  Scenario Outline: Deactivating an inventory pool is not possible if there are not retired items
+    Given I am Ramon
+    And there exists an inventory pool
+    And the inventory pool <has or owns> an unretired item
+    When I open the edit page for an inventory pool
+    And I select "No" from "Active?"
+    And I save
+    Then I see an error message regarding the deactivation of inventory pool
+    And the inventory pool remains active
+    Examples:
+      | has or owns           |
+      | has but doesn't own   |
+      | owns but doesn't have |

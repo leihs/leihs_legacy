@@ -6,6 +6,12 @@ class InventoryPool < ActiveRecord::Base
   include Availability::InventoryPool
   audited
 
+  #################################################################################
+  default_scope do
+    where(is_active: true)
+  end
+  #################################################################################
+
   belongs_to :address
 
   has_one :workday, dependent: :delete
@@ -120,6 +126,8 @@ class InventoryPool < ActiveRecord::Base
   validates_uniqueness_of :name
 
   validates :email, format: /@/, allow_blank: true
+
+  validate :validate_inactive_conditions
 
   after_save do
     if automatic_access and automatic_access_changed?
@@ -387,6 +395,38 @@ class InventoryPool < ActiveRecord::Base
   end
 
   private
+
+  def validate_inactive_conditions
+    unless is_active?
+      if orders_or_signed_contracts?
+        errors.add \
+          :base,
+          _("Inventory pool can't be deactivated " \
+            'due to existing orders or signed contracts.')
+      end
+
+      if owns_or_has_not_retired_items?
+        errors.add \
+          :base,
+          _("Inventory pool can't be deactivated " \
+            'due to existing items which are not yet retired.')
+      end
+    end
+  end
+
+  def orders_or_signed_contracts?
+    reservations.unsubmitted.exists? or
+      reservations.submitted.exists? or
+      reservations.approved.exists? or
+      reservations.signed.exists?
+  end
+
+  def owns_or_has_not_retired_items?
+    Item
+      .where('inventory_pool_id = ? OR owner_id = ?', id, id)
+      .where(retired: nil)
+      .exists?
+  end
 
   def csv_import_helper(row, i)
     unless row['serial_number'].blank?

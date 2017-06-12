@@ -2,8 +2,11 @@
   .col-sm-6
     %strong= inventory_pool.name
 
-  .col-sm-4
+  .col-sm-2
     = inventory_pool.shortname
+
+  .col-sm-2
+    = inventory_pool.is_active? ? _('active') : _('inactive')
 
   .col-sm-2.text-right.line-actions
 

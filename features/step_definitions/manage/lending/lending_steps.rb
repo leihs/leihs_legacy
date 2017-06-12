@@ -189,14 +189,16 @@ end
 
 When(/^I click on "(.*?)"$/) do |arg1|
   case arg1
-    when 'Continue this order'
-      find('.button', text: _('Continue this order')).click
-    when 'Continue with available models only'
-      find('.dropdown-item', text: _('Continue with available models only')).click
-    when 'Delegations'
-      find('.dropdown-item', text: _('Delegations')).click
-    else
+  when 'Continue this order'
+    find('.button', text: _('Continue this order')).click
+  when 'Continue with available models only'
+    find('.dropdown-item', text: _('Continue with available models only')).click
+  when 'Delegations'
+    find('.dropdown-item', text: _('Delegations')).click
+  else
+    rescue_displaced_flash do
       step %Q(I press "#{arg1}")
+    end
   end
 end
 

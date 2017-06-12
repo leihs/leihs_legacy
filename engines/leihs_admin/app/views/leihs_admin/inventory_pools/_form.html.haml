@@ -26,6 +26,12 @@
 
     .row.form-group
       .col-sm-6
+        %strong= "#{_("Active")} *"
+      .col-sm-6.text-right
+        = select_tag "inventory_pool[is_active]", options_for_select([[_("No"), "false"], [_("Yes"), "true"]], @inventory_pool.is_active)
+
+    .row.form-group
+      .col-sm-6
         %strong= "#{_("E-Mail")} *"
         = _("Used for sending e-mails from leihs")
       .col-sm-6

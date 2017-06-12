@@ -50,16 +50,21 @@ FactoryGirl.define do
       delegator_user { FactoryGirl.create(:user) }
     end
 
-    factory :customer do
-      transient do
-        inventory_pool nil
-      end
+    [:customer,
+     :group_manager,
+     :lending_manager,
+     :inventory_manager].each do |role|
+      factory role do
+        transient do
+          inventory_pool nil
+        end
 
-      after(:create) do |user, evaluator|
-        create(:access_right,
-               user: user,
-               inventory_pool: evaluator.inventory_pool,
-               role: :customer)
+        after(:create) do |user, evaluator|
+          create(:access_right,
+                 user: user,
+                 inventory_pool: evaluator.inventory_pool,
+                 role: role)
+        end
       end
     end
   end

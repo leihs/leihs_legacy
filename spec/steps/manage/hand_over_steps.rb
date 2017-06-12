@@ -18,6 +18,10 @@ module Manage
         @item = FactoryGirl.create(:item, owner: @inventory_pool)
       end
 
+      step 'a license owned by my inventory pool exists' do
+        @license = FactoryGirl.create(:license, owner: @inventory_pool)
+      end
+
       step 'the customer has borrowed the item for today' do
         FactoryGirl.create(:signed_contract,
                            user: @customer,
@@ -51,6 +55,90 @@ module Manage
         visit manage_hand_over_path(@inventory_pool, @customer)
         expect(Reservation.where(item_id: @item.id).count).to be == 1
         expect(find('#lines').text).to be_blank
+      end
+
+      step "I enter the item's model name in the :add_assign input field" \
+        do |add_assign|
+        raise unless add_assign == 'Add/Assign'
+        find('#assign-or-add-input input').set @item.model.name
+      end
+
+      step "I choose the item's model name from the displayed dropdown" do
+        within '.ui-autocomplete' do
+          find('a', text: @item.model.name).click
+        end
+      end
+
+      step "a reservation line for the item's model name was added" do
+        within '#lines' do
+          find('.line', text: @item.model.name)
+        end
+      end
+
+      step "I enter the license's model name in the :add_assign input field" \
+        do |add_assign|
+        raise unless add_assign == 'Add/Assign'
+        find('#assign-or-add-input input').set @license.model.name
+      end
+
+      step "I choose the license's model name from the displayed dropdown" do
+        within '.ui-autocomplete' do
+          find('a', text: @license.model.name).click
+        end
+      end
+
+      step "a reservation line for the license's model name was added" do
+        within '#lines' do
+          find('.line', text: @license.model.name)
+        end
+      end
+
+      step 'I assign the item to its model line' do
+        find('#lines .line', text: @item.model.name)
+          .find('[data-assign-item-form] input')
+          .set @item.inventory_code
+        find('.ui-autocomplete a', text: @item.inventory_code).click
+      end
+
+      step 'I assign the license to its model line' do
+        find('#lines .line', text: @license.model.name)
+          .find('[data-assign-item-form] input')
+          .set @license.inventory_code
+        find('.ui-autocomplete a', text: @license.inventory_code).click
+      end
+
+      step 'I click on "Hand Over Selection"' do
+        click_on _('Hand Over Selection')
+      end
+
+      step 'I enter the purpose' do
+        within '.modal' do
+          fill_in 'purpose', with: Faker::Lorem.sentence
+        end
+      end
+
+      step 'I click on "Hand Over"' do
+        click_on _('Hand Over')
+      end
+
+      step 'I switch to the contract window' do
+        wait_until do
+          page.driver.browser.window_handles.count > 1
+        end
+        last_window = page.driver.browser.window_handles.last
+        page.driver.browser.switch_to.window last_window
+      end
+
+      step 'the contract includes the inventory code of the item' do
+        within '.contract' do
+          page.should have_content @item.inventory_code
+        end
+      end
+
+      step 'the contract includes the inventory code of the license' do
+        within '.contract' do
+          page.should have_content @item.inventory_code
+        end
       end
     end
   end

@@ -31,10 +31,12 @@ When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over
            end.first
   @model = @item.model
   @inventory_codes << @item.inventory_code
-  find('#assign-or-add-input input').set @item.model.name
-  find('.ui-autocomplete .submenu-scroll li', text: @item.model.name).click
-  find('.line', text: @item.model.name, match: :first).find('form[data-assign-item-form] input').click
-  find('.ui-menu-item', text: @item.inventory_code).click
+  rescue_displaced_flash do
+    find('#assign-or-add-input input').set @item.model.name
+    find('.ui-autocomplete .submenu-scroll li', text: @item.model.name).click
+    find('.line', text: @item.model.name, match: :first).find('form[data-assign-item-form] input').click
+    find('.ui-menu-item', text: @item.inventory_code).click
+  end
 end
 
 Then /^the item is added to the hand over for the provided date range and the inventory code is already assigend$/ do
@@ -128,7 +130,8 @@ When /^I select the (.*?) from the list$/ do |type|
   page.driver.browser.action.move_to(find('nav#topbar').native).perform
 
   within '.ui-autocomplete' do
-    find('a', match: :prefer_exact, text: @target_name).click
+    find('a', match: :prefer_exact, text: @target_name)
+    all('a .col3of4').detect { |el| el.text == @target_name }.click
   end
 end
 

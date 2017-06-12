@@ -23,7 +23,7 @@ end
 def rescue_displaced_flash
   begin
     yield
-  rescue Selenium::WebDriver::Error::UnknownError
+  rescue
     find("#flash .fa-times-circle").click
     retry
   end

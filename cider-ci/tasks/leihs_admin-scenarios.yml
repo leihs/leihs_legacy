@@ -64,6 +64,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_csv.feature:7
+- name: engines/leihs_admin/spec/features/inventory_pools.feature:107
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:107
 - name: engines/leihs_admin/spec/features/inventory_pools.feature:12
   scripts:
     test:
@@ -80,38 +88,62 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:21
-- name: engines/leihs_admin/spec/features/inventory_pools.feature:31
+- name: engines/leihs_admin/spec/features/inventory_pools.feature:30
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:31
-- name: engines/leihs_admin/spec/features/inventory_pools.feature:45
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:30
+- name: engines/leihs_admin/spec/features/inventory_pools.feature:40
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:45
-- name: engines/leihs_admin/spec/features/inventory_pools.feature:53
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:40
+- name: engines/leihs_admin/spec/features/inventory_pools.feature:54
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:53
-- name: engines/leihs_admin/spec/features/inventory_pools.feature:60
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:54
+- name: engines/leihs_admin/spec/features/inventory_pools.feature:62
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:60
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:62
+- name: engines/leihs_admin/spec/features/inventory_pools.feature:69
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:69
+- name: engines/leihs_admin/spec/features/inventory_pools.feature:77
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:77
+- name: engines/leihs_admin/spec/features/inventory_pools.feature:93
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/inventory_pools.feature:93
 - name: engines/leihs_admin/spec/features/maintenance_mode.feature:12
   scripts:
     test:

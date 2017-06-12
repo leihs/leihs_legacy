@@ -4348,6 +4348,26 @@ window.i18n.locale_data = {
       "Same or similar serial number already exists.": [
          null,
          "Es existiert bereits die gleiche oder eine ähnliche Seriennummer."
+      ],
+      "Active": [
+         null,
+         "Aktiv"
+      ],
+      "active": [
+         null,
+         "aktiv"
+      ],
+      "inactive": [
+         null,
+         "inaktiv"
+      ],
+      "Inventory pool can't be deactivated due to existing orders or signed contracts.": [
+         null,
+         "Gerätepark kann nicht deaktiviert werden, weil es Bestellungen oder offene Verträge hat."
+      ],
+      "Inventory pool can't be deactivated due to existing items which are not yet retired.": [
+         null,
+         "Gerätepark kann nicht deaktiviert werden, weil es noch nicht ausgemusterte Gegenstände hat."
       ]
    }
 }

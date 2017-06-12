@@ -17,7 +17,12 @@ Then(/^the availability of the model is displayed as: "(?:.*?)"$/) do
       av = model.availability_in(@current_inventory_pool)
       max_available = av.maximum_available_in_period_for_groups(start_date, end_date, @customer.group_ids)
       max_available_in_total = av.maximum_available_in_period_summed_for_groups(start_date, end_date)
-      total_rentable = model.total_borrowable_items_for_user(@customer, @current_inventory_pool)
+      total_rentable = \
+          model
+            .items
+            .where(inventory_pool_id: @current_inventory_pool)
+            .borrowable
+            .count
       availability_text = item.find('.col1of4 .row:nth-child(1)').text
       expect(availability_text).to eq "#{max_available}(#{max_available_in_total})/#{total_rentable}"
     end

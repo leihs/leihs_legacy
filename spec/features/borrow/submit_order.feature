@@ -5,7 +5,7 @@ Feature: Submit order
 
   @borrow_submit_order
   Scenario: Failure of submiting an order should display the respective error message
-    Given I am logged in as a customer
+    Given I am logged in as customer
     And I am suspended for a pool I am a customer of
     And there is a borrowable item in this pool
     And I have an unsubmitted order for this pool and the model of this item

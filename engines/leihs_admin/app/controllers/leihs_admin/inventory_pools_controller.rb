@@ -2,7 +2,7 @@ module LeihsAdmin
   class InventoryPoolsController < AdminController
 
     def index
-      @inventory_pools = InventoryPool.search(params[:search_term]).sort
+      @inventory_pools = InventoryPool.unscoped.search(params[:search_term]).sort
     end
 
     def new
@@ -24,11 +24,11 @@ module LeihsAdmin
     end
 
     def edit
-      @inventory_pool = InventoryPool.find(params[:id])
+      @inventory_pool = InventoryPool.unscoped.find(params[:id])
     end
 
     def update
-      @inventory_pool = InventoryPool.find(params[:id])
+      @inventory_pool = InventoryPool.unscoped.find(params[:id])
       process_params params[:inventory_pool]
 
       if @inventory_pool.update_attributes(params[:inventory_pool])
@@ -43,7 +43,7 @@ module LeihsAdmin
 
     def destroy
       begin
-        InventoryPool.find(params[:id]).destroy
+        InventoryPool.unscoped.find(params[:id]).destroy
         respond_to do |format|
           format.json { head status: :ok }
           format.html do

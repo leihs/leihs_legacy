@@ -57,15 +57,6 @@ Feature: Lending
     And I click on "Hand Over"
     Then there are inventory codes for item and license in the contract
 
-  Scenario: Handing over items and licenses by model search
-    Given I am doing a hand over
-    When I add a borrowable item to the hand over by using the search input field
-    When I add a borrowable license to the hand over by using the search input field
-    And I click on "Hand Over Selection"
-    And I fill in all the necessary information in hand over dialog
-    And I click on "Hand Over"
-    Then there are inventory codes for item and license in the contract
-
   @flapping
   Scenario: Inspection during take back
     Given I take back an item

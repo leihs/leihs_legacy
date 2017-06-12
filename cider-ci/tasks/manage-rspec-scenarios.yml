@@ -56,6 +56,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/global_search.feature:7
+- name: spec/features/manage/hand_over.feature:18
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:18
 - name: spec/features/manage/hand_over.feature:7
   scripts:
     test:
@@ -64,6 +72,30 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:7
+- name: spec/features/manage/inactive_inventory_pools.feature:21
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:21
+- name: spec/features/manage/inactive_inventory_pools.feature:30
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:30
+- name: spec/features/manage/inactive_inventory_pools.feature:9
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:9
 - name: spec/features/manage/serial_number_validation.feature:23
   scripts:
     test:

@@ -8,6 +8,38 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/current_order.feature:7
+- name: spec/features/borrow/inactive_inventory_pools.feature:19
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/inactive_inventory_pools.feature:19
+- name: spec/features/borrow/inactive_inventory_pools.feature:35
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/inactive_inventory_pools.feature:35
+- name: spec/features/borrow/inactive_inventory_pools.feature:50
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/inactive_inventory_pools.feature:50
+- name: spec/features/borrow/inactive_inventory_pools.feature:7
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/inactive_inventory_pools.feature:7
 - name: spec/features/borrow/list_of_orders.feature:7
   scripts:
     test:

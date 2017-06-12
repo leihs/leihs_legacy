@@ -3344,3 +3344,18 @@ msgstr "Liste der Authentifizierungssysteme"
 
 msgid "Same or similar serial number already exists."
 msgstr "Es existiert bereits die gleiche oder eine ähnliche Seriennummer."
+
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "active"
+msgstr "aktiv"
+
+msgid "inactive"
+msgstr "inaktiv"
+
+msgid "Inventory pool can't be deactivated due to existing orders or signed contracts."
+msgstr "Gerätepark kann nicht deaktiviert werden, weil es Bestellungen oder offene Verträge hat."
+
+msgid "Inventory pool can't be deactivated due to existing items which are not yet retired."
+msgstr "Gerätepark kann nicht deaktiviert werden, weil es noch nicht ausgemusterte Gegenstände hat."
