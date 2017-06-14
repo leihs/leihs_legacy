@@ -1,6 +1,8 @@
 class Location < ActiveRecord::Base
   audited
 
+  SEARCHABLE_FIELDS = %w(room)
+
   has_many :items, dependent: :nullify
   belongs_to :building
 

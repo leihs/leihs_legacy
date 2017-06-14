@@ -225,6 +225,7 @@ class Model < ActiveRecord::Base
           if fields.empty? or fields.include?(:items)
             sql = sql
               .joins('LEFT JOIN items AS i2 ON i2.model_id = models.id')
+              .joins('LEFT JOIN locations AS l ON l.id = i2.location_id')
               .joins('LEFT JOIN items AS i3 ON i3.parent_id = i2.id')
               .joins('LEFT JOIN models AS m3 ON m3.id = i3.model_id')
           end
@@ -250,10 +251,13 @@ class Model < ActiveRecord::Base
                 Item::SEARCHABLE_FIELDS.map { |f| "i2.#{f}" }.join(', ')
               item_fields_3 = \
                 Item::SEARCHABLE_FIELDS.map { |f| "i3.#{f}" }.join(', ')
+              location_fields = \
+                Location::SEARCHABLE_FIELDS.map { |f| "l.#{f}" }.join(', ')
               s << "CONCAT_WS(' ', " \
                              "#{model_fields}, " \
                              "#{item_fields_2}, " \
-                             "#{item_fields_3}) ILIKE :query"
+                             "#{item_fields_3}, " \
+                             "#{location_fields}) ILIKE :query"
             end
 
             sql = sql.where(format('%s', s.join(' OR ')), query: "%#{x}%")
