@@ -19,23 +19,32 @@ class ApplicationController < ActionController::Base
   end
 
   def new_first_admin_user
-    @user = User.new
+    if User.exists?
+      render :forbidden, body: 'Admin user already exists!'
+    else
+      @user = User.new
+    end
   end
 
   def create_first_admin_user
-    ActiveRecord::Base.transaction do
-      setup_default_database_authentication_system!
-      db_auth_system = \
-        AuthenticationSystem.find_by_class_name!('DatabaseAuthentication')
-      user = User.create! user_params.merge(authentication_system: db_auth_system)
-      DatabaseAuthentication.create! db_auth_params.merge(user: user)
-      AccessRight.create! user: user, role: :admin
+    if User.exists?
+      head :forbidden
+    else
+      ActiveRecord::Base.transaction do
+        setup_default_database_authentication_system!
+        db_auth_system = \
+          AuthenticationSystem.find_by_class_name!('DatabaseAuthentication')
+        user = \
+          User.create! user_params.merge(authentication_system: db_auth_system)
+        DatabaseAuthentication.create! db_auth_params.merge(user: user)
+        AccessRight.create! user: user, role: :admin
+      end
+      flash[:notice] = _(
+        'First admin user has been created. ' \
+        'Default database authentication system has been configured.'
+      )
+      redirect_to root_path
     end
-    flash[:notice] = _(
-      'First admin user has been created. ' \
-      'Default database authentication system has been configured.'
-    )
-    redirect_to root_path
   end
 
   private

@@ -47,3 +47,8 @@ Feature: Create first admin user
     Then the database authentication system has been set to default
     And the other authentication system is not default anymore
 
+  @manage_create_first_admin_user
+  Scenario: Forbid the access to first admin user page if admin access right exists
+    Given a user exists
+    When I visit the first admin user page
+    Then I see a message "Admin user already exists!"

@@ -132,6 +132,14 @@ module Manage
       step 'the other authentication system is not default anymore' do
         expect(@other_auth_system.reload.is_default).to be false
       end
+
+      step 'I visit the first admin user page' do
+        visit new_first_admin_user_path
+      end
+
+      step 'I see a message :message' do |message|
+        expect(page).to have_content message
+      end
     end
   end
 end
