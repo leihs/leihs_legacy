@@ -268,6 +268,27 @@ module LeihsAdmin
         expect(@inventory_pool.reload.is_active?).to be false
       end
 
+      step 'there exists an inactive inventory pool ' \
+           'I have access to as :role' do |role|
+        @inactive_inventory_pool = \
+          FactoryGirl.create(:inventory_pool, is_active: false)
+        FactoryGirl.create(:access_right,
+                           user: @current_user,
+                           inventory_pool: @inactive_inventory_pool,
+                           role: role.sub(' ', '_'))
+      end
+
+      step 'I click on the sections dropdown toggle' do
+        el = find('#topbar .dropdown-toggle', match: :first)
+        el.hover
+      end
+
+      step "I don't see the inactive inventory pool in the list" do
+        within find('#topbar .dropdown', match: :first) do
+          expect(page).not_to have_content @inactive_inventory_pool.name
+        end
+      end
+
       private
 
       def fill_in_user_information(attrs)

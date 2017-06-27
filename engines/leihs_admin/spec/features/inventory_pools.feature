@@ -1,4 +1,3 @@
-
 Feature: Administer inventory pools
 
   As an administrator
@@ -102,6 +101,13 @@ Feature: Administer inventory pools
       | order type      |
       | rejected order  |
       | closed contract |
+
+  @leihs_admin_inventory_pools
+  Scenario: Exclusion of inactive inventory pools in the topbar dropdown list
+    Given I am Gino
+    And there exists an inactive inventory pool I have access to as "inventory_manager"
+    When I click on the sections dropdown toggle
+    Then I don't see the inactive inventory pool in the list
 
   @leihs_admin_inventory_pools
   Scenario Outline: Deactivating an inventory pool is not possible if there are not retired items
