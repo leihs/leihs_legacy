@@ -82,6 +82,20 @@ module Manage
           expect(page).not_to have_content @inactive_inventory_pool.name
         end
       end
+
+      step 'open the inventory helper page' do
+        visit manage_inventory_helper_path(@current_inventory_pool)
+      end
+
+      step 'choose the responsible department via field select box' do
+        type_into_and_select_from_autocomplete(
+          '#field-input', _('Responsible department')
+        )
+      end
+
+      step 'I fill in the name of the inactive inventory pool ' \
+           'in the responsible department field' do
+      end
     end
   end
 end
