@@ -77,8 +77,11 @@ end
 def change_line_start_date(line, days = 2)
   new_start_date = line.start_date + days.days
   get_fullcalendar_day_element(new_start_date).click
-  find('.button#set-start-date', text: _('Start date')).click
+  sleep 1
+  find('.tooltipster-default .button#set-start-date', text: _('Start date')).click
+  sleep 1
   step 'I save the booking calendar'
+  sleep 1
   step 'the booking calendar is closed'
   new_start_date
 end

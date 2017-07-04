@@ -60,8 +60,11 @@ When(/^I change a contract reservations time range$/) do
     end
   expect(has_selector?('.fc-widget-content .fc-day-number')).to be true
   get_fullcalendar_day_element(@new_start_date).click
-  find('#set-start-date', text: _('Start date')).click
+  sleep 1
+  find('.tooltipster-default .button#set-start-date', text: _('Start date')).click
+  sleep 1
   step 'I save the booking calendar'
+  sleep 1
   step 'the booking calendar is closed'
 end
 
@@ -136,8 +139,11 @@ When(/^I change the time range for multiple reservations$/) do
   step 'I edit the timerange of the selection'
   @new_start_date = [@line1.start_date, Time.zone.today].max + 2.days
   get_fullcalendar_day_element(@new_start_date).click
-  find('#set-start-date', text: _('Start date')).click
+  sleep 1
+  find('.tooltipster-show #set-start-date', text: _('Start date')).click
+  sleep 1
   step 'I save the booking calendar'
+  sleep 1
   step 'the booking calendar is closed'
 end
 

@@ -12,6 +12,7 @@ When /^I pick a closed day for beeing the (start|end) date$/ do |date_target|
     date = date+1.day
   end
   get_fullcalendar_day_element(next_closed_day).click
+  sleep 1
 
   case date_target
     when 'start'

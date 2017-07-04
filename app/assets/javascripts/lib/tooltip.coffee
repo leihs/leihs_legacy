@@ -24,22 +24,18 @@ class App.Tooltip
       maxWidth: 0,
       interactive: if options.interactive? then options.interactive else App.Tooltip.interactive,
       interactiveTolerance: 500,
-      offsetX: 0,
-      offsetY: -12,
-      onlyOne: true,
+      multiple: false,
       position: 'top',
       speed: 150,
       timer: 0,
       touchDevices: true,
       trigger: if options.trigger? then options.trigger else 'hover',
-      updateAnimation: true
-      functionBefore: (origin, continueTooltip)=>
-        continueTooltip()
-        tooltip = origin.data("tooltipster")
-        tooltip.addClass options.className if options.className?
-        @delegateEvents tooltip
-        options.callback(origin, tooltip) if options.callback?
-    if options.content?        
+      updateAnimation: true,
+      contentAsHTML: true,
+      theme: 'tooltipster-default',
+      distance: 0
+
+    if options.content?
       @content = options.content
       @target.tooltipster("show")
 
@@ -52,10 +48,10 @@ class App.Tooltip
 
   update: (content) =>
     @content = content
-    @target.tooltipster "update", content
+    @target.tooltipster("content", content)
     do @reposition
 
-  reposition: => @target.tooltipster "reposition"
+  reposition: => @target.tooltipster("reposition")
 
   show: => @target.tooltipster "show"
 
@@ -77,8 +73,9 @@ class App.Tooltip
 
 window.App.Tooltip = App.Tooltip
 
-jQuery -> 
-  $(document).on "mouseenter", ".tooltip[title], .tooltip[data-tooltip-data]", (e)-> 
+jQuery ->
+  $(document).on "mouseenter", ".tooltip[title], .tooltip[data-tooltip-data]", (e)->
+  # NOTE: support init/config via data attributes:
     template = if $(this).data("tooltip-template")? then $(this).data("tooltip-template") else "views/tooltips/default"
     $(this).data("tooltip-data", $(this).attr("title")) if $(this).attr("title")? and not $(this).data("tooltip-data")?
     $(this).removeAttr "title"

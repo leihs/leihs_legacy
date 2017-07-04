@@ -42,7 +42,9 @@ end
 
 When(/^I change the time range for that option$/) do
   rescue_displaced_flash do
-    find(".line[data-line-type='option_line'][data-id='#{@option_line.id}']", text: @option_line.option.name).find('.button', text: _('Change entry')).click
+    find(".line[data-line-type='option_line'][data-id='#{@option_line.id}']", text: @option_line.option.name)
+      .find('.button', text: _('Change entry'))
+      .click
   end
   @new_start_date = change_line_start_date(@option_line, 2)
 end

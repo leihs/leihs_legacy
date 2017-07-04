@@ -290,6 +290,7 @@ class BookingCalendar
       unless $(e.target).closest(".target-selection").length
         do resetSelection
     @fullcalendar.on "click", ".fc-widget-content", (e)=>
+      $.each($.tooltipster.instances(), (i, instance) -> instance.close() )
       date = @getDateByElement e.currentTarget
       target = $(e.currentTarget)
       if moment(date).startOf("day").diff(moment().startOf("day"), "days") < 0
@@ -304,18 +305,17 @@ class BookingCalendar
           content: App.Render "views/booking_calendar/target-selection"
           interactive: true
           delay: 0
-          trigger: false
-          callback: (origin, tooltip)=>
-            $(tooltip).one "click", "button", (e)=>
-              do resetSelection
-              if $(e.currentTarget).is "#set-start-date"
-                @startDate_el.val(moment(date).format(df)).change()
-              else if $(e.currentTarget).is "#set-end-date"
-                @endDate_el.val(moment(date).format(df)).change()
-              do @validation
-        target.tooltipster("enable")
-        target.tooltipster("show")
-        target.tooltipster("disable")
+          trigger: 'click'
+
+        target.tooltipster "open", (instance, helper)=>
+          $(helper.tooltip).one "click", "button", (e)=>
+            do resetSelection
+            if $(e.currentTarget).is "#set-start-date"
+              @startDate_el.val(moment(date).format(df)).change()
+            else if $(e.currentTarget).is "#set-end-date"
+              @endDate_el.val(moment(date).format(df)).change()
+            do @validation
+
       e.stopPropagation()
       return false
 
