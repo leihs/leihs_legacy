@@ -65,8 +65,4 @@
                     %a{:href => @bread_crumbs ? @bread_crumbs.path_for(url_for(params.merge(:locale => language.locale_name))) : url_for(params.merge(:locale => language.locale_name))}= language.name
 
               .text-left
-                - unless controller_path =~ /^borrow/
-                  %a{:href => "https://github.com/leihs/leihs", :target => "_blank"}= _("Source code")
-
-                = render partial: 'layouts/leihs_admin/git_info'
-
+                = render partial: 'layouts/leihs_admin/version_info'

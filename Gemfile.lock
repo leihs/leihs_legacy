@@ -255,6 +255,7 @@ GEM
     json (1.8.6)
     json (1.8.6-java)
     json_pure (1.8.3)
+    kramdown (1.14.0)
     ladle (1.0.1)
       open4 (~> 1.0)
     ladle (1.0.1-java)
@@ -613,6 +614,7 @@ DEPENDENCIES
   jruby-openssl
   json (~> 1.8)
   jsrender-rails (~> 1.2)!
+  kramdown
   ladle
   launchy (~> 2.1)
   leihs_admin!
@@ -671,4 +673,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   1.14.6
+   1.15.1

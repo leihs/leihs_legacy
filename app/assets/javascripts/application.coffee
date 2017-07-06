@@ -48,6 +48,9 @@
 #= require_tree ./controllers
 #= require_tree ./views
 #
+##### UJS (must be last so setup is done!)
+#= require ujs
+#
 #####
 
 window.App ?= {}

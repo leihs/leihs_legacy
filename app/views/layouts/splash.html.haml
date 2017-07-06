@@ -10,10 +10,11 @@
 
     .main-wrapper
 
-      = render :partial => "flash", :locals => {:flash => flash} if flash
+      - if flash.present?
+        = render :partial => "application/flash", :locals => {:flash => flash} 
 
       %header= render :partial => "application/topbar"
-      
+
       = yield
 
-    = render :partial => "footer"
+    = render :partial => "application/footer"

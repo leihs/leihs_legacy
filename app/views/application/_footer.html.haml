@@ -1,12 +1,18 @@
-:ruby  
+:ruby
   active_language = Language.find_by_locale_name(I18n.locale)
+  version_name = RELEASE_INFO.try(:[], :version_name)
+  is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :is_release) || false
+  deploy_time = RELEASE_INFO.try(:[], :deploy_info).try(:[], :time)
+  version_link = release_info_path + (is_release ? ('#' + version_name) : '')
+  version_hint = "Version #{version_name} Deploy #{deploy_time}"
 
 %footer.separated-top.emboss
 
   .wrapper.padding-top-m.padding-horizontal-s
 
     .col1of10.padding-top-xs.padding-left-xs
-      %span.headline-m.light= "leihs"
+      %a.headline-m.light{title: version_hint, href: version_link}
+        = "leihs"
 
     .col9of10.padding-top-xs
 
@@ -16,7 +22,8 @@
           .col1of2
             %span.padding-top-s
               - unless controller_path =~ /^borrow/
-                %a.dark-grey.padding-inset-s{:href => "https://github.com/leihs/leihs", :target => "_blank"}= _("Source code")
+                %a.dark-grey.padding-inset-s{href: version_link, title: version_hint}
+                  = version_name
 
           .col1of2.text-align-right
 

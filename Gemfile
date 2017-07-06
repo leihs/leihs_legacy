@@ -43,6 +43,7 @@ gem 'therubyracer', platform: :mri
 gem 'therubyrhino', platform: :jruby
 gem 'uglifier', '~> 2.4'
 gem 'will_paginate', '~> 3.0'
+gem 'kramdown' # markdown rendering
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-accounting.js', '~> 0.4'

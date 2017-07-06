@@ -1,0 +1,10 @@
+:ruby
+  active_language = Language.find_by_locale_name(I18n.locale)
+  version_name = RELEASE_INFO.try(:[], :version_name)
+  is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :is_release) || false
+  deploy_time = RELEASE_INFO.try(:[], :deploy_info).try(:[], :time)
+  version_link = main_app.release_info_path + (is_release ? ('#' + version_name) : '')
+  version_hint = "Version #{version_name} Deploy #{deploy_time}"
+
+%a.dark-grey.padding-inset-s{href: version_link, title: version_hint}
+  = version_name

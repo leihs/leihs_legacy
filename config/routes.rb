@@ -48,6 +48,8 @@ Rails.application.routes.draw do
   # Attachments
   get 'attachments/:id', to: 'attachments#show', as: 'get_attachment'
 
+  get 'release', to: 'release_info#index', as: 'release_info'
+
   mount LeihsAdmin::Engine => '/admin', :as => 'admin'
   mount Procurement::Engine => '/procurement', :as => 'procurement'
 
