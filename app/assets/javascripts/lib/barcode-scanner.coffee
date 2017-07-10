@@ -1,3 +1,10 @@
+# BarcodeScanner
+#
+# purpose: use hardware barcode scanner without focusing an input field first
+# - collects keyboard input that does not target an input field
+# - detects "fast input followed by enter key", like from Barcode Scanner hardware
+# - on detection, finds target input field and fills + submits it
+
 class BarcodeScanner
 
   constructor: ->
@@ -20,22 +27,19 @@ class BarcodeScanner
       callback: callback
 
   execute: =>
-    activeElement = $ document.activeElement
-    target = if activeElement.is("input, textarea")
-      activeElement
-    else # HACK: support react inputs, need ref to element not DOM node
-      if window.reactBarcodeScannerTarget
-        window.reactBarcodeScannerTarget
-      else
-        $("[data-barcode-scanner-target]:last")
+    # HACK: support react inputs, need ref to element not DOM node
+    target = if window.reactBarcodeScannerTarget
+      window.reactBarcodeScannerTarget
+    else
+      $("[data-barcode-scanner-target]:last")
 
     code = @buffer
     action = @getAction code
     if action?
       action.callback.apply target, @getArguments(code, action)
     else
-      target.val("")
-      target.val(code)
+      currentVal = target.val() || ''
+      target.val(currentVal + code)
       @submit target
     @buffer = null
 
@@ -49,6 +53,10 @@ class BarcodeScanner
     return matches[1..matches.length]
 
   keyPress: (e = window.event)=>
+    # bail out if focus is already an input field!
+    targetType = e.target.nodeName
+    return if targetType == 'INPUT' || targetType == 'TEXTAREA'
+
     charCode = if (typeof e.which == "number") then e.which else e.keyCode
     char = String.fromCharCode(charCode)
     if (charCode == 13) and @buffer?

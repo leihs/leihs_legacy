@@ -84,7 +84,7 @@ Feature: Contract
   @flapping
   Scenario: Rücknehmende Person
     Given I open a take back
-    And I select all reservations of an open contract
+    And I select all reservations of an open contract via Barcode
     And I click take back
     And I click take back inside the dialog
     Then the relevant reservations show the person taking back the item in the format "F. Lastname"

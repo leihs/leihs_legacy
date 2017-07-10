@@ -11,6 +11,12 @@ Feature: Login through database authentication
     And I login as "Normin" via web interface
     Then I am logged in
 
+  Scenario: Login through database authentication in browser using keyboard
+    Given I log out
+    When I visit the homepage
+    And I login as "Normin" via web interface using keyboard
+    Then I am logged in
+
   #80098490
   Scenario: Changing my own password
     Given I am Normin

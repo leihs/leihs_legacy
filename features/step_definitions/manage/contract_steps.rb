@@ -168,7 +168,7 @@ end
 
 When /^there are returned items$/ do
   visit manage_take_back_path(@current_inventory_pool, @customer)
-  step 'I select all reservations of an open contract'
+  step 'I select all reservations of an open contract via Barcode'
   step 'I click take back'
   step 'I see a summary of the things I selected for take back'
   step 'I click take back inside the dialog'

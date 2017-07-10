@@ -21,6 +21,23 @@ When(/^I login as "(.*?)" via web interface$/) do |persona|
   find("[type='submit']", match: :first).click
 end
 
+When(/^I login as "(.*?)" via web interface using keyboard$/) do |persona|
+  @current_user = User.where(login: persona.downcase).first
+  I18n.locale = if @current_user.language then
+                  @current_user.language.locale_name.to_sym
+                else
+                  Language.default_language
+                end
+  step 'I visit the homepage'
+  find("a[href='#{login_path}']", match: :first).click
+  fill_in 'username', with: persona.downcase
+  sleep 0.2
+  pw_field = find('[name="login[password]"]')
+  pw_field.native.send_keys('passw')
+  sleep 0.2 # must be larger than BarcodeScanner delay (100ms)!
+  pw_field.native.send_keys('ord', :enter)
+end
+
 Then(/^I am logged in$/) do
   expect(has_content?(@current_user.short_name)).to be true
 end

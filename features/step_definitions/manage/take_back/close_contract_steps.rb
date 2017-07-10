@@ -15,13 +15,12 @@ When /^I open a take back(, not overdue)?( with at least an option handed over b
   @reservations_to_take_back = @customer.reservations.signed.where(inventory_pool_id: @current_inventory_pool)
 end
 
-When /^I select all reservations of an open contract$/ do
-  within('#assign') do
-    @reservations_to_take_back.each do |line|
-      line.quantity.times do
-        find('[data-barcode-scanner-target]').set line.item.inventory_code
-        find('[data-barcode-scanner-target]').native.send_key :enter
-      end
+When /^I select all reservations of an open contract via Barcode$/ do
+  body = find('body')
+  @reservations_to_take_back.each do |line|
+    line.quantity.times do
+      # NOTE: simulates BarcodeScanner hardware as real as possible:
+      body.native.send_keys(line.item.inventory_code, :enter)
     end
   end
   expect(has_selector?('.line input[type=checkbox][data-select-line]')).to be true

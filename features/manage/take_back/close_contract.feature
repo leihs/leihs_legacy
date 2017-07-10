@@ -9,7 +9,7 @@ Feature: Close Contract
 
   Scenario: Take back all items of a contract
      When I open a take back
-      And I select all reservations of an open contract
+      And I select all reservations of an open contract via Barcode
       And I click take back
      Then I see a summary of the things I selected for take back
      When I click take back inside the dialog

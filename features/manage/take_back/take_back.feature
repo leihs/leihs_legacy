@@ -30,7 +30,7 @@ Feature: Take back
 
   Scenario: Making a note of who took back an item
     When I open a take back
-    And I select all reservations of an open contract
+    And I select all reservations of an open contract via Barcode
     And I click take back
     And I see a summary of the things I selected for take back
     And I click take back inside the dialog
