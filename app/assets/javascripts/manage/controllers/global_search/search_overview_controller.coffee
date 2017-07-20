@@ -92,8 +92,7 @@ class window.App.SearchOverviewController extends Spine.Controller
     .done (data, status, xhr)=> 
       items = (App.Item.find datum.id for datum in data)
       @fetchModels(items).done =>
-        @fetchCurrentItemLocation(items).done =>
-          @render @items, "manage/views/items/line", items, xhr
+        @render @items, "manage/views/items/line", items, xhr
 
   searchLicenses: =>
     App.License.ajaxFetch
@@ -105,8 +104,7 @@ class window.App.SearchOverviewController extends Spine.Controller
     .done (data, status, xhr)=>
       licenses = (App.License.find datum.id for datum in data)
       @fetchModels(licenses).done =>
-        @fetchCurrentItemLocation(licenses).done =>
-          @render @licenses, "manage/views/licenses/line", licenses, xhr
+        @render @licenses, "manage/views/licenses/line", licenses, xhr
 
   fetchModels:(items) =>
     ids = _.uniq _.map items, (m)-> m.model_id
@@ -116,16 +114,6 @@ class window.App.SearchOverviewController extends Spine.Controller
         ids: ids
         paginate: false
         include_package_models: true
-
-  fetchCurrentItemLocation: (items)=>
-    ids = _.map items, (i)-> i.id
-    return {done: (c)->c()} unless ids.length
-    App.CurrentItemLocation.ajaxFetch
-      data: $.param
-        ids: ids
-        all: true
-        paginate: false
-        current_inventory_pool: false
 
   searchDelegations: =>
     App.User.ajaxFetch

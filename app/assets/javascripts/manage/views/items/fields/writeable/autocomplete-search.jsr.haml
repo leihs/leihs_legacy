@@ -4,7 +4,7 @@
   %input.has-addon.width-full{:type => "text", :autocomplete => :off,
         :placeholder => "{{>~field.getLabel()}}",
         :title => "{{>~field.getLabel()}}",
-        :value => "{{>~field.getItemValueLabel(~field.value_label, ~itemData)}}",
+        :value => "{{>~field.getItemValueLabel(~field.item_value_label, ~itemData)}}",
         :data => { :url => "{{>~field.search_path}}", :type => "autocomplete",
                    :autocomplete_search_attr => "{{>~field.search_attr}}",
                    :autocomplete_element_tmpl => "views/autocomplete/element",

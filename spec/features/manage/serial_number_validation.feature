@@ -11,6 +11,8 @@ Feature: Serial number validation
     And I enter an inventory code
     And I select a model
     And I select a supply category
+    And I choose a building
+    And I choose a room
     And I enter serial number "abcd"
     And I save
     Then I see a confirmation dialog that there already exists same or similar serial number
@@ -27,6 +29,8 @@ Feature: Serial number validation
     And I enter an inventory code
     And I select a model
     And I select a supply category
+    And I choose a building
+    And I choose a room
     And I enter serial number "aB Cd"
     And I save
     Then I see a confirmation dialog that there already exists same or similar serial number

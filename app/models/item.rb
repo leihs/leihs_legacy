@@ -30,7 +30,7 @@ class Item < ActiveRecord::Base
            after_add: :update_child_attributes)
 
   belongs_to :model, inverse_of: :items
-  belongs_to :location, inverse_of: :items
+  belongs_to :room, inverse_of: :items
   belongs_to(:owner,
              class_name: 'InventoryPool',
              foreign_key: 'owner_id',
@@ -100,8 +100,8 @@ class Item < ActiveRecord::Base
     model_fields_2 = Model::SEARCHABLE_FIELDS.map { |f| "m2.#{f}" }.join(', ')
     item_fields_1 = Item::SEARCHABLE_FIELDS.map { |f| "i1.#{f}" }.join(', ')
     item_fields_2 = Item::SEARCHABLE_FIELDS.map { |f| "i2.#{f}" }.join(', ')
-    location_fields = \
-      Location::SEARCHABLE_FIELDS.map { |f| "l.#{f}" }.join(', ')
+    room_fields = \
+      Room::SEARCHABLE_FIELDS.map { |f| "r.#{f}" }.join(', ')
     joins(<<-SQL)
       INNER JOIN (SELECT i1.id,
                          CONCAT_WS(' ',
@@ -109,12 +109,12 @@ class Item < ActiveRecord::Base
                                    #{model_fields_2},
                                    #{item_fields_1},
                                    #{item_fields_2},
-                                   #{location_fields}) AS text
+                                   #{room_fields}) AS text
                   FROM items AS i1
                   INNER JOIN models AS m1 ON i1.model_id = m1.id
                   LEFT JOIN items AS i2 ON i2.parent_id = i1.id
                   LEFT JOIN models AS m2 ON m2.id = i2.model_id
-                  LEFT JOIN locations AS l ON l.id = i1.location_id) AS full_text
+                  LEFT JOIN rooms AS r ON r.id = i1.room_id) AS full_text
       ON items.id = full_text.id
     SQL
     .where(Arel::Table.new(:full_text)[:text].matches_all(q))
@@ -254,6 +254,10 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def license?
+    type == 'License'
+  end
+
   def to_s
     "#{model.name} #{inventory_code}"
   end
@@ -271,6 +275,10 @@ class Item < ActiveRecord::Base
   ####################################################################
   # TODO include Statistic module
 
+  def location
+    "#{room.building} #{room} #{shelf}"
+  end
+
   def current_location
     current_location = []
     if inventory_pool and owner != inventory_pool
@@ -279,8 +287,8 @@ class Item < ActiveRecord::Base
     if u = current_borrower
       current_location.push \
         "#{u.firstname} #{u.lastname} #{_('until')} #{I18n.l(current_return_date)}"
-    elsif location
-      current_location.push location.to_s
+    else
+      current_location.push location
     end
     current_location.join(', ')
   end
@@ -344,21 +352,6 @@ class Item < ActiveRecord::Base
   end
 
   ####################################################################
-
-  # overriding association setter
-  def location_with_params=(location_attrs)
-    self.location_without_params = \
-      if location_attrs.is_a? Hash
-        if self.location
-          location_attrs = self.location.attributes.merge location_attrs
-        end
-        Location.find_or_create(location_attrs) unless location_attrs.blank?
-      else
-        location_attrs
-      end
-  end
-
-  alias_method_chain :location=, :params
 
   # overriding association setter
   def supplier_with_params=(v)
@@ -494,7 +487,7 @@ class Item < ActiveRecord::Base
 
   def update_child_attributes(item)
     item.inventory_pool = self.inventory_pool
-    item.location = self.location
+    item.room = self.room
     item.responsible = self.responsible
     item.last_check = self.last_check
     item.properties[:ankunftsdatum] = self.properties[:ankunftsdatum]

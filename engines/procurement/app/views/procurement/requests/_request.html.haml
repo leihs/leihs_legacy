@@ -43,13 +43,39 @@
 
     .form-group
       %label.col-xs-4.control-label
-        = _('Point of Delivery')
+        = _('Building')
       .col-xs-8
         - if request.editable?(current_user)
-          %input.form-control{name: "requests[#{request.id}][location_name]", value: request.location_name, placeholder: _('Point of Delivery'), autocomplete: :off}
-          %input{type: :hidden, name: "requests[#{request.id}][location_id]", value: request.location_id}
+          - building = request.room.try(&:building)
+          = select_tag "requests[#{request.id}][building_id]",
+            options_from_collection_for_select(@buildings, :id, :to_s, building.try(&:id)),
+            { class: 'form-control' }
+          :coffeescript
+            $ ->
+              $("select[name='requests[#{request.id}][building_id]']").change (event) ->
+                building_id = event.target.options[event.target.selectedIndex].value
+                $.ajax({
+                  url: "/procurement/rooms.json?building_id=\#{building_id}"
+                  success: (data) ->
+                    selected = false
+                    options = _.map(data, (el) -> "<option value=\"\#{el.id}\">\#{el.to_s}</option>").join("")
+                    $("select[name='requests[#{request.id}][room_id]']").html(options)
+                  }
+                )
         - else
-          = request.location_name
+          = request.room.try(&:to_s)
+
+    - if building
+      .form-group
+        %label.col-xs-4.control-label
+          = _('Room')
+        .col-xs-8
+          - if request.editable?(current_user)
+            = select_tag "requests[#{request.id}][room_id]",
+              options_from_collection_for_select(building.rooms, :id, :to_s, request.room.id),
+              { class: 'form-control' }
+          - else
+            = request.room.try(&:to_s)
 
     .form-group
       %label.col-xs-4.control-label

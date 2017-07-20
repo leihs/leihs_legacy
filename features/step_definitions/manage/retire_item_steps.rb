@@ -97,7 +97,7 @@ end
 
 
 Then(/^I am redirected to the inventory list$/) do
-  find '#inventory'
+  find '#inventory .row', match: :first
   expect(has_content?(_('List of Inventory'))).to be true
   expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
 end

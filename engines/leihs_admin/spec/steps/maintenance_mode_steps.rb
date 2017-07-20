@@ -1,5 +1,5 @@
 require_relative 'shared/common_steps'
-require_relative 'shared/login_steps'
+require_relative '../../../../spec/steps/shared/login_steps'
 require_relative 'shared/personas_dump_steps'
 
 placeholder :section_name do
@@ -13,8 +13,8 @@ module LeihsAdmin
   module Spec
     module MaintenanceModeSteps
       include ::LeihsAdmin::Spec::CommonSteps
-      include ::LeihsAdmin::Spec::LoginSteps
       include ::LeihsAdmin::Spec::PersonasDumpSteps
+      include ::Spec::LoginSteps
 
       step 'I am in the system-wide settings' do
         visit admin.settings_path unless current_path == admin.settings_path

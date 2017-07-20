@@ -46,7 +46,7 @@
   jQuery ->
     new App.ItemEditController
       el: $("#new-item-view")
-      itemData: #{@item.to_json(include: [:inventory_pool, :location, :model, :owner, :supplier, { attachments: { methods: :public_filename }}], methods: [:lowest_proposed_inventory_code, :highest_proposed_inventory_code])}
+      itemData: #{@item.to_json(include: [:inventory_pool, :model, :owner, :supplier, :room, { attachments: { methods: :public_filename }}], methods: [:lowest_proposed_inventory_code, :highest_proposed_inventory_code])}
       itemType: "#{@type.downcase}"
       writeable: true
       url: "#{manage_create_item_path(current_inventory_pool)}"

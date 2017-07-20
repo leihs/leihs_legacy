@@ -27,7 +27,7 @@ module Leihs
     # But the Faker gem is currently broken and does not accept properly spelled locales like 'en_US', it tries
     # to look for 'en' and that breaks. If Faker is ever fixed, we can uncomment the above lines.
 
-    config.logger = ActiveSupport::Logger.new(STDOUT)
+    config.logger = ActiveSupport::Logger.new(STDOUT) unless Rails.env.development?
 
     if ENV['RAILS_LOG_LEVEL'].present?
       config.log_level = ENV['RAILS_LOG_LEVEL']
@@ -47,6 +47,7 @@ module Leihs
     config.gettext_i18n_rails.use_for_active_record_attributes = false
 
     config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('database/lib')
   end
 end
 

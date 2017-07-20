@@ -13,7 +13,13 @@ class window.App.ItemFlexibleFieldsController extends Spine.Controller
       for field in @el.find("[data-type='field']")
         @toggleChildren {currentTarget: field}
       $("#show-all-fields").show() if $(".hidden.field").length
-      @callback?()
+      if @getFieldsWithValuesDependency().length > 0
+        @setupFieldsWithValuesDependency(@callback)
+      else
+        @callback?()
+
+  getFieldsWithValuesDependency: =>
+    _.filter(App.Field.all(), (f) -> f.values_dependency_field_id)
 
   fetchFields: =>
     return {done: (c)->c()} if App.Field.all().length
@@ -40,6 +46,15 @@ class window.App.ItemFlexibleFieldsController extends Spine.Controller
       else
         @formRightSide
       target.append template
+
+  setupFieldsWithValuesDependency: (callback) =>
+    for field in @getFieldsWithValuesDependency()
+      new App.ValuesDependencyFieldController
+        el: @el
+        renderData: { itemData: @itemData, writeable: @writeable, hideable: @hideable }
+        parentField: App.Field.find(field.values_dependency_field_id)
+        childField: field
+        callback: callback
 
   showOwnerChangeNotification: =>
     App.Flash

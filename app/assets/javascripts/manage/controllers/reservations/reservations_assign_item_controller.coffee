@@ -18,14 +18,7 @@ class window.App.ReservationAssignItemController extends Spine.Controller
     .done (data)=> 
       items = ((App.Item.exists(datum.id) ? App.License.find(datum.id)) for datum in data) 
       if items.length
-        location_ids = _.compact _.uniq _.map items, (i)->i.location_id
-        @fetchLocations(location_ids).done (data)=>
-          if data?
-            locations = (App.Location.find(datum.id) for datum in data)
-            building_ids = _.compact _.uniq _.map locations, (l)-> l.building_id
-            @fetchBuildings(building_ids).done => @setupAutocomplete(target, items)
-          else
-            @setupAutocomplete(target, items)
+        @setupAutocomplete(target, items)
 
   setupAutocomplete: (input, items)->
     return false if not input.is(":focus") or input.is(":disabled")
@@ -61,7 +54,6 @@ class window.App.ReservationAssignItemController extends Spine.Controller
       data: $.param 
         ids: ids
 
-  fetchLocations: _.partial this::fetchWithIds, App.Location
   fetchBuildings: _.partial this::fetchWithIds, App.Building
 
   assignItem: (input, item)=>

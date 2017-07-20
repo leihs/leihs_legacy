@@ -254,7 +254,8 @@ end
 Then(/^I can create new items$/) do
   c = Item.count
   attributes = {
-    model_id: @inventory_pool.models.first.id
+    model_id: @inventory_pool.models.first.id,
+    room_id: FactoryGirl.create(:room).id
   }
   expect(page.driver.browser.process(:post, manage_create_item_path(@inventory_pool, format: :json), {item: attributes}).successful?).to be true
   expect(Item.count).to eq c+1

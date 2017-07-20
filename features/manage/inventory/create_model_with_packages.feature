@@ -10,21 +10,27 @@ Feature: Create model with packages
     And I fill in at least the required fields
     And I add one or more packages
     And I add one or more items to this package
+    And I choose "general building" from building select box
+    And I choose "general room" from room select box
     And I save both package and model
     Then the model is created and the packages and their assigned items are saved
     And the packages have their own inventory codes
 
   Scenario: A model that already has items cannot be turned into a package
     When I edit a model that already has items
-
     Then I cannot assign packages to that model
 
   Scenario: Can't create package without items
     When I add a package to a model
+    And I choose "general building" from building select box
+    And I choose "general room" from room select box
     Then I can only save this package if I also assign items
 
+  @flapping
   Scenario: Remove single item from a package
     When I edit a package
+    And I choose "general building" from building select box
+    And I choose "general room" from room select box
     Then I can remove items from the package
     And those items are no longer assigned to the package
 
@@ -42,8 +48,8 @@ Feature: Create model with packages
     | User/Typical usage     |              | Test Verwendung |
     | Name                   |              | Test Name       |
     | Note                   |              | Test Notiz      |
-    | Building               | autocomplete | None            |
-    | Room                   |              | Test Raum       |
+    | Building               | autocomplete | general building |
+    | Room                   | autocomplete | general room  |
     | Shelf                  |              | Test Gestell    |
     | Initial Price          |              | 50.00           |
     | Last Checked           |              | 01/01/2013      |
@@ -56,6 +62,8 @@ Feature: Create model with packages
     And I add a package
     And I enter the package properties
     And I add one or more items to this package
+    And I choose "general building" from building select box
+    And I choose "general room" from room select box
     And I save this package
     And I edit an existing Package
     Then I enter the package properties
@@ -76,8 +84,8 @@ Feature: Create model with packages
     | User/Typical usage     |              | Test Verwendung |
     | Name                   |              | Test Name       |
     | Note                   |              | Test Notiz      |
-    | Building               | autocomplete | None            |
-    | Room                   |              | Test Raum       |
+    | Building               | autocomplete | general building |
+    | Room                   | autocomplete | general room  |
     | Shelf                  |              | Test Gestell    |
     | Initial Price          |              | 50.00           |
     | Last Checked           |              | 01/01/2013      |
@@ -89,7 +97,6 @@ Feature: Create model with packages
     | field                  |
     | Responsible department |
     | Responsible person     |
-    | Building               |
     | Room                   |
     | Shelf                  |
     | Check-in Date          |

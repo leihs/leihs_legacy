@@ -511,12 +511,6 @@ steps_for :managing_requests do
     end
   end
 
-  step 'several points of delivery exist' do
-    5.times do
-      FactoryGirl.create :location
-    end
-  end
-
   step 'several receivers exist' do
     5.times do
       step 'a receiver exists'
@@ -843,6 +837,24 @@ steps_for :managing_requests do
         find('.row', text: c.name)
       end
     end
+  end
+
+  step 'I choose building :building' do |building|
+    find('.form-group', text: _('Building'))
+      .find('select')
+      .select(building)
+  end
+
+  step 'the room has as default value the general room of :building' do |name|
+    building ||= Building.find_by_name(name)
+    expect(find("select[name='requests[new_1][room_id]']").value)
+      .to be == building.general_room.id
+  end
+
+  step 'I choose room :room' do |room|
+    find('.form-group', text: _('Room'))
+      .find('select')
+      .select(room)
   end
 
   private

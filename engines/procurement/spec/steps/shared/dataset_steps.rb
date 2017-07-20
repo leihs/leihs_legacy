@@ -6,9 +6,16 @@ module DatasetSteps
     step 'there exists a main category'
     step 'there exists a sub category'
     step 'there exist 3 requesters'
+    step 'there exists a general building'
   end
 
   ######################################################
+
+  step 'there exists a general building' do
+    FactoryGirl.create(:building,
+                       id: ::Leihs::Constants::GENERAL_BUILDING_UUID,
+                       name: 'general building')
+  end
 
   step 'a procurement admin exists' do
     Procurement::Access.admins.exists? \

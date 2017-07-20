@@ -42,7 +42,7 @@ require 'selenium/webdriver'
 
 Capybara.register_driver :selenium_firefox do |app|
   if ENV['FIREFOX_ESR_PATH'].present?
-    Selenium::WebDriver::Firefox.path = ENV['FIREFOX_ESR_PATH']
+    Selenium::WebDriver::Firefox::Binary.path = ENV['FIREFOX_ESR_PATH']
   end
   profile = Selenium::WebDriver::Firefox::Profile.new
   Capybara::Selenium::Driver.new app, browser: :firefox, profile: profile

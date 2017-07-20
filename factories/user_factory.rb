@@ -13,7 +13,8 @@ FactoryGirl.define do
     phone { Faker::PhoneNumber.phone_number.gsub(/\D/, '') }
     authentication_system do
       if AuthenticationSystem.first.blank?
-        FactoryGirl.create(:authentication_system)
+        FactoryGirl.create(:authentication_system,
+                           name: 'DatabaseAuthentication')
       else
         AuthenticationSystem.first
       end
@@ -65,6 +66,14 @@ FactoryGirl.define do
                  inventory_pool: evaluator.inventory_pool,
                  role: role)
         end
+      end
+    end
+
+    factory :admin do
+      after(:create) do |user, evaluator|
+        create(:access_right,
+               user: user,
+               role: :admin)
       end
     end
   end

@@ -1,5 +1,5 @@
 require_relative 'shared/common_steps'
-require_relative 'shared/login_steps'
+require_relative '../../../../spec/steps/shared/login_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_dump_steps'
 
@@ -12,21 +12,76 @@ placeholder :whether_providing do
   end
 end
 
+# rubocop:disable Metrics/ModuleLength
 module LeihsAdmin
   module Spec
     module BuildingSteps
       include ::LeihsAdmin::Spec::CommonSteps
-      include ::LeihsAdmin::Spec::LoginSteps
       include ::LeihsAdmin::Spec::NavigationSteps
       include ::LeihsAdmin::Spec::PersonasDumpSteps
+      include ::Spec::LoginSteps
 
       step 'I see a list of buildings' do
         find('.nav-tabs .active', text: _('Buildings'))
         within '.list-of-lines' do
           Building.limit(5).each do |building|
-            find('.row > .col-sm-4', text: building.name)
+            find('.row > .col-sm-3', text: building.name)
           end
         end
+      end
+
+      step 'I see a list of all buildings' do
+        find('.nav-tabs .active', text: _('Buildings'))
+        within '.list-of-lines' do
+          Building.all.each do |building|
+            find(".row[data-id='#{building.id}']")
+          end
+        end
+      end
+
+      step 'the first row contains name of the building' do
+        @first_row = first('.list-of-lines .row')
+        @first_building = Building.find(@first_row['data-id'])
+        expect(@first_row).to have_content @first_building.name
+      end
+
+      step 'the first row contains code of the building' do
+        @first_row ||= first('.list-of-lines .row')
+        @first_building ||= Building.find(@first_row['data-id'])
+        expect(@first_row).to have_content @first_building.code
+      end
+
+      step 'the first row contains rooms count of the building' do
+        @first_row ||= first('.list-of-lines .row')
+        @first_building ||= Building.find(@first_row['data-id'])
+        expect(@first_row)
+          .to have_content "#{@first_building.rooms.count} #{_('rooms')}"
+      end
+
+      step 'the first row contains items count of the building' do
+        @first_row ||= first('.list-of-lines .row')
+        @first_building ||= Building.find(@first_row['data-id'])
+        expect(@first_row)
+          .to have_content "#{@first_building.items.count} #{_('items')}"
+      end
+
+      step 'the general building row contains the general label' do
+        @general_building ||= Building.general
+        @general_row ||= \
+          find(".list-of-lines .row[data-id='#{@general_building.id}']")
+        expect(@general_row).to have_content _('general')
+      end
+
+      step 'the general building row is highlighted' do
+        @general_building ||= Building.general
+        @general_row ||= \
+          find(".list-of-lines .row[data-id='#{@general_building.id}']")
+        expect(@general_row.native.attribute(:class)).to include 'text-warning'
+      end
+
+      step 'the buildings are sorted alphabetically' do
+        ids = all('.list-of-lines .row').map { |r| r['data-id'] }
+        expect(Building.order('lower(name) ASC').map(&:id)).to be == ids
       end
 
       step 'I create a new building :whether_providing ' \
@@ -44,7 +99,7 @@ module LeihsAdmin
 
       step 'I see the :adjective building' do |arg1 = nil|
         within '.list-of-lines' do
-          find('.row > .col-sm-4', text: @name)
+          find('.row > .col-sm-3', text: @name)
         end
       end
 
@@ -91,9 +146,28 @@ module LeihsAdmin
           ).to be true
         end
       end
+
+      step 'a general room for this building was created in the database' do
+        expect(Room.where(general: true).find_by_building_id(@building.id)).to be
+      end
+
+      step 'the new building was created in the database' do
+        @building = Building.find_by_name(@name)
+        expect(Room.where(general: true).find_by_building_id(@building.id)).to be
+      end
+
+      step 'the building was deleted from the database' do
+        expect(Building.find_by_id(@building.id)).not_to be
+      end
+
+      step 'its general room was deleted from the database too' do
+        expect(Room.find_by(building_id: @building.id, general: true))
+          .not_to be
+      end
     end
   end
 end
+# rubocop:enable Metrics/ModuleLength
 
 RSpec.configure do |config|
   config.include LeihsAdmin::Spec::BuildingSteps, leihs_admin_buildings: true

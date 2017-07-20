@@ -52,7 +52,8 @@ module Procurement
           format('%s / %s', _('Replacement'), _('New')) => \
                                   replacement ? _('Replacement') : _('New'),
           _('Receiver') => receiver,
-          _('Point of Delivery') => location_name,
+          _('Building') => room.building.to_s,
+          _('Room') => room.to_s,
           _('Motivation') => motivation,
           _('Inspection comment') => \
             authorize_value(_('Inspection comment'),

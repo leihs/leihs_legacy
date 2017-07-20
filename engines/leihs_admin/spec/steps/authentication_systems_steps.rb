@@ -1,5 +1,5 @@
 require_relative 'shared/common_steps'
-require_relative 'shared/login_steps'
+require_relative '../../../../spec/steps/shared/login_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_dump_steps'
 
@@ -7,9 +7,9 @@ module LeihsAdmin
   module Spec
     module AuthenticationSystemsSteps
       include ::LeihsAdmin::Spec::CommonSteps
-      include ::LeihsAdmin::Spec::LoginSteps
       include ::LeihsAdmin::Spec::NavigationSteps
       include ::LeihsAdmin::Spec::PersonasDumpSteps
+      include ::Spec::LoginSteps
 
       step 'I see a list of authentication systems' do
         find('.nav-tabs .active', text: _('Authentication Systems'))

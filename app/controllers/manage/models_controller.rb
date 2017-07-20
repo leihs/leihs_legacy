@@ -129,8 +129,10 @@ class Manage::ModelsController < Manage::ApplicationController
           data[:inventory_code] ||= \
             "P-#{Item.proposed_inventory_code(current_inventory_pool)}"
           item.update_attributes data
-          children['id'].each do |child|
-            item.children << Item.find_by_id(child)
+          children['id'].each do |child_id|
+            child = Item.find(child_id)
+            inherit_attributes_from_package!(item, child)
+            item.children << child
           end
           flash[:success] = "#{_('Model saved')} / #{_('Packages created')}"
         end
@@ -150,8 +152,10 @@ class Manage::ModelsController < Manage::ApplicationController
           item.update_attributes package
           if children
             item.children = []
-            children['id'].each do |child|
-              item.children << Item.find_by_id(child)
+            children['id'].each do |child_id|
+              child = Item.find(child_id)
+              inherit_attributes_from_package!(item, child)
+              item.children << child
             end
           end
         end
@@ -161,6 +165,11 @@ class Manage::ModelsController < Manage::ApplicationController
   end
 
   private
+
+  def inherit_attributes_from_package!(package, item)
+    item.update_attributes!(room_id: package.room_id,
+                            shelf: package.shelf)
+  end
 
   def save_model(model)
     # PACKAGES

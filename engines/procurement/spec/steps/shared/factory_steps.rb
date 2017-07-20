@@ -97,12 +97,15 @@ module FactorySteps
         @changes[:supplier_name] = hash['value']
       when 'name of receiver'
         @changes[:receiver] = hash['value']
-      when 'point of delivery'
-        @changes[:location_name] = hash['value']
       when 'replacement'
         @changes[:replacement] = (hash['value'] == 'Replacement' ? 1 : 0)
       when 'price'
         @changes[:price] = hash['value']
+      when 'building'
+        @building = FactoryGirl.create(:building, name: hash['value'])
+      when 'room'
+        @changes[:room_id] = \
+          FactoryGirl.create(:room, name: hash['value'], building: @building).id
       else
         raise
       end
@@ -163,6 +166,14 @@ module FactorySteps
                          inspection_start_date: \
                            current_budget_period.end_date + 1.month,
                          end_date: current_budget_period.end_date + 2.months)
+  end
+
+  step 'a room :room for building :building exists' do |room, building|
+    @room = FactoryGirl.create(
+      :room,
+      name: room,
+      building: FactoryGirl.create(:building, name: building)
+    )
   end
 end
 # rubocop:enable Metrics/ModuleLength

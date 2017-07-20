@@ -36,7 +36,7 @@ class InventoryPool < ActiveRecord::Base
            end),
            through: :access_rights, source: :user)
 
-  has_many :locations, -> { uniq }, through: :items
+  has_many :rooms, -> { uniq }, through: :items
   has_many :items, dependent: :restrict_with_exception
   has_many(:own_items,
            class_name: 'Item',
@@ -323,7 +323,7 @@ class InventoryPool < ActiveRecord::Base
                true
              end
 
-    include_params = [:location, :inventory_pool, :owner, :supplier]
+    include_params = [:room, :inventory_pool, :owner, :supplier]
     include_params += \
       (global ? [:model] : [:item_lines, model: [:model_links, :model_groups]])
 
@@ -448,15 +448,9 @@ class InventoryPool < ActiveRecord::Base
       i.supplier = \
         Supplier.find_or_create_by(name: row['supplier_name'])
     end
-    unless row['building'].blank? and row['room'].blank?
-      building_id = if row['building'].blank?
-                      nil
-                    else
-                      Building.find_or_create_by(name: row['building']).id
-                    end
-      room = row['room'].blank? ? nil : row['room']
-      i.location = Location.find_or_create(building_id: building_id,
-                                           room: room)
+    unless row['building_id'].blank? and row['room_id'].blank?
+      building = Building.find_by_id(name: row['building_id'])
+      i.room = Room.find_by(id: row['room_id'], building_id: building.id)
     end
     unless row['properties_anschaffungskategorie'].blank?
       i.properties[:anschaffungskategorie] = \

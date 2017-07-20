@@ -125,10 +125,9 @@ Then(/^the items without location, are displayed with (the available quantity fo
   expect(lines).not_to be_blank
   lines.select { |line| line.is_a? ItemLine }.each do |line|
     if line.item_id
-      next if line.item.location and not line.item.location.room.blank? and not line.item.location.shelf.blank?
       find('section.list .model_name', match: :prefer_exact, text: line.model.name).find(:xpath, './..').find('.location', text: arg2)
     else
-      locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.location_id) AS count, locations.room AS room, locations.shelf AS shelf').joins(:location).group(:location_id, :room, :shelf).order('count DESC, room ASC, shelf ASC')
+      locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.location_id) AS count, locations.room AS room, locations.shelf AS shelf').joins(:location).group('items.location_id', 'locations.room', 'locations.shelf').order('count DESC, room ASC, shelf ASC')
       locations.to_a.delete_if { |location| location.room.blank? and location.shelf.blank? }
       not_defined_count = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).count - locations.to_a.sum(&:count)
       if not_defined_count > 0
@@ -136,19 +135,6 @@ Then(/^the items without location, are displayed with (the available quantity fo
       end
     end
   end
-end
-
-Then(/^items without assigned room or shelf are shown with (their available quantity for the customer and )?"(.*?)"$/) do |arg1, arg2|
-  s1 = arg1 ? 'the available quantity for this customer and ' : nil
-  s2 = case arg2
-         when 'x Location not defined'
-           'x %s' % _('Location not defined')
-         when 'Location not defined'
-           _('Location not defined')
-         else
-           fail
-       end
-  step %(the items without location, are displayed with #{s1}"#{s2}")
 end
 
 Then(/^the missing location information for options, are displayed with "(.*?)"$/) do |arg1|

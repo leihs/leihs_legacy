@@ -1,10 +1,10 @@
 
-Feature: Copying software
+Feature: Copying license
 
   Background:
     Given I am Mike
 
-  Scenario: Copying software
+  Scenario: Copying license
     Given a software license exists
     When I copy an existing software license
     Then it opens the edit view of the new software license
@@ -34,7 +34,7 @@ Feature: Copying software
       | Currency               |
       | Price                  |
 
-  Scenario: Where can software be copied
+  Scenario: Where can license be copied
     Given a software license exists
     When I open the inventory
     Then I can copy an existing software license

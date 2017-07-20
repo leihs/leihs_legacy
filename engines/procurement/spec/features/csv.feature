@@ -34,7 +34,8 @@ Feature: Exporting the data to a CSV-File
       | Supplier                   |
       | Inspection comment         |
       | Receiver                   |
-      | Point of Delivery          |
+      | Building                   |
+      | Room                       |
       | State                      |
     Examples:
       | username  |
@@ -67,7 +68,8 @@ Feature: Exporting the data to a CSV-File
       | Motivation                 |
       | Supplier                   |
       | Receiver                   |
-      | Point of Delivery          |
+      | Building                   |
+      | Room                       |
       | State                      |
     And the values for the following fields are not exported
       | Approved quantity          |
@@ -101,7 +103,8 @@ Feature: Exporting the data to a CSV-File
       | Motivation                 |
       | Supplier                   |
       | Receiver                   |
-      | Point of Delivery          |
+      | Building                   |
+      | Room                       |
       | State                      |
       | Approved quantity          |
       | Inspection comment         |

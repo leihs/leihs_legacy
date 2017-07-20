@@ -154,11 +154,11 @@ Then /^the item line contains the (.*)$/ do |arg1|
         when 'location of the item'
           @item.location.to_s
         when 'code of the building'
-          @item.location.building.code
+          @item.room.building.code
         when 'room'
-          @item.location.room
+          @item.room.name
         when 'shelf'
-          @item.location.shelf
+          @item.shelf
         when 'name of the current borrower'
           @item.current_borrower.to_s
         when 'end date of the current contract'
@@ -600,6 +600,7 @@ end
 
 Then /^the attachments are saved$/ do
   find('#inventory-index-view h1', match: :prefer_exact, text: _('List of Inventory'))
+  find('#inventory .row', match: :first)
   expect(@model.attachments.reload.where(filename: @attachment_filenames.sample).empty?).to be false
 end
 

@@ -1,0 +1,6 @@
+set -eux
+
+file=${FILE:-tmp/db_dump_no_files.pgbin}
+psql $1 -c 'delete from images;'
+psql $1 -c 'delete from attachments;'
+bundle exec rake db:pg:structure_and_data:dump FILE=$file

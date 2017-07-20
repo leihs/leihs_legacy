@@ -89,6 +89,18 @@ module Manage
       step 'the item was updated' do
         expect(Item.find_by_serial_number(@serial_number)).to be
       end
+
+      step 'I choose a building' do
+        type_into_and_select_from_autocomplete \
+          "[data-autocomplete_value_target='item[room][building_id]'",
+          Building.general.name
+      end
+
+      step 'I choose a room' do
+        type_into_and_select_from_autocomplete \
+          "[data-autocomplete_value_target='item[room_id]'",
+          Building.general.rooms.find_by_general(true).name
+      end
     end
   end
 end

@@ -1,8 +1,8 @@
 class Building < ActiveRecord::Base
   audited
 
-  has_many :locations, dependent: :restrict_with_exception
-  has_many :items, through: :locations
+  has_many :rooms
+  has_many :items, through: :rooms
 
   validates_presence_of :name
 
@@ -10,8 +10,32 @@ class Building < ActiveRecord::Base
 
   ########################################################
 
+  after_create do
+    Room.create!(name: 'general room',
+                 building_id: id,
+                 general: true)
+  end
+
+  ########################################################
+
+  def self.general
+    find(Leihs::Constants::GENERAL_BUILDING_UUID)
+  end
+
+  def general_room
+    rooms.find_by!(general: true)
+  end
+
+  def can_destroy?
+    rooms.count == 1 and rooms.find_by(general: true).can_destroy?
+  end
+
   def to_s
-    "#{name} (#{code})"
+    if code.presence
+      "#{name} (#{code})"
+    else
+      name
+    end
   end
 
   def self.filter(params)
@@ -21,16 +45,18 @@ class Building < ActiveRecord::Base
   end
 
   scope :search, lambda { |query|
-                 sql = all
-                 return sql if query.blank?
+    sql = all
+    return sql if query.blank?
 
-                 query.split.each do |q|
-                   q = "%#{q}%"
-                   sql = sql.where(arel_table[:name].matches(q)
-                                       .or(arel_table[:code].matches(q))
-                                  )
-                 end
-                 sql
+    query.split.each do |q|
+      q = "%#{q}%"
+      sql = \
+        sql
+        .where(
+          arel_table[:name].matches(q)
+          .or(arel_table[:code].matches(q)))
+    end
+    sql
   }
 
 end

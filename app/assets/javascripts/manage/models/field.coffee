@@ -9,7 +9,8 @@ class window.App.Field extends Spine.Model
   @configure "Field", "id", "attribute", "default", "display_attr", "display_attr_ext", "forPackage",
                       "extended_key", "extensible", "form_name", "group", "label",
                       "permissions", "required", "search_attr", "search_path", "type", "value_attr",
-                      "value_label", "value_label_ext", "values", "visibility_dependency_field_id", "visibility_dependency_value"
+                      "item_value_label", "item_value_label_ext", "values", "visibility_dependency_field_id", "visibility_dependency_value",
+                      "exclude_from_submit", "values_dependency_field_id", "values_url", "values_label_method"
   
   @extend Spine.Model.Ajax
 
@@ -51,7 +52,7 @@ class window.App.Field extends Spine.Model
     else
       null
 
-  getItemValueLabel: (value_label, item)=>
+  getItemValueLabel: (item_value_label, item)=>
     if item?
       # local helper function
       reduceHelper = (valueLabel) ->
@@ -65,10 +66,10 @@ class window.App.Field extends Spine.Model
         else
           item[valueLabel]
 
-      result = reduceHelper(value_label)
+      result = reduceHelper(item_value_label)
 
       # append extended value label if present
-      result = [result, value_label_ext].join(" ") if value_label_ext = reduceHelper(@value_label_ext)
+      result = [result, item_value_label_ext].join(" ") if item_value_label_ext = reduceHelper(@item_value_label_ext)
 
       result
 
@@ -89,6 +90,9 @@ class window.App.Field extends Spine.Model
   children: ->
     _.filter App.Field.all(), (field)=> field.visibility_dependency_field_id == @id
 
+  childrenWithValueDependency: ->
+    _.filter App.Field.all(), (field)=> field.values_dependency_field_id == @id
+
   descendants: ->
     children = @children()
     if _.isEmpty children
@@ -99,6 +103,10 @@ class window.App.Field extends Spine.Model
   parent: ->
     if @visibility_dependency_field_id?
       App.Field.find @visibility_dependency_field_id
+
+  parentWithValueDependency: ->
+    if @values_dependency_field_id?
+      App.Field.find @values_dependency_field_id
 
   getValueLabel: (values, value)-> 
     value = null if value == undefined

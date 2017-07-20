@@ -5,6 +5,7 @@
 #= require bootstrap
 #= require accounting.js
 #= require jquery-tokeninput
+#= require underscore
 #
 #= require procurement/bootstrap-multiselect
 #

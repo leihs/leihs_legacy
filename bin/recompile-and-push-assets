@@ -1,0 +1,8 @@
+set -eux
+
+./bin/recompile-assets
+cd public/assets
+git add .
+git commit -m "$1"
+git push
+cd -

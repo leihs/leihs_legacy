@@ -1,13 +1,13 @@
 require_relative 'shared/common_steps'
-require_relative 'shared/login_steps'
+require_relative '../../../../spec/steps/shared/login_steps'
 require_relative 'shared/personas_dump_steps'
 
 module LeihsAdmin
   module Spec
     module SettingsSteps
       include ::LeihsAdmin::Spec::CommonSteps
-      include ::LeihsAdmin::Spec::LoginSteps
       include ::LeihsAdmin::Spec::PersonasDumpSteps
+      include ::Spec::LoginSteps
 
       step 'I edit the following settings' do |table|
         @new_settings = {}

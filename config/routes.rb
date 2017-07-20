@@ -119,8 +119,8 @@ Rails.application.routes.draw do
     # Users
     post 'users/:id/set_start_screen', to: 'users#set_start_screen'
 
-    # Locations
-    get     'locations',          to: 'locations#index'
+    # Buildings
+    get     'rooms',              to: 'rooms#index'
 
     scope ":inventory_pool_id/" do
 

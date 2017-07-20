@@ -1,6 +1,17 @@
 class Manage::ItemsController < Manage::ApplicationController
   include FileStorage
 
+  JSON_SPEC = {
+    methods: :current_location,
+    include: {
+      inventory_pool: {},
+      model: {},
+      owner: {},
+      supplier: {},
+      room: { include: :building }
+    }
+  }
+
   def index
     cip = unless params[:current_inventory_pool] == 'false'
              current_inventory_pool
@@ -47,7 +58,11 @@ class Manage::ItemsController < Manage::ApplicationController
     check_fields_for_write_permissions
 
     unless @item.errors.any?
-      saved = @item.update_attributes(params[:item])
+      @item.attributes = item_params
+      if item_params[:room_id].blank? and @item.license?
+        @item.room = Room.general_general
+      end
+      saved = @item.save
     end
 
     respond_to do |format|
@@ -60,12 +75,8 @@ class Manage::ItemsController < Manage::ApplicationController
                              manage_copy_item_path(current_inventory_pool,
                                                    @item.id) })
           else
-            render(status: :ok,
-                   json: @item.to_json(include: [:inventory_pool,
-                                                 :location,
-                                                 :model,
-                                                 :owner,
-                                                 :supplier]))
+            json = @item.as_json(JSON_SPEC).to_json
+            render(status: :ok, json: json)
           end
         else
           if @item
@@ -94,11 +105,11 @@ class Manage::ItemsController < Manage::ApplicationController
 
       unless @item.errors.any?
         # NOTE avoid to lose already stored properties
-        if params[:item][:properties]
-          params[:item][:properties] = \
-            @item.properties.merge params[:item][:properties]
+        if item_params[:properties]
+          item_params[:properties] = \
+            @item.properties.merge item_params[:properties]
         end
-        saved = @item.update_attributes(params[:item])
+        saved = @item.update_attributes(item_params)
       end
 
     end
@@ -112,12 +123,8 @@ class Manage::ItemsController < Manage::ApplicationController
                              manage_copy_item_path(current_inventory_pool,
                                                    @item.id) })
           else
-            render(status: :ok,
-                   json: @item.to_json(include: [:inventory_pool,
-                                                 :location,
-                                                 :model,
-                                                 :owner,
-                                                 :supplier]))
+            json = @item.as_json(JSON_SPEC).to_json
+            render(status: :ok, json: json)
           end
         else
           if @item
@@ -182,7 +189,7 @@ class Manage::ItemsController < Manage::ApplicationController
   def check_fields_for_write_permissions
     Field.all.each do |field|
       next unless field.data['permissions']
-      next unless field.get_value_from_params params[:item]
+      next unless field.get_value_from_params item_params
       next if field.editable(current_user, current_inventory_pool, @item)
       @item
         .errors
@@ -210,5 +217,9 @@ class Manage::ItemsController < Manage::ApplicationController
     # `reverse` because the error message for the serial number
     # should be displayed as last.
     @item.errors.full_messages.reverse.uniq.join(' ')
+  end
+
+  def item_params
+    params.require(:item)
   end
 end

@@ -28,16 +28,8 @@ class window.App.InventoryExpandController extends Spine.Controller
     model = App.Model.find(line.data("id")) if line.data("type") == "model"
     software = App.Software.find(line.data("id")) if line.data("type") == "software"
     itemIds = _.map (model?.items() ? software?.licenses()).all(), (i)->i.id
-    @fetchCurrentItemLocation(line, itemIds).done => 
-      @fetchPackageItems(line, itemIds).done (data)=>
-        @fetchPackageModels(line, itemIds).done => callback line
-
-  fetchCurrentItemLocation: (line, itemIds)=>
-    App.CurrentItemLocation.ajaxFetch
-      data: $.param
-        ids: itemIds
-        all: true
-        paginate: false
+    @fetchPackageItems(line, itemIds).done (data)=>
+      @fetchPackageModels(line, itemIds).done => callback line
 
   fetchPackageItems: (line, itemIds)=>
     if line.data("is_package") == true
@@ -68,7 +60,7 @@ class window.App.InventoryExpandController extends Spine.Controller
   updateChildren: (line)=>
     currentContainer = line.data "_children"
     @renderChildren line, "additionalDataFetched"
-    currentContainer.replaceWith line.data "_children"
+    currentContainer?.replaceWith line.data "_children"
 
   renderChildren: (line, additionalDataFetched = false)=>
     record = App[_.string.classify(line.data("type"))].find line.data("id")

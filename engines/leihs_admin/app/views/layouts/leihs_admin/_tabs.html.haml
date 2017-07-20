@@ -15,6 +15,10 @@
     %a{:href => admin.buildings_path}
       = _('Buildings')
 
+  %li{role: 'presentation', class: params[:controller] == 'leihs_admin/rooms' ? 'active' : nil}
+    %a{:href => admin.rooms_path}
+      = _('Rooms')
+
   %li{role: 'presentation', class: params[:controller] == 'leihs_admin/settings' ? 'active' : nil}
     %a{:href => admin.settings_path}
       = _('Settings')

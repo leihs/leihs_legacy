@@ -280,6 +280,14 @@ msgid_plural "Buildings"
 msgstr[0] "Gebäude"
 msgstr[1] "Gebäude"
 
+msgid "Building together with a general room successfully created"
+msgstr "Gebäude zusammen mit einem generellen Raum wurde erfolgreich erstellt"
+
+msgid "Room"
+msgid_plural "Rooms"
+msgstr[0] "Raum"
+msgstr[1] "Räume"
+
 msgid "CSV"
 msgstr "CSV"
 
@@ -767,6 +775,9 @@ msgstr "Liste der %s"
 
 msgid "List of available variables"
 msgstr "Liste der verfügbaren Variablen"
+
+msgid "List of Rooms"
+msgstr "Liste der Räume"
 
 msgid "List of Buildings"
 msgstr "Liste der Gebäude"
@@ -2665,6 +2676,11 @@ msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s Gegenstand"
 msgstr[1] "%s Gegenstände"
+
+msgid "%s room"
+msgid_plural "%s rooms"
+msgstr[0] "%s Raum"
+msgstr[1] "%s Räume"
 
 msgid "to %s"
 msgstr "an %s"

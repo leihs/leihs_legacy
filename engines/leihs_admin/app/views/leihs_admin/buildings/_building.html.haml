@@ -1,12 +1,15 @@
-.row
-  .col-sm-4
+.row{data: {id: building.id}, class: ('text-warning' if building.id == Leihs::Constants::GENERAL_BUILDING_UUID)}
+  .col-sm-3
     %strong= building.name
 
-  .col-sm-2
+  .col-sm-1
     = building.code
 
+  .col-sm-2.text-center
+    = _('general') if building == Building.general
+
   .col-sm-2
-    = _("%s locations") % building.locations.count
+    = _("%s rooms") % building.rooms.count
 
   .col-sm-2
     = _("%s items") % building.items.count

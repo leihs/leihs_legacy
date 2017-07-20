@@ -11,6 +11,7 @@ FactoryGirl.define do
       end
     end
     inventory_pool { owner }
+    room
 
     after(:build) do |item|
       if item.properties?
@@ -26,7 +27,6 @@ FactoryGirl.define do
     shared_item_license_attributes
 
     model { FactoryGirl.create :model }
-    location { FactoryGirl.create :location }
     supplier { FactoryGirl.create :supplier }
     invoice_date do
       Time.zone.local((Time.zone.now.year - rand(5) - 1),

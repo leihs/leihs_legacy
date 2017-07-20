@@ -17,10 +17,6 @@ steps_for :inspection do
   include PersonasSteps
   include RequestSteps
 
-  step 'a point of delivery exists' do
-    FactoryGirl.create :location
-  end
-
   step 'I can not move any request to the old budget period' do
     within '.request', match: :first do
       current_scope.click # NOTE trick to scroll element into view
@@ -338,5 +334,17 @@ steps_for :inspection do
         end
       end
     end
+  end
+
+  step 'I choose building :building' do |building|
+    find('.form-group', text: _('Building'))
+      .find('select')
+      .select(building)
+  end
+
+  step 'I choose room :room' do |room|
+    find('.form-group', text: _('Room'))
+      .find('select')
+      .select(room)
   end
 end

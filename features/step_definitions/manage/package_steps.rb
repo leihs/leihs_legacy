@@ -145,8 +145,10 @@ Then /^I can remove items from the package$/ do
     within '#items' do
       items = all("[data-type='inline-entry']", minimum: 1)
       @number_of_items_before = items.size
-      @item_to_remove = items.first.text
-      find('[data-remove]', match: :first).click
+      @item_to_remove = items.last.text
+      item_el = find("[data-type='inline-entry']", text: @item_to_remove)
+      el = item_el.find('[data-remove]', match: :first)
+      el.click
     end
     find('#save-package').click
   end
@@ -154,7 +156,7 @@ Then /^I can remove items from the package$/ do
 end
 
 Then /^those items are no longer assigned to the package$/ do
-  expect(has_content?(_('List of Inventory'))).to be true
+  expect(page).to have_selector('#inventory .row')
   @package_to_edit.reload
   expect(@package_to_edit.children.count).to eq (@number_of_items_before - 1)
   expect(@package_to_edit.children.detect {|i| i.inventory_code == @item_to_remove}).to eq nil
@@ -203,8 +205,8 @@ When(/^I enter the package properties$/) do
     | User/Typical usage     |              | Test Verwendung |
     | Name                   |              | Test Name       |
     | Note                   |              | Test Notiz      |
-    | Building               | autocomplete | None            |
-    | Room                   |              | Test Raum       |
+    | Building               | autocomplete | general building |
+    | Room                   | autocomplete | general room  |
     | Shelf                  |              | Test Gestell    |
     | Initial Price          |              | 50.00           | }
 end
@@ -249,8 +251,10 @@ Then(/^all the packaged items receive these same values store to this package$/)
           c.inventory_pool_id == @package.inventory_pool_id
         when 'Responsible person'
           c.responsible == @package.responsible
-        when 'Building', 'Room', 'Shelf'
-          c.location_id == @package.location_id
+        when 'Room'
+          c.room_id == @package.room_id
+        when 'Shelf'
+          c.shelf == @package.shelf
         when 'Check-in Date'
           c.properties[:ankunftsdatum] == @package.properties[:ankunftsdatum]
         when 'Last Checked'

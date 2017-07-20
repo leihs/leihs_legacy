@@ -58,7 +58,12 @@ When(/^I enter the following item information$/) do |table|
     field_name = hash_row['field']
     field_value = hash_row['value']
     field_type = hash_row['type']
-    matched_field = all('.row.emboss', match: :prefer_exact, text: field_name).last
+    matched_field = \
+      wait_until do
+        all('.row.emboss').detect { |el| el.text.match /^#{field_name}/ }
+      end
+    expect(matched_field).to be
+
     case field_type
       when 'radio', 'radio must'
         matched_field.find('label', text: field_value).find('input').set true
@@ -67,7 +72,6 @@ When(/^I enter the following item information$/) do |table|
       when 'select'
         matched_field.select field_value
       when 'autocomplete'
-        find('form .field', match: :prefer_exact, text: field_name)
         within matched_field do
           find('input').click
           find('input').set field_value
@@ -142,6 +146,12 @@ When(/^these required fields are filled in:$/) do |table|
         @project_number_field.set @project_number_value
       when 'Supply Category'
         find('.row.emboss', match: :prefer_exact, text: 'Supply Category').find("select option:not([value=''])", match: :first).select_option
+      when 'Building'
+        fill_in_autocomplete_field must_field_name, Building.general.name
+      when 'Room'
+        find('.row.emboss', text: must_field_name)
+        room = Building.general.rooms.find_by_general(true)
+        fill_in_autocomplete_field must_field_name, room.name
       else
         raise 'unknown field'
     end

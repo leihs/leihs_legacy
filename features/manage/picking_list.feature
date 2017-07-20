@@ -37,7 +37,6 @@ Feature: Picking list
     And each list will sorted after models, then sorted after room and shelf of the most available locations
     And in the list, the assigned items will displayed with inventory code, room and shelf
     And in the list, the not assigned items will displayed without inventory code
-    And items without assigned room or shelf are shown with their available quantity for the customer and "x Location not defined"
     And the missing location information for options, are displayed with "Location not defined"
 
   Scenario: Content of a picking list before hand over -- unavailable items
@@ -47,13 +46,6 @@ Feature: Picking list
     When I open the picking list
     Then the lists are sorted by hand over date
     And the unavailable items are displayed with "Not available"
-
-  Scenario: Content of a picking list before hand over -- Unassigned room and shelf
-  Given there is a hand over with at least an item without room or shelf
-    And I open the hand over
-    And a line with an assigned item which doesn't have a location is marked
-    When I open the picking list
-    Then items without assigned room or shelf are shown with "Location not defined"
 
   Scenario: Inhalt der Rüstliste nach Aushändigung - Inventarcodes sind bekannt
     When I open the picking list for a signed contract
@@ -65,7 +57,6 @@ Feature: Picking list
      | Model name     |
      | Room / Shelf   |
      And each list will sorted after room and shelf
-     And items without assigned room or shelf are shown with "Location not defined"
      And the missing location information for options, are displayed with "Location not defined"
 
   Scenario: Wo wird die Rüstliste aufgerufen

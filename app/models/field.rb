@@ -62,8 +62,7 @@ class Field < ActiveRecord::Base
     when 'all_inventory_pools'
       (InventoryPool.all.map { |x| { value: x.id, label: x.name } }).as_json
     when 'all_buildings'
-      ([{ value: nil, label: _('None') }] \
-       + Building.all.map { |x| { value: x.id, label: x.to_s } }).as_json
+      Building.all.map { |x| { value: x.id, label: x.to_s } }.as_json
     when 'all_suppliers'
       Supplier.order(:name).map { |x| { value: x.id, label: x.name } }.as_json
     when 'all_currencies'

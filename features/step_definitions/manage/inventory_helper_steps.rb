@@ -150,10 +150,11 @@ Then /^I see all the values of the item in an overview with model name and the m
           field_el.has_content? _(value)
         end
       elsif field_type == 'autocomplete'
-        if value
-          value = field.as_json['values'].detect{|v| v['value'] == value}['label']
-          field_el.has_content? _(value)
+        if value and field.as_json['values']
+          v = field.as_json['values'].detect { |v| v['value'] == value }
+          value = v['label']
         end
+        field_el.has_content? _(value)
       elsif field_type == 'autocomplete-search'
         if value
           if field.data['label'] == 'Model'

@@ -24,10 +24,33 @@
         %input.form-control{name: "requests[new_#{i}][receiver]", placeholder: _('Name of receiver'), autocomplete: :off}
     .form-group
       %label.col-xs-4.control-label
-        = _('Point of Delivery')
+        = _('Building')
       .col-xs-8
-        %input.form-control{name: "requests[new_#{i}][location_name]", placeholder: _('Point of Delivery'), autocomplete: :off}
-        %input{type: :hidden, name: "requests[new_#{i}][location_id]"}
+        = select_tag "requests[new_#{i}][building_id]",
+          options_from_collection_for_select(@buildings, :id, :to_s, Leihs::Constants::GENERAL_BUILDING_UUID),
+          { class: 'form-control' }
+        :coffeescript
+          $ ->
+            $("select[name='requests[new_#{i}][building_id]']").change (event) ->
+              building_id = event.target.options[event.target.selectedIndex].value
+              $.ajax({
+                url: "/procurement/rooms.json?building_id=\#{building_id}"
+                success: (data) ->
+                  selected = false
+                  options = _.map(data, (el) -> "<option value=\"\#{el.id}\">\#{el.to_s}</option>").join("")
+                  select_room = $("select[name='requests[new_#{i}][room_id]']")
+                  select_room.html(options)
+                  general_room = _.detect(data, (el) -> el.general)
+                  select_room.val general_room.id
+                }
+              )
+    .form-group
+      %label.col-xs-4.control-label
+        = _('Room')
+      .col-xs-8
+        = select_tag "requests[new_#{i}][room_id]",
+          options_from_collection_for_select(@rooms, :id, :to_s, Room.general_general.id),
+          { class: 'form-control' }
     .form-group
       %label.col-xs-4.control-label
         = _('Motivation')

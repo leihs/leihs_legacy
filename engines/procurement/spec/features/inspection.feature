@@ -60,6 +60,7 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
   @inspection
   Scenario: Editing a request
     Given I am Barbara
+    And a room 'Room 2' for building 'Building 2' exists
     And a request with following data exist
       | key                        | value      |
       | user                       | Roger      |
@@ -67,7 +68,8 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | article nr. or producer nr.| 1234       |
       | supplier                   | Dell       |
       | name of receiver           | Markus     |
-      | point of delivery          | ZHdK       |
+      | building                   | Building   |
+      | room                       | Room       |
       | replacement                | Replacement|
       | price                      | 100        |
       | requested amount           | 1          |
@@ -78,7 +80,8 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | Article nr. or Producer nr.| 12345      |
       | Supplier                   | Digitec    |
       | Name of receiver           | Stefan     |
-      | Point of Delivery          | Toni       |
+      | Building                   | Building 2 |
+      | Room                       | Room 2     |
       | Replacement / New          | New        |
       | Price                      | 1000       |
       | Requested quantity         | 2          |
@@ -90,6 +93,7 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
   @inspection
   Scenario: Editing a request
     Given I am Barbara
+    And a room 'Room 2' for building 'Building 2' exists
     And a request with following data exist
       | key                        | value      |
       | user                       | Roger      |
@@ -97,7 +101,8 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | article nr. or producer nr.| 1234       |
       | supplier                   | Dell       |
       | name of receiver           | Markus     |
-      | point of delivery          | ZHdK       |
+      | building                   | Building   |
+      | room                       | Room       |
       | replacement                | Replacement|
       | price                      | 100        |
       | requested amount           | 1          |
@@ -108,7 +113,8 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | Article nr. or Producer nr.| 12345      |
       | Supplier                   | Digitec    |
       | Name of receiver           | Stefan     |
-      | Point of Delivery          | Toni       |
+      | Building                   | Building 2 |
+      | Room                       | Room 2     |
       | Replacement / New          | New        |
       | Price                      | 1000       |
       | Requested quantity         | 2          |
@@ -169,7 +175,7 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
   Scenario: Creating a request as inspector
     Given I am Barbara
     And a receiver exists
-    And a point of delivery exists
+    And a room 'Room' for building 'Building' exists
     When I navigate to the requests overview page
     And I press on the plus icon of a sub category
     Then I am navigated to the request form
@@ -189,7 +195,8 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     And the ordered amount and the price are multiplied and the result is shown
     When I upload a file
     And I choose the name of a receiver
-    And I choose the point of delivery
+    And I choose building "Building"
+    And I choose room "Room"
     And I choose the following priority value
       | High |
     And I choose the following inspector's priority value

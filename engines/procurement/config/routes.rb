@@ -4,6 +4,8 @@ Procurement::Engine.routes.draw do
 
   resources :budget_periods, only: [:index, :create, :destroy]
 
+  resources :rooms, only: :index
+
   resources :requests, only: [] do
     collection do
       get :overview
@@ -43,7 +45,6 @@ Procurement::Engine.routes.draw do
 
   resources :models, only: :index
   resources :suppliers, only: :index
-  resources :locations, only: :index
 
   resources :organizations, only: :index
 

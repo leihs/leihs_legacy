@@ -17,8 +17,8 @@ module Leihs
                 id: :model_id,
                 label: 'Model',
                 attribute: ['model', 'id'],
-                value_label: ['model', 'product'],
-                value_label_ext: ['model', 'version'],
+                item_value_label: ['model', 'product'],
+                item_value_label_ext: ['model', 'version'],
                 form_name: 'model_id',
                 required: true,
                 type: 'autocomplete-search',
@@ -33,8 +33,8 @@ module Leihs
                 id: :software_model_id,
                 label: 'Software',
                 attribute: ['model', 'id'],
-                value_label: ['model', 'product'],
-                value_label_ext: ['model', 'version'],
+                item_value_label: ['model', 'product'],
+                item_value_label_ext: ['model', 'version'],
                 form_name: 'model_id',
                 required: true,
                 type: 'autocomplete-search',
@@ -140,26 +140,32 @@ module Leihs
                 group: 'Status',
                 forPackage: true
             }, {
-                id: :location_building_id,
+                id: :building_id,
                 label: 'Building',
-                attribute: ['location', 'building_id'],
+                attribute: ['room', 'building_id'],
+                required: true,
+                exclude_from_submit: true,
                 type: 'autocomplete',
                 target_type: 'item',
                 values: :all_buildings,
                 group: 'Location',
                 forPackage: true
             }, {
-                id: :location_room,
+                id: :room_id,
                 label: 'Room',
-                attribute: ['location', 'room'],
-                type: 'text',
+                attribute: 'room_id',
+                required: true,
+                type: 'autocomplete',
                 target_type: 'item',
+                values_dependency_field_id: :building_id,
+                values_url: '/manage/rooms.json?building_id=$$$parent_value$$$',
+                values_label_method: :to_s,
                 group: 'Location',
                 forPackage: true
             }, {
-                id: :location_shelf,
+                id: :shelf,
                 label: 'Shelf',
-                attribute: ['location', 'shelf'],
+                attribute: 'shelf',
                 type: 'text',
                 target_type: 'item',
                 group: 'Location',
@@ -440,8 +446,12 @@ module Leihs
         ]
 
         predefined_fields.each_with_index do |predefined_field, i|
-            id = predefined_field.delete(:id)
-            Field.create_with(id: id, data: predefined_field.as_json, position: i+1).find_or_create_by(id: id)
+          id = predefined_field.delete(:id)
+          if field = Field.find_by_id(id)
+            field.update_attributes!(data: predefined_field.as_json, position: i + 1)
+          else
+            Field.create!(id: id, data: predefined_field.as_json, position: i + 1)
+          end
         end
 
       end

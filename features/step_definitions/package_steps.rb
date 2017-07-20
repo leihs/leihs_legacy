@@ -45,3 +45,15 @@ Given(/^this item is part of this package item$/) do
   expect(@item.reload.parent).to eq @package_item
   expect(@package_item.children.include?(@item)).to be true
 end
+
+When(/^I choose "(.*?)" from building select box$/) do |name|
+  fill_in_via_autocomplete \
+    css: "[data-id='building_id'] input[data-type='autocomplete']",
+    value: name
+end
+
+When(/^I choose "(.*?)" from room select box$/) do |name|
+  fill_in_via_autocomplete \
+    css: "[data-id='room_id'] input[data-type='autocomplete']",
+    value: name
+end

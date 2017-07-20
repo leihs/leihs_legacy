@@ -12,7 +12,7 @@ Feature: Copy item
     And I enter the following item information
       | field                  | type         | value               |
       | Borrowable             | radio        | OK                  |
-      | Building               | autocomplete | None                |
+      | Building               | autocomplete | general building  |
       | Check-In Date          |              | 01/01/2013          |
       | Check-In Note          |              | Test note           |
       | Check-In State         | select       | transportschaden    |
@@ -33,7 +33,7 @@ Feature: Copy item
       | Responsible department | autocomplete | A-Ausleihe          |
       | Responsible person     |              | Matus Kmit          |
       | Retirement             | checkbox     | unchecked           |
-      | Room                   |              | Test room           |
+      | Room                   | autocomplete | general room      |
       | Serial Number          |              | Test serial number  |
       | Shelf                  |              | Test shelf          |
       | Supply Category        | select       | Workshop Technology |

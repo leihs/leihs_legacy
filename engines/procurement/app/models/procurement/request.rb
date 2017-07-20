@@ -11,7 +11,7 @@ module Procurement
     belongs_to :user      # from parent application
     belongs_to :model     # from parent application
     belongs_to :supplier  # from parent application
-    belongs_to :location  # from parent application
+    belongs_to :room # from parent application
 
     has_many :attachments, dependent: :destroy, inverse_of: :request
     accepts_nested_attributes_for :attachments, reject_if: :all_blank
@@ -21,7 +21,7 @@ module Procurement
     REQUESTER_NEW_KEYS = [:requested_quantity, :priority, :replacement]
     REQUESTER_EDIT_KEYS = [:article_name, :model_id, :article_number, :price,
                            :supplier_name, :supplier_id, :motivation, :receiver,
-                           :location_name, :location_id, :template_id,
+                           :room_id, :template_id,
                            attachments_attributes: [:content,
                                                     :filename,
                                                     :size,
@@ -136,14 +136,18 @@ module Procurement
                           .or(arel_table[:article_number].matches(q))
                           .or(arel_table[:supplier_name].matches(q))
                           .or(arel_table[:receiver].matches(q))
-                          .or(arel_table[:location_name].matches(q))
+                          .or(Building.arel_table[:name].matches(q))
+                          .or(Room.arel_table[:name].matches(q))
                           .or(arel_table[:motivation].matches(q))
                           .or(arel_table[:inspection_comment].matches(q))
                           .or(User.arel_table[:firstname].matches(q))
                           .or(User.arel_table[:lastname].matches(q))
                        )
       end
-      sql.joins(:user)
+      sql
+      .joins(:user)
+      .joins(:room)
+      .joins('INNER JOIN buildings ON buildings.id = rooms.building_id')
     }
 
     private

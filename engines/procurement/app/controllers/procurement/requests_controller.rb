@@ -31,6 +31,8 @@ module Procurement
       h[:user_id] = @user if @user
       h[:category_id] = @category if @category
       @requests = Request.where h
+      @buildings = Building.all
+      @rooms = [Room.general_general]
 
       respond_to do |format|
         format.html

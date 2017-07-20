@@ -1,11 +1,11 @@
-require_relative 'shared/login_steps'
+require_relative '../../../../spec/steps/shared/login_steps'
 require_relative 'shared/personas_dump_steps'
 
 module LeihsAdmin
   module Spec
     module StatisticsSteps
-      include ::LeihsAdmin::Spec::LoginSteps
       include ::LeihsAdmin::Spec::PersonasDumpSteps
+      include ::Spec::LoginSteps
 
       step 'I am in the admin section' do
         visit admin.root_path

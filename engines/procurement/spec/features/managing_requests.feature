@@ -68,6 +68,7 @@ Feature: section Managing Requests
   Scenario Outline: Creating a request for a sub category
     Given I am <username>
     And for all main categories pictures have been uploaded
+    And a room 'Room' for building 'Building' exists
     When I want to create a new request
     Then I am navigated to the request form
     And I see the picture of the main category
@@ -82,7 +83,9 @@ Feature: section Managing Requests
     Then the amount and the price are multiplied and the result is shown
     When I upload a file
     And I choose the name of a receiver
-    And I choose the point of delivery
+    And I choose building "Building"
+    Then the room has as default value the general room of "Building"
+    When I choose room "Room"
     And I choose the following priority value
       | High |
     And I choose the following replacement value
@@ -94,7 +97,7 @@ Feature: section Managing Requests
     Examples:
       | username |
       | Barbara  |
-      | Roger    |
+      # | Roger    |
 
   @managing_requests @flapping
   Scenario Outline: Creating a request through a budget period selecting a template article

@@ -256,26 +256,6 @@
       $(this).data('ui-autocomplete')._renderItem = ( ul, item )->
         $( "<li>" ).append( "<a>" + item.firstname + " " + item.lastname + "</a>" ).appendTo( ul )
 
-    $("input[name*='[location_name]']").on('keypress', ->
-      $(this).closest('.form-group').find("input[name*='[location_id]']").val('')
-    ).autocomplete
-      minLength: 3
-      source: ( request, response )->
-        $.ajax
-          url: "/procurement/locations.json"
-          dataType: "json"
-          data:
-            search_term: request.term
-          success: ( data )->
-            response( data )
-      select: ( event, ui )->
-        $(this).closest('.form-group').find("input[name*='[location_id]']").val( ui.item.id )
-        $(this).val( ui.item.to_s ).change()
-        false
-    .each ->
-      $(this).data('ui-autocomplete')._renderItem = ( ul, item )->
-        $( "<li>" ).append( "<a>" + item.to_s + "</a>" ).appendTo( ul )
-
     $("form button[type='submit']").on 'click', ->
       if $('form :invalid').length
         scroll_to $('form :invalid').first().closest('.request')

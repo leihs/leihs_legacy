@@ -1,5 +1,5 @@
 require_relative 'shared/common_steps'
-require_relative 'shared/login_steps'
+require_relative '../../../../spec/steps/shared/login_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_dump_steps'
 
@@ -8,9 +8,9 @@ module LeihsAdmin
   module Spec
     module UsersSteps
       include ::LeihsAdmin::Spec::CommonSteps
-      include ::LeihsAdmin::Spec::LoginSteps
       include ::LeihsAdmin::Spec::NavigationSteps
       include ::LeihsAdmin::Spec::PersonasDumpSteps
+      include ::Spec::LoginSteps
 
       step 'I am editing a user that has no access rights and is not an admin' do
         @user = User.find { |u| not u.has_role? :admin and u.has_role? :customer }

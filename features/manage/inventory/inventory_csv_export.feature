@@ -57,6 +57,7 @@ Feature: Inventory (CSV export)
       | Check-In Date                 |
       | Check-In State                |
       | Check-In Note                 |
+      | Location                      |
       | Borrower First name           |
       | Borrower Last name            |
       | Borrower Personal ID          |
@@ -99,6 +100,7 @@ Feature: Inventory (CSV export)
       | Maintenance expiration |
       | Currency               |
       | Price                  |
+      | Location               |
       | Borrower First name    |
       | Borrower Last name     |
       | Borrower Personal ID   |

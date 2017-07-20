@@ -422,6 +422,14 @@ window.i18n.locale_data = {
          "Gebäude",
          "Gebäude"
       ],
+      "Building together with a general room successfully created": [
+         null,
+         "Gebäude zusammen mit einem generellen Raum wurde erfolgreich erstellt"
+      ],
+      "Room": [
+         null,
+         "Raum"
+      ],
       "CSV": [
          null,
          "CSV"
@@ -1064,6 +1072,10 @@ window.i18n.locale_data = {
          null,
          "Liste der verfügbaren Variablen"
       ],
+      "List of Rooms": [
+         null,
+         "Liste der Räume"
+      ],
       "List of Buildings": [
          null,
          "Liste der Gebäude"
@@ -1609,10 +1621,6 @@ window.i18n.locale_data = {
       "Returned Items": [
          null,
          "Zurückgegebene Gegenstände"
-      ],
-      "Room": [
-         null,
-         "Raum"
       ],
       "Save": [
          null,
@@ -3450,6 +3458,11 @@ window.i18n.locale_data = {
          "%s items",
          "%s Gegenstand",
          "%s Gegenstände"
+      ],
+      "%s room": [
+         "%s rooms",
+         "%s Raum",
+         "%s Räume"
       ],
       "to %s": [
          null,

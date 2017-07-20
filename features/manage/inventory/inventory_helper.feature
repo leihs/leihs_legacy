@@ -9,18 +9,6 @@ Feature: Inventory helper
     When I open the inventory
     Then I see a tab where I can change to the inventory helper
 
-  @flapping
-  Scenario: Changing the shelf when the location already exists
-    Given I go to the inventory helper screen
-    And there is an item that shares its location with another
-    Then I select the field "Shelf"
-    And I set some value for the field "Shelf"
-    Then I enter the start of the inventory code of the specific item
-    And I choose the item from the list of results
-    Then I see all the values of the item in an overview with model name and the modified values are already saved
-    And the changed values are highlighted
-    And the location of the other item has remained the same
-
   Scenario: You can't change the responsible department while something is not in stock
     Given I go to the inventory helper screen
     And I edit the field "Responsible department" of an item that isn't in stock and belongs to the current inventory pool

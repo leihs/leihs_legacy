@@ -23,7 +23,6 @@ Feature: Edit contract line during hand over process
       And I change the time range for all contract reservations, envolving option and item reservations
      Then the time range for all contract reservations is changed
 
-  @hotspot
   Scenario: Change the time range of an option line
      When I open a hand over
       And I add an option to the hand over by providing an inventory code

@@ -9,8 +9,7 @@ class window.App.SearchResultsItemsController extends App.SearchResultsControlle
   fetch: (page, target, callback)=>
     @fetchItems(page).done (data)=>
       items = (App[@model].find datum.id for datum in data)
-      @fetchModels(items).done =>
-        @fetchCurrentItemLocation(items).done => do callback
+      @fetchModels(items).done => do callback
 
   fetchItems: (page)=>
     App[@model].ajaxFetch
@@ -28,13 +27,3 @@ class window.App.SearchResultsItemsController extends App.SearchResultsControlle
         ids: ids
         paginate: false
         include_package_models: true
-
-  fetchCurrentItemLocation: (items)=>
-    ids = _.map items, (i)-> i.id
-    return {done: (c)->c()} unless ids.length
-    App.CurrentItemLocation.ajaxFetch
-      data: $.param
-        ids: ids
-        all: true
-        paginate: false
-        current_inventory_pool: false

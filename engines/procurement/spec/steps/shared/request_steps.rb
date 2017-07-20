@@ -74,11 +74,6 @@ module RequestSteps
     fill_in _('Name of receiver'), with: @receiver.name
   end
 
-  step 'I choose the point of delivery' do
-    @location = Location.all.sample
-    fill_in _('Point of Delivery'), with: @location.to_s
-  end
-
   step 'I fill in all mandatory information' do
     @changes = {}
     request_el = if @template
@@ -172,17 +167,32 @@ module RequestSteps
         when 'Price'
           v = (hash['value'] || Faker::Number.number(4)).to_i
           find("input[name*='[price]']").set v
+          @changes[mapped_key(hash['key'])] = v
         when /quantity/
           v = (hash['value'] || Faker::Number.number(2)).to_i
           fill_in _(hash['key']), with: v
+          @changes[mapped_key(hash['key'])] = v
         when 'Replacement / New'
           v = (hash['value'] == 'Replacement' ? 1 : 0) || [0, 1].sample
           find("input[name*='[replacement]'][value='#{v}']").click
+          @changes[mapped_key(hash['key'])] = v
+        when 'Building'
+          @building = Building.find_by_name(hash['value'])
+          find('.form-group', text: _('Building'))
+            .find('select')
+            .select(hash['value'])
+        when 'Room'
+          room = Room.find_by(name: hash['value'],
+                              building: @building)
+          find('.form-group', text: _('Room'))
+            .find('select')
+            .select(hash['value'])
+          @changes[mapped_key("#{hash['key']}_id")] = room.id
         else
           v = hash['value'] || Faker::Lorem.sentence
           fill_in _(hash['key']), with: v
+          @changes[mapped_key(hash['key'])] = v
         end
-        @changes[mapped_key(hash['key'])] = v
       end
 
       # NOTE trigger change event
@@ -217,8 +227,6 @@ module RequestSteps
       :supplier_name
     when 'Name of receiver'
       :receiver
-    when 'Point of Delivery'
-      :location_name
     else
       from.parameterize.underscore.to_sym
     end

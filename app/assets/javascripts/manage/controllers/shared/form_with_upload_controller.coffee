@@ -12,9 +12,10 @@ class window.App.FormWithUploadController extends Spine.Controller
 
   submit: (event, saveAction = @save, errorHandler = @errorHandler) =>
     do @showLoading
-    saveAction()
-    .fail (e) => errorHandler(e)
-    .done (data) => @done(data)
+    if result = saveAction()
+      result
+        .fail (e) => errorHandler(e)
+        .done (data) => @done(data)
 
   errorHandler: (e) =>
     @showError e.responseText

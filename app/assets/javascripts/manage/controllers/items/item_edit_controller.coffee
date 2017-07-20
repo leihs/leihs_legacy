@@ -25,11 +25,18 @@ class window.App.ItemEditController extends App.FormWithUploadController
     if @flexibleFieldsController.validate()
       $.ajax
         url: @url
-        data: @itemForm.serializeArray().concat \
-          [{name: "item[skip_serial_number_validation]", value: skipSerialNumberValidation}]
+        data: @prepareRequestData(skipSerialNumberValidation)
         type: @method
     else
       do @hideLoading
+      false
+
+  prepareRequestData: (skipSerialNumberValidation = false) =>
+    serial = @itemForm.serializeArray()
+    for field in _.filter(App.Field.all(), (f) -> f.exclude_from_submit)
+      serial = _.reject(serial, (s) -> s.name == field.getFormName())
+    serial.concat \
+      [{name: "item[skip_serial_number_validation]", value: skipSerialNumberValidation}]
 
   done: (data) =>
     # depending if used in new or edit template
@@ -69,7 +76,7 @@ class window.App.ItemEditController extends App.FormWithUploadController
       @copyInput.prop "disabled", false
       $.ajax
         url: @url
-        data: @itemForm.serializeArray()
+        data: @prepareRequestData()
         type: @method
     else
       do @hideLoading

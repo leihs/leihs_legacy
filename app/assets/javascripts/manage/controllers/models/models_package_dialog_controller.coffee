@@ -74,6 +74,14 @@ class window.App.ModelsPackageDialogController extends Spine.Controller
     entry = $(e.currentTarget).closest("[data-type='inline-entry']")
     @children = _.filter @children, (i) -> i.id != entry.data("id")
 
+  prepareRequestData: () =>
+    serial = @itemForm.serializeArray()
+    for field in _.filter(App.Field.all(), (f) -> f.exclude_from_submit)
+      serial = _.reject(serial, (s) -> s.name == field.getFormName())
+    _.map serial, (datum) ->
+      name: datum.name.replace(/item/, "")
+      value: datum.value
+
   save: =>
     @notifications.addClass("hidden").html ""
     unless @children.length
@@ -82,7 +90,4 @@ class window.App.ModelsPackageDialogController extends Spine.Controller
       @notifications.removeClass("hidden").html App.Render "manage/views/models/packages/missing_data_error"
     else
       @modal.destroy true
-      data = _.map @itemForm.serializeArray(), (datum)->
-        name: datum.name.replace(/item/, "")
-        value: datum.value
-      @done data, @children, @entry
+      @done @prepareRequestData(), @children, @entry

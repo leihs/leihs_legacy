@@ -116,10 +116,10 @@ Then /^the list contains the following columns:$/ do |table|
           reservations = @selected_lines_by_date ? @selected_lines_by_date : @contract.reservations
           reservations.each {|line|
             find('tbody tr', text: line.item ? line.item.inventory_code : line.model.name).find('.location', text:
-                if line.model.is_a?(Option) or line.item.try(:location).nil? or (line.item.location.room.blank? and line.item.location.shelf.blank?)
+                if line.model.is_a?(Option)
                   _('Location not defined')
                 else
-                  '%s / %s' % [line.item.location.room, line.item.location.shelf]
+                  '%s / %s' % [line.item.room.name, line.item.shelf]
                 end)
           }
         when 'available quantity x Room / Shelf'
@@ -130,8 +130,7 @@ Then /^the list contains the following columns:$/ do |table|
               if line.model.is_a?(Option)
                 _('Location not defined')
               else
-                locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.location_id) AS count, locations.room AS room, locations.shelf AS shelf').joins(:location).group(:location_id, :room, :shelf).order('count DESC')
-                locations.to_a.delete_if {|location| location.room.blank? and location.shelf.blank? }
+                locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.id) AS count, rooms.name AS room, items.shelf AS shelf').joins(:room).group('rooms.id', 'rooms.name', 'items.shelf').order('count DESC')
                 locations.each do |location|
                   if line.item_id
                     find('tr', text: '%s / %s' % [location.room, location.shelf])

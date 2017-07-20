@@ -7,7 +7,7 @@
     %strong= building.code
 
   .col1of6.line-col
-    %strong= _("%s locations") % building.locations.count
+    %strong= _("%s locations") % building.rooms.count
 
   .col1of6.line-col
     %strong= _("%s items") % building.items.where("'#{current_inventory_pool.id}' IN (inventory_pool_id, owner_id)").count

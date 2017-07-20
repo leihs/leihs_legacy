@@ -10,7 +10,7 @@
     {{/if}}
 
   .col2of8.line-col.text-align-left.padding-right-s
-    {{>currentLocation()}}
+    {{>current_location}}
 
   .col2of8.line-col.line-actions.padding-right-xs
     {{if ~currentInventoryPool.isOwnerOrResponsibleFor(#view.data) && ~accessRight.atLeastRole(~currentUserRole, "lending_manager") }}

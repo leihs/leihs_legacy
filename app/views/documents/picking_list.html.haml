@@ -28,17 +28,17 @@
               %td.model_name= _("Model")
               %td.location= "%s / %s" % [_("Room"), _("Shelf")]
           %tbody
-            - sorted_lines = reservations.sort_by{|line| (line.item.respond_to?(:location) and line.item.location) ? "%s / %s" % [line.item.location.room, line.item.location.shelf] : "zzzz (no locations displayed at the end of the list)" }
+            - sorted_lines = reservations.sort_by { |line| (line.item.respond_to?(:room) and line.item.room) ? "%s / %s" % [line.item.room.name, line.item.shelf] : "zzzz (no locations displayed at the end of the list)"  }
             - sorted_lines.each do |line|
               %tr{style: "vertical-align: top"}
                 %td.quantity= line.quantity
                 %td.inventory_code= line.item.inventory_code
                 %td.model_name= line.model.name
                 %td.location
-                  - if line.model.is_a?(Option) or line.item.location.nil? or (line.item.location.room.blank? and line.item.location.shelf.blank?)
+                  - if line.model.is_a?(Option)
                     %i= _("Location not defined")
                   - else
-                    = "%s / %s" % [line.item.location.room, line.item.location.shelf]
+                    = "%s / %s" % [line.item.room.name, line.item.shelf]
 
 
   - else
@@ -56,7 +56,7 @@
               %td.model_name= _("Model")
               %td.location= "%s x %s / %s" % [_("available quantity"), _("Room"), _("Shelf")]
           %tbody
-            - models_lines = reservations.group_by{|line| [line.model, line.item] }
+            - models_lines = reservations.group_by { |line| [line.model, line.item] }
             - Hash[models_lines.sort_by {|k,v| k.first.to_s or k.last }].each_pair do |model_item, reservations|
               %tr{style: "vertical-align: top"}
                 %td.quantity= reservations.sum &:quantity
@@ -71,16 +71,13 @@
                         %tr
                           %td{style: "width: 4em; text-align: right; border: none"}
                           %td{style: "border: none"}
-                            - if item.location.nil? or (item.location.room.blank? and item.location.shelf.blank?)
-                              %i= _("Location not defined")
-                            - else
-                              = "%s / %s" % [item.location.try(:room), item.location.try(:shelf)]
+                            = "%s / %s" % [item.room.name, item.shelf]
                       - elsif (items_in_stock = model_item.first.items.in_stock.where(inventory_pool_id: current_inventory_pool)).count == 0
                         %td{style: "width: 4em; text-align: right; border: none"}
                         %td{style: "border: none"}
                           %i= _("Not available")
                       - else
-                        - locations = items_in_stock.select("COUNT(items.location_id) AS count, locations.room AS room, locations.shelf AS shelf").joins(:location).group(:location_id, :room, :shelf).order("count DESC, room ASC, shelf ASC")
+                        - locations = items_in_stock.select("COUNT(items.room_id) AS count, items.room_id, rooms.name AS room, shelf").joins(:room).group('items.room_id', 'rooms.name', 'shelf').order("count DESC, room ASC, shelf ASC")
                         - locations.to_a.delete_if {|location| location.room.blank? and location.shelf.blank? }
                         - locations.each do |location|
                           %tr

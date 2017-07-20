@@ -54,20 +54,35 @@ class App.InventoryHelperController extends Spine.Controller
       field.getLabel().match(new RegExp(request.term,"i"))? and
       not App.Field.isPresent(field, @fieldSelection) and
       not field.visibility_dependency_field_id? and
+      not field.values_dependency_field_id? and
       field.id != 'attachments'
     response _.map (_.sortBy fields, (field)-> field.getLabel()), (field)-> {label: field.getLabel(), value: field.value, field: field}
 
   selectField: (e,ui) =>
     @addField ui.item.field
     @fieldInput.val("").autocomplete("destroy").blur()
+    childrenWithValueDependency =
+      _.filter \
+        App.Field.all(),
+        (f) -> f.values_dependency_field_id == ui.item.field.id
+    for field in childrenWithValueDependency
+      new App.ValuesDependencyFieldController
+        el: @el
+        renderData: { writeable: true, removeable: true, fieldColor: "white" }
+        parentField: ui.item.field
+        childField: field
     return false
 
   removeField: (e)=> 
     target = $(e.currentTarget).closest("[data-type='field']")
     field = App.Field.find target.data("id")
     for child in field.children()
-      @fieldSelection.find("[name='#{child.getFormName()}']").closest("[data-type='field']").remove()
-    target.remove()
+      @fieldSelection.find("[name='#{child.getFormName()}']").closest("##{child.id}").remove()
+    for child in field.childrenWithValueDependency()
+      @fieldSelection.find("[name='#{child.getFormName()}']").closest("##{child.id}").remove()
+    if parent = field.parentWithValueDependency()
+      @fieldSelection.find("[name='#{parent.getFormName()}']").closest("##{parent.id}").remove()
+    target.closest("##{field.id}").remove()
     @noFieldsMessage.removeClass("hidden") unless @fieldSelection.find("[data-type='field']").length
 
   toggleChildren: (e)=> 
@@ -79,7 +94,7 @@ class App.InventoryHelperController extends Spine.Controller
       source: (request, response)=>
         @fetchItems(request.term).done (data)=> 
           items = (App.Item.find datum.id for datum in data)
-          @fetchItemLocations(items).done => response items
+          response items
       focus: => return false
       select: (e,ui)=>
         @itemInput.val ui.item.inventory_code
@@ -92,15 +107,6 @@ class App.InventoryHelperController extends Spine.Controller
     App.Item.ajaxFetch
       data: $.param
         search_term: term
-        paginate: false
-
-  fetchItemLocations: (items)=>
-    ids = _.map items, (i)->i.id
-    return {done: (c)->c()} unless ids.length
-    App.CurrentItemLocation.ajaxFetch
-      data: $.param
-        ids: ids
-        all: true
         paginate: false
 
   addField: (field)=>
@@ -128,7 +134,7 @@ class App.InventoryHelperController extends Spine.Controller
         type: "error"
         message: _jed('Please provide all required fields')
     else
-      data = @fieldSelection.serializeArray()
+      data = @prepareRequestData()
       @fetchItem inventoryCode, (item)=> 
 
         @updateItem(item, data)
@@ -140,20 +146,27 @@ class App.InventoryHelperController extends Spine.Controller
           @currentItemData = data
           @setupAppliedItem "success"
 
+  prepareRequestData:  =>
+    serial = @fieldSelection.serializeArray()
+    for field in _.filter(App.Field.all(), (f) -> f.exclude_from_submit)
+      serial = _.reject(serial, (s) -> s.name == field.getFormName())
+    serial
+
   setupAppliedItem: (status)=>
-    @setupItemEdit false
-    if @currentItemData.owner_id == App.InventoryPool.current.id or @currentItemData.inventory_pool_id == App.InventoryPool.current.id
-      @editButton.removeClass("hidden")
-      @saveButton.addClass("hidden")
-      @cancelButton.addClass("hidden")
-    @highlightChangedFields @fieldSelection.find(".field"), status
-    $(document).scrollTop @itemSection.offset().top
+    callback = =>
+      if @currentItemData.owner_id == App.InventoryPool.current.id or @currentItemData.inventory_pool_id == App.InventoryPool.current.id
+        @editButton.removeClass("hidden")
+        @saveButton.addClass("hidden")
+        @cancelButton.addClass("hidden")
+      @highlightChangedFields @fieldSelection.find(".field"), status
+      $(document).scrollTop @itemSection.offset().top
+    @setupItemEdit false, callback
 
   highlightChangedFields: (fields, status)=>
     for fieldEl in fields
       @flexibleFields.find(".field[data-id='#{$(fieldEl).data("id")}']").addClass status
 
-  setupItemEdit: (writeable)=>
+  setupItemEdit: (writeable, callback)=>
     if @flexibleFieldsController? # release old controller 
       replacement = @flexibleFields.clone(false)
       @flexibleFields.replaceWith replacement
@@ -165,6 +178,7 @@ class App.InventoryHelperController extends Spine.Controller
       writeable: writeable
       hideable: true
       excludeIds: ['attachments']
+      callback: callback
   
   fetchItem: (inventoryCode, callback)=>
     App.Item.ajaxFetch
@@ -221,7 +235,7 @@ class App.InventoryHelperController extends Spine.Controller
   saveItem: =>
     if @flexibleFieldsController.validate()
       item = App.Item.find @currentItemData.id
-      @updateItem(item, @flexibleFields.serializeArray()).done => 
+      @updateItem(item, @prepareRequestData()).done => 
         @fetchItemWithFlexibleFields(item).done (itemData)=>
           @currentItemData = itemData
           do @setupSavedItem

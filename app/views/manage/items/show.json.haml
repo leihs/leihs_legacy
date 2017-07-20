@@ -1,5 +1,5 @@
 - if params[:for] == "flexibleFields"
-  != @item.to_json :include => [:inventory_pool, :location, :model, :owner, :supplier]
+  != @item.to_json Manage::ItemsController::JSON_SPEC
 
 - else
   != @item.to_json

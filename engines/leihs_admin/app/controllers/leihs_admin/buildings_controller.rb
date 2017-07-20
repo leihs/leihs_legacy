@@ -18,7 +18,8 @@ module LeihsAdmin
     def create
       @building = Building.create params[:building]
       if @building.persisted?
-        flash[:notice] = _('Building successfully created')
+        flash[:notice] = \
+          _('Building together with a general room successfully created')
         redirect_to action: :index
       else
         flash.now[:error] = @building.errors.full_messages.uniq.join(', ')

@@ -1,5 +1,25 @@
 - if params[:for] == "flexibleFields"
-  != @items.to_json :include => [:inventory_pool, :location, :model, :owner, :supplier]
+  != @items.to_json Manage::ItemsController::JSON_SPEC
 
 - else
-  != @items.to_json(include: {children: {methods: :to_s}})
+  :ruby
+    # In global search it is possible to search after items which are neither owned by
+    # nor responsible by current inventory pool. In such a case the current location
+    # is the name of the inventory pool responsible for the item. As it is not possible
+    # to pass a method with argument to the options hash of the json serializers, it is
+    # required to manipulate the model hashes directly.
+    items = if params[:current_inventory_pool] == 'false'
+              @items
+                .as_json(methods: [:current_location, :inventory_pool],
+                         include: {children: {methods: :to_s}})
+                .map do |h|
+                if current_inventory_pool.id != h['owner_id'] and current_inventory_pool.id != h['inventory_pool_id']
+                  h['current_location'] = h['inventory_pool'].to_s
+                end
+                h
+              end
+            else
+              @items.as_json(methods: :current_location, include: {children: {methods: :to_s}})
+            end
+  != items.to_json
+

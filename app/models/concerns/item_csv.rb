@@ -76,22 +76,18 @@ module Concerns
       h2 = {}
       fields.each do |field|
         next if field.id == 'attachments'
-
-        h2[_(field.data['label'])] = if field.id == 'location_building_id'
-                                       location.try(:building).try(:to_s)
-                                     else
-                                       field.value(self)
-                                     end
+        h2[_(field.data['label'])] = field.value(self)
       end
       h1.merge! h2
 
       h1.merge!(
+        _('Location') => location,
         "#{_('Borrower')} #{_('First name')}" => current_borrower.try(:firstname),
         "#{_('Borrower')} #{_('Last name')}" => current_borrower.try(:lastname),
         "#{_('Borrower')} #{_('Personal ID')}" => \
           current_borrower.try(:extended_info).try(:fetch, 'id', nil) \
             || current_borrower.try(:unique_id),
-        "#{_('Borrowed until')}" => current_reservation.try(:end_date)
+        "#{_('Borrowed until')}" => "#{current_reservation.try(:end_date)}"
       )
       h1
     end

@@ -1,0 +1,23 @@
+set -eux
+
+if [ -n "$(git diff --name-only app/assets)" ]; then
+  ./bin/recompile-and-push-assets "$1"
+else
+  echo "no changes in app/assets"
+fi
+
+cd database
+if [ -n "$(git status --porcelain)" ]; then
+  git add .
+  git commit -m "$1"
+  git push
+  cd -
+  ./bin/migrate-and-dump-personas
+else
+  echo "no changes in database"
+  cd -
+fi
+
+git add .
+git commit -m "$1"
+git push

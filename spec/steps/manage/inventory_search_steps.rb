@@ -13,8 +13,8 @@ module Manage
            'situated in room :room' do |room|
         FactoryGirl.create(:item,
                            owner: @current_inventory_pool,
-                           location: FactoryGirl.create(:location,
-                                                        room: room))
+                           room: FactoryGirl.create(:room,
+                                                    name: room))
       end
 
       step 'I open the inventory list page' do
@@ -27,9 +27,9 @@ module Manage
 
       step 'I see one model line corresponding to the item ' \
            'situated in :room' do |room|
-        items = Item.joins(:location).where(locations: { room: room })
+        items = Item.joins(:room).where(rooms: { name: room })
         expect(items.count).to be == 1
-        item = Item.joins(:location).where(locations: { room: room }).first
+        item = Item.joins(:room).where(rooms: { name: room }).first
         within '#inventory' do
           find("[data-type='model']")
           expect(all("[data-type='model']").count).to be == 1

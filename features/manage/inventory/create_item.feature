@@ -44,7 +44,6 @@ Feature: Create item
       | Attachments                |
       | - Location -               |
       | Building                   |
-      | Room                       |
       | Shelf                      |
       | - Invoice Information -    |
       | Reference                  |
@@ -103,6 +102,8 @@ Feature: Create item
     | Inventory Code|
     | Project Number |
     | Supply Category |
+    | Building |
+    | Room |
     When I enter a supplier that does not exist
     And I save
     Then a new supplier is created
@@ -127,8 +128,8 @@ Feature: Create item
       | IMEI-Number            |              | Test IMEI number    |
       | Name                   |              | Test name           |
       | Note                   |              | Test note           |
-      | Building               | autocomplete | None                |
-      | Room                   |              | Test room           |
+      | Building               | autocomplete | general building  |
+      | Room                   | autocomplete | general room      |
       | Shelf                  |              | Test shelf          |
       | Reference              | radio must   | Investment          |
       | Project Number         |              | Test number         |
@@ -178,6 +179,8 @@ Feature: Create item
     | Inventory Code  |
     | Project Number  |
     | Supply Category |
+    | Building        |
+    | Room            |
     And I add 2 attachments
     And I remove one attachment
     And I save

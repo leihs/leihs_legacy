@@ -11,6 +11,8 @@ Feature: Case insensitive inventory code feature
     When I enter the inventory code of this item in lowercase
     And I select a model
     And I select a supply category
+    And I choose a building
+    And I choose a room
     And I save
     Then I see an error message in regards to already existing inventory code
     And the item was not saved

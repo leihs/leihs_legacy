@@ -120,8 +120,8 @@ Feature: Editing an item
       | IMEI-Number            |              | Test IMEI number    |
       | Name                   |              | Test name           |
       | Note                   |              | Test note           |
-      | Building               | autocomplete | None                |
-      | Room                   |              | Test room           |
+      | Building               | autocomplete | general building  |
+      | Room                   | autocomplete | general room      |
       | Shelf                  |              | Test shelf          |
       | Reference              | radio must   | Investment          |
       | Project Number         |              | Test number         |

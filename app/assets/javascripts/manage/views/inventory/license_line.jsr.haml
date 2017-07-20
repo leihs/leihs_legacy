@@ -6,7 +6,7 @@
     .row {{>inventory_code}}
     .row.grey-text
       {{if ~additionalDataFetched}}
-      {{if currentLocation()}}{{>currentLocation()}},{{/if}}
+      {{>current_location}}
       {{else}}
       %span
         {{partial "views/loading" {"size":"micro"}/}}

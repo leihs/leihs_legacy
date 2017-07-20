@@ -21,6 +21,7 @@ FactoryGirl.define do
     approved_quantity { nil }
     template { nil }
     priority { ['high', 'normal'].sample }
+    room
 
     before :create do |request|
       if request.template
@@ -45,10 +46,6 @@ FactoryGirl.define do
         Supplier.first || FactoryGirl.create(:supplier)
       end
 
-      location do
-        Location.first || FactoryGirl.create(:location)
-      end
-
       template do
         Procurement::Template.first || FactoryGirl.create(:procurement_template)
       end
@@ -58,7 +55,6 @@ FactoryGirl.define do
       replacement false
       supplier_name Faker::Company.name
       receiver Faker::Name.name
-      location_name Faker::Address.street_name
       inspection_comment Faker::Lorem.sentence
       inspector_priority :medium
     end

@@ -455,8 +455,6 @@ steps_for :periods_and_states do
       :supplier_name
     when 'Name of receiver'
       :receiver
-    when 'Point of Delivery'
-      :location_name
     else
       from.parameterize.underscore.to_sym
     end

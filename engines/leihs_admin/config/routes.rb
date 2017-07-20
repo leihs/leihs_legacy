@@ -6,7 +6,7 @@ LeihsAdmin::Engine.routes.draw do
   resources :buildings,       except: :show
   resources :inventory_pools, except: :show
   resources :locations,       only: :destroy
-  resources :scenarios,       only: :index
+  resources :rooms,           except: :show
   resources :statistics,      only: [:index, :show]
   resources :suppliers,       except: :show
   resources :users,           except: :show
