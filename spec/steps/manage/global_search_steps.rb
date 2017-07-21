@@ -2,6 +2,10 @@ require_relative '../shared/common_steps'
 require_relative '../shared/login_steps'
 require_relative '../shared/personas_dump_steps'
 
+placeholder :n do
+  match /\d+/, &:to_i
+end
+
 module Manage
   module Spec
     module GlobalSearchSteps
@@ -9,28 +13,33 @@ module Manage
       include ::Spec::LoginSteps
       include ::Spec::PersonasDumpSteps
 
-      step 'a signed contract for a user matching :search_string exists' \
-        do |search_string|
+      step 'a signed contract :n for a user matching :search_string exists' \
+        do |n, search_string|
         user = FactoryGirl.create(:customer,
                                   inventory_pool: @current_inventory_pool,
                                   firstname: search_string)
-        @contract_1 = FactoryGirl.create(:signed_contract,
-                                         user: user,
-                                         inventory_pool: @current_inventory_pool)
+        instance_variable_set \
+          "@contract_#{n}",
+          FactoryGirl.create(:signed_contract,
+                             user: user,
+                             inventory_pool: @current_inventory_pool)
       end
 
-      step 'a signed contract for a second user matching :search_string exists' \
-        do |search_string|
+      step 'a signed contract :n for a second user matching ' \
+           ':search_string exists' \
+        do |n, search_string|
         user = FactoryGirl.create(:customer,
                                   inventory_pool: @current_inventory_pool,
                                   firstname: search_string)
-        @contract_2 = FactoryGirl.create(:signed_contract,
-                                         user: user,
-                                         inventory_pool: @current_inventory_pool)
+        instance_variable_set \
+          "@contract_#{n}",
+          FactoryGirl.create(:signed_contract,
+                             user: user,
+                             inventory_pool: @current_inventory_pool)
       end
 
-      step 'a signed contract for a delegation matching :search_string exists' \
-        do |search_string|
+      step 'a signed contract :n for a delegation matching :search_string exists' \
+        do |n, search_string|
         delegator_user = \
           FactoryGirl.create(:customer,
                              inventory_pool: @current_inventory_pool)
@@ -38,23 +47,29 @@ module Manage
                                         inventory_pool: @current_inventory_pool,
                                         delegator_user: delegator_user,
                                         firstname: search_string)
-        @contract_3 = FactoryGirl.create(:signed_contract,
-                                         user: delegation,
-                                         inventory_pool: @current_inventory_pool)
+        instance_variable_set \
+          "@contract_#{n}",
+          FactoryGirl.create(:signed_contract,
+                             user: delegation,
+                             inventory_pool: @current_inventory_pool)
       end
 
-      step 'a closed contract for a user matching :search_string exists' \
-        do |search_string|
+      step 'a closed contract :n for a user matching :search_string ' \
+           'created on :date exists' do |n, search_string, date|
         user = FactoryGirl.create(:customer,
                                   inventory_pool: @current_inventory_pool,
                                   firstname: search_string)
-        @contract_4 = FactoryGirl.create(:closed_contract,
-                                         user: user,
-                                         inventory_pool: @current_inventory_pool)
+        instance_variable_set \
+          "@contract_#{n}",
+          FactoryGirl.create(:closed_contract,
+                             created_at: Date.strptime(date, '%d.%m.%Y'),
+                             user: user,
+                             inventory_pool: @current_inventory_pool)
       end
 
-      step 'a closed contract for a contact person of a delegation ' \
-           'matching :search_string exists' do |search_string|
+      step 'a closed contract :n for a contact person of a delegation ' \
+           'matching :search_string created on :date exists' \
+           do |n, search_string, date|
         contact_person = \
           FactoryGirl.create(:customer,
                              firstname: search_string,
@@ -67,24 +82,13 @@ module Manage
                                         delegator_user: delegator_user,
                                         firstname: search_string)
         delegation.delegated_users << contact_person
-        @contract_5 = FactoryGirl.create(:closed_contract,
-                                         user: delegation,
-                                         contact_person: contact_person,
-                                         inventory_pool: @current_inventory_pool)
-      end
-
-      step 'a closed contract for a second delegation ' \
-           'matching :search_string exists' do |search_string|
-        delegator_user = \
-          FactoryGirl.create(:customer,
+        instance_variable_set \
+          "@contract_#{n}",
+          FactoryGirl.create(:closed_contract,
+                             created_at: Date.strptime(date, '%d.%m.%Y'),
+                             user: delegation,
+                             contact_person: contact_person,
                              inventory_pool: @current_inventory_pool)
-        delegation = FactoryGirl.create(:customer,
-                                        inventory_pool: @current_inventory_pool,
-                                        delegator_user: delegator_user,
-                                        firstname: search_string)
-        @contract_6 = FactoryGirl.create(:closed_contract,
-                                         user: delegation,
-                                         inventory_pool: @current_inventory_pool)
       end
 
       step 'I search globally for :search_string' do |search_string|
@@ -97,80 +101,29 @@ module Manage
         expect(page).to have_selector '.list-of-lines .line'
       end
 
-      step 'within the contracts box on the 1st position I see ' \
-           'the signed contract for the user' do
+      step 'within the contracts box I see contracts sorted as follows:' do |table|
         within '#contracts .list-of-lines' do
-          expect(all('.line[data-id]')[0]['data-id']).to be == @contract_1.id
+          expect(all('.row[data-id]').map { |r| r['data-id'] }).to be ==
+            table.raw.flatten.map \
+              { |row| instance_variable_get("@#{row.sub(' ', '_')}").id }
         end
       end
 
-      step 'within the contracts box on the 2nd position I see ' \
-           'the signed contract for the second user' do
-        within '#contracts .list-of-lines' do
-          expect(all('.line[data-id]')[1]['data-id']).to be == @contract_2.id
-        end
+      step 'within the contracts box I see contracts sorted as follows:' do |table|
+        check_contracts_within_container '#contracts .list-of-lines', table
       end
 
-      step 'within the contracts box on the 3rd position I see ' \
-           'the signed contract for the delegation' do
-        within '#contracts .list-of-lines' do
-          expect(all('.line[data-id]')[2]['data-id']).to be == @contract_3.id
-        end
+      step 'I see contracts sorted as follows:' do |table|
+        check_contracts_within_container '.list-of-lines', table
       end
 
-      step 'within the contracts box on the 4th position I see ' \
-           'the closed contract for the user' do
-        within '#contracts .list-of-lines' do
-          expect(all('.line[data-id]')[3]['data-id']).to be == @contract_4.id
-        end
-      end
+      private
 
-      step 'within the contracts box on the 5th position I see ' \
-           'the closed contract for the contact person of a delegation' do
-        within '#contracts .list-of-lines' do
-          expect(all('.line[data-id]')[4]['data-id']).to be == @contract_5.id
-        end
-      end
-
-      step 'on the 1st position I see ' \
-           'the signed contract for the user' do
-        within '.list-of-lines' do
-          expect(all('.line[data-id]')[0]['data-id']).to be == @contract_1.id
-        end
-      end
-
-      step 'on the 2nd position I see ' \
-           'the signed contract for the second user' do
-        within '.list-of-lines' do
-          expect(all('.line[data-id]')[1]['data-id']).to be == @contract_2.id
-        end
-      end
-
-      step 'on the 3rd position I see ' \
-           'the signed contract for the delegation' do
-        within '.list-of-lines' do
-          expect(all('.line[data-id]')[2]['data-id']).to be == @contract_3.id
-        end
-      end
-
-      step 'on the 4th position I see ' \
-           'the closed contract for the user' do
-        within '.list-of-lines' do
-          expect(all('.line[data-id]')[3]['data-id']).to be == @contract_4.id
-        end
-      end
-
-      step 'on the 5th position I see ' \
-           'the closed contract for the contact person of a delegation' do
-        within '.list-of-lines' do
-          expect(all('.line[data-id]')[4]['data-id']).to be == @contract_5.id
-        end
-      end
-
-      step 'on the 6th position I see ' \
-           'the closed contract for the second delegation' do
-        within '.list-of-lines' do
-          expect(all('.line[data-id]')[5]['data-id']).to be == @contract_6.id
+      def check_contracts_within_container(css_path, table)
+        within css_path do
+          expect(all('.row[data-id]').map { |r| r['data-id'] }).to be ==
+            table.raw.flatten.map \
+              { |row| instance_variable_get("@#{row.sub(' ', '_')}").id }
         end
       end
     end

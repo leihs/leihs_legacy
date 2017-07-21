@@ -3,35 +3,39 @@ Feature: Global search within an inventory pool
   Background:
     Given personas dump is loaded
 
+  # Search overview should display contracts matching the user, delegation or contact person of a delegation.
+  # First signed contracts, then closed contracts should be displayed.
+  # Signed contracts should be sorted: 1. normal user first then delegation, 2. user name ASC.
+  # Closed contracts should be sorted according to created date DESC.
   @manage_global_search
-  Scenario: Search overview should display contracts matching the user, delegation or contact person of a delegation and sorted alphabetically
+  Scenario: Search overview should display contracts according to the defined sort order
     Given I am Pius
-    And a signed contract for a user matching 'search string' exists
-    And a signed contract for a second user matching 'xsearch string' exists
-    And a closed contract for a user matching 'search string' exists
-    And a signed contract for a delegation matching 'search string' exists
-    And a closed contract for a contact person of a delegation matching 'search string' exists
+    And a signed contract 1 for a user matching 'search string' exists
+    And a signed contract 2 for a second user matching 'xsearch string' exists
+    And a signed contract 3 for a delegation matching 'search string' exists
+    And a closed contract 4 for a user matching 'search string' created on "01.01.2017" exists
+    And a closed contract 5 for a contact person of a delegation matching 'search string' created on "01.01.2016" exists
     When I search globally for 'search string'
-    Then within the contracts box on the 1st position I see the signed contract for the user
-    Then within the contracts box on the 2nd position I see the signed contract for the second user
-    And within the contracts box on the 3rd position I see the signed contract for the delegation
-    Then within the contracts box on the 4th position I see the closed contract for the user
-    And within the contracts box on the 5th position I see the closed contract for the contact person of a delegation
+    Then within the contracts box I see contracts sorted as follows:
+      | contract 1 |
+      | contract 2 |
+      | contract 3 |
+      | contract 4 |
+      | contract 5 |
 
   @manage_global_search
-  Scenario: Contracts tab should display contracts matching the user, delegation or contact person of a delegation and sorted alphabetically
+  Scenario: Contracts tab should display contracts according to the defined sort order (as in search overview)
     Given I am Pius
-    And a signed contract for a user matching 'search string' exists
-    And a signed contract for a second user matching 'xsearch string' exists
-    And a closed contract for a user matching 'search string' exists
-    And a signed contract for a delegation matching 'search string' exists
-    And a closed contract for a contact person of a delegation matching 'search string' exists
-    And a closed contract for a second delegation matching 'xsearch string' exists
+    And a signed contract 1 for a user matching 'search string' exists
+    And a signed contract 2 for a second user matching 'xsearch string' exists
+    And a signed contract 3 for a delegation matching 'search string' exists
+    And a closed contract 4 for a user matching 'search string' created on "01.01.2017" exists
+    And a closed contract 5 for a contact person of a delegation matching 'search string' created on "01.01.2016" exists
     When I search globally for 'search string'
     And I switch to the contracts tab
-    Then on the 1st position I see the signed contract for the user
-    Then on the 2nd position I see the signed contract for the second user
-    And on the 3rd position I see the signed contract for the delegation
-    Then on the 4th position I see the closed contract for the user
-    And on the 5th position I see the closed contract for the contact person of a delegation
-    And on the 6th position I see the closed contract for the second delegation
+    Then I see contracts sorted as follows:
+      | contract 1 |
+      | contract 2 |
+      | contract 3 |
+      | contract 4 |
+      | contract 5 |

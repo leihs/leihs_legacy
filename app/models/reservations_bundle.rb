@@ -29,7 +29,10 @@ class ReservationsBundle < ActiveRecord::Base
       ctx.compact_id,
       bool_or(groups.is_verification_required) AS verifiable_user,
       COUNT(partitions.id) > 0 AS verifiable_user_and_model,
-      MAX(reservations.created_at) AS created_at
+      CASE
+        WHEN reservations.status IN ('signed', 'closed') THEN MAX(ctx.created_at)
+        ELSE MAX(reservations.created_at)
+      END AS created_at
     SQL
     .joins(<<-SQL)
       LEFT JOIN groups_users ON reservations.user_id = groups_users.user_id
@@ -206,6 +209,7 @@ class ReservationsBundle < ActiveRecord::Base
 
   ############################################
 
+  # rubocop:disable Metrics/MethodLength
   def self.filter(params, user = nil, inventory_pool = nil)
     contracts = if user
                   user.reservations_bundles
@@ -268,13 +272,22 @@ class ReservationsBundle < ActiveRecord::Base
     bundles = \
       ReservationsBundle
       .unscoped
-      .select('reservations_bundles.*')
+      .select(<<-SQL)
+         reservations_bundles.*,
+         CASE
+           WHEN reservations_bundles.status = 'signed'
+             THEN NULL
+           WHEN reservations_bundles.status = 'closed'
+             THEN reservations_bundles.created_at
+         END AS created_at_2
+      SQL
       .from("(#{contracts.to_sql}) AS reservations_bundles")
 
     if params[:global_contracts_search]
       bundles = \
         bundles
         .order('reservations_bundles.status ASC')
+        .order('created_at_2 DESC')
         .order('reservations_bundles.delegated_user_id IS NULL DESC')
         .order('reservations_bundles.firstname ASC')
     else
@@ -286,6 +299,7 @@ class ReservationsBundle < ActiveRecord::Base
     end
     bundles
   end
+  # rubocop:enable Metrics/MethodLength
 
   ############################################
 

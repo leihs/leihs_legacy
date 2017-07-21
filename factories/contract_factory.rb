@@ -2,6 +2,7 @@ FactoryGirl.define do
 
   factory :contract do
     note { Faker::Lorem.paragraph }
+    created_at nil
 
     transient do
       inventory_pool { FactoryGirl.create(:inventory_pool) }
