@@ -525,4 +525,8 @@ class ReservationsBundle < ActiveRecord::Base
   def total_price
     reservations.to_a.sum(&:price)
   end
+
+  def label_for_audits
+    "#{inventory_pool} - #{user} - #{status}"
+  end
 end

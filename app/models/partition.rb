@@ -50,4 +50,8 @@ class Partition < ActiveRecord::Base
 
     sql
   end
+
+  def label_for_audits
+    "#{model.try(&:name)} - #{group.try(&:name)}"
+  end
 end

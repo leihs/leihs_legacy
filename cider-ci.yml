@@ -3,7 +3,7 @@ jobs:
     include: cider-ci/jobs/import-production-db-test.yml
 
 include:
-  ## per-engine jobs:
+  - cider-ci/jobs/rspec-model-tests.yml
 
   ## BORROW/MANAGE - on branches foo/borrow-bar or foo/manage-bar
   - cider-ci/jobs/borrow-manage-code-checks.yml

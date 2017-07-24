@@ -153,4 +153,8 @@ class Field < ActiveRecord::Base
     end
   end
 
+  def label_for_audits
+    id
+  end
+
 end

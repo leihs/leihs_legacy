@@ -78,4 +78,8 @@ class Workday < ActiveRecord::Base
     dates.sort
   end
 
+  def label_for_audits
+    "#{_('Workdays')} #{inventory_pool}"
+  end
+
 end

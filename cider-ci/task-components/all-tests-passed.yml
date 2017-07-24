@@ -50,3 +50,7 @@ procurement-flapping-scenarios:
   type: job
   job_key: procurement-flapping-scenarios
   states: [passed]
+rspec-model-tests:
+  type: job
+  job_key: rspec-model-tests
+  states: [passed]

@@ -1,0 +1,33 @@
+jobs:
+
+  rspec-model-tests:
+
+    name: RSpec Model Tests
+    description: Run model specs.
+
+    priority: 1
+
+    run_when:
+      always:
+        type: branch
+        include_match: '^.*$'
+        exclude_match: '^.*(no-ci|hotspot).*$'
+
+    context:
+      generate_tasks:
+        include_match: spec/models/.*_spec.rb
+
+      task_defaults:
+        max_trials: 3
+        include:
+          - cider-ci/task-components/database.yml
+        scripts:
+          test:
+            body: |
+              set -eux
+              export PATH=~/.rubies/$RUBY/bin:$PATH
+              bundle exec rspec $CIDER_CI_TASK_FILE
+
+      include:
+        - cider-ci/shared/main-context.yml
+

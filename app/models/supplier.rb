@@ -10,6 +10,10 @@ class Supplier < ActiveRecord::Base
     name
   end
 
+  def label_for_audits
+    name
+  end
+
   def self.filter(params)
     suppliers = search(params[:search_term]).order(:name)
     suppliers = suppliers.where(id: params[:ids]) if params[:ids]

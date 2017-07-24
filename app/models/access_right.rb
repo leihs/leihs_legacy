@@ -94,6 +94,10 @@ class AccessRight < ActiveRecord::Base
     s
   end
 
+  def label_for_audits
+    to_s
+  end
+
   def suspended?
     !suspended_until.nil? and suspended_until >= Time.zone.today
   end

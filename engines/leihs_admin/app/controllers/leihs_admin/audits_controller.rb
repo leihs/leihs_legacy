@@ -1,25 +1,16 @@
 module LeihsAdmin
   class AuditsController < AdminController
+    PER_PAGE = 10
 
     def index
-      if params[:start_date].blank?
-        params[:start_date] = I18n.l(30.days.ago.to_date)
-      end
-      params[:end_date] = I18n.l(Time.zone.today) if params[:end_date].blank?
-
-      table = Audited::Adapters::ActiveRecord::Audit.arel_table
-      requests = get_requests(table)
-      requests = requests.where(user_id: params[:user_id]) if params[:user_id]
-
-      per_page = 10
-      page = Integer(params[:page].presence || 1)
-      @audits = \
-        requests
-          .group_by(&:request_uuid)
-          .values[per_page * (page - 1), per_page]
+      @audits = audits
 
       respond_to do |format|
-        format.html
+        format.html do
+          @start_date = start_date_param
+          @end_date = end_date_param
+          @search_term = search_term_param
+        end
         format.js do
           render partial: 'leihs_admin/audits/audits', collection: @audits
         end
@@ -28,31 +19,58 @@ module LeihsAdmin
 
     private
 
-    def get_requests(table)
-      get_initial_query
-        .where(
-          table[:created_at].gteq(
-            Date.parse(params[:start_date]).to_s(:db)
-          )
-        )
-        .where(
-          table[:created_at].lteq(
-            Date.parse(params[:end_date]).tomorrow.to_s(:db)
-          )
-        )
-        .reorder(created_at: :desc, id: :desc)
-        .joins('LEFT JOIN users ON users.id = audits.user_id')
-        .select("audits.*, CONCAT_WS(' ', users.firstname, users.lastname) " \
-                'AS user_name')
+    # rubocop:disable Metrics/MethodLength
+    def audits
+      Audit
+        .select(<<-SQL)
+          audits.request_uuid,
+          audits.user_id,
+          array_agg(row_to_json(audits.*)) AS rows,
+          MAX(audits.created_at) AS created_at
+        SQL
+        .filter(start_date: Date.parse(start_date_param),
+                end_date: Date.parse(end_date_param),
+                auditable_id: id_param,
+                auditable_type: type_param,
+                user_id: user_id_param,
+                search_term: search_term_param)
+        .group(<<-SQL)
+          audits.request_uuid,
+          audits.user_id,
+          audits.created_at::date
+        SQL
+        .reorder('created_at DESC')
+        .offset(PER_PAGE * page_param)
+        .limit(PER_PAGE)
+    end
+    # rubocop:enable Metrics/MethodLength
+
+    def start_date_param
+      params[:start_date].presence or I18n.l(30.days.ago.to_date)
     end
 
-    def get_initial_query
-      if params[:type] and params[:id]
-        auditable = params[:type].camelize.constantize.find(params[:id])
-        auditable.audits
-      else
-        Audited::Adapters::ActiveRecord::Audit
-      end
+    def end_date_param
+      params[:end_date].presence or I18n.l(Time.zone.today)
+    end
+
+    def page_param
+      Integer(params[:page].presence || 0)
+    end
+
+    def user_id_param
+      params[:user_id].presence
+    end
+
+    def search_term_param
+      params[:search_term].presence
+    end
+
+    def type_param
+      params[:type].presence.try(&:capitalize)
+    end
+
+    def id_param
+      params[:id].presence
     end
   end
 end

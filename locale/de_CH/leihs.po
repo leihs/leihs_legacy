@@ -1223,6 +1223,9 @@ msgstr "Lizenz kopieren"
 msgid "Create copied item"
 msgstr "Kopierten Gegenstand erstellen"
 
+msgid "Changes"
+msgstr "Änderungen"
+
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
@@ -2400,6 +2403,9 @@ msgstr "Vorname"
 msgid "User|AccessRight|Suspended reason"
 msgstr "Sperrgrund"
 
+msgid "AccessRight"
+msgstr "Zugangsrecht"
+
 msgid "The selected inventory pool is closed on that day"
 msgstr "Der ausgewählte Gerätepark ist an diesem Tag geschlossen"
 
@@ -2815,6 +2821,9 @@ msgstr "Neue Option erstellen"
 
 msgid "Option saved"
 msgstr "Option gespeichert"
+
+msgid "Notification"
+msgstr "Benachrichtigung"
 
 msgid "Hide notification"
 msgstr "Mitteilung verbergen"
@@ -3375,3 +3384,9 @@ msgstr "Gerätepark kann nicht deaktiviert werden, weil es Bestellungen oder off
 
 msgid "Inventory pool can't be deactivated due to existing items which are not yet retired."
 msgstr "Gerätepark kann nicht deaktiviert werden, weil es noch nicht ausgemusterte Gegenstände hat."
+
+msgid "Action"
+msgstr "Aktion"
+
+msgid "Entity"
+msgstr "Entität"

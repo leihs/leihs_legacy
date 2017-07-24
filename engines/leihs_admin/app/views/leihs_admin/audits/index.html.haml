@@ -1,13 +1,14 @@
 - content_for :title, _("Audits")
 
-
 %form.form-inline.text-right{style: 'margin-bottom: 1em'}
   .input-group
-    %input.form-control.datepicker{type: "text", name: "start_date", placeholder: _("Start date"), value: params[:start_date]}
+    %input.form-control{type: 'text', name: 'search_term', value: @search_term, placeholder: _("Search..."), autocomplete: :false, autofocus: true, onfocus: "this.value = this.value;"}
+  .input-group
+    %input.form-control.datepicker{type: "text", name: "start_date", placeholder: _("Start date"), value: @start_date}
     .input-group-addon
       %i.fa.fa-calendar
   .input-group
-    %input.form-control.datepicker{type: "text", name: "end_date", placeholder: _("End date"), value: params[:end_date]}
+    %input.form-control.datepicker{type: "text", name: "end_date", placeholder: _("End date"), value: @end_date}
     .input-group-addon
       %i.fa.fa-calendar
   %button.btn.btn-default{type: "submit"}= _("Filter")

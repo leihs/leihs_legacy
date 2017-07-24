@@ -25,6 +25,10 @@ class DatabaseAuthentication < ActiveRecord::Base
     crypted_password == encrypt(password)
   end
 
+  def label_for_audits
+    login
+  end
+
   private
 
   def encrypt(password)
@@ -38,5 +42,4 @@ class DatabaseAuthentication < ActiveRecord::Base
     end
     self.crypted_password = encrypt(password)
   end
-
 end

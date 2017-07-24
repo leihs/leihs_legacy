@@ -26,4 +26,8 @@ class AuthenticationSystem < ActiveRecord::Base
     end
   end
 
+  def label_for_audits
+    name
+  end
+
 end

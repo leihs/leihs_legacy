@@ -67,4 +67,8 @@ class Notification < ActiveRecord::Base
     # we currently do *not* log emails to users
   end
 
+  def label_for_audits
+    "#{user.try(&:name)} - #{title}"
+  end
+
 end

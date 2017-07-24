@@ -1,0 +1,15 @@
+- changes = row['audited_changes']
+- ActiveRecord::Coders::YAMLColumn.new.load(changes).each_pair do |k, v|
+  .row
+    %b.col-sm-4.text-right
+      = "#{k}:"
+    .col-sm-8
+      - if k == 'content' and ['Image', 'Attachment'].include?(row['auditable_type'])
+        [encoded]
+      - elsif k == 'metadata' and ['Image', 'Attachment'].include?(row['auditable_type'])
+        [json]
+      - elsif v.is_a?(Array)
+        %s= v.first
+        = v.last
+      - else
+        = v

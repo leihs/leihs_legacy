@@ -14,6 +14,10 @@ class Address < ActiveRecord::Base
     [street, location].compact.join(', ')
   end
 
+  def label_for_audits
+    to_s
+  end
+
   def to_multiline_s
     [street, zip_code, city, country].compact.join('\r\n')
   end

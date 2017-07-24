@@ -1,45 +1,29 @@
-.panel.panel-default
+.panel.panel-default{data: {request_id: audits.request_uuid}}
   .panel-heading
     %h4.row
       .col-sm-4
-        = l audits.first.try(:created_at), format: :long
+        = l audits.created_at, format: :long
       .col-sm-8
-        - if (user_name = audits.first.try(:user_name))
-          %a{href: url_for(user_id: audits.first.user_id)}
-            = user_name
+        - if user = User.find_by_id(audits.user_id)
+          %a{href: url_for(user_id: audits.user_id)}
+            = user.name
   .panel-body
     %h5.row
       .col-sm-1
-        Action
-      .col-sm-3
-        Auditable
-      .col-sm-8
-        Changes
-    - audits.each do |audit|
+        = _('Action')
+      .col-sm-4
+        = _('Entity')
+      .col-sm-7
+        .row
+          .col-sm-4.text-right
+            = _('Changes')
+          .col-sm-8
+    - audits.rows.each do |row|
       %hr
-      .row
+      .row{data: {id: row['id']}}
         .col-sm-1
-          = audit.action
-        .col-sm-3
-          - if audit.auditable_id
-            %a{href: url_for(type: audit.auditable_type.underscore, id: audit.auditable_id)}
-              = audit.auditable_type
-              = audit.auditable_id
-          - if audit.associated_id
-            %br
-            (
-            %a{href: url_for(type: audit.associated_type.underscore, id: audit.associated_id)}
-              = audit.associated_type
-              = audit.associated_id
-            )
-        .col-sm-8
-          - audit.audited_changes.each_pair do |k,v|
-            .row
-              %b.col-sm-4.text-right
-                = "#{k}:"
-              .col-sm-8
-                - if v.is_a? Array
-                  %s= v.first
-                  = v.last
-                - else
-                  = v
+          = row['action']
+        .col-sm-4
+          = render partial: 'auditable_entity', locals: { row: row }
+        .col-sm-7
+          = render partial: 'changes', locals: { row: row }

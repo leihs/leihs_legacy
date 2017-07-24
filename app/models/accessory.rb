@@ -34,6 +34,10 @@ class Accessory < ActiveRecord::Base
     name
   end
 
+  def label_for_audits
+    name
+  end
+
   def active_in?(inventory_pool)
     inventory_pools.include? inventory_pool
   end

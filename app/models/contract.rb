@@ -75,4 +75,8 @@ class Contract < ActiveRecord::Base
     "#{id}"
   end
 
+  def label_for_audits
+    compact_id
+  end
+
 end

@@ -9,4 +9,8 @@ class Purpose < ActiveRecord::Base
     "#{description}"
   end
 
+  def label_for_audits
+    to_s
+  end
+
 end

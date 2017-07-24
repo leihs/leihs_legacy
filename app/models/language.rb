@@ -34,4 +34,8 @@ class Language < ActiveRecord::Base
 
     preferred_language
   end
+
+  def label_for_audits
+    name
+  end
 end

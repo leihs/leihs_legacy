@@ -47,4 +47,8 @@ class Setting < ActiveRecord::Base
     end
   end
 
+  def label_for_audits
+    'Settings'
+  end
+
 end

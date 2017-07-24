@@ -111,7 +111,7 @@ Feature: Model list
     And I am listing models
     Then I can also use a date picker to specify start and end date instead of entering them by hand
 
-  @borrow_model_list
+  @borrow_model_list @flapping
   Scenario: Searching for a model
     Given I am Normin
     And I am listing models

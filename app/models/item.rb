@@ -262,6 +262,10 @@ class Item < ActiveRecord::Base
     "#{model.name} #{inventory_code}"
   end
 
+  def label_for_audits
+    "#{model.name} #{inventory_code}"
+  end
+
   # an item is in stock if it's not handed over or
   # it's not assigned to an approved reservation
   def in_stock?

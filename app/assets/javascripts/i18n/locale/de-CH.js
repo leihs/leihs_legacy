@@ -1650,6 +1650,10 @@ window.i18n.locale_data = {
          null,
          "Kopierten Gegenstand erstellen"
       ],
+      "Changes": [
+         null,
+         "Änderungen"
+      ],
       "Save changes": [
          null,
          "Änderungen speichern"
@@ -3125,6 +3129,10 @@ window.i18n.locale_data = {
          null,
          "Sperrgrund"
       ],
+      "AccessRight": [
+         null,
+         "Zugangsrecht"
+      ],
       "The selected inventory pool is closed on that day": [
          null,
          "Der ausgewählte Gerätepark ist an diesem Tag geschlossen"
@@ -3636,6 +3644,10 @@ window.i18n.locale_data = {
       "Option saved": [
          null,
          "Option gespeichert"
+      ],
+      "Notification": [
+         null,
+         "Benachrichtigung"
       ],
       "Hide notification": [
          null,
@@ -4381,6 +4393,14 @@ window.i18n.locale_data = {
       "Inventory pool can't be deactivated due to existing items which are not yet retired.": [
          null,
          "Gerätepark kann nicht deaktiviert werden, weil es noch nicht ausgemusterte Gegenstände hat."
+      ],
+      "Action": [
+         null,
+         "Aktion"
+      ],
+      "Entity": [
+         null,
+         "Entität"
       ]
    }
 }

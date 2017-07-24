@@ -107,6 +107,10 @@ class MailTemplate < ActiveRecord::Base
     end
   end
 
+  def label_for_audits
+    name
+  end
+
   private
 
   def syntax_validation

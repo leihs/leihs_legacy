@@ -27,4 +27,12 @@ class Attachment < ActiveRecord::Base
     end
   end
 
+  def to_s
+    filename
+  end
+
+  def label_for_audits
+    filename
+  end
+
 end

@@ -1207,6 +1207,9 @@ msgstr ""
 msgid "Create copied item"
 msgstr ""
 
+msgid "Changes"
+msgstr ""
+
 msgid "Save changes"
 msgstr ""
 
@@ -2333,6 +2336,9 @@ msgstr ""
 msgid "User|AccessRight|Suspended reason"
 msgstr ""
 
+msgid "AccessRight"
+msgstr ""
+
 msgid "The selected inventory pool is closed on that day"
 msgstr ""
 
@@ -2725,6 +2731,9 @@ msgid "Create new option"
 msgstr ""
 
 msgid "Option saved"
+msgstr ""
+
+msgid "Notification"
 msgstr ""
 
 msgid "Hide notification"
@@ -3279,4 +3288,10 @@ msgid "Inventory pool can't be deactivated due to existing orders or signed cont
 msgstr ""
 
 msgid "Inventory pool can't be deactivated due to existing items which are not yet retired."
+msgstr ""
+
+msgid "Action"
+msgstr ""
+
+msgid "Entity"
 msgstr ""

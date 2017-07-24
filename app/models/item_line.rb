@@ -30,7 +30,11 @@ class ItemLine < Reservation
   end
 
   def to_s
-    "#{item} - #{I18n.l end_date}"
+    "#{item or model} - #{I18n.l end_date}"
+  end
+
+  def label_for_audits
+    "#{item or model} #{_('until')} #{I18n.l end_date}"
   end
 
   ##################################################
