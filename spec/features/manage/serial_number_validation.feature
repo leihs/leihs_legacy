@@ -66,3 +66,15 @@ Feature: Serial number validation
     Then I was redirected to the inventory page
     And I see a success message
     And the item was updated
+
+  @manage_serial_number_validation
+  Scenario: Displaying warning message on inventory helper page
+    Given I am Mike
+    And there is an item with serial number "abcd"
+    And there is an item with serial number "ABCD"
+    When I open the inventory helper page
+    And I choose "Shelf" from the field select box
+    And I enter some shelf name in the shelf input field
+    And I apply the values on item with serial number "ABCD"
+    Then I see a warning in regards to existing serial number
+    And the values were successfully applied to the item with serial number "ABCD"

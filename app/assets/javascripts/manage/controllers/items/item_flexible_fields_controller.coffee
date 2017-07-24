@@ -17,6 +17,13 @@ class window.App.ItemFlexibleFieldsController extends Spine.Controller
         @setupFieldsWithValuesDependency(@callback)
       else
         @callback?()
+    @setupInitialFlashNotice()
+
+  setupInitialFlashNotice: =>
+    if @showInitialFlashNotice and not @itemData['unique_serial_number?']
+      App.Flash
+        type: "notice"
+        message: _jed("Same or similar serial number already exists.")
 
   getFieldsWithValuesDependency: =>
     _.filter(App.Field.all(), (f) -> f.values_dependency_field_id)

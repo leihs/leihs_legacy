@@ -12,7 +12,8 @@ module Manage
       step 'there is an item with serial number :serial_number' do |serial_number|
         FactoryGirl.create(:item,
                            owner_id: @current_inventory_pool.id,
-                           serial_number: serial_number)
+                           serial_number: serial_number,
+                           skip_serial_number_validation: true)
       end
 
       step 'I open the page for creating a new item' do
@@ -100,6 +101,36 @@ module Manage
         type_into_and_select_from_autocomplete \
           "[data-autocomplete_value_target='item[room_id]'",
           Building.general.rooms.find_by_general(true).name
+      end
+
+      step 'I open the inventory helper page' do
+        visit manage_inventory_helper_path(@current_inventory_pool)
+      end
+
+      step 'I choose :field from the field select box' do |field|
+        type_into_and_select_from_autocomplete('#field-input', _(field))
+      end
+
+      step 'I enter some shelf name in the shelf input field' do
+        fill_in('item[shelf]', with: (@shelf = Faker::Lorem.word))
+      end
+
+      step 'I apply the values on item with serial number :serial_number' \
+        do |serial_number|
+        @item = Item.find_by_serial_number(serial_number)
+        type_into_and_select_from_autocomplete('#item-input', @item.inventory_code)
+      end
+
+      step 'I see a warning in regards to existing serial number' do
+        within('#flash .notice') do
+          page.should \
+            have_content _('Same or similar serial number already exists.')
+        end
+      end
+
+      step 'the values were successfully applied to the item ' \
+           'with serial number :serial_number' do |serial_number|
+        expect(@item.reload.shelf).to be == @shelf
       end
     end
   end

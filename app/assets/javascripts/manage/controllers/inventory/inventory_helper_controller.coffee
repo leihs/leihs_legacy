@@ -150,7 +150,8 @@ class App.InventoryHelperController extends Spine.Controller
     serial = @fieldSelection.serializeArray()
     for field in _.filter(App.Field.all(), (f) -> f.exclude_from_submit)
       serial = _.reject(serial, (s) -> s.name == field.getFormName())
-    serial
+    serial.concat \
+      [{name: "item[skip_serial_number_validation]", value: true}]
 
   setupAppliedItem: (status)=>
     callback = =>
@@ -179,6 +180,7 @@ class App.InventoryHelperController extends Spine.Controller
       hideable: true
       excludeIds: ['attachments']
       callback: callback
+      showInitialFlashNotice: true
   
   fetchItem: (inventoryCode, callback)=>
     App.Item.ajaxFetch
@@ -206,7 +208,7 @@ class App.InventoryHelperController extends Spine.Controller
       return h
     else
       item.updateWithFieldData(data)
-      .fail (e)=> @setNotification(e.responseText, "error")
+      .fail (e)=> @setNotification(e.responseJSON.message, "error")
 
   setNotification: (text, status)-> 
     @notifications.html App.Render "manage/views/inventory/helper/"+status, {text: text}

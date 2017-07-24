@@ -2,7 +2,8 @@ class Manage::ItemsController < Manage::ApplicationController
   include FileStorage
 
   JSON_SPEC = {
-    methods: :current_location,
+    methods: [:current_location,
+              :unique_serial_number?],
     include: {
       inventory_pool: {},
       model: {},
