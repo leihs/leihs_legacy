@@ -9,24 +9,33 @@ class window.App.ModelsIndexTooltipController extends Spine.Controller
   createTooltip: (line) =>
     new App.Tooltip
       el: line
+      trackTooltip: true
+      delay: [200, 100]
 
-  fetchProperties: (model_id) =>
+  fetchProperties: (model_id, target) =>
     App.Property.ajaxFetch
       data: $.param
         model_ids: [model_id]
     .done =>
       return false unless App.Model.exists model_id
-      tooltip = @tooltips[model_id]
+      return false if @tooltips[model_id]?
+
+      tooltip = @createTooltip target
+      @tooltips[model_id] = tooltip
+      @currentTooltip = tooltip
+
       if tooltip?
         model = App.Model.find(model_id)
         model.propertiesToDisplay = _.first model.properties().all(), 5
-        model.amount_of_images = 3
+        model.amount_of_images = 1
         content = App.Render "borrow/views/models/index/tooltip", model
-        tooltip.update App.Render "borrow/views/models/index/tooltip", model
-        do tooltip.enable
-        do tooltip.show if @currentTooltip == tooltip and @mouseOverTooltip
+        tooltip.update content
+        setTimeout(=>
+          tooltip.show() if @currentTooltip == tooltip and @mouseOverTooltip
+        , 0)
 
-  enterLine: (e)=> 
+
+  enterLine: (e)=>
     @mouseOverTooltip = true
     @currentTargetId = $(e.currentTarget).data("id")
     _.delay (=> @stayOnLine e), 200
@@ -38,13 +47,9 @@ class window.App.ModelsIndexTooltipController extends Spine.Controller
     model_id = target.data('id')
     if App.Model.exists model_id
       unless @tooltips[model_id]?
-        tooltip = @createTooltip target
-        do tooltip.disable
-        @currentTooltip = tooltip
-        @tooltips[model_id] = tooltip
-        @fetchProperties model_id
+        @fetchProperties model_id, target
       else
         @currentTooltip = @tooltips[model_id]
 
-  leaveLine: (e)=> 
+  leaveLine: (e)=>
     @mouseOverTooltip = false

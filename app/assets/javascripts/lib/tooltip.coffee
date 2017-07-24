@@ -31,6 +31,8 @@ class App.Tooltip
       touchDevices: true,
       trigger: if options.trigger? then options.trigger else 'hover',
       updateAnimation: true,
+      trackTooltip: if options.trackTooltip? then options.trackTooltip else false,
+      updateAnimation: false,
       contentAsHTML: true,
       theme: 'tooltipster-default',
       distance: 0
@@ -49,11 +51,10 @@ class App.Tooltip
   update: (content) =>
     @content = content
     @target.tooltipster("content", content)
-    do @reposition
 
   reposition: => @target.tooltipster("reposition")
 
-  show: => @target.tooltipster "show"
+  show: => @target.tooltipster "open"
 
   @destroyAll: =>
     for tooltip in $(".tooltipster-base:not(.tooltipster-dying)")
