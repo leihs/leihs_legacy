@@ -3,8 +3,8 @@ require 'turnip/capybara'
 require 'rails_helper'
 require 'factory_girl'
 
-if ENV['FIREFOX_ESR_PATH'].present?
-  Selenium::WebDriver::Firefox.path = ENV['FIREFOX_ESR_PATH']
+if ENV['FIREFOX_ESR_45_PATH'].present?
+  Selenium::WebDriver::Firefox.path = ENV['FIREFOX_ESR_45_PATH']
 end
 
 [:firefox].each do |browser|
