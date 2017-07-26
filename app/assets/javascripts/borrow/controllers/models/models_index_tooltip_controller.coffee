@@ -11,6 +11,7 @@ class window.App.ModelsIndexTooltipController extends Spine.Controller
       el: line
       trackTooltip: true
       delay: [200, 100]
+      trigger: 'hover'
 
   fetchProperties: (model_id, target) =>
     App.Property.ajaxFetch
@@ -18,7 +19,7 @@ class window.App.ModelsIndexTooltipController extends Spine.Controller
         model_ids: [model_id]
     .done =>
       return false unless App.Model.exists model_id
-      return false if @tooltips[model_id]?
+      return false if @tooltips[model_id]? && target.hasClass('tooltipstered')
 
       tooltip = @createTooltip target
       @tooltips[model_id] = tooltip
@@ -34,7 +35,6 @@ class window.App.ModelsIndexTooltipController extends Spine.Controller
           tooltip.show() if @currentTooltip == tooltip and @mouseOverTooltip
         , 0)
 
-
   enterLine: (e)=>
     @mouseOverTooltip = true
     @currentTargetId = $(e.currentTarget).data("id")
@@ -46,10 +46,11 @@ class window.App.ModelsIndexTooltipController extends Spine.Controller
     target = $(e.currentTarget)
     model_id = target.data('id')
     if App.Model.exists model_id
-      unless @tooltips[model_id]?
+      unless @tooltips[model_id]? && target.hasClass('tooltipstered')
         @fetchProperties model_id, target
       else
-        @currentTooltip = @tooltips[model_id]
+        tooltip = @tooltips[model_id]
+        @currentTooltip = tooltip
 
   leaveLine: (e)=>
     @mouseOverTooltip = false
