@@ -450,14 +450,12 @@ module Borrow
               find('.col2of3', text: property.value)
             end
           end
-          (0..@model.images.count - 1).each do |i|
-            expect(
-              has_selector?(
-                "img[src*='/models/#{@model.id}/image_thumb?offset=#{i}']",
-                visible: false
-              )
-            ).to be true
-          end
+          expect(
+            has_selector?(
+              "img[src*='/models/#{@model.id}/image_thumb?offset=0']",
+              visible: false
+            )
+          ).to be true
         end
       end
 
