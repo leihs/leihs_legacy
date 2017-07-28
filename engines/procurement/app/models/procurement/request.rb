@@ -25,6 +25,7 @@ module Procurement
                            attachments_attributes: [:content,
                                                     :filename,
                                                     :size,
+                                                    :metadata,
                                                     :content_type]]
     INSPECTOR_KEYS = [:requested_quantity,
                       :approved_quantity,

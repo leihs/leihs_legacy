@@ -78,6 +78,8 @@ module Procurement
       image = Image.create!(main_category_id: main_category.id,
                             content: Base64.encode64(file.read),
                             filename: file.original_filename,
+                            metadata: \
+                              MetadataExtractor.new(file.tempfile.path).to_hash,
                             size: file.size,
                             content_type: file.content_type)
 
@@ -89,6 +91,7 @@ module Procurement
                     content: Base64.encode64(thumbnail_file.read),
                     filename: "#{basename}_thumb#{extension}",
                     size: thumbnail_file.size,
+                    metadata:  MetadataExtractor.new(thumbnail_filepath).to_hash,
                     parent_id: image.id,
                     content_type: file.content_type)
     end

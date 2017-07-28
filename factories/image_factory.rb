@@ -12,6 +12,7 @@ FactoryGirl.define do
     after(:build) do |image, evaluator|
       file = File.open(evaluator.filepath)
       image.content = Base64.encode64(file.read)
+      image.metadata = MetadataExtractor.new(evaluator.filepath).to_hash
     end
   end
 

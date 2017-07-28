@@ -13,6 +13,7 @@ FactoryGirl.define do
     content { Base64.encode64(file.read) }
     size { file.size }
     content_type { Procurement::FileUtilities.content_type(filepath) }
+    metadata { MetadataExtractor.new(filepath).to_hash }
 
     parent_id nil
 

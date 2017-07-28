@@ -738,6 +738,8 @@ steps_for :managing_requests do
       attachments_attributes: [{ content: Base64.encode64(file.read),
                                  size: file.size,
                                  filename: File.basename(file_path),
+                                 metadata: \
+                                   MetadataExtractor.new(file_path).to_hash,
                                  content_type: content_type }]
   end
 

@@ -196,6 +196,7 @@ module Procurement
       attrs['filename'] = file.original_filename
       attrs['size'] = file.size
       attrs['content_type'] = file.content_type
+      attrs['metadata'] = MetadataExtractor.new(file.tempfile.path).to_hash
       attrs
     end
 
