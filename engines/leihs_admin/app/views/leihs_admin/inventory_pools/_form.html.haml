@@ -56,7 +56,7 @@
   $(document).ready ->
     element = $("select[name='inventory_managers[user_ids][]']").select2
       minimumInputLength: 3
-      placeholder: '#{_("Name of the user")}'
+      placeholder: #{_("Name of the user").to_json}
       ajax:
         url: '/admin/users.json'
         dataType: 'json'
