@@ -26,7 +26,7 @@
   $(document).ready ->
     element1 = $("select[name='user[users][][id]']").select2
       minimumInputLength: 3
-      placeholder: '#{_("Name of the user")}'
+      placeholder: #{_("Name of the user").to_json}
       ajax:
         url: '/admin/users.json'
         dataType: 'json'

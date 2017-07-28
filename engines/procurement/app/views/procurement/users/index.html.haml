@@ -79,9 +79,9 @@
         "<li>" + item.firstname + " " + item.lastname + "</li>"
       prePopulate: #{@admins.sort{|a,b| a.firstname <=> b.firstname}.to_json(only: [:id, :firstname, :lastname])}
       preventDuplicates: true
-      hintText: "#{_('Type in a search term')}"
-      noResultsText: "#{_('No results')}"
-      searchingText: "#{_('Searching...')}"
+      hintText: #{_('Type in a search term').to_json}
+      noResultsText: #{_('No results').to_json}
+      searchingText: #{_('Searching...').to_json}
       #theme: 'facebook'
 
     initAutocompletes = ->
