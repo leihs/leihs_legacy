@@ -1,19 +1,18 @@
 - content_for :title, _("Audits")
 
+
+%form.form-inline.text-right{style: 'margin-bottom: 1em'}
+  .input-group
+    %input.form-control.datepicker{type: "text", name: "start_date", placeholder: _("Start date"), value: params[:start_date]}
+    .input-group-addon
+      %i.fa.fa-calendar
+  .input-group
+    %input.form-control.datepicker{type: "text", name: "end_date", placeholder: _("End date"), value: params[:end_date]}
+    .input-group-addon
+      %i.fa.fa-calendar
+  %button.btn.btn-default{type: "submit"}= _("Filter")
+
 .pages
-
-  .row.text-right
-    %form.form-inline
-      .input-group
-        %input.form-control.datepicker{type: "text", name: "start_date", placeholder: _("Start date"), value: params[:start_date]}
-        .input-group-addon
-          %i.fa.fa-calendar
-      .input-group
-        %input.form-control.datepicker{type: "text", name: "end_date", placeholder: _("End date"), value: params[:end_date]}
-        .input-group-addon
-          %i.fa.fa-calendar
-      %button.btn.btn-default{type: "submit"}= _("Filter")
-
   = render partial: 'leihs_admin/audits/audits', collection: @audits
 
 %h1.pages-progress.text-center
