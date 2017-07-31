@@ -11,7 +11,7 @@ module LeihsAdmin
     ######################################################################
 
     def index
-      @role = params[:role]
+      @role = params.permit(:role)[:role]
       @users = User.filter params, current_inventory_pool
 
       respond_to do |format|

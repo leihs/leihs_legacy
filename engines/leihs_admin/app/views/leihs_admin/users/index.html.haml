@@ -27,6 +27,7 @@
       = link_to _("Administrator"), admin.users_path(role: 'admins')
 
   %form#list-filters.row.well
+    = hidden_field_tag 'role', @role
     .col-sm-2
       %input.form-control{type: 'text', name: 'search_term', value: params[:search_term], placeholder: _("Search..."), autocomplete: :false, autofocus: true, onfocus: "this.value = this.value;"}
     .col-sm-2

@@ -173,6 +173,37 @@ module LeihsAdmin
         end
       end
 
+      step 'the currently active tab is :tab_label' do |tab_label|
+        view = find('#user-index-view')
+        expect(view.find('.nav-tabs li.active').text).to eq tab_label
+      end
+
+      step 'I change the tab to :tab_label' do |tab_label|
+        view = find('#user-index-view')
+        view.find('.nav-tabs li', text: tab_label).click
+      end
+
+      step 'I pick any user' do
+        @user = User.all.sample
+      end
+
+      step 'I pick an admin user' do
+        @user = User.admins.sample
+      end
+
+      step 'I search the Users list for the picked users name' do
+        within '#user-index-view #list-filters' do
+          find('[name=search_term]').set("#{@user.firstname} #{@user.lastname}")
+          find('[type=submit]').click
+        end
+      end
+
+      step 'I see the picked user in the results' do
+        within '#user-index-view #user-list' do
+          expect(find('.row', text: "#{@user.firstname} #{@user.lastname}")).to be
+        end
+      end
+
     end
   end
 end

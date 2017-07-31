@@ -36,7 +36,7 @@ Feature: Admin users
     And the new user has been created
     And he does not have access to any inventory pools and is not an administrator
 
-  @leihs_admin_users 
+  @leihs_admin_users
   Scenario: Deleting a user as an administrator
     Given I open the list of users
     And I pick a user without access rights, orders or contracts
@@ -57,8 +57,27 @@ Feature: Admin users
     And I edit a user that has access rights
     Then inventory pools they have access to are listed with the respective role
 
-  @leihs_admin_users 
+  @leihs_admin_users
   Scenario: Requirements for deleting a user
     Given I open the list of users
     When I pick one user with access rights, one with orders and one with contracts
     Then the delete button for every picked user is not present
+
+  @leihs_admin_users
+  Scenario: Searching for a User in "All" Tab
+    Given I open the list of users
+      And I pick any user
+    Then the currently active tab is "All"
+    When I search the Users list for the picked users name
+    Then I see the picked user in the results
+    Then the currently active tab is "All"
+
+  @leihs_admin_users
+  Scenario: Searching for a User in "Admin" Tab
+  Given I open the list of users
+    And I pick an admin user
+  When I change the tab to "Administrator"
+  Then the currently active tab is "Administrator"
+  When I search the Users list for the picked users name
+  Then I see the picked user in the results
+    And the currently active tab is "Administrator"

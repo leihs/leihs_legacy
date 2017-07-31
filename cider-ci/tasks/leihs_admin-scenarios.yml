@@ -376,6 +376,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/users.feature:61
+- name: engines/leihs_admin/spec/features/users.feature:67
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/users.feature:67
 - name: engines/leihs_admin/spec/features/users.feature:8
   scripts:
     test:
@@ -384,3 +392,11 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/users.feature:8
+- name: engines/leihs_admin/spec/features/users.feature:76
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/users.feature:76
