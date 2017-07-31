@@ -20,6 +20,13 @@ Feature: Start page
     When I choose one of these child categories
     Then I see the model list for this category
 
+  Scenario: Main categories dropdowns do not break when filter options are set
+    Given I am Normin
+      And I set a filter in the first category
+      And I am listing the main categories
+    When I click on the first category dropdown
+    Then I stay on listing the main categories
+
   @rack
   Scenario: Child categories not visible in the dropdown
     Given I am Normin

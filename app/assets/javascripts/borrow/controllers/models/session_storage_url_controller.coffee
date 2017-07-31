@@ -7,13 +7,16 @@ class window.App.SessionStorageUrlController extends Spine.Controller
     return if e.target.id == "start"
     if sessionStorage.length > 0
       e.preventDefault()
-      window.location = @getHref($ e.target) + "&session_storage=true"
+      href = @getHref($ e.target)
+      return unless href and href.length
+      window.location = href + "&session_storage=true"
 
   getHref: (el) =>
     if el.tagName != "A"
       $(el).closest("[href]").attr("href")
     else
       $(el).attr("href")
+
 
   @addSessionStorageToUrl: =>
     unless _.string.contains window.location.href, "&session_storage=true"

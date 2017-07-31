@@ -4,6 +4,10 @@ Given(/^I am listing the main categories$/) do
   visit borrow_root_path
 end
 
+Then(/^I stay on listing the main categories$/) do
+  expect(page.current_path).to eq borrow_root_path
+end
+
 Then(/^I see exactly those main categories that are useful for my user$/) do
   @main_categories = @current_user.all_categories.select {|c| c.parents.empty?}
   categories_counter = 0
@@ -55,6 +59,21 @@ end
 
 Then(/^I see the model list for this category$/) do
   expect((Rack::Utils.parse_nested_query URI.parse(current_url).query)['category_id']).to eq @second_level_category.id
+end
+
+When(/^I click on the first category dropdown$/) do
+  find('#categories').first('.row .row .dropdown-holder').click
+end
+
+Given(/^I set a filter in the first category$/) do
+  visit borrow_root_path
+  find('#categories').first('.row a').click
+  # select last day of next month in calendar:
+  find('#models-index #reset-container input[name=end_date]').click
+  within('.ui-datepicker') do
+    find('.ui-datepicker-header [data-handler=next]').click
+    all('td[data-handler]').last.click
+  end
 end
 
 Given(/^there is a main category whose child categories cannot offer me any items$/) do
