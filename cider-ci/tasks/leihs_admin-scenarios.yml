@@ -232,22 +232,22 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/maintenance_mode.feature:43
-- name: engines/leihs_admin/spec/features/rooms.feature:101
+- name: engines/leihs_admin/spec/features/rooms.feature:110
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/rooms.feature:101
-- name: engines/leihs_admin/spec/features/rooms.feature:109
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/rooms.feature:110
+- name: engines/leihs_admin/spec/features/rooms.feature:118
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/rooms.feature:109
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/rooms.feature:118
 - name: engines/leihs_admin/spec/features/rooms.feature:26
   scripts:
     test:
@@ -296,14 +296,22 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/rooms.feature:83
-- name: engines/leihs_admin/spec/features/rooms.feature:91
+- name: engines/leihs_admin/spec/features/rooms.feature:92
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/rooms.feature:91
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/rooms.feature:92
+- name: engines/leihs_admin/spec/features/rooms.feature:100
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/rooms.feature:100
 - name: engines/leihs_admin/spec/features/settings.feature:7
   scripts:
     test:

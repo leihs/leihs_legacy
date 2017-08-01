@@ -21,7 +21,7 @@ module LeihsAdmin
 
     def new
       @room = Room.new
-      @buildings = Building.all
+      @buildings = ([Building.new] + Building.all)
     end
 
     def create
@@ -31,7 +31,7 @@ module LeihsAdmin
         redirect_to action: :index
       else
         flash.now[:error] = @room.errors.full_messages.uniq.join(', ')
-        @buildings = Building.all
+        @buildings = ([Building.new] + Building.all)
         render :new
       end
     end

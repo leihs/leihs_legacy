@@ -80,6 +80,15 @@ Feature: Rooms
     And the room with name "" and building "Building" was not created
 
   @leihs_admin_rooms
+  Scenario: Checking presence of building
+    Given I am logged in as admin
+    When I visit the list of rooms
+    And I click on create room button
+    Then I see the create room page
+    And I click on "Save"
+    Then I see an error message
+
+  @leihs_admin_rooms
   Scenario: Deleting a room with items is not possible
     Given I am logged in as admin
     And there exists a room

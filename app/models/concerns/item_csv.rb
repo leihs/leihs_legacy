@@ -75,7 +75,7 @@ module Concerns
 
       h2 = {}
       fields.each do |field|
-        next if field.id == 'attachments'
+        next if %w(attachments building_id room_id shelf).include? field.id
         h2[_(field.data['label'])] = field.value(self)
       end
       h1.merge! h2

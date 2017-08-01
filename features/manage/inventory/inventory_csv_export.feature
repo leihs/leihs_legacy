@@ -34,9 +34,6 @@ Feature: Inventory (CSV export)
       | Completeness                  |
       | Borrowable                    |
       | Status note                   |
-      | Building                      |
-      | Room                          |
-      | Shelf                         |
       | Relevant for inventory        |
       | Owner                         |
       | Last Checked                  |
