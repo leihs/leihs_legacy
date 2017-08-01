@@ -13,6 +13,8 @@
         = "#{entity.label_for_audits}"
         %br
   %small= row['auditable_id']
+- else
+  %b= "#{_ row['auditable_type']}"
 
 - if row['associated_id']
   = "#{_ row['associated_type']}"
@@ -29,3 +31,5 @@
         = "#{_ row['associated_type']}: #{assoc_entity.label_for_audits}"
         %br
   %small= row['associated_id']
+- else
+  = "#{_ row['associated_type']}"
