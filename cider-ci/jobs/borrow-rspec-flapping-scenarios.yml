@@ -10,7 +10,7 @@ jobs:
     run_when:
       branch name matches master or borrow:
         type: branch
-        include_match: '^.*(master|borrow).*$'
+        include_match: '^.*(next|master|borrow).*$'
         exclude_match: '^.*(no-ci|hotspot).*$'
 
     context:
