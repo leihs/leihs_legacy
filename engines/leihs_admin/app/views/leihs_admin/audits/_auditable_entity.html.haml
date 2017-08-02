@@ -11,7 +11,7 @@
     - if klass
       - if klass == Setting
         = Setting.first.label_for_audits
-      - else entity = klass.find_by_id(row['auditable_id'])
+      - elsif entity = klass.find_by_id(row['auditable_id'])
         = "#{entity.label_for_audits}"
       %br
   %small= row['auditable_id']
@@ -31,7 +31,7 @@
     - if assoc_klass
       - if assoc_klass == Setting
         = Setting.first.label_for_audits
-      - else assoc_entity = assoc_klass.find_by_id(row['associated_id'])
+      - elsif assoc_entity = assoc_klass.find_by_id(row['associated_id'])
         = "#{_ row['associated_type']}: #{assoc_entity.label_for_audits}"
       %br
   %small= row['associated_id']
