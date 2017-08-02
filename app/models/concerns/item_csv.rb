@@ -81,7 +81,9 @@ module Concerns
       h1.merge! h2
 
       h1.merge!(
-        _('Location') => location,
+        _('Building') => room.building.name,
+        _('Room') => room.name,
+        _('Shelf') => shelf,
         "#{_('Borrower')} #{_('First name')}" => current_borrower.try(:firstname),
         "#{_('Borrower')} #{_('Last name')}" => current_borrower.try(:lastname),
         "#{_('Borrower')} #{_('Personal ID')}" => \
