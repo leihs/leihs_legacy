@@ -1,7 +1,7 @@
 - if row['auditable_id']
   %b= "#{_ row['auditable_type']}"
   %br
-  %a{href: url_for(type: row['auditable_type'].underscore, id: row['auditable_id'])}
+  %a{href: url_for(type: row['auditable_type'].underscore, id: row['auditable_id'], start_date: @start_date, end_date: @end_date, search_term: @search_term)}
     :ruby
       klass = begin
                 row['auditable_type'].constantize
@@ -21,7 +21,7 @@
 - if row['associated_id']
   = "#{_ row['associated_type']}"
   %br
-  %a{href: url_for(type: row['associated_type'].underscore, id: row['associated_id'])}
+  %a{href: url_for(type: row['associated_type'].underscore, id: row['associated_id'], start_date: @start_date, end_date: @end_date, search_term: @search_term)}
     :ruby
       assoc_klass = begin
                       row['auditable_type'].constantize

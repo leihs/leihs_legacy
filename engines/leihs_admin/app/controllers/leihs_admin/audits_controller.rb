@@ -66,7 +66,7 @@ module LeihsAdmin
     end
 
     def type_param
-      params[:type].presence.try(&:capitalize)
+      params[:type].presence.try(&:camelize)
     end
 
     def id_param
