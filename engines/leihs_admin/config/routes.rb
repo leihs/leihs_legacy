@@ -13,7 +13,7 @@ LeihsAdmin::Engine.routes.draw do
 
   # Audits
   get 'audits',           to: 'audits#index'
-  get ':type/:id/audits', to: 'audits#index'
+  get ':type/:id/audits', to: 'audits#index', as: 'individual_audits'
 
   # Database Check
   get "database/indexes", to: "database#indexes"

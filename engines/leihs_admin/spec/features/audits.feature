@@ -50,3 +50,21 @@ Feature: Audits
     Then the end date is set to today
     And the start date is set to one month ago
     And I see the request with the new audit at the top
+
+  @leihs_admin_audits
+  Scenario: Individual audits page for particular entity
+    Given there is an item whose inventory code contains "termXYZ"
+    And there is a 'create' audit for an item whose inventory code contains "termXYZ"
+    And I navigate to the audits page
+    And the end date is set to today
+    And the start date is set to one month ago
+    And I enter "termXYZ" in the search input field
+    And click on "Filter"
+    And I scroll down until I see all audits
+    Then I see 1 audit for the item
+    When I click on the label link of the item
+    Then an individual audits page opens for the audits of this item
+    Then I see 1 audit for the item
+    And the end date is set to today
+    And the start date is set to one month ago
+    And the search input field contains "termXYZ"

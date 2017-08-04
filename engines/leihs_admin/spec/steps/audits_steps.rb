@@ -56,7 +56,8 @@ module LeihsAdmin
 
       step "there is a 'create' audit for an item " \
            'whose inventory code contains :term' do |term|
-        expect(Audit.find_by(action: 'create', auditable_id: @item.id)).to be
+        @audit = Audit.find_by(action: 'create', auditable_id: @item.id)
+        expect(@audit).to be
       end
 
       step "there is an 'update' audit for an item whose " \
@@ -152,6 +153,33 @@ module LeihsAdmin
         Audit.audited_classes.each do |klass|
           expect(klass.instance_methods).to include :label_for_audits
         end
+      end
+
+      step 'I see 1 audit for the item' do
+      end
+
+      step 'I click on the label link of the item' do
+        within(".row[data-id='#{@audit.id}']") do
+          find('a').click
+        end
+      end
+
+      step 'an individual audits page opens for the audits of this item' do
+        expect(current_path).to be == \
+          admin.individual_audits_path(@item.model_name.singular, @item.id)
+      end
+
+      step 'I see 1 audit for the item' do
+        within '.pages' do
+          expect(all('.panel').count).to be == 1
+          within '.panel[data-request_id]' do
+            expect(first('.row[data-id]')['data-id']).to be == @audit.id
+          end
+        end
+      end
+
+      step 'the search input field contains :search_term' do |search_term|
+        expect(find("input[name='search_term']").value).to be == search_term
       end
     end
   end
