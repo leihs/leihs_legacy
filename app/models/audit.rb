@@ -42,7 +42,7 @@ class Audit < Audited::Adapters::ActiveRecord::Audit
         (SELECT 1
          FROM users
          WHERE users.id = audits.user_id
-           AND users.lastname ILIKE :ilike_term)
+           AND (users.firstname || ' ' || users.lastname) ILIKE :ilike_term)
       OR EXISTS
         (SELECT 1
          FROM users
