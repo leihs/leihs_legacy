@@ -1,5 +1,5 @@
 module Procurement
-  class Category < ActiveRecord::Base
+  class Category < ApplicationRecord
 
     has_many :category_inspectors, dependent: :delete_all
     has_many :inspectors, -> { order('firstname, lastname') },
@@ -53,7 +53,8 @@ module Procurement
     def inspector_ids_with_split=(val)
       self.inspector_ids_without_split = val.split(',')
     end
-    alias_method_chain :inspector_ids=, :split
+    alias_method :inspector_ids_without_split=, :inspector_ids=
+    alias_method :inspector_ids=, :inspector_ids_with_split=
 
     ########################################################
 

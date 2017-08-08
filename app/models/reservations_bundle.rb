@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 # No MySQL table, reading a query result
-class ReservationsBundle < ActiveRecord::Base
+class ReservationsBundle < ApplicationRecord
   include Delegation::ReservationsBundle
+  include DefaultPagination
   audited
 
   class << self
@@ -14,6 +15,7 @@ class ReservationsBundle < ActiveRecord::Base
   end
 
   self.table_name = 'reservations'
+  self.inheritance_column = nil
 
   default_scope do
     select(<<-SQL)
@@ -123,11 +125,11 @@ class ReservationsBundle < ActiveRecord::Base
   #######################################################
 
   def models
-    Model.where(id: item_lines.map(&:model_id)).order('product ASC').uniq
+    Model.where(id: item_lines.map(&:model_id)).order('product ASC').distinct
   end
 
   def options
-    Option.where(id: option_lines.map(&:option_id)).uniq
+    Option.where(id: option_lines.map(&:option_id)).distinct
   end
 
   #######################################################
@@ -163,7 +165,7 @@ class ReservationsBundle < ActiveRecord::Base
         (lambda do |query|
           return all if query.blank?
 
-          sql = uniq
+          sql = distinct
             .joins(<<-SQL)
               LEFT JOIN users ON users.id = reservations.user_id
               LEFT JOIN users delegated_users

@@ -11,7 +11,8 @@ scripts:
           'adapter' => 'postgresql',
           'encoding' => 'unicode',
           'host' => 'localhost',
-          'pool' => 10,
+          'pool' => 20,
+          'timeout' => 20,
           'username' => ENV['PGUSER'],
           'password' =>  ENV['PGPASSWORD'],
           'database' => ENV['DATABASE']}

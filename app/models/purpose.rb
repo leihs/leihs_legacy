@@ -1,4 +1,4 @@
-class Purpose < ActiveRecord::Base
+class Purpose < ApplicationRecord
   audited
   has_many :reservations
 

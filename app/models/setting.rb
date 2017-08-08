@@ -1,4 +1,4 @@
-class Setting < ActiveRecord::Base
+class Setting < ApplicationRecord
   audited
 
   validates_presence_of :local_currency_string,

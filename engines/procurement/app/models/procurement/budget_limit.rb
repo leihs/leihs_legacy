@@ -1,5 +1,5 @@
 module Procurement
-  class BudgetLimit < ActiveRecord::Base
+  class BudgetLimit < ApplicationRecord
 
     belongs_to :budget_period
     belongs_to :main_category

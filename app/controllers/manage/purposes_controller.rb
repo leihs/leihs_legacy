@@ -12,7 +12,7 @@ class Manage::PurposesController < Manage::ApplicationController
         .first
     if line
       line.purpose.update_attributes description: params[:description]
-      render status: :ok, nothing: true
+      head :ok
     end
   end
 

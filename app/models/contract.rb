@@ -1,4 +1,4 @@
-class Contract < ActiveRecord::Base
+class Contract < ApplicationRecord
   include LineModules::GroupedAndMergedLines
   include DefaultPagination
   audited
@@ -28,12 +28,12 @@ class Contract < ActiveRecord::Base
            ORDER_BY,
            dependent: :destroy
   has_many :items, through: :item_lines
-  has_many :options, -> { uniq }, through: :option_lines
+  has_many :options, -> { distinct }, through: :option_lines
 
   #########################################################################
 
   def models
-    Model.where(id: item_lines.map(&:model_id)).order('product ASC').uniq
+    Model.where(id: item_lines.map(&:model_id)).order('product ASC').distinct
   end
 
   #########################################################################

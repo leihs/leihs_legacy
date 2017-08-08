@@ -3,6 +3,7 @@ Feature: Edit a hand over
   Background:
     Given I am Pius
 
+  @flapping
   Scenario: Feedback on a successful manual interaction during hand over
     Given there is a hand over with at least one unproblematic model and an option
     And I open the hand over

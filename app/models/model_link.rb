@@ -1,4 +1,4 @@
-class ModelLink < ActiveRecord::Base
+class ModelLink < ApplicationRecord
   audited
 
   belongs_to :model_group, inverse_of: :model_links

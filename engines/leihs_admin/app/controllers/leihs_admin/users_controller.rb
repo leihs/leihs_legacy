@@ -81,15 +81,15 @@ module LeihsAdmin
       @user.destroy if @user.deletable?
       respond_to do |format|
         format.json do
-          @user.persisted? ? render(status: :bad_request) : head(status: :ok)
+          @user.persisted? ? render(status: :bad_request) : head(:ok)
         end
         format.html do
           if @user.persisted?
             flash[:error] = _('You cannot delete this user')
-            redirect_to :back
+            redirect_back fallback_location: root_path
           else
             flash[:success] = _('%s successfully deleted') % _('User')
-            redirect_to :back
+            redirect_back fallback_location: root_path
           end
         end
       end

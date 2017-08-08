@@ -75,7 +75,7 @@ class Manage::ContractsController < Manage::ApplicationController
     else
       errors = @contract.errors.full_messages.uniq.join("\n")
       respond_to do |format|
-        format.json { render text: errors, status: 500 }
+        format.json { render plain: errors, status: 500 }
       end
     end
   end
@@ -94,7 +94,7 @@ class Manage::ContractsController < Manage::ApplicationController
     else
       errors = @contract.errors.full_messages.uniq.join("\n")
       respond_to do |format|
-        format.json { render text: errors, status: 500 }
+        format.json { render plain: errors, status: 500 }
         format.html { render :edit }
       end
     end
@@ -124,7 +124,7 @@ class Manage::ContractsController < Manage::ApplicationController
           @contract.user.reservations_bundles.signed.find(contract.id).to_json
     else
       render status: :bad_request,
-             text: @contract.errors.full_messages.uniq.join(', ')
+             plain: @contract.errors.full_messages.uniq.join(', ')
     end
   end
 
@@ -137,7 +137,7 @@ class Manage::ContractsController < Manage::ApplicationController
                          .find(params[:delegated_user_id])
                      end
     reservations = contract.reservations
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       reservations.each do |line|
         line.update_attributes(user: user, delegated_user: delegated_user)
       end
@@ -151,7 +151,7 @@ class Manage::ContractsController < Manage::ApplicationController
                      inventory_pool_id: current_inventory_pool).to_json
     else
       errors = reservations.flat_map { |line| line.errors.full_messages }
-      render status: :bad_request, text: errors.uniq.join(', ')
+      render status: :bad_request, plain: errors.uniq.join(', ')
     end
   end
 

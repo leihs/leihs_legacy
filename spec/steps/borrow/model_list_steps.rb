@@ -351,7 +351,7 @@ module Borrow
           .borrowable
           .from_category_and_all_its_descendants(@category)
         within '#model-list' do
-          find('.line[data-id]', match: :first)
+          sleep 2
           all('.line[data-id]').reject { |el| el.text.blank? }.each do |model_line|
             model = Model.find model_line['data-id']
             expect(models.include? model).to be true
@@ -425,6 +425,7 @@ module Borrow
       end
 
       step 'all models of the chosen category have been loaded and shown' do
+        sleep 2
         within '#model-list' do
           expect(all('.line', minimum: 1).size)
             .to eq \
@@ -494,6 +495,7 @@ module Borrow
           .all('.dropdown-item[data-id]')
           .map { |ip| ip['data-id'] }
         step 'I scroll to the end of the list'
+        sleep 2
         models = \
           @current_user
           .models
@@ -566,6 +568,7 @@ module Borrow
       step 'the model list is unfiltered' do
         step 'I scroll to the end of the list'
         expect(has_no_selector?('.page.fetched')).to be true
+        sleep 2
         within '#model-list' do
           expect(all('.text-align-left').map(&:text).reject(&:empty?)).to eq \
             @current_user

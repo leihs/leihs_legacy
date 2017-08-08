@@ -550,7 +550,7 @@ Then /^I can deactivate an accessory for my pool$/ do
   end
   step 'I save'
   find('#inventory-index-view h1', match: :prefer_exact, text: _('List of Inventory'))
-  expect { @current_inventory_pool.accessories.reload.find(accessory_to_deactivate) }.to raise_error(ActiveRecord::RecordNotFound)
+  expect { @current_inventory_pool.accessories.reload.find(accessory_to_deactivate.id) }.to raise_error(ActiveRecord::RecordNotFound)
 end
 
 When /^I add multiple images$/ do
@@ -699,7 +699,7 @@ Then(/^only the "(.*?)" inventory is shown$/) do |arg1|
     items = Item.by_owner_or_responsible(@current_inventory_pool).in_stock
     models = items.map(&:model).uniq
   elsif arg1 == 'Owned'
-    models = Model.joins(:items).where(items: {owner_id: @current_inventory_pool.id}).uniq
+    models = Model.joins(:items).where(items: {owner_id: @current_inventory_pool.id}).distinct
   else
     models = Model.owned_or_responsible_by_inventory_pool(@current_inventory_pool)
     case arg1
@@ -754,14 +754,21 @@ Given(/^one is on the list of the options$/) do
 end
 
 When(/^I choose a certain responsible pool inside the whole inventory$/) do
-  @responsible_pool = @current_inventory_pool.own_items.select(:inventory_pool_id, :id).where.not(items: {inventory_pool_id: [@current_inventory_pool.id, nil]}).uniq.first.inventory_pool
+  @responsible_pool = \
+    @current_inventory_pool
+    .own_items
+    .select(:inventory_pool_id, :id)
+    .where.not(items: {inventory_pool_id: [@current_inventory_pool.id, nil]})
+    .distinct
+    .first
+    .inventory_pool
   find(:select, 'responsible_inventory_pool_id').find(:option, @responsible_pool.name).select_option
 end
 
 Then(/^only the inventory is shown for which this pool is responsible$/) do
   inventory = @responsible_pool.items.where(items: {owner_id: @current_inventory_pool.id})
   step 'I fetch all pages of the list'
-  check_amount_of_lines inventory.joins(:model).select(:model_id).uniq.count
+  check_amount_of_lines inventory.joins(:model).select(:model_id).distinct.count
   check_existing_inventory_codes(inventory)
 end
 

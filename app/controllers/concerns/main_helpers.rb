@@ -82,7 +82,7 @@ module MainHelpers
           flash[:error] = msg
           redirect_to options[:redirect_path]
         end
-        format.json { render text: msg }
+        format.json { render plain: msg }
       end
     end
 

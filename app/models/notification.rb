@@ -6,7 +6,7 @@
 # login into leihs they could be able to see all the communications
 # with the leihs system.
 #
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   audited
 
   belongs_to :user, inverse_of: :notifications

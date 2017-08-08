@@ -11,7 +11,7 @@
 # and two which are still available to be taken out for
 # riding pleasure.
 #
-class Item < ActiveRecord::Base
+class Item < ApplicationRecord
   include Concerns::InventoryCode
   include Concerns::ItemCsv
   include Concerns::SerialNumberValidation
@@ -196,7 +196,7 @@ class Item < ActiveRecord::Base
       # NOTE only never handed over packages can be deleted
     else
       errors.add(:base, 'Item cannot be deleted')
-      return false
+      throw :abort
     end
   end
 
@@ -375,7 +375,8 @@ class Item < ActiveRecord::Base
       end
   end
 
-  alias_method_chain :supplier=, :params
+  alias_method :supplier_without_params=, :supplier=
+  alias_method :supplier=, :supplier_with_params=
 
   # overriding association setter
   def owner_with_params=(v)
@@ -386,7 +387,8 @@ class Item < ActiveRecord::Base
                                 end
   end
 
-  alias_method_chain :owner=, :params
+  alias_method :owner_without_params=, :owner=
+  alias_method :owner=, :owner_with_params=
 
   # overriding association setter
   def inventory_pool_with_params=(v)
@@ -399,7 +401,8 @@ class Item < ActiveRecord::Base
                                          end
   end
 
-  alias_method_chain :inventory_pool=, :params
+  alias_method :inventory_pool_without_params=, :inventory_pool=
+  alias_method :inventory_pool=, :inventory_pool_with_params=
 
   ####################################################################
 

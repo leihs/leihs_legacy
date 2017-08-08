@@ -1,4 +1,4 @@
-class Attachment < ActiveRecord::Base
+class Attachment < ApplicationRecord
   audited
 
   belongs_to :model, inverse_of: :attachments

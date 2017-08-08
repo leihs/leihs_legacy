@@ -178,6 +178,7 @@ end
 Then /^it is added for the selected time span$/ do
   find('#flash')
   find('.line', match: :first, text: @model)
+  sleep 2
   expect(@amount_lines_before).to be < all('.line').size
 end
 

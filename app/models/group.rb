@@ -1,4 +1,4 @@
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   include Availability::Group
   include Search::Name
   audited
@@ -10,7 +10,7 @@ class Group < ActiveRecord::Base
   has_many :partitions, dependent: :restrict_with_exception
   accepts_nested_attributes_for :partitions, allow_destroy: true
   has_many(:models,
-           -> { uniq },
+           -> { distinct },
            through: :partitions,
            dependent: :restrict_with_exception)
 

@@ -1,4 +1,4 @@
-class Building < ActiveRecord::Base
+class Building < ApplicationRecord
   audited
 
   has_many :rooms

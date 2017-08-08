@@ -100,9 +100,11 @@ end
 
 
 When(/^I deselect the line$/) do
-  within @line_css do
-    find('input[type=checkbox]').click
-    expect(find('input[type=checkbox]').checked?).to be false
+  rescue_displaced_flash do
+    within @line_css do
+      find('input[type=checkbox]').click
+      expect(find('input[type=checkbox]').checked?).to be false
+    end
   end
 end
 

@@ -39,8 +39,8 @@ class Authenticator::ZhdkController < Authenticator::AuthenticatorController
       self.current_user = create_or_update_user(xml)
       redirect_back_or_default('/') # TODO: #working here#24
     else
-      render text: 'Authentication Failure. HTTP connection failed ' \
-                   "- response was #{response.code}"
+      render plain: 'Authentication Failure. HTTP connection failed ' \
+                    "- response was #{response.code}"
     end
   end
 

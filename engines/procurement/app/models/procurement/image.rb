@@ -1,5 +1,5 @@
 module Procurement
-  class Image < ActiveRecord::Base
+  class Image < ApplicationRecord
     belongs_to :main_category
 
     validate do

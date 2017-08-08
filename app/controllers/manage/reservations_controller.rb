@@ -51,13 +51,13 @@ class Manage::ReservationsController < Manage::ApplicationController
                                         params[:end_date],
                                         params[:purpose_id])
     rescue => e
-      render status: :bad_request, text: e
+      render status: :bad_request, plain: e
     end
   end
 
   def create_for_template
     @reservations = []
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       template = Template.find(params[:template_id])
       template.model_links.each do |link|
         next unless current_inventory_pool.models.exists?(id: link.model_id)
@@ -102,7 +102,7 @@ class Manage::ReservationsController < Manage::ApplicationController
       end
       render status: :ok, json: reservations
     rescue => e
-      render status: :bad_request, text: e
+      render status: :bad_request, plain: e
     end
   end
 
@@ -170,14 +170,14 @@ class Manage::ReservationsController < Manage::ApplicationController
     if error.blank?
       render status: :ok, json: line
     else
-      render status: :bad_request, text: error
+      render plain: error, status: :bad_request
     end
   end
 
   def remove_assignment
     line = current_inventory_pool.reservations.approved.find params[:id]
     line.update_attributes(item_id: nil)
-    head status: :ok
+    head :ok
   end
 
   def take_back
@@ -198,13 +198,13 @@ class Manage::ReservationsController < Manage::ApplicationController
                           returned_to_user_id: current_user.id)
     end
 
-    head status: :ok
+    head :ok
   end
 
   def swap_user
     user = current_inventory_pool.users.find params[:user_id]
     reservations = current_inventory_pool.reservations.where(id: params[:line_ids])
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       reservations.each do |line|
         delegated_user = if user.delegation?
                            if user.delegated_users.include? line.delegated_user
@@ -217,16 +217,16 @@ class Manage::ReservationsController < Manage::ApplicationController
       end
     end
     if reservations.all?(&:valid?)
-      head status: :ok
+      head :ok
     else
-      render status: :bad_request, nothing: true
+      head :bad_request
     end
   end
 
   def swap_model
     reservations = current_inventory_pool.reservations.where(id: params[:line_ids])
     model = Model.find(params[:model_id])
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       reservations.each do |line|
         line.update_attributes(model: model, item_id: nil)
       end
@@ -234,7 +234,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     if reservations.all?(&:valid?)
       render json: reservations
     else
-      render status: :bad_request, nothing: true
+      head :bad_request
     end
   end
 
@@ -346,7 +346,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     error = nil
     line = nil
 
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       begin
         # error if item already assigned to some reservation of this contract
         if contract \

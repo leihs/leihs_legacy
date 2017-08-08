@@ -3,7 +3,7 @@
 #= require jquery-ujs
 #= require jquery.remotipart
 #= require bootstrap
-#= require accounting.js
+#= require accounting.js/accounting.js
 #= require jquery-tokeninput
 #= require underscore
 #

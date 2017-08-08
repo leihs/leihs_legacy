@@ -22,7 +22,7 @@ class Manage::InventoryController < Manage::ApplicationController
                             current_inventory_pool)
         @responsibles = \
           InventoryPool
-            .uniq
+            .distinct
             .joins(:items)
             .where("items.id IN (#{items.select('items.id').to_sql})")
             .where(
@@ -32,7 +32,7 @@ class Manage::InventoryController < Manage::ApplicationController
             )
       end
       format.json do
-        session[:params] = params.symbolize_keys
+        session[:params] = params.to_unsafe_hash.symbolize_keys
         @inventory = current_inventory_pool.inventory params
         set_pagination_header(@inventory) unless params[:paginate] == 'false'
       end

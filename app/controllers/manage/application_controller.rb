@@ -7,7 +7,7 @@ class Manage::ApplicationController < ApplicationController
       store_location
       error_response = proc do
         flash[:error] = _('You are not logged in.')
-        render nothing: true, status: :unauthorized
+        head :unauthorized
       end
       respond_to do |format|
         format.html { redirect_to login_path }
@@ -75,7 +75,7 @@ class Manage::ApplicationController < ApplicationController
                                                      :submitted,
                                                      :rejected])
     else
-      render nothing: true, status: :bad_request
+      head :bad_request
     end
   end
 

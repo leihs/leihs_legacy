@@ -20,7 +20,7 @@ module Procurement
 
       if errors.empty?
         flash[:success] = _('Saved')
-        head status: :ok
+        head :ok
       else
         render json: errors, status: :internal_server_error
       end
@@ -46,7 +46,7 @@ module Procurement
       if param.delete(:_destroy) == '1' or param[:name].blank?
         main_category.destroy
       else
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           image_delete = param.delete('image_delete')
           if image_delete == '1'
             main_category.destroy_image_with_thumbnail!
@@ -64,7 +64,7 @@ module Procurement
     end
 
     def handle_new_category(main_category, param)
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         file = param.delete('image')
         main_category.assign_attributes(param)
         main_category.save!

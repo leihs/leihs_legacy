@@ -1,5 +1,5 @@
 module Procurement
-  class Setting < ActiveRecord::Base
+  class Setting < ApplicationRecord
 
     KEYS = %w(contact_url)
 

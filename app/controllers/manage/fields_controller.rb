@@ -11,11 +11,11 @@ class Manage::FieldsController < Manage::ApplicationController
 
   def hide
     current_user.hidden_fields.find_or_create_by(field_id: params[:id])
-    render nothing: true, status: :ok
+    head :ok
   end
 
   def reset
     current_user.hidden_fields.destroy_all
-    render nothing: true, status: :ok
+    head :ok
   end
 end

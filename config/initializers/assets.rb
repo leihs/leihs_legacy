@@ -19,3 +19,6 @@ Rails.application.config.assets.precompile += %w( application.js
                                                   upload.js
                                                   timecop/timecop-0.1.1.js
                                                 )
+
+Sprockets.register_mime_type 'text/jsr', extensions: ['.jsr']
+Sprockets.register_transformer 'text/jsr', 'application/javascript', JsrenderRails::Jsrender

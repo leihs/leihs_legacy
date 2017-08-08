@@ -17,6 +17,7 @@ Feature: Delete reservations of an open order
     And I delete multiple reservations of this contract
     Then these reservations are deleted
 
+  @flapping
   Scenario: Delete all reservations of an open contract
     When I open a contract for acknowledgement with more then one line
     And I delete all reservations of this contract

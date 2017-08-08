@@ -32,8 +32,8 @@ class Manage::GroupsController < Manage::ApplicationController
       redirect_to manage_inventory_pool_groups_path,
                   flash: { success: _('%s created') % _('Group') }
     else
-      redirect_to :back,
-                  flash: { error: @group.errors.full_messages.uniq.join(', ') }
+      redirect_back fallback_location: root_path,
+                    flash: { error: @group.errors.full_messages.uniq.join(', ') }
     end
   end
 
@@ -45,7 +45,7 @@ class Manage::GroupsController < Manage::ApplicationController
       redirect_to manage_inventory_pool_groups_path,
                   flash: { success: _('%s saved') % _('Group') }
     else
-      render text: @group.errors.full_messages.uniq.join(', '),
+      render plain: @group.errors.full_messages.uniq.join(', '),
              status: :bad_request
     end
   end

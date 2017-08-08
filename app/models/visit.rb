@@ -6,7 +6,7 @@
 # or get them back from the customer.
 #
 # No MySQL table, reading a query result
-class Visit < ActiveRecord::Base
+class Visit < ApplicationRecord
   include LineModules::GroupedAndMergedLines
   include DefaultPagination
 
@@ -130,13 +130,8 @@ class Visit < ActiveRecord::Base
   end
 
   def self.total_count_for_paginate
-    scope_sql = \
-      Visit
-        .arel_table
-        .from("(#{all.reorder(nil).to_sql}) visits")
-        .project(Arel.star)
-        .to_sql
-    ActiveRecord::Base.connection.execute(scope_sql).count
+    scope_sql = Visit.all.reorder(nil).to_sql
+    ApplicationRecord.connection.execute(scope_sql).count
   end
 
   def visit_as_json

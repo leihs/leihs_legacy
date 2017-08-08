@@ -1,4 +1,4 @@
-class Accessory < ActiveRecord::Base
+class Accessory < ApplicationRecord
   audited
 
   belongs_to :model, inverse_of: :accessories

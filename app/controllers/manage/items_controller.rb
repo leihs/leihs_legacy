@@ -108,7 +108,7 @@ class Manage::ItemsController < Manage::ApplicationController
         # NOTE avoid to lose already stored properties
         if item_params[:properties]
           item_params[:properties] = \
-            @item.properties.merge item_params[:properties]
+            @item.properties.merge item_params[:properties].to_unsafe_hash
         end
         saved = @item.update_attributes(item_params)
       end
@@ -166,7 +166,7 @@ class Manage::ItemsController < Manage::ApplicationController
       @item.update_attributes(attr => params[attr])
     end
     @item.save!
-    head status: :ok
+    head :ok
   end
 
   def upload
@@ -178,7 +178,7 @@ class Manage::ItemsController < Manage::ApplicationController
         raise 'Unknown attachment type'
       end
     end
-    head status: :ok
+    head :ok
   end
 
   private

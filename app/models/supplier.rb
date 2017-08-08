@@ -1,4 +1,4 @@
-class Supplier < ActiveRecord::Base
+class Supplier < ApplicationRecord
   audited
 
   validates_presence_of :name

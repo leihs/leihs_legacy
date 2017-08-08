@@ -15,7 +15,7 @@ class Authenticator::DatabaseAuthenticationController \
                                                   params[:login][:password]))
         self.current_user = l.user
         if current_user.access_rights.active.size == 0
-          render text: _("You don't have any rights to access this application.")
+          render plain: _("You don't have any rights to access this application.")
           return
         end
         redirect_back_or_default('/')

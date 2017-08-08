@@ -1,3 +1,5 @@
+# class ApplicationRecord gives problems and this method seems
+# not always be defined, that's why defined on ActiveRecord::Base
 class ActiveRecord::Base
   def can_destroy?
     self.class.reflect_on_all_associations.all? do |assoc|

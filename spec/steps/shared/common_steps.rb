@@ -67,5 +67,14 @@ module Spec
     step 'I see a success message' do
       find('#flash .success')
     end
+
+    def rescue_displaced_flash
+      begin
+        yield
+      rescue
+        find('#flash .fa-times-circle').click
+        retry
+      end
+    end
   end
 end

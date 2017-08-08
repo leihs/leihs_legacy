@@ -35,12 +35,12 @@ Then /^the (order|hand over) can be saved$/ do |arg1|
   step 'I save the booking calendar'
   step 'the booking calendar is closed'
   case arg1
-    when 'order'
-      expect(@line.contract.reservations.where(start_date: @line.start_date, end_date: @line.end_date, model_id: @line.model).size).to eq @size
-    when 'hand over'
-      expect(@line.contract.reservations.where(model_id: @line.model).size).to be >= @size
-    else
-      raise
+  when 'order'
+    expect(@line.contract.reservations.where(start_date: @line.start_date, end_date: @line.end_date, model_id: @line.model).size).to eq @size
+  when 'hand over'
+    expect(@line.contract.reservations.where(model_id: @line.model).size).to be >= @size
+  else
+    raise
   end
 end
 

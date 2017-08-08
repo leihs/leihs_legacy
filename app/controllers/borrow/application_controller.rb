@@ -16,7 +16,7 @@ class Borrow::ApplicationController < ApplicationController
   def refresh_timeout
     # ok, refreshed
     respond_to do |format|
-      format.html { render nothing: true }
+      format.html { head :ok }
       date = if current_user.reservations.unsubmitted.empty?
                Time.zone.now
              else

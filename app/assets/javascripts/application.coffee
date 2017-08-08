@@ -12,10 +12,9 @@
 #= require jquery-ujs
 #= require jquery.inview
 #= require moment
-#= require accounting.js
 #= require fullcalendar
 #= require underscore
-#= require uri.js
+#= require accounting.js/accounting.js
 #
 ##### VENDOR
 #
@@ -26,6 +25,7 @@
 #= require bootstrap/bootstrap-modal
 #= require bootstrap/bootstrap-dropdown
 #= require tooltipster/tooltipster
+#= require uri.js/src/URI
 #
 ##### SPINE
 #
@@ -41,7 +41,7 @@
 #
 ##### APP
 #
-#= require_tree ./initalizers
+#= require_tree ./initializers
 #= require_tree ./lib
 #= require_tree ./modules
 #= require_tree ./models

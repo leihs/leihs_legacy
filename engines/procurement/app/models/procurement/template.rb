@@ -1,5 +1,5 @@
 module Procurement
-  class Template < ActiveRecord::Base
+  class Template < ApplicationRecord
 
     belongs_to :category
     belongs_to :model     # from parent application

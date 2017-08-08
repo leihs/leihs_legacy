@@ -60,6 +60,7 @@ Then 'I close the flash message if visible' do
 end
 
 When 'I scroll loading all pages' do
+  sleep 2
   all('.page[data-page]').each do |data_page|
     data_page.click
     data_page.find('.line div', match: :first)

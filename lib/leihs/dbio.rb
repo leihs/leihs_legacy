@@ -2,7 +2,7 @@ module Leihs
   module DBIO
     class << self
 
-      TABLES = ActiveRecord::Base.connection.tables
+      TABLES = ApplicationRecord.connection.tables
 
       def reload!
         load File.absolute_path(__FILE__)
@@ -11,7 +11,7 @@ module Leihs
       def rows(table)
         class_name = "LeihsDBIO#{table.to_s.capitalize}"
         eval <<-RB.strip_heredoc
-          class ::#{class_name} < ActiveRecord::Base
+          class ::#{class_name} < ApplicationRecord
             self.table_name = '#{table}'
           end
         RB

@@ -72,7 +72,7 @@ module Leihs
 
         (TABLES + NEW_TABLES).each do |tbl_name|
           class_name = "LeihsDBIOImport#{tbl_name.to_s.camelize}"
-          klass = const_set(class_name, Class.new(ActiveRecord::Base))
+          klass = const_set(class_name, Class.new(ApplicationRecord))
           klass.table_name = tbl_name
           klass.inheritance_column = nil
         end
@@ -387,18 +387,18 @@ module Leihs
         end
 
         def unvalidated_import(data)
-          ActiveRecord::Base.connection.execute 'SET session_replication_role = replica;'
-          ActiveRecord::Base.record_timestamps = false
+          ApplicationRecord.connection.execute 'SET session_replication_role = replica;'
+          ApplicationRecord.record_timestamps = false
           data.reject { |tn, _| IGNORED_TABLES.include? tn }.each do |table_name, rows|
             if rows.presence && (not rows.empty?)
               import_table_data table_name, rows
             end
           end
-          ActiveRecord::Base.connection.execute 'SET session_replication_role = DEFAULT;'
+          ApplicationRecord.connection.execute 'SET session_replication_role = DEFAULT;'
         end
 
         def validated_import(data)
-          ActiveRecord::Base.connection.execute <<-SQL.strip_heredoc
+          ApplicationRecord.connection.execute <<-SQL.strip_heredoc
             ALTER TABLE ONLY users
               DROP CONSTRAINT fkey_users_delegators;
             ALTER TABLE ONLY items
@@ -412,12 +412,12 @@ module Leihs
             import_table_data table_name, data[table_name]
           end
 
-          ActiveRecord::Base.connection.execute <<-SQL.strip_heredoc
+          ApplicationRecord.connection.execute <<-SQL.strip_heredoc
             UPDATE images SET parent_id = NULL
               WHERE (NOT EXISTS (SELECT 1 FROM images parents WHERE parents.id = images.parent_id))
           SQL
 
-          ActiveRecord::Base.connection.execute <<-SQL.strip_heredoc
+          ApplicationRecord.connection.execute <<-SQL.strip_heredoc
             ALTER TABLE ONLY users
                 ADD CONSTRAINT fkey_users_delegators FOREIGN KEY (delegator_user_id) REFERENCES users(id);
             ALTER TABLE ONLY items
@@ -429,22 +429,22 @@ module Leihs
           SQL
 
           unmigrated_tables = \
-            ActiveRecord::Base.connection.tables.reject { |tn| tn =~ /schema_migrations/ } \
+            ApplicationRecord.connection.tables.reject { |tn| tn =~ /schema_migrations/ } \
             - TABLES \
             - NEW_TABLES
           Rails.logger.info "Yet unmigrated tables: #{unmigrated_tables.sort}."
         end
 
         def import_data(data, unvalidated_import = false)
-          ActiveRecord::Base.connection.transaction do
+          ApplicationRecord.connection.transaction do
             PgTasks.truncate_tables
-            ActiveRecord::Base.record_timestamps = false
+            ApplicationRecord.record_timestamps = false
             if unvalidated_import
               unvalidated_import data
             else
               validated_import data
             end
-            ActiveRecord::Base.record_timestamps = true
+            ApplicationRecord.record_timestamps = true
           end
         end
 

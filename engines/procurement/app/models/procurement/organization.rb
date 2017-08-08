@@ -1,5 +1,5 @@
 module Procurement
-  class Organization < ActiveRecord::Base
+  class Organization < ApplicationRecord
     extend ActsAsTree::TreeWalker
 
     acts_as_tree # order: "name"

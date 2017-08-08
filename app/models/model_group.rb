@@ -1,12 +1,12 @@
-class ModelGroup < ActiveRecord::Base
+class ModelGroup < ApplicationRecord
   include Search::Name
   audited
 
   attr_accessor :current_parent_id
 
   has_many :model_links, inverse_of: :model_group, dependent: :delete_all
-  has_many :models, -> { uniq }, through: :model_links
-  has_many :items, -> { uniq }, through: :models
+  has_many :models, -> { distinct }, through: :model_links
+  has_many :items, -> { distinct }, through: :models
 
   has_and_belongs_to_many :inventory_pools
 
@@ -52,7 +52,7 @@ class ModelGroup < ActiveRecord::Base
     Model
       .joins(:model_links)
       .where(model_links: { model_group_id: self_and_descendants.map(&:id) })
-      .uniq
+      .distinct
   end
 
   def image

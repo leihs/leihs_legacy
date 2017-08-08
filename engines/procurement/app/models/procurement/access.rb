@@ -1,5 +1,5 @@
 module Procurement
-  class Access < ActiveRecord::Base
+  class Access < ApplicationRecord
 
     belongs_to :user
     belongs_to :organization

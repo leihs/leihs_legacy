@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 
-class Field < ActiveRecord::Base
+class Field < ApplicationRecord
   audited
 
   serialize :data, JSON

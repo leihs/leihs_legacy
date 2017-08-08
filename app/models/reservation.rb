@@ -6,7 +6,7 @@
 # them once the manager chooses a specific #Item of the #Model that the
 # customer wants.
 #
-class Reservation < ActiveRecord::Base
+class Reservation < ApplicationRecord
   include Availability::Reservation
   include Delegation::Reservation
   audited
@@ -40,7 +40,8 @@ class Reservation < ActiveRecord::Base
                                     user_id: user_id,
                                     inventory_pool_id: inventory_pool_id)
   end
-  alias_method_chain :contract, :container
+  alias_method :contract_without_container, :contract
+  alias_method :contract, :contract_with_container
 
   #########################################################################
 

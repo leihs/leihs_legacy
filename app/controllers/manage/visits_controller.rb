@@ -39,7 +39,7 @@ class Manage::VisitsController < Manage::ApplicationController
         visit.reservations.each { |l| contract.remove_line(l) }
       end
     end
-    head status: :ok
+    head :ok
   end
 
   def remind
@@ -60,7 +60,7 @@ class Manage::VisitsController < Manage::ApplicationController
       user.remind(reservations)
     end
 
-    head status: :ok
+    head :ok
   end
 
 end

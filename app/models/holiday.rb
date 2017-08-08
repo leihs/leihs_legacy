@@ -1,4 +1,4 @@
-class Holiday < ActiveRecord::Base
+class Holiday < ApplicationRecord
   audited
   attr_accessor :_destroy
 

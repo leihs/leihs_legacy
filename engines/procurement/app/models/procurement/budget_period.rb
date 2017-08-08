@@ -1,5 +1,5 @@
 module Procurement
-  class BudgetPeriod < ActiveRecord::Base
+  class BudgetPeriod < ApplicationRecord
 
     has_many :requests
     has_many :budget_limits, dependent: :delete_all

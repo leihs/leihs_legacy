@@ -1,4 +1,4 @@
-class AuthenticationSystem < ActiveRecord::Base
+class AuthenticationSystem < ApplicationRecord
   audited
 
   scope :default_system, -> { where(is_default: true) }

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include Delegation::User
   include DefaultPagination
   audited
@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   has_many :access_rights, dependent: :restrict_with_exception
   has_many(:inventory_pools,
-           -> { where(access_rights: { deleted_at: nil }).uniq },
+           -> { where(access_rights: { deleted_at: nil }).distinct },
            through: :access_rights) do
     def with_borrowable_items
       joins(:items)
@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  has_many :items, -> { uniq }, through: :inventory_pools
-  has_many(:models, -> { uniq }, through: :inventory_pools) do
+  has_many :items, -> { distinct }, through: :inventory_pools
+  has_many(:models, -> { distinct }, through: :inventory_pools) do
     def borrowable
       # TODO: dry with_borrowable_items
       joins(:items)
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  has_many(:categories, -> { uniq }, through: :models) do
+  has_many(:categories, -> { distinct }, through: :models) do
     def with_borrowable_items
       where(items: { retired: nil, is_borrowable: true, parent_id: nil })
       .joins("INNER JOIN (#{Partition.query}) AS pwg " \
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
                'ON model_groups.id = model_group_links.parent_id')
         .where(model_group_links: \
                  { child_id: borrowable_categories.pluck(:id) })
-        .uniq
+        .distinct
 
     [borrowable_categories, ancestors].flatten.uniq
   end
@@ -131,7 +131,7 @@ class User < ActiveRecord::Base
   scope :search, lambda { |query|
     sql = all
     return sql if query.blank?
-    sql = sql.uniq.joins(<<-SQL)
+    sql = sql.distinct.joins(<<-SQL)
       LEFT JOIN delegations_users AS du ON du.delegation_id = users.id
       LEFT JOIN users AS u2 ON du.user_id = u2.id
     SQL
@@ -188,8 +188,10 @@ class User < ActiveRecord::Base
         end))
 
   AccessRight::ROLES_HIERARCHY.each do |role|
-    scope(role.to_s.pluralize.to_sym,
-          -> { joins(:access_rights).where(access_rights: { role: role }).uniq })
+    scope(
+      role.to_s.pluralize.to_sym,
+      -> { joins(:access_rights).where(access_rights: { role: role }).distinct }
+    )
   end
 
   ################################################

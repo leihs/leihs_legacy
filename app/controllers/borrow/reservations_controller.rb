@@ -69,7 +69,7 @@ class Borrow::ReservationsController < Borrow::ApplicationController
         end
         render status: :ok, json: reservations
       rescue => e
-        render status: :bad_request, text: e
+        render status: :bad_request, plain: e
       end
     else
       render status: :bad_request, json: @errors.uniq.join(', ')

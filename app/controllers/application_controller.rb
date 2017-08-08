@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     if User.exists?
       head :forbidden
     else
-      ActiveRecord::Base.transaction do
+      ApplicationRecord.transaction do
         setup_default_database_authentication_system!
         db_auth_system = \
           AuthenticationSystem.find_by_class_name!('DatabaseAuthentication')

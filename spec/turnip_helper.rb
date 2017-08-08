@@ -13,6 +13,10 @@ end
   end
 end
 
+Capybara.configure do |config|
+  config.server = :puma
+end
+
 RSpec.configure do |config|
 
   config.raise_error_for_unimplemented_steps = true

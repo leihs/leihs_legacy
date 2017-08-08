@@ -67,7 +67,7 @@ module LeihsAdmin
 
       if @errors.empty?
         flash[:success] = _('Saved')
-        head status: :ok
+        head :ok
       else
         render json: @errors, status: :internal_server_error
       end

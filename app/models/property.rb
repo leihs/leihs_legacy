@@ -1,4 +1,4 @@
-class Property < ActiveRecord::Base
+class Property < ApplicationRecord
   audited
 
   belongs_to :model, inverse_of: :properties

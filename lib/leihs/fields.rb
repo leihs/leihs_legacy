@@ -1,7 +1,7 @@
 module Leihs
   module Fields
     def self.create_fields
-      if ActiveRecord::Base.connection.tables.include?('fields')
+      if ApplicationRecord.connection.tables.include?('fields')
 
         predefined_fields = [
             {

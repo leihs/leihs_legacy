@@ -32,7 +32,7 @@ class Manage::ModelsController < Manage::ApplicationController
 
   def create
     not_authorized! unless privileged_user?
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       @model = case params[:model][:type]
                when 'software'
                    Software
@@ -44,7 +44,7 @@ class Manage::ModelsController < Manage::ApplicationController
         render status: :ok, json: { id: @model.id }
       else
         render status: :bad_request,
-               text: @model.errors.full_messages.uniq.join(', ')
+               plain: @model.errors.full_messages.uniq.join(', ')
       end
     end
   end
@@ -56,12 +56,12 @@ class Manage::ModelsController < Manage::ApplicationController
   def update
     not_authorized! unless privileged_user?
     @model = fetch_model
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       if save_model @model
-        head status: :ok
+        head :ok
       else
         render status: :bad_request,
-               text: @model.errors.full_messages.uniq.join(', ')
+               plain: @model.errors.full_messages.uniq.join(', ')
       end
     end
   end
@@ -75,7 +75,7 @@ class Manage::ModelsController < Manage::ApplicationController
         store_attachment!(file, model_id: @model.id)
       end
     end
-    head status: :ok
+    head :ok
   end
 
   def destroy
@@ -94,7 +94,7 @@ class Manage::ModelsController < Manage::ApplicationController
       @model.errors.add(:base, e)
       text = @model.errors.full_messages.uniq.join(', ')
       respond_to do |format|
-        format.json { render text: text, status: :forbidden }
+        format.json { render plain: text, status: :forbidden }
         format.html do
           redirect_to \
             manage_inventory_path(current_inventory_pool),
@@ -119,10 +119,10 @@ class Manage::ModelsController < Manage::ApplicationController
 
   def update_packages(packages)
     packages.each do |package|
-      package = package[1]
+      package = packages[package]
       children = package.delete(:children)
       if package['id'].blank?
-        ActiveRecord::Base.transaction do
+        ApplicationRecord.transaction do
           item = Item.new
           data = package.merge owner_id: current_inventory_pool.id,
                                model: @model

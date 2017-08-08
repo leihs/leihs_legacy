@@ -1,7 +1,7 @@
 require_dependency 'procurement/concerns/csv'
 
 module Procurement
-  class Request < ActiveRecord::Base
+  class Request < ApplicationRecord
     include Csv
 
     belongs_to :budget_period
@@ -64,7 +64,7 @@ module Procurement
 
     before_destroy do
       validates_budget_period
-      errors.empty?
+      throw :abort unless errors.empty?
     end
 
     def validates_budget_period

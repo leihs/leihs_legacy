@@ -1,5 +1,5 @@
 module Procurement
-  class Attachment < ActiveRecord::Base
+  class Attachment < ApplicationRecord
 
     belongs_to :request, inverse_of: :attachments
 

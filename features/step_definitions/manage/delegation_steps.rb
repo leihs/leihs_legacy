@@ -387,6 +387,7 @@ When(/^I delete an existing user from the delegation$/) do
 end
 
 When(/^I add a user to the delegation$/) do
+  find('body').click
   expect(has_no_selector?('ul.ui-autocomplete')).to be true
   find('[data-search-users]').set ' '
   el = find('ul.ui-autocomplete > li > a', match: :first)
@@ -401,7 +402,7 @@ Then(/^the edited delegation is saved with its current information$/) do
   expect(@delegation.reload.delegator_user).to eq @responsible
   @delegation.delegated_users.each {|du| @delegated_users.include? du}
   @delegation.delegated_users.count == (@delegated_users + [@responsible]).uniq.count
-  expect(@delegation.groups).to eq @current_inventory_pool.groups
+  expect(@delegation.groups).to match_array @current_inventory_pool.groups
 end
 
 When(/^I edit a delegation that has access to the current inventory pool$/) do

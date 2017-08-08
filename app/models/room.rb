@@ -1,4 +1,5 @@
-class Room < ActiveRecord::Base
+class Room < ApplicationRecord
+  include DefaultPagination
 
   SEARCHABLE_FIELDS = %w(name)
 

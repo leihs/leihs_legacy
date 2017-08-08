@@ -65,7 +65,7 @@ module Concerns
       def allocated_inventory_code_numbers(with_allocated_codes = false)
         h = {}
         inventory_codes = \
-          ActiveRecord::Base
+          ApplicationRecord
           .connection
           .select_values('SELECT inventory_code FROM items')
         inventory_codes.each do |code|

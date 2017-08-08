@@ -1,4 +1,4 @@
-class MailTemplate < ActiveRecord::Base
+class MailTemplate < ApplicationRecord
   audited
 
   belongs_to :inventory_pool # NOTE when null, then is system-wide

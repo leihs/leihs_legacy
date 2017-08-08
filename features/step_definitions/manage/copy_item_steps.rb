@@ -68,7 +68,7 @@ Then(/^the inventory code is already filled in$/) do
 end
 
 Then(/^the copied item is saved$/) do
-  expect(has_content?(_('List of Inventory'))).to be true
+  sleep 2
   @copied_item = Item.find_by_inventory_code(@inventory_code_copied)
   expect(@copied_item).not_to be_nil
 end

@@ -1,6 +1,6 @@
 #### source: https://tomafro.net/2009/09/quickly-list-missing-foreign-key-indexes
 #
-# c = ActiveRecord::Base.connection
+# c = ApplicationRecord.connection
 # c.tables.collect do |t|
 #  columns = \
 #    c.columns(t)
@@ -18,7 +18,7 @@ module LeihsAdmin
     include Database::Consistency
 
     before_action do
-      @connection = ActiveRecord::Base.connection
+      @connection = ApplicationRecord.connection
     end
 
     def indexes
@@ -92,7 +92,7 @@ module LeihsAdmin
     private
 
     def nullify_empty_columns
-      only_tables_no_views = ActiveRecord::Base.connection.tables
+      only_tables_no_views = ApplicationRecord.connection.tables
       only_tables_no_views.each do |table_name|
         @connection
           .columns(table_name)

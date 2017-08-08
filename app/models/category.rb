@@ -1,6 +1,6 @@
 class Category < ModelGroup
 
-  has_many :templates, -> { uniq }, through: :models
+  has_many :templates, -> { distinct }, through: :models
 
   has_many :images,
            -> { where(thumbnail: false) },

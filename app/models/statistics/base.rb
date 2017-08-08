@@ -3,7 +3,7 @@ module Statistics
     class << self
 
       def hand_overs(klasses, options = {})
-        options.symbolize_keys!
+        options = options.symbolize_keys
         options[:limit] ||= 10
 
         if klasses.is_a? Array

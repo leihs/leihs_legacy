@@ -10,7 +10,7 @@
 # The description of the #Item class contains an example.
 #
 #
-class Model < ActiveRecord::Base
+class Model < ApplicationRecord
   include Availability::Model
   include DefaultPagination
   audited
@@ -22,7 +22,8 @@ class Model < ActiveRecord::Base
 
   before_destroy do
     if is_package? and reservations.empty?
-      items.destroy_all
+      destroyed = items.destroy_all
+      throw :abort if destroyed.count != items.count
     end
   end
 
@@ -43,8 +44,8 @@ class Model < ActiveRecord::Base
   has_many :unpackaged_items, -> { where(parent_id: nil) }, class_name: 'Item'
 
   # OPTIMIZE: N+1 select problem, :include => :inventory_pools
-  has_many :rooms, -> { uniq }, through: :items
-  has_many :inventory_pools, -> { uniq }, through: :items
+  has_many :rooms, -> { distinct }, through: :items
+  has_many :inventory_pools, -> { distinct }, through: :items
 
   has_many :partitions, dependent: :delete_all do
     def set_in(inventory_pool, new_partitions)
@@ -91,7 +92,7 @@ class Model < ActiveRecord::Base
 
   # ModelGroups
   has_many :model_links, dependent: :destroy
-  has_many :model_groups, -> { uniq }, through: :model_links
+  has_many :model_groups, -> { distinct }, through: :model_links
   has_many(:categories,
            -> { where(type: 'Category') },
            through: :model_links,
@@ -103,7 +104,7 @@ class Model < ActiveRecord::Base
 
   ########
   # says which other Model one Model works with
-  has_and_belongs_to_many :compatibles, -> { uniq },
+  has_and_belongs_to_many :compatibles, -> { distinct },
                           class_name: 'Model',
                           join_table: 'models_compatibles',
                           foreign_key: 'model_id',
@@ -116,7 +117,7 @@ class Model < ActiveRecord::Base
 
   #############################################
 
-  scope :active, -> { joins(:items).where(items: { retired: nil }).uniq }
+  scope :active, -> { joins(:items).where(items: { retired: nil }).distinct }
 
   scope(:without_items,
         (lambda do
@@ -133,7 +134,7 @@ class Model < ActiveRecord::Base
               .joins(:items)
               .where(':id IN (items.owner_id, items.inventory_pool_id)',
                      id: ip.id)
-              .uniq
+              .distinct
           Model.where("models.id NOT IN (#{model_ids.to_sql})")
         end))
 
@@ -142,7 +143,7 @@ class Model < ActiveRecord::Base
   scope :with_properties, lambda {
     joins('LEFT JOIN properties ON properties.model_id = models.id')
       .where.not(properties: { model_id: nil })
-      .uniq
+      .distinct
   }
 
   scope :by_inventory_pool, lambda { |inventory_pool|
@@ -154,7 +155,7 @@ class Model < ActiveRecord::Base
         (lambda do |ip|
           joins(:items)
             .where(':id IN (items.owner_id, items.inventory_pool_id)', id: ip.id)
-            .uniq
+            .distinct
         end))
 
   scope(:all_from_inventory_pools,
@@ -211,7 +212,7 @@ class Model < ActiveRecord::Base
           return all if query.blank?
 
           # old# joins(:categories, :properties, :items)
-          sql = uniq
+          sql = distinct
           if fields.empty?
             sql = sql
               .joins('LEFT JOIN model_links AS ml2 ' \
@@ -324,14 +325,14 @@ class Model < ActiveRecord::Base
                    models
                      .joins(:items)
                      .where(items: { inventory_pool_id: inventory_pool })
-                     .uniq
+                     .distinct
                  else
                    models
                      .joins(:items)
                      .where(':id IN (items.owner_id, ' \
                                     'items.inventory_pool_id)',
                             id: inventory_pool.id)
-                     .uniq
+                     .distinct
                  end
         unless params[:include_package_models]
           models = models.where(items: { parent_id: nil })
@@ -450,6 +451,7 @@ class Model < ActiveRecord::Base
     end
     h
   end
-  alias_method_chain :as_json, :arguments
+  alias_method :as_json_without_arguments, :as_json
+  alias_method :as_json, :as_json_with_arguments
 
 end

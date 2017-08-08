@@ -1,5 +1,5 @@
 module Procurement
-  class CategoryInspector < ActiveRecord::Base
+  class CategoryInspector < ApplicationRecord
 
     validates_presence_of :user, :category
     validates_uniqueness_of :user_id, scope: :category_id

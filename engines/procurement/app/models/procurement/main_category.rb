@@ -1,5 +1,5 @@
 module Procurement
-  class MainCategory < ActiveRecord::Base
+  class MainCategory < ApplicationRecord
 
     has_many :budget_limits,
              dependent: :delete_all,

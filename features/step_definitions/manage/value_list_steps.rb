@@ -130,12 +130,12 @@ Then /^the list contains the following columns:$/ do |table|
               if line.model.is_a?(Option)
                 _('Location not defined')
               else
-                locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.id) AS count, rooms.name AS room, items.shelf AS shelf').joins(:room).group('rooms.id', 'rooms.name', 'items.shelf').order('count DESC')
+                locations = line.model.items.in_stock.where(inventory_pool_id: @current_inventory_pool).select('COUNT(items.id) AS count, rooms.name AS room_name, items.shelf AS shelf').joins(:room).group('rooms.id', 'rooms.name', 'items.shelf').order('count DESC')
                 locations.each do |location|
                   if line.item_id
-                    find('tr', text: '%s / %s' % [location.room, location.shelf])
+                    find('tr', text: '%s / %s' % [location.room_name, location.shelf])
                   else
-                    find('tr', text: '%dx %s / %s' % [location.count, location.room, location.shelf])
+                    find('tr', text: '%dx %s / %s' % [location.count, location.room_name, location.shelf])
                   end
                 end
               end

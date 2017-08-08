@@ -6,14 +6,29 @@ Rails.application.routes.draw do
   get 'first_admin_user', to: 'application#new_first_admin_user', as: 'new_first_admin_user'
   post 'first_admin_user', to: 'application#create_first_admin_user', as: 'create_first_admin_user'
 
-  # Authenticator
-  match 'authenticator/zhdk/login', to: 'authenticator/zhdk#login', via: [:get, :post]
-  match 'authenticator/zhdk/login_successful/:id', to: 'authenticator/zhdk#login_successful', via: [:get, :post]
-  match 'authenticator/db/:action', controller: 'authenticator/database_authentication', via: [:get, :post]
-  match 'authenticator/ldap/:action', controller: 'authenticator/ldap_authentication', via: [:get, :post]
-  match 'authenticator/hslu/:action', controller: 'authenticator/hslu_authentication', via: [:get, :post]
-  match 'authenticator/shibboleth/login', to: 'authenticator/shibboleth_authentication#login', via: [:get, :post]
-  match 'authenticator/login', to: "authenticator/database_authentication#login", via: [:get, :post]
+  namespace 'authenticator' do
+    match 'login', to: 'database_authentication#login', via: [:get, :post]
+
+    match 'zhdk/login', to: 'zhdk#login', via: [:get, :post]
+    match 'zhdk/login_successful/:id', to: 'zhdk#login_successful', via: [:get, :post]
+
+    match 'db/login_form_path', to: 'database_authentication#login_from_path', via: [:get, :post]
+    match 'db/login', to: 'database_authentication#login', via: [:get, :post]
+    match 'db/change_password', to: 'database_authentication#change_password', via: [:get, :post]
+
+    match 'ldap/validate_configuration', to: 'ldap_authentication#validate_configuration', via: [:get, :post]
+    match 'ldap/login_from_path', to: 'ldap_authentication#login_from_path', via: [:get, :post]
+    match 'ldap/login', to: 'ldap_authentication#login', via: [:get, :post]
+
+    match 'hslu/login_from_path', to: 'hslu_authentication#login_from_path', via: [:get, :post]
+    match 'hslu/login', to: 'hslu_authentication#login', via: [:get, :post]
+
+    match 'shibboleth/load_config', to: 'shibboleth_authentication#load_config', via: [:get, :post]
+    match 'shibboleth/validate_config', to: 'shibboleth_authentication#validate_config', via: [:get, :post]
+    match 'shibboleth/login_from_path', to: 'shibboleth_authentication#login_from_path', via: [:get, :post]
+    match 'shibboleth/login', to: 'shibboleth_authentication#login', via: [:get, :post]
+    match 'shibboleth/create_or_update_user', to: 'shibboleth_authentication#create_or_update_user', via: [:get, :post]
+  end
 
   # For RESTful_Authentication
   match 'login', to: 'sessions#authenticate', via: [:get, :post], as: :login

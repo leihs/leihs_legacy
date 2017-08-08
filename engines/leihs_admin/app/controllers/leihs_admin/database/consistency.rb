@@ -11,14 +11,14 @@ module LeihsAdmin
       # rubocop:disable Metrics/CyclomaticComplexity
       # rubocop:disable Metrics/PerceivedComplexity
       def consistency
-        @only_tables_no_views = ActiveRecord::Base.connection.tables
+        @only_tables_no_views = ApplicationRecord.connection.tables
         @excluded_models = [ReservationsBundle, Visit,
                             Audited::Adapters::ActiveRecord::Audit]
         @references = []
 
         Rails.application.eager_load! if Rails.env.development?
 
-        ActiveRecord::Base.descendants.each do |klass|
+        ApplicationRecord.descendants.each do |klass|
           next if klass.name =~ /^HABTM_/
           klass.reflect_on_all_associations(:belongs_to).each do |ref|
             if ref.polymorphic?
@@ -62,7 +62,7 @@ module LeihsAdmin
           end
         end
 
-        ActiveRecord::Base.descendants.each do |klass|
+        ApplicationRecord.descendants.each do |klass|
           klass
             .reflect_on_all_associations(:has_and_belongs_to_many)
             .each do |ref|

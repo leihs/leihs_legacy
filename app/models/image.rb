@@ -1,10 +1,12 @@
-class Image < ActiveRecord::Base
+class Image < ApplicationRecord
   audited
 
   belongs_to :target, polymorphic: true
 
   before_destroy do
-    Image.where(parent_id: self.id, thumbnail: true).destroy_all
+    thumbnails = Image.where(parent_id: self.id, thumbnail: true)
+    destroyed = thumbnails.destroy_all
+    throw :abort if thumbnails.count != destroyed.count
   end
 
   validates_presence_of :content

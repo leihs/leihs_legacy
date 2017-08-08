@@ -7,7 +7,7 @@
 # quantities. Also Options are not an instance of some
 # #Model as id the case for #Item s.
 #
-class Option < ActiveRecord::Base
+class Option < ApplicationRecord
   include DefaultPagination
   audited
 
@@ -91,6 +91,11 @@ class Option < ActiveRecord::Base
       _('Categories') => "#{_('Option')}",
       _('Initial Price') => "#{self.price}"
     }
+  end
+
+  # needed for inventory.to_json(methods: :type)
+  def type
+    nil
   end
 
 end

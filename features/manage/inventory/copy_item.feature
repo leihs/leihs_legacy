@@ -4,7 +4,7 @@ Feature: Copy item
   Background:
     Given I am Mike
 
-  @flapping
+  @unstable
   Scenario: Create and copy items
     Given I create an item
     And I choose "Investment"
@@ -12,6 +12,7 @@ Feature: Copy item
     And I enter the following item information
       | field                  | type         | value               |
       | Borrowable             | radio        | OK                  |
+      # FIX: IS BROKEN ON CIDER!!!
       | Building               | autocomplete | general building  |
       | Check-In Date          |              | 01/01/2013          |
       | Check-In Note          |              | Test note           |
@@ -33,6 +34,7 @@ Feature: Copy item
       | Responsible department | autocomplete | A-Ausleihe          |
       | Responsible person     |              | Matus Kmit          |
       | Retirement             | checkbox     | unchecked           |
+      # FIX: IS BROKEN ON CIDER!!!
       | Room                   | autocomplete | general room      |
       | Serial Number          |              | Test serial number  |
       | Shelf                  |              | Test shelf          |

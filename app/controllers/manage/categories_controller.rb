@@ -5,7 +5,7 @@ class Manage::CategoriesController < Manage::ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        @categories = Category.filter params, current_inventory_pool
+        @categories = Category.filter(params, current_inventory_pool).to_a
         if not params[:include] or not params[:include][:used?]
           cat = Category.new(name: format('* %s *', _('Not categorized')))
           cat.id = UUIDTools::UUID.parse('00000000-0000-0000-0000-000000000000')
@@ -46,7 +46,7 @@ class Manage::CategoriesController < Manage::ApplicationController
       if @category.models.empty?
         @category.destroy
         respond_to do |format|
-          format.json { render nothing: true, status: :ok }
+          format.json { head :ok }
           format.html do
             redirect_to \
               manage_categories_path(current_inventory_pool),
@@ -67,7 +67,7 @@ class Manage::CategoriesController < Manage::ApplicationController
       next unless params[:type] == 'image'
       store_image_with_thumbnail!(file, @category)
     end
-    head status: :ok
+    head :ok
   end
 
   private
@@ -86,17 +86,17 @@ class Manage::CategoriesController < Manage::ApplicationController
   def manage_links(category, links)
     return true if links.blank?
     links.each do |link|
-      parent = @category.parents.find_by_id(link[1]['parent_id'])
+      parent = @category.parents.find_by_id(links[link]['parent_id'])
       if parent # parent exists already
         existing_link = ModelGroupLink.find_edge(parent, @category)
-        if link[1]['_destroy'] == '1'
+        if links[link]['_destroy'] == '1'
           existing_link.destroy
         else
-          existing_link.update_attribute :label, link[1]['label']
+          existing_link.update_attribute :label, links[link]['label']
         end
       else
-        parent = Category.find link[1]['parent_id']
-        category.set_parent_with_label parent, link[1]['label']
+        parent = Category.find links[link]['parent_id']
+        category.set_parent_with_label parent, links[link]['label']
       end
     end
   end

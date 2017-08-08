@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-def fill_in_autocomplete_field field_name, field_value
+def fill_in_autocomplete_field(field_name, field_value)
   within('form .row.emboss', match: :prefer_exact, text: field_name) do
     find('input', match: :first).set ''
     find('input', match: :first).set field_value
@@ -11,6 +11,7 @@ def fill_in_autocomplete_field field_name, field_value
   within '.ui-autocomplete' do
     find('a', match: :prefer_exact, text: field_value).click
   end
+  find('body').click # capybara keeps focus on the autocomplete element
   expect(has_no_selector? '.ui-autocomplete').to be true
 end
 
@@ -19,6 +20,10 @@ def check_fields_and_their_values table
     field_name = hash_row['field']
     field_value = hash_row['value']
     field_type = hash_row['type']
+
+    if field_name == 'Room'
+      sleep 2 # wait for the room field to appear depending on building
+    end
 
     within('.row.emboss', match: :prefer_exact, text: field_name) do
       case field_type
@@ -55,6 +60,7 @@ When(/^I enter the following item information$/) do |table|
   @table_hashes = table.hashes
 
   @table_hashes.each do |hash_row|
+    sleep 2
     field_name = hash_row['field']
     field_value = hash_row['value']
     field_type = hash_row['type']
@@ -65,29 +71,30 @@ When(/^I enter the following item information$/) do |table|
     expect(matched_field).to be
 
     case field_type
-      when 'radio', 'radio must'
-        matched_field.find('label', text: field_value).find('input').set true
-      when 'checkbox'
-        matched_field.find('input').set if field_value == 'checked'
-      when 'select'
-        matched_field.select field_value
-      when 'autocomplete'
-        within matched_field do
-          find('input').click
-          find('input').set field_value
-        end
-        find('.ui-autocomplete a',
-             match: :prefer_exact,
-             text: field_value,
-             visible: true).click
-      else
-        within matched_field do
-          find('input,textarea').set ''
-          find('input,textarea').set field_value
-        end
-        # NOTE trick closing the possible datepicker
-        find('body').click
+    when 'radio', 'radio must'
+      matched_field.find('label', text: field_value).find('input').set true
+    when 'checkbox'
+      matched_field.find('input').set if field_value == 'checked'
+    when 'select'
+      matched_field.select field_value
+    when 'autocomplete'
+      fill_in_autocomplete_field(field_name, field_value)
+      # within matched_field do
+      #   find('input').click
+      #   find('input').set field_value
+      # end
+      # find('.ui-autocomplete a',
+      #      match: :prefer_exact,
+      #      text: field_value,
+      #      visible: true).click
+    else
+      within matched_field do
+        find('input,textarea').set ''
+        find('input,textarea').set field_value
+      end
     end
+
+    find('body').click
   end
 end
 

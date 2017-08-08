@@ -12,7 +12,6 @@ Feature: Changing interface language
     When I change the language to "English (US)"
     Then the language is "English (US)"
 
-  @rack
   Scenario: Changing the language as normal user
     Given I am Normin
     And I am listing models

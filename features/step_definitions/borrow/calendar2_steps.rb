@@ -10,6 +10,7 @@ When(/^I add an existing model to the order$/) do
   #step 'man ein Startdatum auswählt'
   step 'I choose a start date'
   find('#model-list > a.line[data-id]', match: :first)
+  sleep 2
   # This is necessary because otherwise it seems all() does not wait
   # for the list to be populated.
   page.has_css?('#model-list > a.line[data-id]:not(.grayed-out)')
@@ -120,6 +121,7 @@ When(/^everything I input into the calendar is valid$/) do
 end
 
 Then(/^the model has been added to the order with the respective start and end date, quantity and inventory pool$/) do
+  sleep 2
   within '#current-order-lines' do
     find('.line', text: "#{@quantity}x #{@model.name}")
   end

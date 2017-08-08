@@ -15,6 +15,7 @@ When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over
   find('#assign-or-add button').click
   find('#flash')
   find(".line input[value='#{@inventory_code}']")
+  sleep 2
   expect(line_amount_before).to be < all('.line', minimum: 1).size
 end
 

@@ -1,4 +1,4 @@
-class Language < ActiveRecord::Base
+class Language < ApplicationRecord
   audited
 
   default_scope { order(:name) }

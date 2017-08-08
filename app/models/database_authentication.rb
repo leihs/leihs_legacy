@@ -1,4 +1,4 @@
-class DatabaseAuthentication < ActiveRecord::Base
+class DatabaseAuthentication < ApplicationRecord
   audited
 
   attr_accessor :password

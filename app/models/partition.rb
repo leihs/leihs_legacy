@@ -1,4 +1,4 @@
-class Partition < ActiveRecord::Base
+class Partition < ApplicationRecord
   audited
 
   belongs_to :model, inverse_of: :partitions

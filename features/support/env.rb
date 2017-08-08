@@ -38,6 +38,12 @@ ActionController::Base.allow_rescue = false
 
 ##################################################################################
 
+Capybara.configure do |config|
+  config.server = :puma
+end
+
+##################################################################################
+
 require 'selenium/webdriver'
 
 Capybara.register_driver :selenium_firefox do |app|

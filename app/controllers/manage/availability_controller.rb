@@ -4,7 +4,7 @@ class Manage::AvailabilityController < Manage::ApplicationController
 
   def before_action_hook
     @models = Model.where id: params[:model_ids]
-    render status: :bad_request, nothing: true and return if @models.blank?
+    head :bad_request and return if @models.blank?
     @availabilities = []
   end
 

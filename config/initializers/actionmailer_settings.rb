@@ -18,7 +18,7 @@ class ActionMailer::Base
     # Additionally, we have to check for existance of each setting because the settings
     # table will be changed by migrations along the way, so the setting we expect to be
     # there might not actually exist while we are running the migration.
-    if ActiveRecord::Base.connection.tables.include?("settings")
+    if ApplicationRecord.connection.tables.include?("settings")
       begin
         settings = {
           :address => Setting.smtp_address,

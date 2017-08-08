@@ -1,4 +1,4 @@
-class AccessRight < ActiveRecord::Base
+class AccessRight < ApplicationRecord
   audited
 
   belongs_to :user, inverse_of: :access_rights
@@ -74,7 +74,7 @@ class AccessRight < ActiveRecord::Base
 
   before_destroy do
     check_for_existing_reservations
-    errors.empty?
+    throw :abort unless errors.empty?
   end
 
   ####################################################################

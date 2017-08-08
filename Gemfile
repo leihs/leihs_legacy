@@ -8,15 +8,13 @@ gem 'puma'
 gem 'uuidtools'
 gem 'base32-crockford'
 
-# gem 'activerecord-jdbcmysql-adapter', platform: :jruby
-# gem 'acts-as-dag', '~> 4.0' # alternative: 'dagnabit'
 gem 'axlsx', '~> 2.0', '>= 2.0.1'
-gem 'audited-activerecord', git: 'https://github.com/sellittf/audited.git' #, '~> 4.2'
+gem 'audited', git: 'https://github.com/leihs/audited', branch: 'master'
 gem 'barby', '~> 0.5.0'
 gem 'chunky_png', '~> 1.2'
 gem 'coffee-rails', '~> 4.0'
 gem 'coffee-script', '~> 2.2'
-gem 'compass-rails', '~> 2.0'
+gem 'compass-rails', '~> 3.0'
 gem 'execjs', '~> 2.6'
 gem 'font-awesome-sass', '~> 4.4' # NOTE font not found using gem 'rails-assets-font-awesome'
 gem 'geocoder', '~> 1.1'
@@ -25,7 +23,7 @@ gem 'haml', '~> 4.0'
 gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'jruby-openssl', platform: :jruby
 gem 'json', '~> 1.8'
-gem 'jsrender-rails', '~> 1.2', git: 'https://github.com/spape/jsrender-rails.git', branch: 'own_template_prefix'
+gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'rails_5'
 gem 'liquid', '~> 3.0'
 gem 'mini_magick', '~> 3.4'
 # gem 'mysql2', '~> 0.4', platform: :mri
@@ -37,7 +35,7 @@ gem 'react-rails'
 gem 'rgl', '~> 0.4.0', require: 'rgl/adjacency' # use ruby-graphviz instead ?? (already in test group)
 gem 'rubocop', '0.35.1', require: false
 gem 'ruby_parser', '~> 3.1' # gettext dependency that Bundler seems unable to resolve
-gem 'sass-rails', '~> 4.0'
+gem 'sass-rails', '~> 5.0'
 gem 'therubyracer', platform: :mri
 gem 'therubyrhino', platform: :jruby
 gem 'uglifier', '~> 2.4'
@@ -55,7 +53,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-moment', '~> 2.10'
   gem 'rails-assets-timecop', '~> 0.1'
   gem 'rails-assets-underscore', '~> 1.8'
-  gem 'rails-assets-uri.js', '~> 1.16'
+  # gem 'rails-assets-spine', '~> 1.3.0'
+  # gem 'rails-assets-uri.js', '~> 1.16'
 end
 
 group :development do
@@ -72,7 +71,6 @@ group :development do
 end
 
 group :test do
-  gem 'capybara-puma'
   gem 'ladle'
   gem 'open4'
   gem 'rack_session_access', '~> 0.1.1'
@@ -82,7 +80,7 @@ end
 group :development, :test do
   gem 'byebug' # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'cider_ci-support'
-  gem 'cucumber-rails', '1.4.2', require: false # it already includes capybara # NOTE '~> 1.4' doesn't work beacause 'gherkin'
+  gem 'cucumber-rails', '~> 1.4', require: false # it already includes capybara # NOTE '~> 1.4' doesn't work beacause 'gherkin'
   gem 'database_cleaner'
   gem 'factory_girl_rails', '~> 4.1'
   gem 'faker', '1.3.0' # NOTE '~> 1.4' doesn't work beacause "I18n::InvalidLocale" error, see note for config.i18n in config/application.rb
@@ -92,7 +90,7 @@ group :development, :test do
   gem 'meta_request'
   gem 'pry-rails'
   gem 'redcarpet' # This isn't being pulled in by yard, but it's required
-  gem 'rspec-rails', '~> 3.0', require: false
+  gem 'rspec-rails', '~> 3.6', require: false
   gem 'selenium-webdriver', '~> 2.53'
   gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'timecop', '~> 0.7'

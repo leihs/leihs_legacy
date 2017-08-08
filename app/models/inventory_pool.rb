@@ -2,7 +2,7 @@
 
 require_dependency 'model' # in tests Model constant seems not to autoload properly
 
-class InventoryPool < ActiveRecord::Base
+class InventoryPool < ApplicationRecord
   include Availability::InventoryPool
   audited
 
@@ -24,7 +24,7 @@ class InventoryPool < ActiveRecord::Base
 
   has_many :access_rights, dependent: :delete_all
   has_many(:users,
-           -> { where(access_rights: { deleted_at: nil }).uniq },
+           -> { where(access_rights: { deleted_at: nil }).distinct },
            through: :access_rights)
   has_many(:suspended_users,
            (lambda do
@@ -32,17 +32,17 @@ class InventoryPool < ActiveRecord::Base
                .where
                .not(access_rights: { suspended_until: nil })
                .where('access_rights.suspended_until >= ?', Time.zone.today)
-               .uniq
+               .distinct
            end),
            through: :access_rights, source: :user)
 
-  has_many :rooms, -> { uniq }, through: :items
+  has_many :rooms, -> { distinct }, through: :items
   has_many :items, dependent: :restrict_with_exception
   has_many(:own_items,
            class_name: 'Item',
            foreign_key: 'owner_id',
            dependent: :restrict_with_exception)
-  has_many :models, -> { uniq }, through: :items
+  has_many :models, -> { distinct }, through: :items
   has_many :options
 
   has_and_belongs_to_many :model_groups
@@ -70,14 +70,14 @@ class InventoryPool < ActiveRecord::Base
     Supplier
       .joins(:items)
       .where(':id IN (items.owner_id, items.inventory_pool_id)', id: id)
-      .uniq
+      .distinct
   end
 
   def buildings
     Building
       .joins(:items)
       .where(':id IN (items.owner_id, items.inventory_pool_id)', id: id)
-      .uniq
+      .distinct
   end
 
   #######################################################################

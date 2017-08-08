@@ -74,6 +74,7 @@ end
 
 When(/^I increase a submitted contract reservations quantity$/) do
   expect(has_selector?('.line[data-ids]')).to be true
+  sleep 2
   @line_element ||= all('.line[data-ids]').to_a.sample
   within @line_element do
     @line_model_name = find('.col6of10 strong').text
@@ -171,6 +172,7 @@ end
 
 When(/^I change the time range for multiple reservations that have quantity bigger then (\d+)$/) do |arg1|
   expect(has_selector?('.line[data-ids]')).to be true
+  sleep 2
   all_ids = all('.line[data-ids]').to_a.map { |x| x['data-ids'] }
   @models_quantities = all_ids.map do |ids|
     @line_element = find(".line[data-ids='#{ids}']")

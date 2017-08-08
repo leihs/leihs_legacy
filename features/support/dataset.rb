@@ -25,7 +25,7 @@ module Dataset
     PgTasks.truncate_tables
     dump_file = File.join(Rails.root, 'features/personas/personas.pgbin')
     PgTasks.data_restore dump_file
-    ActiveRecord::Base.connection.execute 'UPDATE settings SET logo_url = NULL;'
+    ApplicationRecord.connection.execute 'UPDATE settings SET logo_url = NULL;'
   end
 
   def use_test_datetime

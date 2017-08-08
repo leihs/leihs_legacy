@@ -1,4 +1,5 @@
-class Audit < Audited::Adapters::ActiveRecord::Audit
+class Audit < Audited::Audit
+  include Concerns::ScopeIfPresence
 
   def self.filter(start_date: nil,
                   end_date: nil,

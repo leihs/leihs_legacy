@@ -109,6 +109,7 @@ Feature: Create item
     Then a new supplier is created
     And the created item has the new supplier
 
+  @unstable
   Scenario: Creating an item with all its information
     Given I am Matti
     And I create an item

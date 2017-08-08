@@ -101,10 +101,12 @@ module Manage
       end
 
       step 'I assign the license to its model line' do
-        find('#lines .line', text: @license.model.name)
-          .find('[data-assign-item-form] input')
-          .set @license.inventory_code
-        find('.ui-autocomplete a', text: @license.inventory_code).click
+        rescue_displaced_flash do
+          find('#lines .line', text: @license.model.name)
+            .find('[data-assign-item-form] input')
+            .set @license.inventory_code
+          find('.ui-autocomplete a', text: @license.inventory_code).click
+        end
       end
 
       step 'I click on "Hand Over Selection"' do

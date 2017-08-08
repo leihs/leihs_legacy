@@ -45,7 +45,7 @@ module LeihsAdmin
       begin
         InventoryPool.unscoped.find(params[:id]).destroy
         respond_to do |format|
-          format.json { head status: :ok }
+          format.json { head :ok }
           format.html do
             flash[:success] = _('%s successfully deleted') % _('Inventory Pool')
             redirect_to action: :index
@@ -53,7 +53,7 @@ module LeihsAdmin
         end
       rescue => e
         respond_to do |format|
-          format.json { render status: :bad_request, nothing: true }
+          format.json { head :bad_request }
           format.html do
             flash[:error] = e
             redirect_to action: :index

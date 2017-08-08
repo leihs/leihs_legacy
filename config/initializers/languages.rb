@@ -1,4 +1,4 @@
-if ActiveRecord::Base.connection.tables.include?("languages") and not Rails.env.test?
+if ApplicationRecord.connection.tables.include?("languages") and not Rails.env.test?
 
   unless Language.exists?
 

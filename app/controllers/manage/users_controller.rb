@@ -153,7 +153,7 @@ class Manage::UsersController < Manage::ApplicationController
             redirect_to manage_inventory_pool_users_path
           end
           format.json do
-            render text: _('User details were updated successfully.')
+            render plain: _('User details were updated successfully.')
           end
         end
       end
@@ -161,9 +161,9 @@ class Manage::UsersController < Manage::ApplicationController
       respond_to do |format|
         format.html do
           flash[:error] = e.to_s
-          redirect_to :back
+          redirect_back fallback_location: root_path
         end
-        format.json { render text: e.to_s, status: 500 }
+        format.json { render plain: e.to_s, status: 500 }
       end
     end
   end
@@ -172,9 +172,9 @@ class Manage::UsersController < Manage::ApplicationController
 
   def set_start_screen(path = params[:path])
     if current_user.start_screen(path)
-      render nothing: true, status: :ok
+      head :ok
     else
-      render nothing: true, status: :bad_request
+      head :bad_request
     end
   end
 

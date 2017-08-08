@@ -23,3 +23,8 @@ task_defaults:
     logs:
       include_match: log\/.*\.log$
       content_type: text/plain
+
+  tree_attachments:
+    deprecation-warnings:
+      include_match: tmp\/deprecation-warnings\.txt$
+      content_type: text/plain

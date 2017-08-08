@@ -32,7 +32,7 @@ Feature: Lending
     Then I see the error message "you cannot hand out reservations which are starting in the future"
     And I cannot hand over the items
 
-  # https://www.pivotaltracker.com/story/show/29455957
+  @flapping
   Scenario: Booking calendar: Show the customer's groups in "show availability"
     Given the customer is in multiple groups
     When I open a hand over to this customer

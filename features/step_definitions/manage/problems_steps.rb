@@ -141,6 +141,7 @@ Given /^I take back a(n)?( late)? item$/ do |grammar, is_late|
     item_line.update_attributes(start_date: Date.today - 2,
                                 end_date: Date.today - 1)
   end
+  sleep 2
   @line_id = item_line.id
   expect(@line_id).to be
   visit manage_take_back_path(@current_inventory_pool, item_line.user)
