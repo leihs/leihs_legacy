@@ -5,7 +5,7 @@
         = l audits.created_at, format: :long
       .col-sm-8
         - if user = User.find_by_id(audits.user_id)
-          %a{href: url_for(user_id: audits.user_id)}
+          %a{href: url_for(user_id: audits.user_id, start_date: @start_date, end_date: @end_date, search_term: @search_term)}
             = user.name
   .panel-body
     %h5.row
