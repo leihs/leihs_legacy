@@ -55,6 +55,10 @@ module Manage
         visit manage_hand_over_path(@current_inventory_pool, @customer)
       end
 
+      step 'I open take back for this customer' do
+        visit manage_take_back_path(@current_inventory_pool, @customer)
+      end
+
       step 'I add this assign to the hand over' do
         within '#assign-or-add' do
           find('#assign-or-add-input input').set @inventory_code
@@ -62,10 +66,29 @@ module Manage
         end
       end
 
+      step 'I enter the downcased inventory code in the assign field' do
+        find('#assign-input').set(@item.inventory_code.downcase)
+        # find("#assign-input").set(@item.inventory_code)
+        find('#assign-input').native.send_keys(:enter)
+      end
+
+      step 'I hand over' do
+        click_on 'Hand Over Selection'
+        find('#purpose').set('Some test purpose')
+        click_on 'Hand Over'
+        wait_until { windows.second }
+        windows.second.close
+        click_on 'Finish this hand over'
+      end
+
       step 'the new item line was added to the hand over' do
         within '#lines' do
           find("input[value='#{@inventory_code}']")
         end
+      end
+
+      step 'the item is selected for take back' do
+        expect(first('#flash .success', text: 'selected for take back')).to be
       end
 
       step 'the new item line was created in the data base' do

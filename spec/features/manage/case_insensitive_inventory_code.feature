@@ -26,3 +26,15 @@ Feature: Case insensitive inventory code feature
     And I add this assign to the hand over
     Then the new item line was added to the hand over
     And the new item line was created in the data base
+
+  @manage_case_insensitive_inventory_code
+  Scenario: Selecting an item for take back with downcased inventory code
+    Given I am Pius
+    And there is an item with uppercase inventory code in the current pool
+    And there is a customer in the current pool
+    When I open hand over for this customer
+    And I add this assign to the hand over
+    And I hand over
+    When I open take back for this customer
+    And I enter the downcased inventory code in the assign field
+    Then the item is selected for take back

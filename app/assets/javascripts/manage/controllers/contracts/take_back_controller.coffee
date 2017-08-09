@@ -51,14 +51,14 @@ class window.App.TakeBackController extends Spine.Controller
 
   getLines: => _.flatten _.map(@user.contracts().all(), (c)->c.reservations().all())
 
-  render: (renderAvailability)=> 
+  render: (renderAvailability)=>
     @reservationsContainer.html App.Render "manage/views/reservations/grouped_lines_with_action_date", App.Modules.HasLines.groupByDateRange(@getLines(), false, "end_date"),
       linePartial: "manage/views/reservations/take_back_line"
       renderAvailability: renderAvailability
     do @returnedQuantitiesController.restore
     do @lineSelection.restore
 
-  takeBack: => 
+  takeBack: =>
     returnedQuantity = {}
     reservations = (App.Reservation.find id for id in App.LineSelectionController.selected)
     for line in reservations
@@ -97,7 +97,7 @@ class window.App.TakeBackController extends Spine.Controller
   getCheckLineFunction: (inv_code) =>
     el = @el
     (line) ->
-      line.inventoryCode() == inv_code and
+      line.inventoryCode().toLowerCase() == inv_code.toLowerCase() and
         (if line.option() then el.find(".line[data-id='#{line.id}'] input[data-quantity-returned]").val() < line.quantity else true)
 
   getQuantity: (line)=>
@@ -118,7 +118,7 @@ class window.App.TakeBackController extends Spine.Controller
   setupAutocomplete: =>
     @input.autocomplete
       appendTo: @el
-      source: (request, response)=> 
+      source: (request, response)=>
         data = for line in @getLines()
           name: line.model().name()
           inventoryCode: line.inventoryCode()
@@ -128,7 +128,7 @@ class window.App.TakeBackController extends Spine.Controller
         response data
       focus: => return false
       select: @select
-    .data("uiAutocomplete")._renderItem = (ul, item) => 
+    .data("uiAutocomplete")._renderItem = (ul, item) =>
       $(App.Render "manage/views/reservations/assign/autocomplete_element", item).data("value", item).appendTo(ul)
 
   select: (e, ui)=>
