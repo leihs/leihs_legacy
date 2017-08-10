@@ -1,0 +1,15 @@
+<li class='separated-bottom exclude-last-child width-xxl'>
+  <a class='row{{if hasProblems()}} light-red{{/if}}' title='{{>inventory_code}}{{if location}} {{>location}}{{/if}}'>
+    <div class='col1of4 text-ellipsis'>
+      <strong>{{>inventory_code}}</strong>
+    </div>
+    <div class='col3of4 text-ellipsis'>
+      {{>location}}
+    </div>
+    {{if serial_number}}
+    <div class='col3of4'>
+      <strong>{{>serial_number}}</strong>
+    </div>
+    {{/if}}
+  </a>
+</li>

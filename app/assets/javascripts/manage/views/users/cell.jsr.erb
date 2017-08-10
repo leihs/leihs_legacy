@@ -1,0 +1,8 @@
+<div class='line-col {{>~grid}}'>
+  <strong data-address='{{>address}}' data-badge_id='{{>badge_id}}' data-city='{{>city}}' data-email='{{>email}}' data-firstname='{{>firstname}}' data-id='{{>id}}' data-image_url='{{>image_url}}' data-lastname='{{>lastname}}' data-phone='{{>phone}}' data-type='user-cell' data-zip='{{>zip}}'>
+    {{>firstname}} {{>lastname}}
+    {{if isSuspended()}}
+    <span class='darkred-text'>{{jed "Suspended"/}}!</span>
+    {{/if}}
+  </strong>
+</div>

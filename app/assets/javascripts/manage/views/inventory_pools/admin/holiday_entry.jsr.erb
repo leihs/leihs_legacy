@@ -1,0 +1,14 @@
+<div class='row line font-size-xs' data-index='{{>i}}'>
+  <input name='inventory_pool[holidays_attributes][{{>i}}][name]' type='hidden' value='{{>name}}'>
+  <input name='inventory_pool[holidays_attributes][{{>i}}][start_date]' type='hidden' value='{{>start_date}}'>
+  <input name='inventory_pool[holidays_attributes][{{>i}}][end_date]' type='hidden' value='{{>end_date}}'>
+  <div class='line-col col1of4 text-align-left'>
+    <strong>{{>name}}</strong>
+  </div>
+  <div class='line-col col2of4 text-align-left'>
+    {{>start_date}} - {{>end_date}}
+  </div>
+  <div class='line-col col1of4'>
+    <button class='button inset small' data-remove-holiday>{{jed "Delete"/}}</button>
+  </div>
+</div>

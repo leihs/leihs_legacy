@@ -1,0 +1,19 @@
+<div class='row line font-size-xs'>
+  <input name='group[partitions_attributes][][id]' type='hidden'>
+  <input name='group[partitions_attributes][][model_id]' type='hidden' value='{{>id}}'>
+  <input name='group[partitions_attributes][][inventory_pool_id]' type='hidden' value='{{>~currentInventoryPool.id}}'>
+  <div class='line-col col3of6 text-align-left' data-model-name>
+    {{>name()}}
+  </div>
+  <div class='line-col col2of6'>
+    <div class='line-col col1of2' data-quantities>
+      <input class='width-full small text-align-center' min='1' name='group[partitions_attributes][][quantity]' type='text' value='1'>
+    </div>
+    <div class='line-col col1of2 padding-left-xs text-align-left' data-quantities>
+      / {{>availability().total_rentable}}
+    </div>
+  </div>
+  <div class='line-col col1of6 text-align-right'>
+    <button class='button inset small' data-remove-group>{{jed "Remove"/}}</button>
+  </div>
+</div>

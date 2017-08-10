@@ -1,0 +1,15 @@
+<div class='paragraph-m row emboss straight text-align-center padding-inset-xs {{>type}}'>
+  <strong>{{>message}}</strong>
+  {{if loading}}
+  <img class='max-width-micro max-height-micro' src='<%= image_path('loading.gif') %>'>
+  {{/if}}
+  <a class='no-colors transparent-hover position-absolute-topright height-full padding-horizontal-m' data-remove='true' title='{{jed 'Hide notification'/}}'>
+    <div class='table'>
+      <div class='table-row'>
+        <div class='table-cell vertical-align-middle'>
+          <i class='fa fa-times-circle'></i>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

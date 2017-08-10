@@ -1,0 +1,46 @@
+<div class='modal medium hide fade ui-modal padding-vertical-m' role='dialog' tabindex='-1'>
+  <div class='row padding-vertical-m padding-horizontal-l'>
+    <div class='col1of2'>
+      <h3 class='headline-l'>{{jed "Package"/}}</h3>
+    </div>
+    <div class='col1of2'>
+      <div class='float-right'>
+        <a aria-hidden='true' class='modal-close weak' data-dismiss='modal' title='{{jed "close dialog"/}}' type='button'>
+          {{jed "Cancel"/}}
+        </a>
+        <button class='button green' id='save-package' type='button'>
+          {{jed "Save Package"/}}
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class='hidden' id='notifications'></div>
+  <div class='modal-body row padding-horizontal-l'>
+    <div class='margin-bottom-m'>
+      <h2 class='headline-m padding-bottom-m'>{{jed 'Items'/}}</h2>
+      <div class='row emboss margin-vertical-xxs margin-right-xs'>
+        <div class='row padding-inset-xs'>
+          <div class='col1of2 padding-vertical-xs'>
+            <strong class='font-size-m inline-block'>{{jed 'Add item'/}}</strong>
+          </div>
+          <div class='col1of2'>
+            <div class='row'>
+              <input autocomplete='off' class='width-full has-addon' data-barcode-scanner-target id='search-item' type='text'>
+              <div class='addon transparent'>
+                <span class='arrow down'></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='row' id='items'></div>
+    </div>
+    <form class='padding-top-s' id='item-form'>
+      <div id='flexible-fields'>
+        <div class='height-s'></div>
+        <img class='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='<%= asset_path('loading.gif') %>'>
+        <div class='height-s'></div>
+      </div>
+    </form>
+  </div>
+</div>

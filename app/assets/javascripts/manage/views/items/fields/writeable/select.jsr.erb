@@ -1,0 +1,13 @@
+<select class='width-full' name='{{>~field.getFormName()}}'>
+  {{for ~field.values}}
+  {{if ~field.getValue(~itemData, ~field.attribute, true) == value}}
+  <option selected value='{{>value}}'>
+    {{jed label/}}
+  </option>
+  {{else}}
+  <option value='{{>value}}'>
+    {{jed label/}}
+  </option>
+  {{/if}}
+  {{/for}}
+</select>

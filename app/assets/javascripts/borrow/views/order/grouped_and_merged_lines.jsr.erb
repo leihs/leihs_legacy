@@ -1,0 +1,13 @@
+<div class='row padding-inset-l'>
+  <div class='col1of7'>
+    <h3 class='headline-m'>{{localize start_date/}}</h3>
+  </div>
+  <div class='col5of7'>
+    <h2 class='headline-m'>{{>inventory_pool.name}}</h2>
+  </div>
+</div>
+<div class='separated-top padding-bottom-l'>
+  {{for groups}}
+  {{partial "borrow/views/order/order_line" reservations/}}
+  {{/for}}
+</div>

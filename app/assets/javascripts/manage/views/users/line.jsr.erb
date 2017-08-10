@@ -1,0 +1,72 @@
+<div class='row line'>
+  <div class='col1of5 line-col'>
+    <strong data-address='{{>address}}' data-badge_id='{{>badge_id}}' data-city='{{>city}}' data-email='{{>email}}' data-firstname='{{>firstname}}' data-id='{{>id}}' data-image_url='{{>image_url}}' data-lastname='{{>lastname}}' data-phone='{{>phone}}' data-type='user-cell' data-zip='{{>zip}}'>
+      {{>name()}}
+    </strong>
+  </div>
+  <div class='col1of5 line-col text-align-left'>
+    {{>phone}}
+  </div>
+  <div class='col1of5 line-col text-align-left'>
+    {{>roleName()}}
+  </div>
+  <div class='col1of5 line-col text-align-left darkred-text'>
+    {{if suspended()}}
+    {{jed "Suspended until"/}} {{date suspendedUntil()/}}
+    {{/if}}
+  </div>
+  <div class='col1of5 line-col line-actions'>
+    <div class='multibutton'>
+      {{if ~currentInventoryPool && accessRight()}}
+      <a class='button white' href='{{>url('hand_over')}}'>
+        <i class='fa fa-mail-forward'></i>
+        {{jed "Hand Over"/}}
+      </a>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' href='{{>url('edit')}}'>
+              <i class='fa fa-edit'></i>
+              {{jed "Edit"/}}
+            </a>
+          </li>
+          <li>
+            <a class='dropdown-item' href='mailto:{{>email}}'>
+              <i class='fa fa-envelope'></i>
+              {{jed "E-Mail"/}}
+            </a>
+          </li>
+        </ul>
+      </div>
+      {{else}}
+      <a class='button white' href='{{>url('edit')}}'>
+        {{jed "Edit"/}}
+      </a>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' href='mailto:{{>email}}'>
+              <i class='fa fa-envelope'></i>
+              {{jed "E-Mail"/}}
+            </a>
+          </li>
+          {{if !~currentInventoryPool}}
+          <li>
+            <a class='dropdown-item red' data-method='delete' href='{{>url()}}'>
+              <i class='fa fa-trash'></i>
+              {{jed "Delete"/}}
+            </a>
+          </li>
+          {{/if}}
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

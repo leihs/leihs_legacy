@@ -1,0 +1,71 @@
+<div class='line row focus-hover-thin' data-id='{{>id}}' data-is_package='{{>is_package}}' data-type='software'>
+  <div class='col1of5 line-col'>
+    <div class='row'>
+      <div class='col1of2'>
+        <button class='button inset small width-full' data-type='inventory-expander' title='{{if is_package}}{{jed 'Packages'/}}{{else}}{{jed 'Items'/}}{{/if}}'>
+          {{if licenses().count()>0}}
+          <i class='arrow right'></i>
+          {{/if}}
+          <span>{{>licenses().count()}}</span>
+        </button>
+      </div>
+      <div class='col1of2 text-align-center height-xxs'>
+        <div class='table'>
+          <div class='table-row'>
+            <div class='table-cell vertical-align-middle'>
+              <img class='max-width-xxs max-height-xxs' src='/models/{{>id}}/image_thumb'>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col2of5 line-col text-align-left'>
+    {{if is_package}}
+    <div class='grey-text'>{{jed 'Package'/}}</div>
+    {{/if}}
+    <strong>
+      {{> name()}}
+    </strong>
+  </div>
+  <div class='col1of5 line-col text-align-center'>
+    <span title='{{jed 'in stock'/}}'>{{> availability().in_stock}}</span>
+    /
+    <span title='{{jed 'rentable'/}}'>{{> availability().total_rentable}}</span>
+  </div>
+  <div class='col1of5 line-col line-actions padding-right-xs'>
+    {{if ~accessRight.atLeastRole(~currentUserRole, "lending_manager") }}
+    <div class='multibutton width-full text-align-right'>
+      <a class='button white text-ellipsis col4of5 negative-margin-right-xxs' href='{{>url('edit')}}' title='{{jed 'Edit Software'/}}'>
+        {{jed "Edit Software"/}}
+      </a>
+      <div class='dropdown-holder inline-block col1of5'>
+        <div class='button white dropdown-toggle width-full no-padding text-align-center'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' data-model-id='{{>id}}' data-open-time-line>
+              <i class='fa fa-align-left'></i>
+              {{jed "Timeline"/}}
+            </a>
+          </li>
+          {{if licenses().count() == 0}}
+          <li>
+            <a class='dropdown-item red' data-method='delete' href='{{>url()}}'>
+              <i class='fa fa-trash'></i>
+              {{jed "Delete"/}}
+            </a>
+          </li>
+          {{/if}}
+        </ul>
+      </div>
+    </div>
+    {{else}}
+    <a class='button white text-ellipsis' data-model-id='{{>id}}' data-open-time-line>
+      <i class='fa fa-align-left'></i>
+      {{jed "Timeline"/}}
+    </a>
+    {{/if}}
+  </div>
+</div>

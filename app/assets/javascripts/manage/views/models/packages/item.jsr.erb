@@ -1,0 +1,15 @@
+<div class='row emboss padding-bottom-xxs margin-bottom-xxs' data-id='{{>id}}' data-new data-type='inline-entry'>
+  <div class='row padding-inset-xxs'>
+    <div class='col1of4 padding-left-s padding-top-xs'>
+      <strong class='font-size-m inline-block'>
+        {{>inventory_code}}
+      </strong>
+    </div>
+    <div class='col2of4 padding-top-xs'>
+      {{>model().name()}}
+    </div>
+    <div class='col1of4 text-align-right'>
+      <button class='button small inset' data-remove type='button'><%= _('Remove') %></button>
+    </div>
+  </div>
+</div>

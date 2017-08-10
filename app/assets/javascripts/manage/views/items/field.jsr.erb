@@ -1,0 +1,65 @@
+<div id='{{>~field.id}}'>
+  <div class='{{if ~fieldColor}}{{>~fieldColor}} {{/if}}{{if ~field.hidden}}hidden {{/if}}field row emboss padding-inset-xs margin-vertical-xxs margin-right-xs' data-editable='{{>~field.isEditable(~itemData)}}' data-id='{{>~field.id}}' data-required='{{>~field.required}}' data-type='field'>
+    <div class='row'>
+      <div class='col1of2 padding-vertical-xs' data-type='key'>
+        {{if !~field.visibility_dependency_field_id && (~removeable || (~hideable && !~field.required) )}}
+        <a class='font-size-m link grey padding-inset-xs' data-placement='top' data-toggle='tooltip' data-type='remove-field' title='{{jed 'Hide this field from all item forms'/}}'>
+          <i class='fa fa-times-circle'></i>
+        </a>
+        {{/if}}
+        <strong class='font-size-m inline-block'>
+          {{>~field.getLabel()}}
+          {{if ~field.required}}*{{/if}}
+        </strong>
+      </div>
+      <div class='col1of2' data-type='value'>
+        {{if (~writeable && !~itemData) || (~writeable && ~field.isEditable(~itemData))}}
+        {{include tmpl="manage/views/items/fields/writeable/"+~field.type/}}
+        {{else}}
+        <div class='padding-vertical-xs font-size-m' data-value='{{>~field.getValue(~itemData, ~field.attribute)}}'>
+          {{include tmpl="manage/views/items/fields/readonly/"+~field.type/}}
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{if ~field.id == 'inventory_code' && ~itemData && !~itemData.created_at}}
+    <div class='row text-align-right' id='switch'>
+      <button class='button small green' data-inventory_code='{{>~itemData.inventory_code}}'>
+        {{jed 'last used +1'/}}
+      </button>
+      <button class='button small white' data-inventory_code='{{>~itemData.lowest_proposed_inventory_code}}'>
+        {{jed 'fill up gaps'/}}
+      </button>
+      <button class='button small white' data-inventory_code='{{>~itemData.highest_proposed_inventory_code}}'>
+        {{jed 'assign highest available'/}}
+      </button>
+    </div>
+    {{/if}}
+    {{if ~field.id == 'attachments'}}
+    <div class='list-of-lines even padding-bottom-xxs'>
+      {{if ~writeable && ~field.isEditable(~itemData)}}
+      {{partial 'manage/views/items/fields/writeable/partials/uploaded_attachment' ~itemData.attachments/}}
+      {{else}}
+      {{partial 'manage/views/items/fields/readonly/partials/uploaded_attachment' ~itemData.attachments/}}
+      {{/if}}
+    </div>
+    {{/if}}
+  </div>
+</div>
+<script>
+  (function() {
+    $(document).ready(function() {
+      if (!window.defined_once) {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('body').on('click', '#switch button[data-inventory_code]', function() {
+          $('input[name="item[inventory_code]"]').val($(this).data('inventory_code'));
+          $('#switch button[data-inventory_code]').removeClass('green').addClass('white');
+          $(this).removeClass('white').addClass('green');
+          return false;
+        });
+        return window.defined_once = true;
+      }
+    });
+  
+  }).call(this);
+</script>

@@ -1,0 +1,44 @@
+<div class='line row focus-hover-thin' data-id='{{>id}}' data-is_package='{{>is_package}}' data-type='model'>
+  <div class='col1of10 line-col text-align-center no-padding'>
+    <div class='table'>
+      <div class='table-row'>
+        <div class='table-cell vertical-align-middle'>
+          <img class='max-width-xxs max-height-xxs' src='/models/{{>id}}/image_thumb'>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col4of10 line-col text-align-left'>
+    {{if is_package}}
+    <div class='grey-text'>{{jed 'Package'/}}</div>
+    {{/if}}
+    <strong>
+      {{> name()}}
+    </strong>
+  </div>
+  <div class='col3of10 line-col text-align-center'>
+    <span title='{{jed 'in stock'/}}'>{{> availability().in_stock}}</span>
+    /
+    <span title='{{jed 'rentable'/}}'>{{> availability().total_rentable}}</span>
+  </div>
+  <div class='col2of8 line-col line-actions padding-right-xs'>
+    <div class='multibutton width-full text-align-right'>
+      <a class='button white text-ellipsis col4of5 negative-margin-right-xxs' href='{{>url('edit')}}' title='{{jed 'Edit Software'/}}'>
+        {{jed "Edit Software"/}}
+      </a>
+      <div class='dropdown-holder inline-block col1of5'>
+        <div class='button white dropdown-toggle width-full no-padding text-align-center'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' data-model-id='{{>id}}' data-open-time-line>
+              <i class='fa fa-align-left'></i>
+              {{jed "Timeline"/}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

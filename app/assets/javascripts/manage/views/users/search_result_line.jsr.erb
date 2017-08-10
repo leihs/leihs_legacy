@@ -1,0 +1,52 @@
+<div class='row line'>
+  <div class='col2of8 line-col'>
+    <strong data-address='{{>address}}' data-badge_id='{{>badge_id}}' data-city='{{>city}}' data-email='{{>email}}' data-firstname='{{>firstname}}' data-id='{{>id}}' data-image_url='{{>image_url}}' data-lastname='{{>lastname}}' data-phone='{{>phone}}' data-type='user-cell' data-zip='{{>zip}}'>
+      {{>name()}}
+      {{if isSuspended()}}
+      <span class='darkred-text'>{{jed "Suspended"/}}!</span>
+      {{/if}}
+    </strong>
+  </div>
+  <div class='col2of8 line-col text-align-left'>
+    {{>city}}
+  </div>
+  <div class='col1of8 line-col text-align-left'>
+    {{if phone}}
+    <div class='row grey-text'>{{jed 'Phone'/}}</div>
+    {{>phone}}
+    {{/if}}
+  </div>
+  <div class='col1of8 line-col text-align-left'>
+    {{if badge_id}}
+    <div class='row grey-text'>{{jed 'Badge'/}}</div>
+    {{>badge_id}}
+    {{/if}}
+  </div>
+  <div class='col2of8 line-col line-actions'>
+    <div class='multibutton'>
+      <a class='button white' href='{{>url('hand_over')}}'>
+        <i class='fa fa-mail-forward'></i>
+        {{jed "Hand Over"/}}
+      </a>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' href='{{>url('edit')}}'>
+              <i class='fa fa-edit'></i>
+              {{jed "Edit"/}}
+            </a>
+          </li>
+          <li>
+            <a class='dropdown-item' href='mailto:{{>email}}'>
+              <i class='fa fa-envelope'></i>
+              {{jed "E-Mail"/}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

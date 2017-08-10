@@ -1,0 +1,44 @@
+<div class='row line' data-ids='{{JSON ids/}}'>
+  {{if !available()}}
+  <div class='line-info red' title='<%= _('Not available') %>'></div>
+  {{/if}}
+  <div class='line-col col1of9 padding-left-l text-align-center'>
+    <img class='max-height-xxs-alt max-width-xs' src='/models/{{>model_id}}/image_thumb'>
+  </div>
+  <div class='line-col col4of9 text-align-left'>
+    <div class='col1of10 text-align-right padding-right-s'>
+      {{if subreservations}}
+      {{sum subreservations "quantity"/}}
+      {{else}}
+      {{> quantity}}
+      {{/if}}
+      x
+    </div>
+    <strong class='col6of10 text-ellipsis' title='{{>model().name()}}'>{{>model().name()}}</strong>
+    <strong class='col2of10 text-ellipsis padding-left-m' title='{{>model().manufacturer}}'>{{>model().manufacturer}}</strong>
+  </div>
+  <div class='line-col col2of9 text-align-left'>
+    {{interval start_date end_date/}}
+    {{jed "until"/}}
+    {{localize end_date/}}
+  </div>
+  <div class='line-col line-actions col2of9 padding-right-l'>
+    <div class='multibutton'>
+      <button class='button white' data-change-order-lines data-end-date='{{>end_date}}' data-ids='{{JSON ids/}}' data-model-id='{{>model_id}}' data-start-date='{{>start_date}}'>
+        <i class='fa fa-calendar'></i>
+        {{jed "Change entry"/}}
+      </button>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <span class='arrow down'></span>
+        </div>
+        <div class='dropdown right'>
+          <a class='dropdown-item red' data-confirm='{{jed 'Delete'/}}' data-method='delete' href='/borrow/order/remove_reservations?{{param ids 'line_ids'/}}'>
+            <i class='fa fa-trash'></i>
+            {{jed 'Delete'/}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

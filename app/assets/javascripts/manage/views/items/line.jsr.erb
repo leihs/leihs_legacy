@@ -1,0 +1,36 @@
+<div class='line row focus-hover-thin{{if !~currentInventoryPool.isOwnerOrResponsibleFor(#view.data)}} grayed-out{{/if}}' data-id='{{>id}}' data-type='item'>
+  <div class='col1of8 line-col'>
+    <strong>{{>inventory_code}}</strong>
+  </div>
+  <div class='col3of8 line-col text-align-left'>
+    {{>model().name()}}
+    {{if ~currentInventoryPool.isOwnerOrResponsibleFor(#view.data) }}
+    <strong class='block darkred-text'>{{>getProblems()}}</strong>
+    {{/if}}
+  </div>
+  <div class='col2of8 line-col text-align-left padding-right-s'>
+    {{>current_location}}
+  </div>
+  <div class='col2of8 line-col line-actions padding-right-xs'>
+    {{if ~currentInventoryPool.isOwnerOrResponsibleFor(#view.data) && ~accessRight.atLeastRole(~currentUserRole, "lending_manager") }}
+    <div class='multibutton'>
+      <a class='button white' href='{{>url('edit')}}' title='{{jed 'Edit Item'/}}'>
+        {{jed "Edit Item"/}}
+      </a>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' href='{{>url('copy')}}'>
+              <i class='fa fa-copy'></i>
+              {{jed "Copy Item"/}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>

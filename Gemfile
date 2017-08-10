@@ -22,7 +22,6 @@ gem 'font-awesome-sass', '~> 4.4' # NOTE font not found using gem 'rails-assets-
 gem 'geocoder', '~> 1.1'
 gem 'gettext_i18n_rails', '~> 1.0'
 gem 'haml', '~> 4.0'
-gem 'haml_assets', '~> 0.2'
 gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'jruby-openssl', platform: :jruby
 gem 'json', '~> 1.8'

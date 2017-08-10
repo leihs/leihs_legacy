@@ -1,0 +1,12 @@
+<div class='padding-inset-xxs'>
+  {{for ~field.values}}
+  <label class='padding-inset-xxs'>
+    {{if ~field.getValue(~itemData, ~field.attribute, true) == value}}
+    <input checked name='{{>~field.getFormName()}}' type='radio' value='{{>value}}'>
+    {{else}}
+    <input name='{{>~field.getFormName()}}' type='radio' value='{{>value}}'>
+    {{/if}}
+    <span class='font-size-m'>{{jed label/}}</span>
+  </label>
+  {{/for}}
+</div>

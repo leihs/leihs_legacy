@@ -1,0 +1,6 @@
+{{for data}}
+<input name='model[packages][{{>~uid}}]{{>name}}' type='hidden' value='{{>value}}'>
+{{/for}}
+{{for children}}
+<input name='model[packages][{{>~uid}}][children][id][]' type='hidden' value='{{>id}}'>
+{{/for}}

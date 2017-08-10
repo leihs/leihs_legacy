@@ -1,0 +1,16 @@
+<div class='line row focus-hover-thin' data-id='{{>id}}' data-type='option'>
+  <div class='col1of5 line-col text-align-center'>{{>inventory_code}}</div>
+  <div class='col2of5 line-col text-align-left'>
+    <strong>{{> name()}}</strong>
+  </div>
+  <div class='col1of5 line-col text-align-center'>
+    {{money price/}}
+  </div>
+  <div class='col1of5 line-col line-actions padding-right-xs'>
+    {{if ~accessRight.atLeastRole(~currentUserRole, "lending_manager") }}
+    <a class='button white text-ellipsis' href='{{>url('edit')}}'>
+      {{jed "Edit Option"/}}
+    </a>
+    {{/if}}
+  </div>
+</div>

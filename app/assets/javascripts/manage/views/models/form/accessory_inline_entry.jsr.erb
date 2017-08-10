@@ -1,0 +1,13 @@
+<div class='row line font-size-xs focus-hover-thin' data-new data-type='inline-entry'>
+  <input name='model[accessories_attributes][{{>~uid}}][inventory_pool_toggle]' type='hidden' value='0,{{current_inventory_pool_id/}}'>
+  <label class='line-col col1of10 text-align-center no-padding'>
+    <input autocomplete='off' checked name='model[accessories_attributes][{{>~uid}}][inventory_pool_toggle]' type='checkbox' value='1,{{current_inventory_pool_id/}}'>
+  </label>
+  <div class='line-col col6of10 text-align-left'>
+    {{>name}}
+    <input name='model[accessories_attributes][{{>~uid}}][name]' type='hidden' value='{{>name}}'>
+  </div>
+  <div class='line-col col3of10 text-align-right'>
+    <button class='button small inset' data-remove><%= _('Remove') %></button>
+  </div>
+</div>

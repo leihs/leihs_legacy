@@ -1,0 +1,5 @@
+{{if ~field.getValue(~itemData, ~field.attribute, true)}}
+<input autocomplete='off' class='width-full' name='{{>~field.getFormName()}}' type='text' value='{{>~field.getValue(~itemData, ~field.attribute, true)}}'>
+{{else}}
+<input autocomplete='off' class='width-full' name='{{>~field.getFormName()}}' type='text'>
+{{/if}}

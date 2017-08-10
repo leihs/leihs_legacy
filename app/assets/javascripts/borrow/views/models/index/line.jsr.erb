@@ -1,0 +1,32 @@
+<a class='row line height-xs focus-hover-thin{{if availableQuantityForInventoryPools}}{{if availableQuantityForInventoryPools(~inventory_pool_ids) <= 0}} grayed-out{{/if}}{{/if}}' data-id='{{>id}}' href='/borrow/models/{{>id}}'>
+  <div class='line-col col1of6 no-padding'>
+    <div class='padding-inset-xxs text-align-center'>
+      {{if id}}
+      <img class='max-height-xxs-alt max-width-xs' src='/models/{{>id}}/image_thumb'>
+      {{else}}
+      <div class='padding-inset-s'>
+        <img class='margin-horziontal-auto max-height-xxs-alt max-width-micro' src='<%= image_path('loading.gif') %>'>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  <div class='line-col col3of6 text-align-left'>
+    {{if id}}
+    {{>name()}}
+    {{/if}}
+  </div>
+  <div class='line-col col1of6'>
+    {{if id}}
+    {{>manufacturer}}
+    {{/if}}
+  </div>
+  <div class='line-col col1of6'>
+    {{if id}}
+    <button class='button small focus-hover inset' data-create-order-line data-model-id='{{>id}}' title='Add to order'>
+      <div class='padding-horizontal-xxs'>
+        <i class='fa fa-plus icon-xxs'></i>
+      </div>
+    </button>
+    {{/if}}
+  </div>
+</a>

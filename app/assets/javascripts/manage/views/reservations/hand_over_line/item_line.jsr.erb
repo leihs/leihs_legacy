@@ -1,0 +1,87 @@
+<div class='line light row focus-hover-thin' data-id='{{>id}}' data-line-type='item_line'>
+  <div class='{{if ~renderAvailability && anyProblems()}}line-info red{{/if}}'></div>
+  <div class='line-col padding-left-xs'>
+    <div class='row'>
+      <div class='col1of4'>
+        <label class='padding-inset-s'>
+          <input autocomplete='off' data-select-line type='checkbox'>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class='col2of10 line-col text-align-center'>
+    <div class='row'>
+      {{if item()}}
+      {{partial 'manage/views/reservations/hand_over_line/assigned_item' #view.data/}}
+      {{else}}
+      {{partial 'manage/views/reservations/hand_over_line/unassigned_item' #view.data/}}
+      {{/if}}
+    </div>
+  </div>
+  <div class='col4of10 line-col text-align-left'>
+    <strong data-id='{{>model().id}}' data-type='model-cell'>
+      {{>model().name()}}
+    </strong>
+    {{if item() && item().children().all().length}}
+    <ul style='font-size: 0.8em; list-style-type: disc; margin-left: 1.5em;'>
+      {{for item().children().all()}}
+      <li>
+        {{>to_s}}
+      </li>
+      {{/for}}
+    </ul>
+    {{/if}}
+    {{if model().accessory_names && model().accessory_names.length}}
+    <br>
+    <span>{{>model().accessory_names}}</span>
+    {{/if}}
+    {{if model().hand_over_note}}
+    <br>
+    <span class='grey-text'>{{>model().hand_over_note}}</span>
+    {{/if}}
+  </div>
+  <div class='col1of10 line-col text-align-center'>
+    {{if purpose_id}}
+    <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>purpose().description}}'>
+      <i class='fa fa-comment grey'></i>
+    </div>
+    {{/if}}
+  </div>
+  <div class='col1of10 line-col text-align-center'>
+    {{if ~renderAvailability && anyProblems()}}
+    <div class='emboss red padding-inset-xxs-alt text-align-center tooltip' data-tooltip-data='{{JSON getProblems()/}}' data-tooltip-template='manage/views/reservations/problems_tooltip'>
+      <strong>{{>getProblems().length}}</strong>
+    </div>
+    {{/if}}
+  </div>
+  <div class='col2of10 line-col line-actions padding-left-xxs padding-right-s'>
+    <div class='multibutton'>
+      <button class='button white text-ellipsis' data-edit-lines data-ids='{{JSON [id]/}}'>{{jed "Change entry"/}}</button>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' data-model-id='{{>model().id}}' data-open-time-line>
+              <i class='fa fa-align-left'></i>
+              {{jed "Timeline"/}}
+            </a>
+          </li>
+          <li>
+            <a class='dropdown-item' data-swap-model>
+              <i class='fa fa-exchange'></i>
+              {{jed "Swap Model"/}}
+            </a>
+          </li>
+          <li>
+            <a class='dropdown-item red' data-destroy-line>
+              <i class='fa fa-trash'></i>
+              {{jed "Delete"/}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

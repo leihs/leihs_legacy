@@ -1,0 +1,60 @@
+<div class='modal fade ui-modal medium' role='dialog' tabindex='-1'>
+  <div class='modal-header row'>
+    <div class='col3of5'>
+      <h2 class='headline-l'>{{jed itemsCount "Take back of %s item" "Take back of %s items" itemsCount/}}</h2>
+      <h3 class='headline-m light'>
+        {{>user.firstname}} {{>user.lastname}}
+      </h3>
+    </div>
+    <div class='col2of5 text-align-right'>
+      <div class='modal-close'>{{jed "Cancel"/}}</div>
+      <button class='button green' data-take-back>
+        <i class='fa fa-mail-reply'></i>
+        {{jed "Take Back"/}}
+      </button>
+    </div>
+  </div>
+  <div class='row margin-top-s padding-horizontal-l'>
+    <div class='modal-body'>
+      {{for groupedLines}}
+      <div class='padding-bottom-m margin-bottom-m no-last-child-margin'>
+        <div class='row margin-bottom-s'>
+          <div class='col1of2'>
+            <p>
+              {{date start_date/}}
+              -
+              {{date end_date/}}
+            </p>
+          </div>
+          <div class='col1of2 text-align-right'>
+            <strong>{{diffDatesInDays start_date end_date/}}</strong>
+          </div>
+        </div>
+        {{for reservations}}
+        <div class='row'>
+          <div class='col1of8 text-align-center'>
+            <div class='paragraph-s'>
+              {{if ~returnedQuantity[id]}}
+              {{> ~returnedQuantity[id]}}/{{>quantity}}
+              {{else}}
+              {{if subreservations}}
+              {{sum subreservations "quantity"/}}
+              {{else}}
+              {{> quantity}}
+              {{/if}}
+              {{/if}}
+            </div>
+          </div>
+          <div class='col7of8'>
+            <div class='paragraph-s'>
+              <strong>{{>model().name()}}</strong>
+            </div>
+          </div>
+        </div>
+        {{/for}}
+      </div>
+      {{/for}}
+    </div>
+  </div>
+  <div class='modal-footer'></div>
+</div>

@@ -1,0 +1,13 @@
+<div class='padding-inset-xxs'>
+  {{:~setvar("values", ~field.getValue(~itemData, ~field.attribute, true))}}
+  {{for ~field.values}}
+  <label class='padding-inset-xxs'>
+    {{if ~getvar("values") != null && ~getvar("values").indexOf(value) >= 0}}
+    <input checked name='{{>~field.getFormName(~field.attribute, ~field.form_name, 'asArray')}}' type='checkbox' value='{{>value}}'>
+    {{else}}
+    <input name='{{>~field.getFormName(~field.attribute, ~field.form_name, 'asArray')}}' type='checkbox' value='{{>value}}'>
+    {{/if}}
+    <span class='font-size-m'>{{jed label/}}</span>
+  </label>
+  {{/for}}
+</div>

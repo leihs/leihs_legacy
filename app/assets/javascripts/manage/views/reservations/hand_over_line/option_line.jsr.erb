@@ -1,0 +1,63 @@
+<div class='line light row focus-hover-thin' data-id='{{>id}}' data-line-type='option_line'>
+  <div class='line-info{{if ~renderAvailability && anyProblems()}} red{{/if}}'></div>
+  <div class='line-col padding-left-xs'>
+    <div class='row'>
+      <div class='col1of4'>
+        <label class='padding-inset-s'>
+          <input autocomplete='off' data-select-line type='checkbox'>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class='col1of10 line-col'>
+    <input class='small width-full text-align-center' data-line-quantity type='text' value='{{>quantity}}'>
+  </div>
+  <div class='col1of10 line-col text-align-center'>
+    <span class='grey-text'>{{>option().inventory_code}}</span>
+  </div>
+  <div class='col4of10 line-col text-align-left'>
+    <strong>{{>option().name()}}</strong>
+  </div>
+  <div class='col1of10 line-col text-align-center'>
+    {{if purpose_id}}
+    <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>purpose().description}}'>
+      <i class='fa fa-comment grey'></i>
+    </div>
+    {{/if}}
+  </div>
+  <div class='col1of10 line-col text-align-center'>
+    {{if ~renderAvailability && anyProblems()}}
+    <div class='emboss red padding-inset-xxs-alt text-align-center tooltip' data-tooltip-data='{{JSON getProblems()/}}' data-tooltip-template='manage/views/reservations/problems_tooltip'>
+      <strong>{{>getProblems().length}}</strong>
+    </div>
+    {{else ~renderAvailability && !anyProblems()}}
+    <div class='padding-inset-xxs-alt text-align-center'>
+      <i class='fa fa-check'></i>
+    </div>
+    {{/if}}
+  </div>
+  <div class='col2of10 line-col line-actions padding-left-xxs padding-right-s'>
+    <div class='multibutton'>
+      <button class='button white text-ellipsis' data-edit-lines data-ids='{{JSON [id]/}}'>{{jed 'Change entry'/}}</button>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' data-model-id='{{>model().id}}' data-open-time-line>
+              <i class='fa fa-align-left'></i>
+              {{jed "Timeline"/}}
+            </a>
+          </li>
+          <li>
+            <a class='dropdown-item red' data-destroy-line>
+              <i class='fa fa-trash'></i>
+              {{jed "Delete"/}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

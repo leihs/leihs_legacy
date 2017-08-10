@@ -1,0 +1,13 @@
+<div class='row line font-size-xs focus-hover-thin' data-type='inline-entry'>
+  <div class='line-col col1of10 text-align-center'><%= _('Quantity') %>:</div>
+  <div class='line-col col2of10'>
+    <input class='width-full small text-align-center' data-quantity-allocation='true' name='{{>field.getFormName()}}[][quantity]' type='text' value='{{if allocation}}{{>allocation.quantity}}{{/if}}'>
+  </div>
+  <div class='line-col col1of10 text-align-center'><%= _('Location') %>:</div>
+  <div class='line-col col5of10'>
+    <input class='width-full small text-align-center' data-room-allocation='true' name='{{>field.getFormName()}}[][room]' type='text' value='{{if allocation}}{{>allocation.room}}{{/if}}'>
+  </div>
+  <div class='line-col col1of10'>
+    <button class='button inset small' data-remove><%= _('Remove') %></button>
+  </div>
+</div>

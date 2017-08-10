@@ -1,0 +1,52 @@
+<div class='row line' data-model_link_id='{{>model_link_id}}'>
+  <input name='reservations[][model_id]' type='hidden' value='{{>model_id}}'>
+  <input name='reservations[][quantity]' type='hidden' value='{{>quantity}}'>
+  <input name='reservations[][start_date]' type='hidden' value='{{>start_date}}'>
+  <input name='reservations[][end_date]' type='hidden' value='{{>end_date}}'>
+  <input name='reservations[][inventory_pool_id]' type='hidden' value='{{>inventory_pool_id}}'>
+  {{if !available}}
+  <div class='line-info red' title='{{jed 'Not available'/}}'></div>
+  {{/if}}
+  <div class='line-col col1of9 padding-left-s text-align-center'>
+    <img class='max-height-xxs-alt max-width-xs' src='/models/{{>model_id}}/image_thumb'>
+  </div>
+  <div class='line-col col5of9 text-align-left'>
+    <div class='col1of10 text-align-right padding-right-s'>
+      {{>quantity}}
+      x
+    </div>
+    <strong class='col6of10 text-ellipsis' title='{{>model().name()}}'>{{>model().name()}}</strong>
+    <strong class='col2of10 text-ellipsis padding-left-m' title='{{>model().manufacturer}}'>{{>model().manufacturer}}</strong>
+  </div>
+  <div class='line-col col1of9 text-align-left'>
+    {{interval start_date end_date/}}
+    {{jed "until"/}}
+    {{localize end_date/}}
+  </div>
+  <div class='line-col line-actions col2of9'>
+    {{if unborrowable}}
+    <button class='button red' data-destroy-template-line>
+      <i class='fa fa-trash'></i>
+      {{jed "Delete" /}}
+    </button>
+    {{else}}
+    <div class='multibutton'>
+      <button class='button white' data-change-template-line data-end-date='{{> end_date}}' data-model-id='{{> model_id}}' data-quantity='{{> quantity}}' data-start-date='{{> start_date}}'>
+        <i class='fa fa-calendar'></i>
+        {{jed "Change"/}}
+      </button>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <span class='arrow down'></span>
+        </div>
+        <div class='dropdown right'>
+          <a class='dropdown-item red' data-destroy-template-line>
+            <i class='fa fa-trash'></i>
+            {{jed "Delete"/}}
+          </a>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>

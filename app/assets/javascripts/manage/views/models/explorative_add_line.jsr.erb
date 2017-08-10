@@ -1,0 +1,30 @@
+<div class='line row focus-hover-thin{{if availability().maxAvailableForGroups(~startDate, ~endDate, ~groupIds) <= 0}} grayed-out{{/if}}' data-id='{{>id}}' data-type='model'>
+  <div class='col1of10 line-col no-padding text-align-center'>
+    <div class='table'>
+      <div class='table-row'>
+        <div class='table-cell vertical-align-middle'>
+          <img class='max-width-xxs max-height-xxs' src='/models/{{>id}}/image_thumb'>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col5of10 line-col text-align-left'>
+    {{if is_package}}
+    <div class='grey-text'>{{jed 'Package'/}}</div>
+    {{/if}}
+    <strong>
+      {{> name()}}
+    </strong>
+  </div>
+  <div class='col2of10 line-col no-padding text-align-center'>
+    <span title='{{jed 'Available for borrower'/}}'>{{>availability().maxAvailableForGroups(~startDate, ~endDate, ~groupIds)}}</span>
+    <span title='{{jed 'Available in total'/}}'>({{>availability().maxAvailableInTotal(~startDate, ~endDate)}})</span>
+    /
+    <span title='{{jed 'Borrowable items'/}}'>{{>availability().total_rentable}}</span>
+  </div>
+  <div class='col2of10 line-col line-actions padding-right-s text-align-center'>
+    <a class='button white' data-type='select'>
+      {{jed "Select"/}}
+    </a>
+  </div>
+</div>

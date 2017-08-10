@@ -1,0 +1,14 @@
+<div class='row line font-size-xs focus-hover-thin' data-type='inline-entry'>
+  <input name='item[attachments_attributes][{{>id}}][id]' type='hidden' value='{{>id}}'>
+  <input name='item[attachments_attributes][{{>id}}][_destroy]' type='hidden'>
+  <div class='line-col col7of10 text-align-left'>
+    <a class='blue' href='{{>public_filename}}' target='_blank'>
+      {{>filename}}
+    </a>
+  </div>
+  <div class='line-col col3of10 text-align-right'>
+    <button class='button small inset' data-remove type='button'>
+      {{jed "Remove"/}}
+    </button>
+  </div>
+</div>

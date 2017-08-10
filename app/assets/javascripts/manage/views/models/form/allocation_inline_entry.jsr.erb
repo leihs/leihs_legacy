@@ -1,0 +1,13 @@
+<div class='row line font-size-xs focus-hover-thin' data-new data-type='inline-entry'>
+  <input name='model[partitions_attributes][{{>~uid}}][inventory_pool_id]' type='hidden' value='{{current_inventory_pool_id/}}'>
+  <input name='model[partitions_attributes][{{>~uid}}][group_id]' type='hidden' value='{{>id}}'>
+  <div class='line-col col3of5 text-align-left' data-name='{{>name}}'>
+    {{>name}}
+  </div>
+  <div class='line-col col1of5 text-align-center'>
+    <input autocomplete='off' class='width-xs small text-align-center' name='model[partitions_attributes][{{>~uid}}][quantity]' type='text' value='1'>
+  </div>
+  <div class='line-col col1of5 text-align-right'>
+    <button class='button small inset' data-remove><%= _('Remove') %></button>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class='row line font-size-xs' data-new data-type='inline-entry'>
+  <input name='template[model_links_attributes][][model_id]' type='hidden' value='{{>id}}'>
+  <div class='line-col col2of6 no-padding'>
+    <div class='line-col col1of2' data-quantities>
+      <input autocomplete='off' class='width-full small text-align-center' max='{{>availability().total_rentable}}' min='1' name='template[model_links_attributes][][quantity]' type='text' value='1'>
+    </div>
+    <div class='line-col col1of2 padding-left-xs text-align-left' data-quantities>
+      / {{>availability().total_rentable}}
+    </div>
+  </div>
+  <div class='line-col col3of6 text-align-left' data-model-name>
+    {{>name()}}
+  </div>
+  <div class='line-col col1of6 text-align-right'>
+    <button class='button inset small' data-remove>{{jed "Remove"/}}</button>
+  </div>
+</div>

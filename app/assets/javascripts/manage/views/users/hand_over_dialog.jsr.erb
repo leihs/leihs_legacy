@@ -1,0 +1,92 @@
+<div class='modal fade ui-modal medium' role='dialog' tabindex='-1'>
+  <div class='modal-header row'>
+    <div class='col3of5'>
+      <h2 class='headline-l'>{{jed itemsCount "Hand over of %s item" "Hand over of %s items" itemsCount/}}</h2>
+      <h3 class='headline-m light'>
+        {{>user.firstname}} {{>user.lastname}}
+      </h3>
+    </div>
+    <div class='col2of5 text-align-right'>
+      <div class='modal-close'>{{jed "Cancel"/}}</div>
+      <button class='button green' data-hand-over>
+        <i class='fa fa-mail-forward'></i>
+        {{jed "Hand Over"/}}
+      </button>
+    </div>
+  </div>
+  <div class='row margin-top-s padding-horizontal-l'>
+    <div class='separated-bottom padding-bottom-m margin-bottom-m'>
+      <p class='emboss red padding-inset-s hidden paragraph-s margin-bottom-s' id='error'>
+        <strong></strong>
+      </p>
+      {{if user.isDelegation()}}
+      <div class='row margin-bottom-l'>
+        <div class='col1of3' id='contact-person'>
+          <input autocomplete='off' autofocus='autofocus' class='width-full' data-barcode-scanner-target data-prevent-barcode-scanner-submit id='user-id' placeholder='{{jed 'Contact person'/}} {{jed 'Name / ID'/}}' type='text'>
+          <div id='selected-user'></div>
+        </div>
+      </div>
+      {{/if}}
+      {{if purpose}}
+      <div class='row margin-bottom-s emboss padding-inset-s'>
+        <div class='col3of4'>
+          <p class='paragraph-s'>{{>purpose}}</p>
+        </div>
+        <div class='col1of4 text-align-right'>
+          {{if ~showAddPurpose}}
+          <button class='button inset' id='add-purpose'>{{jed 'Add Purpose'/}}</button>
+          {{/if}}
+        </div>
+      </div>
+      {{/if}}
+      <div class='{{if purpose}}hidden{{/if}}' id='purpose-input'>
+        <div class='row padding-bottom-s'>
+          <p>{{jed "Please provide a purpose..."/}}</p>
+        </div>
+        <textarea class='row height-xs' id='purpose' name='purpose'></textarea>
+      </div>
+    </div>
+    <div class='modal-body'>
+      {{for groupedLines}}
+      <div class='padding-bottom-m margin-bottom-m no-last-child-margin'>
+        <div class='row margin-bottom-s'>
+          <div class='col1of2'>
+            <p>
+              {{date start_date/}}
+              -
+              {{date end_date/}}
+            </p>
+          </div>
+          <div class='col1of2 text-align-right'>
+            <strong>{{diffDatesInDays start_date end_date/}}</strong>
+          </div>
+        </div>
+        {{for reservations}}
+        <div class='row'>
+          <div class='col1of8 text-align-center'>
+            <div class='paragraph-s'>
+              {{if subreservations}}
+              {{sum subreservations "quantity"/}}
+              {{else}}
+              {{> quantity}}
+              {{/if}}
+            </div>
+          </div>
+          <div class='col7of8'>
+            <div class='paragraph-s'>
+              <strong>{{>model().name()}}</strong>
+            </div>
+          </div>
+        </div>
+        {{/for}}
+      </div>
+      {{/for}}
+    </div>
+    <div class='row separated-top padding-top-m padding-bottom-m'>
+      <div class='col1of1 padding-bottom-s'>
+        <p>{{jed "Write a note... the note will be part of the contract"/}}</p>
+      </div>
+      <textarea class='col1of1 height-xs' id='note' name='note'>{{>~currentInventoryPool.default_contract_note}}</textarea>
+    </div>
+  </div>
+</div>

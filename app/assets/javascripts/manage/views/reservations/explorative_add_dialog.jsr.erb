@@ -1,0 +1,34 @@
+<div class='modal fade ui-modal medium' role='dialog' tabindex='-1'>
+  <div class='modal-header row padding-bottom-s'>
+    <div class='col4of5'>
+      <h2 class='headline-l'>{{jed 'Models'/}} {{jed 'by browsing categories'/}}</h2>
+      <h3 class='headline-m light'>({{date startDate/}} - {{date endDate/}})</h3>
+    </div>
+    <div class='col1of5 text-align-right'>
+      <div class='modal-close'>{{jed "Cancel"/}}</div>
+    </div>
+  </div>
+  <div class='modal-body separated-top'>
+    <div class='table'>
+      <div class='table-row'>
+        <div class='col1of4 table-cell separated-right padding-inset-m' id='categories'>
+          <div class='row padding-inset-s'>
+            <input autocomplete='off' class='small' id='category-search' placeholder='{{jed 'Search category'/}}' type='text'>
+          </div>
+          <div id='category-root'></div>
+          <div id='category-current'></div>
+          <div class='row padding-bottom-s' id='category-list'>
+            <div class='height-xs'></div>
+            <img class='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='<%= asset_path('loading.gif') %>'>
+          </div>
+        </div>
+        <div class='table-cell col3of4 list-of-lines even min-height-l' id='models'>
+          <div class='height-s'></div>
+          <img class='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='<%= asset_path('loading.gif') %>'>
+          <div class='height-s'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='modal-footer'></div>
+</div>

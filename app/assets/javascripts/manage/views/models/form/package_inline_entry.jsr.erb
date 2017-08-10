@@ -1,0 +1,20 @@
+<div class='row line font-size-xs focus-hover-thin' data-new data-type='inline-entry'>
+  {{for data}}
+  <input name='model[packages][{{>~uid}}]{{>name}}' type='hidden' value='{{>value}}'>
+  {{/for}}
+  {{for children}}
+  <input name='model[packages][{{>~uid}}][children][id][]' type='hidden' value='{{>id}}'>
+  {{/for}}
+  <div class='line-col col1of4 text-align-left'>
+    {{jed 'Prepackaged'/}}
+  </div>
+  <div class='line-col col1of4 text-align-left'>
+    <span class='grey-text'>{{jed 'not yet saved'/}}</span>
+  </div>
+  <div class='line-col col1of2 text-align-right'>
+    <button class='button small inset' data-remove title='<%= _('Remove') %>' type='button'>
+      <i class='fa fa-trash'></i>
+    </button>
+    <button class='button small inset' data-edit-package type='button'><%= _('Edit') %></button>
+  </div>
+</div>

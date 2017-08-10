@@ -1,0 +1,39 @@
+{{partial 'manage/views/users/cell' user() '{"grid":"col1of8"}'/}}
+<div class='col1of8 line-col'>{{diffToday created_at/}}</div>
+<div class='col1of8 line-col text-align-center' data-type='lines-cell'>{{include tmpl='manage/views/reservations/cell'/}}</div>
+<div class='col1of8 line-col'>
+  {{>getMaxRange()}}
+  {{jed getMaxRange() "day" "days"/}}
+</div>
+<div class='col2of8 line-col text-align-left'>{{include tmpl='manage/views/purposes/cell'/}}</div>
+<div class='col2of8 line-col line-actions'>
+  <div class='multibutton'>
+    <a class='button white text-ellipsis' data-order-approve>
+      <i class='fa fa-thumbs-up'></i>
+      {{if to_be_verified()}}
+      {{jed "Verify"/}} + {{jed "Approve"/}}
+      {{else}}
+      {{jed "Approve"/}}
+      {{/if}}
+    </a>
+    <div class='dropdown-holder inline-block'>
+      <div class='button white dropdown-toggle'>
+        <div class='arrow down'></div>
+      </div>
+      <ul class='dropdown right'>
+        <li>
+          <a class='dropdown-item' href='{{>editPath()}}'>
+            <i class='fa fa-edit'></i>
+            {{jed "Edit"/}}
+          </a>
+        </li>
+        <li>
+          <a class='dropdown-item red' data-order-reject>
+            <i class='fa fa-thumbs-down'></i>
+            {{jed "Reject"/}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

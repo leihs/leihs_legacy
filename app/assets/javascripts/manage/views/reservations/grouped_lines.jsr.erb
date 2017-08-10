@@ -1,0 +1,24 @@
+<div class='emboss deep padding-bottom-s margin-bottom-m' data-selected-lines-container>
+  <div class='row'>
+    <div class='col1of2 padding-vertical-s'>
+      <label class='padding-inset-s inline'>
+        <input autocomplete='off' data-select-lines type='checkbox'>
+      </label>
+      <p class='paragraph-s inline'>
+        {{day start_date/}}
+        {{date start_date/}}
+        -
+        {{day end_date/}}
+        {{date end_date/}}
+      </p>
+    </div>
+    <div class='col1of2 padding-inset-s text-align-right'>
+      <p class='paragraph-s inline'>
+        {{diffDatesInDays start_date end_date/}}
+      </p>
+    </div>
+  </div>
+  <div class='row'>
+    {{partial ~linePartial reservations #view.ctx/}}
+  </div>
+</div>

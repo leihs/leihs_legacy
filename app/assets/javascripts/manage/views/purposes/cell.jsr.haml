@@ -1,6 +1,0 @@
-{{if concatenatedPurposes().length > 60}}
-%span.tooltip{:title => "{{>concatenatedPurposes()}}", :"data-tooltip-template" => "manage/views/purposes/tooltip"}
-  {{truncate concatenatedPurposes() 60 "..."/}}
-{{else}}
-{{> concatenatedPurposes()}}
-{{/if}}

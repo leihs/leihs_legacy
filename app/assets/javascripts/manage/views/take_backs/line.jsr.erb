@@ -1,0 +1,53 @@
+<div class='line row focus-hover-thin' data-id='{{>id}}' data-type='take_back'>
+  {{if isOverdue()}}
+  <div class='line-info red'></div>
+  {{/if}}
+  {{partial 'manage/views/users/cell' user() '{"grid":"col1of5"}'/}}
+  <div class='col1of5 line-col'>
+    {{if isOverdue()}}
+    <strong>{{diffToday date/}}</strong>
+    {{else}}
+    {{diffToday date/}}
+    {{/if}}
+  </div>
+  <div class='col1of5 line-col text-align-center' data-type='lines-cell'>{{include tmpl='manage/views/reservations/cell'/}}</div>
+  {{if isOverdue()}}
+  <div class='col1of5 line-col latest-reminder-cell text-align-center' data-user-id='{{>user().id}}' data-visit-id='{{>id}}'>
+    {{jed "Latest reminder"/}}
+    <i class='fa fa-envelope-alt'></i>
+  </div>
+  {{else}}
+  <div class='col1of5 line-col text-align-center'>
+    {{>getMaxRange()}}
+    {{jed getMaxRange() "day" "days"/}}
+  </div>
+  {{/if}}
+  <div class='col1of5 line-col line-actions'>
+    {{if isOverdue()}}
+    <div class='multibutton'>
+      <a class='button white text-ellipsis' href='/manage/{{>inventory_pool_id}}/users/{{>user().id}}/take_back'>
+        <i class='fa fa-mail-reply'></i>
+        {{jed "Take Back"/}}
+      </a>
+      <div class='dropdown-holder inline-block'>
+        <div class='button white dropdown-toggle'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' data-send-takeback-reminder data-user-id='{{>user().id}}'>
+              <i class='fa fa-envelope'></i>
+              {{jed "Send reminder"/}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {{else}}
+    <a class='button white text-ellipsis' href='/manage/{{>inventory_pool_id}}/users/{{>user().id}}/take_back'>
+      <i class='fa fa-mail-reply'></i>
+      {{jed "Take Back"/}}
+    </a>
+    {{/if}}
+  </div>
+</div>

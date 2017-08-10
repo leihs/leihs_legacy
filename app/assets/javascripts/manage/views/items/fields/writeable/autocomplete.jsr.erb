@@ -1,0 +1,15 @@
+<label class='row'>
+  {{if ~field.extensible}}
+  <input data-type='extended-value' name='{{>~field.getExtendedKeyFormName()}}' type='hidden' value='{{>~field.getValue(~itemData, ~field.extended_key, true)}}'>
+  {{/if}}
+  {{if ~field.getValue(~itemData, ~field.attribute, true)}}
+  <input name='{{>~field.getFormName()}}' type='hidden' value='{{>~field.getValue(~itemData, ~field.attribute, true)}}'>
+  <input autocomplete='off' class='has-addon width-full' data-autocomplete_blur_on_select='true' data-autocomplete_data='{{stringify ~field.values/}}' data-autocomplete_display_attribute='label' data-autocomplete_element_tmpl='views/autocomplete/element' data-autocomplete_extended_key_target='{{>~field.getExtendedKeyFormName()}}' data-autocomplete_extensible='{{>~field.extensible}}' data-autocomplete_search_on_focus='true' data-autocomplete_value_target='{{>~field.getFormName()}}' data-type='autocomplete' placeholder='{{>~field.getLabel()}}' title='{{>~field.getLabel()}}' type='text' value='{{>~field.getValueLabel(~field.values, ~field.getValue(~itemData, ~field.attribute, true))}}'>
+  {{else}}
+  <input name='{{>~field.getFormName()}}' type='hidden'>
+  <input autocomplete='off' class='has-addon width-full' data-autocomplete_blur_on_select='true' data-autocomplete_data='{{stringify ~field.values/}}' data-autocomplete_display_attribute='label' data-autocomplete_element_tmpl='views/autocomplete/element' data-autocomplete_extended_key_target='{{>~field.getExtendedKeyFormName()}}' data-autocomplete_extensible='{{>~field.extensible}}' data-autocomplete_search_on_focus='true' data-autocomplete_value_target='{{>~field.getFormName()}}' data-type='autocomplete' placeholder='{{>~field.getLabel()}}' title='{{>~field.getLabel()}}' type='text'>
+  {{/if}}
+  <div class='addon transparent'>
+    <i class='arrow down'></i>
+  </div>
+</label>

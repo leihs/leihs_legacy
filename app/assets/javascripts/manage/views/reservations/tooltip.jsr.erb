@@ -1,0 +1,38 @@
+<div class='min-width-l'>
+  {{for groupedLinesByDateRange(true)}}
+  <div class='exclude-last-child padding-bottom-m margin-bottom-m no-last-child-margin'>
+    <div class='row margin-bottom-s'>
+      <div class='col1of2'>
+        <span>
+          {{date start_date/}}
+          -
+          {{date end_date/}}
+        </span>
+      </div>
+      <div class='col1of2 text-align-right'>
+        <strong>{{diffDatesInDays start_date end_date/}}</strong>
+      </div>
+    </div>
+    {{for reservations}}
+    <div class='row padding-top-xs'>
+      <div class='col1of8 text-align-center'>
+        <div class='paragraph-s line-height-s'>
+          {{if ~quantity}}
+          {{>~quantity}}
+          {{else subreservations}}
+          {{sum subreservations "quantity"/}}
+          {{else}}
+          {{>quantity}}
+          {{/if}}
+        </div>
+      </div>
+      <div class='col7of8'>
+        <div class='paragraph-s line-height-s text-ellipsis width-full padding-right-s'>
+          <strong>{{>model().name()}}</strong>
+        </div>
+      </div>
+    </div>
+    {{/for}}
+  </div>
+  {{/for}}
+</div>

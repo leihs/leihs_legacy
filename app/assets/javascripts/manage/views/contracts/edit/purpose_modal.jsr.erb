@@ -1,0 +1,27 @@
+<div class='modal medium hide fade ui-modal padding-inset-m padding-horizontal-l' role='dialog' tabindex='-1'>
+  <form>
+    <div class='row padding-vertical-m'>
+      <div class='col1of2'>
+        <h3 class='headline-l'>{{jed "Edit Purpose"/}}</h3>
+      </div>
+      <div class='col1of2'>
+        <div class='float-right'>
+          <a aria-hidden='true' class='modal-close weak' data-dismiss='modal' title='{{jed "close dialog"/}}' type='button'>
+            {{jed "Cancel"/}}
+          </a>
+          <button class='button white text-ellipsis' type='submit'>
+            {{jed "Save"/}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class='padding-vertical-m hidden' id='errors'>
+      <div class='row emboss red text-align-center font-size-m padding-inset-s'>
+        <strong></strong>
+      </div>
+    </div>
+    <div class='row padding-top-m'>
+      <textarea autofocus='autofocus' class='col1of1 height-s' name='purpose'>{{>description}}</textarea>
+    </div>
+  </form>
+</div>

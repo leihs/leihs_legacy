@@ -1,0 +1,71 @@
+<div class='row width-xxl font-size-m'>
+  {{if image_url}}
+  <p>
+    <img class='max-size-xxs margin-horziontal-auto' src='{{>image_url/}}'>
+  </p>
+  {{/if}}
+  <div class='row'>
+    <div class='col1of3 text-align-right padding-right-s'>
+      {{jed "Product"/}}:
+    </div>
+    <div class='col2of3'>
+      <strong>{{>product}}</strong>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col1of3 text-align-right padding-right-s'>
+      {{jed "Version"/}}:
+    </div>
+    <div class='col2of3'>
+      <strong>{{>version}}</strong>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col1of3 text-align-right padding-right-s'>
+      {{jed "Manufacturer"/}}:
+    </div>
+    <div class='col2of3'>
+      <strong>{{>manufacturer}}</strong>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col1of3 text-align-right padding-right-s'>
+      {{jed "Description"/}}:
+    </div>
+    <div class='col2of3'>
+      <strong>{{>description}}</strong>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col1of3 text-align-right padding-right-s'>
+      {{jed "Internal Description"/}}:
+    </div>
+    <div class='col2of3'>
+      <strong>{{>internal_description}}</strong>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col1of3 text-align-right padding-right-s'>
+      {{jed "Technical Details"/}}:
+    </div>
+    <div class='col2of3'>
+      <strong>{{>technical_detail}}</strong>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col1of3 text-align-right padding-right-s'>
+      {{jed "Important notes for hand over"/}}:
+    </div>
+    <div class='col2of3'>
+      <strong>{{>hand_over_note}}</strong>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col1of3 text-align-right padding-right-s'>
+      {{jed "Accessories"/}}:
+    </div>
+    <div class='col2of3'>
+      <strong>{{>accessory_names}}</strong>
+    </div>
+  </div>
+</div>

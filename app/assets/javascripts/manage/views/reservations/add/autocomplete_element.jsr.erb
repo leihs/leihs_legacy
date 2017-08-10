@@ -1,0 +1,21 @@
+<li class='separated-bottom exclude-last-child'>
+  <a class='row{{if available}}{{else}} light-red{{/if}}' title='{{>name}}'>
+    <div class='row'>
+      <div class='col3of4' title='{{>name}}'>
+        <strong class='wrap'>
+          {{>name}}
+        </strong>
+      </div>
+      <div class='col1of4 text-align-right'>
+        <div class='row'>
+          {{if availability}}
+          {{>availability}}
+          {{/if}}
+        </div>
+        <div class='row'>
+          <span class='grey-text'>{{>type}}</span>
+        </div>
+      </div>
+    </div>
+  </a>
+</li>

@@ -236,9 +236,6 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
-    haml_assets (0.2.2)
-      haml
-      tilt
     hashie (3.5.5)
     highline (1.7.8)
     hike (1.2.3)
@@ -609,7 +606,6 @@ DEPENDENCIES
   geocoder (~> 1.1)
   gettext_i18n_rails (~> 1.0)
   haml (~> 4.0)
-  haml_assets (~> 0.2)
   jquery-tmpl-rails (~> 1.1)
   jruby-openssl
   json (~> 1.8)
@@ -673,4 +669,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   1.15.1
+   1.15.3

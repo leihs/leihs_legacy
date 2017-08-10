@@ -1,0 +1,12 @@
+<label class='row'>
+  {{if ~field.getValue(~itemData, ~field.attribute, true)}}
+  <input name='{{>~field.getFormName()}}' type='hidden' value='{{>~field.getValue(~itemData, ~field.attribute, true)}}'>
+  <input autocomplete='off' class='has-addon width-full' data-autocomplete_blur_on_select='true' data-autocomplete_display_attribute='{{>~field.display_attr}}' data-autocomplete_display_attribute_ext='{{>~field.display_attr_ext}}' data-autocomplete_element_tmpl='views/autocomplete/element' data-autocomplete_search_attr='{{>~field.search_attr}}' data-autocomplete_value_attribute='{{>~field.value_attr}}' data-autocomplete_value_target='{{>~field.getFormName()}}' data-type='autocomplete' data-url='{{>~field.search_path}}' placeholder='{{>~field.getLabel()}}' title='{{>~field.getLabel()}}' type='text' value='{{>~field.getItemValueLabel(~field.item_value_label, ~itemData)}}'>
+  {{else}}
+  <input name='{{>~field.getFormName()}}' type='hidden'>
+  <input autocomplete='off' class='has-addon width-full' data-autocomplete_blur_on_select='true' data-autocomplete_display_attribute='{{>~field.display_attr}}' data-autocomplete_display_attribute_ext='{{>~field.display_attr_ext}}' data-autocomplete_element_tmpl='views/autocomplete/element' data-autocomplete_search_attr='{{>~field.search_attr}}' data-autocomplete_value_attribute='{{>~field.value_attr}}' data-autocomplete_value_target='{{>~field.getFormName()}}' data-type='autocomplete' data-url='{{>~field.search_path}}' placeholder='{{>~field.getLabel()}}' title='{{>~field.getLabel()}}' type='text'>
+  {{/if}}
+  <div class='addon transparent'>
+    <i class='arrow down'></i>
+  </div>
+</label>

@@ -1,0 +1,59 @@
+<div class='line row focus-hover-thin' data-id='{{>id}}' data-type='item'>
+  <div class='col1of5 line-col'>
+    {{if model().is_package}}
+    <div class='row'>
+      <div class='col1of2'></div>
+      <div class='col1of2'>
+        <button class='button inset small width-full' data-type='inventory-expander'>
+          {{if children().count()>0}}
+          <i class='arrow right'></i>
+          {{/if}}
+          <span>{{>children().count()}}</span>
+        </button>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  <div class='col2of5 line-col text-align-left'>
+    <div class='row'>{{>inventory_code}}</div>
+    {{if parent_id}}
+    <strong class='grey-text'>{{>model().name()}}</strong>
+    <div class='row grey-text text-ellipsis width-full' title='{{jed "is part of a package"/}}'>
+      {{jed "is part of a package"/}}
+    </div>
+    {{else}}
+    <div class='row grey-text'>
+      {{if ~additionalDataFetched}}
+      {{>current_location}}
+      {{else}}
+      {{partial "views/loading" {"size":"micro"}/}}
+      {{/if}}
+    </div>
+    {{/if}}
+  </div>
+  <div class='col1of5 line-col text-align-center'>
+    <strong class='darkred-text'>{{>getProblems()}}</strong>
+  </div>
+  <div class='col1of5 line-col line-actions padding-right-xs'>
+    {{if ~accessRight.atLeastRole(~currentUserRole, "lending_manager") }}
+    <div class='multibutton width-full text-align-right'>
+      <a class='button white text-ellipsis col4of5 negative-margin-right-xxs' href='{{>url('edit')}}' title='{{jed 'Edit Item'/}}'>
+        {{jed "Edit Item"/}}
+      </a>
+      <div class='dropdown-holder inline-block col1of5'>
+        <div class='button white dropdown-toggle width-full no-padding text-align-center'>
+          <div class='arrow down'></div>
+        </div>
+        <ul class='dropdown right'>
+          <li>
+            <a class='dropdown-item' href='{{>url('copy')}}'>
+              <i class='fa fa-copy'></i>
+              {{jed "Copy Item"/}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>

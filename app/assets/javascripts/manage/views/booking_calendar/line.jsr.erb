@@ -1,0 +1,36 @@
+<div class='line row'>
+  {{if model().availability}}
+  <div class='line-info{{if model().availability().withoutLines([#view.data]).maxAvailableForGroups(~start_date, ~end_date, ~groupIds) < (~quantity||quantity)}} red{{/if}}'></div>
+  {{/if}}
+  <div class='col1of10 line-col text-align-center'>
+    <span>
+      {{if ~quantity}}
+      {{>~quantity}}
+      {{else subreservations}}
+      {{sum subreservations "quantity"/}}
+      {{else}}
+      {{>quantity}}
+      {{/if}}
+    </span>
+    {{if model().availability}}
+    <span class='grey-text'>
+      /
+      {{if subreservations}}
+      {{>model().availability().withoutLines(subreservations).maxAvailableForGroups(~start_date, ~end_date, ~groupIds)}}
+      {{else}}
+      {{>model().availability().withoutLines([#view.data]).maxAvailableForGroups(~start_date, ~end_date, ~groupIds)}}
+      {{/if}}
+    </span>
+    {{/if}}
+  </div>
+  <div class='col5of10 line-col text-align-left'>
+    <strong>{{>model().name()}}</strong>
+  </div>
+  <div class='col4of10 line-col'>
+    {{if model().availability}}
+    {{for model().availability().withoutLines([#view.data]).unavailableRanges((~quantity||quantity), ~groupIds, ~start_date, ~end_date)}}
+    <strong class='darkred-text'>{{date startDate/}}-{{date endDate/}}</strong>
+    {{/for}}
+    {{/if}}
+  </div>
+</div>

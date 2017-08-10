@@ -1,0 +1,6 @@
+<input name='{{>~field.getFormName()}}' type='hidden' value='{{>~field.getValue(~itemData, ~field.attribute, true)}}'>
+{{if ~field.getValue(~itemData, ~field.attribute, true)}}
+<input autocomplete='off' class='width-full' data-type='datepicker' type='text' value='{{date ~field.getValue(~itemData, ~field.attribute, true)/}}'>
+{{else}}
+<input autocomplete='off' class='width-full' data-type='datepicker' type='text'>
+{{/if}}

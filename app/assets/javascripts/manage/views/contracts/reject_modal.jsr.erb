@@ -1,0 +1,74 @@
+<div class='modal medium hide fade ui-modal padding-inset-m padding-horizontal-l' role='dialog' tabindex='-1'>
+  <form action='/manage/{{current_inventory_pool_id/}}/contracts/{{>id}}/reject' method='post'>
+    {{csrf_token/}}
+    <div class='row padding-vertical-m'>
+      <div class='col1of2'>
+        <h3 class='headline-l'>{{jed "Reject order"/}}</h3>
+        <h3 class='headline-s light'>
+          {{>user().firstname}}
+          {{>user().lastname}}
+        </h3>
+      </div>
+      <div class='col1of2'>
+        <div class='float-right'>
+          <a aria-hidden='true' class='modal-close weak' data-dismiss='modal' title='{{jed "close dialog"/}}' type='button'>
+            {{jed "Cancel"/}}
+          </a>
+          <button class='button red' type='submit'>
+            <i class='fa fa-thumbs-down'></i>
+            {{jed 'Reject'/}}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class='row margin-top-m'>
+      <div class='separated-bottom padding-bottom-m margin-bottom-m'>
+        <div class='row margin-bottom-s emboss padding-inset-s'>
+          <p class='paragraph-s'>{{>concatenatedPurposes()}}</p>
+        </div>
+      </div>
+      <div class='modal-body'>
+        {{for groupedLinesByDateRange(true)}}
+        <div class='padding-bottom-m margin-bottom-m no-last-child-margin'>
+          <div class='row margin-bottom-s'>
+            <div class='col1of2'>
+              <p>
+                {{date start_date/}}
+                -
+                {{date end_date/}}
+              </p>
+            </div>
+            <div class='col1of2 text-align-right'>
+              <strong>{{diffDatesInDays start_date end_date/}}</strong>
+            </div>
+          </div>
+          {{for reservations}}
+          <div class='row'>
+            <div class='col1of8 text-align-center'>
+              <div class='paragraph-s'>
+                {{if subreservations}}
+                {{sum subreservations "quantity"/}}
+                {{else}}
+                {{> quantity}}
+                {{/if}}
+              </div>
+            </div>
+            <div class='col7of8'>
+              <div class='paragraph-s'>
+                <strong>{{>model().name()}}</strong>
+              </div>
+            </div>
+          </div>
+          {{/for}}
+        </div>
+        {{/for}}
+      </div>
+    </div>
+    <div class='row separated-top padding-top-m'>
+      <div class='col1of1 padding-bottom-s'>
+        <p>{{jed "Write a comment. The comment will be part of the rejection e-mail."/}}</p>
+      </div>
+      <textarea autofocus='autofocus' class='col1of1 height-s' id='rejection-comment' name='comment'></textarea>
+    </div>
+  </form>
+</div>

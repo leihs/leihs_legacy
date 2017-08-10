@@ -1,0 +1,52 @@
+<div class='modal fade ui-modal medium min-height-m' role='dialog' tabindex='-1'>
+  <div class='modal-header row'>
+    <div class='col3of5'>
+      <h2 class='headline-l'>{{jed "Take back completed"/}}</h2>
+      <h3 class='headline-m light'>
+        {{jed itemsCount "%s item" "%s items" itemsCount/}}
+        {{jed "from %s" user.name()/}}
+      </h3>
+    </div>
+    <div class='col2of5 text-align-right'>
+      <div class='multibutton'>
+        <a class='button white text-ellipsis' href='{{dailyPath/}}'>{{jed "Finish this take back"/}}</a>
+        <div class='dropdown-holder inline-block'>
+          <div class='button white dropdown-toggle'>
+            <div class='arrow down'></div>
+          </div>
+          <ul class='dropdown right'>
+            <li>
+              <a class='dropdown-item' href=''>
+                <i class='fa fa-undo'></i>
+                {{jed "Back to this user"/}}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='modal-body'>
+    <div class='padding-inset-l margin-top-s'>
+      {{for contracts}}
+      <div class='row emboss padding-inset-s margin-bottom-s'>
+        <div class='col1of6'></div>
+        <div class='col2of6 padding-inset-s'>
+          <a class='button white width-full' href='{{>url()}}' target='_blank'>
+            <i class='fa fa-file-alt'></i>
+            {{jed "Contract"/}}
+            {{>compact_id}}
+          </a>
+        </div>
+        <div class='col2of6 padding-inset-s'>
+          <a class='button white width-full' href='{{>url('value_list')}}' target='_blank'>
+            <i class='fa fa-list-ol'></i>
+            {{jed "Value List"/}}
+          </a>
+        </div>
+        <div class='col1of6'></div>
+      </div>
+      {{/for}}
+    </div>
+  </div>
+</div>

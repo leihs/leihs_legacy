@@ -1,0 +1,17 @@
+<div class='row line font-size-xs focus-hover-thin' data-new data-type='inline-entry'>
+  <input name='category[links][{{>~uid}}][parent_id]' type='hidden' value='{{>id}}'>
+  <div class='line-col col3of10 text-align-left'>
+    {{>name}}
+  </div>
+  <div class='line-col col1of10 text-align-center' title='{{jed 'Subordinate to %s' name/}}'>
+    <i class='fa fa-sitemap'></i>
+  </div>
+  <div class='line-col col3of10 text-align-left'>
+    <input autocomplete='off' class='small width-full' name='category[links][{{>~uid}}][label]' placeholder='{{jed 'Label'/}}' type='text' value='{{>~label}}'>
+  </div>
+  <div class='line-col col3of10 text-align-right'>
+    <button class='button small inset' data-remove>
+      {{jed 'Remove'/}}
+    </button>
+  </div>
+</div>

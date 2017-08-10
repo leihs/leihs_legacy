@@ -1,0 +1,77 @@
+<div class='modal medium hide fade ui-modal padding-inset-m padding-horizontal-l' role='dialog' tabindex='-1'>
+  <form>
+    <div class='row padding-vertical-m'>
+      <div class='col1of2'>
+        <h3 class='headline-l'>
+          {{jed "Inspect Item"/}}
+          {{>inventory_code}}
+        </h3>
+        <h4 class='headline-m light'>{{>model().name()}}</h4>
+      </div>
+      <div class='col1of2'>
+        <div class='float-right'>
+          <a aria-hidden='true' class='modal-close weak' data-dismiss='modal' title='{{jed "close dialog"/}}' type='button'>
+            {{jed "Cancel"/}}
+          </a>
+          <button class='button green' type='submit'>
+            {{jed "Save"/}}
+          </button>
+        </div>
+      </div>
+      <div class='row padding-vertical-m'>
+        <div class='row padding-top-m'>
+          <label class='col1of3 padding-right-s'>
+            <div class='row'>{{jed 'Status'/}}</div>
+            <div class='row'>
+              <select class='width-full' name='is_broken'>
+                {{if is_broken}}
+                <option value='false'>{{jed 'Functional'/}}</option>
+                <option selected value='true'>{{jed 'Defective'/}}</option>
+                {{else}}
+                <option selected value='false'>{{jed 'Functional'/}}</option>
+                <option value='true'>{{jed 'Defective'/}}</option>
+                {{/if}}
+              </select>
+            </div>
+          </label>
+          <label class='col1of3 padding-right-s'>
+            <div class='row'>{{jed 'Completeness'/}}</div>
+            <div class='row'>
+              <select class='width-full' name='is_incomplete'>
+                {{if is_incomplete}}
+                <option value='false'>{{jed 'Complete'/}}</option>
+                <option selected value='true'>{{jed 'Incomplete'/}}</option>
+                {{else}}
+                <option selected value='false'>{{jed 'Complete'/}}</option>
+                <option value='true'>{{jed 'Incomplete'/}}</option>
+                {{/if}}
+              </select>
+            </div>
+          </label>
+          <div class='col1of3 padding-right-s'>
+            <div class='row'>{{jed 'Borrowable'/}}</div>
+            <div class='row'>
+              <select class='width-full' name='is_borrowable'>
+                {{if is_borrowable}}
+                <option selected value='true'>{{jed 'Borrowable'/}}</option>
+                <option value='false'>{{jed 'Unborrowable'/}}</option>
+                {{else}}
+                <option value='true'>{{jed 'Borrowable'/}}</option>
+                <option selected value='false'>{{jed 'Unborrowable'/}}</option>
+                {{/if}}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class='row padding-top-m'>
+          <label class='col1of1 padding-right-s'>
+            <div class='row'>{{jed 'Status note'/}}</div>
+            <div class='row'>
+              <textarea class='width-full' name='status_note'>{{> status_note}}</textarea>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
