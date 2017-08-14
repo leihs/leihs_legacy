@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: version 0.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-22 12:39+0200\n"
-"PO-Revision-Date: 2017-08-14 17:17+0200\n"
+"PO-Revision-Date: 2017-08-14 17:29+0200\n"
 "Last-Translator: Ramón Cahenzli <rca@psy-q.ch>\n"
 "Language-Team: Swiss-German (Zürich area) <ramon.cahenzli@zhdk.ch>\n"
 "Language: gsw_CH\n"
@@ -780,10 +780,10 @@ msgid "Logged in successfully"
 msgstr "Erfolgriich iigloggt"
 
 msgid "Login"
-msgstr "Login"
+msgstr "Iilogge"
 
 msgid "Logout"
-msgstr "Logout"
+msgstr "Uusego"
 
 msgid "MAC-Address"
 msgstr "MAC-Adrässe"
@@ -1351,13 +1351,10 @@ msgstr "De Inventarcode %s isch für das Modäll nöd gültig"
 msgid "The item belongs to a package"
 msgstr "Diä Sach ghört zumene Paket"
 
-#, fuzzy
 msgid ""
 "The item cannot be retired because it's not returned yet or has already been "
 "assigned to a contract line."
 msgstr ""
-"Di verantwortlich Abteilig chan näd gändert werdä, will si nonig zruggbracht worde "
-"isch."
 
 msgid "The item doesn't belong to the inventory pool related to this contract"
 msgstr "D Sach ghört nöd zum Grätepark wo dem Vertrag"
@@ -1420,12 +1417,6 @@ msgstr ""
 
 msgid "This contract is not signable because some reservations are not assigned."
 msgstr "Dä Vertrag cha nöd underschribe werde, will einigi Ziile nöd zuegwise sind."
-
-#, fuzzy
-msgid ""
-"This contract is not signable because the delegated user is either missing or not "
-"part of this delegation."
-msgstr "De Vertrag cha nöd underschribe werde, will er kei Ziile hät."
 
 msgid "Delegated user is not member of the contract's delegation or is empty"
 msgstr ""
@@ -1548,7 +1539,6 @@ msgstr "Aktualisiert am"
 msgid "Upload error."
 msgstr "Fehler bim ufelade."
 
-#, fuzzy
 msgid "User"
 msgid_plural "Users"
 msgstr[0] "Benutzer"
@@ -2876,9 +2866,8 @@ msgstr ""
 msgid "Used on the start page in the borrow section"
 msgstr ""
 
-#, fuzzy
 msgid "A package item must belong to a package model"
-msgstr "Diä Sach ghört zumene Paket"
+msgstr "Diä Sach muss zumene Paket ghöre"
 
 msgid "Product"
 msgstr "Produkt"
