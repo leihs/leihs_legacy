@@ -73,14 +73,15 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2012-10-22 12:39+0200",
-         "PO-Revision-Date": " 2011-06-16 17:42+0200",
-         "Last-Translator": " FULL NAME <EMAIL@ADDRESS>",
-         "Language-Team": " LANGUAGE <LL@li.org>",
-         "Language": " ",
+         "PO-Revision-Date": " 2017-08-14 17:18+0200",
+         "Language": " en_US",
          "MIME-Version": " 1.0",
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
-         "Plural-Forms": " nplurals=INTEGER; plural=EXPRESSION;"
+         "Plural-Forms": " nplurals=2; plural=(n != 1);",
+         "Last-Translator": " ",
+         "Language-Team": " ",
+         "X-Generator": " Poedit 2.0.3"
       },
       "Additional label in inventory codes": [
          null,

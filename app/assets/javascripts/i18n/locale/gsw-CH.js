@@ -73,7 +73,7 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2012-10-22 12:39+0200",
-         "PO-Revision-Date": " 2014-02-20 15:33+0100",
+         "PO-Revision-Date": " 2017-08-14 17:29+0200",
          "Last-Translator": " Ramón Cahenzli <rca@psy-q.ch>",
          "Language-Team": " Swiss-German (Zürich area) <ramon.cahenzli@zhdk.ch>",
          "Language": " gsw_CH",
@@ -81,7 +81,7 @@ window.i18n.locale_data = {
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
          "Plural-Forms": " nplurals=2; plural=(n != 1);",
-         "X-Generator": " Poedit 1.6.3"
+         "X-Generator": " Poedit 2.0.3"
       },
       "Additional label in inventory codes": [
          null,
@@ -1089,11 +1089,11 @@ window.i18n.locale_data = {
       ],
       "Login": [
          null,
-         "Login"
+         "Iilogge"
       ],
       "Logout": [
          null,
-         "Logout"
+         "Uusego"
       ],
       "MAC-Address": [
          null,
@@ -1834,7 +1834,7 @@ window.i18n.locale_data = {
       ],
       "The item cannot be retired because it's not returned yet or has already been assigned to a contract line.": [
          null,
-         "Di verantwortlich Abteilig chan näd gändert werdä, will si nonig zruggbracht worde isch."
+         ""
       ],
       "The item doesn't belong to the inventory pool related to this contract": [
          null,
@@ -1915,10 +1915,6 @@ window.i18n.locale_data = {
       "This contract is not signable because some reservations are not assigned.": [
          null,
          "Dä Vertrag cha nöd underschribe werde, will einigi Ziile nöd zuegwise sind."
-      ],
-      "This contract is not signable because the delegated user is either missing or not part of this delegation.": [
-         null,
-         "De Vertrag cha nöd underschribe werde, will er kei Ziile hät."
       ],
       "Delegated user is not member of the contract's delegation or is empty": [
          null,
@@ -3806,7 +3802,7 @@ window.i18n.locale_data = {
       ],
       "A package item must belong to a package model": [
          null,
-         "Diä Sach ghört zumene Paket"
+         "Diä Sach muss zumene Paket ghöre"
       ],
       "Product": [
          null,

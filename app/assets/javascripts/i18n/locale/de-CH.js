@@ -75,18 +75,16 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2012-10-22 12:39+0200",
-         "PO-Revision-Date": " 2013-01-17 10:22+0100",
+         "PO-Revision-Date": " 2017-08-14 17:21+0200",
          "Last-Translator": " Ramón Cahenzli <ramon.cahenzli@zhdk.ch>",
          "Language-Team": " German (Switzerland) <ramon.cahenzli@zhdk.ch>",
-         "Language": " ",
+         "Language": " de",
          "MIME-Version": " 1.0",
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
          "X-Launchpad-Export-Date": " 2008-12-18 06:16+0000",
-         "X-Generator": " Launchpad (build Unknown)",
-         "X-Poedit-Language": " German",
-         "X-Poedit-Country": " Switzerland",
-         "Plural-Forms": " nplurals=2; plural=(n != 1)"
+         "X-Generator": " Poedit 2.0.3",
+         "Plural-Forms": " nplurals=2; plural=(n != 1);"
       },
       "Additional label in inventory codes": [
          null,
@@ -427,8 +425,9 @@ window.i18n.locale_data = {
          "Gebäude zusammen mit einem generellen Raum wurde erfolgreich erstellt"
       ],
       "Room": [
-         null,
-         "Raum"
+         "Rooms",
+         "Raum",
+         "Räume"
       ],
       "CSV": [
          null,
@@ -2124,6 +2123,7 @@ window.i18n.locale_data = {
       ],
       "User": [
          "Users",
+         "Benutzer",
          "Benutzer"
       ],
       "Delegation": [

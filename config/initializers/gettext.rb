@@ -11,5 +11,5 @@ else
 end
 # DANGER, WARNING: Use underscores when separating language from region (e.g. "en_US"). Not using underscores will
 # trigger Ragnarök and the world of mortals will cease its pitiful existence.
-FastGettext.default_available_locales = ['en_GB', 'de_CH', 'es', 'fr', 'gsw_CH', 'en_US'] #all you want to allow
+FastGettext.default_available_locales = ['en_GB', 'de_CH', 'es', 'fr_CH', 'gsw_CH', 'en_US'] #all you want to allow
 FastGettext.default_text_domain = 'leihs'

@@ -73,7 +73,7 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2013-01-14 13:11+0100",
-         "PO-Revision-Date": " 2012-09-17 14:41+0100",
+         "PO-Revision-Date": " 2017-08-14 17:17+0200",
          "Last-Translator": " Ramón Cahenzli <ramon.cahenzli@zhdk.ch>",
          "Language-Team": " Spanish <es@li.org>",
          "Language": " es",
@@ -81,7 +81,7 @@ window.i18n.locale_data = {
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
          "X-Launchpad-Export-Date": " 2010-01-27 15:44+0000",
-         "X-Generator": " Launchpad (build Unknown)"
+         "X-Generator": " Poedit 2.0.3"
       },
       " at the inventory pool ": [
          null,

@@ -21,7 +21,7 @@ if (window.i18n == undefined) window.i18n = {};
   };
 
   i18n.days = {
-    first: 1,
+    first: 2,
     full: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
     trunc: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa']
   };
@@ -74,31 +74,51 @@ window.i18n.locale_data = {
       "": {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
-         "POT-Creation-Date": " 2017-07-12 12:39+0200",
-         "PO-Revision-Date": " 2017-07-12 10:22+0100",
+         "POT-Creation-Date": " 2012-10-22 12:39+0200",
+         "PO-Revision-Date": " 2017-08-14 17:35+0200",
          "Last-Translator": " Loïc Fürhoff <loic.furhoff@heig-vd.ch>",
-         "Language-Team": " French (Switzerland) <loic.furhoff@heig-vd.ch>",
-         "Language": "fr_CH",
+         "Language-Team": " French (Switzerland)",
+         "Language": " fr",
+         "Plural-Forms": " nplurals=2; plural=(n > 1);",
          "MIME-Version": " 1.0",
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
+         "X-Loco-Source-Locale": " fr_CH",
          "X-Launchpad-Export-Date": " 2008-12-18 06:16+0000",
-         "X-Generator": " Launchpad (build Unknown)",
-         "X-Poedit-Language": " French",
-         "X-Poedit-Country": " Switzerland",
-         "Plural-Forms": " nplurals=2; plural=(n != 1)"
+         "X-Generator": " Poedit 2.0.3",
+         "X-Loco-Parser": " loco_parse_po"
       },
+      "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\"": [
+         null,
+         ""
+      ],
+      "Suspended until": [
+         null,
+         "Suspendu jusqu'au"
+      ],
+      "Access as": [
+         null,
+         "Accès comme"
+      ],
+      "Change %s": [
+         null,
+         "Modifier"
+      ],
+      "Organisations of the requesters": [
+         null,
+         "Organisations selon la liste des demandeurs"
+      ],
       "Additional label in inventory codes": [
          null,
-         "Label additionnel dans les codes d'inventaires"
+         "Étiquette supplémentaire utilisée dans les codes d'inventaire"
       ],
       "Visible for borrowers in frontend": [
          null,
-         "Visible pour les emprunteurs dans le frontend"
+         "Visible dans l'interface d'emprunt"
       ],
       "Print dialog will open aut.": [
          null,
-         "La fenêtre d'impression va s'ouvrir automatiquement."
+         "La fenêtre d'impression s'ouvrira automatiquement."
       ],
       "Used for sending e-mails from leihs": [
          null,
@@ -118,11 +138,7 @@ window.i18n.locale_data = {
       ],
       " item(s) due on ": [
          null,
-         "élément(s) dû le "
-      ],
-      "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\"": [
-         null,
-         ""
+         " élément(s) dû le "
       ],
       "%d day in the future": [
          "%d days in the future",
@@ -151,7 +167,7 @@ window.i18n.locale_data = {
       ],
       "Automatic suspension reason": [
          null,
-         "Raison de la suspension automatique"
+         "Motif de la suspension automatique"
       ],
       "A model for the Inventory Code / Serial Number '%s' was not found": [
          null,
@@ -215,7 +231,7 @@ window.i18n.locale_data = {
       ],
       "Add Purpose": [
          null,
-         "Ajouter une raison"
+         "Ajouter un motif"
       ],
       "Add/Assign": [
          null,
@@ -235,7 +251,7 @@ window.i18n.locale_data = {
       ],
       "Admin": [
          null,
-         "Admin"
+         "Administration"
       ],
       "Administrators": [
          null,
@@ -307,7 +323,7 @@ window.i18n.locale_data = {
       ],
       "Approved": [
          null,
-         "Approuvé"
+         "Approuvée"
       ],
       "Approved Items": [
          null,
@@ -327,7 +343,7 @@ window.i18n.locale_data = {
       ],
       "Attachment was successfully created.": [
          null,
-         "Pièce jointe créée avec succès"
+         "Pièce jointe créée avec succès."
       ],
       "Attempt to add node to own graph collection": [
          null,
@@ -351,7 +367,7 @@ window.i18n.locale_data = {
       ],
       "Available in total: ": [
          null,
-         "Total disponible:"
+         "Total disponible: "
       ],
       "available quantity": [
          null,
@@ -422,9 +438,42 @@ window.i18n.locale_data = {
          "Bâtiment",
          "Bâtiments"
       ],
+      "Building together with a general room successfully created": [
+         null,
+         "Bâtiment avec une salle générale créée avec succès"
+      ],
+      "Room": [
+         "Rooms",
+         "Salle",
+         "Salles"
+      ],
       "CSV": [
          null,
          "CSV"
+      ],
+      "CSV import": [
+         null,
+         "Importer un CSV"
+      ],
+      "Accepted columns: ": [
+         null,
+         "Colonnes acceptées: "
+      ],
+      "All other columns are ignored.": [
+         null,
+         "Toutes les autres colonnes sont ignorées."
+      ],
+      "Import": [
+         null,
+         "Importer"
+      ],
+      "Export": [
+         null,
+         "Exporter"
+      ],
+      "Upload a comma separated CSV file (with UTF-8 encoding), each row describing an item.": [
+         null,
+         "Uploader un fichier CSV séparé par des virgules (encodage UTF-8), chaque ligne décrit un élément."
       ],
       "CSV export": [
          null,
@@ -496,7 +545,7 @@ window.i18n.locale_data = {
       ],
       "Completeness": [
          null,
-         "Totalité"
+         "Intégralité"
       ],
       "Consider opening hours": [
          null,
@@ -520,7 +569,7 @@ window.i18n.locale_data = {
       ],
       "Contract Nr.": [
          null,
-         "Numéro de contrat"
+         "Contrat N°"
       ],
       "Contracts": [
          null,
@@ -528,7 +577,7 @@ window.i18n.locale_data = {
       ],
       "Couldn't update ": [
          null,
-         "Actualisation impossible"
+         "Actualisation impossible "
       ],
       "Created at": [
          null,
@@ -596,7 +645,7 @@ window.i18n.locale_data = {
       ],
       "Delete %s": [
          null,
-         "Supprimer %s"
+         "Supprimer la %s"
       ],
       "Delete line": [
          null,
@@ -672,7 +721,7 @@ window.i18n.locale_data = {
       ],
       "Edit Purpose": [
          null,
-         "Editer la raison"
+         "Editer le motif"
       ],
       "Edit Selection": [
          null,
@@ -684,7 +733,7 @@ window.i18n.locale_data = {
       ],
       "Edit purpose for order from": [
          null,
-         "Editer la raison pour la commande depuis"
+         "Editer le motif de la commande depuis"
       ],
       "Edit this Order": [
          null,
@@ -788,7 +837,7 @@ window.i18n.locale_data = {
       ],
       "Hand Over": [
          null,
-         "Transmettre"
+         "Transmission"
       ],
       "Hand Over Selection": [
          null,
@@ -836,7 +885,7 @@ window.i18n.locale_data = {
       ],
       "not in stock": [
          null,
-         "Pas en stock"
+         "pas en stock"
       ],
       "In Total": [
          null,
@@ -844,7 +893,7 @@ window.i18n.locale_data = {
       ],
       "Incomplete": [
          null,
-         "Imcomplet"
+         "Incomplet"
       ],
       "Inconsistent Inventory Pool": [
          null,
@@ -876,7 +925,7 @@ window.i18n.locale_data = {
       ],
       "Invalid order_lines": [
          null,
-         "order_lines invalide"
+         "Champ order_lines invalide"
       ],
       "Invalid technical user - contact your leihs admin": [
          null,
@@ -992,6 +1041,10 @@ window.i18n.locale_data = {
          null,
          "Elément sauvé."
       ],
+      "Item saved": [
+         null,
+         "Elément sauvé"
+      ],
       "Item taken back": [
          null,
          "Elément restitué"
@@ -1006,7 +1059,7 @@ window.i18n.locale_data = {
       ],
       "Kind regards,": [
          null,
-         "Cordialement"
+         "Cordialement,"
       ],
       "Language": [
          null,
@@ -1015,6 +1068,14 @@ window.i18n.locale_data = {
       "Last Checked": [
          null,
          "Dernière vérification"
+      ],
+      "Hand Over Purpose": [
+         null,
+         "Motif pour la transmission"
+      ],
+      "Checked before": [
+         null,
+         "Vérifé avant le"
       ],
       "Last Visitors:": [
          null,
@@ -1063,6 +1124,10 @@ window.i18n.locale_data = {
       "List of available variables": [
          null,
          "Liste des variables disponibles"
+      ],
+      "List of Rooms": [
+         null,
+         "Liste des salles"
       ],
       "List of Buildings": [
          null,
@@ -1279,7 +1344,7 @@ window.i18n.locale_data = {
       ],
       "Open": [
          null,
-         "Ouvrir"
+         "Ouvert"
       ],
       "Open Datepicker": [
          null,
@@ -1299,8 +1364,8 @@ window.i18n.locale_data = {
       ],
       "%s Order": [
          "%s Orders",
-         "%s commande",
-         "%s commandes"
+         "%s Commande",
+         "%s Commandes"
       ],
       "Order approved": [
          null,
@@ -1356,7 +1421,7 @@ window.i18n.locale_data = {
       ],
       "Owned": [
          null,
-         "Possédé"
+         "En possession"
       ],
       "Owner": [
          null,
@@ -1412,7 +1477,7 @@ window.i18n.locale_data = {
       ],
       "Manage inventory, place reservations on items and pick them up": [
          null,
-         "Gérer l'inventaire, placer des réservations sur les éléements et les récupérer"
+         "Gérer un inventaire, réserver et récupérer du matériel"
       ],
       "Please note that these contracts, while they do belong to approved orders, may be changed by the lending manager at any time. They represent only a current snapshot of the order and might not contain the same items as the final contract once you pick up your items.": [
          null,
@@ -1420,7 +1485,7 @@ window.i18n.locale_data = {
       ],
       "Please provide a purpose...": [
          null,
-         "Veuillez fournir une raison..."
+         "Veuillez fournir un motif..."
       ],
       "Please provide all required fields": [
          null,
@@ -1432,7 +1497,7 @@ window.i18n.locale_data = {
       ],
       "Please specify the purpose of your order here...": [
          null,
-         "Veuillez spécifier la raison de votre commande ici..."
+         "Veuillez spécifier le motif de votre commande ici..."
       ],
       "Previous": [
          null,
@@ -1460,19 +1525,19 @@ window.i18n.locale_data = {
       ],
       "Purpose": [
          null,
-         "Raison"
+         "Motif"
       ],
       "Purpose changed '%s' for '%s'": [
          null,
-         "Raison changée de '%s' à %s'"
+         "Motif changé de '%s' à %s'"
       ],
       "Purpose changed '%{from}' for '%{to}'": [
          null,
-         "Raison changé de '%{from}' à '%{to}'"
+         "Motif changé de '%{from}' à '%{to}'"
       ],
       "Purpose these items are borrowed for": [
          null,
-         "Raison pour laquelle ces éléments sont empruntés"
+         "Motif pour lequel ces éléments sont empruntés"
       ],
       "Qty.": [
          null,
@@ -1500,7 +1565,7 @@ window.i18n.locale_data = {
       ],
       "Reason for Retirement": [
          null,
-         "Raison pour le retrait"
+         "Motif de retrait"
       ],
       "Recommended Accessories": [
          null,
@@ -1516,11 +1581,11 @@ window.i18n.locale_data = {
       ],
       "Rejected": [
          null,
-         "Refusé"
+         "Refusée"
       ],
       "Rejected on": [
          null,
-         "refusé le"
+         "Refusé le"
       ],
       "Rejection Successful": [
          null,
@@ -1596,7 +1661,7 @@ window.i18n.locale_data = {
       ],
       "Retirement": [
          null,
-         "Retrait"
+         "Retiré"
       ],
       "Return": [
          null,
@@ -1609,10 +1674,6 @@ window.i18n.locale_data = {
       "Returned Items": [
          null,
          "Eléments retournés"
-      ],
-      "Room": [
-         null,
-         "Salle"
       ],
       "Save": [
          null,
@@ -1744,7 +1805,7 @@ window.i18n.locale_data = {
       ],
       "Submission failed": [
          null,
-         "L'envoi a échoué."
+         "L'envoi a échoué"
       ],
       "Submit": [
          null,
@@ -1764,7 +1825,7 @@ window.i18n.locale_data = {
       ],
       "Successfully set.": [
          null,
-         "Mise en place réussie"
+         "Mise en place réussie."
       ],
       "Supplier": [
          null,
@@ -1780,11 +1841,11 @@ window.i18n.locale_data = {
       ],
       "Swapped from %s ": [
          null,
-         "Echange de %s"
+         "Echange de %s "
       ],
       "Take Back": [
          null,
-         "Restituer"
+         "Restitution"
       ],
       "Take Back Selection": [
          null,
@@ -1876,7 +1937,7 @@ window.i18n.locale_data = {
       ],
       "The item doesn't belong to the inventory pool related to this contract": [
          null,
-         "L'élément n'appartient pas au groupe d'inventaire apparenté à ce contrat "
+         "L'élément n'appartient pas au groupe d'inventaire apparenté à ce contrat"
       ],
       "The item doesn't match with the reserved model": [
          null,
@@ -1948,7 +2009,7 @@ window.i18n.locale_data = {
       ],
       "This contract is not signable because none of the reservations have a purpose.": [
          null,
-         "Ce contrat ne peut être signé parce que aucune des réservations n'a de raison."
+         "Ce contrat ne peut être signé parce que aucune des réservations n'a de motif."
       ],
       "This contract is not signable because some reservations are not assigned.": [
          null,
@@ -2000,7 +2061,7 @@ window.i18n.locale_data = {
       ],
       "This item was retired": [
          null,
-         "\"Cet élément a été retiré"
+         "Cet élément a été retir"
       ],
       "This item will be given to a different inventory pool and not show up in yours anymore!": [
          null,
@@ -2012,7 +2073,7 @@ window.i18n.locale_data = {
       ],
       "This order has already been approved.": [
          null,
-         "Cette commande a déjà été approuvée"
+         "Cette commande a déjà été approuvée."
       ],
       "This order is not approvable because doesn't have any models.": [
          null,
@@ -2225,7 +2286,7 @@ window.i18n.locale_data = {
       ],
       "Write a comment... (your comment will be part of the confirmation e-mail)": [
          null,
-         "Ecrivez un commentaire... Celui-ci fera partie de l'email de confirmation."
+         "Ecrivez un commentaire... (Celui-ci fera partie de l'email de confirmation)"
       ],
       "Write a note... the note will be part of the contract": [
          null,
@@ -2305,7 +2366,7 @@ window.i18n.locale_data = {
       ],
       "You should redo your action or reload the page!": [
          null,
-         "Vous devriez refaire votre action ou recharger la page"
+         "Vous devriez refaire votre action ou recharger la page!"
       ],
       "You wait for confirmation from the inventory pools in question": [
          null,
@@ -2321,7 +2382,7 @@ window.i18n.locale_data = {
       ],
       "[Model %s] ": [
          null,
-         "[Modèle %s]"
+         "[Modèle %s] "
       ],
       "[leihs] Order received": [
          null,
@@ -2377,7 +2438,7 @@ window.i18n.locale_data = {
       ],
       "current page is set as start page": [
          null,
-         "la page actuelle est définie comme page de départ"
+         "la page actuelle est définie comme page d'accueil"
       ],
       "day": [
          "days",
@@ -2394,7 +2455,7 @@ window.i18n.locale_data = {
       ],
       "entries%s": [
          null,
-         "Eentrées%s"
+         "entrées%s"
       ],
       "extend": [
          null,
@@ -2446,7 +2507,7 @@ window.i18n.locale_data = {
       ],
       "item not assigned. ": [
          null,
-         "l'élément n'est pas attribué"
+         "l'élément n'est pas attribué "
       ],
       "jump to this date": [
          null,
@@ -2482,11 +2543,11 @@ window.i18n.locale_data = {
       ],
       "no purpose specified": [
          null,
-         "pas de raison spécifiée"
+         "pas de motif spécifié"
       ],
       "not available. ": [
          null,
-         "non-disponible."
+         "non-disponible. "
       ],
       "not available": [
          null,
@@ -2502,7 +2563,7 @@ window.i18n.locale_data = {
       ],
       "not valid. ": [
          null,
-         "non-valide."
+         "non-valide. "
       ],
       "on time!": [
          null,
@@ -2530,7 +2591,7 @@ window.i18n.locale_data = {
       ],
       "quantity not available. ": [
          null,
-         "quantité non-disponible."
+         "quantité non-disponible. "
       ],
       "reserved / item assigned in future": [
          null,
@@ -2542,7 +2603,7 @@ window.i18n.locale_data = {
       ],
       "set current page as start page": [
          null,
-         "définir la page en cours comme page de départ"
+         "définir la page en cours comme page d'accueil"
       ],
       "show less": [
          null,
@@ -2570,7 +2631,7 @@ window.i18n.locale_data = {
       ],
       "therefore you may not be able to change some of these fields": [
          null,
-         "par conséquent, vous ne pourrez peut-être pas modifier certains de ces champs."
+         "par conséquent, vous ne pourrez peut-être pas modifier certains de ces champs"
       ],
       "this is a package": [
          null,
@@ -2618,7 +2679,7 @@ window.i18n.locale_data = {
       ],
       "while deleting multiple order reservations": [
          null,
-         "pendant la suppression de plusieurs demandes de réservations"
+         "pendant la suppression de plusieurs commandes de réservations"
       ],
       "while deleting order line for": [
          null,
@@ -2638,15 +2699,15 @@ window.i18n.locale_data = {
       ],
       "you cannot hand out reservations which are starting in the future": [
          null,
-         "Sie können keine Zeilen aushändigen, deren Startdatum in der Zukunft liegt"
+         "vous ne pouvez pas transmettre des réservations qui commencent dans le futur"
       ],
       "you cannot hand out reservations which are ending in the past": [
          null,
-         "vous ne pouvez pas transmettre de réservations avec une date de fin antérieure à aujourd’hui."
+         "vous ne pouvez pas transmettre de réservations avec une date de fin antérieure à aujourd’hui"
       ],
       "you cannot hand out reservations with unassigned inventory codes": [
          null,
-         "vous ne pouvez pas transmettre de réservation sans code d'inventaire"
+         "vous ne peut pas distribuer des réservations avec des codes d’inventaire non assigné"
       ],
       "Helper": [
          null,
@@ -2676,6 +2737,10 @@ window.i18n.locale_data = {
          null,
          "Gestionnaire d'inventaire"
       ],
+      "Inventory managers": [
+         null,
+         "Gestionnaires d'inventaire"
+      ],
       "New": [
          null,
          "Nouveau"
@@ -2690,11 +2755,11 @@ window.i18n.locale_data = {
       ],
       "New Template": [
          null,
-         "nouveau gabarit"
+         "Nouveau gabarit"
       ],
       "New Category": [
          null,
-         "nouvelle catégorie"
+         "Nouvelle catégorie"
       ],
       "New Group": [
          null,
@@ -2710,23 +2775,23 @@ window.i18n.locale_data = {
       ],
       "Contract expiration": [
          null,
-         "Expiration de contrat"
+         "Expiration du contrat"
       ],
       "Warranty expiration": [
          null,
-         "Expiration de garantie"
+         "Expiration de la garantie"
       ],
       "Process multiple fields for multiple items in a row": [
          null,
-         "modifier plusieurs champs pour plusieurs appareils séquentiellement"
+         "Modifier plusieurs champs pour plusieurs appareils séquentiellement"
       ],
       "Select Field": [
          null,
-         "Champ de selection"
+         "Champ de sélection"
       ],
       "no fields selected": [
          null,
-         "Aucun champ sélectionné"
+         "aucun champ sélectionné"
       ],
       "Apply Fields on Item": [
          null,
@@ -2734,7 +2799,7 @@ window.i18n.locale_data = {
       ],
       "no item selected": [
          null,
-         "Aucun élément sélectionné"
+         "aucun élément sélectionné"
       ],
       "requested": [
          null,
@@ -2754,11 +2819,11 @@ window.i18n.locale_data = {
       ],
       "Select Image": [
          null,
-         "Sélectionner une image"
+         "Choisir une image"
       ],
       "Select File": [
          null,
-         "Sélectionner un fichier"
+         "Choisir un fichier"
       ],
       "Image": [
          null,
@@ -2810,23 +2875,23 @@ window.i18n.locale_data = {
       ],
       "Model|Images|File file size": [
          null,
-         "taille"
+         "Modèle|Images|File taille de fichier"
       ],
       "Model|Images|File content type": [
          null,
-         "type de fichier"
+         "Modèle|Images|File type de contenu"
       ],
       "Item|Retired reason": [
          null,
-         "Raison de la suppression"
+         "Elément|Motif de la suppression"
       ],
       "You can not create a package without any item": [
          null,
-         "Vous ne pouvez pas créer un package sans élément"
+         "Vous ne pouvez pas créer un paquet sans élément"
       ],
       "Packages created": [
          null,
-         "packages créés"
+         "Paquets créés"
       ],
       "Attention": [
          null,
@@ -2858,15 +2923,15 @@ window.i18n.locale_data = {
       ],
       "Closed Days": [
          null,
-         "Fermé"
+         "Jours de fermeture"
       ],
       "Toggle %s": [
          null,
-         "activer/déactiver %s"
+         "Activer/désactiver %s"
       ],
       "Search %s": [
          null,
-         "chercher %s"
+         "Chercher %s"
       ],
       "by browsing categories": [
          null,
@@ -2878,7 +2943,7 @@ window.i18n.locale_data = {
       ],
       "Closed Day": [
          null,
-         "Fermé"
+         "Jour fermé"
       ],
       "Borrow": [
          null,
@@ -2898,7 +2963,7 @@ window.i18n.locale_data = {
       ],
       "Manage": [
          null,
-         "Gérer"
+         "Gestion"
       ],
       "Nothing selected": [
          null,
@@ -2911,16 +2976,16 @@ window.i18n.locale_data = {
       ],
       "%s Return": [
          "%s Returns",
-         "%s Résultat",
-         "%s Résultats"
+         "%s Retour",
+         "%s Retours"
       ],
       "Returns": [
          null,
-         "Résultats"
+         "Retours"
       ],
       "not yet saved": [
          null,
-         "Pas encore enregistré"
+         "pas encore enregistré"
       ],
       "Prepackaged": [
          null,
@@ -2928,7 +2993,7 @@ window.i18n.locale_data = {
       ],
       "Model saved": [
          null,
-         "Gabarit enregistré"
+         "Modèle enregistré"
       ],
       "The package is not in stock": [
          null,
@@ -2984,7 +3049,7 @@ window.i18n.locale_data = {
       ],
       "Name of the template": [
          null,
-         "nom du gabarit"
+         "Nom du gabarit"
       ],
       "%s saved": [
          null,
@@ -2996,11 +3061,11 @@ window.i18n.locale_data = {
       ],
       "To pick up": [
          null,
-         "Venir le chercher"
+         "A retirer"
       ],
       "deployed %s ago": [
          null,
-         "Déployé il y a %s"
+         "déployé il y a %s"
       ],
       "is %s ago": [
          null,
@@ -3012,11 +3077,11 @@ window.i18n.locale_data = {
       ],
       "this is the branch '%s'": [
          null,
-         "C'est la branche '%s'"
+         "c'est la branche '%s'"
       ],
       "last change by '%s'": [
          null,
-         "dernière modification par %s"
+         "dernière modification par %s'"
       ],
       "Add to order": [
          null,
@@ -3044,7 +3109,7 @@ window.i18n.locale_data = {
       ],
       "All inventory pools": [
          null,
-         "Tous les parcs périphériques"
+         "Tous les inventaires"
       ],
       "Inventory pools": [
          null,
@@ -3082,21 +3147,13 @@ window.i18n.locale_data = {
          null,
          "NPA"
       ],
-      "Suspendu jusqu'au": [
-         null,
-         "Gesperrt bis"
-      ],
       "Suspended reason": [
          null,
-         "Raison de la suspension"
+         "Motif de la suspension"
       ],
       "Role": [
          null,
          "Rôle"
-      ],
-      "Accéder en tant que": [
-         null,
-         "Zugriff als"
       ],
       "No access": [
          null,
@@ -3116,7 +3173,7 @@ window.i18n.locale_data = {
       ],
       "User|AccessRight|Suspended reason": [
          null,
-         "Raison de la suspension"
+         "Utilisateur|Droit d'accès|Motif de la suspension"
       ],
       "The selected inventory pool is closed on that day": [
          null,
@@ -3128,11 +3185,11 @@ window.i18n.locale_data = {
       ],
       "Purpose of the order": [
          null,
-         "Raison de la demande "
+         "Motif de la commande"
       ],
       "Specification of the purpose is required": [
          null,
-         "Une raison pour la demande est obligatoire"
+         "Un motif pour la commande est obligatoire"
       ],
       "Specification of the contact person is required": [
          null,
@@ -3142,17 +3199,13 @@ window.i18n.locale_data = {
          null,
          "Mofidier"
       ],
-      "Change %s": [
-         null,
-         "Modifier \"%s\""
-      ],
       "Change entry": [
          null,
-         "Modifier le champ"
+         "Modifier l'entrée"
       ],
       "Save change": [
          null,
-         "enregistrer les modifications"
+         "Enregistrer les modifications"
       ],
       "Continue this order": [
          null,
@@ -3160,7 +3213,7 @@ window.i18n.locale_data = {
       ],
       "Please solve the conflicts for all highlighted reservations in order to continue.": [
          null,
-         "Pour continuer, corriger les conflits des éléments mis en surbrillance, merci"
+         "Pour continuer, veuillez corriger les conflits des éléments mis en surbrillance."
       ],
       "You have permission to access the following inventory pool": [
          "You have permission to access the following inventory pools",
@@ -3181,15 +3234,15 @@ window.i18n.locale_data = {
       ],
       "These orders have been successfully submitted, but are NOT YET APPROVED.": [
          null,
-         "Ces demandes ont été envoyées. , elles ne sont toutefois PAS ENCORE APPROUVÉES."
+         "Ces commandes ont été envoyées, elles ne sont toutefois PAS ENCORE APPROUVÉES."
       ],
       "Search for '%s'": [
          null,
-         "rechercher '%s'"
+         "Rechercher '%s'"
       ],
       "Your order has been successfully submitted, but is NOT YET APPROVED.": [
          null,
-         "Cette demande a été envoyée. , elle n'a toutefois PAS ENCORE APPROUVÉE."
+         "Cette commande a été envoyée, elle n'est toutefois PAS ENCORE APPROUVÉE."
       ],
       "Continue with available models only": [
          null,
@@ -3213,7 +3266,7 @@ window.i18n.locale_data = {
       ],
       "Please adapt the specific quantities to fit your needs.": [
          null,
-         "S'il vous plaît ajuster le nombre requis addapté à vos besoins"
+         "Veuillez ajuster la quantité requise adaptée à vos besoins."
       ],
       "Insert 0 for the entries you dont need.": [
          null,
@@ -3221,7 +3274,7 @@ window.i18n.locale_data = {
       ],
       "The highlighted entries are not accomplishable for the intended quantity.": [
          null,
-         "Les entrées sélectionnées ne peuvent pas être remplies pour que le nombre demandé"
+         "Les entrées sélectionnées ne peuvent pas être remplies pour que le nombre demandé."
       ],
       "Please contact the concerned inventory pool.": [
          null,
@@ -3265,7 +3318,7 @@ window.i18n.locale_data = {
       ],
       "%d minutes passed. The items are not reserved for you any more!": [
          null,
-         "%d Minutes se sont écoulés. Les éléments suivants ne sont plus réservés! "
+         "%d Minutes se sont écoulés. Les éléments suivants ne sont plus réservés !"
       ],
       "Time until your order times out. Click to reset.": [
          null,
@@ -3277,7 +3330,7 @@ window.i18n.locale_data = {
       ],
       "Reset timeout": [
          null,
-         "Réinitialiser le timeout"
+         "Réinitialiser le délai"
       ],
       "Your order ist empty.": [
          null,
@@ -3293,7 +3346,7 @@ window.i18n.locale_data = {
       ],
       "Please select a time range and continue.": [
          null,
-         "S'il vous plait, sélectionner une heure et continuer"
+         "Veuillez sélectionner une heure et continuer."
       ],
       "You can modify the time range for each separate model in the next step.": [
          null,
@@ -3325,7 +3378,7 @@ window.i18n.locale_data = {
       ],
       "Complete order": [
          null,
-         "commande complète"
+         "Terminer la commande"
       ],
       "The responsible inventory pool cannot be changed because it's not returned yet or has already been assigned to a contract line.": [
          null,
@@ -3333,7 +3386,7 @@ window.i18n.locale_data = {
       ],
       "Send reminder": [
          null,
-         "Envoyez un rappel"
+         "Envoyer un rappel"
       ],
       "Approval failed": [
          null,
@@ -3341,7 +3394,7 @@ window.i18n.locale_data = {
       ],
       "Deleted": [
          null,
-         "Supprimer"
+         "Supprimé"
       ],
       "Reminder sent": [
          null,
@@ -3357,7 +3410,7 @@ window.i18n.locale_data = {
       ],
       "Availability loaded": [
          null,
-         "disponibilité chargé"
+         "Disponibilité chargée"
       ],
       "Invalid data": [
          null,
@@ -3365,7 +3418,7 @@ window.i18n.locale_data = {
       ],
       "Reject order": [
          null,
-         "Commande refusée"
+         "Refuser la commande"
       ],
       "Inventory code, model name, search term": [
          null,
@@ -3452,6 +3505,11 @@ window.i18n.locale_data = {
          "%s élément",
          "%s éléments"
       ],
+      "%s room": [
+         "%s rooms",
+         "%s salle",
+         "%s salles"
+      ],
       "to %s": [
          null,
          "à %s"
@@ -3462,7 +3520,7 @@ window.i18n.locale_data = {
       ],
       "Extend entry": [
          null,
-         "étendre l'entrée"
+         "Etendre l'entrée"
       ],
       "%s selected for take back": [
          null,
@@ -3486,7 +3544,7 @@ window.i18n.locale_data = {
       ],
       "Take back completed": [
          null,
-         "retrait total"
+         "Retrait complété"
       ],
       "Take back of %s item": [
          "Take back of %s items",
@@ -3507,7 +3565,7 @@ window.i18n.locale_data = {
       ],
       "Add inventory": [
          null,
-         "Ajouter un inventaire"
+         "Ajouter à l'inventaire"
       ],
       "Active Inventory": [
          null,
@@ -3567,7 +3625,7 @@ window.i18n.locale_data = {
       ],
       "Uploading files - please wait": [
          null,
-         "Upload de fichiers en cours - veullez patienter"
+         "Upload de fichiers en cours - veuillez patienter"
       ],
       "Save package": [
          null,
@@ -3635,7 +3693,7 @@ window.i18n.locale_data = {
       ],
       "Parent categories": [
          null,
-         "Catégories parent"
+         "Catégories parentes"
       ],
       "Subordinate to %s": [
          null,
@@ -3671,7 +3729,7 @@ window.i18n.locale_data = {
       ],
       "Save Package": [
          null,
-         "sauver le paquet"
+         "Sauver le paquet"
       ],
       "Print Selection": [
          null,
@@ -3711,7 +3769,7 @@ window.i18n.locale_data = {
       ],
       "lends": [
          null,
-         "Prêts"
+         "prêts"
       ],
       "Which inventory pool is busiest?": [
          null,
@@ -3840,7 +3898,7 @@ window.i18n.locale_data = {
       ],
       "Used on the start page in the borrow section": [
          null,
-         "Utilisé sur la page de départ dans la section emprunt"
+         "Utilisée sur la page d'accueil dans la section emprunt"
       ],
       "A package item must belong to a package model": [
          null,
@@ -3896,23 +3954,15 @@ window.i18n.locale_data = {
       ],
       "fill up gaps": [
          null,
-         "Combler les lacunes"
+         "combler les vides"
       ],
       "assign highest available": [
          null,
-         "Attribuer la plus élevée disponible"
+         "attribuer le plus élevée disponible"
       ],
       "Swap Model": [
          null,
          "Echanger le modèle"
-      ],
-      "Checked before": [
-         null,
-         "Contrôlé avant"
-      ],
-      "Search category": [
-         null,
-         "Catégorie de recherche"
       ],
       "Budget limits": [
          null,
@@ -3948,7 +3998,7 @@ window.i18n.locale_data = {
       ],
       "Requested quantity": [
          null,
-         "Quantité demandée "
+         "Quantité demandée"
       ],
       "Approved quantity": [
          null,
@@ -3956,7 +4006,7 @@ window.i18n.locale_data = {
       ],
       "Order quantity": [
          null,
-         "Quantité de la demande"
+         "Quantité de la commande"
       ],
       "Requests": [
          null,
@@ -3968,7 +4018,7 @@ window.i18n.locale_data = {
       ],
       "Edit templates": [
          null,
-         "\"Editer des gabarits"
+         "Editer des gabarit"
       ],
       "Requester": [
          null,
@@ -4034,10 +4084,6 @@ window.i18n.locale_data = {
          null,
          "Unité d'organisation"
       ],
-      "Organisations according to requester list": [
-         null,
-         "Organisations selon la liste des demandeurs"
-      ],
       "Department": [
          null,
          "Département"
@@ -4053,10 +4099,6 @@ window.i18n.locale_data = {
       "Denied": [
          null,
          "Refusé"
-      ],
-      "approved": [
-         null,
-         "approuvé"
       ],
       "Partially approved": [
          null,
@@ -4092,7 +4134,7 @@ window.i18n.locale_data = {
       ],
       "max 255 characters": [
          null,
-         "Max. 255 caractères"
+         "max. 255 caractères"
       ],
       "Article or Project": [
          null,
@@ -4272,7 +4314,7 @@ window.i18n.locale_data = {
       ],
       "Current total of selected requests": [
          null,
-         "Total actuel des requêtes sélectionnées "
+         "Total actuel des requêtes sélectionnées"
       ],
       "% used (category limit - total of selected requests)": [
          null,
@@ -4369,6 +4411,22 @@ window.i18n.locale_data = {
       "Inventory pool can't be deactivated due to existing items which are not yet retired.": [
          null,
          "Le groupe d'inventaire ne peut être désactivé, car il existe des éléments actifs."
+      ],
+      "Startdate": [
+         null,
+         "Date de début"
+      ],
+      "Enddate": [
+         null,
+         "Date de fin"
+      ],
+      "In list": [
+         null,
+         "Dans la liste"
+      ],
+      "required": [
+         null,
+         "requis"
       ]
    }
 }
