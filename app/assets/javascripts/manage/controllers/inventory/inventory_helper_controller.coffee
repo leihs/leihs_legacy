@@ -107,7 +107,6 @@ class App.InventoryHelperController extends Spine.Controller
     App.Item.ajaxFetch
       data: $.param
         search_term: term
-        paginate: false
 
   addField: (field)=>
     return true if App.Field.isPresent field, @fieldSelection
