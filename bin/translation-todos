@@ -1,0 +1,21 @@
+#!/bin/sh -exu
+
+cd locale
+
+for TRANSLATION in */leihs.po; do
+  LANG_CODE=`dirname ${TRANSLATION}`
+
+  mkdir -p "todo/${LANG_CODE}"
+
+  pofilter \
+    --nonotes \
+    --language=${LANG_CODE} \
+    -t isfuzzy \
+    -t untranslated \
+    "${LANG_CODE}" "todo/${LANG_CODE}"
+done
+
+cd ..
+
+rm -rf tmp/translation-todos/
+mv locale/todo/ tmp/translation-todos/

@@ -62,5 +62,16 @@ jobs:
               body:
                 read_and_replace_with: cider-ci/bin/check-locales-are-synchronised
 
+        extract missing and fuzzy translations:
+          name: "Extract missing and fuzzy translations"
+          tree_attachments:
+            translation-todos:
+              include_match: tmp\/translation-todos\/.*\.po$
+              content_type: text/plain
+          scripts:
+            test:
+              body:
+                read_and_replace_with: bin/translation-todos
+
       include:
         - path: cider-ci/context-components/merged-submodules-check.yml
