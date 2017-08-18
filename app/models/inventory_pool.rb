@@ -12,6 +12,12 @@ class InventoryPool < ApplicationRecord
   end
   #################################################################################
 
+  after_save do
+    unless is_active?
+      reservations.unsubmitted.destroy_all
+    end
+  end
+
   belongs_to :address
 
   has_one :workday, dependent: :delete
@@ -419,8 +425,7 @@ class InventoryPool < ApplicationRecord
   end
 
   def orders_or_signed_contracts?
-    reservations.unsubmitted.exists? or
-      reservations.submitted.exists? or
+    reservations.submitted.exists? or
       reservations.approved.exists? or
       reservations.signed.exists?
   end

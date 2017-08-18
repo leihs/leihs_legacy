@@ -1,5 +1,6 @@
 require_relative 'shared/common_steps'
 require_relative '../../../../spec/steps/shared/login_steps'
+require_relative '../../../../spec/steps/shared/common_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_dump_steps'
 
@@ -286,6 +287,17 @@ module LeihsAdmin
       step "I don't see the inactive inventory pool in the list" do
         within find('#topbar .dropdown', match: :first) do
           expect(page).not_to have_content @inactive_inventory_pool.name
+        end
+      end
+
+      step 'there is no unsubmitted order for the deactivated inventory pool' do
+        expect(@inventory_pool.reservations.unsubmitted.count).to be == 0
+      end
+
+      step 'the inventory pool does not have any unretired items' do
+        @inventory_pool.items.each do |item|
+          item.update_attributes(retired: Date.today,
+                                 retired_reason: Faker::Lorem.sentence)
         end
       end
 

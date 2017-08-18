@@ -83,24 +83,37 @@ Feature: Administer inventory pools
     And the inventory pool remains active
     Examples:
       | order type        |
-      | unsubmitted order |
       | submitted order   |
       | approved order    |
       | signed contract   |
 
   @leihs_admin_inventory_pools
-  Scenario Outline: Deactivating an inventory pool is possible if there are only rejected orders or closed contracts
+  Scenario Outline: Deactivating an inventory pool is possible if there are only unsubmitted orders, rejected orders or closed contracts
     Given I am Ramon
     And there exists an inventory pool with "<order type>"
+    And the inventory pool does not have any unretired items
     When I open the edit page for an inventory pool
     And I select "No" from "Active?"
     And I save
     Then I see a success message
     And the inventory pool became inactive
     Examples:
-      | order type      |
-      | rejected order  |
-      | closed contract |
+      | order type          |
+      | unsubmitted order   |
+      | rejected order      |
+      | closed contract     |
+
+  @leihs_admin_inventory_pools
+  Scenario: Deactivating an inventory pool destroys unsubmitted orders
+    Given I am Ramon
+    And there exists an inventory pool with "unsubmitted order"
+    And the inventory pool does not have any unretired items
+    When I open the edit page for an inventory pool
+    And I select "No" from "Active?"
+    And I save
+    Then I see a success message
+    And the inventory pool became inactive
+    And there is no unsubmitted order for the deactivated inventory pool
 
   @leihs_admin_inventory_pools
   Scenario: Exclusion of inactive inventory pools in the topbar dropdown list
