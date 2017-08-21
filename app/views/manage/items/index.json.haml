@@ -19,7 +19,7 @@
                 h
               end
             else
-              @items.as_json(methods: [:location], include: {children: {methods: :to_s}})
+              @items.as_json(methods: [:location, :type], include: {children: {methods: :to_s}})
             end
   != items.to_json
 

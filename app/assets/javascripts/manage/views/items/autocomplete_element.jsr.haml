@@ -2,5 +2,10 @@
   %a{:class => "row{{if hasProblems()}} light-red{{/if}}", :title => "{{>inventory_code}}{{if location}} {{>location}}{{/if}}"}
     .col1of4.text-ellipsis
       %strong {{>inventory_code}}
+    {{if type == 'Item'}}
     .col3of4.text-ellipsis
       {{>location}}
+    {{else}}
+    .col3of4
+      %strong {{>serial_number}}
+    {{/if}}
