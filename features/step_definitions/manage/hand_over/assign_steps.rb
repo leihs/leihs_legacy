@@ -92,9 +92,8 @@ end
 Then(/^I see the inventory codes and the complete serial numbers of that software$/) do
   within '.ui-autocomplete' do
     @reservation.model.items.each do |item|
-      within(".ui-menu-item a[title='#{item.inventory_code}']", text: item.serial_number) do
+      within(".ui-menu-item", text: item.inventory_code) do
         find('.col3of4', text: item.serial_number)
-        expect(has_no_selector?('.col3of4.text-ellipsis', text: item.serial_number)).to be true
       end
     end
   end
