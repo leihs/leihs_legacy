@@ -25,5 +25,5 @@ Rails.application.config.assets.precompile += %w( application.js
 # Sprockets.register_transformer 'text/jsr', 'application/javascript', JsrenderRails::Jsrender
 # thus using deprecated way:
 Rails.application.config.assets.configure do |env|
-  env.register_engine '.jsr', JsrenderRails::Jsrender
+  env.register_engine '.jsr', JsrenderRails::Jsrender, silence_deprecation: true
 end
