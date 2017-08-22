@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
 
   layout 'splash'
 
+  # FIXME: workaround for this bug:
+  #       <https://github.com/charliesome/better_errors/issues/341>
+  before_action :better_errors_hack, if: -> { Rails.env.development? }
+
   def root
     if not User.exists?
       redirect_to new_first_admin_user_path
@@ -69,4 +73,12 @@ class ApplicationController < ActionController::Base
   def db_auth_params
     params.require(:db_auth)
   end
+
+  # NOTE: see hook on top of file
+  def better_errors_hack
+    if request.env.key?('puma.config')
+      request.env['puma.config'].options.user_options.delete(:app)
+    end
+  end
+
 end
