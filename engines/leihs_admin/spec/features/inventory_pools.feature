@@ -11,7 +11,7 @@ Feature: Administer inventory pools
   Scenario: List of inventory pools
     Given I am Gino
     When I navigate to the admin area
-    Then I see the list of all inventory pools sorted alphabetically
+    Then I see the list of all active inventory pools sorted alphabetically
     And each line displays the inventory pool's name
     And each line displays the inventory pool's short name
     And each line displays the inventory pool's active state
@@ -136,3 +136,21 @@ Feature: Administer inventory pools
       | has or owns           |
       | has but doesn't own   |
       | owns but doesn't have |
+
+  @leihs_admin_inventory_pools
+  Scenario: Filtering active and inactive inventory pools
+    Given I am Ramon
+    And there exists an active inventory pool
+    And there exists an inactive inventory pool
+    And I navigate to the inventory pools page
+    Then the activity filtering is set to "active"
+    And I can see the active inventory pool
+    And I can not see the inactive inventory pool
+    When I filter for "all" activity
+    Then the activity filtering is set to "all"
+    And I can see the active inventory pool
+    And I can see the inactive inventory pool
+    When I filter for "inactive" activity
+    Then the activity filtering is set to "inactive"
+    And I can not see the active inventory pool
+    And I can see the inactive inventory pool

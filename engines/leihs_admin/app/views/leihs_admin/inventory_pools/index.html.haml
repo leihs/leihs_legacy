@@ -23,8 +23,12 @@
 
 %form.row.well
   .col-sm-4
-    %input.form-control{type: 'text', name: 'search_term', value: params[:search_term], placeholder: _("Search..."), autocomplete: :false, autofocus: true, onfocus: "this.value = this.value;"}
-  .col-sm-8
+    %input.form-control{type: 'text', name: 'search_term', value: params[:search_term], placeholder: _("Search term..."), autocomplete: :false, autofocus: true, onfocus: "this.value = this.value;"}
+  .col-sm-4
+    %select.form-control{name: 'activity'}
+      - [:all, :active, :inactive].each do |opt|
+        %option{value: opt, selected: ((params[:activity].presence == opt.to_s) || (params[:activity].presence.nil? && opt == :active))}= opt
+  .col-sm-4
     %button.btn.btn-default{type: :submit}
       %i.fa.fa-search
       = _('Search')

@@ -26,6 +26,14 @@ module LeihsAdmin
         end
       end
 
+      step 'I navigate to the inventory pools page' do
+        within 'nav.topbar' do
+          find('.navbar-right .dropdown-toggle', match: :first).click
+          find('.navbar-right .dropdown-menu a', text: _('Admin')).click
+        end
+        click_on 'Inventory Pools'
+      end
+
       step 'I create a new inventory pool in the ' \
            'admin area\'s inventory pool tab' do
         expect(current_path).to eq admin.inventory_pools_path
@@ -45,10 +53,10 @@ module LeihsAdmin
         ).not_to be_nil
       end
 
-      step 'I see the list of all inventory pools sorted alphabetically' do
+      step 'I see the list of all active inventory pools sorted alphabetically' do
         expect(has_content?(_('List of Inventory Pools'))).to be true
         within '.list-of-lines' do
-          expect(InventoryPool.all.sort.map(&:name))
+          expect(InventoryPool.where(is_active: true).sort.map(&:name))
             .to be == all('.row > .col-sm-6').map(&:text)
         end
       end
@@ -223,6 +231,16 @@ module LeihsAdmin
                            owner: @inventory_pool)
       end
 
+      step 'there exists an active inventory pool' do
+        @active_inventory_pool = FactoryGirl.create(:inventory_pool,
+                                                    is_active: true)
+      end
+
+      step 'there exists an inactive inventory pool' do
+        @inactive_inventory_pool = FactoryGirl.create(:inventory_pool,
+                                                      is_active: false)
+      end
+
       step 'there exists an inventory pool with :order_type' do |order_type|
         @inventory_pool = FactoryGirl.create(:inventory_pool)
         case order_type
@@ -299,6 +317,31 @@ module LeihsAdmin
           item.update_attributes(retired: Date.today,
                                  retired_reason: Faker::Lorem.sentence)
         end
+      end
+
+      step 'the activity filtering is set to :activity' do |activity|
+        expect(find('select[name=activity]').value).to be == activity
+      end
+
+      step 'I can see the active inventory pool' do
+        expect(page).to have_content @active_inventory_pool.name
+      end
+
+      step 'I can see the inactive inventory pool' do
+        expect(page).to have_content @inactive_inventory_pool.name
+      end
+
+      step 'I can not see the active inventory pool' do
+        expect(page).not_to have_content @active_inventory_pool.name
+      end
+
+      step 'I can not see the inactive inventory pool' do
+        expect(page).not_to have_content @inactive_inventory_pool.name
+      end
+
+      step 'I filter for :activity activity' do |activity|
+        find('select[name=activity]').select activity
+        click_on 'Search'
       end
 
       private

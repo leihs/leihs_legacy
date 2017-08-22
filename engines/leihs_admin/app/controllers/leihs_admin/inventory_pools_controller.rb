@@ -2,7 +2,16 @@ module LeihsAdmin
   class InventoryPoolsController < AdminController
 
     def index
-      @inventory_pools = InventoryPool.unscoped.search(params[:search_term]).sort
+      @inventory_pools = InventoryPool.unscoped.search(params[:search_term])
+      @inventory_pools = case params[:activity]
+                         when nil, 'active'
+                           @inventory_pools.where(is_active: true)
+                         when 'inactive'
+                           @inventory_pools.where(is_active: false)
+                         else
+                           @inventory_pools
+                         end
+      @inventory_pools = @inventory_pools.sort
     end
 
     def new
