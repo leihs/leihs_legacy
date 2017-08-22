@@ -20,5 +20,10 @@ Rails.application.config.assets.precompile += %w( application.js
                                                   timecop/timecop-0.1.1.js
                                                 )
 
-Sprockets.register_mime_type 'text/jsr', extensions: ['.jsr']
-Sprockets.register_transformer 'text/jsr', 'application/javascript', JsrenderRails::Jsrender
+# DOES NOT WORK: NoMethodError: undefined method `call' for JsrenderRails::Jsrender:Class
+# Sprockets.register_mime_type 'text/jsr', extensions: ['.jsr']
+# Sprockets.register_transformer 'text/jsr', 'application/javascript', JsrenderRails::Jsrender
+# thus using deprecated way:
+Rails.application.config.assets.configure do |env|
+  env.register_engine '.jsr', JsrenderRails::Jsrender
+end

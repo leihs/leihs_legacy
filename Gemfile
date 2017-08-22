@@ -23,7 +23,7 @@ gem 'haml', '~> 4.0'
 gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'jruby-openssl', platform: :jruby
 gem 'json', '~> 1.8'
-gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'rails_5'
+gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'master'
 gem 'liquid', '~> 3.0'
 gem 'mini_magick', '~> 3.4'
 # gem 'mysql2', '~> 0.4', platform: :mri

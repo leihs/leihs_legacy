@@ -16,8 +16,8 @@ GIT
 
 GIT
   remote: https://github.com/leihs/jsrender-rails
-  revision: de61c794c92f10b43012b1faa1389707495e0558
-  branch: rails_5
+  revision: 61e9f43dff127ce35c8e95346c9b04f7ed1d07ad
+  branch: master
   specs:
     jsrender-rails (2.0)
       rails (~> 5.0.0)
