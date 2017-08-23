@@ -35,3 +35,13 @@ Feature: Hand over
     When I switch to the contract window
     Then the contract includes the inventory code of the item
     And the contract includes the inventory code of the license
+
+  @manage_hand_over
+  Scenario: Displaying item's location in the assign item dropdown
+    Given I am Pius
+    And a customer for my inventory pool exists
+    And an item owned by my inventory pool exists
+    When I open hand over for the user
+    And I add item's model line to the hand over
+    And I click in the assign item input field on the item's model line
+    Then I see item's location in the assign item dropdown

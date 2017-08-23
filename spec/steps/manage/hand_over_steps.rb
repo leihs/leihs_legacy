@@ -142,6 +142,29 @@ module Manage
           page.should have_content @item.inventory_code
         end
       end
+
+      step 'I add item\'s model line to the hand over' do
+        within '#assign-or-add' do
+          find('#assign-or-add-input input').set @item.model.name
+          find('.ui-autocomplete a', text: @item.model.name).click
+        end
+      end
+
+      step 'I click in the assign item input field on the item\'s model line' do
+        within('.line[data-id]', text: @item.model.name) do
+          find('input[data-assign-item]').click
+        end
+      end
+
+      step 'I see item\'s location in the assign item dropdown' do
+        within('.line[data-id]', text: @item.model.name) do
+          within('.ui-autocomplete') do
+            within('a', text: @item.inventory_code) do
+              expect(page).to have_content @item.location
+            end
+          end
+        end
+      end
     end
   end
 end

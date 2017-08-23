@@ -3,10 +3,11 @@
     <div class='col1of4 text-ellipsis'>
       <strong>{{>inventory_code}}</strong>
     </div>
+    {{if type == 'Item'}}
     <div class='col3of4 text-ellipsis'>
       {{>location}}
     </div>
-    {{if serial_number}}
+    {{else}}
     <div class='col3of4'>
       <strong>{{>serial_number}}</strong>
     </div>
