@@ -4,8 +4,7 @@ require 'yaml'
 STRICT_MODE = true
 ENGINES = ['leihs_admin',
            'procurement']
-EXCLUDE_TAGS = %w(@upcoming
-                  @manual
+EXCLUDE_TAGS = %w(@manual
                   @broken
                   @flapping
                   @unstable)

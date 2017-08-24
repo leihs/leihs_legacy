@@ -1,48 +1,11 @@
 Feature: Delegation
 
-  @upcoming
-  Scenario: Assigning a suspended responsible person to a delegation
-    Given I am Pius
-    And I am editing a delegation
-    When I assign a responsible person that is suspended for the current inventory pool
-    Then on the selection he is highlighted in red
-    And I see the note 'Suspended!' next to their name
-
-  @upcoming
-  Scenario: Adding a suspended user to a delegation
-    Given I am Pius
-    And I am editing a delegation
-    When I add a user to the delegation that is suspended for the current inventory pool
-    Then on the selection he is highlighted in red
-    And I see the note 'Suspended!' next to their name
-
   Scenario: Choosing contact person when handing over
     Given I am Pius
     And there is a hand over for a delegation with assigned items
     And I open this hand over
     When I finish this hand over
     Then I have to specify a contact person
-
-  @upcoming
-  Scenario: Displaying a suspended contact person while handing over
-    Given I am Pius
-    And there is a hand over for a delegation with assigned items
-    And the current inventory pool has at least suspended 1 user
-    And I open this hand over
-    When I finish this hand over
-    And I choose a suspended contact person
-    Then this contact person is highlighted in red
-    And I see the note 'Suspended!' next to their name
-
-  @upcoming
-  Scenario: Picking a suspended contact person while ordering
-    Given I am Pius
-    And I open an order
-    And I swap the user
-    And I pick a delegation
-    When I pick a contact person that is suspended for the current inventory pool
-    Then that person is highlighted in red
-    And I see the note 'Suspended!' next to their name
 
   Scenario: Switching an order from a delegation to a normal user while handing over
     Given I am Pius

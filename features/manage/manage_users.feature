@@ -11,28 +11,6 @@ Feature: Manage users
       | user      |
       | delegation|
 
-  @upcoming 
-  Scenario: Elements of the edit view
-    Given I am inventory manager or lending manager
-    And I edit a user
-    Then the user's first and last name are used as a title
-    And I see the suspend button for this user
-    And I see reason and duration of suspension for this user, if they are suspended
-    Then I see the following information about the user, in order:
-    |en         |de           |
-    |Last name  |Name         |
-    |First name |Vorname      |
-    |Address    |Strasse      |
-    |Zip        |PLZ          |
-    |City       |Ort          |
-    |Country    |Land         |
-    |Phone      |Telefonnummer|
-    |E-Mail     |E-Mail-Adresse|
-    And I can change this user's information, as long as they use local database authentication and not another adapter
-    And I cannot change this user's information if they use something other than local database authentication
-    And I see the user's role and can change them depending on my own role
-    And my changes are saved if I save the user
-
   @rack
   Scenario Outline: As lending or inventory manager I can't access the admin area
     Given I am <person>
@@ -182,15 +160,6 @@ Feature: Manage users
       | Mike    | signed          | Currently has items to return |
       | Pius    | signed          | Currently has items to return |
 
-  @upcoming
-  Scenario: Editing the groups of a user
-    Given I am Pius
-    And I edit a user
-    Then I can add groups using a list with autocomplete
-    And I can remove groups
-    And I save the user
-    Then their group membership is saved
-
   Scenario: As an inventory manager, add a new user to the inventory pool
     Given I am Mike
     When I am looking at the user list
@@ -299,13 +268,3 @@ Feature: Manage users
     And I save
     Then I see a confirmation of success on the list of users
     And the user has the role "customer"
-
-  # Unimplemented, so not translated.
-  @upcoming
-  Scenario: Startseite zurücksetzen
-    Given I am Pius
-    And man hat eine Startseite gesetzt
-    When man seine Startseite zurücksetzt
-    Then ist ist keine Startseite gesetzt
-    When man auf das Logo klickt
-    Then landet man auf der Tagesansicht als Standard-Startseite

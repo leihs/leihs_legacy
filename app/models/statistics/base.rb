@@ -35,7 +35,7 @@ module Statistics
       end
 
       def contracts(klasses, options = {})
-        options.symbolize_keys!
+        options = options.symbolize_keys
         options[:limit] ||= 10
 
         if klasses.is_a? Array
@@ -67,7 +67,7 @@ module Statistics
       end
 
       def item_values(klasses, options = {})
-        options.symbolize_keys!
+        options = options.symbolize_keys
         options[:limit] ||= 10
 
         if klasses.is_a? Array

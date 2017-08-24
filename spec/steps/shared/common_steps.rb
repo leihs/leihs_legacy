@@ -76,5 +76,15 @@ module Spec
         retry
       end
     end
+
+    def rescue_with_pry
+      begin
+        yield
+      rescue
+        # rubocop:disable Lint/Debugger
+        binding.pry
+        # rubocop:enable Lint/Debugger
+      end
+    end
   end
 end
