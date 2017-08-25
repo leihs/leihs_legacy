@@ -14,9 +14,6 @@ class Image < ApplicationRecord
   validates_presence_of :target, if: ->(image) { image.parent_id.nil? }
 
   validate do
-    if size < 4_000 and not thumbnail
-      errors.add(:base, _('Uploaded file must be at least 4KB'))
-    end
     if size >= 8_000_000
       errors.add(:base, _('Uploaded file must be less than 8MB'))
     end
