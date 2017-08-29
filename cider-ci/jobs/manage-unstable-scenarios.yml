@@ -19,7 +19,7 @@ jobs:
 
       task_defaults:
         load: 1.5
-        max_trials: 25
+        max_trials: 1024
         eager_trials: 1
         include:
           - cider-ci/task-components/database.yml

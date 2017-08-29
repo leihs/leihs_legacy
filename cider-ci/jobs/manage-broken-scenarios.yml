@@ -5,7 +5,7 @@ jobs:
     name: 'Manage: Broken Scenarios'
 
     description: |
-      Run Manage flapping scenarios
+      Run Manage broken scenarios
 
     priority: -10
 

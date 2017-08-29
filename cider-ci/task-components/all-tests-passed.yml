@@ -26,6 +26,10 @@ manage-flapping-scenarios:
   type: job
   job_key: manage-flapping-scenarios
   states: [passed]
+manage-unstable-scenarios:
+  type: job
+  job_key: manage-unstable-scenarios
+  states: [passed]
 manage-rspec-scenarios:
   type: job
   job_key: manage-rspec-scenarios

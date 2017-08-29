@@ -5,7 +5,7 @@ jobs:
     name: 'Borrow: Broken Scenarios'
 
     description: |
-      Run Borrow flapping scenarios
+      Run Borrow broken scenarios
 
     run_when:
       branch name matches master or borrow:
