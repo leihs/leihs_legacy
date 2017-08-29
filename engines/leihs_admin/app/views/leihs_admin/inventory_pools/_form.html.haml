@@ -77,7 +77,7 @@
           result.firstname + ' ' + result.lastname
         else
           result.text
-    #{@inventory_pool.users.inventory_managers.sort{|a,b| a.lastname <=> b.lastname}.to_json(only: [:id, :firstname, :lastname])}.forEach (user, i)->
+    #{@inventory_pool.users.inventory_managers.order(:lastname).to_json(only: [:id, :firstname, :lastname])}.forEach (user, i)->
       option = new Option(user.firstname + ' ' + user.lastname, user.id, true, true)
       element.append(option)
     element.trigger('change')
