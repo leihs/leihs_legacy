@@ -79,7 +79,17 @@ class AccessRight < ApplicationRecord
 
   ####################################################################
 
-  scope :active, -> { where(deleted_at: nil) }
+  scope :active, (lambda do
+    joins(<<-SQL)
+      LEFT JOIN inventory_pools
+      ON inventory_pools.id = access_rights.inventory_pool_id
+    SQL
+    .where(<<-SQL)
+      access_rights.deleted_at IS NULL
+      AND (inventory_pools.is_active = 't' OR access_rights.role = 'admin')
+    SQL
+  end)
+
   scope :suspended, (lambda do
     where
       .not(suspended_until: nil)
