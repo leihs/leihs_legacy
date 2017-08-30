@@ -7,9 +7,8 @@ Feature: Edit purpose during acknowledge process
   Background:
     Given I am Pius
 
-  @unstable
   Scenario: Change the purpose of a contract
      When I open a contract for acknowledgement
-     Then I see the contract's purpose 
+     Then I see the contract's purpose
      When I change the contract's purpose
      Then the contract's purpose is changed
