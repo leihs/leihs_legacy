@@ -11,6 +11,7 @@ def fill_in_autocomplete_field(field_name, field_value)
   within '.ui-autocomplete' do
     find('a', match: :prefer_exact, text: field_value).click
   end
+
   find('body').click # capybara keeps focus on the autocomplete element
   expect(has_no_selector? '.ui-autocomplete').to be true
 end
@@ -20,10 +21,6 @@ def check_fields_and_their_values table
     field_name = hash_row['field']
     field_value = hash_row['value']
     field_type = hash_row['type']
-
-    if field_name == 'Room'
-      sleep 2 # wait for the room field to appear depending on building
-    end
 
     within('.row.emboss', match: :prefer_exact, text: field_name) do
       case field_type
@@ -60,7 +57,6 @@ When(/^I enter the following item information$/) do |table|
   @table_hashes = table.hashes
 
   @table_hashes.each do |hash_row|
-    sleep 2
     field_name = hash_row['field']
     field_value = hash_row['value']
     field_type = hash_row['type']
@@ -87,6 +83,19 @@ When(/^I enter the following item information$/) do |table|
       #      match: :prefer_exact,
       #      text: field_value,
       #      visible: true).click
+
+      # ####################################################################
+      # NOTE: For "Building" the filling in is done a second time, because on CI the
+      # parentValue in values_dependency_field_controller.coffee is not
+      # yet set when the change event is handled (locally the change event
+      # is fired twice, dont know why), look at:
+      # parentValue = App.Field.getValue(@parentElement.find(".field[data-id]"))
+      # if parentValue
+      #   url = @childField.values_url.replace("$$$parent_value$$$", parentValue)
+      if field_name == 'Building'
+        fill_in_autocomplete_field(field_name, field_value)
+      end
+      # ####################################################################
     else
       within matched_field do
         find('input,textarea').set ''
