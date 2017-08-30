@@ -21,7 +21,7 @@ Feature: Purpose
     When I edit an order
     Then I can edit the purpose
 
-  @unstable
+  @flapping
   Scenario: Handing over items will copy the existing purposes to any blank purposes
     When I open a hand over
      And I click an inventory code input field of an item line
@@ -52,7 +52,6 @@ Feature: Purpose
     But I do not assign a purpose
     Then I can finish the hand over
 
-  @unstable
   Scenario: Hand overs with a few items that don't have a purpose are possible
     When I open a hand over
     And I click an inventory code input field of an item line

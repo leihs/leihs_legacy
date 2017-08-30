@@ -27,7 +27,6 @@ Feature: Sign Contract
     When I click hand over inside the dialog
     Then the reservations start date is today
 
-  @unstable
   Scenario: Hand over a selection of items
     When I open a hand over with models
     And I select an item line and assign an inventory code

@@ -4,7 +4,6 @@ Feature: Displaying problems
   Background:
     Given I am Pius
 
-  @unstable
   Scenario: Showing problems in an order when a model is not avaiable
     Given I edit the latest problematic order
     And a model is no longer available
