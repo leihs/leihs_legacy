@@ -1,6 +1,10 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # this has changed with Rails 5.0, we revert to the old setting to minimize the
+  # likeliness of problems for now
+  config.enable_dependency_loading = true
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
