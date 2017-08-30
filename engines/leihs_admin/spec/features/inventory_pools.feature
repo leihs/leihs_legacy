@@ -154,3 +154,15 @@ Feature: Administer inventory pools
     Then the activity filtering is set to "inactive"
     And I can not see the active inventory pool
     And I can see the inactive inventory pool
+
+  @leihs_admin_inventory_pools
+  Scenario: Regrant inventory manager access
+    Given I am Ramon
+    And there exists an active inventory pool
+    And there exists a user
+    And the user had access to the pool as inventory manager
+    When I open the edit page for the active inventory pool
+    And I add the user as inventory manager of the pool
+    And I save
+    Then I see a success message
+    And the user has inventory manager access to the pool

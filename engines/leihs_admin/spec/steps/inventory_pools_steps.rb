@@ -1,6 +1,6 @@
 require_relative 'shared/common_steps'
 require_relative '../../../../spec/steps/shared/login_steps'
-require_relative '../../../../spec/steps/shared/common_steps'
+require_relative '../../../../spec/steps/shared/factory_steps'
 require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_dump_steps'
 
@@ -18,6 +18,7 @@ module LeihsAdmin
       include ::LeihsAdmin::Spec::NavigationSteps
       include ::LeihsAdmin::Spec::PersonasDumpSteps
       include ::Spec::LoginSteps
+      include ::Spec::FactorySteps
 
       step 'I navigate to the admin area' do
         within 'nav.topbar' do
@@ -342,6 +343,28 @@ module LeihsAdmin
       step 'I filter for :activity activity' do |activity|
         find('select[name=activity]').select activity
         click_on 'Search'
+      end
+
+      step 'the user had access to the pool as inventory manager' do
+        FactoryGirl.create(:access_right,
+                           inventory_pool: @active_inventory_pool,
+                           deleted_at: Date.yesterday,
+                           role: :inventory_manager)
+      end
+
+      step 'I open the edit page for the active inventory pool' do
+        visit admin.edit_inventory_pool_path(@active_inventory_pool)
+      end
+
+      step 'I add the user as inventory manager of the pool' do
+        find("input[type='search']").set @user.name
+        find('.select2-container li', text: @user.name).click
+      end
+
+      step 'the user has inventory manager access to the pool' do
+        ar = @user.access_right_for(@active_inventory_pool)
+        expect(ar).to be
+        expect(ar.role).to be == :inventory_manager
       end
 
       private

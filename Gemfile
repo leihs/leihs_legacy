@@ -58,16 +58,11 @@ source 'https://rails-assets.org' do
 end
 
 group :development do
-  gem 'better_errors', '~> 2.1', '>= 2.1.1'
-  gem 'capistrano', '2.15.5'
-  gem 'capistrano-ext'
-  gem 'capistrano-rbenv', '~> 1.0'
   gem 'metric_fu'
   gem 'relish'
-  gem 'thin', platform: :mri # web server (Webrick do not support keep-alive connections)
   gem 'traceroute'
-  gem 'trinidad', platform: :jruby # web server (Webrick do not support keep-alive connections)
-  gem 'web-console', '~> 2.0' # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console'
+  # gem 'web-console', '~> 2.0' # Access an IRB console on exception pages or by using <%= console %> in views
 end
 
 group :test do
@@ -78,21 +73,16 @@ group :test do
 end
 
 group :development, :test do
-  gem 'byebug' # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'cider_ci-support'
   gem 'cucumber-rails', '~> 1.4', require: false # it already includes capybara # NOTE '~> 1.4' doesn't work beacause 'gherkin'
   gem 'database_cleaner'
   gem 'factory_girl_rails', '~> 4.1'
   gem 'faker', '1.3.0' # NOTE '~> 1.4' doesn't work beacause "I18n::InvalidLocale" error, see note for config.i18n in config/application.rb
   gem 'flog'
   gem 'flay'
-  gem 'launchy', '~> 2.1'
   gem 'meta_request'
   gem 'pry-rails'
-  gem 'redcarpet' # This isn't being pulled in by yard, but it's required
   gem 'rspec-rails', '~> 3.6', require: false
   gem 'selenium-webdriver', '~> 2.53'
   gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'timecop', '~> 0.7'
-  gem 'yard'
 end

@@ -87,9 +87,11 @@ class Manage::UsersController < Manage::ApplicationController
 
         unless params[:access_right][:role].to_sym == :no_access
           ar = \
-            @user.access_right_for(@current_inventory_pool) \
-            || @user.access_rights.build(inventory_pool: @current_inventory_pool)
-          ar.update_attributes! role: params[:access_right][:role]
+            @user
+            .access_rights
+            .find_or_initialize_by(inventory_pool: @current_inventory_pool)
+          ar.update_attributes!(role: params[:access_right][:role],
+                                deleted_at: nil)
         end
 
         respond_to do |format|

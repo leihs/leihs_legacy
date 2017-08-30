@@ -18,6 +18,10 @@ module Spec
       @category = FactoryGirl.create(:category)
     end
 
+    step 'there exists a user' do
+      @user = FactoryGirl.create(:user)
+    end
+
     step 'there exists a room' do
       @room = FactoryGirl.create(:room)
     end

@@ -87,9 +87,11 @@ module LeihsAdmin
       to_add = submitted_inventory_manager_ids - existing_inventory_manager_ids
       to_add.each do |id|
         user = User.find id
-        ar = user.access_right_for(@inventory_pool) \
-          || user.access_rights.build(inventory_pool: @inventory_pool)
-        ar.update_attributes! role: :inventory_manager
+        ar = \
+          user
+          .access_rights
+          .find_or_initialize_by(inventory_pool: @inventory_pool)
+        ar.update_attributes!(role: :inventory_manager, deleted_at: nil)
       end
     end
 
