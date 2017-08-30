@@ -1,0 +1,21 @@
+pg: &default
+  adapter: postgresql
+  host: localhost
+  port: 5432
+  pool: 20
+  timeout: 20
+  encoding: unicode
+  username: <your user>
+  password: <your pass>
+
+development:
+  <<: *default
+  database: leihs_dev
+
+test:
+  <<: *default
+  database: leihs_test
+
+production:
+  <<: *default
+  database: leihs_prod
