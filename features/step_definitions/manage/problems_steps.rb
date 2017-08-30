@@ -1,11 +1,6 @@
 # encoding: utf-8
 
 
-#Given /^I edit an order( that is not in the past)?$/ do |arg1|
-#  @event = "order"
-#  step "I open a contract for acknowledgement%s" % (arg1 ? ", whose start date is not in the past" : "")
-#end
-
 Given /^I am doing a take back( that is not overdue)?$/ do |arg1|
   @event = 'take_back'
   if arg1

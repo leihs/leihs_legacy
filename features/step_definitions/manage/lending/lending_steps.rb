@@ -70,6 +70,18 @@ When(/^I edit an order$/) do
   step 'I edit the order'
 end
 
+When(/^I edit the latest problematic order$/) do
+  # NOTE: expectations are hardcoded for data of a specific contract.
+  #       we need to find by user because reservations bundles order is random
+  @event = 'order'
+  @contract = @current_inventory_pool.reservations_bundles.submitted
+    .where(user_id: 'baf29045-ea7d-5880-be5b-efb8095a3216')
+    .first
+  @user = @contract.user
+  @customer = @contract.user
+  step 'I edit the order'
+end
+
 When(/^I edit the order$/) do
   visit manage_edit_contract_path(@current_inventory_pool, @contract)
 end

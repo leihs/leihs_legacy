@@ -6,7 +6,7 @@ Feature: Displaying problems
 
   @unstable
   Scenario: Showing problems in an order when a model is not avaiable
-    Given I edit an order
+    Given I edit the latest problematic order
     And a model is no longer available
     ################################################################
     # on Cider the flash message gets sometimes displaced and covers
