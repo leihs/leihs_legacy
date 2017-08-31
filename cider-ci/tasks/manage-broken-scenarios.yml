@@ -1,2 +1,6 @@
 ---
-tasks: []
+tasks:
+- name: No Tasks for this Job!
+  scripts:
+    test:
+      body: echo OK

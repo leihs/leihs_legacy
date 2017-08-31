@@ -19,6 +19,12 @@ def task_hash(name, exec)
   }
 end
 
+def empty_task_hash
+  { 'name' => 'No Tasks for this Job!',
+    'scripts' => { 'test' => { 'body' => 'echo OK' } }
+  }
+end
+
 def create_scenario_tasks(filepath,
                           feature_dir_paths,
                           framework: nil,
@@ -50,7 +56,7 @@ def create_scenario_tasks(filepath,
       tasks << task_hash(path, exec).merge(task_extensions)
     end
 
-    result = {'tasks' => tasks}
+    result = {'tasks' => tasks.any? ? tasks : [empty_task_hash]}
     f.write result.to_yaml
   end
 end
