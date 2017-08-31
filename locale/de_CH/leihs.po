@@ -3390,3 +3390,18 @@ msgstr "Aktion"
 
 msgid "Entity"
 msgstr "Entität"
+
+msgid "Upload a comma separated CSV file (with UTF-8 encoding), each row describing an item."
+msgstr "Laden Sie eine Komma-separierte CSV-Datei hoch (UTF-8 Kodierung). Jede Zeile muss einen Gegenstand beinhalten."
+
+msgid "Accepted columns"
+msgstr "Akzeptierte Spalten"
+
+msgid "required"
+msgstr "zwingend"
+
+msgid "All other columns are ignored."
+msgstr "Alle weiteren Kolonnen werden ignoriert."
+
+msgid "or"
+msgstr "oder"

@@ -4401,6 +4401,26 @@ window.i18n.locale_data = {
       "Entity": [
          null,
          "Entität"
+      ],
+      "Upload a comma separated CSV file (with UTF-8 encoding), each row describing an item.": [
+         null,
+         "Laden Sie eine Komma-separierte CSV-Datei hoch (UTF-8 Kodierung). Jede Zeile muss einen Gegenstand beinhalten."
+      ],
+      "Accepted columns": [
+         null,
+         "Akzeptierte Spalten"
+      ],
+      "required": [
+         null,
+         "zwingend"
+      ],
+      "All other columns are ignored.": [
+         null,
+         "Alle weiteren Kolonnen werden ignoriert."
+      ],
+      "or": [
+         null,
+         "oder"
       ]
    }
 }

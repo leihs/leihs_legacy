@@ -3295,3 +3295,18 @@ msgstr ""
 
 msgid "Entity"
 msgstr ""
+
+msgid "Upload a comma separated CSV file (with UTF-8 encoding), each row describing an item."
+msgstr ""
+
+msgid "Accepted columns"
+msgstr ""
+
+msgid "required"
+msgstr ""
+
+msgid "All other columns are ignored."
+msgstr ""
+
+msgid "or"
+msgstr ""
