@@ -2,27 +2,39 @@
 
 Then /^for each visible model I can see the Timeline$/ do
 
-  lines = if not all('#edit-contract-view').empty?
-            '.order-line'
-          elsif not all('#hand-over-view').empty?
-            ".line[data-line-type='item_line']"
-          elsif not all('#take-back-view').empty?
-            ".line[data-line-type='item_line']"
-          elsif not all('#search-overview').empty?
-            ".line[data-type='model']"
-          elsif not all('#inventory').empty?
-            ".line[data-type='model']"
-          else
-            raise 'unknown page'
-          end
+  line_selector = nil
+  parent_id = nil
 
-  raise 'no reservations found for this page' if lines.size.zero?
+  if not all('#edit-contract-view').empty?
+    line_selector = '.order-line'
+    parent_id = '#edit-contract-view'
+  elsif not all('#hand-over-view').empty?
+    line_selector = ".line[data-line-type='item_line']"
+    parent_id = '#hand-over-view'
+  elsif not all('#take-back-view').empty?
+    line_selector = ".line[data-line-type='item_line']"
+    parent_id = '#take-back-view'
+  elsif not all('#search-overview').empty?
+    line_selector = ".line[data-type='model']"
+    parent_id = '#search-overview'
+  elsif not all('#inventory').empty?
+    line_selector = ".line[data-type='model']"
+    parent_id = '#inventory'
+  else
+    raise 'unknown page'
+  end
 
   find('.line', match: :first)
 
   current_role = @current_user.access_right_for(@current_inventory_pool).role
 
-  all(lines, visible: true)[0..5].each do |line|
+  line_texts = find(parent_id).all(line_selector, visible: true).map do |line_element|
+    line_element.find('.test-fix-timeline').text
+  end
+
+
+  line_texts[0..5].each do |line_text|
+    line = find(line_selector, text: line_text)
     if current_role == :group_manager and (@contract.nil? or [:signed].include? @contract.status)
       line.find('.line-actions > a', text: _('Timeline')).click
     else
