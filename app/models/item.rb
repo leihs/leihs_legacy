@@ -280,6 +280,7 @@ class Item < ApplicationRecord
   # TODO include Statistic module
 
   def location
+    return if license?
     "#{room.building} #{room} #{shelf}"
   end
 
@@ -294,7 +295,7 @@ class Item < ApplicationRecord
     else
       current_location.push location
     end
-    current_location.join(', ')
+    current_location.compact.join(', ')
   end
 
   def current_borrower
