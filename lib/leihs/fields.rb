@@ -447,7 +447,7 @@ module Leihs
 
         predefined_fields.each_with_index do |predefined_field, i|
           id = predefined_field.delete(:id)
-          if field = Field.find_by_id(id)
+          if field = Field.unscoped.find_by_id(id)
             field.update_attributes!(data: predefined_field.as_json, position: i + 1)
           else
             Field.create!(id: id, data: predefined_field.as_json, position: i + 1)
