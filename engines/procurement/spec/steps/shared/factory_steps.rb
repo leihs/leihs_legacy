@@ -161,11 +161,24 @@ module FactorySteps
 
   step 'there is a future budget period' do
     current_budget_period = Procurement::BudgetPeriod.current
+    @counter = 1
     @future_budget_period = \
-      FactoryGirl.create(:procurement_budget_period,
-                         inspection_start_date: \
-                           current_budget_period.end_date + 1.month,
-                         end_date: current_budget_period.end_date + 2.months)
+      begin
+        FactoryGirl.create(:procurement_budget_period,
+                           inspection_start_date: \
+                             current_budget_period.end_date + @counter.month,
+                           end_date: \
+                             current_budget_period.end_date + \
+                               (@counter + 1).months
+                          )
+      rescue => e
+        if @counter <= 10
+          @counter += 1
+          retry
+        else
+          raise e
+        end
+      end
   end
 
   step 'a room :room for building :building exists' do |room, building|
