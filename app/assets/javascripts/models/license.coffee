@@ -1,5 +1,5 @@
 ###
-  
+
   License
 
 ###
@@ -21,9 +21,10 @@ class window.App.License extends window.App.Item
       _.map(@properties.operating_system, (os) -> _jed App.License.formatString os).join ", "
 
   licenseTypeInformation: ->
-    _jed App.License.formatString @properties.license_type
+    _jed(App.License.formatString(this.properties.license_type))
 
   @formatString: (s) =>
+    return unless typeof s == 'string'
     capitalizeEachWord = (s) =>
       s.replace /(?:^|\s)\S/g, (s) -> s.toUpperCase()
     capitalizeEachWord _.string.humanize s
