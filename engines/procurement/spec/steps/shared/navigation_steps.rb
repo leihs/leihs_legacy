@@ -15,10 +15,6 @@ module NavigationSteps
   end
 
   step 'I am navigated to the new request form for the requester' do
-    # NOTE this doesn't match the query params
-    # expect(current_path).to eq
-
-    # NOTE instead this matches the query params
     expect(page).to have_current_path \
       procurement.category_budget_period_user_requests_path(
         @category,
@@ -94,11 +90,20 @@ module NavigationSteps
     expect(current_path).not_to include 'procurement'
   end
 
-  step 'I confirm the alert popup' do
+  def handle_alert_popup(action)
+    fail unless [:accept, :dismiss].include? action
     alert = page.driver.browser.switch_to.alert
-    alert.accept
+    alert.send(action)
     expect { page.driver.browser.switch_to.alert }.to \
       raise_error Selenium::WebDriver::Error::NoSuchAlertError
+  end
+
+  step 'I confirm the alert popup' do
+    handle_alert_popup(:accept)
+  end
+
+  step 'I cancel the alert popup' do
+    handle_alert_popup(:dismiss)
   end
 
   step 'I do not see a link to procurement' do
@@ -194,15 +199,22 @@ module NavigationSteps
   end
 
   step 'I navigate to the templates page' do
+    step 'I try to navigate to the templates page'
+    step 'I am navigated to the templates page'
+  end
+
+  step 'I try to navigate to the templates page:confirm' do |confirm|
     # NOTE refresh the page
     if has_no_selector? '.navbar', text: _('Templates')
       visit procurement.root_path
     end
-
     within '.navbar' do
       click_on _('Templates')
     end
+    step 'I confirm the alert popup' if confirm
+  end
 
+  step 'I am navigated to the templates page' do
     expect(current_path).to be == procurement.templates_path
     expect(page).to have_selector('h3', text: _('Templates'))
   end

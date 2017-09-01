@@ -9,6 +9,8 @@
 #
 #= require procurement/bootstrap-multiselect
 #
+#= require ./request-edit
+#
 #= require_self
 
 $(document).ready ->
@@ -19,3 +21,15 @@ $(document).ready ->
 
 
   $('body').on 'focus mouseover', '[data-toggle="tooltip"]', -> $(this).tooltip('toggle')
+
+# helpers
+@inViewport = (el) ->
+  return false if (!el || 1 != el.nodeType)
+  html = document.documentElement
+  r = el.getBoundingClientRect()
+  return ( !!r &&
+    r.bottom >= 0 &&
+    r.right >= 0 &&
+    r.top <= html.clientHeight &&
+    r.left <= html.clientWidth
+  )

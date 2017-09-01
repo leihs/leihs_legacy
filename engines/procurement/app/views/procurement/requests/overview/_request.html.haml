@@ -1,4 +1,5 @@
-%a.list-group-item.row{href: category_budget_period_user_requests_path(request.category, request.budget_period, request.user, request_id: request.id), data: {request_id: request.id}}
+%a.list-group-item.row{href: category_budget_period_user_requests_path(request.category, request.budget_period, request.user, request_id: request.id),
+    data: {request_id: request.id, edit_url: edit_request_path(request)}}
   .col-sm-2
     = request.article_name
   .col-sm-2

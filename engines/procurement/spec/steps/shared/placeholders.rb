@@ -24,3 +24,12 @@ placeholder :confirm do
     false
   end
 end
+
+# Given a foo exists
+# Given a 2. foo exists
+# Then I see the foo
+# Then I see the 2. foo
+placeholder :nth do
+  match(/(a|the) (\d*)\./) { |_a, num| (num.to_i < 2) ? '' : num }
+  match(/a|the|this/) { '' }
+end

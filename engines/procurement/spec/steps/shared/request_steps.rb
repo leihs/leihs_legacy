@@ -162,6 +162,13 @@ module RequestSteps
          end
     table.hashes.each do |hash|
       within el do
+        # quoted values:
+        hash['value'] = begin
+          hash['value'].match(/(^")([^"]*)("$)/)[2]
+        rescue
+          hash['value']
+        end
+        # random values:
         hash['value'] = nil if hash['value'] == 'random'
         case hash['key']
         when 'Price'

@@ -1,4 +1,4 @@
-.panel{class: "panel-#{header_color(budget_period)}"}
+.panel{class: "panel-#{header_color(budget_period)}", data: {budget_period_id: budget_period.id}}
   .panel-heading
     .row
       .col-sm-2.h1
@@ -14,12 +14,14 @@
       .col-sm-1
         - if @user.nil?
           - budget_limit_amount = grouped_categories.keys.map {|mc| mc.budget_limits.find_by(budget_period_id: budget_period.id).try(:amount) || 0 }.sum
-          .label.label-default.budget_limit{title: _('Total of limits this budget period'), data: {toggle: 'tooltip'}}
+          .label.label-default.budget_limit{data: {toggle: 'tooltip', shows_sum: 'budget_period_limit', },
+                                            title: _('Total of limits this budget period'), }
             %i.fa.fa-pie-chart
             = money_without_cents_and_with_symbol budget_limit_amount, false
           %br
         - total_price = requests.map {|r| r.total_price(current_user) }.sum
-        .label.label-primary.big_total_price{data: {toggle: 'tooltip'}, title: _('Current total of budget period')}
+        .label.label-primary.big_total_price{data: {toggle: 'tooltip', shows_sum: 'budget_period'},
+                                             title: _('Current total of budget period')}
           %i.fa.fa-shopping-cart
           = money_without_cents_and_with_symbol total_price, false
       .col-sm-2

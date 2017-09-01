@@ -52,76 +52,52 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     And a request with following data exist
       | key                | value   |
       | user               | Roger   |
-    When I navigate to the requests form of Roger
+    When I open this request
     Then the following fields are not editable
       | Motivation         |
       | Priority           |
 
   @inspection
-  Scenario: Editing a request
+  Scenario: Editing a request in the overview
     Given I am Barbara
     And a room 'Room 2' for building 'Building 2' exists
     And a request with following data exist
-      | key                        | value      |
-      | user                       | Roger      |
-      | article or project         | MyProject  |
-      | article nr. or producer nr.| 1234       |
-      | supplier                   | Dell       |
-      | name of receiver           | Markus     |
-      | building                   | Building   |
-      | room                       | Room       |
-      | replacement                | Replacement|
-      | price                      | 100        |
-      | requested amount           | 1          |
-    When I navigate to the requests form of Roger
-    And I fill in the following fields
-      | key                        | value      |
-      | Article or Project         | MyProject2 |
-      | Article nr. or Producer nr.| 12345      |
-      | Supplier                   | Digitec    |
-      | Name of receiver           | Stefan     |
-      | Building                   | Building 2 |
-      | Room                       | Room 2     |
-      | Replacement / New          | New        |
-      | Price                      | 1000       |
-      | Requested quantity         | 2          |
-    When I upload a file
-    And I click on save
-    Then I see a success message
-    And the request with all given information was updated successfully in the database
+      | key                        | value       |
+      | user                       | Roger       |
+      | article or project         | MyProject   |
+      | article nr. or producer nr.| 1234        |
+      | supplier                   | Dell        |
+      | name of receiver           | Markus      |
+      | building                   | Building    |
+      | room                       | Room        |
+      | replacement                | Replacement |
+      | price                      | 100         |
+      | requested amount           | 1           |
 
-  @inspection
-  Scenario: Editing a request
-    Given I am Barbara
-    And a room 'Room 2' for building 'Building 2' exists
-    And a request with following data exist
-      | key                        | value      |
-      | user                       | Roger      |
-      | article or project         | MyProject  |
-      | article nr. or producer nr.| 1234       |
-      | supplier                   | Dell       |
-      | name of receiver           | Markus     |
-      | building                   | Building   |
-      | room                       | Room       |
-      | replacement                | Replacement|
-      | price                      | 100        |
-      | requested amount           | 1          |
-    When I navigate to the requests form of Roger
-    And I fill in the following fields
-      | key                        | value      |
-      | Article or Project         | MyProject2 |
-      | Article nr. or Producer nr.| 12345      |
-      | Supplier                   | Digitec    |
-      | Name of receiver           | Stefan     |
-      | Building                   | Building 2 |
-      | Room                       | Room 2     |
-      | Replacement / New          | New        |
-      | Price                      | 1000       |
-      | Requested quantity         | 2          |
-    When I upload a file
-    And I click on save
-    Then I see a success message
+    When I navigate to the requests overview page
+     And I open the requests main category
+     And I open the requests category
+    Then I see the request line
+
+    When I click on the request line
+    Then I see the request inline edit form
+
+    When I fill in the following fields
+      | key                        | value       |
+      | Article or Project         | MyProject2  |
+      | Article nr. or Producer nr.| 12345       |
+      | Supplier                   | Digitec     |
+      | Name of receiver           | Stefan      |
+      | Building                   | Building 2  |
+      | Room                       | Room 2      |
+      | Replacement / New          | New         |
+      | Price                      | 1000        |
+      | Requested quantity         | 2           |
+    And I upload a file
+    And I save the inline form
+    Then I see the updated request line
     And the request with all given information was updated successfully in the database
+    And the uploaded file is now an attachment of the request
 
   @inspection
   Scenario: Using the filters as inspector
@@ -232,14 +208,14 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     And the request with all given information was created successfully in the database
 
   @inspection
-  Scenario: Give Reason when Partially Excepting or Denying
+  Scenario: Give Reason when Denying
     Given I am Barbara
     And a request with following data exist
       | key              | value   |
       | budget period    | current |
       | user             | Roger   |
       | requested amount | 2       |
-    When I navigate to the requests form of Roger
+    When I open this request
     And I fill in the following fields
       | key               | value |
       | Approved quantity | 0     |
@@ -249,9 +225,19 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | key                | value  |
       | Inspection comment | random |
     And I click on save
-    Then I see a success message
+    Then I see the updated request line
     And the status is set to "Denied"
     And the changes are saved successfully to the database
+
+  @inspection
+  Scenario: Give Reason when Partially Excepting
+    Given I am Barbara
+    And a request with following data exist
+      | key              | value   |
+      | budget period    | current |
+      | user             | Roger   |
+      | requested amount | 2       |
+    When I open this request
     When I delete the following fields
       | Inspection comment |
     And I fill in the following fields
@@ -263,9 +249,82 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | key                | value  |
       | Inspection comment | random |
     And I click on save
-    Then I see a success message
+    Then I see the updated request line
     And the status is set to "Partially approved"
     And the changes are saved successfully to the database
+
+  @inspection
+  Scenario: Overview Edit Form can only be opened one at a time
+    Given I am Barbara
+    And a request with following data exist
+      | key                | value       |
+      | budget period      | current     |
+      | user               | Roger       |
+      | article or project | MyProject1  |
+    And a 2. request with following data exist
+      | key                | value       |
+      | budget period      | current     |
+      | user               | Roger       |
+      | article or project | MyProject2  |
+
+    When I open this request
+    Then I see the 1. request inline edit form
+
+    When I try to open the 2. request
+    Then I see the 1. request inline edit form
+
+  @inspection
+  Scenario: Overview Edit Form can not be hidden
+    Given I am Barbara
+    And a request with following data exist
+      | key                | value       |
+      | budget period      | current     |
+      | user               | Roger       |
+      | article or project | MyProject2  |
+    And I open this request
+
+    When I try to close the requests main category
+    Then I see the request inline edit form
+
+    When I try to close the requests category
+    Then I see the request inline edit form
+
+    When I try to toggle a filter
+    Then I see the request inline edit form
+
+  @inspection
+  Scenario: Overview Edit Form with changes blocks navigation with confirmation
+    Given I am Barbara
+    And a request with following data exist
+      | key                | value       |
+      | budget period      | current     |
+      | user               | Roger       |
+      | article or project | MyProject2  |
+    And I open this request
+    And I change any text input field in the request form
+
+    When I try to navigate to the templates page
+    And I cancel the alert popup
+    Then I see the request inline edit form
+
+    When I try to navigate to the templates page, confirming to leave the page
+    Then I am navigated to the templates page
+
+  @inspection
+  Scenario: Overview Edit Form shows error message on invalid data
+    Given I am Barbara
+    And a request with following data exist
+      | key                | value       |
+      | budget period      | current     |
+      | user               | Roger       |
+      | article or project | MyProject2  |
+    When I open this request
+    When I fill in the following fields
+
+      | key                | value |
+      | Article or Project | " "   | # single space
+    And I save the inline form
+    Then the inline form has an error message "Article name muss ausgefüllt werden"
 
   @inspection
   Scenario: Moving request to another budget period as inspector
@@ -273,10 +332,12 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     And the current budget period is in inspection phase
     And there is a future budget period
     And there is a budget period which has already ended
-    And following requests exist for the current budget period
-      | quantity | user  | category  |
-      | 3        | Roger | inspected |
-    When I navigate to the requests form of Roger
+    And a request with following data exist
+      | key                | value       |
+      | budget period      | current     |
+      | user               | Roger       |
+      | article or project | MyProject2  |
+    When I open this request
     Then I can not move any request to the old budget period
     When I move a request to the future budget period
     Then I see a success message
@@ -285,17 +346,18 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | Order quantity     |
     And the value of the field inspector's priority is set to the default value
     And the changes are saved successfully to the database
-    And I can not submit the data
 
   @inspection
   Scenario: Moving request as inspector to another category
     Given I am Barbara
     And several categories exist
     And the current budget period is in inspection phase
-    And following requests exist for the current budget period
-      | quantity | user  | category  |
-      | 3        | Roger | inspected |
-    When I navigate to the requests form of Roger
+    And a request with following data exist
+      | key                | value       |
+      | budget period      | current     |
+      | user               | Roger       |
+      | article or project | MyProject2  |
+    When I open this request
     And I move a request to the other category where I am not inspector
     Then I see a success message
     And the changes are saved successfully to the database

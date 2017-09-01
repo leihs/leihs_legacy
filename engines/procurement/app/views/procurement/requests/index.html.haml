@@ -4,14 +4,15 @@
 
 = form_tag nil, remote: true, multipart: true, class: 'form-horizontal' do
   .panel{class: "panel-#{header_color(@budget_period)}"}
-    .panel-heading
-      = render partial: 'procurement/budget_periods/header', locals: {budget_period: @budget_period, requests: @requests}
-      - if is_editable
-        .row
-          .col-xs-12.text-right
-            %button.btn.btn-success{type: :submit, disabled: true}
-              %i.fa.fa-check
-              = _('Save')
+    - unless @for_inline_edit
+      .panel-heading
+        = render partial: 'procurement/budget_periods/header', locals: {budget_period: @budget_period, requests: @requests}
+        - if is_editable
+          .row
+            .col-xs-12.text-right
+              %button.btn.btn-success{type: :submit, disabled: true}
+                %i.fa.fa-check
+                = _('Save')
 
     .panel-body
       - if is_editable
@@ -117,23 +118,86 @@
       scroll_to(el)
 
   $(document).ready ->
+    # setup common helpers
+    formHelper = App.RequestEditFormBehaviour
+    $form = $('form')
+
+    formHelper.requireInspectionCommentIfQuantityDecreased()
+
+    formHelper.autocompleteInputs()
+
+    formHelper.disableSubmitOnEnter()
+
+    formHelper.handleDeletingAttachments()
+
+    formHelper.formChangeListener($form, {
+      hasChanged: ()->
+        $('.flash').hide()
+        $form.find("button[type='submit']").removeAttr('disabled')
+        window.onbeforeunload = formHelper.unsavedChangesConfirmation
+      isSame: ()->
+        $('.flash').show()
+        $form.find("button[type='submit']").attr('disabled', 'true')
+        window.onbeforeunload = null
+    })
+
+    $form.on('ajax:success', () ->
+      window.onbeforeunload = null
+    )
+
+    ###############################################################################
+    # only for forms in this view:
+
     do zebra_rows
 
-    #$('.panel-footer').on 'click', '.fa-plus-circle', ->
-    $('.sidebar-wrapper').on 'click', '.fa-plus-circle', ->
-      #target_el = $(this).closest('tfoot').prev('tbody').find('tr:last-child')
-      #cloned_el = target_el.clone()
-      #cloned_el.find('input').val('')
-      #cloned_el.insertAfter(target_el)
-      #$(this).hide()
-      el = $('.request[data-request_id="new_request"]')
-      #el.find('[data-to_be_required]').attr('required', 'true')
-      el.find("input:radio[name*='[priority]'][value='normal']").prop('checked', 'true')
-      el.removeClass('hidden').closest('form').change()
-      do zebra_rows
-      scroll_to(el)
+    # update totals on changes:
+    $("input[name*='_quantity]'], input[name*='[price]']").on 'keyup change', ->
+      order_quantity = $(this).closest('.request').find("input[name*='[order_quantity]']").val()
+      approved_quantity = $(this).closest('.request').find("input[name*='[approved_quantity]']").val()
+      requested_quantity = $(this).closest('.request').find("input[name*='[requested_quantity]']").val()
+      quantity = order_quantity or approved_quantity or requested_quantity
+      price_el = $(this).closest('.request').find("input[name*='[price]']")
+      total = quantity * price_el.val()
+      formatted_total = accounting.formatMoney(total, {symbol: 'CHF', format: "%s %v", precision: 0, thousand: "'"})
+      $(this).closest('.request').find(".total_price").data('total', total).html(formatted_total)
+      big_total = 0
+      $(".total_price").each ->
+        if Number($(this).data('total'))
+          big_total += Number($(this).data('total'))
+      formatted_big_total = accounting.formatMoney(big_total, {symbol: 'CHF', format: "%s %v", precision: 0, thousand: "'"})
+      $(".big_total_price").html(formatted_big_total)
+
+    # handle moving actions
+    $form.find('.btn-group a').on 'ajax:success', (e, data, status, xhr) ->
+      $('.flash').hide()
+      el = $(this).closest('.request')
+      el.html data
       false
 
+    # BATCH: nothing can't be saved if any form has any invalid field:
+    $form.find("button[type='submit']").on 'click', ->
+      if $('form :invalid').length
+        scroll_to $('form :invalid').first().closest('.request')
+        false
+
+    # BATCH: handle form submitting
+    $form
+    .on('ajax:success', (e, data, status, xhr) ->
+      location.replace $(this).attr('action')
+    )
+    .on('ajax:error', (e, xhr, status, error) ->
+      errors = ''
+      for error in xhr.responseJSON
+        errors += '<li>' + error + '</li>'
+      el = $(".flash")
+      el.html('<ul class="alert alert-danger" style="padding-left: 2em;">' + errors + '</ul>').show()
+      $('html, body').animate({
+        scrollTop: el.offset().top - 100
+      }, 200)
+    )
+
+    ###############################################################################
+    # for adding new requests:
     $('.request[data-request_id="new_request"] input:text').on 'keyup change', ->
       el = $(this).closest('.request')
       inputs = el.find('input:text')
@@ -155,153 +219,25 @@
       do zebra_rows
       false
 
-    $('.request .btn-group a').on 'ajax:success', (e, data, status, xhr) ->
-      $('.flash').hide()
-      el = $(this).closest('.request')
-      el.html data
-      false
-
-    $("input[name*='[approved_quantity]']").on 'change', ->
-      parent_el = $(this).closest('.request')
-      inspection_comment_el = parent_el.find("textarea[name*='[inspection_comment]']")
-      order_quantity_el = parent_el.find("input[name*='[order_quantity]']")
-      new_val = $(this).val()
-
-      if (not order_quantity_el.val()) or Number(order_quantity_el.val()) > Number(new_val)
-        order_quantity_el.val(new_val)
-
-      requested_quantity_el = parent_el.find("input[name*='[requested_quantity]']")
-      requested_quantity = if requested_quantity_el.length
-                             requested_quantity_el.val()
-                           else
-                             parent_el.find('.requested_quantity').text()
-
-      if Number(new_val) < Number(requested_quantity)
-        inspection_comment_el.attr('required', 'true')
-      else
-        inspection_comment_el.removeAttr('required')
-
-    $("input[name*='_quantity]'], input[name*='[price]']").on 'keyup change', ->
-      order_quantity = $(this).closest('.request').find("input[name*='[order_quantity]']").val()
-      approved_quantity = $(this).closest('.request').find("input[name*='[approved_quantity]']").val()
-      requested_quantity = $(this).closest('.request').find("input[name*='[requested_quantity]']").val()
-      quantity = order_quantity or approved_quantity or requested_quantity
-      price_el = $(this).closest('.request').find("input[name*='[price]']")
-      total = quantity * price_el.val()
-      formatted_total = accounting.formatMoney(total, {symbol: 'CHF', format: "%s %v", precision: 0, thousand: "'"})
-      $(this).closest('.request').find(".total_price").data('total', total).html(formatted_total)
-      big_total = 0
-      $(".total_price").each ->
-        if Number($(this).data('total'))
-          big_total += Number($(this).data('total'))
-      formatted_big_total = accounting.formatMoney(big_total, {symbol: 'CHF', format: "%s %v", precision: 0, thousand: "'"})
-      $(".big_total_price").html(formatted_big_total)
-
-    $("input[name*='[article_name]']").on('keypress', ->
-      $(this).closest('.form-group').find("input[name*='[model_id]']").val('')
-    ).autocomplete
-      minLength: 3
-      source: ( request, response )->
-        $.ajax
-          url: "/procurement/models.json"
-          dataType: "json"
-          data:
-            search_term: request.term
-          success: ( data )->
-            response( data )
-      select: ( event, ui )->
-        $(this).closest('.form-group').find("input[name*='[model_id]']").val( ui.item.id )
-        $(this).val( ui.item.name ).change()
-        false
-    .each ->
-      $(this).data('ui-autocomplete')._renderItem = ( ul, item )->
-        $( "<li>" ).append( "<a>" + item.name + "</a>" ).appendTo( ul )
-
-    $("input[name*='[supplier_name]']").on('keypress', ->
-      $(this).closest('.form-group').find("input[name*='[supplier_id]']").val('')
-    ).autocomplete
-      minLength: 3
-      source: ( request, response )->
-        $.ajax
-          url: '/procurement/suppliers.json'
-          dataType: "json"
-          data:
-            search_term: request.term
-          success: ( data )->
-            response( data )
-      select: ( event, ui )->
-        $(this).closest('.form-group').find("input[name*='[supplier_id]']").val( ui.item.id )
-        $(this).val( ui.item.name ).change()
-        false
-    .each ->
-      $(this).data('ui-autocomplete')._renderItem = ( ul, item )->
-        $( "<li>" ).append( "<a>" + item.name + "</a>" ).appendTo( ul )
-
-    $("input[name*='[receiver]']").autocomplete
-      minLength: 3
-      source: ( request, response )->
-        $.ajax
-          url: '/procurement/users.json'
-          dataType: "json"
-          data:
-            search_term: request.term
-          success: ( data )->
-            response( data )
-            #response($.map data, (item)->
-            #  {label: item.firstname + ' ' + item.lastname, value: item.id})
-      select: ( event, ui )->
-        $(this).val( ui.item.firstname + " " + ui.item.lastname ).change()
-        false
-    .each ->
-      $(this).data('ui-autocomplete')._renderItem = ( ul, item )->
-        $( "<li>" ).append( "<a>" + item.firstname + " " + item.lastname + "</a>" ).appendTo( ul )
-
-    $("form button[type='submit']").on 'click', ->
-      if $('form :invalid').length
-        scroll_to $('form :invalid').first().closest('.request')
-        false
-
-    form_data_before_changes = $('form').serialize()
-
-    $('form').on('change keyup', ->
-      attachments = $("input[type='file']").map(-> $(this).val() ).get().join('')
-      if form_data_before_changes != $('form').serialize() or attachments != ''
-        $('.flash').hide()
-        $("form button[type='submit']").removeAttr('disabled')
-        window.onbeforeunload = -> return "#{_('You have unsaved data. Would you like to delete the data?')}"
-      else
-        $('.flash').show()
-        $("form button[type='submit']").attr('disabled', 'true')
-        window.onbeforeunload = null
-    ).on('ajax:success', (e, data, status, xhr) ->
-      window.onbeforeunload = null
-      location.replace $(this).attr('action')
-    ).on 'ajax:error', (e, xhr, status, error) ->
-      errors = ''
-      for error in xhr.responseJSON
-        errors += '<li>' + error + '</li>'
-      el = $(".flash")
-      el.html('<ul class="alert alert-danger" style="padding-left: 2em;">' + errors + '</ul>').show()
-      $('html, body').animate({
-        scrollTop: el.offset().top - 100
-      }, 200)
-
-    $('form input').keypress (e)->
-      charCode = e.charCode || e.keyCode || e.which
-      if charCode  == 13
-        return false
-
-    $('.attachments a.delete').on 'click', ->
-      li = $(this).closest('li')
-      if li.find("input[name*='[attachments_delete]']").val() == '1'
-        li.css('text-decoration', 'none').find("input[name*='[attachments_delete]']").val('')
-      else
-        li.css('text-decoration', 'line-through').find("input[name*='[attachments_delete]']").val('1')
-      li.closest('form').change()
-      false
-
+    ###############################################################################
+    # for sidebar:
     $("a.show_template").on 'click', ->
       show_template $(this).data('template_id')
+      false
+
+    #$('.panel-footer').on 'click', '.fa-plus-circle', ->
+    $('.sidebar-wrapper').on 'click', '.fa-plus-circle', ->
+      #target_el = $(this).closest('tfoot').prev('tbody').find('tr:last-child')
+      #cloned_el = target_el.clone()
+      #cloned_el.find('input').val('')
+      #cloned_el.insertAfter(target_el)
+      #$(this).hide()
+      el = $('.request[data-request_id="new_request"]')
+      #el.find('[data-to_be_required]').attr('required', 'true')
+      el.find("input:radio[name*='[priority]'][value='normal']").prop('checked', 'true')
+      el.removeClass('hidden').closest('form').change()
+      do zebra_rows
+      scroll_to(el)
       false
 
 - if params[:template_id]

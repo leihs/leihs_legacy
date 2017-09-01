@@ -61,7 +61,7 @@ module FactorySteps
     end
   end
 
-  step 'a request with following data exist' do |table|
+  step ':nth request with following data exist' do |nth, table|
     @changes = {
       category: @category
     }
@@ -84,6 +84,8 @@ module FactorySteps
       when 'requested amount'
         @changes[:requested_quantity] = \
           (hash['value'] || Faker::Number.number(2)).to_i
+      when 'quantity'
+        @changes[:quantity] = hash['value']
       when 'approved amount'
         @changes[:approved_quantity] = \
           (hash['value'] || Faker::Number.number(2)).to_i
@@ -101,16 +103,25 @@ module FactorySteps
         @changes[:replacement] = (hash['value'] == 'Replacement' ? 1 : 0)
       when 'price'
         @changes[:price] = hash['value']
+      when 'category'
+        category = \
+          if hash['value'] == 'inspected'
+            Procurement::Category.all.detect do |category|
+              not category.inspectable_by?(@current_user)
+            end
+          end
+        @changes[:category] = category || hash['value']
       when 'building'
         @building = FactoryGirl.create(:building, name: hash['value'])
       when 'room'
         @changes[:room_id] = \
           FactoryGirl.create(:room, name: hash['value'], building: @building).id
       else
-        raise
+        fail "unknown attribute given! `#{hash['key']}`"
       end
     end
-    @request = FactoryGirl.create :procurement_request, @changes
+    request = FactoryGirl.create :procurement_request, @changes
+    instance_variable_set("@request#{nth}", request)
   end
 
   step 'following requests exist for the current budget period' do |table|

@@ -17,6 +17,7 @@ end
 module CommonSteps
 
   def wait_until(wait_time = 60, &block)
+    raise ArgumentError unless block_given?
     begin
       Timeout.timeout(wait_time) do
         until value = block.call
@@ -28,6 +29,21 @@ module CommonSteps
       # rubocop:disable Style/RaiseArgs
       fail Timeout::Error.new(block.source)
       # rubocop:enable Style/RaiseArgs
+    end
+  end
+
+  def toggle_bootstrap_collapse(state, label, check: true)
+    fail unless [:open, :close].include? state
+    toggler = find('[data-toggle="collapse"]', text: label)
+    target = find('#' + toggler[:href].split('#').last, visible: nil)
+    toggler.click
+    return true unless check
+    wait_until(15) do
+      if state == :open
+        target[:class].include? 'in'
+      else
+        toggler[:class].include? 'collapsed'
+      end
     end
   end
 
@@ -246,7 +262,9 @@ module CommonSteps
                             find("textarea[name*='[inspection_comment]']")
                         end
       end
-      expect(input_field['required']).to eq 'true' # ;-)
+      wait_until do
+        input_field['required'] == 'true'
+      end
       color = (label_field || input_field).native.css_value('background-color')
       expect(color).to eq 'rgba(242, 222, 222, 1)'
     end

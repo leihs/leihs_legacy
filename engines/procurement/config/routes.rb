@@ -6,14 +6,14 @@ Procurement::Engine.routes.draw do
 
   resources :rooms, only: :index
 
-  resources :requests, only: [] do
+  resources :requests, only: [:edit, :update] do
     collection do
       get :overview
     end
   end
 
   resources :users, only: [:index, :create] do
-    resources :budget_periods, only: [] do
+    resources :budget_periods do
       resources :requests, only: :new
       scope format: true, constraints: {format: ['csv', 'xlsx']} do
         resources :requests, only: :index
@@ -22,8 +22,8 @@ Procurement::Engine.routes.draw do
   end
 
   resources :categories, only: [:index, :create] do
-    resources :budget_periods, only: [] do
-      resources :users, only: [] do
+    resources :budget_periods do
+      resources :users do
         collection do
           get :choose
         end
@@ -35,7 +35,7 @@ Procurement::Engine.routes.draw do
       end
     end
     scope format: true, constraints: {format: ['csv', 'xlsx']} do
-      resources :budget_periods, only: [] do
+      resources :budget_periods do
         resources :requests, only: [:index]
       end
     end

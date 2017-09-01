@@ -18,15 +18,15 @@ steps_for :inspection do
   include RequestSteps
 
   step 'I can not move any request to the old budget period' do
-    within '.request', match: :first do
-      current_scope.click # NOTE trick to scroll element into view
-
+    within("form[action='#{procurement.request_path(@request.id)}']") do
       link_on_dropdown(@past_budget_period.to_s, false)
     end
   end
 
   step 'I can not submit the data' do
-    find 'button[disabled]', text: _('Save'), match: :first
+    within("form[action='#{procurement.request_path(@request.id)}']") do
+      find 'button[disabled]', text: _('Save'), match: :first
+    end
   end
 
   step 'I press on the Userplus icon of a sub category I am inspecting' do
@@ -222,21 +222,24 @@ steps_for :inspection do
   end
 
   step 'the following fields are not editable' do |table|
-    table.raw.flatten.each do |value|
-      within '.form-group', text: _(value), match: :prefer_exact do
-        case value
-        when 'Motivation'
-          expect(page).to have_no_selector \
-            "[name='requests[#{@request.id}][motivation]']"
-          find '.col-xs-8', text: @request.motivation
-        when 'Priority'
-          expect(page).to have_no_selector \
-            "[name='requests[#{@request.id}][priority]']"
-          find '.col-xs-8', text: _(@request.priority.capitalize)
-        when 'Requested quantity'
-          expect(page).to have_no_selector \
-            "[name='requests[#{@request.id}][requested_quantity]']"
-          find '.col-xs-4', text: @request.requested_quantity
+    within('#filter_target') do
+      table.raw.flatten.each do |value|
+        within '.form-group', text: _(value), match: :prefer_exact do
+          case value
+          when 'Motivation'
+            expect(page).to have_no_selector \
+              "[name='requests[#{@request.id}][motivation]']"
+            find '.col-xs-8', text: @request.motivation
+
+          when 'Priority'
+            expect(page).to have_no_selector \
+              "[name='requests[#{@request.id}][priority]']"
+            find '.col-xs-8', text: _(@request.priority.capitalize)
+          when 'Requested quantity'
+            expect(page).to have_no_selector \
+              "[name='requests[#{@request.id}][requested_quantity]']"
+            find '.col-xs-4', text: @request.requested_quantity
+          end
         end
       end
     end
@@ -318,12 +321,12 @@ steps_for :inspection do
       find('.collapsed').click if el1.has_selector? '.collapsed'
 
       el2 = if @request
-              ".request[data-request_id='#{@request.id}']"
+              ["[data-request_id='#{@request.id}']", visible: true]
             else
-              ".request[data-request_id='new_request']"
+              [".request[data-request_id='new_request']"]
             end
 
-      within el2 do
+      within(*el2) do
         table.raw.flatten.each do |value|
           case value
           when 'Price'
@@ -347,4 +350,87 @@ steps_for :inspection do
       .find('select')
       .select(room)
   end
+
+  step 'I open this request' do
+    step 'I navigate to the requests overview page'
+    step 'I open the requests main category'
+    step 'I open the requests category'
+    step 'I click on the request line'
+    step 'I see the request inline edit form' # to make sure its loaded
+  end
+
+  step 'I open the requests main category' do
+    toggle_bootstrap_collapse(:open, @request.category.main_category.name)
+  end
+
+  step 'I open the requests category' do
+    toggle_bootstrap_collapse(:open, @request.category.name)
+  end
+
+  step 'I try to close the requests main category' do
+    toggle_bootstrap_collapse(
+      :close, @request.category.main_category.name, check: false)
+  end
+
+  step 'I try to close the requests category' do
+    toggle_bootstrap_collapse(:close, @request.category.name, check: false)
+  end
+
+  step 'I try to toggle a filter' do
+    find('form#filter_panel').all('.form-group input[type="checkbox"]')
+      .sample.click
+  end
+
+  step 'I see the request line' do
+    line = find(".collapse.in > [data-request_id='#{@request.id}']")
+    expect(line).to have_content @request.article_name
+  end
+
+  step 'I click on the request line' do
+    line = find("[data-request_id='#{@request.id}']")
+    line.click
+  end
+
+  step 'I see :nth request inline edit form' do |nth|
+    fail unless nth == '' # only supports n=1, just for more explicit/readable step
+    find(
+      "form[action='#{procurement.request_path(@request.id)}'].in" \
+      " [data-request_id='#{@request.id}']"
+    )
+  end
+
+  step 'I save the inline form' do
+    within("form[action='#{procurement.request_path(@request.id)}']") do
+      click_on _('Save')
+    end
+  end
+
+  step 'I see the updated request line' do
+    line = find("[data-request_id='#{@request.id}']", visible: true)
+    within(line) do
+      expect(page).to have_content @changes[:article_name]
+      expect(page).to have_content @changes[:user].to_s
+    end
+  end
+
+  step 'the inline form has an error message :msg' do |msg|
+    within("form[action='#{procurement.request_path(@request.id)}']") do
+      flash_msg = find('.alert.alert-danger')
+      expect(flash_msg.text).to eq msg
+    end
+  end
+
+  step 'I try to open the 2. request' do
+    req = @request2
+    toggle_bootstrap_collapse(:open, req.category.main_category.name)
+    toggle_bootstrap_collapse(:open, req.category.name)
+    find("[data-request_id='#{req.id}']").click
+  end
+
+  step 'I change any text input field in the request form' do
+    within("form[action='#{procurement.request_path(@request.id)}']") do
+      all('input[type="text"], input[placeholder]').sample.set(Faker::Lorem.word)
+    end
+  end
+
 end

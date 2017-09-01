@@ -1,4 +1,4 @@
-%form#filter_panel
+%form#filter_panel.disabled
   %input{type: :hidden, name: 'filter[sort_by]', value: @filter['sort_by']}
   %input{type: :hidden, name: 'filter[sort_dir]', value: @filter['sort_dir']}
 
@@ -103,19 +103,35 @@
   %i.fa.fa-table
   = _('Excel export')
 
+:css
+  form#filter_panel {
+    transition: opacity 0.5s
+  }
+  form#filter_panel.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+
 :coffeescript
   $(document).ready ->
     currentRequest = null
     timeoutId = null
-    $('form#filter_panel').on('ajax:beforeSend', (e, xhr, settings)->
-      $('#filter_target').addClass('transparency')
+    $filterPanel = $('form#filter_panel')
+    $filterTarget = $('#filter_target')
+
+    enableForm = => $filterPanel.removeClass('disabled')
+    isDisabled = => $filterPanel.hasClass('disabled')
+
+    $filterPanel.on('ajax:beforeSend', (e, xhr, settings)->
+      $filterTarget.addClass('transparency')
       currentRequest.abort() if (currentRequest)
       currentRequest = xhr
       settings.url = settings.url.replace('&format=csv', '')
       settings.url = settings.url.replace('&format=xlsx', '')
     ).on('ajax:complete', (e, data, status, xhr) ->
       $(this).removeAttr("data-remote").removeData('remote')
-      $('#filter_target').html(data.responseText).removeClass('transparency')
+      $filterTarget.html(data.responseText).removeClass('transparency')
     ).keydown((e)->
       charCode = e.charCode || e.keyCode || e.which
       if charCode == 13
@@ -129,16 +145,20 @@
           $(this).data('remote', true).submit()
         , 400
     ).on('change', (event)->
+      return false if isDisabled()
       if event.target.name != 'filter[search]' and event.target.name != 'filter[category_ids][]'
         $(this).data('remote', true).submit()
-    ).change()
+    )
 
-    $("#filter_panel select").multiselect(
+    $filterPanel.find("select").multiselect(
       includeSelectAllOption: true
       enableClickableOptGroups: true
       selectAllText: "#{_('Select all')}"
       nonSelectedText: "#{_('None selected')}"
       allSelectedText: "#{_('All selected')}"
       nSelectedText: " #{_('selected')}"
-      onChange: -> $('form#filter_panel').data('remote', true).submit()
+      onChange: -> $filterPanel.data('remote', true).submit()
     )
+
+    enableForm()
+    $filterPanel.change() # trigger initial loading of content according to filter

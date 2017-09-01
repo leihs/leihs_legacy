@@ -1,0 +1,13 @@
+= form_tag(procurement.request_path(@request.id), method: :put, remote: true, data: { type: :html },
+    class: 'form-horizontal', style: 'padding: 15px 0; border-top: 1px solid #e3e3e3;') do
+
+  = render partial: 'request', locals: { request: @request }
+
+  .text-right
+    - if @request.editable?(current_user)
+      %button.btn.btn-default.cancel-button= _('Cancel')
+      %button.btn.btn-success{type: :submit, disabled: true}
+        %i.fa.fa-check
+        = _('Save')
+    - else
+      %button.btn.btn-default.cancel-button= _('Close')

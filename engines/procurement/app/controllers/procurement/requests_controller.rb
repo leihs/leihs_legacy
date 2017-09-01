@@ -8,7 +8,9 @@ module Procurement
 
     before_action do
       if procurement_inspector? or procurement_admin?
-        @user = User.not_as_delegations.find(params[:user_id]) if params[:user_id]
+       if params[:user_id]
+         @user = User.not_as_delegations.find(params[:user_id])
+       end
       else # only requester
         @user = current_user
       end
@@ -26,6 +28,7 @@ module Procurement
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def index
       h = { budget_period_id: @budget_period }
       h[:user_id] = @user if @user
@@ -33,9 +36,12 @@ module Procurement
       @requests = Request.where h
       @buildings = Building.all
       @rooms = [Room.general_general]
+      @for_inline_edit = request.xhr?
 
       respond_to do |format|
-        format.html
+        format.html do
+          render(layout: !@for_inline_edit)
+        end
         format.csv do
           send_data Request.csv_export(@requests, current_user),
                     type: 'text/csv; charset=utf-8; header=present',
@@ -46,6 +52,43 @@ module Procurement
                     type: 'application/xlsx',
                     disposition: "filename=#{_('Requests')}.xlsx"
         end
+      end
+    end
+    # rubocop:enable Metrics/MethodLength
+
+    # render edit form for a single request (PJAX)
+    def edit
+      @request = Request.find(id_param)
+      @user = @request.user
+
+      unless RequestPolicy.new(current_user, request_user: @user).allowed?
+        raise Pundit::NotAuthorizedError
+      end
+
+      @buildings = Building.all
+      @rooms = [Room.general_general]
+      @category = @request.category
+      @budget_period = @request.budget_period
+
+      render layout: !request.xhr?
+    end
+
+    # update a single request
+    def update
+      @request = Request.find(id_param)
+      @category = @request.category
+
+      request_params = params.require(:requests).require(@request.id)
+      handle_attachments! request_params
+      permitted = permit_request_attributes(request_params,
+                                            category: @category,
+                                            user: @request.user)
+
+      r = update_request(params, permitted)
+      if r.errors.any?
+        render json: r.errors.full_messages, status: 422
+      else
+        render layout: !request.xhr?, locals: { r: r }, format: 'html'
       end
     end
 
@@ -76,7 +119,7 @@ module Procurement
     end
 
     def create
-      errors = create_or_update_or_destroy
+      errors = create_or_update
 
       if errors.empty?
         flash[:success] = _('Saved')
@@ -128,10 +171,8 @@ module Procurement
 
     private
 
-    def initialize_keys
-      keys = Request::REQUESTER_EDIT_KEYS
-      keys += Request::INSPECTOR_KEYS if @category.inspectable_by?(current_user)
-      keys
+    def id_param
+      params.require(:id)
     end
 
     def handle_attachments!(params_x)
@@ -141,18 +182,15 @@ module Procurement
       end
     end
 
-    def create_or_update_or_destroy
-      keys = initialize_keys
-
+    def create_or_update
       params.require(:requests).values.map do |param|
-        if param[:id].blank? or @user == current_user
-          keys += Request::REQUESTER_NEW_KEYS
-        end
         handle_attachments! param
-        permitted = param.permit(keys)
+
+        permitted = \
+          permit_request_attributes(param, category: @category, user: @user)
 
         if param[:id]
-          r = update_or_destroy(param, permitted)
+          r = update_request(param, permitted)
         else
           next if permitted[:motivation].blank?
           r = @category.requests.create(permitted) do |x|
@@ -164,18 +202,20 @@ module Procurement
       end.flatten.compact
     end
 
-    def update_or_destroy(param, permitted)
+    def update_request(param, permitted)
       r = Request.find(param[:id])
-      if param[:attachments_delete]
-        param[:attachments_delete].each_pair do |k, v|
+
+      # NOTE: hacky, 2nd case is for single `#update`
+      attachments_to_delete = param[:attachments_delete] \
+        || param.try(:fetch, :requests, nil).try(:fetch, r.id.to_sym, nil)
+                .try(:fetch, :attachments_delete, nil)
+
+      if attachments_to_delete
+        attachments_to_delete.each_pair do |k, v|
           r.attachments.destroy(k) if v == '1'
         end
       end
-      if permitted.values.all?(&:blank?)
-        r.destroy
-      else
-        r.update_attributes(permitted)
-      end
+      r.update_attributes(permitted)
       r
     end
 
@@ -185,7 +225,9 @@ module Procurement
           {}
         else
           file = h['file']
-          attachment_attributes(file)
+          unless file.blank?
+            attachment_attributes(file)
+          end
         end
       end
     end
@@ -198,6 +240,23 @@ module Procurement
       attrs['content_type'] = file.content_type
       attrs['metadata'] = MetadataExtractor.new(file.tempfile.path).to_hash
       attrs
+    end
+
+    def initialize_keys(category:, new_request: false)
+      keys = Request::REQUESTER_EDIT_KEYS
+      if category.inspectable_by?(current_user)
+        keys += Request::INSPECTOR_KEYS
+      end
+      if new_request
+        keys += Request::REQUESTER_NEW_KEYS
+      end
+      keys
+    end
+
+    def permit_request_attributes(r_params, category:, user:)
+      new_request = r_params[:id].blank? || user == current_user
+      keys = initialize_keys(category: category, new_request: new_request)
+      r_params.permit(keys)
     end
 
   end
