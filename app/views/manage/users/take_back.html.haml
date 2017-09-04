@@ -37,14 +37,14 @@
     #lines.padding-inset-m.padding-top-xxs= render :partial => "manage/reservations/grouped_lines_with_action_date", :locals => {:grouped_lines_by_date => @grouped_lines_by_date, :line_partial => "manage/reservations/take_back"}
 
 :coffeescript
-  
+
   jQuery ->
 
-    App.User.addRecord new App.User $.extend {groupIds: #{@group_ids}}, #{@user.to_json(except: :extended_info)}
+    App.User.addRecord new App.User $.extend {groupIds: #{@group_ids.to_json}}, #{@user.to_json(except: :extended_info)}
 
     for purpose in #{@reservations.map(&:purpose).uniq.to_json}
       if purpose != null
-        App.Purpose.addRecord new App.Purpose purpose 
+        App.Purpose.addRecord new App.Purpose purpose
 
     for contract in #{@contracts.to_json}
       App.Contract.addRecord new App.Contract contract

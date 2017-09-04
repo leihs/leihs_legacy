@@ -130,9 +130,9 @@
         "<li>" + item.firstname + " " + item.lastname + "</li>"
       prePopulate: $(el).data('current')
       preventDuplicates: true
-      hintText: "#{_('Type in a search term')}"
-      noResultsText: "#{_('No results')}"
-      searchingText: "#{_('Searching...')}"
+      hintText: #{_('Type in a search term').to_json}
+      noResultsText: #{_('No results').to_json}
+      searchingText: #{_('Searching...').to_json}
 
   $(document).ready ->
     $('form > .h3').on 'click', '.fa-plus-circle', ->
@@ -187,7 +187,7 @@
       if form_data_before_changes != $('form').serialize() or attachments != ''
         $('.flash').hide()
         $("form button[type='submit']").removeAttr('disabled')
-        window.onbeforeunload = -> return "#{_('You have unsaved data. Would you like to delete the data?')}"
+        window.onbeforeunload = -> return #{_('You have unsaved data. Would you like to delete the data?').to_json}
       else
         $('.flash').show()
         $("form button[type='submit']").attr('disabled', 'true')

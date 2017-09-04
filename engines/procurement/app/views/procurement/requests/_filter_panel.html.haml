@@ -153,10 +153,10 @@
     $filterPanel.find("select").multiselect(
       includeSelectAllOption: true
       enableClickableOptGroups: true
-      selectAllText: "#{_('Select all')}"
-      nonSelectedText: "#{_('None selected')}"
-      allSelectedText: "#{_('All selected')}"
-      nSelectedText: " #{_('selected')}"
+      selectAllText: #{_('Select all').to_json}
+      nonSelectedText: #{_('None selected').to_json}
+      allSelectedText: #{_('All selected').to_json}
+      nSelectedText: " " + #{_('selected').to_json}
       onChange: -> $filterPanel.data('remote', true).submit()
     )
 

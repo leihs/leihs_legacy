@@ -243,9 +243,9 @@
 - if params[:template_id]
   :coffeescript
     $(document).ready ->
-      show_template '#{params[:template_id]}'
+      show_template #{params[:template_id].to_json}
 
 - if params[:request_id]
   :coffeescript
     $(document).ready ->
-      show_request '#{params[:request_id]}'
+      show_request #{params[:request_id].to_json}

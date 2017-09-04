@@ -54,7 +54,7 @@
 
     element2 = $("select[name='user[delegator_user_id]']").select2
       minimumInputLength: 3
-      placeholder: '#{_("Name of the responsible")}'
+      placeholder: #{_("Name of the responsible").to_json}
       ajax:
         url: '/admin/users.json'
         dataType: 'json'

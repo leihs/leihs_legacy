@@ -205,7 +205,7 @@
     theme.event.track.autoWidthMargin = 1.0;
     theme.event.track.offset = 60;
     theme.event.track.gap = -13;
-    theme.event.overviewTrack.offset = #{sum_w};
+    theme.event.overviewTrack.offset = Number(#{sum_w});
     theme.event.tape.height = 15;
 
     var bandNames = #{bandNames_js.to_json};

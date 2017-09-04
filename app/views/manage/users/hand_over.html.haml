@@ -40,11 +40,11 @@
 
   jQuery ->
 
-    App.User.addRecord new App.User $.extend {groupIds: #{@group_ids}}, #{@user.to_json(except: :extended_info)}
+    App.User.addRecord new App.User $.extend {groupIds: #{@group_ids.to_json}}, #{@user.to_json(except: :extended_info)}
 
     for purpose in #{@reservations.map(&:purpose).uniq.to_json}
       if purpose != null
-        App.Purpose.addRecord new App.Purpose purpose 
+        App.Purpose.addRecord new App.Purpose purpose
 
     App.Contract.addRecord new App.Contract #{@contract.to_json}
 
