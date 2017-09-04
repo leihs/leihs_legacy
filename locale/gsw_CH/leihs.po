@@ -702,7 +702,7 @@ msgid "Kind regards,"
 msgstr "Schöni Grüess"
 
 msgid "Language"
-msgstr ""
+msgstr "Sproch"
 
 msgid "Last Checked"
 msgstr "Letschti Inventur"
@@ -2904,3 +2904,9 @@ msgstr "högschtmöglich"
 
 msgid "Swap Model"
 msgstr "Modäll tuusche"
+
+msgid "Languages"
+msgstr "Sproch"
+
+msgid "List of Languages"
+msgstr "Lischte vode Sproch"

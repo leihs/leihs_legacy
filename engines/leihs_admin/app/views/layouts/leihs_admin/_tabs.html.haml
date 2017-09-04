@@ -43,6 +43,10 @@
     %a{href: admin.audits_path}
       = _('Audits')
 
+  %li{role: 'presentation', class: params[:controller] == 'leihs_admin/languages' ? 'active' : nil}
+    %a{href: admin.languages_path}
+      = _('Languages')
+
   -#%li{role: 'presentation'}
     %a{:href => '/admin/scenarios'}
       = _('Scenarios')

@@ -1,0 +1,26 @@
+- content_for :title, _("List of Languages")
+
+.row
+  %h1= yield :title
+
+%table.table.table-stripped
+  %thead
+    %tr
+      %th= 'name'
+      %th= 'id'
+      %th= 'is_default?'
+      %th= 'is_active?'
+  %tbody
+    - @languages.each do |lang|
+      %tr
+        %td
+          %strong= lang.name
+
+        %td
+          = lang.locale_name
+
+        %td
+          = lang.default
+
+        %td
+          = lang.active

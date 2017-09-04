@@ -4477,6 +4477,14 @@ window.i18n.locale_data = {
       "(unknown)": [
          null,
          "(unbekannt)"
+      ],
+      "Languages": [
+         null,
+         "Sprachen"
+      ],
+      "List of Languages": [
+         null,
+         "Liste der Sprachen"
       ]
    }
 }

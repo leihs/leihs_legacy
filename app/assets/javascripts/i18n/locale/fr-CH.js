@@ -4420,6 +4420,14 @@ window.i18n.locale_data = {
          null,
          "Date de fin"
       ],
+      "Languages": [
+         null,
+         "Langues"
+      ],
+      "List of Languages": [
+         null,
+         "Liste des langues"
+      ],
       "In list": [
          null,
          "Dans la liste"

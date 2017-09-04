@@ -3327,6 +3327,12 @@ msgstr "Date de début"
 msgid "Enddate"
 msgstr "Date de fin"
 
+msgid "Languages"
+msgstr "Langues"
+
+msgid "List of Languages"
+msgstr "Liste des langues"
+
 msgid "In list"
 msgstr "Dans la liste"
 

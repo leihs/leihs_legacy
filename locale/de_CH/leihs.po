@@ -3461,3 +3461,9 @@ msgstr "Konten"
 
 msgid "(unknown)"
 msgstr "(unbekannt)"
+
+msgid "Languages"
+msgstr "Sprachen"
+
+msgid "List of Languages"
+msgstr "Liste der Sprachen"

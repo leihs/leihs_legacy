@@ -39,4 +39,6 @@ LeihsAdmin::Engine.routes.draw do
   get 'mail_templates/:dir/:name', to: 'mail_templates#edit'
   put 'mail_templates/:dir/:name', to: 'mail_templates#update'
 
+  # Languages
+  get 'languages',           to: 'languages#index'
 end

@@ -985,7 +985,7 @@ window.i18n.locale_data = {
       ],
       "Language": [
          null,
-         ""
+         "Sproch"
       ],
       "Last Checked": [
          null,
@@ -3851,6 +3851,14 @@ window.i18n.locale_data = {
       "Swap Model": [
          null,
          "Modäll tuusche"
+      ],
+      "Languages": [
+         null,
+         "Sproch"
+      ],
+      "List of Languages": [
+         null,
+         "Lischte vode Sproch"
       ]
    }
 }

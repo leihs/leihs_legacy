@@ -3376,4 +3376,9 @@ msgid "Accounts"
 msgstr ""
 
 msgid "(unknown)"
+
+msgid "Languages"
+msgstr ""
+
+msgid "List of Languages"
 msgstr ""
