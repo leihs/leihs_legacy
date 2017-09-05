@@ -1,5 +1,6 @@
 class Manage::ModelsController < Manage::ApplicationController
   include FileStorage
+  include WorkaroundRailsBug25198
 
   private
 
@@ -184,6 +185,10 @@ class Manage::ModelsController < Manage::ApplicationController
     model.properties.destroy_all
     # REMAINING DATA
     params[:model].delete(:type)
+    ###############################################################################
+    # TODO: # Rails bug: https://github.com/rails/rails/issues/25198
+    deal_with_destroy_nested_attributes!(params[:model])
+    ###############################################################################
     model.update_attributes(params[:model]) and model.save
   end
 
