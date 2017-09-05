@@ -2610,6 +2610,10 @@ window.i18n.locale_data = {
          null,
          "Helfer"
       ],
+      "Expert Search": [
+         null,
+         "Expertäsuechi"
+      ],
       "Suspended": [
          null,
          "Gschperrt"
@@ -2705,6 +2709,10 @@ window.i18n.locale_data = {
       "Inventory Helper": [
          null,
          "Inventar-Hälfer"
+      ],
+      "Inventory Expert Search": [
+         null,
+         "Inventar-Expertäsuechi"
       ],
       "Select Image": [
          null,

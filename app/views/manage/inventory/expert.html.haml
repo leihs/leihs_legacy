@@ -1,0 +1,8 @@
+-content_for :title, _("Expert Search")
+-content_for :inventory_section, "active"
+
+#inventory-helper-view.wrapper.margin-top-m
+
+  = render :partial => 'manage/tabs/inventory', :locals => {:active_tab => :expert}
+
+  = react_component('Expert', { inventory_pool_id: params['inventory_pool_id'] })

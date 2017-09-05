@@ -1984,6 +1984,9 @@ msgstr ""
 msgid "Helper"
 msgstr ""
 
+msgid "Expert Search"
+msgstr ""
+
 msgid "Suspended"
 msgstr ""
 
@@ -2057,6 +2060,9 @@ msgid "Options"
 msgstr ""
 
 msgid "Inventory Helper"
+msgstr ""
+
+msgid "Inventory Expert Search"
 msgstr ""
 
 msgid "Select Image"

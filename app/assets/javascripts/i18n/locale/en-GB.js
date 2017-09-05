@@ -2577,6 +2577,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Expert Search": [
+         null,
+         ""
+      ],
       "Suspended": [
          null,
          ""
@@ -2666,6 +2670,10 @@ window.i18n.locale_data = {
          ""
       ],
       "Inventory Helper": [
+         null,
+         ""
+      ],
+      "Inventory Expert Search": [
          null,
          ""
       ],

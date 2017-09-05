@@ -203,7 +203,11 @@ class ReservationsBundle < ApplicationRecord
                 .or(Option.arel_table[:product].matches(qq))
                 .or(Option.arel_table[:version].matches(qq))
                 .or(Item.arel_table[:inventory_code].matches(qq))
-                .or(Item.arel_table[:properties].matches(qq))
+                .or(
+                  Arel::Nodes::SqlLiteral.new(
+                    "items.properties::jsonb::text ilike '#{qq}'"
+                  )
+                )
                 .or(Purpose.arel_table[:description].matches(qq)))
           end
           sql

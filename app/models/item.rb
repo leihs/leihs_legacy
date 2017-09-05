@@ -48,7 +48,11 @@ class Item < ApplicationRecord
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
-  store :properties
+  # Note: Rails correctly serializes Jsonb on its own. However, the
+  # resulting hashes when reading from the DB contain string keys,
+  # but no symbol keys. Since we still use symbol keys everywhere
+  # to access the properties, we need the following serializer:
+  serialize :properties, Concerns::HashSerializer
 
   ####################################################################
 

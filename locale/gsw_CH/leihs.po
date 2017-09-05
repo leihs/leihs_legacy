@@ -1980,6 +1980,9 @@ msgstr "Si chönd kei Ziile usegäh wo kän Inventarcode zuegwise händ"
 msgid "Helper"
 msgstr "Helfer"
 
+msgid "Expert Search"
+msgstr "Expertäsuechi"
+
 msgid "Suspended"
 msgstr "Gschperrt"
 
@@ -2051,6 +2054,9 @@ msgstr "Optione"
 
 msgid "Inventory Helper"
 msgstr "Inventar-Hälfer"
+
+msgid "Inventory Expert Search"
+msgstr "Inventar-Expertäsuechi"
 
 msgid "Select Image"
 msgstr "Bild uuswähle"
