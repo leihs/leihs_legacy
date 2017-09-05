@@ -311,6 +311,10 @@ module Leihs
           row.merge(compact_id: row[:id].to_s)
         end
 
+        def map_items_row row
+          row.except('updater_id')
+        end
+
         def custom_pre_migrator(table_name, row)
           case table_name
           when 'model_group_links'
@@ -321,6 +325,8 @@ module Leihs
             map_contract_row row
           when 'images'
             map_images_row row
+          when 'items'
+            map_items_row row
           when 'attachments'
             map_attachments_row row
           when 'procurement_attachments'
@@ -361,9 +367,14 @@ module Leihs
           Rails.logger.info "Importing #{table_name} with #{rows.count} rows..."
           class_name = singleton_class.const_get("LeihsDBIOImport#{table_name.to_s.camelize}")
           rows = convert(table_name, rows).map do |row|
+            begin
             class_name.create! row.reject { |k, v| k == 'after_create' }
             if row.has_key?('after_create')
               custom_after_create! row
+            end
+            rescue => e
+              #binding.pry
+              raise e
             end
           end
           Rails.logger.info "Imported #{table_name} with #{rows.count} rows."
