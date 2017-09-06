@@ -421,9 +421,11 @@
 
     _searchResultLoader(searchResult) {
       if(searchResult[searchResult.length - 1].inventory.has_more) {
+        // var loading = <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading.gif' />
+        var loading = <div className='loading-bg' />
         return (
           <div key={'loader'} className='line row focus-hover-thin'>
-            <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading.gif' />
+            {loading}
           </div>
         )
       } else {

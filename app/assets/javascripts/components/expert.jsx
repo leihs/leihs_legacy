@@ -132,17 +132,19 @@
     },
 
     _searchResultLoading() {
-        return (
-          <div className='table' key='result'>
-            <div className='table-row'>
-              <div className='table-cell list-of-lines even separated-top padding-bottom-s min-height-l' id='inventory'>
-                <div className='height-s'></div>
-                <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading.gif' />
-                <div className='height-s'></div>
-              </div>
+      // var loading = <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading.gif' />
+      var loading = <div className='loading-bg' />
+      return (
+        <div className='table' key='result'>
+          <div className='table-row'>
+            <div className='table-cell list-of-lines even separated-top padding-bottom-s min-height-l' id='inventory'>
+              <div className='height-s'></div>
+              {loading}
+              <div className='height-s'></div>
             </div>
           </div>
-        )
+        </div>
+      )
     },
 
     _searchResultComponent() {
@@ -165,12 +167,15 @@
     },
 
     _loadingFields() {
+      // var loading = <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading.gif' />
+      var loading = <div className='loading-bg' />
+
       return (
         <div className='table'>
           <div className='table-row'>
             <div className='table-cell list-of-lines even separated-top padding-bottom-s min-height-l' id='inventory' style={{border: '0px'}}>
               <div className='height-s'></div>
-              <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading.gif' />
+              {loading}
               <div className='height-s'></div>
             </div>
           </div>
