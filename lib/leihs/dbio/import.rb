@@ -3,9 +3,11 @@ module Leihs
     module Import
       class << self
 
-        LEIHS_UUID_NS = UUIDTools::UUID.sha1_create UUIDTools::UUID.parse_int(0), 'leihs'
+        uuid_ns = ENV['LEIS_UUID_NS'].presence || raise("Set a globally unique LEIS_UUID_NS value")
 
-        IGNORED_TABLES = %w(schema_migrations)
+        LEIHS_UUID_NS = UUIDTools::UUID.sha1_create UUIDTools::UUID.parse_int(0), uuid_ns
+
+        IGNORED_TABLES = %w(schema_migrations ar_internal_metadata)
 
         TABLES = %w(
           languages
