@@ -5,8 +5,9 @@ class User < ApplicationRecord
 
   serialize :extended_info
 
-  store :settings, accessors: [:latest_inventory_pool_id_before_logout,
-                               :start_screen]
+  serialize :settings
+  store_accessor :settings, [:latest_inventory_pool_id_before_logout,
+                             :start_screen]
 
   belongs_to :authentication_system
   belongs_to :language
