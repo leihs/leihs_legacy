@@ -36,16 +36,14 @@ end
 Then /^the contract is rejected$/ do
   if @daily_view_line
     within @daily_view_line do
-      within '.line-actions' do
-        find('.button', text: _('Rejected'))
-      end
+      find('.line-actions-column', text: _('Rejected'))
     end
   end
 
   rejected_contract = @current_inventory_pool.reservations_bundles.rejected.find_by(user_id: @contract.user)
   @contract.reservations.each do |line|
     if current_path == manage_contracts_path(@current_inventory_pool.id)
-      find(".line.row", text: rejected_contract.user.name).find('a.button', text: _('Rejected'))
+      find(".line.row", text: rejected_contract.user.name).find('.line-actions-column', text: _('Rejected'))
     end
     expect(rejected_contract.reservations.include? line).to be true
     expect(line.reload.status).to eq :rejected

@@ -1,5 +1,5 @@
 class window.App.ContractsRejectController extends Spine.Controller
-  
+
   events:
     "click [data-order-reject]": "setupModal"
 
@@ -17,9 +17,9 @@ class window.App.ContractsRejectController extends Spine.Controller
     @order.reject comment
     @modal.destroy true
     callback = @callback ? =>
-      button = if $(@trigger).closest(".multibutton").length then $(@trigger).closest(".multibutton").find(".button:first") else $(@trigger)
-      button.html App.Render "manage/views/contracts/rejected_button"
-      App.Button.disable button
+      buttons = $(@trigger).closest(".line-actions-column")
+      if buttons
+        buttons.replaceWith('<div class="col2of8 line-col line-actions-column"><strong>' + _jed("Rejected") + '</strong></div>')
     callback.call @
 
   fetchData: (record, callback)=>

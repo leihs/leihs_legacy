@@ -26,7 +26,7 @@ class window.App.ContractsIndexController extends Spine.Controller
     @fetchContracts(page).done =>
       @fetchUsers(page).done =>
         @fetchReservations page, =>
-          @fetchPurposes page, => 
+          @fetchPurposes page, =>
             @render target, @contracts[page], page
 
   fetchContracts: (page)=>
@@ -36,7 +36,7 @@ class window.App.ContractsIndexController extends Spine.Controller
       range: @range.get()
     data = $.extend data, { from_verifiable_users: true } if App.User.current.role == "group_manager"
     App.Contract.ajaxFetch({ data: $.param data })
-    .done (data, status, xhr) => 
+    .done (data, status, xhr) =>
       @pagination.set JSON.parse(xhr.getResponseHeader("X-Pagination"))
       contracts = (App.Contract.find(datum.id) for datum in data)
       @contracts[page] = contracts
@@ -73,6 +73,6 @@ class window.App.ContractsIndexController extends Spine.Controller
           purpose_ids: _.uniq(slice)
       .done done
 
-  render: (target, data, page)=> 
+  render: (target, data, page)=>
     target.html App.Render "manage/views/contracts/line", data, { accessRight: App.AccessRight, currentUserRole: App.User.current.role }
     @pagination.renderPlaceholders() if page == 1
