@@ -32,7 +32,7 @@ class window.App.ModelsEditController extends App.FormWithUploadController
       source: @manufacturers
       minLength: 0
       delay: 0
-    .data("uiAutocomplete")._renderItem = (ul, item) => 
+    .data("uiAutocomplete")._renderItem = (ul, item) =>
       $(App.Render "views/autocomplete/element", item).data("value", item).appendTo(ul)
     @manufacturer.focus -> $(this).autocomplete("search")
 
@@ -42,7 +42,25 @@ class window.App.ModelsEditController extends App.FormWithUploadController
         do @finish
 
   finish: =>
-    if @imagesController.uploadErrors.length or @attachmentsController.uploadErrors.length
+    if @imagesController.uploadErrors.length > 0
+      expectedErrors = _.filter(
+        this.imagesController.uploadErrors, (e) =>
+          _.string.include(e, _jed('Unallowed content type')) || _.string.include(e, _jed('Uploaded file must be less than 8MB'))
+      )
+      onlyExpectedErrors = _.size(expectedErrors) > 0 && _.size(expectedErrors) == _.size(@imagesController.uploadErrors)
+
+      if onlyExpectedErrors
+        @setupImageRestrictionsErrorModel(
+          @model,
+          _jed(
+            "%s was saved, but there were problems uploading some images. Only images smaller than 8MB and of type png, gif and jpg are allowed.",
+            _jed(@model.constructor.name)
+          )
+        )
+      else
+        @setupErrorModal(@model)
+
+    else if@attachmentsController.uploadErrors.length
       @setupErrorModal(@model)
     else
       window.location = App.Inventory.url()+"?flash[success]=#{_jed('Model saved')}"

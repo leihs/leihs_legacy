@@ -3593,6 +3593,10 @@ window.i18n.locale_data = {
          null,
          "%s wurde gespeichert, beim heraufladen von Dateien ist es allerdings zu Problemen gekommen"
       ],
+      "%s was saved, but there were problems uploading some images. Only images smaller than 8MB and of type png, gif and jpg are allowed.": [
+         null,
+         "%s wurde gespeichert, beim heraufladen von Bildern ist es allerdings zu Problemen gekommen. Nur Bilder kleiner als 8MB und vom Typ png, gif und jpg sind erlaubt."
+      ],
       "Uploading files - please wait": [
          null,
          "Dateien werden hochgeladen - bitte warten"

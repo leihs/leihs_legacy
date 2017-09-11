@@ -2694,6 +2694,9 @@ msgstr ""
 msgid "%s was saved, but there were problems uploading files"
 msgstr ""
 
+msgid "%s was saved, but there were problems uploading some images. Only images smaller than 8MB and of type png, gif and jpg are allowed."
+msgstr ""
+
 msgid "Uploading files - please wait"
 msgstr ""
 

@@ -3,7 +3,7 @@
 Internationalisation
 
 This script provides functionalities for internationalisation in JavaScript.
- 
+
 ###
 
 window.i18n.jed = new Jed {"domain": "leihs", locale_data: i18n.locale_data}
@@ -41,7 +41,7 @@ jQuery ()->
     isRTL: false
     showMonthAfterYear: false
     yearSuffix: ''
-  
+
   accounting.settings =
     currency:
       symbol: if window.local_currency_string? then window.local_currency_string else "CHF"
@@ -53,7 +53,7 @@ jQuery ()->
       precision: 0
       decimal: i18n.number.decimal
       thousand: i18n.number.thousand
-    
+
   moment.locale "default",
     months : i18n.months.full
     monthsShort : i18n.months.trunc

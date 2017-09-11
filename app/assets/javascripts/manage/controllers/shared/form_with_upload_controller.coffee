@@ -42,13 +42,21 @@ class window.App.FormWithUploadController extends Spine.Controller
 
   collectErrorMessages: => #virtual
 
+  setupImageRestrictionsErrorModel: (entity, message) =>
+    tmpl = App.Render "manage/views/templates/upload/upload_image_type_errors_dialog",
+      url: entity.url("edit")
+      headlineMessage: message
+      buttonLabel: _jed("Edit %s", _jed(entity.constructor.name))
+    modal = new App.Modal tmpl
+    modal.undestroyable()
+
   setupErrorModal: (entity) =>
     errors = @collectErrorMessages()
     tmpl = App.Render "manage/views/templates/upload/upload_errors_dialog",
-    errors: errors
-    url: entity.url("edit")
-    headlineMessage: _jed("%s was saved, but there were problems uploading files", _jed(entity.constructor.name))
-    buttonLabel: _jed("Edit %s", _jed(entity.constructor.name))
+      errors: errors
+      url: entity.url("edit")
+      headlineMessage: _jed("%s was saved, but there were problems uploading files", _jed(entity.constructor.name))
+      buttonLabel: _jed("Edit %s", _jed(entity.constructor.name))
 
     modal = new App.Modal tmpl
     modal.undestroyable()
