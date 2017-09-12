@@ -18,7 +18,7 @@ class window.App.ItemEditController extends App.FormWithUploadController
       itemType: @itemType
       writeable: true
       hideable: true
-      callback: =>
+      fetchFieldsCallback: =>
         @attachmentsController = new App.ItemAttachmentsController {el: @el.find("#attachments")}
 
   save: ({skipSerialNumberValidation = false} = {}) =>

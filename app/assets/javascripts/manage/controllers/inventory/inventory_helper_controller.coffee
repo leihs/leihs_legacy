@@ -1,5 +1,5 @@
 class App.InventoryHelperController extends Spine.Controller
-  
+
   elements:
     "#field-selection": "fieldSelection"
     "#field-input": "fieldInput"
@@ -32,8 +32,8 @@ class App.InventoryHelperController extends Spine.Controller
 
   delegateEvents: =>
     super
-    @el.on "submit", "form", (e)=> e.preventDefault()    
-    
+    @el.on "submit", "form", (e)=> e.preventDefault()
+
   fetchFields: =>
     App.Field.ajaxFetch
       data: $.param
@@ -45,12 +45,12 @@ class App.InventoryHelperController extends Spine.Controller
       focus: => return false
       select: @selectField
       minLength: 0
-    .data("uiAutocomplete")._renderItem = (ul, item) => 
+    .data("uiAutocomplete")._renderItem = (ul, item) =>
       $(App.Render "views/autocomplete/element", item).data("value", item).appendTo(ul)
     @fieldInput.autocomplete("search")
 
-  getFields: (request, response)=> 
-    fields = _.filter App.Field.all(), (field)=> 
+  getFields: (request, response)=>
+    fields = _.filter App.Field.all(), (field)=>
       field.getLabel().match(new RegExp(request.term,"i"))? and
       not App.Field.isPresent(field, @fieldSelection) and
       not field.visibility_dependency_field_id? and
@@ -73,7 +73,7 @@ class App.InventoryHelperController extends Spine.Controller
         childField: field
     return false
 
-  removeField: (e)=> 
+  removeField: (e)=>
     target = $(e.currentTarget).closest("[data-type='field']")
     field = App.Field.find target.data("id")
     for child in field.children()
@@ -85,14 +85,14 @@ class App.InventoryHelperController extends Spine.Controller
     target.closest("##{field.id}").remove()
     @noFieldsMessage.removeClass("hidden") unless @fieldSelection.find("[data-type='field']").length
 
-  toggleChildren: (e)=> 
+  toggleChildren: (e)=>
     field = e.field ? $(e.currentTarget).closest("[data-type='field']")
     App.Field.toggleChildren field, @fieldSelection, {writeable: true, removeable: true, fieldColor: "white"}
 
-  setupItemAutocomplete: =>    
+  setupItemAutocomplete: =>
     @itemInput.autocomplete
       source: (request, response)=>
-        @fetchItems(request.term).done (data)=> 
+        @fetchItems(request.term).done (data)=>
           items = (App.Item.find datum.id for datum in data)
           response items
       focus: => return false
@@ -100,7 +100,7 @@ class App.InventoryHelperController extends Spine.Controller
         @itemInput.val ui.item.inventory_code
         do @applyFields
       minLength: 0
-    .data("uiAutocomplete")._renderItem = (ul, item) => 
+    .data("uiAutocomplete")._renderItem = (ul, item) =>
       $(App.Render "manage/views/inventory/helper/item_autocomplete_element", item).data("value", item).appendTo(ul)
 
   fetchItems: (term)=>
@@ -134,14 +134,14 @@ class App.InventoryHelperController extends Spine.Controller
         message: _jed('Please provide all required fields')
     else
       data = @prepareRequestData()
-      @fetchItem inventoryCode, (item)=> 
+      @fetchItem inventoryCode, (item)=>
 
         @updateItem(item, data)
         .fail (e, status)=>
           @fetchItemWithFlexibleFields(item).done (itemData)=>
             @currentItemData = itemData
             @setupAppliedItem "error"
-        .done (data)=> 
+        .done (data)=>
           @currentItemData = data
           @setupAppliedItem "success"
 
@@ -167,7 +167,7 @@ class App.InventoryHelperController extends Spine.Controller
       @flexibleFields.find(".field[data-id='#{$(fieldEl).data("id")}']").addClass status
 
   setupItemEdit: (writeable, callback)=>
-    if @flexibleFieldsController? # release old controller 
+    if @flexibleFieldsController? # release old controller
       replacement = @flexibleFields.clone(false)
       @flexibleFields.replaceWith replacement
       @flexibleFieldsController.release()
@@ -178,9 +178,9 @@ class App.InventoryHelperController extends Spine.Controller
       writeable: writeable
       hideable: true
       excludeIds: ['attachments']
-      callback: callback
+      dependencyValuesCallback: callback
       showInitialFlashNotice: true
-  
+
   fetchItem: (inventoryCode, callback)=>
     App.Item.ajaxFetch
       data: $.param
@@ -200,7 +200,7 @@ class App.InventoryHelperController extends Spine.Controller
 
   updateItem: (item, data)=>
     unless data.length
-      h = 
+      h =
         always: (c)-> c()
         fail: (c)-> c()
         done: (c)-> c()
@@ -209,10 +209,10 @@ class App.InventoryHelperController extends Spine.Controller
       item.updateWithFieldData(data)
       .fail (e)=> @setNotification(e.responseJSON.message, "error")
 
-  setNotification: (text, status)-> 
+  setNotification: (text, status)->
     @notifications.html App.Render "manage/views/inventory/helper/"+status, {text: text}
 
-  resetNotifications: -> 
+  resetNotifications: ->
     @notifications.html ""
     do App.Flash.reset
 
@@ -236,7 +236,7 @@ class App.InventoryHelperController extends Spine.Controller
   saveItem: =>
     if @flexibleFieldsController.validate()
       item = App.Item.find @currentItemData.id
-      @updateItem(item, @prepareRequestData()).done => 
+      @updateItem(item, @prepareRequestData()).done =>
         @fetchItemWithFlexibleFields(item).done (itemData)=>
           @currentItemData = itemData
           do @setupSavedItem

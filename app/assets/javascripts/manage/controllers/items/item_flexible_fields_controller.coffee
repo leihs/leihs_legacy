@@ -14,9 +14,8 @@ class window.App.ItemFlexibleFieldsController extends Spine.Controller
         @toggleChildren {currentTarget: field}
       $("#show-all-fields").show() if $(".hidden.field").length
       if @getFieldsWithValuesDependency().length > 0
-        @setupFieldsWithValuesDependency(@callback)
-      else
-        @callback?()
+        @setupFieldsWithValuesDependency(@dependencyValuesCallback)
+      @fetchFieldsCallback?()
     @setupInitialFlashNotice()
 
   setupInitialFlashNotice: =>
@@ -34,7 +33,7 @@ class window.App.ItemFlexibleFieldsController extends Spine.Controller
       data: $.param
         target_type: @itemType
 
-  renderForm: => 
+  renderForm: =>
     @el.html App.Render "manage/views/items/form"
     @formLeftSide = @el.find "#item-form-left-side"
     @formRightSide = @el.find "#item-form-right-side"
@@ -54,14 +53,14 @@ class window.App.ItemFlexibleFieldsController extends Spine.Controller
         @formRightSide
       target.append template
 
-  setupFieldsWithValuesDependency: (callback) =>
+  setupFieldsWithValuesDependency: (dependencyValuesCallback) =>
     for field in @getFieldsWithValuesDependency()
       new App.ValuesDependencyFieldController
         el: @el
         renderData: { itemData: @itemData, writeable: @writeable, hideable: @hideable }
         parentField: App.Field.find(field.values_dependency_field_id)
         childField: field
-        callback: callback
+        callback: dependencyValuesCallback
 
   showOwnerChangeNotification: =>
     App.Flash
@@ -72,7 +71,7 @@ class window.App.ItemFlexibleFieldsController extends Spine.Controller
     unless App.Field.validate @el
       App.Flash
         type: "error"
-        message: _jed('Please provide all required fields')    
+        message: _jed('Please provide all required fields')
       do e.preventDefault if e?
       return false
     else
