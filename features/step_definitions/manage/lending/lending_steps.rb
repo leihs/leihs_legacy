@@ -294,10 +294,11 @@ end
 Then /^the print dialog opens automatically$/ do
   step 'I select an item line and assign an inventory code'
   step 'I click hand over'
+  window_handles = page.driver.browser.window_handles.clone
   within '.modal' do
     find('.button.green[data-hand-over]', text: _('Hand Over')).click
   end
-  check_printed_contract(page.driver.browser.window_handles, @current_inventory_pool, @item_line)
+  check_printed_contract(window_handles, @current_inventory_pool, @item_line)
 end
 
 When(/^start and end date are set to the corresponding dates of the hand over's first time window$/) do

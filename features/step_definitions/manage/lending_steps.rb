@@ -13,7 +13,7 @@ When /^I assign something that is not part of this take back$/ do
 end
 
 def check_printed_contract(window_handles, ip = nil, reservation = nil)
-  while (page.driver.browser.window_handles - window_handles).empty? do end
+  while (page.driver.browser.window_handles - window_handles).empty? do sleep 1 end
   new_window = page.windows.find {|window|
     window if window.handle == (page.driver.browser.window_handles - window_handles).first
   }
