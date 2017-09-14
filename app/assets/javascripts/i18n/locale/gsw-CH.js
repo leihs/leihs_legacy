@@ -991,6 +991,10 @@ window.i18n.locale_data = {
          null,
          "Letschti Inventur"
       ],
+      "License Version": [
+         null,
+         "Lizenz Version"
+      ],
       "Last Visitors:": [
          null,
          "Letschti Bsuecher:"

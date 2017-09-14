@@ -86,6 +86,11 @@ module Manage
         @attributes = { model_id: @software.id }
       end
 
+      step 'I fill in the version 3.61 for the license' do
+        find('.field[data-id=license_version]').find('input').set('3.61')
+        @attributes.merge!(item_version: '3.61')
+      end
+
       step 'I fill in a serial number' do
         serial_number = Faker::Lorem.characters(8)
         fill_in 'item[serial_number]', with: serial_number

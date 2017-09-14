@@ -74,6 +74,7 @@ Feature: Inventory (CSV export)
       | Manufacturer           |
       | Software Information   |
       | Inventory Code         |
+      | License Version        |
       | Serial Number          |
       | Note                   |
       | Activation Type        |

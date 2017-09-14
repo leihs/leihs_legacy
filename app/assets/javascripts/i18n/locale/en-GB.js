@@ -986,6 +986,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "License Version": [
+         null,
+         ""
+      ],
       "Last Visitors:": [
          null,
          ""

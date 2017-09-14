@@ -54,6 +54,7 @@ Feature: Creating a software license
     Then the inventory code is pre-filled
     When I fill in the software
     And I fill in a serial number
+    And I fill in the version 3.61 for the license
     When I choose dongle as activation type
     Then the field "Dongle ID" is visible
     And the field "Dongle ID" is required

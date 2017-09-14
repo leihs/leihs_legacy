@@ -728,6 +728,9 @@ msgstr ""
 msgid "Last Checked"
 msgstr ""
 
+msgid "License Version"
+msgstr ""
+
 msgid "Last Visitors:"
 msgstr ""
 

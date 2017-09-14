@@ -740,6 +740,9 @@ msgstr "Sprache"
 msgid "Last Checked"
 msgstr "Letzte Inventur"
 
+msgid "License Version"
+msgstr "Lizenz Version"
+
 msgid "Last Visitors:"
 msgstr "Letzte Besucher:"
 

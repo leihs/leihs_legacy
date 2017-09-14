@@ -710,6 +710,9 @@ msgstr ""
 msgid "Last Checked"
 msgstr "Letschti Inventur"
 
+msgid "License Version"
+msgstr "Lizenz Version"
+
 msgid "Last Visitors:"
 msgstr "Letschti Bsuecher:"
 
