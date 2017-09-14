@@ -342,8 +342,9 @@ module Leihs
                 type: 'text',
                 target_type: 'license',
                 permissions: {role: :inventory_manager, owner: true},
-                visibility_dependency_field_id: :properties_license_type,
-                visibility_dependency_value: ['multiple_workplace', 'site_license', 'concurrent'],
+                # Remove this dependency and allow quantities for all license types.
+                # visibility_dependency_field_id: :properties_license_type,
+                # visibility_dependency_value: ['multiple_workplace', 'site_license', 'concurrent'],
                 group: 'General Information'
             }, {
                 id: :properties_quantity_allocations,
