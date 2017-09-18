@@ -366,3 +366,12 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | Order quantity     |
       | Inspection comment |
     And the value of the field inspector's priority is set to the default value
+
+  @inspection
+  Scenario: Using the inspection comment default templates
+    Given I am Barbara
+    And a request with following data exist
+      | key                | value   |
+      | user               | Roger   |
+    When I open this request
+    And I pry

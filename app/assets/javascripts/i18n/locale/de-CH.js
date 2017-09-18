@@ -4437,6 +4437,14 @@ window.i18n.locale_data = {
       "or": [
          null,
          "oder"
+      ],
+      "Choose template comment": [
+         null,
+         "Textvorlage auswählen"
+      ],
+      "optional, additional comment": [
+         null,
+         "optionaler, individueller Kommentar"
       ]
    }
 }

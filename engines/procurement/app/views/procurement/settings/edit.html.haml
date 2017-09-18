@@ -9,9 +9,20 @@
     %tbody
       %tr
         %td
-          %span.form-control= 'contact_url'
+          %label{for: 'settings_contact_url'}= 'contact_url'
         %td
-          %input.form-control{name: "settings[contact_url]", value: @settings['contact_url'], placeholder: _('Value'), autocomplete: :off, required: true}
+          %input.form-control{name: 'settings[contact_url]', id: 'settings_contact_url', value: @settings['contact_url'], placeholder: _('Value'), autocomplete: :off, required: true}
+
+      %tr
+        - text = @settings['inspection_comments'].join("\n\n")
+        %td
+          %label{for: 'settings_inspection_comments'}= 'inspection_comments'
+        %td
+          %textarea.form-control{name: 'settings[inspection_comments]', id: 'settings_inspection_comments',
+          rows: (text.split("\n").length + 1), placeholder: _('Values'), autocomplete: :off}
+            = text
+          %span.help-block= _('1 value per line')
+
     %tfoot
       %tr
         %td.text-right{colspan: 2}
@@ -32,7 +43,7 @@
       location.reload()
     ).on "ajax:error", (e, xhr, status, error) ->
       errors = ''
-      for error in xhr.responseJSON
+      for error in (xhr.responseJSON || ['Error!'])
         errors += '<li>' + error + '</li>'
       el = $(".flash")
       el.html('<ul class="alert alert-danger" style="padding-left: 2em;">' + errors + '</ul>').show()

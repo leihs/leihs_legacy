@@ -20,6 +20,15 @@ steps_for :settings do
     end
   end
 
+  # NOTE: could also be a generic form step
+  step 'I enter the following text in the field :label_text' do |label_text, text|
+    within 'form table tbody' do
+      label = find('label', text: label_text)
+      input = label.all('input, textarea').first || find('#' + label[:for])
+      input.set text
+    end
+  end
+
   step 'the settings are saved successfully to the database' do
     expect(Procurement::Setting.count).to be 1
 
@@ -27,6 +36,14 @@ steps_for :settings do
     @settings_key_value.each_pair do |key, val|
       expect(setting[key]).to eq val
     end
+  end
+
+  step 'these settings are saved in the database as listed' do |table|
+    settings = Procurement::Setting.first
+    table.rows_hash.except('key').each do |key, val|
+      expect(settings[key].to_json).to eq val
+    end
+
   end
 
   step 'the contact link is visible' do

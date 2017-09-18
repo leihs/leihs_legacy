@@ -1,7 +1,7 @@
 module Procurement
   class Setting < ApplicationRecord
 
-    KEYS = %w(contact_url)
+    KEYS = %w(contact_url inspection_comments)
 
     def self.all_as_hash
       # NOTE: workaround when settings dont exist at all (tests)

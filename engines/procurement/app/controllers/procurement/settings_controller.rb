@@ -28,8 +28,20 @@ module Procurement
       settings = Procurement::Setting.first || Procurement::Setting.new
       setting_keys = Procurement::Setting.all_as_hash.keys
       attrs = params.permit(settings: setting_keys).require(:settings).to_h
-      settings.update_attributes!(attrs)
+      settings.update_attributes!(coerce_values(attrs))
       settings.errors.full_messages.flatten.compact
     end
+
+    def coerce_values(attrs)
+      attrs.map do |key, val|
+        coerced_val = \
+          case key
+          when 'inspection_comments'
+            val.split("\n").map(&:strip).map(&:presence).compact
+          end
+        [key, coerced_val || val]
+      end.to_h
+    end
+
   end
 end

@@ -3417,3 +3417,6 @@ msgstr "Alle weiteren Kolonnen werden ignoriert."
 
 msgid "or"
 msgstr "oder"
+
+msgid "Insert a default comment"
+msgstr "Standardkommentar einfügen"

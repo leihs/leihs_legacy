@@ -239,6 +239,8 @@ steps_for :inspection do
             expect(page).to have_no_selector \
               "[name='requests[#{@request.id}][requested_quantity]']"
             find '.col-xs-4', text: @request.requested_quantity
+          else
+            fail 'Unknown field!'
           end
         end
       end
@@ -393,10 +395,12 @@ steps_for :inspection do
 
   step 'I see :nth request inline edit form' do |nth|
     fail unless nth == '' # only supports n=1, just for more explicit/readable step
-    find(
-      "form[action='#{procurement.request_path(@request.id)}'].in" \
-      " [data-request_id='#{@request.id}']"
-    )
+    wait_until(10) do
+      all(
+        "form[action='#{procurement.request_path(@request.id)}'].in" \
+        " [data-request_id='#{@request.id}']"
+      ).first.present?
+    end
   end
 
   step 'I save the inline form' do
@@ -430,6 +434,44 @@ steps_for :inspection do
   step 'I change any text input field in the request form' do
     within("form[action='#{procurement.request_path(@request.id)}']") do
       all('input[type="text"], input[placeholder]').sample.set(Faker::Lorem.word)
+    end
+  end
+
+  step ':boolean inspection comment templates exists' do |*args|
+    should_exist, table = args # NOTE: variadic args…
+    fail if should_exist and table.nil?
+    settings = Procurement::Setting.find_or_create_by(id: 0)
+    if should_exist
+      settings.update_attributes!(inspection_comments: table.to_a)
+      expect(settings.reload.inspection_comments).to eq table.to_a
+    else
+      expect(settings.inspection_comments).to eq []
+    end
+  end
+
+  step 'I :boolean edit the inspector comment' do |can_see|
+    expectation = can_see ? :have_selector : :have_no_selector
+    selector = "textarea[name=\"requests[#{@request.id}][inspection_comment]\"]"
+    expect(page).to(method(expectation).call(selector))
+  end
+
+  step 'I :boolean the comment template dropdown' do |can_see|
+    expectation = can_see ? :have_selector : :have_no_selector
+    selector = 'select#request_edit_select_inspection_comment_templates'
+    expect(page).to(method(expectation).call(selector))
+  end
+
+  step 'I choose the comment template :string' do |string|
+    select = find('select#request_edit_select_inspection_comment_templates')
+    select.find('option', text: 'Too expensive').select_option
+  end
+
+  step 'the request has to following values saved in the database' do |table|
+    old_upd = @request.updated_at
+    wait_until { @request.reload.updated_at > old_upd }
+    request = @request.reload.as_json
+    table.to_a.drop(1).to_h.each do |attr, value|
+      expect(request[attr]).to eq value
     end
   end
 

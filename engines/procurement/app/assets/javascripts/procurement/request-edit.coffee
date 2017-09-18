@@ -21,6 +21,21 @@ RequestEditFormBehaviour =
         inspection_comment_el.removeAttr('required')
 
   autocompleteInputs: ->
+
+    $("#request_edit_select_inspection_comment_templates").on('change', ->
+      $select = $(this)
+      $textarea = $('[name="' + $select.data('target') + '"]')
+      throw new Error unless $textarea.length
+      templateText = $select.prop('value')
+      currentText = $textarea.val()
+      combinedText = if currentText and currentText.length
+        templateText + '; ' + $textarea.val()
+      else
+        templateText
+      $select.val('')
+      $textarea.val(combinedText)
+    )
+
     $("input[name*='[article_name]']").on('keypress', ->
       $(this).closest('.form-group').find("input[name*='[model_id]']").val('')
     ).autocomplete
