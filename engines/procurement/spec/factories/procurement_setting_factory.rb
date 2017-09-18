@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :procurement_setting, class: Procurement::Setting do
-    key {}
-    value {}
+    contact_url { Faker::Internet.url }
   end
 end

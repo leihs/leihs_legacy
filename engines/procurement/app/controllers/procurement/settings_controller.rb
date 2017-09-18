@@ -12,7 +12,7 @@ module Procurement
     end
 
     def create
-      errors = create_or_update
+      errors = update_settings
 
       if errors.empty?
         flash[:success] = _('Saved')
@@ -24,13 +24,12 @@ module Procurement
 
     private
 
-    def create_or_update
-      params.require(:settings).map do |param|
-        permitted = param.permit(:key, :value)
-        setting = Procurement::Setting.find_or_initialize_by(key: permitted[:key])
-        setting.update_attributes(value: permitted[:value])
-        setting.errors.full_messages
-      end.flatten.compact
+    def update_settings
+      settings = Procurement::Setting.first || Procurement::Setting.new
+      setting_keys = Procurement::Setting.all_as_hash.keys
+      attrs = params.permit(settings: setting_keys).require(:settings).to_h
+      settings.update_attributes!(attrs)
+      settings.errors.full_messages.flatten.compact
     end
   end
 end

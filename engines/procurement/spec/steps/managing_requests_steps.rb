@@ -45,9 +45,9 @@ steps_for :managing_requests do
   end
 
   step 'a link to a contact site exists' do
-    @setting = FactoryGirl.create :procurement_setting,
-                                  key: 'contact_url',
-                                  value: 'http://www.example.com/contact'
+    s = Procurement::Setting.first || FactoryGirl.create(:procurement_setting)
+    s.update_attributes!(contact_url: 'http://www.example.com/contact')
+    @setting_contact_url = s.contact_url
   end
 
   step 'each template article contains' do |table|
@@ -89,7 +89,7 @@ steps_for :managing_requests do
 
   step 'I am navigated to the specific website' do
     expect(current_url).to eq @url
-    expect(current_url).to eq @setting.value
+    expect(current_url).to eq @setting_contact_url
   end
 
   step 'I can change the budget period of my request' do
@@ -214,7 +214,7 @@ steps_for :managing_requests do
     within 'header ul.nav.h4' do
       link = find('.fa-envelope').find(:xpath, 'ancestor::a')
       @url = link[:href]
-      expect(@url).to eq @setting.value
+      expect(@url).to eq @setting_contact_url
       document_window = window_opened_by do
         link.click
       end

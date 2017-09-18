@@ -3,21 +3,11 @@ module Procurement
 
     KEYS = %w(contact_url)
 
-    validates_presence_of :key, :value
-    validates_uniqueness_of :key
-
     def self.all_as_hash
-      h = {}
-
-      KEYS.each do |k|
-        h[k] = nil
-      end
-
-      all.order(key: :asc).each do |s|
-        h[s.key] = s.value
-      end
-
-      h
+      # NOTE: workaround when settings dont exist at all (tests)
+      empty_attrs = Procurement::Setting.new.as_json
+      attrs = Procurement::Setting.first.as_json
+      empty_attrs.merge(attrs || {}).slice(*KEYS)
     end
 
   end

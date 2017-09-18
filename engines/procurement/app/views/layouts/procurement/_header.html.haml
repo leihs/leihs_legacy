@@ -64,9 +64,9 @@
                 %i.fa.fa-cube
                 = _('Templates')
 
-          - if setting = Procurement::Setting.find_by(key: 'contact_url')
+          - if contact_url = settings.contact_url
             %li
-              %a{href: setting.value, target: '_blank'}
+              %a{href: contact_url, target: '_blank'}
                 %i.fa.fa-envelope
                 = _('Contact')
 

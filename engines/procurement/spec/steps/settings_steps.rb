@@ -12,24 +12,20 @@ steps_for :settings do
   end
 
   step 'I enter the following settings' do |table|
-    @settings_key_value = {}
+    @settings_key_value = table.hashes.map { |h| [h['key'], h['value']] }.to_h
     within 'form table tbody' do
-      table.hashes.each do |kv|
-        @settings_key_value[kv['key']] = kv['value']
-        within 'tr', match: :first do # OPTIMIZE
-          find('input[name="settings[][key]"]').set kv['key']
-          find('input[name="settings[][value]"]').set kv['value']
-        end
+      @settings_key_value.each do |key, val|
+        find("input[name=\"settings[#{key}]\"]").set val
       end
     end
   end
 
   step 'the settings are saved successfully to the database' do
-    expect(Procurement::Setting.count).to eq @settings_key_value.count
+    expect(Procurement::Setting.count).to be 1
 
-    @settings_key_value.each_pair do |k, v|
-      setting = Procurement::Setting.find_by(key: k, value: v)
-      expect(setting).to be
+    setting = Procurement::Setting.first
+    @settings_key_value.each_pair do |key, val|
+      expect(setting[key]).to eq val
     end
   end
 

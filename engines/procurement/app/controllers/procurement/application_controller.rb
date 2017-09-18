@@ -3,6 +3,7 @@ module Procurement
     include MainHelpers
     include Pundit
 
+    helper_method :settings
     helper_method :procurement_requester?
     helper_method :procurement_inspector?
     helper_method :procurement_admin?
@@ -55,6 +56,10 @@ module Procurement
         render action: :root
 
       end
+    end
+
+    def settings
+      OpenStruct.new(Procurement::Setting.all_as_hash)
     end
 
     def procurement_or_leihs_admin?
