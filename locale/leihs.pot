@@ -3325,3 +3325,30 @@ msgstr ""
 
 msgid "Insert a default comment"
 msgstr ""
+
+msgid "1 value per line, blank lines ignored"
+msgstr ""
+
+msgid "accounting type"
+msgstr ""
+
+msgid "internal order"
+msgstr ""
+
+msgid "general ledger account"
+msgstr ""
+
+msgid "cost center"
+msgstr ""
+
+msgid "investment"
+msgstr ""
+
+msgid "aquisition"
+msgstr ""
+
+msgid "Accounts"
+msgstr ""
+
+msgid "(unknown)"
+msgstr ""

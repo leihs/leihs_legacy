@@ -4438,13 +4438,45 @@ window.i18n.locale_data = {
          null,
          "oder"
       ],
-      "Choose template comment": [
+      "Insert a default comment": [
          null,
-         "Textvorlage auswählen"
+         "Standardkommentar einfügen"
       ],
-      "optional, additional comment": [
+      "1 value per line, blank lines ignored": [
          null,
-         "optionaler, individueller Kommentar"
+         "1 Wert pro Zeile, Leerzeilen werden ignoriert"
+      ],
+      "accounting type": [
+         null,
+         "Abrechnungsart"
+      ],
+      "internal order": [
+         null,
+         "Innenauftrag"
+      ],
+      "general ledger account": [
+         null,
+         "Sachkonto"
+      ],
+      "cost center": [
+         null,
+         "Kostenstelle"
+      ],
+      "investment": [
+         null,
+         "Investition"
+      ],
+      "aquisition": [
+         null,
+         "Beschaffung"
+      ],
+      "Accounts": [
+         null,
+         "Konten"
+      ],
+      "(unknown)": [
+         null,
+         "(unbekannt)"
       ]
    }
 }

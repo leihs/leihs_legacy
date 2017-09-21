@@ -36,6 +36,25 @@ RequestEditFormBehaviour =
       $textarea.val(combinedText)
     )
 
+    # accounting types
+    do () ->
+      $typeToggle = $('select[name*="[accounting_type]"]')
+      $typeToggled = $('[data-toggledBy="accounting_type"]')
+      setupFieldState = ((selected) ->
+        if selected == 'aquisition'
+          $typeToggled.filter('[data-toggleValue="aquisition"]').removeClass('hidden')
+          $typeToggled.filter('[data-toggleValue="investment"]')
+            .addClass('hidden')
+            .find('input[name*="[internal_order_number]"]').removeAttr('required')
+        else
+          $typeToggled.filter('[data-toggleValue="aquisition"]').addClass('hidden')
+          $typeToggled.filter('[data-toggleValue="investment"]')
+            .removeClass('hidden')
+            .find('input[name*="[internal_order_number]"]').attr('required', 'true')
+      )
+      setupFieldState($typeToggle.prop('value')) # initial state
+      $typeToggle.on('change', -> setupFieldState($(this).prop('value')))
+
     $("input[name*='[article_name]']").on('keypress', ->
       $(this).closest('.form-group').find("input[name*='[model_id]']").val('')
     ).autocomplete

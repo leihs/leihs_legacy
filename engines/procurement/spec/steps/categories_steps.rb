@@ -208,13 +208,32 @@ steps_for :categories do
     el.set @new_name
   end
 
-  step 'I modify the name of the sub category' do
-    @new_name = Faker::Lorem.word
+  def in_the_sub_category_form
     within(:xpath, "//input[@value='#{@category.main_category.name}']/ancestor::" \
                    "div[contains(@class, 'panel-info')]") do
-      find('.collapsed').click
+      first('.collapsed').try(:click)
+      yield
+    end
+  end
 
+  step 'I modify the name of the sub category' do
+    @new_name = Faker::Lorem.word
+    in_the_sub_category_form do
       find("input[name*='[name]'][value='#{@category.name}']").set @new_name
+    end
+  end
+
+  step 'I modify the "Kostenstelle" of the sub category' do
+    @cost_center = Faker::Number.number(10)
+    in_the_sub_category_form do
+      find('input[name*="[cost_center]"]').set @cost_center
+    end
+  end
+
+  step 'I modify the "Sachkonto" of the sub category' do
+    @general_ledger_account = Faker::Number.number(10)
+    in_the_sub_category_form do
+      find('input[name*="[general_ledger_account]"]').set @general_ledger_account
     end
   end
 
@@ -296,6 +315,8 @@ steps_for :categories do
        'was successfully updated in the database' do
     @category.reload
     expect(@category.name).to eq @new_name
+    expect(@category.cost_center).to eq @cost_center
+    expect(@category.general_ledger_account).to eq @general_ledger_account
     expect(@category.inspectors.map(&:name)).to include @new_inspector.name
     expect(@category.inspectors.map(&:name)).not_to include @deleted_inspector.name
     @rest_inspectors.each do |r_inspector|

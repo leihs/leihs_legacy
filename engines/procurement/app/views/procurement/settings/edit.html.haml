@@ -21,7 +21,7 @@
           %textarea.form-control{name: 'settings[inspection_comments]', id: 'settings_inspection_comments',
           rows: (text.split("\n").length + 1), placeholder: _('Values'), autocomplete: :off}
             = text
-          %span.help-block= _('1 value per line')
+          %span.help-block= _('1 value per line, blank lines ignored')
 
     %tfoot
       %tr

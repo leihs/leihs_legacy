@@ -260,6 +260,10 @@ module CommonSteps
                             find("textarea[name*='[motivation]']")
                         when 'inspection comment'
                             find("textarea[name*='[inspection_comment]']")
+                        when 'Innenauftrag'
+                            find("input[name*='[internal_order_number]']")
+                        else
+                          fail 'unknown field!'
                         end
       end
       wait_until do

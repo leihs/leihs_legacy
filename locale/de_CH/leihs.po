@@ -3420,3 +3420,30 @@ msgstr "oder"
 
 msgid "Insert a default comment"
 msgstr "Standardkommentar einfügen"
+
+msgid "1 value per line, blank lines ignored"
+msgstr "1 Wert pro Zeile, Leerzeilen werden ignoriert"
+
+msgid "accounting type"
+msgstr "Abrechnungsart"
+
+msgid "internal order"
+msgstr "Innenauftrag"
+
+msgid "general ledger account"
+msgstr "Sachkonto"
+
+msgid "cost center"
+msgstr "Kostenstelle"
+
+msgid "investment"
+msgstr "Investition"
+
+msgid "aquisition"
+msgstr "Beschaffung"
+
+msgid "Accounts"
+msgstr "Konten"
+
+msgid "(unknown)"
+msgstr "(unbekannt)"

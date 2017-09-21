@@ -475,4 +475,47 @@ steps_for :inspection do
     end
   end
 
+  step 'I see the accounting type is :type' do |type|
+    selected = find('select[name*=accounting_type]').value
+    expect(_(selected)).to eq type
+  end
+
+  def check_form_group_visibility(label, visibool)
+    field = find('.form-group label', text: label, visible: false)
+    expect(field.visible?).to be visibool
+  end
+
+  step 'I :boolean the "Kostenstelle" of the sub category' do |can_see|
+    check_form_group_visibility('Kostenstelle', can_see)
+    return unless can_see
+    expect(find('.form-group', text: 'Kostenstelle').find('samp').text)
+      .to eq @category.cost_center
+  end
+
+  step 'I :boolean the "Sachkonto" of the sub category' do |can_see|
+    check_form_group_visibility('Sachkonto', can_see)
+    return unless can_see
+    expect(find('.form-group', text: 'Sachkonto').find('samp').text)
+      .to eq @category.general_ledger_account
+  end
+
+  step 'I :boolean the field "Innenauftrag"' do |can_see|
+    check_form_group_visibility('Innenauftrag', can_see)
+  end
+
+  step 'I see but can\'t edit the correct accounting type' do
+    select = find('select[name*=accounting_type]')
+    expect(select['disabled']).to eq 'true'
+  end
+
+  step 'I see but can\'t edit the "Innenauftrag"' do
+    input = find('input[name*=internal_order_number]')
+    expect(input['disabled']).to eq 'true'
+  end
+
+  step 'I change the accounting type to :type' do |type|
+    select = find('select[name*=accounting_type]')
+    select.find('option', text: type).select_option
+  end
+
 end

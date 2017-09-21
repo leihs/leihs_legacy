@@ -1,8 +1,10 @@
 require_dependency 'procurement/concerns/csv'
+require_dependency 'procurement/concerns/request_filters'
 
 module Procurement
   class Request < ApplicationRecord
     include Csv
+    include RequestFilters
 
     belongs_to :budget_period
     belongs_to :category
@@ -32,7 +34,11 @@ module Procurement
                       :order_quantity,
                       :inspection_comment,
                       :inspector_priority,
-                      :replacement]
+                      :replacement,
+                      :accounting_type,
+                      :internal_order_number]
+
+    ACCOUNTING_TYPES = ['aquisition', 'investment']
 
     #################################################################
 
@@ -58,6 +64,7 @@ module Procurement
     validates_presence_of :user, :category, :organization,
                           :article_name, :motivation
     validates_presence_of :inspection_comment, if: :not_completely_approved?
+    validates_presence_of :internal_order_number, if: :investment?
     validates :requested_quantity,
               presence: true,
               numericality: { greater_than: 0 }
@@ -124,37 +131,15 @@ module Procurement
       price * quantity
     end
 
-    #####################################################
-
-    scope :search, lambda { |query|
-      sql = all
-      return sql if query.blank?
-
-      query.split.each do |q|
-        next if q.blank?
-        q = "%#{q}%"
-        sql = sql.where(arel_table[:article_name].matches(q)
-                          .or(arel_table[:article_number].matches(q))
-                          .or(arel_table[:supplier_name].matches(q))
-                          .or(arel_table[:receiver].matches(q))
-                          .or(Building.arel_table[:name].matches(q))
-                          .or(Room.arel_table[:name].matches(q))
-                          .or(arel_table[:motivation].matches(q))
-                          .or(arel_table[:inspection_comment].matches(q))
-                          .or(User.arel_table[:firstname].matches(q))
-                          .or(User.arel_table[:lastname].matches(q))
-                       )
-      end
-      sql
-      .joins(:user)
-      .joins(:room)
-      .joins('INNER JOIN buildings ON buildings.id = rooms.building_id')
-    }
+    def investment?
+      accounting_type == 'investment'
+    end
 
     private
 
     def not_completely_approved?
       approved_quantity and approved_quantity < requested_quantity
     end
+
   end
 end

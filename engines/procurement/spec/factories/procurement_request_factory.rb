@@ -22,6 +22,8 @@ FactoryGirl.define do
     template { nil }
     priority { ['high', 'normal'].sample }
     room
+    accounting_type { Procurement::Request.column_defaults['accounting_type'] }
+    internal_order_number {}
 
     before :create do |request|
       if request.template

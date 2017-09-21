@@ -117,7 +117,7 @@ module FactorySteps
         @changes[:room_id] = \
           FactoryGirl.create(:room, name: hash['value'], building: @building).id
       else
-        fail "unknown attribute given! `#{hash['key']}`"
+        @changes[hash['key'].parameterize.underscore.to_sym] = hash['value']
       end
     end
     request = FactoryGirl.create :procurement_request, @changes

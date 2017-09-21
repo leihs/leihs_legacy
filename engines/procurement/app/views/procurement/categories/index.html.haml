@@ -58,7 +58,7 @@
             %table.table
               %thead
                 %tr.row
-                  %th.col-xs-5= _('Name')
+                  %th.col-xs-5= [_('Name'), _('Accounts')].join(', ')
                   %th.col-xs-6= _('Inspectors')
                   %th.col-xs-1
               %tbody
@@ -68,8 +68,21 @@
                       %input{type: :hidden, name: "main_categories[#{main_category.object_id}][categories_attributes][#{subcategory.object_id}][id]", value: subcategory.id}
                       %input{type: :hidden, name: "main_categories[#{main_category.object_id}][categories_attributes][#{subcategory.object_id}][_destroy]"}
                       %input.form-control{name: "main_categories[#{main_category.object_id}][categories_attributes][#{subcategory.object_id}][name]", placeholder: _('Name'), value: subcategory.name}
+
+                      .form-group.form-group-sm{style: 'margin-top: 10px; margin-bottom: 5px'}
+                        %label.control-label.small
+                          = _('cost center')
+                        %input.form-control.input-sm{name: "main_categories[#{main_category.object_id}][categories_attributes][#{subcategory.object_id}][cost_center]",
+                          placeholder: _('cost center'), value: subcategory.cost_center}
+                      .form-group
+                        %label.control-label.small
+                          = _('general ledger account')
+                        %input.form-control.input-sm{name: "main_categories[#{main_category.object_id}][categories_attributes][#{subcategory.object_id}][general_ledger_account]",
+                          placeholder: _('general ledger account'), value: subcategory.general_ledger_account}
+
                     %td.col-xs-6
-                      %input.form-control{name: "main_categories[#{main_category.object_id}][categories_attributes][#{subcategory.object_id}][inspector_ids]", multiple: true, placeholder: _("Name of the inspector"), autocomplete: :off, data: {current: subcategory.inspectors.to_json(only: [:id, :firstname, :lastname])}}
+                      %input.form-control{name: "main_categories[#{main_category.object_id}][categories_attributes][#{subcategory.object_id}][inspector_ids]",
+                        multiple: true, placeholder: _("Name of the inspector"), autocomplete: :off, data: {current: subcategory.inspectors.to_json(only: [:id, :firstname, :lastname])}}
                     %td.col-xs-1.text-right
                       - if subcategory.can_destroy?
                         %i.fa.fa-minus-circle{title: _("Delete subcategory"), data: {toggle: 'tooltip'}}

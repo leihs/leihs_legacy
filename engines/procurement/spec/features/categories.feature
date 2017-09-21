@@ -101,6 +101,8 @@ Feature: Procurement Categories
     And the sub category has an inspector
     When I navigate to the categories edit page
     And I modify the name of the sub category
+    And I modify the "Kostenstelle" of the sub category
+    And I modify the "Sachkonto" of the sub category
     And I delete the inspector
     And I add another inspector
     And I click on save
