@@ -1708,7 +1708,7 @@ audits:
     Benutzer diese Bedingungen sowie die\n  'Richtlinie zur Ausleihe von Sachen' der
     ZHdK und etwaige abteilungsspezifische\n  Ausleih-Richtlinien.\ncontract_lending_party_string:
     |-\n  Your\n  Address\n  Here\nemail_signature: Das PZ-leihs Team\ndefault_email:
-    sender@example.com\ndeliver_order_notifications: false\nuser_image_url: http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}\nldap_config:
+    sender@example.com\ndeliver_order_notifications: false\nuser_image_url: http://localhost/?person/foto&width=100&compressionlevel=0&id={:id}\nldap_config:
     \nlogo_url: \"/assets/image-logo-zhdk.png\"\nmail_delivery_method: test\nsmtp_username:
     \nsmtp_password: \nsmtp_enable_starttls_auto: false\nsmtp_openssl_verify_mode:
     none\ntime_zone: Bern\ndisable_manage_section: false\ndisable_manage_section_message:
@@ -56295,7 +56295,7 @@ settings:
   email_signature: Das PZ-leihs Team
   default_email: sender@example.com
   deliver_order_notifications: false
-  user_image_url: http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}
+  user_image_url: http://localhost/?person/foto&width=100&compressionlevel=0&id={:id}
   ldap_config: 
   logo_url: "/assets/image-logo-zhdk.png"
   mail_delivery_method: test
