@@ -187,7 +187,7 @@
         )
         .fail((jqXHR, textStatus, errorThrown) ->
           console.error(jqXHR, textStatus, errorThrown)
-          window.location.replace(fallbackHref)
+          window.location.assign(fallbackHref)
         )
 
       setupInlineForm = ($form) ->
