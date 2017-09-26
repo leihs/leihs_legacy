@@ -204,7 +204,7 @@
 
       } else {
         return searchResult.inventory.items.filter((item) => {
-          return item.model_id == modelId //&& !item.parent_id
+          return item.model_id == modelId && !item.parent_id
         }).map((item) => {
           return this._searchResultItem(type, item, false, null, false, modelLabel)
         })
