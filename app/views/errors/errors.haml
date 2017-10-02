@@ -1,0 +1,84 @@
+!!! 5
+%html{:lang => I18n.locale}
+
+  %head
+    %title= "Error! leihs | #{_("Equipment Booking and Inventory Management System")}"
+
+    -# = render :partial => "layouts/head"
+
+    :css
+      /* from tachyons.io */
+      html {
+        box-sizing: border-box;
+        line-height: 1.15;
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%
+      }
+      body {
+        width: 100%;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, roboto, noto, Oxygen, Oxygen-Sans, avenir next, avenir, ubuntu, Cantarell, "Open Sans", segoe ui, helvetica neue, helvetica, arial, sans-serif;
+        margin: 0;
+        color: white;
+        background-color: tomato
+      }
+      #wrapper {
+        width: 100%;
+        height: 100vh;
+        display: table;
+        table-layout: fixed;
+      }
+      #error {
+        text-align: center;
+        padding: 2rem;
+        display: table-cell;
+        vertical-align: middle;
+      }
+      #title {
+        font-size: 1.25rem;
+        font-weight: 200;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+      }
+      #details {
+        font-size: 2.25rem;
+        font-weight: 400;
+        margin: 0 auto;
+        max-width: 68rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+      #footer, #footer pre {
+        font-family: Consolas, Monaco, "Fira Mono", "Lucida Console", "Lucida Sans Typewriter", "Bitstream Vera Sans Mono", monospace;
+        font-size: .875rem;
+        line-height: 1.5;
+        font-weight: 100;
+
+      }
+      summary:focus { outline: none; }
+
+    = render partial: "layouts/custom_head_tag"
+
+  %body
+    #wrapper
+
+      #error
+
+        %h1#title= message
+
+        %p#details= details.try(:first)
+
+        %details#footer
+
+          %summary
+            %b= 'leihs'
+            = 'Error'
+            = code.to_s
+            = 'on'
+            = request.env['HTTP_HOST']
+            = 'at'
+            = Time.now.utc.as_json
+
+          %pre
+            = details.drop(1).join("\n")
