@@ -12,13 +12,8 @@
     },
 
 
-    _onChangeFrom(date) {
-      this.props.selectedValue.value.from = date
-      this.props.onChange()
-    },
-
-    _onChangeTo(date) {
-      this.props.selectedValue.value.to = date
+    _onChange(date) {
+      this.props.selectedValue.value.at = date
       this.props.onChange()
     },
 
@@ -31,14 +26,7 @@
 
       return (
         <div className='col1of2' data-type='value'>
-          <div className='col1of2'>
-            von:
-            <DatePickerWithInput value={selectedValue.value.from} onChange={this._onChangeFrom} />
-          </div>
-          <div className='col1of2'>
-            bis:
-            <DatePickerWithInput value={selectedValue.value.to} onChange={this._onChangeTo} />
-          </div>
+          <DatePickerWithInput value={selectedValue.value.at} name={'item[' + selectedValue.field.id + ']'} onChange={this._onChange} />
         </div>
       )
 

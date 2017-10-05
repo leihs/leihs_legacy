@@ -78,7 +78,8 @@
       return (
 
         <FieldAutocomplete label={_jed(field.label)}
-          doSearch={doSearch} onChange={this._onChange} />
+          doSearch={doSearch} onChange={this._onChange}
+          name={this.props.name} />
 
       )
     }

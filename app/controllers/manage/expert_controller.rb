@@ -1,6 +1,7 @@
 class Manage::ExpertController < Manage::ApplicationController
   include ExpertView
   include ExpertExport
+  include FileStorage
 
   private
 

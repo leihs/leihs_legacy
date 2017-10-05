@@ -181,6 +181,32 @@ class Manage::ItemsController < Manage::ApplicationController
     head :ok
   end
 
+  def new_react
+    @props = {
+      next_code: Item.proposed_inventory_code(current_inventory_pool),
+      lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
+      highest_code: Item.proposed_inventory_code(current_inventory_pool, :highest),
+      inventory_pool: current_inventory_pool,
+      is_inventory_relevant: (super_user? ? true : false),
+      save_path: manage_create_item_path,
+      store_attachment_path: manage_item_store_attachment_react_path,
+      inventory_path: manage_inventory_path
+    }
+  end
+
+  Mime::Type.register(
+    'application/octet-stream', :plist_binary, [], ['binary.plist'])
+  def store_attachment_react
+    respond_to do |format|
+      format.plist_binary do
+        store_attachment!(
+          params[:data],
+          item_id: params[:item_id]
+        )
+      end
+    end
+  end
+
   private
 
   def fetch_item_by_id

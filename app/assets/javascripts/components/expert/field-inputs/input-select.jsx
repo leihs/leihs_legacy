@@ -20,12 +20,31 @@
     },
 
 
+    _getFormName(selectedValue) {
+
+      var field = selectedValue.field
+      if (field.form_name) {
+        return '[' + field.form_name + ']'
+      } else if (field.attribute instanceof Array) {
+        return _.reduce(
+          field.attribute,
+          (result, part) => {
+            return result + '[' + part + ']'
+          },
+          ''
+        )
+        this._setValue(result, field.attribute, value)
+      } else {
+        return '[' + field.attribute + ']'
+      }
+    },
+
     _renderSelectValues(selectedValue) {
       return selectedValue.field.values.map((value, index) => {
 
         return (
           <option key={'' + index} value={'' + index}>
-            {value.label}
+            {_jed(value.label)}
           </option>
         )
       })
@@ -45,7 +64,8 @@
 
       return (
         <div className='col1of2'>
-          <select className='width-full' onChange={this._onChange} value={'' + index}>
+          <select className='width-full' onChange={this._onChange} value={'' + index}
+            name={'item' + this._getFormName(selectedValue)}>
             {this._renderSelectValues(selectedValue)}
           </select>
         </div>

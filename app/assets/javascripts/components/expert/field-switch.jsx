@@ -106,7 +106,7 @@ window.FieldSwitch = {
     }
   },
 
-  _inputByType (selectedValue, onChangeSelectedValue, selectedValues) {
+  _inputByType (selectedValue, onChangeSelectedValue, dependencyValue) {
     switch(selectedValue.field.type) {
       case 'text':
         if(selectedValue.field.currency) {
@@ -119,7 +119,7 @@ window.FieldSwitch = {
         return <InputAutocompleteSearch onChange={onChangeSelectedValue} selectedValue={selectedValue} />
         break
       case 'autocomplete':
-        return <InputAutocomplete selectedValue={selectedValue} selectedValues={selectedValues} onChange={onChangeSelectedValue} />
+        return <InputAutocomplete selectedValue={selectedValue} dependencyValue={dependencyValue} onChange={onChangeSelectedValue} />
         break
       case 'textarea':
         return <InputTextarea selectedValue={selectedValue} onChange={onChangeSelectedValue} />
@@ -131,7 +131,7 @@ window.FieldSwitch = {
         return <InputRadio selectedValue={selectedValue} onChange={onChangeSelectedValue} />
         break
       case 'date':
-        return <InputDate selectedValue={selectedValue} onChange={onChangeSelectedValue} />
+        return <InputDateRange selectedValue={selectedValue} onChange={onChangeSelectedValue} />
         break
       default:
         throw 'Unexpected type: ' + selectedValue.field.type

@@ -97,8 +97,8 @@ end
 
 
 Then(/^I am redirected to the inventory list$/) do
-  find '#inventory .row', match: :first
-  expect(has_content?(_('List of Inventory'))).to be true
+  find('h1', text: _('List of Inventory'))
+  find('#inventory .row', match: :first)
   expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
 end
 

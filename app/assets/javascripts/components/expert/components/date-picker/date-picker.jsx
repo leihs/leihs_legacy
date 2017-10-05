@@ -120,7 +120,7 @@
     },
 
     _parseDate(string) {
-      var parts = string.split('.')
+      var parts = string.split('/')
       if(parts.length != 3) {
         return null
       }

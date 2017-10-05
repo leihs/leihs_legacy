@@ -31,7 +31,7 @@
 
     _onSelect (day, month, year) {
 
-      var value = this._leadingZero(day) + '.' + this._leadingZero(month) + '.' + year
+      var value = this._leadingZero(day) + '/' + this._leadingZero(month) + '/' + year
       this.setState({
         value: value,
         visible: false
@@ -92,7 +92,7 @@
       return (
         // TODO Dummy wrapper. Remove when React supports arrays as return value.
         <span>
-          <input value={this.state.value} onChange={this._onChange} autoComplete='off' onFocus={this._onFocus} className='width-full hasDatepicker' type='text' />
+          <input value={this.state.value} onChange={this._onChange} name={this.props.name} autoComplete='off' onFocus={this._onFocus} className='width-full hasDatepicker' type='text' />
 
           {this._renderPicker()}
 

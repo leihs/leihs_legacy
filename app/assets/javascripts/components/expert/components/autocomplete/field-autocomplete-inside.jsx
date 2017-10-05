@@ -171,7 +171,8 @@
             onChange={this._onChange} value={this.props.term}
             onFocus={this._onFocus}
             onKeyDown={this._onKeyPress}
-            placeholder={label} title={label} type='text' />
+            placeholder={label} title={label} type='text'
+            name={this.props.name} />
           <div className='addon transparent'>
              <i className='arrow down'></i>
           </div>

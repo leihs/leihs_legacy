@@ -7,41 +7,42 @@
   const Autocomplete = window.ReactAutocomplete
   React.findDOMNode = ReactDOM.findDOMNode // NOTE: autocomplete lib needs this
 
-  window.InputCurrency = React.createClass({
+  window.InputDateRange = React.createClass({
     propTypes: {
     },
 
 
-    _onChangeFrom(event) {
-      event.preventDefault()
-      this.props.selectedValue.value.from = event.target.value
+    _onChangeFrom(date) {
+      this.props.selectedValue.value.from = date
       this.props.onChange()
     },
 
-    _onChangeTo(event) {
-      event.preventDefault()
-      this.props.selectedValue.value.to = event.target.value
+    _onChangeTo(date) {
+      this.props.selectedValue.value.to = date
       this.props.onChange()
     },
-
 
 
     render () {
       const props = this.props
       const selectedValue = props.selectedValue
 
+
+
       return (
         <div className='col1of2' data-type='value'>
           <div className='col1of2'>
-            min:
-            <input autoComplete='off' className='width-full' type='text' value={selectedValue.value.from} onChange={this._onChangeFrom} />
+            von:
+            <DatePickerWithInput value={selectedValue.value.from} onChange={this._onChangeFrom} />
           </div>
           <div className='col1of2'>
-            max:
-            <input autoComplete='off' className='width-full' type='text' value={selectedValue.value.to} onChange={this._onChangeTo} />
+            bis:
+            <DatePickerWithInput value={selectedValue.value.to} onChange={this._onChangeTo} />
           </div>
         </div>
       )
+
+
     }
   })
 })()

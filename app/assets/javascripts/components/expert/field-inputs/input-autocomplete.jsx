@@ -12,14 +12,6 @@
     },
 
 
-    _parent(selectedValue) {
-
-
-      return _.first(this.props.selectedValues.filter((other) => {
-        return other.field.id == selectedValue.field.values_dependency_field_id
-      }))
-    },
-
 
     _onChange(result) {
 
@@ -45,9 +37,7 @@
 
       if(field.values_dependency_field_id) {
 
-        var parent = this._parent(selectedValue)
-
-        var url = field.values_url.replace('$$$parent_value$$$', parent.value.id)
+        var url = field.values_url.replace('$$$parent_value$$$', props.dependencyValue.value.id)
 
         var transformResult = (result) => {
 
@@ -86,7 +76,8 @@
 
         return (
           <FieldAutocompletePreload label={_jed(field.label)} preloadUrl={url}
-            doDelayedSearch={doSearch} onChange={this._onChange}/>
+            doDelayedSearch={doSearch} onChange={this._onChange}
+            name={'item[' + selectedValue.field.id + ']'} />
         )
 
         console.log('url = ' + url)
@@ -130,10 +121,17 @@
         }
 
 
+        var initialText = null
+        if(selectedValue.value.id) {
+          initialText = selectedValue.value.text
+        }
+
         return (
 
           <FieldAutocomplete label={_jed(field.label)}
-            doSearch={doSearch} onChange={this._onChange}/>
+            initialText={initialText}
+            doSearch={doSearch} onChange={this._onChange}
+            name={'item[' + selectedValue.field.id + ']'} />
 
         )
 

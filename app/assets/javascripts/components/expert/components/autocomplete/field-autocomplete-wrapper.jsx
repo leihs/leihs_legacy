@@ -13,7 +13,7 @@
 
     getInitialState () {
       return {
-        term: '',
+        term: (this.props.initialText ? this.props.initialText : ''),
         result: null
       }
     },
@@ -90,6 +90,7 @@
           _onTerm={this._onTerm}
           _onSelect={this._onSelect}
           _onClose={this._onClose}
+          name={this.props.name}
         />
       )
     }

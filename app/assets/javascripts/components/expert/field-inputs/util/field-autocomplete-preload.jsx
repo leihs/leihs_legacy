@@ -49,7 +49,8 @@
 
       return (
         <FieldAutocomplete label={this.props.label}
-          doSearch={doSearch} onChange={this.props.onChange} />
+          doSearch={doSearch} onChange={this.props.onChange}
+          name={this.props.name} />
       )
     }
   })

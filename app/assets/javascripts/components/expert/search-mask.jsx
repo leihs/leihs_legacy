@@ -48,6 +48,10 @@
 
     _renderField(selectedValue, top) {
 
+      var dependencyValue = _.first(this.props.selectedValues.filter((other) => {
+        return other.field.id == selectedValue.field.values_dependency_field_id
+      }))
+
       return (
 
         <div key={selectedValue.field.id} id={selectedValue.field.id}>
@@ -63,7 +67,7 @@
                 </strong>
               </div>
 
-              {FieldSwitch._inputByType(selectedValue, this.props._onChangeSelectedValue, this.props.selectedValues)}
+              {FieldSwitch._inputByType(selectedValue, this.props._onChangeSelectedValue, dependencyValue)}
 
             </div>
           </div>

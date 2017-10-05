@@ -246,6 +246,8 @@ Rails.application.routes.draw do
       get   'items',                          to: "items#index"
       post  'items',                          to: "items#create",               as: "create_item"
       get   'items/new',                      to: "items#new",                  as: "new_item"
+      get   'items/new_react',                to: "items#new_react",            as: "new_item_react"
+      post   'items/store_attachment_react',                to: "items#store_attachment_react",            as: "item_store_attachment_react"
       get   'items/current_locations',        to: "items#current_locations"
       get   'items/:id',                      to: "items#show"
       put   'items/:id',                      to: "items#update",               as: "update_item"

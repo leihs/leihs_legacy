@@ -34,6 +34,8 @@
             label={this.props.label}
             _makeCall={this._makeCall}
             onChange={this._onChange}
+            initialText={this.props.initialText}
+            name={this.props.name}
           />
         </div>
       )

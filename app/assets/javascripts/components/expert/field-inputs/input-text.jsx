@@ -23,7 +23,8 @@
 
       return (
         <div className='col1of2' data-type='value'>
-          <input autoComplete='off' className='width-full' name='item[price]' type='text' value={selectedValue.value.text} onChange={this._onChange} />
+          <input autoComplete='off' className='width-full' name={'item[' + selectedValue.field.id + ']'}
+            type='text' value={selectedValue.value.text} onChange={this._onChange} />
         </div>
       )
     }

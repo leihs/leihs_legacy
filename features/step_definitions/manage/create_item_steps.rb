@@ -3,15 +3,11 @@
 def fill_in_autocomplete_field(field_name, field_value)
   within('form .row.emboss', match: :prefer_exact, text: field_name) do
     find('input', match: :first).set ''
-    find('input', match: :first).set field_value
-  end
-  # NOTE: this sleep is needed in case of loops where there is a risk
-  # of click on a previously displayed autocomplete menu
-  sleep 1
-  within '.ui-autocomplete' do
-    find('a', match: :prefer_exact, text: field_value).click
+    find('input', match: :first).native.send_keys(field_value)
   end
 
+  sleep 3
+  find('.ui-autocomplete').find('a', match: :prefer_exact, text: field_value).click
   find('body').click # capybara keeps focus on the autocomplete element
   expect(has_no_selector? '.ui-autocomplete').to be true
 end
@@ -42,14 +38,14 @@ end
 
 Then(/^I can create an item$/) do
   step 'I add a new Item'
-  expect(current_path).to eq manage_new_item_path(@current_inventory_pool)
+  expect(current_path).to eq manage_new_item_react_path(@current_inventory_pool)
 end
 
 
 Given(/^I create an? (item|license)$/) do |object_type|
   opts = {}
   opts.merge! type: :license if object_type == 'license'
-  visit manage_new_item_path(@current_inventory_pool, opts)
+  visit manage_new_item_react_path(@current_inventory_pool, opts)
   expect(has_selector?('.row.emboss')).to be true
 end
 
@@ -156,12 +152,12 @@ When(/^these required fields are filled in:$/) do |table|
         model_name = Model.first.name
         fill_in_autocomplete_field must_field_name, model_name
       when 'Project Number'
-        find('.row.emboss', match: :prefer_exact, text: 'Reference').find("input[value='investment']").set true
+        find('.row.emboss', match: :prefer_exact, text: 'Reference').find('label', text: 'Investment').click
         @project_number_value = 'test'
         @project_number_field = find('.row.emboss', match: :prefer_exact, text: must_field_name).find('input,textarea')
         @project_number_field.set @project_number_value
       when 'Supply Category'
-        find('.row.emboss', match: :prefer_exact, text: 'Supply Category').find("select option:not([value=''])", match: :first).select_option
+        find('.row.emboss', match: :prefer_exact, text: 'Supply Category').find("select option:not([value='0'])", match: :first).select_option
       when 'Building'
         fill_in_autocomplete_field must_field_name, Building.general.name
       when 'Room'
@@ -183,10 +179,10 @@ When(/^these required fields are blank:$/) do |table|
       when 'Model'
         find('.row.emboss', match: :prefer_exact, text: must_field_name).find('input').set ''
       when 'Project Number'
-        find('.row.emboss', match: :prefer_exact, text: 'Reference').find("input[value='investment']").set true
+        find('.row.emboss', match: :prefer_exact, text: 'Reference').find('label', text: 'Investment').click
         find('.row.emboss', match: :prefer_exact, text: must_field_name).find('input,textarea').set ''
       when 'Supply Category'
-        find('.row.emboss', match: :prefer_exact, text: must_field_name).find("select option[value='']").select_option
+        find('.row.emboss', match: :prefer_exact, text: must_field_name).find("select option[value='0']").select_option
       else
         raise 'unknown field'
     end
@@ -199,7 +195,7 @@ When(/^I leave the field "(.+)" empty$/) do |must_field_name|
   if not find('.row.emboss', match: :prefer_exact, text: @must_field_name).all('input,textarea').empty?
     find('.row.emboss', match: :prefer_exact, text: @must_field_name).find('input,textarea').set ''
   elsif not find('.row.emboss', match: :prefer_exact, text: @must_field_name).all('select').empty?
-    find('.row.emboss', match: :prefer_exact, text: @must_field_name).find("select option[value='']").select_option
+    find('.row.emboss', match: :prefer_exact, text: @must_field_name).find("select option[value='0']").select_option
   else
     raise 'unkown field'
   end
