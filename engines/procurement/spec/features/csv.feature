@@ -36,7 +36,10 @@ Feature: Exporting the data to a CSV-File
       | Receiver                   |
       | Building                   |
       | Room                       |
-      | State                      |
+      | accounting type            |
+      | general ledger account     |
+      | cost center                |
+      | internal order             |
     Examples:
       | username  |
       | Barbara   |
@@ -76,6 +79,10 @@ Feature: Exporting the data to a CSV-File
       | Order quantity             |
       | Inspector's priority       |
       | Inspection comment         |
+      | accounting type            |
+      | general ledger account     |
+      | cost center                |
+      | internal order             |
 
   @csv
   Scenario: Export data for requesters for past budget period
@@ -113,6 +120,10 @@ Feature: Exporting the data to a CSV-File
       | Order quantity             |
       | Inspector's priority       |
       | Inspection comment         |
+      | accounting type            |
+      | general ledger account     |
+      | cost center                |
+      | internal order             |
 
   @csv
   Scenario: Export data as Excel native format

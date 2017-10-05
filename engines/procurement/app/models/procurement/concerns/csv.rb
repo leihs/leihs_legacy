@@ -58,32 +58,37 @@ module Procurement
           _('Inspection comment') => \
             authorize_value(_('Inspection comment'),
                             inspection_comment,
-                            current_user)
+                            current_user),
+          _('accounting type') => authorize_value(
+            _('accounting type'), _(accounting_type), current_user),
+          _('cost center') => authorize_value(
+            _('cost center'), cost_center, current_user),
+          _('general ledger account') => authorize_value(
+            _('general ledger account'), general_ledger_account, current_user),
+          _('internal order') => authorize_value(
+            _('internal order'), internal_order_number, current_user)
         }
       end
       # rubocop:enable Metrics/MethodLength
 
-      # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
       def authorize_value(column, value, current_user)
         value if \
           case column
-          when _('Approved quantity')
+          when _('Approved quantity'), _('Inspection comment')
             Procurement::Access.admin?(current_user) or
               Procurement::Category.inspector_of_any_category?(current_user) or
               (requested_by?(current_user) and budget_period.past?)
-          when _('Inspection comment')
-            Procurement::Access.admin?(current_user) or
-              Procurement::Category.inspector_of_any_category?(current_user) or
-              (requested_by?(current_user) and budget_period.past?)
-          when _('Order quantity')
+
+          when _('Order quantity'), _("Inspector's priority")
             Procurement::Access.admin?(current_user) or
               Procurement::Category.inspector_of_any_category?(current_user)
-          when _("Inspector's priority")
+
+          when _('accounting type'), _('cost center'), \
+               _('general ledger account'), _('internal order')
             Procurement::Access.admin?(current_user) or
               Procurement::Category.inspector_of_any_category?(current_user)
           end
       end
-      # rubocop:enable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
 
     end
 

@@ -135,6 +135,18 @@ module Procurement
       accounting_type == 'investment'
     end
 
+    def cost_center
+      category.cost_center unless investment?
+    end
+
+    def general_ledger_account
+      category.general_ledger_account if investment?
+    end
+
+    def internal_order_number
+      attribute(:internal_order_number) if investment?
+    end
+
     private
 
     def not_completely_approved?
