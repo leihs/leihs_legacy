@@ -8,7 +8,6 @@ Feature: Picking list
   Background:
     Given I am Pius
 
-  @rack
   Scenario: What I want to see on the picking list
     When I open a picking list
     Then I want to see the following sections in the picking list:

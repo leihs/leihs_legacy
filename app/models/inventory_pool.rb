@@ -59,10 +59,10 @@ class InventoryPool < ApplicationRecord
   has_and_belongs_to_many :accessories
 
   has_many :reservations, dependent: :restrict_with_exception
-  has_many :reservations_bundles, -> { extending BundleFinder }
-  # TODO: ?? # has_many :contracts, through: :reservations_bundles
   has_many :item_lines, dependent: :restrict_with_exception
   has_many :visits
+  has_many :orders
+  has_many :contracts
 
   has_many :groups do
     def with_general

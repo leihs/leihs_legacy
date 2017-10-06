@@ -1,5 +1,5 @@
 When /^I reject a contract$/ do
-  @contract = @current_inventory_pool.reservations_bundles.submitted.first
+  @contract = @current_inventory_pool.orders.submitted.first
 
   step %Q(I uncheck the "No verification required" button)
 
@@ -34,21 +34,20 @@ When /^I confirm the contract rejection$/ do
 end
 
 Then /^the contract is rejected$/ do
+  sleep 1
   if @daily_view_line
     within @daily_view_line do
       find('.line-actions-column', text: _('Rejected'))
     end
   end
 
-  rejected_contract = @current_inventory_pool.reservations_bundles.rejected.find_by(user_id: @contract.user)
-  @contract.reservations.each do |line|
+  rejected_contract = @current_inventory_pool.orders.rejected.find_by(user_id: @contract.user)
+  rejected_contract.reservations.each do |line|
     if current_path == manage_contracts_path(@current_inventory_pool.id)
       find(".line.row", text: rejected_contract.user.name).find('.line-actions-column', text: _('Rejected'))
     end
-    expect(rejected_contract.reservations.include? line).to be true
     expect(line.reload.status).to eq :rejected
   end
-  step 'that contract has been deleted'
 end
 
 Then(/^I am redirected to the daily view$/) do

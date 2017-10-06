@@ -1,0 +1,68 @@
+- content_for :title, "#{ _("Order")} | #{@user}"
+- content_for :lending_section, "active"
+
+#edit-contract-view.wrapper.margin-top-m
+
+  = render :partial => 'manage/tabs/lending', :locals => {:active_tab => :orders}
+
+  .row.content-wrapper.min-height-xl.min-width-full.straight-top
+
+    .margin-top-l.padding-horizontal-m
+      .row
+        .col2of6
+          %h1.headline-l= _("Edit %s") % _("Order")
+          %h2.headline-s.light
+            = render partial: "manage/users/tooltip", locals: {user: @user}
+          - if dg_user = @order.delegated_user
+            %h2.headline-s.light= "(#{dg_user})"
+
+        #daily-navigation.col4of6.text-align-right= render :partial => "manage/orders/edit/navigation"
+
+    .margin-top-m.padding-inset-m.separated-bottom
+
+      = render :partial => "manage/orders/edit/purpose"
+
+    #status.padding-horizontal-m.margin-top-m
+      .emboss.blue.padding-inset-s
+        %p.paragraph-s
+          %img.margin-right-s.max-width-micro{:src => asset_path("loading.gif")}
+          %strong
+            = _("Loading availability")
+
+    .row.margin-top-s.padding-top-m.padding-horizontal-m
+
+      .col2of3
+
+        = render :partial => "manage/orders/edit/add"
+
+      .col1of3
+
+        .float-right= render :partial => "manage/orders/edit/selection"
+
+    #lines.padding-inset-m= render :partial => "manage/reservations/grouped_lines", :locals => {:grouped_lines => @grouped_lines, :line_partial => "manage/reservations/order"}
+
+:coffeescript
+  
+  jQuery ->
+
+    App.User.addRecord new App.User $.extend {groupIds: #{@group_ids}}, #{@user.to_json(methods: :image_url, except: :extended_info)}
+    App.User.addRecord new App.User(#{@order.delegated_user.to_json(except: :extended_info)})
+
+    App.Order.addRecord new App.Order #{@order.to_json}
+    App.Order.current = App.Order.find("#{@order.id}")
+
+    for model in #{@models.to_json}
+      App.Model.addRecord new App.Model model
+
+    for software in #{@software.to_json}
+      App.Software.addRecord new App.Software software
+
+    for item in #{@items.to_json}
+      App.Item.addRecord new App.Item item
+
+    for reservation in #{@reservations.to_json}
+      App.Reservation.addRecord new App.Reservation reservation
+
+    new App.OrdersEditController
+      el: "#edit-contract-view"
+      order: App.Order.find "#{@order.id}"

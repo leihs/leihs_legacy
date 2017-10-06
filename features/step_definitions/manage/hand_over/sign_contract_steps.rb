@@ -70,7 +70,7 @@ def open_hand_over_and_set_contract
   step 'I open a hand over for this customer'
   expect(has_selector?('#hand-over-view', visible: true)).to be true
 
-  @contract = @customer.reservations_bundles.where(inventory_pool_id: @current_inventory_pool).approved.first
+  @contract = @customer.orders.where(inventory_pool_id: @current_inventory_pool).approved.first
 end
 
 When(/^I open a hand over which has multiple( unassigned)? reservations( and models in stock)?( with software)?$/) do |arg1, arg2, arg3|
@@ -111,7 +111,7 @@ end
 When(/^I open a hand over with overdue reservations$/) do
   @models_in_stock = @current_inventory_pool.items.in_stock.map(&:model).uniq
   @customer = @current_inventory_pool.users.to_a.detect do |u|
-    u.reservations_bundles.approved.exists? and u.reservations_bundles.approved.any? do |c|
+    u.orders.approved.exists? and u.orders.approved.any? do |c|
       c.reservations.any? {|l| l.start_date < Date.today and l.end_date >= Date.today and @models_in_stock.include? l.model}
     end
   end
@@ -228,7 +228,7 @@ Then(/^the contract is signed for the selected items$/) do
     @reservations_to_take_back.find_by(item_id: item)
   end
   expect(reservations.map(&:contract).uniq.size).to be 1
-  @contract = @customer.reservations_bundles.signed.where(inventory_pool_id: @current_inventory_pool).detect {|reservations_bundle| reservations_bundle.reservations.include? reservations.first}
+  @contract = @customer.contracts.open.where(inventory_pool_id: @current_inventory_pool).detect {|contract| contract.reservations.include? reservations.first}
 end
 
 When(/^I select an item without assigning an inventory code$/) do
@@ -285,4 +285,8 @@ When(/^I assign an inventory code to the item line$/) do
   end
   line_selected = find(".line[data-id='#{@item_line.id}'].green")
   @selected_items << item if line_selected
+end
+
+Then(/^I fill in the purpose inside hand over dialog$/) do
+  find('#purpose').set Faker::Lorem.sentence
 end

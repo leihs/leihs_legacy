@@ -12,20 +12,19 @@ end
 
 Given /^a model is no longer available$/ do
   if @event=='order' or @event=='hand_over'
-    @entity = if @contract
-                @contract
-              else
+    @entity = @contract || @order ||
+              begin
                 item = FactoryGirl.create(:item,
                                           inventory_pool: @current_inventory_pool)
-                reservation = FactoryGirl.create(:item_line,
+                reservation = FactoryGirl.create(:item_line, :with_purpose,
                                                  user: @customer,
                                                  item: item,
                                                  model: item.model,
                                                  inventory_pool: @current_inventory_pool,
                                                  status: :approved)
-                @entity = reservation.contract
+                reservation.order
               end
-    reservation ||= @contract.item_lines.first
+    reservation ||= @entity.item_lines.first
     expect(reservation).to be
     @model = reservation.model
     @initial_quantity = @entity.reservations.where(model_id: @model.id).count
@@ -46,6 +45,7 @@ end
 
 Then /^I see any problems displayed on the relevant reservations$/ do
   @problems = []
+  @lines = all('.line', minimum: 1, text: @model.name)
   @lines.each do |line|
     line.find("[data-tooltip-template='manage/views/reservations/problems_tooltip']").click
     @problems << find('.tooltipster-content strong', match: :first).text
@@ -92,7 +92,7 @@ end
 Then /^"(.*?)" are available in total, also counting availability from groups the user is not member of$/ do |arg1|
   max = @av.maximum_available_in_period_summed_for_groups(@line.start_date, @line.end_date, @av.inventory_pool_and_model_group_ids) || 0
   if [:unsubmitted, :submitted].include? @line.status
-    max += @line.contract.reservations.where(start_date: @line.start_date, end_date: @line.end_date, model_id: @line.model).size
+    max += (@line.contract or @line.order).reservations.where(start_date: @line.start_date, end_date: @line.end_date, model_id: @line.model).size
   else
     max += @line.quantity
   end
@@ -126,7 +126,7 @@ Given /^I take back a(n)?( late)? item$/ do |grammar, is_late|
   item_line = FactoryGirl.create(:item_line,
                                  item: item,
                                  model: item.model,
-                                 contract: FactoryGirl.create(:signed_contract,
+                                 contract: FactoryGirl.create(:open_contract,
                                                               inventory_pool: @current_inventory_pool,
                                                               user: user),
                                  user: user,

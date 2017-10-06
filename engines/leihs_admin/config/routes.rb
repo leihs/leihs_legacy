@@ -15,13 +15,6 @@ LeihsAdmin::Engine.routes.draw do
   get 'audits',           to: 'audits#index'
   get ':type/:id/audits', to: 'audits#index', as: 'individual_audits'
 
-  # Database Check
-  get "database/indexes", to: "database#indexes"
-  match "database/empty_columns", to: "database#empty_columns", as: "empty_columns", via: [:get, :delete]
-  match "database/consistency", to: "database#consistency", as: "consistency", via: [:get, :delete]
-  match "database/access_rights", to: "database#access_rights", as: "access_rights", via: [:get, :post]
-  get "database/not_null_columns", to: "database#not_null_columns"
-
   # Export inventory of all inventory pools
   get 'inventory/csv',              :to => 'inventory#csv_export',  :as => 'global_inventory_csv_export'
   get 'inventory/excel',            :to => 'inventory#excel_export',  :as => 'global_inventory_excel_export'

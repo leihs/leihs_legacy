@@ -5,9 +5,6 @@ gem 'procurement', path: "engines/procurement"
 
 gem 'puma'
 
-gem 'uuidtools'
-gem 'base32-crockford'
-
 gem 'axlsx', '~> 2.0', '>= 2.0.1'
 gem 'audited', git: 'https://github.com/leihs/audited', branch: 'master'
 gem 'barby', '~> 0.5.0'

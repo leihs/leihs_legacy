@@ -12,6 +12,8 @@ class User < ApplicationRecord
   belongs_to :authentication_system
   belongs_to :language
 
+  has_many :orders
+
   has_many :access_rights, dependent: :restrict_with_exception
   has_many(:inventory_pools,
            -> { where(access_rights: { deleted_at: nil }).distinct },
@@ -89,8 +91,7 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :delete_all
 
   has_many :reservations, dependent: :restrict_with_exception
-  has_many :reservations_bundles, -> { extending BundleFinder }
-  # TODO: ?? # has_many :contracts, through: :reservations_bundles
+  has_many :contracts
   has_many :item_lines, dependent: :restrict_with_exception
   has_many :option_lines, dependent: :restrict_with_exception
   has_many :visits
@@ -372,7 +373,7 @@ class User < ApplicationRecord
   #################### End role_requirement
 
   def deletable?
-    reservations_bundles.empty? and access_rights.active.empty?
+    orders.empty? and contracts.empty? and access_rights.active.empty?
   end
 
   ############################################

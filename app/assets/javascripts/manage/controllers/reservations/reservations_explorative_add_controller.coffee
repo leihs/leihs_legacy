@@ -10,6 +10,7 @@ class window.App.ReservationsExplorativeAddController extends Spine.Controller
   constructor: (data)->
     @startDate = data.startDate
     @endDate = data.endDate
+    @user = data.user
     do @setupModal
     super
     @categoriesFilter = new App.CategoriesFilterController({el: @categoriesContainer, filter: @reset})
@@ -51,12 +52,12 @@ class window.App.ReservationsExplorativeAddController extends Spine.Controller
       url: App.Availability.url()
       data: $.param
         model_ids: ids
-        user_id: @contract.user_id
+        user_id: @user.id
 
   render: (target, data, page)=> 
     if data?
       if data.length
-        target.html App.Render "manage/views/models/explorative_add_line", data, {startDate: @startDate, endDate: @endDate, groupIds: @contract.user().groupIds}
+        target.html App.Render "manage/views/models/explorative_add_line", data, {startDate: @startDate, endDate: @endDate, groupIds: @user.groupIds}
         @pagination.renderPlaceholders() if page == 1
       else
         target.html App.Render "manage/views/lists/no_results"

@@ -29,14 +29,8 @@ class Manage::VisitsController < Manage::ApplicationController
       .first
 
     unless visit.blank?
-      contract = \
-        visit
-          .user
-          .reservations_bundles
-          .approved
-          .find_by(inventory_pool_id: current_inventory_pool)
-      Contract.transaction do
-        visit.reservations.each { |l| contract.remove_line(l) }
+      ActiveRecord::Base.transaction do
+        visit.reservations.each(&:destroy!)
       end
     end
     head :ok

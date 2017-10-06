@@ -47,7 +47,7 @@ When /^I delete all reservations of this contract$/ do
 end
 
 Then /^I got an error message that not all reservations can be deleted$/ do
-  find('#flash .error', text: _('You cannot delete all reservations of an contract. Perhaps you want to reject it instead?'))
+  find('#flash .error', text: _('You cannot delete all reservations of an order. Perhaps you want to reject it instead?'))
 end
 
 Then /^none of the reservations are deleted$/ do

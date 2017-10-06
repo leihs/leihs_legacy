@@ -17,10 +17,11 @@ end
 
 When /^I open the booking calendar$/ do
   wait_until { page.has_selector?(".order-line, .line[data-line-type='item_line']") }
-  @line_el = first(".order-line, .line[data-line-type='item_line']")
+  @line_el = find(".order-line, .line[data-line-type='item_line']", match: :first)
   expect(@line_el).to be
   id = @line_el['data-id'] || JSON.parse(@line_el['data-ids']).first
   @line = Reservation.find_by_id id
+  @line_el = find(".order-line, .line[data-line-type='item_line']", match: :first)
   @line_el.find('.multibutton .button[data-edit-lines]', text: _('Change entry')).click
   find('.fc-day-content', match: :first)
 end
@@ -36,9 +37,9 @@ Then /^the (order|hand over) can be saved$/ do |arg1|
   step 'the booking calendar is closed'
   case arg1
   when 'order'
-    expect(@line.contract.reservations.where(start_date: @line.start_date, end_date: @line.end_date, model_id: @line.model).size).to eq @size
+    expect(@line.order.reservations.where(start_date: @line.start_date, end_date: @line.end_date, model_id: @line.model).size).to eq @size
   when 'hand over'
-    expect(@line.contract.reservations.where(model_id: @line.model).size).to be >= @size
+    expect(@line.user.reservations.approved.where(model_id: @line.model).size).to be >= @size
   else
     raise
   end

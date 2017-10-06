@@ -86,7 +86,7 @@ module LeihsAdmin
 
       step 'I pick a user without access rights, orders or contracts' do
         @user = User.find do |u|
-          u.access_rights.active.empty? and u.reservations_bundles.empty?
+          u.access_rights.active.empty? and u.orders.empty? and u.contracts.empty?
         end
       end
 
@@ -152,11 +152,9 @@ module LeihsAdmin
       step 'I pick one user with access rights, ' \
            'one with orders and one with contracts' do
         @users = []
-        @users << User.find do |u|
-          not u.access_rights.active.empty? and u.reservations_bundles.empty?
-        end
-        @users << User.find { |u| not u.reservations_bundles.empty? }
-        @users << User.find { |u| u.reservations_bundles.empty? }
+        @users << User.find { |u| not u.access_rights.active.empty? }
+        @users << User.find { |u| not u.orders.empty? }
+        @users << User.find { |u| not u.contracts.empty? }
       end
 
       step 'the delete button for every picked user is not present' do

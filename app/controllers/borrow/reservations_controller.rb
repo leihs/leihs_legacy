@@ -1,15 +1,11 @@
 class Borrow::ReservationsController < Borrow::ApplicationController
+  include Borrow::Concerns::CreateLines
 
   before_action only: [:create, :change_time_range] do
     @start_date = params[:start_date].try { |x| Date.parse(x) } || Time.zone.today
     @end_date = params[:end_date].try { |x| Date.parse(x) } || Date.tomorrow
     @inventory_pool = current_user.inventory_pools.find(params[:inventory_pool_id])
 
-    @target_contract = \
-      current_user
-        .reservations_bundles
-        .unsubmitted
-        .find_or_initialize_by(inventory_pool_id: @inventory_pool.id)
     @errors = []
     unless @inventory_pool.open_on?(@start_date)
       @errors << _('Inventory pool is closed on start date')
@@ -37,15 +33,17 @@ class Borrow::ReservationsController < Borrow::ApplicationController
       @errors << _('Item is not available in that time range')
     end
 
-    if @errors.empty? \
-      and (reservations = model.add_to_contract(@target_contract,
-                                                current_user,
-                                                quantity,
-                                                @start_date,
-                                                @end_date,
-                                                session[:delegated_user_id])) \
-      and reservations.all?(&:valid?)
-      render status: :ok, json: reservations.first
+    if @errors.empty?
+      reservations = create_lines(model: model,
+                                  quantity: quantity,
+                                  status: :unsubmitted,
+                                  inventory_pool: @inventory_pool,
+                                  start_date: @start_date,
+                                  end_date: @end_date,
+                                  delegated_user_id: session[:delegated_user_id])
+      if reservations and reservations.all?(&:valid?)
+        render status: :ok, json: reservations.first
+      end
     else
       render status: :bad_request, json: @errors.uniq.join(', ')
     end
@@ -60,7 +58,7 @@ class Borrow::ReservationsController < Borrow::ApplicationController
   end
 
   def change_time_range
-    reservations = @target_contract.reservations.find(params[:line_ids])
+    reservations = Reservation.find(params[:line_ids])
     if @errors.empty?
       begin
         reservations.each do |line|

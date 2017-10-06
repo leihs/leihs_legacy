@@ -35,11 +35,21 @@ Given(/^it has at least (\d+) (unsubmitted|submitted|approved|signed) reservatio
 
     attrs[:start_date] = Date.today + rand(0..10).days
     attrs[:end_date] = Date.today + rand(10..20).days
-    cl = FactoryGirl.create :reservation, attrs
+    if [:submitted, :rejected, :approved].include? attrs[:status]
+      user = FactoryGirl.create(:customer,
+                                inventory_pool: @current_inventory_pool)
+      order = FactoryGirl.create(:order,
+                                 inventory_pool: @current_inventory_pool,
+                                 user: user,
+                                 state: attrs[:status])
+      attrs['order_id'] = order.id
+      attrs['user_id'] = user.id
+    end
+    cl = FactoryGirl.create(:reservation, attrs.merge!(delegated_user: nil))
 
     if status.to_sym == :signed
-      contract_container = cl.user.reservations_bundles.approved.find_by(inventory_pool_id: cl.inventory_pool)
-      contract = contract_container.sign(@current_user, [cl])
+      contract = Contract.sign!(@current_user, @current_inventory_pool, user, [cl],
+                                Faker::Lorem.sentence)
       expect(contract.valid?).to be true
     end
   end
@@ -63,7 +73,7 @@ Given /^approve each submitted contract with more than (.*) reservations should 
 
   seconds = seconds.to_f
 
-  contracts = ReservationsBundle.submitted.select do |rb|
+  contracts = Order.submitted.select do |rb|
     rb.reservations.count > arg1.to_i
   end
   expect(contracts).not_to be_empty

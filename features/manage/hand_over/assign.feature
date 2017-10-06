@@ -7,6 +7,7 @@ Feature: Assign items during hand over
   Background:
     Given I am Pius
 
+  @flapping
   Scenario: Assign an inventory code to an itemline
      When I open a hand over which has multiple unassigned reservations and models in stock
       And I click an inventory code input field of an item line
@@ -22,6 +23,7 @@ Feature: Assign items during hand over
      Then the first itemline in the selection matching the provided inventory code is assigned
       And no new line is added to the hand over
 
+  @flapping
   Scenario: Remove the assignment of an inventory code by clear the the inventory code input
      When I open a hand over with reservations that have assigned inventory codes
       And I clean the inventory code of one of the reservations

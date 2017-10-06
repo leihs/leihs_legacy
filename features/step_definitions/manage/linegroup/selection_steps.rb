@@ -3,23 +3,26 @@ When /^I open a take back, hand over or I edit a contract$/ do
   type = possible_types.sample
   case type
   when 'take_back'
-    @customer = @current_inventory_pool.users.detect {|x| x.reservations_bundles.signed.exists? }
+    @customer = @current_inventory_pool.users.detect {|x| x.contracts.open.exists? }
     visit manage_take_back_path(@current_inventory_pool, @customer)
   when 'hand_over'
-    @customer = @current_inventory_pool.users.detect {|x| x.reservations_bundles.approved.exists? }
+    @customer = @current_inventory_pool.users.detect {|x| x.orders.approved.exists? }
     step 'I open a hand over for this customer'
   when 'contract'
-    @customer = @current_inventory_pool.users.detect {|x| x.reservations_bundles.submitted.exists? }
-    @entity = @customer.reservations_bundles.submitted.first
-    visit manage_edit_contract_path(@current_inventory_pool, @entity)
+    @customer = @current_inventory_pool.users.detect {|x| x.orders.submitted.exists? }
+    @entity = @customer.orders.submitted.first
+    visit manage_edit_order_path(@current_inventory_pool, @entity)
   end
 end
 
 When /^I select all reservations of an linegroup$/ do
   within '#lines' do
     @linegroup = find('[data-selected-lines-container]', match: :first)
-    @linegroup.all('.line').each do |line|
-      line.find('input[type=checkbox][data-select-line]', match: :first).click
+    within @linegroup do
+      find('.line input[type=checkbox][data-select-line]', match: :first)
+      all('.line input[type=checkbox][data-select-line]', match: :first).map do |c|
+        c.click
+      end
     end
   end
 end

@@ -428,27 +428,29 @@ Given(/^a software license exists$/) do
 end
 
 Given(/^this software license is handed over to somebody$/) do
-  line = FactoryGirl.create :item_line, inventory_pool: @current_inventory_pool, status: :approved, model: @model, item: @item
-  @contract_with_software_license = line.user.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)
-  expect(@contract_with_software_license.reservations.reload.empty?).to be false
-  contract = @contract_with_software_license.sign(@current_user, [line])
-  expect(contract).to be_valid
-  @contract_with_software_license = line.user.reservations_bundles.signed.find(contract.id)
-end
-
-Given(/^this software license is handed over to a normal user$/) do
+  @user = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
+  order = FactoryGirl.create(:order,
+                             user: @user,
+                             inventory_pool: @current_inventory_pool,
+                             state: :approved)
   line = FactoryGirl.create(:item_line,
+                            order: order,
                             inventory_pool: @current_inventory_pool,
-                            user: FactoryGirl.create(:customer,
-                                                     inventory_pool: @current_inventory_pool),
+                            user: @user,
                             status: :approved,
                             model: @model,
                             item: @item)
-  @contract_with_software_license = line.user.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)
+  @contract_with_software_license = Contract.sign!(@current_user,
+                                                   @current_inventory_pool,
+                                                   @user,
+                                                   [line],
+                                                   Faker::Lorem.sentence)
   expect(@contract_with_software_license.reservations.reload.empty?).to be false
-  contract = @contract_with_software_license.sign(@current_user, [line])
-  expect(contract).to be_valid
-  @contract_with_software_license = line.user.reservations_bundles.signed.find(contract.id)
+  expect(@contract_with_software_license).to be_valid
+end
+
+Given(/^this software license is handed over to a normal user$/) do
+  step 'this software license is handed over to somebody'
 end
 
 When(/^I search after the name of that person$/) do

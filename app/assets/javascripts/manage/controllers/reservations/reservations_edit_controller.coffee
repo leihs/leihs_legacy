@@ -22,6 +22,7 @@ class window.App.ReservationsEditController extends Spine.Controller
       user: @user
       models: models
       quantity: quantity
-      contract: @contract
+      order: @order
+      hand_over: @hand_over
       startDateDisabled: @startDateDisabled
       quantityDisabled: @quantityDisabled

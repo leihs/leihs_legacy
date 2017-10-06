@@ -328,14 +328,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:52
-- name: features/borrow/my_orders_overview.feature:62
+- name: features/borrow/my_orders_overview.feature:61
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:62
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/my_orders_overview.feature:61
 - name: features/borrow/my_orders_overview.feature:10
   scripts:
     test:

@@ -18,6 +18,7 @@ Feature: Displaying problems
      And "3" are available in total, also counting availability from groups the user is not member of
      And "7" are in this inventory pool (and borrowable)
 
+  @flapping
   Scenario: Showing problems in an order when taking back a defective item
     Given I take back an item
     And one item is defective
@@ -30,6 +31,7 @@ Feature: Displaying problems
      Then the affected item's line shows the item's problems
      And the problem is displayed as: "Gegenstand ist defekt"
 
+  @flapping
   Scenario: Displaying problems with incomplete items during take back
     Given I take back an item
      And one item is incomplete

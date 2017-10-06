@@ -11,6 +11,7 @@
 # description of the various steps the lending process goes through.
 #
 class ItemLine < Reservation
+  audited
 
   belongs_to :item, inverse_of: :item_lines
   belongs_to :model, inverse_of: :reservations

@@ -187,10 +187,9 @@ Feature: Delegation
     Then the model has been added to the order with the respective start and end date, quantity and inventory pool
     When I open my list of orders
     And I enter a purpose
-    And I take note of the contract
+    And I take note of the reservations
     And I submit the order
-    And I reload the order
-    Then the order's status changes to submitted
+    Then the reservations' status changes to submitted
     And the delegation is saved as borrower
     And I am saved as contact person
 

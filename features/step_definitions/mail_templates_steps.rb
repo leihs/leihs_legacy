@@ -210,7 +210,7 @@ end
 
 When(/^one of my submitted orders to an inventory pool without custom approved mail templates get approved$/) do
   expect(ActionMailer::Base.deliveries.count).to eq 0
-  @contract = @current_user.reservations_bundles.submitted.detect { |c| c.approvable? and c.inventory_pool.mail_templates.where(name: 'approved').empty? }
+  @contract = @current_user.orders.submitted.detect { |c| c.approvable? and c.inventory_pool.mail_templates.where(name: 'approved').empty? }
   @contract.approve(Faker::Lorem.sentence)
   expect(ActionMailer::Base.deliveries.count).to be > 0
 end

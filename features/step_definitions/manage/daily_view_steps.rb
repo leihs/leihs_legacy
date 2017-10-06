@@ -2,15 +2,34 @@
 
 Given(/^there is an order with two different time windows$/) do
   @customer = @current_inventory_pool.users.customers.first
-  FactoryGirl.create :reservation, user: @customer, status: :submitted, inventory_pool: @current_inventory_pool, start_date: Date.today, end_date: Date.tomorrow
-  FactoryGirl.create :reservation, user: @customer, status: :submitted, inventory_pool: @current_inventory_pool, start_date: Date.today, end_date: Date.today+10.days
-  @contract = @customer.reservations_bundles.submitted.find_by(inventory_pool_id: @current_inventory_pool)
+  @order = FactoryGirl.create(:order,
+                              user: @customer,
+                              inventory_pool: @current_inventory_pool,
+                              state: :submitted)
+  FactoryGirl.create(
+    :reservation,
+    user: @customer,
+    status: :submitted,
+    order: @order,
+    inventory_pool: @current_inventory_pool,
+    start_date: Date.today,
+    end_date: Date.tomorrow
+  )
+  FactoryGirl.create(
+    :reservation,
+    user: @customer,
+    status: :submitted,
+    order: @order,
+    inventory_pool: @current_inventory_pool,
+    start_date: Date.today,
+    end_date: Date.today+10.days
+  )
 end
 
 Then(/^I see the longest time span of this order directly on the order's line$/) do
-  line_with_max_range = @contract.item_lines.max{|line| line.end_date - line.start_date}
+  line_with_max_range = @order.reservations.where(type: 'ItemLine').max{|line| line.end_date - line.start_date}
   range = (line_with_max_range.end_date-line_with_max_range.start_date).to_i+1
-  expect(find(".line[data-id='#{@contract.id}']").has_content? "#{range} #{_('days')}").to be true
+  expect(find(".line[data-id='#{@order.id}']").has_content? "#{range} #{_('days')}").to be true
 end
 
 When(/^the current inventory pool's users are suspended$/) do

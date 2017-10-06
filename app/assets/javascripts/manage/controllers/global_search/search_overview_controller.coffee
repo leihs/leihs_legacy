@@ -28,9 +28,9 @@ class window.App.SearchOverviewController extends Spine.Controller
     new App.LinesCellTooltipController {el: @el}
     new App.UserCellTooltipController {el: @el}
     new App.HandOversDeleteController {el: @el}
-    new App.ContractsApproveController {el: @el}
+    new App.OrdersApproveController {el: @el}
     new App.TakeBacksSendReminderController {el: @el}
-    new App.ContractsRejectController {el: @el, async: true, callback: @orderRejected}
+    new App.OrdersRejectController {el: @el, async: true, callback: @orderRejected}
     new App.TimeLineController {el: @el}
 
   removeLoading: _.after 5, -> @loading.remove()
@@ -142,11 +142,11 @@ class window.App.SearchOverviewController extends Spine.Controller
         per_page: @previewAmount
         global_contracts_search: true
         search_term: @searchTerm
-        status: ["signed", "closed"]
+        status: ["open", "closed"]
     .done (data, status, xhr)=>
       contracts = (App.Contract.find datum.id for datum in data)
       @fetchUsers(contracts, "all").done =>
-        @fetchReservations(contracts).done =>
+        @fetchReservationsForContracts(contracts).done =>
           @render @contracts, "manage/views/contracts/line", contracts, xhr
 
   fetchUsers: (records, all = false) =>
@@ -162,7 +162,7 @@ class window.App.SearchOverviewController extends Spine.Controller
       users = (App.User.find datum.id for datum in data)
       App.User.fetchDelegators users
 
-  fetchReservations: (records)=>
+  fetchReservationsForContracts: (records)=>
     ids = _.flatten _.map records, (r)-> r.id
     return {done: (c)->c()} unless ids.length
     App.Reservation.ajaxFetch
@@ -170,26 +170,25 @@ class window.App.SearchOverviewController extends Spine.Controller
         contract_ids: ids
         paginate: false
 
+  fetchReservationsForOrders: (records)=>
+    ids = _.flatten _.map records, (r)-> r.id
+    return {done: (c)->c()} unless ids.length
+    App.Reservation.ajaxFetch
+      data: $.param
+        order_ids: ids
+        paginate: false
+
   searchOrders: =>
-    App.Contract.ajaxFetch
+    App.Order.ajaxFetch
       data: $.param
         per_page: @previewAmount
         search_term: @searchTerm
         status: ["approved", "submitted", "rejected"]
     .done (data, status, xhr)=>
-      contracts = (App.Contract.find datum.id for datum in data)
-      @fetchUsers(contracts).done =>
-        @fetchReservations(contracts).done =>
-          @fetchPurposes(contracts).done =>
-            @render @orders, "manage/views/contracts/line", contracts, xhr
-
-  fetchPurposes: (contracts)=>
-    ids = _.compact _.filter (_.map (_.flatten (_.map contracts, (o) -> o.reservations().all())), (l) -> l.purpose_id), (id) -> not App.Purpose.exists(id)?
-    return {done: (c)=>c()} unless ids.length
-    App.Purpose.ajaxFetch
-      data: $.param
-        purpose_ids: ids
-        paginate: false
+      orders = (App.Order.find datum.id for datum in data)
+      @fetchUsers(orders).done =>
+        @fetchReservationsForOrders(orders).done =>
+          @render @orders, "manage/views/orders/line", orders, xhr
 
   searchOptions: =>
     App.Option.ajaxFetch

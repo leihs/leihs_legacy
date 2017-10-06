@@ -1,5 +1,5 @@
 When /^I click an inventory code input field of an item line$/ do
-  @item_line = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).item_lines.where(item_id: nil).first
+  @item_line = @customer.reservations.approved.find_by(inventory_pool_id: @current_inventory_pool, item_id: nil)
   @item_line_element = find('.line', match: :prefer_exact, text: @item_line.model.name)
   @item_line_element.find('[data-assign-item]').click
 end

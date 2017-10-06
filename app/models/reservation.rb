@@ -8,40 +8,22 @@
 #
 class Reservation < ApplicationRecord
   include Availability::Reservation
+  include Concerns::ScopeIfPresence
   include Delegation::Reservation
-  audited
 
   belongs_to :inventory_pool, inverse_of: :reservations
   belongs_to :user, inverse_of: :reservations
-  belongs_to :purpose
   belongs_to :contract, inverse_of: :reservations
+  belongs_to :order
+  belongs_to :model
   belongs_to :handed_over_by_user, class_name: 'User'
   belongs_to :returned_to_user, class_name: 'User'
 
   has_many :groups, through: :user
 
-  def contract_id
-    read_attribute(:contract_id) || dynamic_contract_id
-  end
-
-  def dynamic_contract_id
-    [status, user_id, inventory_pool_id]
-      .compact
-      .join('_')
-  end
-
   def created_at_date_if_submitted
     created_at.strftime('%Y-%m-%d') if status == :submitted
   end
-
-  def contract_with_container
-    contract_without_container \
-      || ReservationsBundle.find_by(status: status,
-                                    user_id: user_id,
-                                    inventory_pool_id: inventory_pool_id)
-  end
-  alias_method :contract_without_container, :contract
-  alias_method :contract, :contract_with_container
 
   #########################################################################
 
@@ -69,20 +51,16 @@ class Reservation < ApplicationRecord
   def self.filter(params, inventory_pool)
     reservations = inventory_pool.reservations
 
-    if params[:contract_ids]
-      conditions = params[:contract_ids].map do |p|
-        if p.include?('_')
-          format_args = p.split('_')[0, 2]
-          format("(status = '%s' AND user_id = '%s')", *format_args)
-        else
-          format("contract_id = '%s'", p)
-        end
-      end.join(' OR ')
-      reservations = reservations.where(conditions)
-    end
-
-    reservations = reservations.where(id: params[:ids]) if params[:ids]
     reservations
+      .scope_if_presence(params[:contract_ids]) do |rs, ids|
+        reservations.where(contract_id: ids)
+      end
+      .scope_if_presence(params[:order_ids]) do |rs, ids|
+        reservations.where(order_id: ids)
+      end
+      .scope_if_presence(params[:ids]) do |rs, ids|
+        reservations.where(id: ids)
+      end
   end
 
   #####################################################
@@ -99,8 +77,6 @@ class Reservation < ApplicationRecord
   validates_presence_of :user, :inventory_pool, :status
   validates_presence_of(:contract,
                         if: proc { |r| [:signed, :closed].include?(r.status) })
-  # TODO: validates_presence_of :purpose,
-  # if: Proc.new { |record| record.status != :unsubmitted }
   validate :date_sequence
   validate do
     errors.add(:base, _('No access')) unless user.access_right_for(inventory_pool)
@@ -192,7 +168,6 @@ class Reservation < ApplicationRecord
     end
   end
 
-  # TODO: dry with ReservationsBundle
   def target_user
     if user.delegation? and delegated_user
       delegated_user
@@ -204,30 +179,21 @@ class Reservation < ApplicationRecord
   ############################################
 
   def approvable?
-    if status == :approved
-      errors.add(:base, _('This order has already been approved.'))
-      false
-    else
-      if user.suspended?(inventory_pool)
-        errors.add(:base, _('This user is suspended.'))
-      end
-      if delegated_user.try :suspended?, inventory_pool
-        errors.add(:base,
-                   _('The delegated user %s is suspended.') % delegated_user)
-      end
-      unless visits_on_open_date?
-        errors.add(:base,
-                   _('This order is not approvable because the inventory pool ' \
-                     'is closed on either the start or enddate.'))
-      end
-      unless available?
-        errors.add(:base,
-                   _('This order is not approvable because some reserved ' \
-                     'models are not available.'))
-      end
-      errors.add(:base, _('Please provide a purpose...')) if purpose.to_s.blank?
-      errors.empty?
+    if delegated_user.try :suspended?, inventory_pool
+      errors.add(:base,
+                 _('The delegated user %s is suspended.') % delegated_user)
     end
+    unless visits_on_open_date?
+      errors.add(:base,
+                 _('This order is not approvable because the inventory pool ' \
+                   'is closed on either the start or enddate.'))
+    end
+    unless available?
+      errors.add(:base,
+                 _('This order is not approvable because some reserved ' \
+                   'models are not available.'))
+    end
+    errors.empty?
   end
 
   def update_time_line(start_date, end_date, user)

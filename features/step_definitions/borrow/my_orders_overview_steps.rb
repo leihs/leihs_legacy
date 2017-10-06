@@ -2,7 +2,6 @@
 
 Given(/^I have added items to an order$/) do
   step 'I have an unsubmitted order with models'
-  @contracts = @current_user.reservations_bundles.unsubmitted
 end
 
 When(/^I open my list of orders$/) do
@@ -81,8 +80,6 @@ end
 #############################################################################
 
 When(/^I delete the order$/) do
-  @contracts = @current_user.reservations_bundles.unsubmitted
-
   @before_max_available = before_max_available(@current_user)
 
   a = find("a[data-method='delete'][href='/borrow/order/remove']", match: :first)
@@ -96,7 +93,6 @@ end
 
 Then(/^all entries are deleted from the order$/) do
   expect(@current_user.reservations.unsubmitted).to be_empty
-  expect(@current_user.reservations_bundles.unsubmitted).to be_empty
 end
 
 Then(/^the items are available for borrowing again$/) do
@@ -117,13 +113,15 @@ When(/^I enter a purpose$/) do
 end
 
 When(/^I submit the order$/) do
+  @reservations = @current_user.reservations.unsubmitted
   find('form button.green', match: :first).click
 end
 
-Then(/^the order's status changes to submitted$/) do
-  @contracts.each do |contract|
-    expect(contract.status).to eq :submitted
+Then(/^the reservations' status changes to submitted$/) do
+  @reservations.reload.each do |r|
+    expect(r.status).to be == :submitted
   end
+  expect(@current_user.reservations.unsubmitted).to be_empty
 end
 
 Then(/^I see an order confirmation$/) do
@@ -206,7 +204,6 @@ Then(/^the entry's date is changed accordingly$/) do
 end
 
 Then(/^the entry is grouped based on its current start date and inventory pool$/) do
-  @current_user.reservations_bundles.unsubmitted.each(&:reload)
   step 'I see entries grouped by start date and inventory pool'
 end
 

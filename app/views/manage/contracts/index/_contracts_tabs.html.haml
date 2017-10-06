@@ -1,9 +1,9 @@
 #list-tabs.inline-tab-navigation
 
-  %a.inline-tab-item{data: {status: ["signed", "closed"]}, class: (params[:status] != ["signed"] and params[:status] != ["closed"] ? "active" : nil)}
+  %a.inline-tab-item{data: {status: ["open", "closed"]}, class: (params[:status] != ["open"] and params[:status] != ["closed"] ? "active" : nil)}
     = _("All")
 
-  %a.inline-tab-item{data: {status: ["signed"]}, class: (params[:status] == ["signed"] ? "active" : nil)}
+  %a.inline-tab-item{data: {status: ["open"]}, class: (params[:status] == ["open"] ? "active" : nil)}
     = _("Open")
 
   %a.inline-tab-item{data: {status: ["closed"]}, class: (params[:status] == ["closed"] ? "active" : nil)}

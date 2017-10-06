@@ -250,15 +250,27 @@ module LeihsAdmin
                              status: :unsubmitted,
                              inventory_pool: @inventory_pool)
         when 'submitted order'
+          user = FactoryGirl.create(:customer, inventory_pool: @inventory_pool)
+          order = FactoryGirl.create(:order,
+                                     user: user,
+                                     inventory_pool: @inventory_pool,
+                                     state: :submitted)
           FactoryGirl.create(:reservation,
                              status: :submitted,
+                             order: order,
                              inventory_pool: @inventory_pool)
         when 'approved order'
+          user = FactoryGirl.create(:customer, inventory_pool: @inventory_pool)
+          order = FactoryGirl.create(:order,
+                                     user: user,
+                                     inventory_pool: @inventory_pool,
+                                     state: :approved)
           FactoryGirl.create(:reservation,
                              status: :approved,
+                             order: order,
                              inventory_pool: @inventory_pool)
         when 'signed contract'
-          FactoryGirl.create(:signed_contract,
+          FactoryGirl.create(:open_contract,
                              inventory_pool: @inventory_pool)
         end
       end

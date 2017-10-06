@@ -41,8 +41,8 @@
     {{/if}}
   </div>
   <div class='col1of10 line-col text-align-center'>
-    {{if purpose_id}}
-    <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>purpose().description}}'>
+    {{if order()}}
+    <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>order().purpose}}'>
       <i class='fa fa-comment grey'></i>
     </div>
     {{/if}}

@@ -21,6 +21,7 @@ Feature: Edit take back end date
     Then the end date of that line is changed
     And the start date of that line is not changed
 
+  @flapping
   Scenario: Change the time range of multiple contract reservations
      When I open a take back which has multiple reservations
       And I change the end date for all contract reservations, envolving option and item reservations

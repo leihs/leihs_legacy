@@ -35,7 +35,7 @@ Then /^for each visible model I can see the Timeline$/ do
 
   line_texts[0..5].each do |line_text|
     line = find(line_selector, text: line_text)
-    if current_role == :group_manager and (@contract.nil? or [:signed].include? @contract.status)
+    if current_role == :group_manager and (@contract.nil? or [:signed].include? @contract.state)
       line.find('.line-actions > a', text: _('Timeline')).click
     else
       within line.find('.line-actions .multibutton') do

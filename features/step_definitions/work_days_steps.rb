@@ -48,14 +48,14 @@ When '$who try to order an item for $date' do |who, date|
   # Login                            
   post login_path(login: user.login)
   step "I am logged in as '#{user.login}' with password '#{nil}'"
-  @current_user.reservations.unsubmitted.delete_all if @contract
+  @current_user.reservations.unsubmitted.delete_all if @reservations
   get borrow_root_path
   @response = post borrow_reservations_path(model_id: model.id,
                                               quantity: 1,
                                               inventory_pool_id: inventory_pool.id,
                                               start_date: date,
                                               end_date: date)
-  @contract = @current_user.reservations_bundles.unsubmitted.find_by(inventory_pool_id: inventory_pool)
+  @reservations = @current_user.reservations.unsubmitted.where(inventory_pool_id: inventory_pool)
 end
 
 # OPTIMIZE 0402
@@ -71,14 +71,14 @@ end
 # end
 
 Then 'that should be possible$reason' do |reason|
-  expect(@contract.reservations.size).to eq 1
-  line = @contract.reservations.first
+  expect(@reservations.size).to eq 1
+  line = @reservations.first
   line.start_date = LeihsFactory.parsedate(@date)
   expect(line.save).to be true
 end
 
 When 'trying to set the end date to the same date' do  
-  line = @contract.reservations.first
+  line = @reservations.first
   line.end_date = LeihsFactory.parsedate(@date)
   @save_successful = line.save
 end

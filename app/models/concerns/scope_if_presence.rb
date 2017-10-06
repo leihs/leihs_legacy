@@ -36,10 +36,20 @@ module Concerns
     #   end
     #   ...
     #
+    #################################################################
+    # or also use the short cut method passing with "&:"
+    # Audit
+    #   .scope_if_presence(foo, &:some_foo_scope)
+
     module ClassMethods
-      def scope_if_presence(arg)
+      def scope_if_presence(arg, &block)
         if arg.presence
-          yield(all, arg)
+          case block.arity
+          when -1, 1 then block.call(all)
+          when 2 then block.call(all, arg)
+          else
+            raise 'unallowed block arity'
+          end
         else
           all
         end

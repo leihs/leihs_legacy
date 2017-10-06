@@ -42,12 +42,6 @@
 
     App.User.addRecord new App.User $.extend {groupIds: #{@group_ids.to_json}}, #{@user.to_json(except: :extended_info)}
 
-    for purpose in #{@reservations.map(&:purpose).uniq.to_json}
-      if purpose != null
-        App.Purpose.addRecord new App.Purpose purpose
-
-    App.Contract.addRecord new App.Contract #{@contract.to_json}
-
     for model in #{@models.as_json(accessories_for_ip: current_inventory_pool).to_json}
       App.Model.addRecord new App.Model model
 
@@ -66,7 +60,9 @@
     for license in #{@licenses.to_json}
       App.License.addRecord new App.License license
 
+    for order in #{@orders.to_json}
+      App.Order.addRecord new App.Order order
+
     new App.HandOverController
       el: "#hand-over-view"
       user: App.User.find("#{@user.id}")
-      contract: App.Contract.find "#{@contract.id}"

@@ -7,6 +7,8 @@ class window.App.LinesCellTooltipController extends Spine.Controller
     trigger = $(e.currentTarget)
     record = if trigger.closest(".line[data-type='contract']").length 
       App.Contract.findOrBuild(trigger.closest(".line[data-type='contract']").data())
+    else if trigger.closest(".line[data-type='order']").length 
+      App.Order.findOrBuild(trigger.closest(".line[data-type='order']").data())
     else if trigger.closest(".line[data-type='take_back']").length 
       App.Visit.findOrBuild(trigger.closest(".line[data-type='take_back']").data())
     else if trigger.closest(".line[data-type='hand_over']").length 

@@ -1,0 +1,69 @@
+:ruby
+  active_tab, title, start_date = [:orders, _("List of Orders"), nil]
+
+-content_for :title, title
+-content_for :lending_section, "active"
+#contracts-index-view.wrapper.margin-top-m
+
+  = render :partial => 'manage/tabs/lending', :locals => {:active_tab => active_tab}
+
+  .row.content-wrapper.min-height-xl.min-width-full.straight-top
+
+    .margin-top-l.padding-horizontal-m
+      .row
+        %h1.headline-xl= title
+
+    .row.margin-top-l
+      
+      = render :partial => "manage/orders/index/#{active_tab}_tabs"
+
+      .row.margin-vertical-xs.padding-horizontal-m
+
+        .col2of6.padding-right-s
+          %input#list-search.width-full{type: "text", name: "input", placeholder: _("Search..."), autocomplete: :off}
+
+        #list-range.col2of6.padding-right-s
+          .col4of10
+            %label.row
+              %input.has-addon{type: "text", name: "start_date", placeholder: _("from"), autocomplete: :off, value: start_date ? start_date : nil}
+              %span.addon
+                %i.fa.fa-calendar
+          .col1of10.text-align-center
+            .padding-top-s= "-"
+          .col4of10
+            %label.row
+              %input.has-addon{type: "text", name: "end_date", placeholder: _("to"), autocomplete: :off}
+              %span.addon
+                %i.fa.fa-calendar
+          .col1of10
+            %form#list-filters.col4of5.padding-left-s
+              %label.button.inset.white.height-xxs
+
+                - if group_manager? and not lending_manager?
+
+                  %input{ :name => :to_be_verified,
+                    :type => :checkbox,
+                    :value => "true",
+                    :checked => "checked",
+                    :autocomplete => :off }
+                  %span= _("To be verified")
+
+                - elsif lending_manager?
+
+                  %input{ :name => :no_verification_required,
+                    :type => :checkbox,
+                    :value => "true",
+                    :checked => "checked",
+                    :autocomplete => :off }
+                  %span= _("No verification required")
+
+      #contracts.list-of-lines.even.separated-top.padding-bottom-s.min-height-l
+        .height-s
+        %img.margin-horziontal-auto.margin-top-xxl.margin-bottom-xxl{:src => asset_path("loading.gif")}
+
+:coffeescript
+
+  jQuery ->
+    new App.OrdersIndexController
+      el: $("#contracts-index-view")
+      status: #{params[:status].to_json}

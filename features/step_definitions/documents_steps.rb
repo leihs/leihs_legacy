@@ -12,7 +12,7 @@ Then(/^my contracts are ordered by the earliest time window$/) do
 end
 
 Then(/^I see the following information for each contract:$/) do |table|
-  contracts = @current_user.reservations_bundles.signed_or_closed.sort {|a,b| b.time_window_min <=> a.time_window_min}
+  contracts = @current_user.contracts.sort {|a,b| b.time_window_min <=> a.time_window_min}
   contracts.each do |contract|
     within(".line[data-id='#{contract.id}']") do
       table.raw.flatten.each do |s|
@@ -28,7 +28,7 @@ Then(/^I see the following information for each contract:$/) do |table|
           when 'Purpose'
             expect(has_content?(contract.purpose)).to be true
           when 'Status'
-            expect(has_content?(_('Open'))).to be true if contract.status == :signed
+            expect(has_content?(_('Open'))).to be true if contract.state == :open
           when 'Link to the contract'
             expect(has_selector?("a[href='#{borrow_user_contract_path(contract.id)}']", text: _('Contract'))).to be true
           when 'Link to the value list'
@@ -47,7 +47,7 @@ Then(/^I see the following information for each contract:$/) do |table|
 end
 
 Given(/^I click the value list link$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.first
+  @contract = @current_user.contracts.first
   within(".row.line[data-id='#{@contract.id}']") do
     find('.dropdown-toggle').click
     document_window = window_opened_by do
@@ -62,7 +62,7 @@ Then(/^the value list opens$/) do
 end
 
 Given(/^I click the contract link$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.first
+  @contract = @current_user.contracts.first
   document_window = window_opened_by do
     find("a[href='#{borrow_user_contract_path(@contract.id)}']", text: _('Contract')).click
   end
@@ -74,7 +74,8 @@ Then(/^the contract opens$/) do
 end
 
 When(/^I open a value list from my documents$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.first
+  @contract = @current_user.contracts.first
+  @user = @current_user
   visit borrow_user_value_list_path(@contract.id)
   #step "öffnet sich die Werteliste"
   step 'the value list opens'
@@ -82,14 +83,14 @@ When(/^I open a value list from my documents$/) do
 end
 
 When(/^I open a contract from my documents$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.first
+  @contract = @current_user.contracts.first
   visit borrow_user_contract_path(@contract.id)
   step 'the contract opens'
   @contract_element = find('.contract', match: :first)
 end
 
 When(/^I open a contract with returned items from my documents$/) do
-  @contract = @current_user.reservations_bundles.signed_or_closed.find {|c| c.reservations.any? &:returned_to_user}
+  @contract = @current_user.contracts.find {|c| c.reservations.any? &:returned_to_user}
   visit borrow_user_contract_path(@contract.id)
   step 'the contract opens'
 end
@@ -125,7 +126,7 @@ Given(/^I am a customer with contracts with different dates$/) do
   customer = FactoryGirl.create(:user)
   customer.access_rights << FactoryGirl.create(:access_right, inventory_pool: inventory_pool)
   (Date.today..Date.today + 1.week).each do |date|
-    FactoryGirl.create(:signed_contract,
+    FactoryGirl.create(:open_contract,
                        inventory_pool: inventory_pool,
                        user: customer,
                        start_date: date,

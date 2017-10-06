@@ -20,7 +20,7 @@ class Manage::ReservationsController < Manage::ApplicationController
 
   def update
     # TODO: params.require(:reservation).permit(:item_id, :model_id, :option_id,
-    # :purpose_id, :quantity, :start_date, :end_date)
+    # :quantity, :start_date, :end_date)
     params[:reservation].delete(:contract_id)
 
     @reservation = current_inventory_pool.reservations.find(params[:line_id])
@@ -30,32 +30,37 @@ class Manage::ReservationsController < Manage::ApplicationController
     end
   end
 
-  before_action only: [:create, :create_for_template, :assign_or_create] do
-    @status, user_id = params[:contract_id].split('_')[0, 2]
-    @user = current_inventory_pool.users.find(user_id)
-  end
-
   def create
+    user = User.find(params[:user_id])
+    inventory_pool = InventoryPool.find(params[:inventory_pool_id])
+
     begin
-      record = if params[:model_id]
-                 current_inventory_pool.models.find(params[:model_id])
-               else
-                 current_inventory_pool.options.find(params[:option_id])
-               end
-      @reservation = create_reservation(@user,
-                                        current_inventory_pool,
-                                        @status,
-                                        record,
-                                        1,
-                                        params[:start_date],
-                                        params[:end_date],
-                                        params[:purpose_id])
+      Order.transaction do
+        record = if params[:model_id]
+                   current_inventory_pool.models.find(params[:model_id])
+                 else
+                   current_inventory_pool.options.find(params[:option_id])
+                 end
+        # accomodate hand over and edit order
+        order = Order.find_by(id: params[:order_id])
+        @reservation = create_reservation(user,
+                                          order.try(&:id),
+                                          inventory_pool,
+                                          (order.try(&:state) or :approved),
+                                          record,
+                                          1,
+                                          params[:start_date],
+                                          params[:end_date])
+      end
     rescue => e
       render status: :bad_request, plain: e
     end
   end
 
   def create_for_template
+    user = User.find(params[:user_id])
+    order = Order.find_by(id: params[:order_id])
+
     @reservations = []
     ApplicationRecord.transaction do
       template = Template.find(params[:template_id])
@@ -63,16 +68,20 @@ class Manage::ReservationsController < Manage::ApplicationController
         next unless current_inventory_pool.models.exists?(id: link.model_id)
         link.quantity.times do
           @reservations.push \
-            create_reservation(@user,
+            create_reservation(user,
+                               order.try(&:id),
                                current_inventory_pool,
-                               @status,
+                               (order.try(&:state) or :approved),
                                current_inventory_pool.models.find(link.model_id),
                                1,
                                params[:start_date],
-                               params[:end_date],
-                               params[:purpose_id])
+                               params[:end_date])
         end
       end
+    end
+    if @reservations.empty?
+      render json: 'No available models for this template and inventory pool!',
+             status: :bad_request
     end
   end
 
@@ -144,28 +153,23 @@ class Manage::ReservationsController < Manage::ApplicationController
     end
   end
 
+  # used in hand over
   def assign_or_create
-    contract = \
-      current_inventory_pool
-        .reservations_bundles
-        .find_by(id: params[:contract_id])
-    contract ||= \
-      @user
-        .reservations_bundles
-        .new(inventory_pool: current_inventory_pool, status: @status)
+    @user = current_inventory_pool.users.find(params[:user_id])
 
     item = \
       current_inventory_pool
       .items
       .where('UPPER(inventory_code) = ?', code_param.upcase)
       .first
+
     model = find_model(item)
     option = find_option unless model
 
-    line, error = create_new_line_or_assign(model,
+    line, error = create_new_line_or_assign(@user,
+                                            model,
                                             item,
-                                            option,
-                                            contract)
+                                            option)
 
     if error.blank?
       render status: :ok, json: line
@@ -201,24 +205,41 @@ class Manage::ReservationsController < Manage::ApplicationController
     head :ok
   end
 
+  # for hand over
   def swap_user
     user = current_inventory_pool.users.find params[:user_id]
     reservations = current_inventory_pool.reservations.where(id: params[:line_ids])
-    ApplicationRecord.transaction do
-      reservations.each do |line|
-        delegated_user = if user.delegation?
-                           if user.delegated_users.include? line.delegated_user
-                             line.delegated_user
-                           else
-                             user.delegator_user
-                           end
-                         end
-        line.update_attributes(user: user, delegated_user: delegated_user)
+    begin
+      ApplicationRecord.transaction do
+        reservations.group_by(&:order).each_pair do |order, lines|
+          ####################################################################
+          # create a new order with the same purpose and pool,
+          # but with a different user in order to maintain the
+          # integrity with the rest of the order's reservations
+          if order
+            new_order = Order.create!(user: user,
+                                      inventory_pool: order.inventory_pool,
+                                      state: order.state,
+                                      purpose: order.purpose)
+          end
+          ####################################################################
+
+          lines.each do |line|
+            delegated_user = if user.delegation?
+                               if user.delegated_users.include? line.delegated_user
+                                 line.delegated_user
+                               else
+                                 user.delegator_user
+                               end
+                             end
+            line.update_attributes!(user: user,
+                                    delegated_user: delegated_user,
+                                    order: new_order || nil)
+          end
+        end
+        head :ok
       end
-    end
-    if reservations.all?(&:valid?)
-      head :ok
-    else
+    rescue
       head :bad_request
     end
   end
@@ -240,13 +261,14 @@ class Manage::ReservationsController < Manage::ApplicationController
 
   def print
     @reservations = current_inventory_pool.reservations.where(id: params[:ids])
+    @user = @reservations.first.user
+    @delegated_user = @reservations.first.delegated_user
+
     case params[:type]
     when 'value_list'
-        @user = @reservations.first.user
-        render 'documents/reservations', layout: 'print'
+      render 'documents/reservations', layout: 'print'
     when 'picking_list'
-        @contract = @reservations.first.contract
-        render 'documents/picking_list', layout: 'print'
+      render 'documents/picking_list', layout: 'print'
     end
   end
 
@@ -306,27 +328,26 @@ class Manage::ReservationsController < Manage::ApplicationController
         .first
   end
 
-  # TODO: merge to ReservationsBundle#add_lines
   def create_reservation(user,
+                         order_id,
                          inventory_pool,
                          status,
                          record,
                          quantity,
                          start_date,
-                         end_date,
-                         purpose_id)
+                         end_date)
     if record.is_a? Model
       reservation = user.item_lines.new(model: record)
     elsif record.is_a? Option
       reservation = user.option_lines.new(option: record)
     end
+    reservation.order_id = order_id
     reservation.inventory_pool = inventory_pool
     reservation.status = status
     reservation.quantity = Integer(quantity)
     reservation.start_date = \
       start_date.try { |x| Date.parse(x) } || Time.zone.today
     reservation.end_date = end_date.try { |x| Date.parse(x) } || Date.tomorrow
-    reservation.purpose = Purpose.where(id: purpose_id).first
 
     # NOTE we need to store because the availability reads the persisted
     # reservations (as running_reservations)
@@ -342,41 +363,55 @@ class Manage::ReservationsController < Manage::ApplicationController
   end
 
   # rubocop:disable Metrics/MethodLength
-  def create_new_line_or_assign(model, item, option, contract)
+  def create_new_line_or_assign(user, model, item, option)
     error = nil
     line = nil
 
     ApplicationRecord.transaction do
       begin
-        # error if item already assigned to some reservation of this contract
-        if contract \
-          && item \
-          && line = contract.reservations.find_by(item_id: item.id)
+        # error if item already assigned to some approved reservation of the user
+        if item && line = \
+            user
+            .reservations
+            .where(inventory_pool: current_inventory_pool)
+            .approved
+            .find_by(item_id: item.id)
           error = \
             _('%s is already assigned to this contract') % item.inventory_code
         # create new line or assign
         elsif model
           # try to assign for (selected)line_ids first
           if line_ids_param and code_param
-            line = contract.reservations.where(id: line_ids_param,
-                                               model_id: item.model.id,
-                                               item_id: nil).first
+            line = \
+              user
+              .reservations
+              .where(inventory_pool: current_inventory_pool)
+              .approved
+              .where(id: line_ids_param,
+                     model_id: item.model.id,
+                     item_id: nil).first
           end
-          # try to assign to contract reservations of the customer
+          # try to assign to approved reservations of the customer
           if code_param
             line ||= \
-              contract
+              user
                 .reservations
+                .approved
+                .where(inventory_pool: current_inventory_pool)
                 .where(model_id: model.id, item_id: nil)
                 .order(:id)
                 .first
           end
           # add new line
-          line ||= model.add_to_contract(contract,
-                                         contract.user,
-                                         quantity_param,
-                                         start_date_param,
-                                         end_date_param).first
+          line ||= \
+            ItemLine.create(
+              status: :approved,
+              user: user,
+              model: model,
+              inventory_pool: current_inventory_pool,
+              start_date: start_date_param,
+              end_date: end_date_param
+            )
           if model_group_id_param.nil? \
             and item \
             and line \
@@ -384,19 +419,26 @@ class Manage::ReservationsController < Manage::ApplicationController
             error = line.errors.values.join
           end
         elsif option
-          if line = contract.reservations.where(option_id: option.id,
-                                                start_date: start_date_param,
-                                                end_date: end_date_param).first
+          if line = \
+              user
+              .reservations
+              .approved
+              .where(inventory_pool: current_inventory_pool)
+              .where(option_id: option.id,
+                     start_date: start_date_param,
+                     end_date: end_date_param).first
             line.quantity += quantity_param
             line.save
-          # FIXME: go through contract.add_lines ??
-          elsif not line = contract.user.option_lines.create(
-            status: contract.status,
-            inventory_pool: contract.inventory_pool,
-            option: option,
-            quantity: quantity_param,
-            start_date: start_date_param,
-            end_date: end_date_param)
+          elsif not line = \
+            OptionLine.create(
+              user: user,
+              status: :approved,
+              inventory_pool: current_inventory_pool,
+              option: option,
+              quantity: quantity_param,
+              start_date: start_date_param,
+              end_date: end_date_param
+            )
             error = _('The option could not be added')
           end
         else

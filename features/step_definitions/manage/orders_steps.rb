@@ -5,17 +5,16 @@ Then(/^I don't see empty orders in the list of orders$/) do
   within '#contracts' do
     expect(has_selector? '.line[data-id]').to be true
     all('.line[data-id]').each do |line|
-      contract = @current_inventory_pool.reservations_bundles.find(line['data-id'])
+      contract = @current_inventory_pool.orders.find(line['data-id'])
       expect(contract.reservations.empty?).to be false
     end
   end
 end
 
 When(/^I open a suspended user's order$/) do
-  user = @current_inventory_pool.reservations_bundles.submitted.first.user
-  ensure_suspended_user(user, @current_inventory_pool)
-  step 'I navigate to the open orders'
-  step 'I open an order placed by "%s"' % user
+  @order = @current_inventory_pool.orders.submitted.first
+  ensure_suspended_user(@order.user, @current_inventory_pool)
+  visit manage_edit_order_path(@current_inventory_pool, @order)
 end
 
 When(/^I see the note 'Suspended!' next to their name$/) do
@@ -30,12 +29,12 @@ def ensure_suspended_user(user, inventory_pool, suspended_until = rand(1.years.f
 end
 
 Given(/^an order contains overbooked models$/) do
-  @contract = @current_inventory_pool.reservations_bundles.submitted.with_verifiable_user_and_model.detect {|c| not c.approvable?}
+  @contract = @current_inventory_pool.orders.submitted.with_verifiable_user_and_model.detect {|c| not c.approvable?}
   expect(@contract).not_to be_nil
 end
 
 When(/^I edit this submitted contract$/) do
-  visit manage_edit_contract_path(@current_inventory_pool, @contract)
+  visit manage_edit_order_path(@current_inventory_pool, @contract)
 end
 
 When(/^I approve the order$/) do
@@ -64,7 +63,7 @@ end
 
 
 Given(/^a verifiable order exists$/) do
-  @contract = ReservationsBundle.with_verifiable_user_and_model.first
+  @contract = Order.with_verifiable_user_and_model.first
   expect(@contract).not_to be_nil
 end
 
@@ -84,30 +83,39 @@ end
 
 Then(/^I see all verifiable orders$/) do
   step 'I scroll to the end of the list'
-  @contracts = @current_inventory_pool.reservations_bundles.where(status: [:submitted, :approved, :rejected]).with_verifiable_user_and_model
+  @contracts = \
+    @current_inventory_pool
+    .orders
+    .where(state: [:submitted, :approved, :rejected])
+    .with_verifiable_user_and_model
+    .with_some_line_not_in_any_contract
   @contracts.each {|c|
-    expect(has_selector?("[data-type='contract'][data-id='#{c.id}']")).to be true
+    expect(has_selector?("[data-type='order'][data-id='#{c.id}']")).to be true
   }
 end
 
 Then(/^these orders are ordered by creation date$/) do
-  expect(all("[data-type='contract']").map { |x| x['data-id'] })
+  expect(all("[data-type='order']").map { |x| x['data-id'] })
     .to be == @contracts.order('created_at DESC').map(&:id)
 end
 
 Then(/^I see all pending verifiable orders$/) do
   step 'I scroll to the end of the list'
-  @contracts = @current_inventory_pool.reservations_bundles.where(status: :submitted).with_verifiable_user_and_model
+  @contracts = \
+    @current_inventory_pool
+    .orders
+    .where(state: :submitted)
+    .with_verifiable_user_and_model
   @contracts.each {|c|
-    expect(has_selector?("[data-type='contract'][data-id='#{c.id}']")).to be true
+    expect(has_selector?("[data-type='order'][data-id='#{c.id}']")).to be true
   }
-  @contract = @contracts.order('created_at DESC').first
-  @line_css =  "[data-type='contract'][data-id='#{@contract.id}']"
+  @contract = @contracts.first
+  @line_css =  "[data-type='order'][data-id='#{@contract.id}']"
 end
 
 Then(/^I see who placed this order on the order line and can view a popup with user details$/) do
   find(@line_css).has_text? @contract.user.name
-  find("[data-firstname][data-id='#{@contract.user.id}']").click
+  find("[data-firstname][data-id='#{@contract.user.id}']", match: :first).click
   expect(has_selector?('.tooltipster-base', text: @contract.user.name)).to be true
 end
 
@@ -152,7 +160,7 @@ Then(/^I can reject the order$/) do
 end
 
 Then(/^I can edit the order$/) do
-  expect(find(@line_css).has_selector? "[href*='#{manage_edit_contract_path(@current_inventory_pool, @contract)}']", visible: false).to be true
+  expect(find(@line_css).has_selector? "[href*='#{manage_edit_order_path(@current_inventory_pool, @contract)}']", visible: false).to be true
 end
 
 Then(/^I cannot hand over orders$/) do
@@ -161,26 +169,35 @@ end
 
 Then(/^I see all verified and approved orders$/) do
   step 'I scroll to the end of the list'
-  @contracts = @current_inventory_pool.reservations_bundles.where(status: :approved).with_verifiable_user_and_model
+  @contracts = \
+    @current_inventory_pool
+    .orders
+    .where(state: :approved)
+    .with_verifiable_user_and_model
+    .with_some_line_not_in_any_contract
   @contracts.each {|c|
-    expect(has_selector?("[data-type='contract'][data-id='#{c.id}']")).to be true
+    expect(has_selector?("[data-type='order'][data-id='#{c.id}']")).to be true
   }
-  @contract = @contracts.order('created_at DESC').first
-  @line_css =  "[data-type='contract'][data-id='#{@contract.id}']"
+  @contract = @contracts.first
+  @line_css =  "[data-type='order'][data-id='#{@contract.id}']"
 end
 
 Then(/^I see the order's status on the order line$/) do
-  find(@line_css, text: _(@contract.status.to_s.capitalize))
+  find(@line_css, text: _(@contract.state.capitalize))
 end
 
 Then(/^I see all verifiable rejected orders$/) do
   step 'I scroll to the end of the list'
-  @contracts = @current_inventory_pool.reservations_bundles.where(status: :rejected).with_verifiable_user_and_model
+  @contracts = \
+    @current_inventory_pool
+    .orders
+    .where(state: :rejected)
+    .with_verifiable_user_and_model
   @contracts.each {|c|
-    expect(has_selector?("[data-type='contract'][data-id='#{c.id}']")).to be true
+    expect(has_selector?("[data-type='order'][data-id='#{c.id}']")).to be true
   }
-  @contract = @contracts.order('created_at DESC').first
-  @line_css =  "[data-type='contract'][data-id='#{@contract.id}']"
+  @contract = @contracts.first
+  @line_css =  "[data-type='order'][data-id='#{@contract.id}']"
 end
 
 When(/^I uncheck the filter "(.*?)"$/) do |filter|
@@ -190,9 +207,14 @@ end
 Then(/^I see orders placed by users in groups requiring verification$/) do
   step 'I scroll to the end of the list'
   within '#contracts' do
-    @contracts = @current_inventory_pool.reservations_bundles.where(status: [:submitted, :approved, :rejected]).with_verifiable_user
+    @contracts = \
+      @current_inventory_pool
+      .orders
+      .where(state: [:submitted, :approved, :rejected])
+      .with_verifiable_user
+      .with_some_line_not_in_any_contract
     @contracts.each do |contract|
-      find(".line[data-type='contract'][data-id='#{contract.id}']")
+      find(".line[data-type='order'][data-id='#{contract.id}']")
     end
   end
 end
@@ -245,6 +267,7 @@ end
 
 
 But(/^I cannot assign items$/) do
+  find("[data-line-type='item_line']", minimum: 1, match: :first)
   all("[data-line-type='item_line']", minimum: 1).each do |dom_line|
     within dom_line do
       find('input[data-assign-item]').click
@@ -258,9 +281,9 @@ end
 When(/^I am listing the (orders|contracts|visits)$/) do |arg1|
   case arg1
     when 'orders'
-      visit manage_contracts_path(@current_inventory_pool, status: [:approved, :submitted, :rejected])
+      visit manage_orders_path(@current_inventory_pool, state: [:approved, :submitted, :rejected])
     when 'contracts'
-      visit manage_contracts_path(@current_inventory_pool, status: [:signed, :closed])
+      visit manage_contracts_path(@current_inventory_pool, state: [:open, :closed])
     when 'visits'
       visit manage_inventory_pool_visits_path(@current_inventory_pool)
     else
@@ -271,9 +294,9 @@ end
 Given(/^(orders|contracts|visits) exist$/) do |arg1|
   @contracts = case arg1
                  when 'orders'
-                   @current_inventory_pool.reservations_bundles.where(status: [:submitted, :approved, :rejected])
+                   @current_inventory_pool.orders.where(state: [:submitted, :approved, :rejected])
                  when 'contracts'
-                   @current_inventory_pool.reservations_bundles.signed_or_closed
+                   @current_inventory_pool.contracts
                  when 'visits'
                    @current_inventory_pool.visits.where.not(status: :submitted)
                  else
@@ -283,7 +306,13 @@ Given(/^(orders|contracts|visits) exist$/) do |arg1|
 end
 
 When(/^I search( globally)? for (an order|a contract|a visit)( with its purpose)?$/) do |arg0, arg1, arg2|
-  @contract = @contracts.first
+  if arg1 == 'a contract'
+    @contract = @current_inventory_pool.contracts.first
+  elsif arg1 == 'an order'
+    @contract = @current_inventory_pool.orders.with_some_line_not_in_any_contract.first
+  elsif arg1 == 'a visit'
+    @contract = @current_inventory_pool.visits.where(status: ['approved', 'signed']).first
+  end
   @search_term = if arg2
                    @contract.purpose.split.sample.gsub(/^\W*/, '').gsub(/\W*$/, '')
                  else
@@ -311,7 +340,7 @@ Then(/^all listed (orders|contracts|visits) match the search term$/) do |arg1|
     within '.list-of-lines' do
       find(".line[data-id='#{@contract.id}']")
       contract_ids = all('.line').map{|x| x['data-id'] }.sort
-      matching_contracts_ids = @contracts.search(@search_term).map(&:id).map(&:to_s).sort
+      matching_contracts_ids = @contracts.filter(search_term: @search_term).map(&:id).map(&:to_s).sort
       expect(contract_ids).to eq matching_contracts_ids
     end
   end

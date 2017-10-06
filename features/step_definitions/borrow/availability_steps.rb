@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 Given(/^I have an unsubmitted order with models$/) do
-  expect(@current_user.reservations_bundles.unsubmitted.to_a.size).to be >= 1
+  expect(@current_user.reservations.unsubmitted.to_a.size).to be >= 1
 end
 
 Given(/^the contract timeout is set to (\d+) minutes$/) do |arg1|
@@ -23,7 +23,7 @@ end
 When(/^I add the same model to an order$/) do
   (@new_reservation.maximum_available_quantity + 1).times do
     FactoryGirl.create(:reservation,
-                       status: :submitted,
+                       status: :unsubmitted,
                        inventory_pool: @inventory_pool,
                        start_date: @new_reservation.start_date,
                        end_date: @new_reservation.end_date,
@@ -56,10 +56,16 @@ Given(/^(a|\d+) model(?:s)? (?:is|are) not available$/) do |n|
 
   available_lines.take(n - unavailable_lines.size).each do |line|
     (line.maximum_available_quantity + 1).times do
+      user = FactoryGirl.create(:customer, inventory_pool: line.inventory_pool)
       FactoryGirl.create(:item_line,
                          status: :submitted,
                          inventory_pool: line.inventory_pool,
                          model: line.model,
+                         user: user,
+                         order: FactoryGirl.build(:order,
+                                                  state: :submitted,
+                                                  inventory_pool: line.inventory_pool,
+                                                  user: user),
                          start_date: line.start_date,
                          end_date: line.end_date)
     end

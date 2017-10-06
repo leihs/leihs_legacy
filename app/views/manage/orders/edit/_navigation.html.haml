@@ -1,0 +1,20 @@
+%button#swap-user.button.white
+  %i.fa.fa-exchange
+  = _("Change orderer")
+
+%button.button.red{:"data-order-reject" => true, :"data-id" => @order.id}
+  %i.fa.fa-thumbs-down
+  = _("Reject order")
+
+.multibutton
+  %button.button.green{:"data-order-approve" => true, :"data-id" => @order.id, :autocomplete => :off}
+    %i.fa.fa-thumbs-up
+    = @order.to_be_verified? ? _("Verify + approve order") : _("Approve order")
+  .dropdown-holder.inline-block
+    .button.green.dropdown-toggle
+      .arrow.down
+    %ul.dropdown.right
+      %li
+        %a#approve-with-comment.dropdown-item
+          %i.fa.fa-comment-alt
+          = _("with comment")

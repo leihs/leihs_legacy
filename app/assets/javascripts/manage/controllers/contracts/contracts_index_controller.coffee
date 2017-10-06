@@ -7,9 +7,7 @@ class window.App.ContractsIndexController extends Spine.Controller
     super
     new App.LinesCellTooltipController {el: @el}
     new App.UserCellTooltipController {el: @el}
-    new App.ContractsApproveController {el: @el}
-    new App.ContractsRejectController {el: @el, async: true, callback: @orderRejected}
-    @pagination = new App.ListPaginationController {el: @list, fetch: @fetch}
+    @pagination = new App.OrdersPaginationController {el: @list, fetch: @fetch}
     @search = new App.ListSearchController {el: @el.find("#list-search"), reset: @reset}
     @filter = new App.ListFiltersController {el: @el.find("#list-filters"), reset: @reset}
     @range = new App.ListRangeController {el: @el.find("#list-range"), reset: @reset}
@@ -18,6 +16,7 @@ class window.App.ContractsIndexController extends Spine.Controller
 
   reset: =>
     @contracts = {}
+    @finished = false
     @list.html App.Render "manage/views/lists/loading"
     @fetch 1, @list
     @pagination.page = 1
@@ -26,11 +25,11 @@ class window.App.ContractsIndexController extends Spine.Controller
     @fetchContracts(page).done =>
       @fetchUsers(page).done =>
         @fetchReservations page, =>
-          @fetchPurposes page, =>
-            @render target, @contracts[page], page
+          @render target, @contracts[page], page
 
   fetchContracts: (page)=>
     data = $.extend @tabs.getData(), $.extend @filter.getData(),
+      disable_total_count: true
       search_term: @search.term()
       page: page
       range: @range.get()
@@ -38,6 +37,7 @@ class window.App.ContractsIndexController extends Spine.Controller
     App.Contract.ajaxFetch({ data: $.param data })
     .done (data, status, xhr) =>
       @pagination.set JSON.parse(xhr.getResponseHeader("X-Pagination"))
+      @finished = true if data.length == 0
       contracts = (App.Contract.find(datum.id) for datum in data)
       @contracts[page] = contracts
 
@@ -62,17 +62,8 @@ class window.App.ContractsIndexController extends Spine.Controller
       users = (App.User.find datum.id for datum in data)
       App.User.fetchDelegators users
 
-  fetchPurposes: (page, callback)=>
-    ids = _.compact _.filter (_.map (_.flatten (_.map @contracts[page], (o) -> o.reservations().all())), (l) -> l.purpose_id), (id) -> not App.Purpose.exists(id)?
-
-    do callback unless ids.length
-    done = _.after Math.ceil(ids.length/50), callback
-    _(ids).each_slice 50, (slice)=>
-      App.Purpose.ajaxFetch
-        data: $.param
-          purpose_ids: _.uniq(slice)
-      .done done
-
   render: (target, data, page)=>
     target.html App.Render "manage/views/contracts/line", data, { accessRight: App.AccessRight, currentUserRole: App.User.current.role }
-    @pagination.renderPlaceholders() if page == 1
+    if !@finished && $('.loading-page').length == 0
+      nextPage = page + 1
+      @list.append(App.Render("manage/views/lists/loading_page", nextPage, {page: nextPage}))

@@ -11,9 +11,9 @@ Then(/^I can change who placed this order$/) do
   end
   find('.content-wrapper', text: new_user.name, match: :first)
 
-  new_contract = new_user.reservations_bundles.find_by(status: :submitted, inventory_pool_id: @contract.inventory_pool)
+  new_contract = new_user.orders.find_by(state: :submitted, inventory_pool_id: @contract.inventory_pool)
   @contract.reservations.each do |line|
     expect(new_contract.reservations.include? line).to be true
   end
-  expect{@contract.reload}.to raise_error ActiveRecord::RecordNotFound
+  expect(@contract.reload.user).to be == new_user
 end

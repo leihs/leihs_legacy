@@ -13,7 +13,6 @@ FactoryGirl.define do
     end
     status { :unsubmitted }
     delegated_user { user.delegated_users.sample if user.delegation? }
-    purpose { FactoryGirl.create(:purpose) if status != :unsubmitted }
     start_date { inventory_pool.next_open_date(Time.zone.today) }
     end_date { inventory_pool.next_open_date(start_date) }
 
@@ -30,6 +29,29 @@ FactoryGirl.define do
         av.partitions[nil] > 0 and av.running_reservations.empty?
       end || FactoryGirl.create(:model_with_items, inventory_pool: inventory_pool)
     end
+
+    trait :with_assigned_item do
+      model { create(:model) }
+      item { create(:item, model: model, owner: inventory_pool) }
+    end
+
+    trait :with_purpose do
+      transient do
+        purpose { Faker::Lorem.sentence }
+      end
+      status :submitted
+
+      after :build do |reservation, evaluator|
+        unless reservation.status == :unsubmitted
+          reservation.order = \
+            FactoryGirl.create(:order,
+                               user: reservation.user,
+                               inventory_pool: reservation.inventory_pool,
+                               state: reservation.status,
+                               purpose: evaluator.purpose)
+        end
+      end
+    end
   end
 
   factory :option_line do
@@ -41,5 +63,4 @@ FactoryGirl.define do
           FactoryGirl.create(:option, inventory_pool: inventory_pool)
     end
   end
-
 end

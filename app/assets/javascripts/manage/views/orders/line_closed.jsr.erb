@@ -1,0 +1,39 @@
+{{partial 'manage/views/users/cell' user() '{"grid":"col1of8"}'/}}
+<div class='col1of8 line-col'>{{diffToday created_at/}}</div>
+<div class='col1of8 line-col text-align-center' data-type='lines-cell'>{{include tmpl='manage/views/reservations/cell'/}}</div>
+<div class='col1of8 line-col'>
+  {{>getMaxRange()}}
+  {{jed getMaxRange() "day" "days"/}}
+</div>
+<div class='col2of8 line-col text-align-left'>
+  <strong>{{jed "Closed"/}}</strong>
+  {{jed "Contract"/}}
+  {{>compact_id}}
+</div>
+<div class='col2of8 line-col line-actions'>
+  <div class='multibutton'>
+    <a class='button white text-ellipsis' href='{{>url()}}' target='_blank'>
+      <i class='fa fa-file'></i>
+      {{jed "Contract"/}}
+    </a>
+    <div class='dropdown-holder inline-block'>
+      <div class='button white dropdown-toggle'>
+        <div class='arrow down'></div>
+      </div>
+      <ul class='dropdown right'>
+        <li>
+          <a class='dropdown-item' href='{{>url('value_list')}}' target='_blank'>
+            <i class='fa fa-list-ol'></i>
+            {{jed "Value List"/}}
+          </a>
+        </li>
+        <li>
+          <a class='dropdown-item' href='{{>url('picking_list')}}' target='_blank'>
+            <i class='fa fa-list-ol'></i>
+            {{jed "Picking List"/}}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

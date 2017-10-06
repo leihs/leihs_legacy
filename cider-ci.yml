@@ -23,7 +23,7 @@ include:
   - cider-ci/jobs/manage-rspec-scenarios.yml
   - cider-ci/jobs/manage-rspec-flapping-scenarios.yml
   # no broken ones right now
-  # - cider-ci/jobs/manage-broken-scenarios.yml
+  - cider-ci/jobs/manage-broken-scenarios.yml
 
   ## ADMIN - on branches foo/admin-bar
   - cider-ci/jobs/leihs-admin-scenarios.yml

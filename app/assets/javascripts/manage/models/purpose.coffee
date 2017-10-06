@@ -1,1 +1,0 @@
-window.App.Purpose.url = => "/manage/#{App.InventoryPool.current.id}/purposes"

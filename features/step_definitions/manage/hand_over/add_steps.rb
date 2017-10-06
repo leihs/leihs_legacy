@@ -41,7 +41,12 @@ When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over
 end
 
 Then /^the item is added to the hand over for the provided date range and the inventory code is already assigend$/ do
-  expect(@customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).items.include?(Item.find_by_inventory_code(@inventory_code))).to be true
+  expect(
+    @customer
+    .reservations
+    .approved
+    .find_by(inventory_pool_id: @current_inventory_pool, item_id: Item.find_by_inventory_code(@inventory_code))
+  ).to be
   assigned_inventory_codes = all('.line input[data-assign-item]').map(&:value)
   expect(assigned_inventory_codes).to include @inventory_code
 end
@@ -61,13 +66,20 @@ Then /^the (.*?) is added to the hand over$/ do |type|
       find(".line[data-line-type='option_line'] .col1of10", match: :prefer_exact, text: @inventory_code)
       option = Option.find_by_inventory_code(@inventory_code)
       find('#flash', text: option.name)
-      contract = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)
-      @option_line = contract.reload.option_lines.where(option_id: option).order(:created_at).last
-      expect(contract.reload.options).to include option
+      @option_line = @reservation = \
+        @customer
+        .reservations
+        .approved
+        .find_by(inventory_pool_id: @current_inventory_pool, option_id: option)
+      expect(@reservation).to be
     when 'model'
-      contract = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)
+      @item_line = @reservation = \
+        @customer
+        .reservations
+        .approved
+        .find_by(inventory_pool_id: @current_inventory_pool, model_id: @model)
+      expect(@reservation).to be
       find(".line[data-line-type='item_line'] .col4of10", match: :prefer_exact, text: @model.name)
-      expect(contract.reload.models.include?(@model)).to be true
   end
 end
 
@@ -102,8 +114,7 @@ When /^I type the beginning of (.*?) name to the add\/assign input field$/ do |t
     when 'that model'
       @model.name
     when 'a template'
-      @template = FactoryGirl.create(:template)
-      @current_inventory_pool.templates << @template
+      @template = @current_inventory_pool.templates.first
       @template.name
   end
   type_into_autocomplete '#assign-or-add-input input', @target_name[0..-2]
@@ -131,8 +142,13 @@ When /^I select the (.*?) from the list$/ do |type|
   page.driver.browser.action.move_to(find('nav#topbar').native).perform
 
   within '.ui-autocomplete' do
-    find('a', match: :prefer_exact, text: @target_name)
-    all('a .col3of4').detect { |el| el.text == @target_name }.click
+    if type == 'option'
+      find('a', text: /#{@target_name}.*Option/).click
+    elsif type == 'model'
+      find('a', text: /#{@target_name}.*Model/).click
+    else
+      find('a', text: @target_name).click
+    end
   end
 end
 
@@ -140,17 +156,20 @@ Then /^each model of the template is added to the hand over for the provided dat
   sleep 1
   @template.models.each do |model|
     @model = model
-    step 'the (.*?) is added to the hand over'
+    step 'the model is added to the hand over'
   end
 end
 
 When /^I add so many reservations that I break the maximal quantity of a model$/ do
   @model ||= FactoryGirl.create(:model_with_items, inventory_pool: @current_inventory_pool)
   @target_name = @model.name
+  start_date = Date.parse find('#add-start-date').value
+  end_date = Date.parse find('#add-end-date').value
+  av = @model.availability_in(@current_inventory_pool)
   quantity_to_add = if @contract
-                      start_date = Date.parse find('#add-start-date').value
-                      end_date = Date.parse find('#add-end-date').value
-                      @model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups start_date, end_date, @contract.user.groups.map(&:id)
+                      av.maximum_available_in_period_summed_for_groups start_date, end_date, @contract.user.groups.map(&:id)
+                    elsif @order
+                      av.maximum_available_in_period_summed_for_groups start_date, end_date, @order.user.groups.map(&:id)
                     else
                       @model.items.size
                     end

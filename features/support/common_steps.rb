@@ -23,7 +23,7 @@ Given 'test pending' do
 end
 
 # This step is not active currently, since it is used in a @wip feature.
-# It needs to be eventually migrated from culerity to capybara all the same 
+# It needs to be eventually migrated from culerity to capybara all the same
 When /I fill in (\w+) of "([^\"]*)" with "([^\"]*)"/ do |order, field, value|
   text_fields = $browser.text_fields
   matching = text_fields.find_all { |t| t.id.match( field ) }
@@ -68,5 +68,11 @@ When 'I scroll loading all pages' do
 end
 
 Then 'I scroll to the end of the list' do
+  page.execute_script "window.scrollBy(0,10000)"
+end
+
+Then 'I scroll to the end of the order list twice' do
+  find('.list-of-lines .line', match: :first)
+  page.execute_script "window.scrollBy(0,10000)"
   page.execute_script "window.scrollBy(0,10000)"
 end

@@ -7,17 +7,21 @@ Given "a reservation exists for $quantity '$model' from $from to $to" do |quanti
   inventory_pool = model.inventory_pools.select{|ip| ip.open_on?(to_date(from)) and ip.open_on?(to_date(to))}.sample
   user = inventory_pool.users.sample
   @reservations = []
+  order = FactoryGirl.create(:order,
+                             user: user,
+                             inventory_pool: inventory_pool,
+                             state: :submitted)
   quantity.to_i.times do
     @reservations << user.item_lines.create(inventory_pool: inventory_pool,
-                                            status: :unsubmitted,
+                                            status: :submitted,
                                             quantity: 1,
+                                            user: user,
+                                            order: order,
                                             model: model,
                                             start_date: to_date(from),
                                             end_date: to_date(to))
   end
   expect(@reservations.size).to be >= quantity.to_i
-  contract = user.reservations_bundles.unsubmitted.find_by(inventory_pool_id: inventory_pool)
-  expect(contract.submit('this is the required purpose')).to be true
   expect(model.availability_in(inventory_pool.reload).running_reservations.size).to be >= 1
 end
 
@@ -25,17 +29,21 @@ Given "a contract exists for $quantity '$model' from $from to $to" do |quantity,
   model = Model.find_by_name(model)
   inventory_pool = model.inventory_pools.detect { |ip| ip.open_on?(to_date(from)) && ip.open_on?(to_date(to)) }
   user = inventory_pool.users.first
-  purpose = FactoryGirl.create(:purpose)
   @reservations = []
+  order = FactoryGirl.create(:order,
+                             user: user,
+                             inventory_pool: inventory_pool,
+                             state: :approved)
   quantity.to_i.times do
     @reservations << user.item_lines.create(inventory_pool: inventory_pool,
+                                            user: user,
                                             status: :approved,
                                             quantity: 1,
                                             model: model,
                                             item: model.items.in_stock.where(inventory_pool_id: inventory_pool).first,
                                             start_date: to_date(from),
                                             end_date: to_date(to),
-                                            purpose: purpose)
+                                            order: order)
   end
   expect(@reservations.size).to be >= quantity.to_i
   expect(model.availability_in(inventory_pool.reload).running_reservations.size).to be >= 1
@@ -58,8 +66,11 @@ Given "$who marks $quantity '$model' as 'in-repair' on 18.3.2030" do |who, quant
 end
 
 Given 'the $who signs the contract' do |who|
-  contract_container = @reservations.first.user.reservations_bundles.approved.find_by(inventory_pool_id: @reservations.first.inventory_pool)
-  contract = contract_container.sign(User.find_by_login(who), @reservations)
+  contract = Contract.sign!(User.find_by_login(who),
+                            @current_inventory_pool,
+                            @reservations.first.user,
+                            @reservations,
+                            Faker::Lorem.sentence)
   expect(contract.valid?).to be true
   expect(contract.persisted?).to be true
   expect(contract.reservations == @reservations).to be true

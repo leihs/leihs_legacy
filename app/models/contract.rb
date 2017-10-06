@@ -1,6 +1,8 @@
 class Contract < ApplicationRecord
-  include LineModules::GroupedAndMergedLines
+  include Concerns::ScopeIfPresence
+  include Concerns::TimeWindows
   include DefaultPagination
+  include LineModules::GroupedAndMergedLines
   audited
 
   before_create do
@@ -30,6 +32,36 @@ class Contract < ApplicationRecord
   has_many :items, through: :item_lines
   has_many :options, -> { distinct }, through: :option_lines
 
+  belongs_to :user
+  belongs_to :inventory_pool
+
+  #########################################################################
+
+  scope :open, -> { where(state: :open) }
+  scope :closed, -> { where(state: :closed) }
+
+  #########################################################################
+
+  def orders
+    reservations.map(&:order).uniq
+  end
+
+  def delegated_user
+    reservations.map(&:delegated_user).uniq.first
+  end
+
+  def handed_over_by_user
+    reservations.map(&:handed_over_by_user).uniq.first
+  end
+
+  def total_quantity
+    reservations.sum(:quantity)
+  end
+
+  def total_price
+    reservations.to_a.sum(&:price)
+  end
+
   #########################################################################
 
   def models
@@ -51,10 +83,6 @@ class Contract < ApplicationRecord
       if reservations.map(&:start_date).uniq.size != 1
         errors.add(:base, _('The start_date is not unique'))
       end
-      unless reservations.any? &:purpose
-        errors.add(:base, _('This contract is not signable because ' \
-                            'none of the reservations have a purpose.'))
-      end
       unless reservations.all? &:item
         errors.add(:base, _('This contract is not signable because ' \
                             'some reservations are not assigned.'))
@@ -62,8 +90,163 @@ class Contract < ApplicationRecord
       if reservations.any? { |l| l.end_date < Time.zone.today }
         errors.add(:base, _('Start Date must be before End Date'))
       end
+      if reservations.map(&:delegated_user).uniq.count > 1
+        errors.add(:base, _("Contract can't have multiple delegated users."))
+      end
+      if reservations.map(&:handed_over_by_user).uniq.count > 1
+        errors.add(:base, _("Contract can't have multiple handed over by users."))
+      end
     end
   end
+
+  #################################################################################
+
+  scope :with_verifiable_user, (lambda do
+    where <<-SQL
+      EXISTS (
+        SELECT 1
+        FROM groups_users
+        INNER JOIN groups ON groups.id = groups_users.group_id
+        WHERE groups_users.user_id = contracts.user_id
+          AND groups.is_verification_required = TRUE
+          AND groups.inventory_pool_id = contracts.inventory_pool_id
+      )
+    SQL
+  end)
+
+  PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION = <<-SQL
+    SELECT 1
+    FROM partitions
+    INNER JOIN reservations ON reservations.model_id = partitions.model_id
+    AND partitions.inventory_pool_id = reservations.inventory_pool_id
+    AND reservations.contract_id = contracts.id
+    INNER JOIN groups ON groups.id = partitions.group_id
+    AND groups.is_verification_required IS TRUE
+    AND groups.inventory_pool_id = contracts.inventory_pool_id
+    INNER JOIN groups_users ON groups.id = groups_users.group_id
+    AND groups_users.user_id = contracts.user_id
+  SQL
+
+  scope :with_verifiable_user_and_model, (lambda do
+    where <<-SQL
+      EXISTS (#{PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION})
+    SQL
+  end)
+
+  scope :no_verification_required, (lambda do
+    where <<-SQL
+      NOT EXISTS (#{PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION})
+    SQL
+  end)
+
+  def to_be_verified?
+    Contract.with_verifiable_user_and_model.where(id: id).exists?
+  end
+
+  #########################################################################
+
+  def self.filter(params, user = nil, inventory_pool = nil)
+    contracts = if user
+                  user.contracts
+                elsif inventory_pool
+                  inventory_pool.contracts
+                else
+                  all
+                end
+
+    contracts = \
+      contracts
+      .scope_if_presence(params[:status]) do |contracts, states|
+        contracts.where(state: states)
+      end
+      .scope_if_presence(params[:search_term]) do |contracts, search_term|
+        contracts.search(params[:search_term])
+      end
+      .scope_if_presence(params[:id]) do |contracts, ids|
+        contracts.where(id: ids)
+      end
+      .scope_if_presence(params[:no_verification_required],
+                         &:no_verification_required)
+      .scope_if_presence(params[:to_be_verified],
+                         &:with_verifiable_user_and_model)
+      .scope_if_presence(params[:from_verifiable_users],
+                         &:with_verifiable_user)
+      .scope_if_presence(params[:range].try(:[], :start_date)) \
+        do |contracts, start_date|
+        contracts.where('contracts.created_at >= ?', start_date)
+      end
+      .scope_if_presence(params[:range].try(:[], :end_date)) \
+        do |contracts, end_date|
+        contracts.where('contracts.created_at <= ?', end_date)
+      end
+      .scope_if_presence(params[:global_contracts_search],
+                         &:sort_for_global_search)
+
+    contracts.default_paginate(params)
+  end
+
+  #########################################################################
+
+  def self.search(query)
+    return all if query.blank?
+
+    sql = distinct
+      .joins('INNER JOIN reservations ON contracts.id = reservations.contract_id')
+      .joins('INNER JOIN users ON users.id = reservations.user_id')
+      .joins(<<-SQL)
+        LEFT JOIN users delegated_users
+        ON delegated_users.id = reservations.delegated_user_id
+      SQL
+      .joins('LEFT JOIN orders ON reservations.order_id = orders.id')
+      .joins('LEFT JOIN options ON options.id = reservations.option_id')
+      .joins('LEFT JOIN models ON models.id = reservations.model_id')
+      .joins('LEFT JOIN items ON items.id = reservations.item_id')
+
+    query.split.map(&:strip).each do |q|
+      qq = "%#{q}%"
+      sql = sql.where(
+        User.arel_table[:login].matches(qq)
+          .or(User.arel_table[:firstname].matches(qq))
+          .or(User.arel_table[:lastname].matches(qq))
+          .or(User.arel_table[:badge_id].matches(qq))
+          .or(Arel::Table.new('delegated_users')[:login].matches(qq))
+          .or(Arel::Table.new('delegated_users')[:firstname].matches(qq))
+          .or(Arel::Table.new('delegated_users')[:lastname].matches(qq))
+          .or(Arel::Table.new('delegated_users')[:badge_id].matches(qq))
+          .or(Model.arel_table[:manufacturer].matches(qq))
+          .or(Model.arel_table[:product].matches(qq))
+          .or(Model.arel_table[:version].matches(qq))
+          .or(Option.arel_table[:product].matches(qq))
+          .or(Option.arel_table[:version].matches(qq))
+          .or(Item.arel_table[:inventory_code].matches(qq))
+          .or(Order.arel_table[:purpose].matches(qq))
+      )
+    end
+    sql
+  end
+
+  def self.sort_for_global_search
+    select(<<-SQL)
+      contracts.*,
+      CASE
+        WHEN contracts.state = 'closed' THEN contracts.created_at
+        ELSE NULL
+      END AS custom_created_at,
+      users.firstname,
+      bool_and(reservations.delegated_user_id IS NULL) AS not_for_delegation
+    SQL
+      .group(<<-SQL)
+        contracts.id,
+        reservations.contract_id,
+        reservations.id,
+        users.firstname
+      SQL
+      .order('contracts.state DESC')
+      .order('custom_created_at DESC')
+      .order('not_for_delegation DESC')
+      .order('users.firstname ASC')
+  end
+
   #########################################################################
 
   # compares two objects in order to sort them
@@ -77,6 +260,46 @@ class Contract < ApplicationRecord
 
   def label_for_audits
     compact_id
+  end
+
+  #########################################################################
+
+  def self.sign!(current_user,
+                 current_inventory_pool,
+                 user,
+                 selected_lines,
+                 purpose,
+                 note = nil,
+                 delegated_user_id = nil)
+    transaction do
+      contract = Contract.new(state: :open,
+                              purpose: purpose,
+                              user: user,
+                              inventory_pool: current_inventory_pool)
+      contract.note = note
+
+      selected_lines.each do |cl|
+        attrs = {
+          contract: contract,
+          status: :signed,
+          user: user,
+          handed_over_by_user_id: current_user.id
+        }
+
+        if delegated_user_id
+          attrs[:delegated_user] = user.delegated_users.find(delegated_user_id)
+        end
+
+        # Forces handover date to be today.
+        attrs[:start_date] = Time.zone.today if cl.start_date != Time.zone.today
+
+        cl.attributes = attrs
+
+        contract.reservations << cl
+      end
+      contract.save!
+      contract
+    end
   end
 
 end

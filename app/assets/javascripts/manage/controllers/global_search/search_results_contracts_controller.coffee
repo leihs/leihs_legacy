@@ -22,7 +22,7 @@ class window.App.SearchResultsContractsController extends App.SearchResultsContr
         search_term: @searchTerm
         global_contracts_search: true
         page: page
-        status: ["signed", "closed"]
+        status: ["open", "closed"]
 
   fetchUsers: (contracts)=>
     ids = _.uniq _.map contracts, (r)-> r.user_id

@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 When(/^I delete a line$/) do
-  @contract = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)
+  @contract = @customer.visits.hand_over.find_by(inventory_pool_id: @current_inventory_pool)
   @line = @contract.reservations.first
   step 'I delete this line element'
 end
@@ -42,7 +42,7 @@ Then(/^these seleted reservations are deleted$/) do
 end
 
 When(/^I delete all reservations of a model thats availability is blocked by these reservations$/) do
-  unless @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).reservations.first.available?
+  unless @customer.orders.approved.find_by(inventory_pool_id: @current_inventory_pool).reservations.first.available?
     step 'I add an item to the hand over by providing an inventory code'
     @model = Item.find_by_inventory_code(@inventory_code).model
     find('.line', match: :prefer_exact, text: @model.name).find("input[type='checkbox'][data-select-line]").click

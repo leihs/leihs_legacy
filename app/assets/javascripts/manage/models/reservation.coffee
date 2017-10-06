@@ -6,19 +6,29 @@ window.App.Reservation.createOne = (data)->
   $.post("/manage/#{App.InventoryPool.current.id}/reservations", data)
   .done (reservation)->
     App.Reservation.addRecord new App.Reservation reservation
-    App.Contract.trigger "refresh"
+    App.Reservation.trigger "refresh"
+    App.Order.trigger "refresh"
 
 window.App.Reservation.createForTemplate = (data)->
-  $.post("/manage/#{App.InventoryPool.current.id}/reservations/for_template", data)
-  .done (reservations)->
-    records = for reservation in reservations
-      App.Reservation.addRecord new App.Reservation reservation
-    App.Model.ajaxFetch
-      data: $.param
-        template_id: data.template_id
-        paginate: false 
-    .done =>
-      App.Contract.trigger "refresh"
+  $.ajax
+    url: "/manage/#{App.InventoryPool.current.id}/reservations/for_template"
+    data: data
+    method: "POST"
+    success: (reservations) ->
+      records = for reservation in reservations
+        App.Reservation.addRecord new App.Reservation reservation
+      $.ajax
+        url: App.Model.url()
+        data: $.param
+          template_id: data.template_id
+          paginate: false
+        success: (models) ->
+          for model in models
+            App.Model.addRecord new App.Model model
+          App.Model.trigger "refresh"
+          App.Reservation.trigger "refresh"
+          App.Order.trigger "refresh"
+
 
 window.App.Reservation.destroyMultiple = (ids)->
   App.Reservation.find(id).remove() for id in ids
@@ -28,7 +38,9 @@ window.App.Reservation.destroyMultiple = (ids)->
     data: 
       line_ids: ids
       _method: "delete"
-  App.Reservation.trigger "destroy", ids
+  .done ->
+    App.Reservation.trigger "destroy", ids
+    App.Order.trigger "refresh"
 
 window.App.Reservation.changeTimeRange = (reservations, startDate, endDate)=>
   startDate = moment(startDate).format("YYYY-MM-DD") if startDate
@@ -42,7 +54,8 @@ window.App.Reservation.changeTimeRange = (reservations, startDate, endDate)=>
       data = {end_date: endDate}
       data["start_date"] = startDate if startDate
       line.refresh data
-    App.Contract.trigger "refresh"
+    App.Reservation.trigger "refresh"
+    App.Order.trigger "refresh"
 
 window.App.Reservation.assignOrCreate = (data)->
   $.post("/manage/#{App.InventoryPool.current.id}/reservations/assign_or_create", data)

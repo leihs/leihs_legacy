@@ -1,21 +1,17 @@
 class Manage::ContractsController < Manage::ApplicationController
 
-  before_action except: [:approve, :reject] do
+  before_action do
     if params[:id]
-      @contract = current_inventory_pool.reservations_bundles.find(params[:id])
+      @contract = Contract.find(params[:id])
     end
     @user = current_inventory_pool.users.find(params[:user_id]) if params[:user_id]
-  end
-  before_action only: [:approve, :reject] do
-    @contract = \
-      current_inventory_pool.reservations_bundles.submitted.find(params[:id])
   end
 
   private
 
   # NOTE overriding super controller
   def required_manager_role
-    closed_actions = [:sign]
+    closed_actions = [:create]
     if closed_actions.include?(action_name.to_sym)
       super
     else
@@ -31,112 +27,68 @@ class Manage::ContractsController < Manage::ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        @contracts = ReservationsBundle.filter params, nil, current_inventory_pool
-        set_pagination_header @contracts
+        @contracts = Contract.filter params, nil, current_inventory_pool
+        @contracts = @contracts.order('created_at DESC')
+        set_pagination_header @contracts, disable_total_count: (
+          params[:disable_total_count] == 'true' ? true : false
+        )
       end
     end
   end
 
-  def edit
-    @contract = current_inventory_pool.reservations_bundles.find(params[:id])
-    @user = @contract.user
-    @group_ids = @user.group_ids
-    add_visitor(@user)
-    @reservations = @contract.reservations
-    @models = @contract.models
-    @items = @contract.items
-    @purposes = @contract.reservations.map(&:purpose).uniq
-    @grouped_lines = @reservations.group_by { |g| [g.start_date, g.end_date] }
-    @grouped_lines.each_pair do |k, reservations|
-      @grouped_lines[k] = \
-        reservations.sort_by { |line| line.model.name }.group_by(&:model)
-    end
-    @start_date = @contract.min_date
-    @end_date = @contract.max_date
-  end
-
   def show
+    @contract = Contract.find(params[:id])
+    @user = @contract.user
+    @delegated_user = @contract.delegated_user
     render 'documents/contract', layout: 'print'
   end
 
   def value_list
+    @user = @contract.user
+    @delegated_user = @contract.delegated_user
     render 'documents/value_list', layout: 'print'
   end
 
   def picking_list
+    @user = @contract.user
+    @delegated_user = @contract.delegated_user
     render 'documents/picking_list', layout: 'print'
   end
 
-  def approve(force = (params.key? :force) ? true : false)
-    if @contract.approve(params[:comment], true, current_user, force)
-      respond_to do |format|
-        format.json { render json: true, status: 200 }
-      end
-    else
-      errors = @contract.errors.full_messages.uniq.join("\n")
-      respond_to do |format|
-        format.json { render plain: errors, status: 500 }
-      end
-    end
-  end
+  def create
+    reservations = \
+      @user
+      .reservations
+      .approved
+      .where(inventory_pool: current_inventory_pool)
+      .find(line_ids_param)
 
-  def reject
-    if request.post? \
-      and params[:comment] \
-      and @contract.reject(params[:comment], current_user)
-      respond_to do |format|
-        format.json { render json: true, status: 200 }
-        format.html do
-          redirect_to manage_daily_view_path,
-                      flash: { success: _('Order rejected') }
-        end
-      end
-    else
-      errors = @contract.errors.full_messages.uniq.join("\n")
-      respond_to do |format|
-        format.json { render plain: errors, status: 500 }
-        format.html { render :edit }
-      end
-    end
-  end
+    ApplicationRecord.transaction do
+      begin
+        @contract = Contract.sign!(current_user,
+                                   current_inventory_pool,
+                                   @user,
+                                   reservations,
+                                   params[:purpose],
+                                   params[:note],
+                                   params[:delegated_user_id])
 
-  def sign(line_ids = params[:line_ids] || raise('line_ids is required'),
-           purpose_description = params[:purpose],
-           note = params[:note])
-
-    reservations = @contract.reservations.find(line_ids)
-    if purpose_description
-      purpose = Purpose.create description: purpose_description
-      reservations.each do |line|
-        if line.purpose.nil?
-          line.purpose = purpose
-          line.save
-        end
+        render json: @contract.to_json
+      rescue => e
+        render status: :bad_request, plain: e.message
       end
-    end
-
-    if (contract = @contract.sign(current_user,
-                                  reservations,
-                                  note,
-                                  params[:delegated_user_id])).valid?
-      render \
-        json: \
-          @contract.user.reservations_bundles.signed.find(contract.id).to_json
-    else
-      render status: :bad_request,
-             plain: @contract.errors.full_messages.uniq.join(', ')
     end
   end
 
   def swap_user
-    contract = current_inventory_pool.reservations_bundles.find params[:id]
+    order = current_inventory_pool.orders.find params[:id]
     user = current_inventory_pool.users.find(params[:user_id]) if params[:user_id]
     delegated_user = if params[:delegated_user_id]
                        current_inventory_pool \
                          .users
                          .find(params[:delegated_user_id])
                      end
-    reservations = contract.reservations
+    reservations = order.reservations
     ApplicationRecord.transaction do
       reservations.each do |line|
         line.update_attributes(user: user, delegated_user: delegated_user)
@@ -146,8 +98,8 @@ class Manage::ContractsController < Manage::ApplicationController
       render \
         json: \
           user \
-            .reservations_bundles
-            .find_by(status: contract.status,
+            .orders
+            .find_by(status: order.status,
                      inventory_pool_id: current_inventory_pool).to_json
     else
       errors = reservations.flat_map { |line| line.errors.full_messages }
@@ -155,4 +107,9 @@ class Manage::ContractsController < Manage::ApplicationController
     end
   end
 
+  private
+
+  def line_ids_param
+    params.require(:line_ids)
+  end
 end

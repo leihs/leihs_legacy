@@ -1,4 +1,5 @@
 class Borrow::TemplatesController < Borrow::ApplicationController
+  include Borrow::Concerns::CreateLines
 
   before_action only: [:availability, :show, :add_to_order, :select_dates] do
     @template = current_user.templates.detect { |t| t.id == params[:id] }
@@ -30,17 +31,13 @@ class Borrow::TemplatesController < Borrow::ApplicationController
       availability and render :availability
     else
       available_lines.each do |l|
-        contract = \
-          current_user
-            .reservations_bundles
-            .unsubmitted
-            .find_or_initialize_by(inventory_pool_id: l[:inventory_pool].id)
-        l[:model].add_to_contract(contract,
-                                  current_user,
-                                  l[:quantity],
-                                  l[:start_date],
-                                  l[:end_date],
-                                  session[:delegated_user_id])
+        create_lines(model: l[:model],
+                     quantity: l[:quantity],
+                     status: :unsubmitted,
+                     inventory_pool: l[:inventory_pool],
+                     start_date: l[:start_date],
+                     end_date: l[:end_date],
+                     delegated_user_id: session[:delegated_user_id])
       end
       redirect_to \
         borrow_current_order_path,

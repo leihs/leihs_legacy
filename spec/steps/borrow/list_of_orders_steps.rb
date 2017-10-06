@@ -10,9 +10,14 @@ module Borrow
       include ::Spec::PersonasDumpSteps
 
       step 'I have a submitted order' do
+        order = FactoryGirl.create(:order,
+                                   state: :submitted,
+                                   user: @current_user,
+                                   inventory_pool: @inventory_pool)
         FactoryGirl.create(:reservation,
                            user: @current_user,
                            status: :submitted,
+                           order: order,
                            inventory_pool: @inventory_pool)
       end
 

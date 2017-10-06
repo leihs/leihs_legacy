@@ -1,8 +1,8 @@
 .customer
   %label= _("Borrower")
-  %span.name= @contract.user
-  - contact_person = ( @contract.delegated_user or @contract.user )
-  - if @contract.delegated_user
+  %span.name= @user
+  - contact_person = ( @delegated_user or @user )
+  - if @delegated_user
     %br
     %span.name= contact_person
   - if contact_person.address

@@ -137,7 +137,9 @@ class window.App.ReservationsAddController extends Spine.Controller
     return false if @preventSubmit
     inventoryCode = @getInputValue()
     if inventoryCode.length
-      App.Inventory.findByInventoryCode(inventoryCode).done((data) => @addInventoryItem(data, inventoryCode))
+      App.Inventory.findByInventoryCode(inventoryCode)
+        .done((data) =>
+          @addInventoryItem(data, inventoryCode))
     @autocompleteController.getInstance().resetInput()
 
   addInventoryItem: (data, inventoryCode)=>
@@ -165,6 +167,8 @@ class window.App.ReservationsAddController extends Spine.Controller
       @addOption record, startDate, endDate
     else if record instanceof App.Template
       @addTemplate record, startDate, endDate
+    App.Reservation.trigger "refresh"
+    App.Order.trigger "refresh"
 
   addModel: (model, startDate, endDate, inventoryCode)=>
     if @addModelForHandOver and inventoryCode
@@ -175,17 +179,21 @@ class window.App.ReservationsAddController extends Spine.Controller
         inventory_pool_id: App.InventoryPool.current.id
         start_date: moment(startDate).format "YYYY-MM-DD"
         end_date: moment(endDate).format "YYYY-MM-DD"
-        contract_id: @contract.id
-        purpose_id: @purpose?.id
+        order_id: @order?.id
+        user_id: (@order?.user_id or @user.id)
+        inventory_pool_id: (@order?.inventory_pool_id or App.InventoryPool.current.id)
         quantity: 1
         model_id: model.id
       .done (line)=>
+        App.Reservation.trigger "refresh"
+        App.Order.trigger "refresh"
         App.LineSelectionController.add line.id
         # always trigger this:
         @onSubmitInventoryCode?(inventoryCode)
         App.Flash
           type: "notice"
           message: _jed("Added %s", model.name())
+        @callback?()
       .fail (e)->
         App.Flash
           type: "error"
@@ -193,7 +201,7 @@ class window.App.ReservationsAddController extends Spine.Controller
 
 
   addOption: (option, startDate, endDate)=>
-    line = _.find @contract.reservations().all(), (l)->
+    line = _.find App.Reservation.all(), (l)->
       l.option_id == option.id and
       moment(l.start_date).diff(startDate, "days") == 0 and
       moment(l.end_date).diff(endDate, "days") == 0
@@ -210,8 +218,9 @@ class window.App.ReservationsAddController extends Spine.Controller
         inventory_pool_id: App.InventoryPool.current.id
         start_date: moment(startDate).format "YYYY-MM-DD"
         end_date: moment(endDate).format "YYYY-MM-DD"
-        contract_id: @contract.id
-        purpose_id: @purpose?.id
+        order_id: @order?.id
+        user_id: (@order?.user_id or @user.id)
+        inventory_pool_id: (@order?.inventory_pool_id or App.InventoryPool.current.id)
         quantity: 1
         option_id: option.id
       ,
@@ -226,18 +235,25 @@ class window.App.ReservationsAddController extends Spine.Controller
       inventory_pool_id: App.InventoryPool.current.id
       start_date: moment(startDate).format "YYYY-MM-DD"
       end_date: moment(endDate).format "YYYY-MM-DD"
-      contract_id: @contract.id
-      purpose_id: @purpose?.id
+      order_id: @order?.id
+      user_id: (@order?.user_id or @user.id)
+      inventory_pool_id: (@order?.inventory_pool_id or App.InventoryPool.current.id)
       template_id: template.id
     .done (reservations)=>
       App.LineSelectionController.add line.id for line in reservations
       App.Flash
         type: "notice"
         message: _jed("Added %s", template.name)
+    .fail (e) ->
+      App.Flash
+        type: "error"
+        message: e.responseText
+
 
   showExplorativeSearch: (e) =>
     new App.ReservationsExplorativeAddController
-      contract: @contract
+      order: @order
       startDate: @getStartDate()
       endDate: @getEndDate()
       addModel: @addModel
+      user: @user

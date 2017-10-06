@@ -2,19 +2,24 @@
 
 Given(/^there is (an order|a take back|an overdue take back) for a delegation that was not placed by a person responsible for that delegation$/) do |arg1|
   status = case arg1
-             when "an order"
-               :submitted
-             when "a take back", "an overdue take back"
-               :signed
+           when "an order"
+             :submitted
+           when "a take back", "an overdue take back"
+             :open
            end
   @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
     User.as_delegations.detect do |delegation|
-      @contract = ip.reservations_bundles.send(status).where(user_id: delegation).where.not(delegated_user_id: delegation.delegator_user).detect do |reservation_bundle|
-        if arg1 == "an overdue take back"
-          reservation_bundle.reservations.any? {|reservation| reservation.end_date < Date.today }
-        else
-          true
+      if status == :submitted
+        @order = @contract = ip.orders.submitted.where(user_id: delegation).detect do |order|
+          order.delegated_user != delegation.delegator_user and
+            if arg1 == "an overdue take back"
+              order.reservations.any? {|reservation| reservation.end_date < Date.today }
+            else
+              true
+            end
         end
+      elsif status == :open
+        @contract = ip.contracts.open.where(user_id: delegation).detect { |c| c.delegated_user != delegation.delegator_user }
       end
     end
   end

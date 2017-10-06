@@ -1,25 +1,25 @@
 # -*- encoding : utf-8 -*-
 
 Given /^I search for the inventory code of an item that is in a contract$/ do
-  @contract = @current_user.inventory_pools.first.reservations_bundles.signed.first
+  @contract = @current_user.inventory_pools.first.contracts.open.first
   @item = @contract.items.first
 end
 
 Then /^I see the contract this item is assigned to in the list of results$/ do
-  expect(@current_user.inventory_pools.first.reservations_bundles.search(@item.inventory_code)).to include @contract
+  expect(@current_user.inventory_pools.first.contracts.search(@item.inventory_code)).to include @contract
 end
 
 Given(/^there is a user with contracts who no longer has access to the current inventory pool$/) do
-  @user = User.find {|u| u.access_rights.find {|ar| ar.inventory_pool == @current_inventory_pool and ar.deleted_at} and !u.reservations_bundles.blank?}
+  @user = User.find {|u| u.access_rights.find {|ar| ar.inventory_pool == @current_inventory_pool and ar.deleted_at} and !u.contracts.blank?}
   expect(@user).not_to be_nil
 end
 
 Then(/^I see all that user's contracts$/) do
-  @user.reservations_bundles.each {|c| find("#contracts .line[data-id='#{c.id}']") }
+  @user.contracts.each {|c| find("#contracts .line[data-id='#{c.id}']") }
 end
 
 Then(/^I see that user's signed and closed contracts$/) do
-  @user.reservations_bundles.signed_or_closed.where(inventory_pool: @current_inventory_pool).each {|c| find("#contracts .line[data-id='#{c.id}']") }
+  @user.contracts.where(inventory_pool: @current_inventory_pool).each {|c| find("#contracts .line[data-id='#{c.id}']") }
 end
 
 Then(/^the name of that user is shown on each contract line$/) do
@@ -36,7 +36,7 @@ Then(/^that user's personal details are shown in the tooltip$/) do
 end
 
 Given(/^there is a user with an unapproved order$/) do
-  @user = @current_inventory_pool.users.find {|u| u.reservations_bundles.submitted.exists? }
+  @user = @current_inventory_pool.users.find {|u| u.orders.submitted.exists? }
 end
 
 When(/^I search for that user$/) do
@@ -47,14 +47,14 @@ When(/^I search for that user$/) do
 end
 
 Then(/^I cannot hand over the unapproved order unless I approve it first$/) do
-  contract = @user.reservations_bundles.submitted.first
+  contract = @user.orders.submitted.first
   line = find(".line[data-id='#{contract.id}']")
   expect(line.find('.multibutton').has_no_selector?('li', text: _('Hand Over'), visible: false)).to be true
 end
 
 Given(/^there is a user with at least (\d+) and less than (\d+) contracts$/) do |min, max|
   @user = @current_inventory_pool.users.find do |u|
-    u.reservations_bundles.signed_or_closed.where(inventory_pool: @current_inventory_pool).to_a.size.between? min.to_i, max.to_i # NOTE count returns a Hash because the group() in default scope
+    u.contracts.where(inventory_pool: @current_inventory_pool).to_a.size.between? min.to_i, max.to_i # NOTE count returns a Hash because the group() in default scope
   end
   expect(@user).not_to be_nil
 end
@@ -91,7 +91,7 @@ Then(/^I see the item in the items container$/) do
 end
 
 Given(/^there exists a closed contract with a retired item$/) do
-  @contract = @current_inventory_pool.reservations_bundles.closed.find do |c|
+  @contract = @current_inventory_pool.contracts.closed.find do |c|
     @item = c.items.find &:retired
   end
   expect(@contract).not_to be_nil
@@ -111,7 +111,7 @@ Then(/^I see in the tooltip the (?:model|software) name of this (?:item|license)
 end
 
 Given(/^there exists a closed contract with an item, for which an other inventory pool is responsible and owner$/) do
-  @contract = @current_inventory_pool.reservations_bundles.closed.find do |c|
+  @contract = @current_inventory_pool.contracts.closed.find do |c|
     @item = c.items.find {|i| i.inventory_pool != @current_inventory_pool and i.owner != @current_inventory_pool }
   end
   expect(@contract).not_to be_nil
@@ -123,6 +123,7 @@ Given(/^there exists a closed contract with a license, for which an other invent
   @item = software.items.licenses.first
   FactoryGirl.create(:item_line,
                      model: software,
+                     user: @contract.user,
                      item: @item,
                      status: :closed,
                      contract: @contract,
@@ -164,7 +165,12 @@ Given(/^enough data for "(.*?)" having "(.*?)" exists$/) do |subsection, search_
       when 'Orders'
         user = FactoryGirl.create(:user, lastname: make_string.call)
         FactoryGirl.create(:access_right, user: user, inventory_pool: @current_inventory_pool, role: 'customer')
-        FactoryGirl.create(:reservation, user: user, inventory_pool: @current_inventory_pool, status: :submitted)
+        order = FactoryGirl.create(:order, user: user, inventory_pool: @current_inventory_pool, state: :submitted)
+        FactoryGirl.create(:reservation,
+                           user: user,
+                           inventory_pool: @current_inventory_pool,
+                           order: order,
+                           status: :submitted)
         user
       end
   end

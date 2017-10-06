@@ -23,7 +23,7 @@ module Manage
       end
 
       step 'the customer has borrowed the item for today' do
-        FactoryGirl.create(:signed_contract,
+        FactoryGirl.create(:open_contract,
                            user: @customer,
                            inventory_pool: @inventory_pool,
                            start_date: Date.today,

@@ -115,11 +115,11 @@ Then /^list (\d+) and list (\d+) contain the following columns:$/ do |arg1, arg2
 end
 
 Then /^I see a comma-separated list of purposes$/ do
-  @contract.reservations.each {|line| expect(@contract_element.find('.purposes').has_content? line.purpose.to_s).to be true }
+  @contract.reservations.each {|line| expect(@contract_element.find('.purposes').has_content? line.order.purpose).to be true }
 end
 
 Then /^each unique purpose is listed only once$/ do
-  purposes = @contract.reservations.sort.map{|l| l.purpose.to_s }.uniq.join('; ')
+  purposes = @contract.reservations.sort.map{|l| l.order.purpose }.uniq.join('; ')
   @contract_element.find('.purposes > p', text: purposes)
 end
 
@@ -231,12 +231,12 @@ Then(/^the inventory pool is listed as lender$/) do
 end
 
 Given(/^there is a contract for a user whose address ends with "(.*?)"$/) do |arg1|
-  @user = @current_inventory_pool.users.customers.find {|u| u.reservations_bundles.signed_or_closed.exists? and u.read_attribute(:address) =~ /, $/}
+  @user = @current_inventory_pool.users.customers.find {|u| u.contracts.exists? and u.read_attribute(:address) =~ /, $/}
   expect(@user).not_to be_nil
 end
 
 When(/^I open this user's contract$/) do
-  visit manage_contract_path(@current_inventory_pool, @user.reservations_bundles.signed_or_closed.first)
+  visit manage_contract_path(@current_inventory_pool, @user.contracts.first)
 end
 
 Then(/^their address is shown without the "(.*?)"$/) do |arg1|

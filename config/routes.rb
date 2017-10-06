@@ -86,16 +86,16 @@ Rails.application.routes.draw do
     get "models/availability",  to: "models#availability", as: "models_availability"
     get "models/:id",           to: "models#show", as: "model"
 
-    get     "order",        to: "contracts#current", as: "current_order"
-    post    "order",        to: "contracts#submit"
-    delete  "order/remove", to: "contracts#remove"
+    get     "order",        to: "customer_orders#current", as: "current_order"
+    post    "order",        to: "customer_orders#submit"
+    delete  "order/remove", to: "customer_orders#remove"
     post    "reservations",                   to: "reservations#create"
     post    "reservations/change_time_range", to: "reservations#change_time_range", as: "change_time_range"
     delete  "reservations/:line_id",          to: "reservations#destroy"
-    delete  "order/remove_reservations", to: "contracts#remove_reservations"
-    get     "order/timed_out", to: "contracts#timed_out"
-    post    "order/delete_unavailables", to: "contracts#delete_unavailables"
-    get     "orders", to: "contracts#index", as: "orders"
+    delete  "order/remove_reservations", to: "customer_orders#remove_reservations"
+    get     "order/timed_out", to: "customer_orders#timed_out"
+    post    "order/delete_unavailables", to: "customer_orders#delete_unavailables"
+    get     "orders", to: "customer_orders#index", as: "orders"
 
     get "refresh_timeout", to: "application#refresh_timeout"
     get "returns", to: "returns#index", as: "returns"
@@ -152,13 +152,17 @@ Rails.application.routes.draw do
       get 'daily', to: "inventory_pools#daily", as: "daily_view"
 
       ## Contracts
+      get   'orders',                  to: "orders#index",      as: "orders"
+      post  "orders/:id/approve",      to: "orders#approve",    as: "approve_order"
+      post  "orders/:id/reject",       to: "orders#reject"
+      put   "orders/:id",              to: "orders#update"
+      post  'orders/:id/swap_user',    to: "orders#swap_user"
+      get   'orders/:id/edit',         to: "orders#edit",       as: "edit_order"
+
+      ## Contracts
       get   'contracts',                  to: "contracts#index",      as: "contracts"
+      post  'contracts',                  to: "contracts#create",     as: "create_contract"
       get   "contracts/:id",              to: "contracts#show",       as: "contract"
-      post  "contracts/:id/approve",      to: "contracts#approve",    as: "approve_contract"
-      post  "contracts/:id/reject",       to: "contracts#reject"
-      post  'contracts/:id/sign',         to: "contracts#sign"
-      get   'contracts/:id/edit',         to: "contracts#edit",       as: "edit_contract"
-      post  'contracts/:id/swap_user',    to: "contracts#swap_user"
       get   "contracts/:id/value_list",   to: "contracts#value_list", as: "value_list"
       get   "contracts/:id/picking_list", to: "contracts#picking_list", as: "picking_list"
 
@@ -174,10 +178,6 @@ Rails.application.routes.draw do
 
       ## Latest Reminder
       get 'latest_reminder', to: 'inventory_pools#latest_reminder'
-
-      ## Purposes
-      put 'purposes/:purpose_id', to: "purposes#update"
-      get 'purposes',             to: "purposes#index"
 
       ## Workdays
       get 'workdays', to: "workdays#index"

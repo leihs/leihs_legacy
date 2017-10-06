@@ -13,7 +13,7 @@
     .clear
 
 
-  - if [:signed, :closed].include?(@contract.status)
+  - if defined?(@contract) and ['open', 'closed'].include?(@contract.state)
     - lines_by_end_date = @contract.reservations.includes(:item).group_by{|line| line.end_date }
     - lines_by_end_date.each_pair do |end_date, reservations|
       %section.list

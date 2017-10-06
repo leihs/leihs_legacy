@@ -12,8 +12,8 @@
       %li#topbar-search.topbar-item.topbar-search.position-absolute-left
         = render :partial => 'topbar_search'
 
-      - if (q3 = current_user.reservations_bundles.submitted.to_a.size) > 0 # NOTE count returns a Hash because the group() in default scope
-        %li.topbar-item{:class => current_page?(:controller => :contracts) ? "active" : nil}
+      - if (q3 = current_user.orders.submitted.to_a.size) > 0 # NOTE count returns a Hash because the group() in default scope
+        %li.topbar-item{:class => current_page?(:controller => :customer_orders) ? "active" : nil}
           %a.topbar-item-inner{href: borrow_orders_path}
             != n_("%s Order", "%s Orders", q3) % "<span class='badge'>#{q3}</span>"
 

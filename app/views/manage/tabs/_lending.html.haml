@@ -11,7 +11,7 @@
 
       - if group_manager?
         %li
-          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_contracts_path(current_inventory_pool, status: [:approved, :submitted, :rejected]),
+          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_orders_path(current_inventory_pool, state: [:approved, :submitted, :rejected]),
           :class => (defined? active_tab and active_tab == :orders) ? "active" : ""}
             = _("Orders")
 
@@ -23,7 +23,7 @@
 
       - if group_manager?
         %li
-          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_contracts_path(current_inventory_pool, status: [:signed, :closed]),
+          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_contracts_path(current_inventory_pool, status: [:open, :closed]),
           :class => (defined? active_tab and active_tab == :contracts) ? "active" : ""}
             = _("Contracts")
 

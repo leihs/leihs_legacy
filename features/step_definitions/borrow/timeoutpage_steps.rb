@@ -63,9 +63,7 @@ end
 #########################################################################
 
 Then(/^the user's order has been deleted$/) do
-  @contracts.each do |contract|
-    expect { contract.reload }.to raise_error(ActiveRecord::RecordNotFound)
-  end
+  expect(@current_user.reservations.unsubmitted).to be_empty
 end
 
 #########################################################################

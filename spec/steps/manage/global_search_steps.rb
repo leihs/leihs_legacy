@@ -20,7 +20,7 @@ module Manage
                                   firstname: search_string)
         instance_variable_set \
           "@contract_#{n}",
-          FactoryGirl.create(:signed_contract,
+          FactoryGirl.create(:open_contract,
                              user: user,
                              inventory_pool: @current_inventory_pool)
       end
@@ -33,7 +33,7 @@ module Manage
                                   firstname: search_string)
         instance_variable_set \
           "@contract_#{n}",
-          FactoryGirl.create(:signed_contract,
+          FactoryGirl.create(:open_contract,
                              user: user,
                              inventory_pool: @current_inventory_pool)
       end
@@ -49,7 +49,7 @@ module Manage
                                         firstname: search_string)
         instance_variable_set \
           "@contract_#{n}",
-          FactoryGirl.create(:signed_contract,
+          FactoryGirl.create(:open_contract,
                              user: delegation,
                              inventory_pool: @current_inventory_pool)
       end

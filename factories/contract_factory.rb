@@ -2,22 +2,23 @@ FactoryGirl.define do
 
   factory :contract do
     note { Faker::Lorem.paragraph }
+    purpose { Faker::Lorem.sentence }
     created_at nil
+    inventory_pool { FactoryGirl.create(:inventory_pool) }
+    user do
+      user = FactoryGirl.create(:user)
+      unless AccessRight.find_by(user: user,
+                                 inventory_pool: inventory_pool,
+                                 deleted_at: nil)
+        FactoryGirl.create(:access_right,
+                           user: user,
+                           inventory_pool: inventory_pool,
+                           role: :customer)
+      end
+      user
+    end
 
     transient do
-      inventory_pool { FactoryGirl.create(:inventory_pool) }
-      user do
-        user = FactoryGirl.create(:user)
-        unless AccessRight.find_by(user: user,
-                                   inventory_pool: inventory_pool,
-                                   deleted_at: nil)
-          FactoryGirl.create(:access_right,
-                             user: user,
-                             inventory_pool: inventory_pool,
-                             role: :customer)
-        end
-        user
-      end
       items do
         Array.new(3).map { |_| FactoryGirl.create(:item) }
       end
@@ -26,16 +27,24 @@ FactoryGirl.define do
       end_date nil
     end
 
-    factory :signed_contract do
+    factory :open_contract do
+      state :open
+
       after :build do |c, evaluator|
+        order = FactoryGirl.create(:order,
+                                   user: c.user,
+                                   inventory_pool: c.inventory_pool,
+                                   state: :approved)
+
         evaluator.items.each do |item|
           c.reservations << \
-            FactoryGirl.create(
+            FactoryGirl.build(
               :reservation,
               status: :signed,
-              inventory_pool: evaluator.inventory_pool,
-              user: evaluator.user,
+              inventory_pool: c.inventory_pool,
+              user: c.user,
               contract: c,
+              order: order,
               start_date: evaluator.start_date,
               end_date: evaluator.end_date,
               item: item,
@@ -47,15 +56,23 @@ FactoryGirl.define do
     end
 
     factory :closed_contract do
+      state :closed
+
       after :build do |c, evaluator|
+        order = FactoryGirl.create(:order,
+                                   user: c.user,
+                                   inventory_pool: c.inventory_pool,
+                                   state: :approved)
+
         evaluator.items.each do |item|
           c.reservations << \
-            FactoryGirl.create(
+            FactoryGirl.build(
               :reservation,
               status: :closed,
-              inventory_pool: evaluator.inventory_pool,
-              user: evaluator.user,
+              inventory_pool: c.inventory_pool,
+              user: c.user,
               contract: c,
+              order: order,
               start_date: evaluator.start_date,
               end_date: evaluator.end_date,
               item: item,

@@ -45,7 +45,7 @@ module Borrow
       end
 
       step 'the order was not submitted' do
-        expect(@current_user.reservations_bundles.submitted).to be_empty
+        expect(@current_user.orders.submitted).to be_empty
       end
     end
   end

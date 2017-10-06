@@ -8,26 +8,40 @@ When /^'(.*)' orders (\d+) '(.*)' from inventory pool (\d+)( for the same time)?
     @end_date = Date.today + rand(3..6).days
   end
 
-  target_contract = @user.reservations_bundles.unsubmitted.find_or_initialize_by(inventory_pool_id: inventory_pool.id)
-  model.add_to_contract(target_contract, @user, quantity, @start_date, @end_date)
+  quantity.to_i.times do
+    FactoryGirl.create(:reservation,
+                       status: :unsubmitted,
+                       model: model,
+                       inventory_pool: inventory_pool,
+                       user: @user,
+                       start_date: @start_date,
+                       end_date: @end_date)
+  end
 end
 
 When /^all reservations of '(.*)' are submitted$/ do |who|
   expect(@user.reservations.unsubmitted.reload).not_to be_empty
-  @user.reservations_bundles.unsubmitted.each do |reservations_bundle|
-    reservations_bundle.submit("this is the required purpose")
+  @user.reservations.unsubmitted.group_by(&:inventory_pool).each_pair do |inventory_pool, reservations|
+    order = FactoryGirl.create(:order,
+                               inventory_pool: inventory_pool,
+                               user: @user,
+                               purpose: "this is the required purpose",
+                               state: :submitted)
+    reservations.each do |reservation|
+      reservation.update_attributes(status: :submitted, order: order)
+    end
   end
   expect(@user.reservations.unsubmitted.reload).to be_empty
 end
 
 Then /([0-9]+) order(s?) exist(s?) for inventory pool (.*)/ do |size, s1, s2, ip|
   inventory_pool = InventoryPool.find_by_name(ip)
-  @reservations_bundles = inventory_pool.reservations_bundles.submitted.to_a
-  expect(@reservations_bundles.size).to eq size.to_i
+  @orders = inventory_pool.orders.submitted.to_a
+  expect(@orders.size).to eq size.to_i
 end
 
 Then /it asks for ([0-9]+) item(s?)$/ do |number, s|
-  total = @reservations_bundles.map {|o| o.reservations.sum(:quantity) }.sum
+  total = @orders.map {|o| o.reservations.sum(:quantity) }.sum
   expect(total).to eq number.to_i
 end
 
@@ -39,10 +53,10 @@ Given /^there is a "(.*?)" contract with (\d+) reservations?$/ do |contract_type
   @no_of_lines_at_start = no_of_lines.to_i
   status = contract_type.downcase.to_sym
 
-  user = @inventory_pool.users.detect {|u| u.reservations_bundles.where(inventory_pool_id: @inventory_pool, status: status).empty? }
+  user = @inventory_pool.users.detect {|u| u.orders.where(inventory_pool_id: @inventory_pool, status: status).empty? }
   expect(user).not_to be_nil
   @no_of_lines_at_start.times.map { FactoryGirl.create :reservation, user: user, inventory_pool: @inventory_pool, status: status }
-  @contract = user.reservations_bundles.find_by(inventory_pool_id: @inventory_pool, status: status)
+  @contract = user.orders.find_by(inventory_pool_id: @inventory_pool, status: status)
 end
 
 Given /^there is a "(SIGNED|CLOSED)" contract with reservations?$/ do |contract_type|
@@ -82,14 +96,6 @@ Given /^an inventory pool existing$/ do
   @inventory_pool = FactoryGirl.create :inventory_pool
 end
 
-Given /^an empty contract of (.*) existing$/ do |allowed_type|
-  status = allowed_type.downcase.to_sym
-  line = @inventory_pool.reservations.where(status: status).sample
-  @contract = line.user.reservations_bundles.find_by(inventory_pool_id: @inventory_pool, status: status)
-  @contract.reservations.each &:destroy
-  @contract.reservations.reload
-end
-
 When /^I add some reservations for this contract$/ do
   @quantity = 3
   expect(@contract.reservations.size).to eq 0
@@ -103,7 +109,7 @@ end
 
 Given /^an? (submitted|unsubmitted) contract with reservations existing$/ do |arg1|
   User.all.detect do |user|
-    @contract = user.reservations_bundles.where(status: arg1).sample
+    @contract = user.orders.where(status: arg1).sample
   end
 end
 
@@ -111,7 +117,7 @@ Given(/^a submitted contract with approvable reservations exists$/) do
   User.all.detect do |user|
     @contract = \
       user
-        .reservations_bundles
+        .orders
         .where(status: :submitted)
         .detect { |rb| rb.approvable? }
   end

@@ -22,16 +22,14 @@ end
 
 
 Then /^I see the purpose$/ do
-  if @contract.reservations.first.purpose
-    expect(has_content?(@contract.reservations.first.purpose.description)).to be true
-  end
+  expect(has_content?(@order.purpose)).to be true
 end
 
 Then /^I see the assigned purpose on each line$/ do
-  @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).reservations.each do |line|
+  @customer.reservations.approved.where(inventory_pool_id: @current_inventory_pool).each do |line|
     target = find(".line[data-id='#{line.id}'] [data-tooltip-template*='purpose']")
     hover_for_tooltip target
-    find('.tooltipster-default .tooltipster-content', text: line.purpose.description)
+    find('.tooltipster-default .tooltipster-content', text: line.order.purpose)
   end
 end
 
@@ -43,7 +41,7 @@ Then /^I can edit the purpose$/ do
     find('button[type=submit]').click
   end
   find('#purpose', text: @new_purpose_description)
-  expect(@contract.reload.reservations.first.purpose.description).to eq @new_purpose_description
+  expect(@order.reload.purpose).to eq @new_purpose_description
 end
 
 When /^none of the selected items have an assigned purpose$/ do
@@ -87,9 +85,9 @@ Then /^I do not assign a purpose$/ do
 end
 
 Then /^I can finish the hand over$/ do
-  signed_contracts_size = @customer.reservations_bundles.signed.to_a.size # NOTE count returns a Hash because the group() in default scope
+  signed_contracts_size = @customer.contracts.open.to_a.size # NOTE count returns a Hash because the group() in default scope
   step 'I click hand over inside the dialog'
-  expect(@customer.reservations_bundles.signed.to_a.size).to be > signed_contracts_size # NOTE count returns a Hash because the group() in default scope
+  expect(@customer.contracts.open.to_a.size).to be > signed_contracts_size # NOTE count returns a Hash because the group() in default scope
 end
 
 Then /^I don't have to assign a purpose in order to finish the hand over$/ do
@@ -111,7 +109,7 @@ When /^I define a purpose$/ do
   find('#add-purpose').click
   @added_purpose = 'Another Purpose'
   find('#purpose').set @added_purpose
-  @approved_lines = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).reservations
+  @approved_lines = @customer.orders.approved.find_by(inventory_pool_id: @current_inventory_pool).reservations
   step 'I can finish the hand over'
 end
 
@@ -122,7 +120,7 @@ Then /^only items without purpose are assigned that purpose$/ do
 end
 
 When /^all selected items have an assigned purpose$/ do
-  @contract = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool)
+  @contract = @customer.orders.approved.find_by(inventory_pool_id: @current_inventory_pool)
   reservations = @contract.reservations
   reservations.each do |line|
     @item_line = line
@@ -165,3 +163,65 @@ end
 Then /^I cannot assign any more purposes$/ do
   expect(has_no_selector?('.modal .purpose button', visible: true)).to be true
 end
+
+When(/^I click on hand over$/) do
+  find('[data-hand-over-selection]').click
+end
+
+When(/^I add a purpose$/) do
+  within '.modal' do
+    find('#add-purpose').click
+    @additional_purpose = Faker::Lorem.sentence
+    find('#purpose').set @additional_purpose
+  end
+end
+
+When(/^I finish the hand over$/) do
+  @contract_window = window_opened_by do
+    find('.modal [data-hand-over]').click
+  end
+end
+
+Then(/^the contract has the original plus the added purpose$/) do
+  page.driver.browser.switch_to.window(@contract_window.handle)
+  within '.purposes' do
+    expect(current_scope).to have_content @purpose
+    expect(current_scope).to have_content @additional_purpose
+  end
+end
+
+Then(/^there is an approved and assigned reservation with purpose for a customer$/) do
+  @customer = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
+  @purpose = Faker::Lorem.sentence
+  @reservation = FactoryGirl.create(:item_line, :with_assigned_item, :with_purpose,
+                                    purpose: @purpose,
+                                    user: @customer,
+                                    inventory_pool: @current_inventory_pool,
+                                    status: :approved)
+end
+
+Then(/^I open the hand over page for this customer$/) do
+  visit manage_hand_over_path(@current_inventory_pool, @customer)
+end
+
+Then(/^I select this reservation$/) do
+  find("[data-id='#{@reservation.id}'] [data-select-line]").click
+end
+
+Given(/^there is another approved and assigned reservation with purpose for a customer$/) do
+  @another_purpose = Faker::Lorem.sentence
+  @another_reservation = FactoryGirl.create(:item_line, :with_assigned_item, :with_purpose,
+                                            purpose: @another_purpose,
+                                            user: @customer,
+                                            inventory_pool: @current_inventory_pool,
+                                            status: :approved)
+end
+
+Then(/^the contract has both the purposes$/) do
+  page.driver.browser.switch_to.window(@contract_window.handle)
+  within '.purposes' do
+    expect(current_scope).to have_content @purpose
+    expect(current_scope).to have_content @another_purpose
+  end
+end
+

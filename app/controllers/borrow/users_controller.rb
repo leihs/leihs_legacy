@@ -7,7 +7,7 @@ class Borrow::UsersController < Borrow::ApplicationController
   end
 
   def documents
-    @contracts = current_user.reservations_bundles.signed_or_closed
+    @contracts = current_user.contracts
     @contracts = \
       @contracts.to_a.sort { |a, b| a.time_window_min <=> b.time_window_min }
   end
@@ -36,14 +36,20 @@ class Borrow::UsersController < Borrow::ApplicationController
   ################################################################
 
   before_action only: [:contract, :value_list] do
-    @contract = current_user.reservations_bundles.find(params[:id])
+    @contract = current_user.contracts.find(params[:id])
   end
 
   def contract
+    @user = @contract.user
+    @delegated_user = @contract.delegated_user
+    @inventory_pool = @contract.inventory_pool
     render 'documents/contract', layout: 'print'
   end
 
   def value_list
+    @user = @contract.user
+    @delegated_user = @contract.delegated_user
+    @inventory_pool = @contract.inventory_pool
     render 'documents/value_list', layout: 'print'
   end
 

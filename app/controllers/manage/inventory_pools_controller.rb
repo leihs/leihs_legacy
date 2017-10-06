@@ -29,7 +29,7 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
     if @date == Time.zone.today
       # NOTE count returns a Hash because the group() in default scope
       @submitted_reservations_count = \
-        current_inventory_pool.reservations_bundles.submitted.to_a.size
+        current_inventory_pool.orders.submitted.to_a.size
       @overdue_hand_overs_count = \
         current_inventory_pool.visits.hand_over.where('date < ?', @date).to_a.size
       @overdue_take_backs_count = \

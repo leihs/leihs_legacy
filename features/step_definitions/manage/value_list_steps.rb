@@ -3,6 +3,7 @@
 Given /^I open a value list$/ do
   #step 'man öffnet einen Vertrag bei der Aushändigung'
   step 'I open a contract during hand over'
+  @user = @hand_over.user
 
   page.driver.browser.close
   new_window = page.driver.browser.window_handles.last
@@ -35,11 +36,11 @@ Then /^I want to see the following sections in the (value list|picking list):$/ 
           end
         when 'Borrower'
           within('.customer') do
-            expect(has_content? @contract.user.firstname).to be true
-            expect(has_content? @contract.user.lastname).to be true
-            expect(has_content? @contract.user.address).to be true if @contract.user.address
-            expect(has_content? @contract.user.zip).to be true
-            expect(has_content? @contract.user.city).to be true
+            expect(has_content? @user.firstname).to be true
+            expect(has_content? @user.lastname).to be true
+            expect(has_content? @user.address).to be true if @user.address
+            expect(has_content? @user.zip).to be true
+            expect(has_content? @user.city).to be true
           end
         when 'Lender'
           find('.inventory_pool')
@@ -259,9 +260,16 @@ Then(/^any options are priced according to their price set in the inventory pool
 end
 
 Given(/^there is an order with at least two models and a quantity of at least three per model$/) do
-  @order = @current_inventory_pool.reservations_bundles.submitted.find do |o|
-    o.reservations.map(&:model).instance_eval do
-      uniq.count >= 2 and select{|m| o.reservations.select{|l| l.model == m}.count >= 3 }.uniq.count >= 2
+  customer = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
+  @order = FactoryGirl.create(:order, state: :submitted, user: customer, inventory_pool: @current_inventory_pool)
+  [FactoryGirl.create(:model), FactoryGirl.create(:model)].each do |model|
+    3.times do
+      @order.reservations << FactoryGirl.create(:reservation,
+                                                user: customer,
+                                                inventory_pool: @current_inventory_pool,
+                                                order: @order,
+                                                status: :submitted,
+                                                model: model)
     end
   end
   expect(@order).not_to be_nil

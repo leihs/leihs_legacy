@@ -30,13 +30,13 @@ end
 
 When /^I try to complete a hand over that contains a model with unborrowable items$/ do
   @reservation = nil
-  @contract = @current_inventory_pool.reservations_bundles.approved.detect do |c|
+  @order = @current_inventory_pool.orders.approved.detect do |c|
     @reservation = c.item_lines.where(item_id: nil).detect do |l|
       l.model.items.unborrowable.where(inventory_pool_id: @current_inventory_pool).first
     end
   end
   @model = @reservation.model
-  @customer = @contract.user
+  @customer = @order.user
   step 'I open a hand over for this customer'
   expect(has_selector?('#hand-over-view', visible: true)).to be true
 end
@@ -64,26 +64,24 @@ end
 
 When(/^I edit an order$/) do
   @event = 'order'
-  @contract = @current_inventory_pool.reservations_bundles.submitted.first
-  @user = @contract.user
-  @customer = @contract.user
+  @order = @current_inventory_pool.orders.submitted.first
+  @user = @order.user
+  @customer = @order.user
   step 'I edit the order'
 end
 
 When(/^I edit the latest problematic order$/) do
-  # NOTE: expectations are hardcoded for data of a specific contract.
-  #       we need to find by user because reservations bundles order is random
   @event = 'order'
-  @contract = @current_inventory_pool.reservations_bundles.submitted
+  @order = @current_inventory_pool.orders.submitted
     .where(user_id: 'baf29045-ea7d-5880-be5b-efb8095a3216')
     .first
-  @user = @contract.user
-  @customer = @contract.user
+  @user = @order.user
+  @customer = @order.user
   step 'I edit the order'
 end
 
 When(/^I edit the order$/) do
-  visit manage_edit_contract_path(@current_inventory_pool, @contract)
+  visit manage_edit_order_path(@current_inventory_pool, (@order or @contract))
 end
 
 Then(/^the user appears under last visitors$/) do
@@ -93,6 +91,7 @@ end
 
 When /^the chosen items contain some from a future hand over$/ do
   find('#add-start-date').set I18n.l(Date.today+2.days)
+  find('#add-end-date').set I18n.l(Date.today+2.days)
   step 'I add an item to the hand over by providing an inventory code'
 end
 
@@ -163,8 +162,11 @@ When /^I open a hand over for a customer that has things to pick up today as wel
 end
 
 When /^I scan something \(assign it using its inventory code\) and it is already assigned to a future contract$/ do
-  @model = @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).models.detect do |model|
-    @item = model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).first
+  @customer.orders.approved.where(inventory_pool_id: @current_inventory_pool).detect do |order|
+    order.models.detect do |model|
+      @item = model.items.borrowable.in_stock.where(inventory_pool: @current_inventory_pool).first
+      @model = @item.try(&:model)
+    end
   end
   find('#assign-or-add-input input').set @item.inventory_code
   find('#assign-or-add button').click
@@ -177,9 +179,9 @@ Then /^it is assigned \(whether it is selected or not\)$/ do
 end
 
 When /^it doesn't exist in any future contracts$/ do
-  @model_not_in_contract = (@current_inventory_pool.items.borrowable.in_stock.map(&:model).uniq -
-                              @customer.reservations_bundles.approved.find_by(inventory_pool_id: @current_inventory_pool).models).sample
-  @item = @model_not_in_contract.items.borrowable.in_stock.first
+  @model_not_in_order = (@current_inventory_pool.items.borrowable.in_stock.map(&:model).uniq -
+                              @customer.orders.approved.find_by(inventory_pool_id: @current_inventory_pool).models).sample
+  @item = @model_not_in_order.items.borrowable.in_stock.first
   find('#add-start-date').set I18n.l(Date.today+7.days)
   find('#add-end-date').set I18n.l(Date.today+8.days)
   find('#assign-or-add-input input').set @item.inventory_code
@@ -325,8 +327,8 @@ Then /^I see search results in the following categories:$/ do |table|
           find('#models .list-of-lines .line', match: :first)
         when 'Items'
           find('#items .list-of-lines .line', match: :first)
-        when 'Contracts'
-          find('#contracts .list-of-lines .line', match: :first)
+        when 'orders'
+          find('#orders .list-of-lines .line', match: :first)
         when 'Orders'
           find('#orders .list-of-lines .line', match: :first)
         when 'Options'
@@ -341,7 +343,7 @@ Then /^I see at most the first (\d+) results from each category$/ do |amount|
   expect(all('.user .list .line:not(.toggle)', visible: true).size).to be <= amount
   expect(all('.model .list .line:not(.toggle)', visible: true).size).to be <= amount
   expect(all('.item .list .line:not(.toggle)', visible: true).size).to be <= amount
-  expect(all('.contract .list .line:not(.toggle)', visible: true).size).to be <= amount
+  expect(all('.order .list .line:not(.toggle)', visible: true).size).to be <= amount
   expect(all('.order .list .line:not(.toggle)', visible: true).size).to be <= amount
 end
 
@@ -425,16 +427,16 @@ Then /^I open an order( placed by "(.*?)")$/ do |arg0, arg1|
   step %Q(I uncheck the "No verification required" button)
 
   if arg0
-    @contract = @current_inventory_pool.reservations_bundles.find find('.line', match: :prefer_exact, text: arg1)['data-id']
+    @order = @current_inventory_pool.orders.find find('.line', match: :prefer_exact, text: arg1)['data-id']
     within('.line', match: :prefer_exact, text: arg1) do
       find('.line-actions .multibutton .dropdown-holder').click
       find('.dropdown-item', text: _('Edit')).click
     end
   else
-    @contract = @current_inventory_pool.reservations_bundles.submitted.first
-    visit manage_edit_contract_path(@current_inventory_pool, @contract)
+    @order = @current_inventory_pool.orders.submitted.first
+    visit manage_edit_order_path(@current_inventory_pool, @order)
   end
-  @user = @contract.user
+  @user = @order.user
   find('h1', text: _('Edit %s') % _('Order'))
   find('h2', text: @user.to_s)
 end
@@ -445,15 +447,15 @@ end
 
 
 Then(/^I see the previously opened order's user as last visitor$/) do
-  find('#daily-view #last-visitors', text: @contract.user.name)
+  find('#daily-view #last-visitors', text: @order.user.name)
 end
 
 When(/^I click on the last visitor's name$/) do
-  find('#daily-view #last-visitors a', text: @contract.user.name).click
+  find('#daily-view #last-visitors a', text: @order.user.name).click
 end
 
 Then(/^I see search results matching that user's name$/) do
-  find('#search-overview h1', text: _("Search Results for \"%s\"") % @contract.user.name)
+  find('#search-overview h1', text: _("Search Results for \"%s\"") % @order.user.name)
 end
 
 When(/^I enter something in the "(.*?)" field$/) do |field_label|
@@ -466,7 +468,7 @@ When(/^I enter something in the "(.*?)" field$/) do |field_label|
 end
 
 When(/^I open a take back that contains options$/) do
-  @customer = @current_inventory_pool.users.all.select {|x| x.reservations_bundles.signed.exists? and !x.reservations_bundles.signed.detect{|c| c.options.exists? }.nil? }.first
+  @customer = @current_inventory_pool.users.all.select {|x| x.contracts.open.exists? and !x.contracts.open.detect{|c| c.options.exists? }.nil? }.first
   visit manage_take_back_path(@current_inventory_pool, @customer)
   expect(has_selector?('#take-back-view')).to be true
 end

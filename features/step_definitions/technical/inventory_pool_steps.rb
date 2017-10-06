@@ -68,9 +68,15 @@ Given /^all contracts and contract reservations are deleted$/ do
 end
 
 Given /^there are open contracts for all users$/ do
-  @open_reservations = User.all.flat_map { |user|
-    rand(3..6).times.map { FactoryGirl.create :reservation, user: user, inventory_pool: @current_inventory_pool, status: :approved }
-  }
+  @open_reservations = User.all.flat_map do |user|
+    rand(3..6).times.map do
+      order = FactoryGirl.create(:order,
+                                 user: user,
+                                 inventory_pool: @current_inventory_pool,
+                                 state: :approved)
+      FactoryGirl.create :reservation, order: order, user: user, inventory_pool: @current_inventory_pool, status: :approved
+    end
+  end
 end
 
 Given /^every contract has a different start date$/ do
@@ -90,7 +96,12 @@ Then /^the result is a set of contract reservations that are associated with the
 end
 
 Given /^there is an open contract with reservations for a user$/ do
-  @open_reservations = rand(3..6).times.map { FactoryGirl.create :reservation, user: User.first, inventory_pool: @current_inventory_pool, status: :approved }
+  user = User.first
+  order = FactoryGirl.create(:order,
+                             user: user,
+                             inventory_pool: @current_inventory_pool,
+                             state: :approved)
+  @open_reservations = rand(3..6).times.map { FactoryGirl.create :reservation, order: order, user: user, inventory_pool: @current_inventory_pool, status: :approved }
 end
 
 Given /^the first contract line starts on the same date as the second one$/ do
@@ -115,8 +126,18 @@ Given /^there are 2 different contracts for 2 different users$/ do
 end
 
 Given /^there are 2 different contracts with reservations for 2 different users$/ do
-  @open_reservations2 = rand(3..6).times.map { FactoryGirl.create :reservation, user: User.first, inventory_pool: @current_inventory_pool, status: :approved }
-  @open_reservations3 = rand(3..6).times.map { FactoryGirl.create :reservation, user: User.last, inventory_pool: @current_inventory_pool, status: :approved }
+  user2 = User.first
+  order2 = FactoryGirl.create(:order,
+                              user: user2,
+                              inventory_pool: @current_inventory_pool,
+                              state: :approved)
+  @open_reservations2 = rand(3..6).times.map { FactoryGirl.create :reservation, order: order2, user: user2, inventory_pool: @current_inventory_pool, status: :approved }
+  user3 = User.last
+  order3 = FactoryGirl.create(:order,
+                              user: user3,
+                              inventory_pool: @current_inventory_pool,
+                              state: :approved)
+  @open_reservations3 = rand(3..6).times.map { FactoryGirl.create :reservation, order: order3, user: user3, inventory_pool: @current_inventory_pool, status: :approved }
 end
 
 Then /^there are 2 hand over visits for the given inventory pool$/ do
@@ -158,10 +179,17 @@ Given /^to each contract line an item is assigned$/ do
   end
 end
 
-Given /^all contracts are signed|the contract is signed$/ do
+Given /^the contract is signed$/ do
   # sign the contract
-  contract_container = @open_reservations.first.user.reservations_bundles.approved.find_by(inventory_pool_id: @open_reservations.first.inventory_pool)
-  contract_container.sign(@manager, @open_reservations)
+  Contract.sign!(@manager, @current_inventory_pool, @open_reservations.first.user, @open_reservations,
+                 Faker::Lorem.sentence)
+end
+
+Given /^all contracts are signed$/ do
+  @open_reservations.group_by(&:user).each_pair do |user, reservations|
+    Contract.sign!(@manager, @current_inventory_pool, user, reservations,
+                   Faker::Lorem.sentence)
+  end
 end
 
 When /^the take back visits of the given inventory pool are fetched$/ do
@@ -210,8 +238,8 @@ end
 Given /^both contracts are signed$/ do
   [@open_reservations2, @open_reservations3].each do |reservations|
     # sign the contract
-    contract_container = reservations.first.user.reservations_bundles.approved.find_by(inventory_pool_id: reservations.first.inventory_pool)
-    contract_container.sign(@manager, reservations)
+    Contract.sign!(@manager, @current_inventory_pool, reservations.first.user, reservations,
+                   Faker::Lorem.sentence)
   end
 end
 

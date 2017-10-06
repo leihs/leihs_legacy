@@ -9,8 +9,8 @@ module Borrow
       include ::Spec::LoginSteps
       include ::Spec::PersonasDumpSteps
 
-      step 'I have a signed contract' do
-        FactoryGirl.create(:signed_contract,
+      step 'I have an open contract' do
+        FactoryGirl.create(:open_contract,
                            user: @current_user,
                            inventory_pool: @inventory_pool)
       end

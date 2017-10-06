@@ -101,22 +101,6 @@ Then(/^I can navigate to the parent category$/) do
   find('#category-current a').click
 end
 
-
-# Dann(/^kann ich ein Modell anhand der explorativen Suche wählen$/) do
-#   find("button.addon[type='submit'] .fa.fa-plus").click
-#   find(".modal.ui-shown .line", match: :first)
-#   find("[data-type='category-filter']", :match => :first).click
-#   find(".modal.ui-shown .line", match: :first)
-#   model = Model.find find(".modal.ui-shown .line", match: :first)["data-id"]
-#   find(".modal.ui-shown .line .button", match: :first).click
-#   find("#flash")
-#   if @contract
-#     expect(@contract.models.include? model).to be true
-#   else
-#     expect(@customer.reservations_bundles.map(&:models).flatten.include? model).to be true
-#   end
-# end
-
 Then(/^the explorative search shows only models from my inventory pool$/) do
   find("button.addon[type='submit'] .fa.fa-plus").click
   find('.modal.ui-shown .line', match: :first)

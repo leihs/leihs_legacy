@@ -22,9 +22,17 @@ class Visit < ApplicationRecord
     visit_id
   end
 
-  VISIT_ID_SQL_EXPR =
-    "ENCODE( DIGEST( CONCAT_WS('_', date, reservations.inventory_pool_id, " \
-    " reservations.user_id, status), 'sha1' ), 'hex' )"
+  VISIT_ID_SQL_EXPR = <<-SQL
+    ENCODE(
+      DIGEST(
+        CONCAT_WS('_',
+                  date,
+                  reservations.inventory_pool_id,
+                  reservations.user_id,
+                  status),
+        'sha1'),
+      'hex')
+  SQL
 
   default_scope do
     select(<<-SQL)

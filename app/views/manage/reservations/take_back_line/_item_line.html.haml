@@ -19,8 +19,8 @@
       %span.grey-text= line.model.hand_over_note
 
   .col1of10.line-col.text-align-center
-    - unless line.purpose.blank?
-      .tooltip{:"title" => line.purpose.description, :"data-tooltip-template" => "manage/views/purposes/tooltip"}
+    - if purpose = line.order.try(&:purpose).presence
+      .tooltip{:"title" => purpose, :"data-tooltip-template" => "manage/views/purposes/tooltip"}
         %i.fa.fa-comment.grey
 
   .col1of10.line-col.text-align-center

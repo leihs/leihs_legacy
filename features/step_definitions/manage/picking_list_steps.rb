@@ -1,29 +1,59 @@
 # -*- encoding : utf-8 -*-
 
-Given(/^I open (a|the) picking list( for a signed contract)?$/) do |arg1, arg2|
+Given(/^I open the picking list$/) do
   step 'I close the flash message'
-  
-  if @hand_over and arg1 == 'the'
-    within '#lines' do
-      @selected_lines = @current_inventory_pool.reservations.find all(".line input[type='checkbox']:checked").map { |x| x.find(:xpath, './../../../../..')['data-id'] }
-    end
-    step 'I can open the picking list'
 
-    document_window = window_opened_by do
-      click_button _('Picking List')
-    end
-    page.driver.browser.switch_to.window(document_window.handle)
-  else
-    @contract = case arg1
-                  when 'a'
-                    @current_inventory_pool.reservations_bundles.first
-                  when 'the'
-                    if arg2
-                      @current_inventory_pool.reservations_bundles.signed.first
-                    end
-                end
-    visit manage_picking_list_path(@current_inventory_pool, @contract)
+  within '#lines' do
+    @selected_lines = @current_inventory_pool.reservations.find all(".line input[type='checkbox']:checked").map { |x| x.find(:xpath, './../../../../..')['data-id'] }
   end
+  step 'I can open the picking list'
+
+  document_window = window_opened_by do
+    click_button _('Picking List')
+  end
+  page.driver.browser.switch_to.window(document_window.handle)
+
+  @list_element = find('.picking_list')
+end
+
+Given(/^I open the picking list for a signed contract$/) do
+  step 'I close the flash message'
+
+  @contract = @current_inventory_pool.contracts.open.first
+  @user = @contract.user
+  @delegated_user = @contract.delegated_user
+
+  visit manage_picking_list_path(@current_inventory_pool, @contract)
+
+  @list_element = find('.picking_list')
+end
+
+Given(/^I open a picking list$/) do
+  step 'I close the flash message'
+
+  @hand_over = @current_inventory_pool.visits.hand_over.first
+  @user = @hand_over.reservations.first.user
+  @delegator_user = @hand_over.reservations.first.delegated_user
+
+  visit manage_hand_over_path(@current_inventory_pool, @hand_over.user)
+
+  sleep 1
+  line_ids = all('.line[data-id]').map { |l| l['data-id'] }
+  line_ids.each do |id|
+    el = find(".line[data-id='#{id}'] input[data-select-line]")
+    el.click unless el.checked?
+  end
+
+  within '#lines' do
+    @selected_lines = @current_inventory_pool.reservations.find all(".line input[type='checkbox']:checked").map { |x| x.find(:xpath, './../../../../..')['data-id'] }
+  end
+
+  step 'I can open the picking list'
+
+  document_window = window_opened_by do
+    click_button _('Picking List')
+  end
+  page.driver.browser.switch_to.window(document_window.handle)
 
   @list_element = find('.picking_list')
 end
@@ -46,6 +76,7 @@ Then(/^I can open the (contract|picking list|value list) of any (order|contract)
 
   find('body').click # closes the toggler if already open
 
+  expect(page).to have_selector('#contracts')
   within '#contracts' do
     within all('.line', minimum: 1).sample do
       within find('.line-actions .multibutton') do

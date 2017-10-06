@@ -18,8 +18,8 @@ class window.App.SwapModelController extends Spine.Controller
                       [App.Reservation.find $(e.currentTarget).closest("[data-id]").data("id")]
     reservation = @reservations[0]
     new App.ReservationsExplorativeAddController
-      contract: reservation.contract()
       startDate: reservation.start_date
       endDate: reservation.end_date
       addModel: @swapModel
+      user: @user
 

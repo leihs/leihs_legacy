@@ -1,9 +1,10 @@
 When /^I open a booking calendar to edit a singe line$/ do
   # high frequently booked model
   @model = @current_inventory_pool.models.max {|a,b| a.availability_in(@current_inventory_pool).changes.length <=> b.availability_in(@current_inventory_pool).changes.length}
-  @contract = @current_inventory_pool.reservations_bundles.submitted.detect {|c| c.reservations.any? {|cl| cl.model_id == @model.id} }
+  @order = @contract = @current_inventory_pool.orders.submitted.detect {|c| c.reservations.any? {|cl| cl.model_id == @model.id} }
   step 'I edit the order'
   @edited_line = find('.line', text: @model.name, match: :first)
+  binding.pry
   @edited_line.find('[data-edit-lines]').click
   find('.modal')
 end
@@ -17,9 +18,9 @@ Then /^I see all availabilities in that calendar, where the small number is the 
     end
     av = @model.availability_in(@current_inventory_pool)
     changes = av.available_total_quantities
-    changes.each_with_index do |c, i|
+    changes.each_with_index do |change, i|
       current_calendar_date = Date.parse find('.fc-widget-content:not(.fc-other-month)', match: :first)['data-date']
-      current_change_date = c[0]
+      current_change_date = change[0]
       while current_calendar_date.month != current_change_date.month do
         find('.fc-button-next').click
         current_calendar_date = Date.parse find('.fc-widget-content:not(.fc-other-month)', match: :first)['data-date']
@@ -29,8 +30,8 @@ Then /^I see all availabilities in that calendar, where the small number is the 
       next_change = changes[i+1]
 
       if next_change
-        days_between_changes = (next_change[0]-c[0]).to_i
-        next_date = c[0]
+        days_between_changes = (next_change[0] - change[0]).to_i
+        next_date = change[0]
         last_month = next_date.month
 
         days_between_changes.times do
@@ -44,7 +45,7 @@ Then /^I see all availabilities in that calendar, where the small number is the 
           #######################################################################################################################
           # check total, where the small number is the total quantity of that specific date
 
-          total_quantity = c[1]
+          total_quantity = change[1]
           # add quantity of edited line when date element is selected
           if change_date_el[:class].match('selected') != nil
             total_quantity += find('#booking-calendar-quantity').value.to_i
@@ -53,12 +54,12 @@ Then /^I see all availabilities in that calendar, where the small number is the 
 
           #######################################################################################################################
           # check selected partition/borrower quantity (big number)
- 
+
           quantity_for_borrower = av.maximum_available_in_period_summed_for_groups next_date, next_date, @contract.user.group_ids
 
           # the quantity is considering only the partitions with groups we are member of (exclude soft overbookings)
           if change_date_el[:class].match('selected') != nil
-            x = c[2].select {|h| ([nil] + @contract.user.group_ids).include? h[:group_id]}
+            x = change[2].select {|h| ([nil] + @contract.user.group_ids).include? h[:group_id]}
             y = x.flat_map {|h| h[:running_reservations] }
             quantity_to_restore = (y & @contract.reservations.pluck(:id)).size
             quantity_for_borrower += quantity_to_restore

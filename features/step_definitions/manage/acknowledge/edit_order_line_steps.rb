@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 When(/^I open a contract for acknowledgement( with more then one line)?(, whose start date is not in the past)?$/) do |arg1, arg2|
-  contracts = @current_inventory_pool.reservations_bundles.submitted
+  contracts = @current_inventory_pool.orders.submitted
   contracts = contracts.select { |c| c.reservations.size > 1 and c.reservations.map(&:model_id).uniq.size > 1 } if arg1
   contracts = contracts.select { |c| c.min_date >= Time.zone.today } if arg2
 
@@ -97,10 +97,13 @@ When(/^I change a contract reservations quantity$/) do
     @line =
       if @contract
         @contract.reservations.first
+      elsif @order
+        @order.reservations.first
       else
-        @customer.visits.hand_over.where(inventory_pool_id: @current_inventory_pool).first.reservations.first
+        @hand_over = @customer.visits.hand_over.where(inventory_pool_id: @current_inventory_pool).first
+        @hand_over.reservations.first
       end
-    @total_quantity = @line.contract.reservations.where(model_id: @line.model_id).to_a.sum(&:quantity)
+    @total_quantity = (@contract || @order || @hand_over).reservations.where(model_id: @line.model_id).to_a.sum(&:quantity)
     @new_quantity = @line.quantity + 1
     @line_element = find(".line[data-id='#{@line.id}']")
   end
@@ -115,7 +118,10 @@ When(/^I change a contract reservations quantity$/) do
 end
 
 Then(/^the contract line was duplicated$/) do
-  expect(@line.contract.reservations.where(model_id: @line.model_id).to_a.sum(&:quantity)).to eq @total_quantity + 1
+  expect(
+    (@line.contract || @contract || @order || @hand_over)
+    .reservations.where(model_id: @line.model_id).to_a.sum(&:quantity)
+  ).to eq @total_quantity + 1
 end
 
 Then(/^the quantity of that submitted contract line is changed$/) do

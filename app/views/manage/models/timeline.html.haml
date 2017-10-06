@@ -58,7 +58,7 @@
                               # construct the popup that is being displayed when you click on an event
                               link_string, link_path =
                                 if line.status == :submitted
-                                  [ _("Acknowledge"), manage_edit_contract_path(current_inventory_pool, line.contract) ]
+                                  [ _("Acknowledge"), manage_edit_order_path(current_inventory_pool, line.order) ]
                                 elsif line.status == :approved
                                   [ _("Hand Over"), manage_hand_over_path(current_inventory_pool, user) ]
                                 else

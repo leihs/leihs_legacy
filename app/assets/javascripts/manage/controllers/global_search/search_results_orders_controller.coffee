@@ -1,26 +1,25 @@
 #= require ./search_results_controller
 class window.App.SearchResultsOrdersController extends App.SearchResultsController
 
-  model: "Contract"
-  templatePath: "manage/views/contracts/line"
+  model: "Order"
+  templatePath: "manage/views/orders/line"
 
   constructor: ->
     super
     new App.LinesCellTooltipController {el: @el}
     new App.UserCellTooltipController {el: @el}
-    new App.ContractsApproveController {el: @el}
+    new App.OrdersApproveController {el: @el}
     new App.ContractsRejectController {el: @el, async: true, callback: @orderRejected}
 
   fetch: (page, target, callback)=>
     @fetchOrders(page).done (data)=>
-      orders = (App.Contract.find datum.id for datum in data)
+      orders = (App.Order.find datum.id for datum in data)
       @fetchUsers(orders).done =>
         @fetchReservations(orders).done =>
-          @fetchPurposes(orders).done =>
-            do callback
+          do callback
 
   fetchOrders: (page)=>
-    App.Contract.ajaxFetch
+    App.Order.ajaxFetch
       data: $.param
         page: page
         search_term: @searchTerm
@@ -42,12 +41,4 @@ class window.App.SearchResultsOrdersController extends App.SearchResultsControll
     return {done: (c)->c()} unless ids.length
     App.Reservation.ajaxFetch
       data: $.param
-        contract_ids: ids
-
-  fetchPurposes: (orders)=>
-    ids = _.compact _.filter (_.map (_.flatten (_.map orders, (o) -> o.reservations().all())), (l) -> l.purpose_id), (id) -> not App.Purpose.exists(id)?
-    return {done: (c)=>c()} unless ids.length
-    App.Purpose.ajaxFetch
-      data: $.param
-        purpose_ids: ids
-        paginate: false
+        order_ids: ids

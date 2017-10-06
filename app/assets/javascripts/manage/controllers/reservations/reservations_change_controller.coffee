@@ -5,8 +5,10 @@ class window.App.ReservationsChangeController extends window.App.ManageBookingCa
       model_id: _.first(@models).id
       start_date: @getStartDate().format("YYYY-MM-DD")
       end_date: @getEndDate().format("YYYY-MM-DD")
-      contract_id: @contract?.id
-      purpose_id: _.first(@reservations).purpose_id
+      order_id: @order?.id
+      user_id: (@order?.user?.id or @user.id)
+      inventory_pool_id: (@order?.inventory_pool?.id or App.InventoryPool.current.id)
+      state: (@order?.state or "approved")
       quantity: 1
     .fail (e)=>
       @fail(e)
@@ -14,12 +16,13 @@ class window.App.ReservationsChangeController extends window.App.ManageBookingCa
   # overwrite
   done: (data)=>
     App.Reservation.trigger "refresh", (App.Reservation.find datum.id for datum in data)
+    App.Order.trigger "refresh"
     super
 
   # overwrite
   store: =>
-     # the check for the existence of contract is needed for distinguishing the take backs, for which only the changing of end date should be possible (see @changeRange and @startDateDisabled). @contract is not initialized on the take back page, because there may be different contracts
-    if @contract?
+     # the check for the existence of order is needed for distinguishing the take backs, for which only the changing of end date should be possible (see @changeRange and @startDateDisabled). @order is not initialized on the take back page, because there may be different order
+    if @order? or @hand_over?
       if @models.length == 1
         do @storeItemLine
       else if @models.length == 0
@@ -46,6 +49,8 @@ class window.App.ReservationsChangeController extends window.App.ManageBookingCa
         @createReservation()
         .done (datum) =>
           @reservations.push App.Reservation.find datum.id
+          App.Reservation.trigger "refresh"
+          App.Order.trigger "refresh"
           do finish
     else # no quantity difference, try to change the range
       do @changeRange
@@ -57,7 +62,7 @@ class window.App.ReservationsChangeController extends window.App.ManageBookingCa
         quantity: @getQuantity()
         start_date: @getStartDate().format("YYYY-MM-DD")
         end_date: @getEndDate().format("YYYY-MM-DD")
-      @done line.contract()
+      @done line.order()
     else 
       do @changeRange
 

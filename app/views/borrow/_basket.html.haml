@@ -30,10 +30,6 @@
 
 :coffeescript
 
-  for contract_json in #{current_user.reservations_bundles.unsubmitted.to_json}
-    App.Contract.addRecord new App.Contract contract_json
-    App.Contract.currents.push App.Contract.find(contract_json.id)
-
   for reservation in #{current_user.reservations.unsubmitted.to_json}
     App.Reservation.addRecord new App.Reservation reservation
 
@@ -41,5 +37,5 @@
     App.Model.addRecord new App.Model model
 
   jQuery =>
-    new App.UnsubmittedContractsBasketController
+    new App.BasketController
       el: $("#current-order-basket")

@@ -683,7 +683,7 @@ Then(/^the user has the role "inventory manager"$/) do
 end
 
 Given(/^I pick a user without access rights, orders or contracts$/) do
-  @user = User.find { |u| u.access_rights.active.empty? and u.reservations_bundles.empty? }
+  @user = User.find { |u| u.access_rights.active.empty? and u.reservations.empty? }
 end
 
 When(/^I delete that user from the list$/) do
@@ -726,9 +726,9 @@ end
 
 Given(/^I pick one user with access rights, one with orders and one with contracts$/) do
   @users = []
-  @users << User.find { |u| not u.access_rights.active.empty? and u.reservations_bundles.empty? }
-  @users << User.find { |u| not u.reservations_bundles.empty? }
-  @users << User.find { |u| u.reservations_bundles.empty? }
+  @users << User.find { |u| not u.access_rights.active.empty? and u.orders.empty? }
+  @users << User.find { |u| not u.orders.empty? }
+  @users << User.find { |u| u.orders.empty? }
 end
 
 Given(/^I am editing a user who has access to (and no items from )?(the current|an) inventory pool$/) do |arg1, arg2|
@@ -829,7 +829,31 @@ Given(/^there exists a contract with status "(.*?)" for a user without any other
             when 'signed' then
               :signed
           end
-  @contract = @current_inventory_pool.reservations_bundles.send(state).detect { |c| c.user.reservations_bundles.all? { |c| c.status == state } }
+  if state == :submitted
+    user = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
+    @contract = FactoryGirl.create(:order,
+                                   user: user,
+                                   inventory_pool: @current_inventory_pool,
+                                   state: :submitted)
+    FactoryGirl.create(:reservation,
+                       user: user,
+                       inventory_pool: @current_inventory_pool,
+                       order: @contract,
+                       status: :submitted)
+  elsif state == :approved
+    user = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
+    @contract = FactoryGirl.create(:order,
+                                   user: user,
+                                   inventory_pool: @current_inventory_pool,
+                                   state: :approved)
+    FactoryGirl.create(:reservation,
+                       user: user,
+                       inventory_pool: @current_inventory_pool,
+                       order: @contract,
+                       status: :approved)
+  elsif state == :signed
+    @contract = FactoryGirl.create(:open_contract, inventory_pool: @current_inventory_pool)
+  end
   expect(@contract).not_to be_nil
 end
 

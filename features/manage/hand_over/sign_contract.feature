@@ -15,6 +15,7 @@ Feature: Sign Contract
     And I click hand over
     Then I see a summary of the things I selected for hand over
     And I see the quantity for this option
+    And I fill in the purpose inside hand over dialog
     When I click hand over inside the dialog
     Then the quantity of options is handed over
 

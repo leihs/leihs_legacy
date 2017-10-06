@@ -137,24 +137,29 @@ Then(/^I am logged in as that delegation$/) do
 end
 
 Then(/^the delegation is saved as borrower$/) do
-  @contracts.each do |contract|
-    expect(contract.user).to eq @delegation
+  (@contracts or @reservations).each do |entity|
+    expect(entity.user).to eq @delegation
   end
 end
 
 Then(/^I am saved as contact person$/) do
-  @contracts.each do |contract|
-    expect(contract.delegated_user).to eq @delegated_user
+  (@contracts or @reservations).each do |entity|
+    expect(entity.delegated_user).to eq @delegated_user
   end
 end
 
 Given(/^there is an order for a delegation$/) do
-  @contract = @current_inventory_pool.reservations_bundles.submitted.find {|c| c.user.delegation? }
+  @order = @contract = @current_inventory_pool.orders.submitted.find {|c| c.user.delegation? }
   expect(@contract).not_to be_nil
 end
 
 Given(/^I am editing a delegation's order$/) do
-  @contract = @current_inventory_pool.reservations_bundles.find {|c| [:submitted, :approved].include? c.status and c.delegated_user and c.user.delegated_users.count >= 2}
+  @order = @contract = @current_inventory_pool.orders.find do |o|
+    [:submitted, :approved].include?(o.state) and
+      o.reservations.any?(&:delegated_user)
+      o.user.delegated_users.count >= 2
+  end
+  expect(@order).to be
   @delegation = @contract.user
   step 'I edit the order'
 end
@@ -168,7 +173,7 @@ Then(/^I see the contact person$/) do
 end
 
 Given(/^there is an order placed by me personally$/) do
-  @contract = @current_inventory_pool.reservations_bundles.submitted.find {|c| not c.user.delegation? }
+  @order = @contract = @current_inventory_pool.orders.submitted.find {|c| not c.user.delegation? }
   expect(@contract).not_to be_nil
 end
 
@@ -219,11 +224,12 @@ When(/^I change the delegation$/) do
   find('#swap-user', match: :first).click
   find('.modal', match: :first)
   @contract ||= @hand_over.reservations.map(&:contract).uniq.first
-  @old_delegation = @contract.user
+  @order ||= @hand_over.reservations.map(&:order).uniq.first
+  @old_delegation = (@contract || @order).user
   @new_delegation = @current_inventory_pool.users.find {|u| u.delegation? and u.firstname != @old_delegation.firstname}
   find('input#user-id', match: :first).set @new_delegation.name
   find('.ui-menu-item a', match: :prefer_exact, text: @new_delegation.name).click
-  @contract.reservations.reload.all? {|c| c.user == @new_delegation }
+  (@contract || @order).reservations.reload.all? {|c| c.user == @new_delegation }
 end
 
 When(/^I try to change the delegation$/) do
@@ -292,8 +298,9 @@ end
 
 When(/^I pick a user instead of a delegation$/) do
   @contract ||= @hand_over.reservations.map(&:contract).uniq.first
-  @delegation = @contract.user
-  @delegated_user = @contract.delegated_user
+  @order ||= @hand_over.reservations.map(&:order).uniq.first
+  @delegation = (@contract || @order).user
+  @delegated_user = (@contract || @order).delegated_user
   @new_user = @current_inventory_pool.users.not_as_delegations.first
   expect(page).to have_content _('Availability loaded')
   all('input[data-select-lines]', minimum: 1).map do |input|
@@ -335,7 +342,7 @@ Then(/^no contact person is shown$/) do
 end
 
 When(/^there is no order, hand over or contract for a delegation$/) do
-  @delegations = User.as_delegations.select {|d| d.reservations_bundles.blank?}
+  @delegations = User.as_delegations.select {|d| d.orders.blank?}
 end
 
 When(/^that delegation has no access rights to any inventory pool$/) do
@@ -441,16 +448,15 @@ When(/^I create an order for a delegation$/) do
     Then the model has been added to the order with the respective start and end date, quantity and inventory pool
     When I open my list of orders
     And I enter a purpose
-    And I take note of the contract
+    And I take note of the reservations
     And I submit the order
-    And I reload the order
-    Then the order's status changes to submitted
+    Then the reservations' status changes to submitted
     And the delegation is saved as borrower
   }
 end
 
 When(/^I hand over the items ordered for this delegation to "(.*?)"$/) do |contact_person|
-  @contract = @delegation.reservations_bundles.submitted.first
+  @contract = @delegation.orders.submitted.first
   @contract.approve Faker::Lorem.sentence
   visit manage_hand_over_path(@current_inventory_pool, @delegation)
   expect(has_selector?('input[data-assign-item]')).to be true
@@ -469,7 +475,8 @@ When(/^I hand over the items ordered for this delegation to "(.*?)"$/) do |conta
 end
 
 Then(/^"(.*?)" is the new contact person for this contract$/) do |contact_person|
-  expect(@delegation.reservations_bundles.signed.first.delegated_user).to eq @contact
+  expect(@delegation.contracts.open.order('created_at DESC').first.delegated_user)
+    .to eq @contact
 end
 
 Then(/^the hand over shows the user$/) do
@@ -497,7 +504,6 @@ When(/^I pick a delegation instead of a user$/) do
   find('#user input#user-id', match: :first).set @delegation.name
   find('.ui-menu-item a', match: :first, text: @delegation.name).click
 end
-
 
 When(/^I pick a contact person from the delegation$/) do
   @contact = @delegation.delegated_users.first
@@ -594,17 +600,8 @@ When(/^I pick a contact person that is suspended for the current inventory pool$
   find('.ui-menu-item a', match: :first, text: delegated_user.name).click
 end
 
-
-And(/^I take note of the contract$/) do
-  @contracts = @current_user.reservations_bundles.unsubmitted
-end
-
-
-And(/^I reload the order$/) do
-  reloaded_contracts = @contracts.map do |contract|
-    contract.user.reservations_bundles.find_by(status: :submitted, inventory_pool_id: contract.inventory_pool)
-  end
-  @contracts = reloaded_contracts
+And(/^I take note of the reservations$/) do
+  @reservations = @current_user.reservations.unsubmitted
 end
 
 When(/^I switch from my user to a delegation$/) do

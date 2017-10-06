@@ -203,27 +203,24 @@ class Manage::UsersController < Manage::ApplicationController
 
   def hand_over
     set_shared_visit_variables 0 do
-      @contract = \
+      @reservations = \
         @user
-          .reservations_bundles
-          .approved
-          .find_by(inventory_pool_id: current_inventory_pool)
-      @contract ||= \
-        @user
-          .reservations_bundles
-          .approved
-          .new(inventory_pool: current_inventory_pool) do |x|
-            # simply choose the delegator user in order to
-            # pass contract validation. the delegated user has to be chosen again
-            # in the hand over process anyway
-            x.delegated_user = @user.delegator_user if @user.delegation?
-          end
-      @reservations = @contract.reservations.includes([:purpose, :model])
-      @models = @contract.models.where(type: :Model)
-      @software = @contract.models.where(type: :Software)
-      @options = @contract.options
-      @items = @contract.items.items
-      @licenses = @contract.items.licenses
+        .reservations
+        .where(status: :approved, inventory_pool: current_inventory_pool)
+      @orders = @reservations.map(&:order)
+      @models = @reservations.map(&:model).select { |m| m.type == 'Model' }.uniq
+      @software = \
+        @reservations.map(&:model).select { |m| m.type == 'Software' }.uniq
+      @options = \
+        @reservations.where.not(option_id: nil).map(&:option).uniq
+      @items = \
+        @reservations.where.not(item_id: nil)
+        .map(&:item)
+        .select { |i| i.type == 'Item' }
+      @licenses = \
+        @reservations.where.not(item_id: nil)
+        .map(&:item)
+        .select { |i| i.type == 'License' }
     end
     @start_date, @end_date = \
       @grouped_lines.keys.sort.first || [Time.zone.today, Time.zone.today]
@@ -237,15 +234,19 @@ class Manage::UsersController < Manage::ApplicationController
           .reservations
           .signed
           .where(inventory_pool_id: current_inventory_pool)
-          .includes([:purpose, :model, :item])
+          .includes([:model, :item, :order])
       @contracts = \
         @user
-          .reservations_bundles
-          .signed
+          .contracts
+          .open
           .where(inventory_pool_id: current_inventory_pool)
-      @models = @contracts.flat_map(&:models).uniq
-      @options = @contracts.flat_map(&:options).uniq
-      @items = @contracts.flat_map(&:items).uniq
+      @models = @reservations.map(&:model).select { |m| m.type == 'Model' }.uniq
+      @options = \
+        @reservations.where.not(option_id: nil).map(&:option).uniq
+      @items = \
+        @reservations.where.not(item_id: nil)
+        .map(&:item)
+        .select { |i| i.type == 'Item' }
     end
     @start_date = @reservations.map(&:start_date).min || Time.zone.today
     @end_date = @reservations.map(&:end_date).max || Time.zone.today
