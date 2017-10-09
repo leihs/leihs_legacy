@@ -1,6 +1,6 @@
 :ruby
-  editable_accounting_fields = \
-    procurement_admin? || procurement_inspector? || request.category.inspectable_by?(current_user)
+  visible_accounting_fields = request.category.inspectable_by?(current_user)
+  editable_accounting_fields = (visible_accounting_fields and not request.budget_period.past?)
 
 .row.request{data: {request_id: request.id, template_id: request.template_id}}
   .col-xs-6
@@ -226,42 +226,48 @@
                 %a{href: get_attachment_path(attachment.id), target: '_blank'}
                   %img{src: get_attachment_path(attachment.id), style: 'height: 4em; max-width: 10em'}
 
-
-    .form-group
-      %label.col-xs-4.control-label
-        = _('accounting type')
-      .col-xs-8
-        = select_tag "requests[#{request.id}][accounting_type]",
-          options_for_select(Procurement::Request::ACCOUNTING_TYPES.map {|v| [_(v), v]},
-            request.accounting_type),
-            { disabled: !editable_accounting_fields, class: 'form-control' }
-
-    %div{data: {toggledBy: 'accounting_type', toggleValue: 'investment'},
-      class: ('hidden' unless request.investment?) }
+    - if visible_accounting_fields
       .form-group
         %label.col-xs-4.control-label
-          = _('internal order')
+          = _('accounting type')
         .col-xs-8
-          %input.form-control{name: "requests[#{request.id}][internal_order_number]",
-            placeholder: _('internal order'),
-            value: request.internal_order_number,
-            disabled: !editable_accounting_fields }
+          - unless editable_accounting_fields
+            %p.form-control-static.accounting_type= _(request.accounting_type)
+          - else
+            = select_tag "requests[#{request.id}][accounting_type]",
+              options_for_select(Procurement::Request::ACCOUNTING_TYPES.map {|v| [_(v), v]},
+                request.accounting_type),
+              {  class: 'form-control' }
 
-      .form-group
-        %label.col-xs-4.control-label
-          = _('general ledger account')
-        .col-xs-8
-          %p.form-control-static
-            %samp= request.category.general_ledger_account.presence || _('(unknown)')
+      %div{data: {toggledBy: 'accounting_type', toggleValue: 'investment'},
+        class: ('hidden' unless request.investment?) }
+        .form-group
+          %label.col-xs-4.control-label
+            = _('internal order')
+          .col-xs-8
+            - unless editable_accounting_fields
+              %p.form-control-static.internal_order_number
+                %samp= _(request.internal_order_number)
+            - else
+              %input.form-control{name: "requests[#{request.id}][internal_order_number]",
+                placeholder: _('internal order'),
+                value: request.internal_order_number }
 
-    %div{data: {toggledBy: 'accounting_type', toggleValue: 'aquisition'},
-      class: ('hidden' if request.investment?) }
-      .form-group
-        %label.col-xs-4.control-label
-          = _('cost center')
-        .col-xs-8
-          %p.form-control-static
-            %samp= request.category.cost_center.presence || _('(unknown)')
+        .form-group
+          %label.col-xs-4.control-label
+            = _('general ledger account')
+          .col-xs-8
+            %p.form-control-static
+              %samp= request.category.general_ledger_account.presence || _('(unknown)')
+
+      %div{data: {toggledBy: 'accounting_type', toggleValue: 'aquisition'},
+        class: ('hidden' if request.investment?) }
+        .form-group
+          %label.col-xs-4.control-label
+            = _('cost center')
+          .col-xs-8
+            %p.form-control-static
+              %samp= request.category.cost_center.presence || _('(unknown)')
 
 
     .form-group

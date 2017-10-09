@@ -39,6 +39,7 @@ RequestEditFormBehaviour =
     # accounting types
     do () ->
       $typeToggle = $('select[name*="[accounting_type]"]')
+      return if !$typeToggle[0]
       $typeToggled = $('[data-toggledBy="accounting_type"]')
       setupFieldState = ((selected) ->
         if selected == 'aquisition'

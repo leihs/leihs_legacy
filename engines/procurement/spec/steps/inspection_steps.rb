@@ -480,6 +480,16 @@ steps_for :inspection do
     expect(_(selected)).to eq type
   end
 
+  step 'I change the accounting type to :type' do |type|
+    select = find('select[name*=accounting_type]')
+    select.find('option', text: type).select_option
+  end
+
+  step 'I see but can\'t edit the "Innenauftrag"' do
+    expect(find('p.internal_order_number').text)
+      .to eq @request.internal_order_number
+  end
+
   def check_form_group_visibility(label, visibool)
     field = find('.form-group label', text: label, visible: false)
     expect(field.visible?).to be visibool
@@ -503,19 +513,13 @@ steps_for :inspection do
     check_form_group_visibility('Innenauftrag', can_see)
   end
 
-  step 'I see but can\'t edit the correct accounting type' do
-    select = find('select[name*=accounting_type]')
-    expect(select['disabled']).to eq 'true'
-  end
-
-  step 'I see but can\'t edit the "Innenauftrag"' do
-    input = find('input[name*=internal_order_number]')
-    expect(input['disabled']).to eq 'true'
-  end
-
-  step 'I change the accounting type to :type' do |type|
-    select = find('select[name*=accounting_type]')
-    select.find('option', text: type).select_option
+  step 'I do not see any accounting type fields' do
+    expect(page).to_not have_content _('accounting type')
+    expect(page).to_not have_content _('internal order')
+    expect(page).to_not have_content _('general ledger account')
+    expect(page).to_not have_content _('cost center')
+    expect(page).to_not have_content _('internal order')
+    expect(page).to_not have_content _(@request.accounting_type)
   end
 
 end

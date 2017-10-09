@@ -31,33 +31,6 @@ Feature: Inspection using accounting fields
       And the field "Innenauftrag" is marked red
 
   @inspection
-  Scenario: Accounting fields only editable for Inspectors ("Beschaffung")
-    Given I am Roger
-      And a request with following data exist
-        | key                | value      |
-        | user               | Roger      |
-        | accounting type    | aquisition |
-    When I open this request
-    Then I see but can't edit the correct accounting type
-      And I see the "Kostenstelle" of the sub category
-      And I do not see the "Sachkonto" of the sub category
-      And I do not see the field "Innenauftrag"
-
-  @inspection
-  Scenario: Accounting fields only editable for Inspectors ("Investition")
-    Given I am Roger
-      And a request with following data exist
-      | key                   | value      |
-      | user                  | Roger      |
-      | accounting type       | investment |
-      | internal order number | 123456789  |
-    When I open this request
-    Then I see but can't edit the correct accounting type
-      And I see the "Sachkonto" of the sub category
-      And I do not see the "Kostenstelle" of the sub category
-      And I see but can't edit the "Innenauftrag"
-
-  @inspection
   Scenario: Changing Request type to "Investition" and entering "Innenauftrag"
     Given I am Barbara
       And a request with following data exist
@@ -73,3 +46,24 @@ Feature: Inspection using accounting fields
         | key                   | value      |
         | accounting_type       | investment |
         | internal_order_number | 234234234  |
+
+  @inspection
+  Scenario: Accounting fields only visible for Inspectors ("Beschaffung")
+    Given I am Roger
+      And a request with following data exist
+        | key                | value      |
+        | user               | Roger      |
+        | accounting type    | aquisition |
+    When I open this request
+    Then I do not see any accounting type fields
+
+  @inspection
+  Scenario: Accounting fields only visible for Inspectors ("Investition")
+    Given I am Roger
+      And a request with following data exist
+      | key                   | value      |
+      | user                  | Roger      |
+      | accounting type       | investment |
+      | internal order number | 123456789  |
+    When I open this request
+    Then I do not see any accounting type fields
