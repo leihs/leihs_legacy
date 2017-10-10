@@ -4,7 +4,9 @@ module Procurement
   class SettingsController < ApplicationController
 
     before_action do
-      authorize Procurement::Setting
+      unless procurement_admin?
+        raise Errors::ForbiddenError
+      end
     end
 
     def edit

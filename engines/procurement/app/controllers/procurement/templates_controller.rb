@@ -2,9 +2,6 @@ require_dependency 'procurement/application_controller'
 
 module Procurement
   class TemplatesController < ApplicationController
-    def self.policy_class
-      CategoryPolicy
-    end
 
     def index
       @categories = Procurement::Category.all.select do |category|
@@ -30,7 +27,10 @@ module Procurement
 
       params.require(:categories).each_pair do |id, param|
         category = Procurement::Category.find(id)
-        authorize category, :inspectable_by_user?
+
+        unless category.inspectable_by?(current_user)
+          raise Errors::ForbiddenError
+        end
 
         category.update_attributes(templates_attributes: \
                                    param[:templates_attributes])

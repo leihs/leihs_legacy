@@ -17,7 +17,7 @@
     - if current_user
       .page-content-wrapper.container-fluid
         %ul.nav.navbar-nav.h4
-          - if policy('procurement/application'.to_sym).procurement_or_leihs_admin?
+          - if procurement_or_leihs_admin?
             %li.dropdown{class: opened_menu == :admin ? 'active' : nil}
               %a.dropdown-toggle{href: "#", data: {toggle: "dropdown"}}
                 %i.fa.fa-gear

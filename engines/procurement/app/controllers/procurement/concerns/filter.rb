@@ -4,6 +4,7 @@ module Procurement
     extend ActiveSupport::Concern
 
     included do
+      # rubocop:disable Metrics/MethodLength
       def default_filters
         @filter = params[:filter] || begin
           r = get_user_filter(current_user) || {}
@@ -11,7 +12,13 @@ module Procurement
           r
         end
         @filter['user_id'] ||= @user.id if @user
-        @filter['budget_period_ids'] ||= [Procurement::BudgetPeriod.current.id]
+
+        if Procurement::BudgetPeriod.current
+          @filter['budget_period_ids'] ||= [Procurement::BudgetPeriod.current.id]
+        else
+          flash.now[:error] = _('Current budget period not defined yet')
+        end
+
         @filter['category_ids'] ||= begin
           r = Procurement::CategoryInspector.where(user_id: current_user) \
             .pluck(:category_id)
@@ -27,7 +34,6 @@ module Procurement
         @filter['sort_dir'] = 'asc' if @filter['sort_dir'].blank?
       end
 
-      # rubocop:disable Metrics/MethodLength
       def get_requests
         fallback_filters
 

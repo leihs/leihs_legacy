@@ -3,9 +3,12 @@ require_dependency 'procurement/application_controller'
 module Procurement
   class UsersController < ApplicationController
 
-    skip_before_action :authorize_if_admins_exist
     before_action only: [:index, :create] do
-      authorize 'procurement/application'.to_sym, :procurement_or_leihs_admin?
+      unless procurement_or_leihs_admin?
+        # raise Errors::ForbiddenError
+        flash.now[:error] = _('You are not authorized for this action.')
+        render action: :root
+      end
     end
 
     def index
@@ -51,9 +54,15 @@ module Procurement
       redirect_to users_path
     end
 
+    # rubocop:disable Metrics/MethodLength
     def choose
       @category = Procurement::Category.find(params[:category_id])
-      authorize @category, :inspectable_by_user?
+
+      unless @category.inspectable_by?(current_user)
+        # raise Errors::ForbiddenError
+        flash.now[:error] = _('You are not authorized for this action.')
+        render action: :root
+      end
 
       @budget_period = BudgetPeriod.find(params[:budget_period_id])
 
@@ -74,6 +83,7 @@ module Procurement
         @requester_accesses.reverse! if params[:sort_dir] == 'desc'
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
   end
 end

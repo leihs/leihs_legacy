@@ -4,7 +4,11 @@ module Procurement
   class BudgetPeriodsController < ApplicationController
 
     before_action do
-      authorize BudgetPeriod
+      unless procurement_admin?
+        # raise Errors::ForbiddenError
+        flash.now[:error] = _('You are not authorized for this action.')
+        render action: :root
+      end
     end
 
     def index

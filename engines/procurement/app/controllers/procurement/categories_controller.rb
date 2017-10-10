@@ -4,7 +4,11 @@ module Procurement
   class CategoriesController < ApplicationController
 
     before_action do
-      authorize Category
+      unless procurement_admin?
+        # raise Errors::ForbiddenError
+        flash.now[:error] = _('You are not authorized for this action.')
+        render action: :root
+      end
     end
 
     def index

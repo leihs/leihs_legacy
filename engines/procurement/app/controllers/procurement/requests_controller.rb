@@ -1,12 +1,13 @@
 require_dependency 'procurement/application_controller'
 require_dependency 'procurement/concerns/filter'
 
+# rubocop:disable all
 module Procurement
-  # rubocop:disable Metrics/ClassLength
   class RequestsController < ApplicationController
     include Filter
 
-    before_action do
+    def index
+      ############################# former before_action ##########################
       if procurement_inspector? or procurement_admin?
        if params[:user_id]
          @user = User.not_as_delegations.find(params[:user_id])
@@ -23,13 +24,13 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless RequestPolicy.new(current_user, request_user: @user).allowed?
-        raise Pundit::NotAuthorizedError
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
       end
-    end
+      #############################################################################
 
-    # rubocop:disable Metrics/MethodLength
-    def index
       h = { budget_period_id: @budget_period }
       h[:user_id] = @user if @user
       h[:category_id] = @category if @category
@@ -54,15 +55,40 @@ module Procurement
         end
       end
     end
-    # rubocop:enable Metrics/MethodLength
 
     # render edit form for a single request (PJAX)
     def edit
+      ############################# former before_action ##########################
+      if procurement_inspector? or procurement_admin?
+       if params[:user_id]
+         @user = User.not_as_delegations.find(params[:user_id])
+       end
+      else # only requester
+        @user = current_user
+      end
+
+      if params[:category_id]
+        @category = Procurement::Category.find(params[:category_id])
+      end
+
+      if params[:budget_period_id]
+        @budget_period = BudgetPeriod.find(params[:budget_period_id])
+      end
+
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
+      end
+      #############################################################################
+
       @request = Request.find(id_param)
       @user = @request.user
 
-      unless RequestPolicy.new(current_user, request_user: @user).allowed?
-        raise Pundit::NotAuthorizedError
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
       end
 
       @buildings = Building.all
@@ -75,6 +101,30 @@ module Procurement
 
     # update a single request
     def update
+      ############################# former before_action ##########################
+      if procurement_inspector? or procurement_admin?
+       if params[:user_id]
+         @user = User.not_as_delegations.find(params[:user_id])
+       end
+      else # only requester
+        @user = current_user
+      end
+
+      if params[:category_id]
+        @category = Procurement::Category.find(params[:category_id])
+      end
+
+      if params[:budget_period_id]
+        @budget_period = BudgetPeriod.find(params[:budget_period_id])
+      end
+
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
+      end
+      #############################################################################
+
       @request = Request.find(id_param)
       @category = @request.category
 
@@ -93,6 +143,30 @@ module Procurement
     end
 
     def overview
+      ############################# former before_action ##########################
+      if procurement_inspector? or procurement_admin?
+       if params[:user_id]
+         @user = User.not_as_delegations.find(params[:user_id])
+       end
+      else # only requester
+        @user = current_user
+      end
+
+      if params[:category_id]
+        @category = Procurement::Category.find(params[:category_id])
+      end
+
+      if params[:budget_period_id]
+        @budget_period = BudgetPeriod.find(params[:budget_period_id])
+      end
+
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
+      end
+      #############################################################################
+
       respond_to do |format|
         format.html { default_filters }
         format.js do
@@ -115,10 +189,61 @@ module Procurement
     end
 
     def new
-      authorize @budget_period, :not_past?
+      ############################# former before_action ##########################
+      if procurement_inspector? or procurement_admin?
+       if params[:user_id]
+         @user = User.not_as_delegations.find(params[:user_id])
+       end
+      else # only requester
+        @user = current_user
+      end
+
+      if params[:category_id]
+        @category = Procurement::Category.find(params[:category_id])
+      end
+
+      if params[:budget_period_id]
+        @budget_period = BudgetPeriod.find(params[:budget_period_id])
+      end
+
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
+      end
+      #############################################################################
+
+      if @budget_period.past?
+        # raise Errors::ForbiddenError
+        flash.now[:error] = _('The budget period is closed')
+      end
     end
 
     def create
+      ############################# former before_action ##########################
+      if procurement_inspector? or procurement_admin?
+       if params[:user_id]
+         @user = User.not_as_delegations.find(params[:user_id])
+       end
+      else # only requester
+        @user = current_user
+      end
+
+      if params[:category_id]
+        @category = Procurement::Category.find(params[:category_id])
+      end
+
+      if params[:budget_period_id]
+        @budget_period = BudgetPeriod.find(params[:budget_period_id])
+      end
+
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
+      end
+      #############################################################################
+
       errors = create_or_update
 
       if errors.empty?
@@ -130,8 +255,38 @@ module Procurement
     end
 
     def move
-      @request = Request.where(user_id: @user, category_id: @category,
-                               budget_period_id: @budget_period).find(params[:id])
+      ############################# former before_action ##########################
+      if procurement_inspector? or procurement_admin?
+       if params[:user_id]
+         @user = User.not_as_delegations.find(params[:user_id])
+       end
+      else # only requester
+        @user = current_user
+      end
+
+      if params[:category_id]
+        @category = Procurement::Category.find(params[:category_id])
+      end
+
+      if params[:budget_period_id]
+        @budget_period = BudgetPeriod.find(params[:budget_period_id])
+      end
+
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
+      end
+      #############################################################################
+
+      #############################################################################
+      # TODO: Pundit authorize according to user / category / budget period ...?
+      # @request = \
+      #   Request.where(user_id: @user,
+      #                 category_id: @category,
+      #                 budget_period_id: @budget_period).find(params[:id])
+      #############################################################################
+      @request = Request.find(params[:id])
 
       if params[:to_category_id]
         @request.category = Procurement::Category.find(params[:to_category_id])
@@ -158,8 +313,38 @@ module Procurement
     end
 
     def destroy
-      request = Request.where(user_id: @user, category_id: @category,
-                              budget_period_id: @budget_period).find(params[:id])
+      ############################# former before_action ##########################
+      if procurement_inspector? or procurement_admin?
+       if params[:user_id]
+         @user = User.not_as_delegations.find(params[:user_id])
+       end
+      else # only requester
+        @user = current_user
+      end
+
+      if params[:category_id]
+        @category = Procurement::Category.find(params[:category_id])
+      end
+
+      if params[:budget_period_id]
+        @budget_period = BudgetPeriod.find(params[:budget_period_id])
+      end
+
+      unless (@user == current_user or
+          Procurement::Category.inspector_of_any_category?(current_user) or
+          Procurement::Access.admin?(current_user))
+        raise Errors::ForbiddenError
+      end
+      #############################################################################
+
+      #############################################################################
+      # TODO: Pundit authorize according to user / category / budget period ...?
+      # request = Request.where(user_id: @user,
+      #                         category_id: @category,
+      #                         budget_period_id: @budget_period).find(params[:id])
+      #############################################################################
+      request = Request.find(params[:id])
+
       request.destroy
       if request.destroyed?
         render partial: 'layouts/procurement/flash',
@@ -260,5 +445,5 @@ module Procurement
     end
 
   end
-  # rubocop:enable Metrics/ClassLength
 end
+# rubocop:enable all
