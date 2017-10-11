@@ -199,6 +199,8 @@
 
         formHelper.handleDeletingAttachments()
 
+        formHelper.updateTotalSumOnChanges()
+
         formHelper.formChangeListener($form, {
           hasChanged: ()->
             currentEditForm.data('hasChanged', true)

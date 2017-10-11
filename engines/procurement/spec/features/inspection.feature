@@ -94,7 +94,8 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | Price                      | 1000        |
       | Requested quantity         | 2           |
     And I upload a file
-    And I save the inline form
+    Then the total sum is updated
+    When I save the inline form
     Then I see the updated request line
     And the request with all given information was updated successfully in the database
     And the uploaded file is now an attachment of the request

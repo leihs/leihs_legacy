@@ -18,13 +18,13 @@ steps_for :inspection do
   include RequestSteps
 
   step 'I can not move any request to the old budget period' do
-    within("form[action='#{procurement.request_path(@request.id)}']") do
+    within_request_inline_edit_form do
       link_on_dropdown(@past_budget_period.to_s, false)
     end
   end
 
   step 'I can not submit the data' do
-    within("form[action='#{procurement.request_path(@request.id)}']") do
+    within_request_inline_edit_form do
       find 'button[disabled]', text: _('Save'), match: :first
     end
   end
@@ -403,8 +403,15 @@ steps_for :inspection do
     end
   end
 
-  step 'I save the inline form' do
+  def within_request_inline_edit_form
+    fail unless block_given?
     within("form[action='#{procurement.request_path(@request.id)}']") do
+      yield
+    end
+  end
+
+  step 'I save the inline form' do
+    within_request_inline_edit_form do
       click_on _('Save')
     end
   end
@@ -418,7 +425,7 @@ steps_for :inspection do
   end
 
   step 'the inline form has an error message :msg' do |msg|
-    within("form[action='#{procurement.request_path(@request.id)}']") do
+    within_request_inline_edit_form do
       flash_msg = find('.alert.alert-danger')
       expect(flash_msg.text).to eq msg
     end
@@ -432,8 +439,17 @@ steps_for :inspection do
   end
 
   step 'I change any text input field in the request form' do
-    within("form[action='#{procurement.request_path(@request.id)}']") do
+    within_request_inline_edit_form do
       all('input[type="text"], input[placeholder]').sample.set(Faker::Lorem.word)
+    end
+  end
+
+  step 'the total sum is updated' do
+    within_request_inline_edit_form do
+      cur_sum = [:price, :requested_quantity].map do |key|
+        find("input[name*=\"#{key}\"]").value.to_i
+      end.reduce { |a, e| a * e }
+      expect(find('.total_price').text).to eq currency(cur_sum)
     end
   end
 

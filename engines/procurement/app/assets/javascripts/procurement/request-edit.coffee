@@ -131,6 +131,25 @@ RequestEditFormBehaviour =
       li.closest('form').change()
       false
 
+  updateTotalSumOnChanges: (update_parents = false) ->
+    $("input[name*='_quantity]'], input[name*='[price]']").on 'keyup change', ->
+      order_quantity = $(this).closest('.request').find("input[name*='[order_quantity]']").val()
+      approved_quantity = $(this).closest('.request').find("input[name*='[approved_quantity]']").val()
+      requested_quantity = $(this).closest('.request').find("input[name*='[requested_quantity]']").val()
+      quantity = order_quantity or approved_quantity or requested_quantity
+      price_el = $(this).closest('.request').find("input[name*='[price]']")
+      total = quantity * price_el.val()
+      formatted_total = accounting.formatMoney(total, {symbol: 'CHF', format: "%s %v", precision: 0, thousand: "'"})
+      $(this).closest('.request').find(".total_price").data('total', total).html(formatted_total)
+      return unless update_parents
+      big_total = 0
+      $(".total_price").each ->
+        if Number($(this).data('total'))
+          big_total += Number($(this).data('total'))
+      formatted_big_total = accounting.formatMoney(big_total, {symbol: 'CHF', format: "%s %v", precision: 0, thousand: "'"})
+      $(".big_total_price").html(formatted_big_total)
+
+
   formChangeListener: ($form, {isSame, hasChanged})->
     initial_form_data = $form.serialize()
     $form.on('change keyup', ->

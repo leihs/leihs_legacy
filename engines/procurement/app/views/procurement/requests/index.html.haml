@@ -130,6 +130,9 @@
 
     formHelper.handleDeletingAttachments()
 
+    update_parents = true
+    formHelper.updateTotalSumOnChanges(update_parents)
+
     formHelper.formChangeListener($form, {
       hasChanged: ()->
         $('.flash').hide()
