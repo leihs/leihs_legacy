@@ -38,7 +38,7 @@ end
 
 Then(/^I can create an item$/) do
   step 'I add a new Item'
-  expect(current_path).to eq manage_new_item_react_path(@current_inventory_pool)
+  expect(current_path).to eq manage_new_item_path(@current_inventory_pool)
 end
 
 
