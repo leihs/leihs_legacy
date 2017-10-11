@@ -1912,7 +1912,7 @@ msgstr ""
 msgid "Helper"
 msgstr ""
 
-msgid "Expert Search"
+msgid "Advanced Search"
 msgstr ""
 
 msgid "Suspended"
@@ -1984,7 +1984,7 @@ msgstr ""
 msgid "Inventory Helper"
 msgstr ""
 
-msgid "Inventory Expert Search"
+msgid "Inventory Advanced Search"
 msgstr ""
 
 msgid "Select Image"

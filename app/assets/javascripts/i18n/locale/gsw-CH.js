@@ -2610,9 +2610,9 @@ window.i18n.locale_data = {
          null,
          "Helfer"
       ],
-      "Expert Search": [
+      "Advanced Search": [
          null,
-         "Expertäsuechi"
+         "Erwiterti Suechi"
       ],
       "Suspended": [
          null,
@@ -2710,9 +2710,9 @@ window.i18n.locale_data = {
          null,
          "Inventar-Hälfer"
       ],
-      "Inventory Expert Search": [
+      "Inventory Advanced Search": [
          null,
-         "Inventar-Expertäsuechi"
+         "Inventar Erwiterti Suechi"
       ],
       "Select Image": [
          null,

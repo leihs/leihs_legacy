@@ -2050,8 +2050,8 @@ msgstr ""
 msgid "Helper"
 msgstr "Helfer"
 
-msgid "Expert Search"
-msgstr "Expertensuche"
+msgid "Advanced Search"
+msgstr "Erweiterte Suche"
 
 msgid "Suspended"
 msgstr "Gesperrt"
@@ -2128,8 +2128,8 @@ msgstr "Optionen"
 msgid "Inventory Helper"
 msgstr "Inventarhelfer"
 
-msgid "Inventory Expert Search"
-msgstr "Inventar Expertensuche"
+msgid "Inventory Advanced Search"
+msgstr "Inventar Erweiterte Suche"
 
 msgid "Select Image"
 msgstr "Bild auswählen"

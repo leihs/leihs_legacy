@@ -24,7 +24,7 @@ def enable_manager_for_inventory_pool(user, inventory_pool)
 end
 
 def click_expert_search
-  find('.navigation-tab-item', text: _('Expert Search')).click
+  find('.navigation-tab-item', text: _('Advanced Search')).click
 end
 
 def create_field(f)

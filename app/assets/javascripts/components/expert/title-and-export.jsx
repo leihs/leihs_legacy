@@ -40,7 +40,7 @@
         <div className='margin-top-l padding-horizontal-m'>
           <div className='row'>
             <div className='col1of3'>
-              <h1 className='headline-xl'>{_jed('Inventory Expert Search')}</h1>
+              <h1 className='headline-xl'>{_jed('Inventory Advanced Search')}</h1>
             </div>
             <div className='col2of3'>
               <div className='text-align-right'>

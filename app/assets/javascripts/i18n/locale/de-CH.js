@@ -2667,9 +2667,9 @@ window.i18n.locale_data = {
          null,
          "Helfer"
       ],
-      "Expert Search": [
+      "Advanced Search": [
          null,
-         "Expertensuche"
+         "Erweiterte Suche"
       ],
       "Suspended": [
          null,
@@ -2771,9 +2771,9 @@ window.i18n.locale_data = {
          null,
          "Inventarhelfer"
       ],
-      "Inventory Expert Search": [
+      "Inventory Advanced Search": [
          null,
-         "Inventar Expertensuche"
+         "Inventar Erweiterte Suche"
       ],
       "Select Image": [
          null,

@@ -2683,7 +2683,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Expert Search": [
+      "Advanced Search": [
          null,
          ""
       ],
@@ -2783,7 +2783,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Inventory Expert Search": [
+      "Inventory Advanced Search": [
          null,
          ""
       ],

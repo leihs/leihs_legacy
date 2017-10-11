@@ -1,5 +1,5 @@
 
-Feature: Inventory expert search
+Feature: Inventory Advanced Search
 
   Scenario: Field Inventory Code
     Then Step Field Inventory Code
