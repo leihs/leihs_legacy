@@ -22,3 +22,14 @@
     %select.vertical-align-middle.min-width-full{:disabled => :disabled}
       %option Lorem
       %option ipsum
+
+%h3.headline-m.light.padding-vertical-m.margin-bottom-m= "required (if not filled out, is marked as invalid)"
+.row.padding-inset-l.padding-top-s
+  .row.margin-bottom-m
+    %input.vertical-align-middle.min-width-full{:type => :text, :placeholder => "type something here", :required => true}
+  .row.margin-bottom-m
+    %input.vertical-align-middle.min-width-full{:type => :password, :value => "Lorem ipsum dolor sit ", :required => true}
+  .row.margin-bottom-m
+    %textarea.vertical-align-middle.min-width-full{:required => true}
+  .row.margin-bottom-m
+    %textarea.vertical-align-middle.min-width-full{:required => true} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean arcu est, faucibus eu cursus a, gravida in purus.
