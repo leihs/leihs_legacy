@@ -38,3 +38,6 @@ jobs:
           scripts:
             main:
               body: echo 'All relevant tests and meta checks have passed' ; exit 0
+
+        include:
+          - path: cider-ci/context-components/merged-submodules-check.yml

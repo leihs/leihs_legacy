@@ -1,7 +1,6 @@
-tasks:
-  git-submodules-merged:
-    name: "Git submodules are all merged to origin/master"
-    scripts:
-      test:
-        body:
-          read_and_replace_with: cider-ci/bin/check-git-submodules-are-merged
+git-submodules-merged:
+  name: "Git submodules are all merged to origin/master"
+  scripts:
+    test:
+      body:
+        read_and_replace_with: cider-ci/bin/check-git-submodules-are-merged

@@ -72,6 +72,3 @@ jobs:
             test:
               body:
                 read_and_replace_with: bin/translation-todos
-
-      include:
-        - path: cider-ci/context-components/merged-submodules-check.yml
