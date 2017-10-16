@@ -1,5 +1,13 @@
 # encoding: utf-8
 
+def with_disabled_triggers
+  ActiveRecord::Base.connection.execute  \
+    'SET session_replication_role = REPLICA;'
+  yield
+  ActiveRecord::Base.connection.execute  \
+    'SET session_replication_role = DEFAULT;'
+end
+
 def login_as_user(user, password)
   click_on _('Login')
   fill_in _('Username'), with: user.login
@@ -29,7 +37,7 @@ end
 
 def create_field(f)
   field = Field.new(id: f[:id], data: f[:data], active: f[:active], position: f[:position])
-  field.save!
+  with_disabled_triggers { field.save! }
   field
 end
 
@@ -50,7 +58,7 @@ def shared_open_expert_search(data)
 end
 
 def delete_all_fields
-  Field.unscoped.all.destroy_all
+  with_disabled_triggers { Field.unscoped.all.destroy_all }
 end
 
 def create_item(inventory_pool)

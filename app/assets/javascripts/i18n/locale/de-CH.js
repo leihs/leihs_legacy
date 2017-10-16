@@ -4485,6 +4485,14 @@ window.i18n.locale_data = {
       "List of Languages": [
          null,
          "Liste der Sprachen"
+      ],
+      "Update": [
+         null,
+         "Aktualisieren"
+      ],
+      "Fields have been updated successfully.": [
+         null,
+         "Die Felder wurden erfolgreich aktualisiert."
       ]
    }
 }

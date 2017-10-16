@@ -1,22 +1,13 @@
 - content_for :title, _("Fields")
 - content_for :manage_section, "active"
 
-= form_tag nil, method: :put, class: 'indent', remote: true, id: "fields_form" do
-
-  .row
+= form_tag admin.batch_update_fields_path do
+  .panel
     .row
       .col-sm-6
         %h1= yield :title
-      .col-sm-6.text-right
-        %button.btn.btn-default#create_field{type: :button}
-          %i.fa.fa-plus
-          = _("Create %s") % _("Field")
-        %button.btn.btn-success{type: :submit}= _("Save %s") % _("Fields")
-    %p.row.bg-danger.lead
-      %span
-        WARNING: Be sure what you are doing here. Read the 
-        %a{href: "https://github.com/leihs/leihs/wiki/Fields"}= "documentation."
-        Misconfiguration of the fields' data may lead to inconsistent data, broken features or in the worst case to failure of server start.
+      .col-sm-6.text-right{style: 'margin-top: 20px'}
+        %button.btn.btn-success{type: :submit}= _("Update")
 
   - @grouped_fields.each_pair do |group_name, fields|
     .panel.panel-default
@@ -25,51 +16,17 @@
       .panel-body
         - if group_name.blank?
           #append_here
-        .sortable-list.list-of-lines
+        .list-of-lines
           - fields.each do |field|
-            .row.sortable-item
+            .row{style: 'word-break: break-word; padding-top: 15px; padding-bottom: 15px'}
               .col-sm-4
-                %strong= field.id
+                %strong
+                  = field.id
+                  - if field.data['required']
+                    = " *"
                 %br
-                %input{type: :checkbox, name: "fields[#{field.id}][active]", value: 1, checked: field.active? }
+                %input{name: "fields[#{field.id}][active]", type: :hidden, value: 0, disabled: field.data['required']}
+                %input{type: :checkbox, name: "fields[#{field.id}][active]", value: 1, checked: field.active?, disabled: field.data['required'] }
                 = _("Active")
-                %br
-                %i.fa.fa-arrows-v
               .col-sm-8
-                %textarea.form-control{name: "fields[#{field.id}][data]"}= field.data.to_json
-
-:scss
-  .sortable-item {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    textarea {
-      height: 6em;
-    }
-
-    i.fa.fa-arrows-v {
-      cursor: move;
-    }
-  }
-
-:coffeescript
-  $(document).ready ->
-    $("#fields_form").on("ajax:success", (e, data, status, xhr) ->
-      location.reload()
-    ).on "ajax:error", (e, xhr, status, error) ->
-      errors = ''
-      for error in xhr.responseJSON
-        errors += '<li>' + error + '</li>'
-      $("#flash").html '<ul class="alert alert-danger danger" style="padding-left: 2em;">' + errors + '</ul>'
-
-    $(".sortable-list").sortable()
-    $('#create_field').on 'click', ->
-      newRow = $('<div class="row">
-                    <div class="col-sm-4">
-                      <input name="fields[_new_fields_][][id]" type="text">
-                      <br><input name="fields[_new_fields_][][active]" type="checkbox" value="1" checked="checked">Active
-                    </div>
-                    <div class="col-sm-8">
-                      <textarea class="form-control" name="fields[_new_fields_][][data]">{"label":"LABEL","attribute":["properties","ATTRIBUTE"],"type":"text","group":null}</textarea>
-                    </div>
-                  </div>')
-      newRow.prependTo('#append_here').effect('highlight')
+                = field.data.to_json

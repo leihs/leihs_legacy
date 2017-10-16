@@ -10,5 +10,4 @@ bundle exec rake db:pg:terminate_connections
 bundle exec rake db:drop db:create db:migrate VERSION=100
 bundle exec rake leihs:dbio:import FILE=features/personas/personas.yml REPLACE_MISSING_IMAGES=yes
 bundle exec rake db:migrate
-bundle exec rake app:db:create_fields
 bundle exec rake db:pg:structure_and_data:dump FILE=features/personas/personas.pgbin

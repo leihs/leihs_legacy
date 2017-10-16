@@ -3,8 +3,6 @@
 class Field < ApplicationRecord
   audited
 
-  serialize :data, JSON
-
   ####################################
 
   GROUPS_ORDER = [nil,

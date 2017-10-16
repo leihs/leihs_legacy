@@ -28,7 +28,7 @@ LeihsAdmin::Engine.routes.draw do
 
   # Fields
   get 'fields', to: 'fields#index'
-  put 'fields', to: 'fields#update'
+  post 'batch_update_fields', to: 'fields#batch_update'
 
   # Administrate settings
   get 'settings', to: 'settings#edit'

@@ -21,11 +21,5 @@ namespace :app do
       # also sync the test database schema
       `RAILS_ENV=test rake db:drop db:create db:migrate`
     end
-
-    desc 'Create fields'
-    task create_fields: :environment do
-      Leihs::Fields.create_fields
-    end
-
   end
 end

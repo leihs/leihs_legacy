@@ -3467,3 +3467,9 @@ msgstr "Sprachen"
 
 msgid "List of Languages"
 msgstr "Liste der Sprachen"
+
+msgid "Update"
+msgstr "Aktualisieren"
+
+msgid "Fields have been updated successfully."
+msgstr "Die Felder wurden erfolgreich aktualisiert."

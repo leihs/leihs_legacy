@@ -3376,9 +3376,16 @@ msgid "Accounts"
 msgstr ""
 
 msgid "(unknown)"
+msgstr ""
 
 msgid "Languages"
 msgstr ""
 
 msgid "List of Languages"
+msgstr ""
+
+msgid "Update"
+msgstr ""
+
+msgid "Fields have been updated successfully."
 msgstr ""
