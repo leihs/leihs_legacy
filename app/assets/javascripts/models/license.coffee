@@ -23,6 +23,12 @@ class window.App.License extends window.App.Item
   licenseTypeInformation: ->
     _jed(App.License.formatString(this.properties.license_type))
 
+  itemVersion: ->
+    if @item_version
+      _jed('item_version') + ' ' + @item_version
+    else
+      null
+
   @formatString: (s) =>
     return unless typeof s == 'string'
     capitalizeEachWord = (s) =>

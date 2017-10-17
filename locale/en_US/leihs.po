@@ -734,6 +734,9 @@ msgstr ""
 msgid "License Version"
 msgstr ""
 
+msgid "item_version"
+msgstr "Version"
+
 msgid "Last Visitors:"
 msgstr ""
 

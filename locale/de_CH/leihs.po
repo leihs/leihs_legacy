@@ -741,6 +741,9 @@ msgstr "Letzte Inventur"
 msgid "License Version"
 msgstr "Lizenz Version"
 
+msgid "item_version"
+msgstr "Version"
+
 msgid "Last Visitors:"
 msgstr "Letzte Besucher:"
 

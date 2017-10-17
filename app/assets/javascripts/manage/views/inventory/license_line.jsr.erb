@@ -1,10 +1,15 @@
 <div class='line row focus-hover-thin' data-id='{{>id}}' data-type='license'>
   <div class='col1of5 line-col'></div>
   <div class='col2of5 line-col text-align-left'>
-    <div class='row'>{{>inventory_code}}</div>
+    <div class='row'>
+      {{>inventory_code}}
+    </div>
     <div class='row grey-text'>
+      {{if item_version}}
+        {{>itemVersion() + ', '}}
+      {{/if}}
       {{if ~additionalDataFetched}}
-      {{>current_location}}
+      {{>current_location + ', '}}
       {{else}}
       <span>
         {{partial "views/loading" {"size":"micro"}/}}

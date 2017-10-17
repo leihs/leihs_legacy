@@ -1027,6 +1027,10 @@ window.i18n.locale_data = {
          null,
          "Lizenz Version"
       ],
+      "item_version": [
+         null,
+         "Version"
+      ],
       "Last Visitors:": [
          null,
          "Letzte Besucher:"

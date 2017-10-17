@@ -1019,6 +1019,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "item_version": [
+         null,
+         "Version"
+      ],
       "Last Visitors:": [
          null,
          ""
