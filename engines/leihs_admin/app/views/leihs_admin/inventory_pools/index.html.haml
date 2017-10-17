@@ -23,11 +23,11 @@
 
 %form.row.well
   .col-sm-4
-    %input.form-control{type: 'text', name: 'search_term', value: params[:search_term], placeholder: _("Search term..."), autocomplete: :false, autofocus: true, onfocus: "this.value = this.value;"}
+    %input.form-control{type: 'text', name: 'search_term', value: params[:search_term], placeholder: _("admin_search_term"), autocomplete: :false, autofocus: true, onfocus: "this.value = this.value;"}
   .col-sm-4
     %select.form-control{name: 'activity'}
       - [:all, :active, :inactive].each do |opt|
-        %option{value: opt, selected: ((params[:activity].presence == opt.to_s) || (params[:activity].presence.nil? && opt == :active))}= opt
+        %option{value: opt, selected: ((params[:activity].presence == opt.to_s) || (params[:activity].presence.nil? && opt == :active))}= _("admin_#{opt}")
   .col-sm-4
     %button.btn.btn-default{type: :submit}
       %i.fa.fa-search

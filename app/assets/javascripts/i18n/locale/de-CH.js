@@ -1677,6 +1677,10 @@ window.i18n.locale_data = {
          null,
          "Suche..."
       ],
+      "admin_search_term": [
+         null,
+         "Suche..."
+      ],
       "Searching": [
          null,
          "Suche"
@@ -4401,6 +4405,18 @@ window.i18n.locale_data = {
       "inactive": [
          null,
          "inaktiv"
+      ],
+      "admin_active": [
+         null,
+         "Aktiv"
+      ],
+      "admin_inactive": [
+         null,
+         "Inaktiv"
+      ],
+      "admin_all": [
+         null,
+         "Alle"
       ],
       "Inventory pool can't be deactivated due to existing orders or signed contracts.": [
          null,

@@ -1169,6 +1169,9 @@ msgstr ""
 msgid "Search..."
 msgstr ""
 
+msgid "admin_search_term"
+msgstr "Search term..."
+
 msgid "Searching"
 msgstr ""
 
@@ -2706,3 +2709,12 @@ msgstr ""
 
 msgid "Hide this field from all item forms"
 msgstr ""
+
+msgid "admin_active"
+msgstr "Active"
+
+msgid "admin_inactive"
+msgstr "Inactive"
+
+msgid "admin_all"
+msgstr "All"

@@ -1624,6 +1624,10 @@ window.i18n.locale_data = {
          null,
          "Sueche..."
       ],
+      "admin_search_term": [
+         null,
+         "Sueche..."
+      ],
       "Searching": [
          null,
          "Sueche"
@@ -3859,6 +3863,18 @@ window.i18n.locale_data = {
       "List of Languages": [
          null,
          "Lischte vode Sproch"
+      ],
+      "admin_active": [
+         null,
+         "Aktiv"
+      ],
+      "admin_inactive": [
+         null,
+         "Inaktiv"
+      ],
+      "admin_all": [
+         null,
+         "Alli"
       ]
    }
 }

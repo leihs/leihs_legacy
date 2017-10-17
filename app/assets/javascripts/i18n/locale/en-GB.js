@@ -1601,6 +1601,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "admin_search_term": [
+         null,
+         "Search term..."
+      ],
       "Searching": [
          null,
          ""
@@ -3626,6 +3630,18 @@ window.i18n.locale_data = {
       "Hide this field from all item forms": [
          null,
          ""
+      ],
+      "admin_active": [
+         null,
+         "Active"
+      ],
+      "admin_inactive": [
+         null,
+         "Inactive"
+      ],
+      "admin_all": [
+         null,
+         "All"
       ]
    }
 }

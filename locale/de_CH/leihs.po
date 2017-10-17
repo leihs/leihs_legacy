@@ -1239,6 +1239,9 @@ msgstr "Suchresultate für \"%s\""
 msgid "Search..."
 msgstr "Suche..."
 
+msgid "admin_search_term"
+msgstr "Suche..."
+
 msgid "Searching"
 msgstr "Suche"
 
@@ -3396,6 +3399,15 @@ msgstr "aktiv"
 
 msgid "inactive"
 msgstr "inaktiv"
+
+msgid "admin_active"
+msgstr "Aktiv"
+
+msgid "admin_inactive"
+msgstr "Inaktiv"
+
+msgid "admin_all"
+msgstr "Alle"
 
 msgid ""
 "Inventory pool can't be deactivated due to existing orders or signed "

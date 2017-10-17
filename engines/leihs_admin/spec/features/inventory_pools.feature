@@ -146,11 +146,11 @@ Feature: Administer inventory pools
     Then the activity filtering is set to "active"
     And I can see the active inventory pool
     And I can not see the inactive inventory pool
-    When I filter for "all" activity
+    When I filter for "All" activity
     Then the activity filtering is set to "all"
     And I can see the active inventory pool
     And I can see the inactive inventory pool
-    When I filter for "inactive" activity
+    When I filter for "Inactive" activity
     Then the activity filtering is set to "inactive"
     And I can not see the active inventory pool
     And I can see the inactive inventory pool

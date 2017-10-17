@@ -1723,6 +1723,10 @@ window.i18n.locale_data = {
          null,
          "Recherche..."
       ],
+      "admin_search_term": [
+         null,
+         "Recherche..."
+      ],
       "Searching": [
          null,
          "En cours de recherche"
@@ -4435,6 +4439,18 @@ window.i18n.locale_data = {
       "required": [
          null,
          "requis"
+      ],
+      "admin_active": [
+         null,
+         "Actif"
+      ],
+      "admin_inactive": [
+         null,
+         "Inactif"
+      ],
+      "admin_all": [
+         null,
+         "Tous"
       ]
    }
 }

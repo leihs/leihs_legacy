@@ -1190,6 +1190,9 @@ msgstr "Suechresultat für \"%s\""
 msgid "Search..."
 msgstr "Sueche..."
 
+msgid "admin_search_term"
+msgstr "Sueche..."
+
 msgid "Searching"
 msgstr "Sueche"
 
@@ -2910,3 +2913,12 @@ msgstr "Sproch"
 
 msgid "List of Languages"
 msgstr "Lischte vode Sproch"
+
+msgid "admin_active"
+msgstr "Aktiv"
+
+msgid "admin_inactive"
+msgstr "Inaktiv"
+
+msgid "admin_all"
+msgstr "Alli"

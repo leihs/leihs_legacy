@@ -1262,6 +1262,9 @@ msgstr "Résultats de recherche pour \"%s\""
 msgid "Search..."
 msgstr "Recherche..."
 
+msgid "admin_search_term"
+msgstr "Recherche..."
+
 msgid "Searching"
 msgstr "En cours de recherche"
 
@@ -3338,3 +3341,12 @@ msgstr "Dans la liste"
 
 msgid "required"
 msgstr "requis"
+
+msgid "admin_active"
+msgstr "Actif"
+
+msgid "admin_inactive"
+msgstr "Inactif"
+
+msgid "admin_all"
+msgstr "Tous"
