@@ -1,7 +1,9 @@
 {{partial 'manage/views/users/cell' user() '{"grid":"col1of8"}'/}}
-<div class='col1of8 line-col'>{{diffToday created_at/}}</div>
+<div class='col1of8 line-col tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{jed "tooltip_contract_creation_date"/}}'>
+  {{diffToday created_at/}}
+</div>
 <div class='col1of8 line-col text-align-center' data-type='lines-cell'>{{include tmpl='manage/views/reservations/cell'/}}</div>
-<div class='col1of8 line-col'>
+<div class='col1of8 line-col tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{jed "tooltip_lending_duration"/}}'>
   {{>getMaxRange()}}
   {{jed getMaxRange() "day" "days"/}}
 </div>

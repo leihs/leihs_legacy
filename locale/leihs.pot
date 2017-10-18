@@ -3404,3 +3404,30 @@ msgstr ""
 
 msgid "Fields have been updated successfully."
 msgstr ""
+
+msgid "tooltip_reserverd_resp_further_available_models_count"
+msgstr ""
+
+msgid "tooltip_contract_creation_date"
+msgstr ""
+
+msgid "tooltip_lending_duration"
+msgstr ""
+
+msgid "tooltip_order_arrival"
+msgstr ""
+
+msgid "tooltip_number_of_lending_days"
+msgstr ""
+
+msgid "tooltip_date_of_planned_delivery_or_return"
+msgstr ""
+
+msgid "tooltip_number_of_lending_days_or_date_of_last_reminder"
+msgstr ""
+
+msgid "tooltip_total_number_of_filtered_items_of_a_model"
+msgstr ""
+
+msgid "tooltip_available_respectively_totally_borrowable_if_in_stock"
+msgstr ""
