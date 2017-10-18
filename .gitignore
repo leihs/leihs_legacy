@@ -16,6 +16,7 @@
 /database
 /tags
 Gemfile.local*
+app/controllers/authenticator/agw_info.rb
 config/cucumber.sphinx.conf
 config/culerity.sphinx.conf
 config/database.yml

@@ -1,10 +1,25 @@
 require 'net/http'
 require 'net/https'
 require 'cgi'
-class Authenticator::ZhdkController < Authenticator::AuthenticatorController
 
-  AUTHENTICATION_URL = 'https://intern.zhdk.ch/?auth/leihs2'
-  APPLICATION_IDENT = '7f6d33ca2ad44359c826e2337d9315b1'
+# Server instances which don't rely on ZHdK login (e.g. demo) don't setup
+# this file during deployment proces.
+agw_info_path = File.join(Rails.root,
+                          'app',
+                          'controllers',
+                          'authenticator',
+                          'agw_info.rb')
+if File.exists?(agw_info_path)
+  require agw_info_path
+end
+
+class Authenticator::ZhdkController < Authenticator::AuthenticatorController
+  # Server instances which don't rely on ZHdK login (e.g. demo) don't setup
+  # the respective file and thus don't have this module defined.
+  if defined?(AGWInfo)
+    include AGWInfo
+  end
+
   SUPER_USERS = ['e157339|zhdk',
                  'e159123|zhdk',
                  'e10262|zhdk',
@@ -93,7 +108,7 @@ class Authenticator::ZhdkController < Authenticator::AuthenticatorController
      when Net::HTTPSuccess     then response
      when Net::HTTPRedirection then fetch(response['location'], limit - 1)
      else
-         response.error!
+       response.error!
      end
   end
 
