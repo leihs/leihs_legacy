@@ -34,7 +34,8 @@ window.EnsureDependents = {
           field: dependent,
           value: fieldSpecific._createEmptyValue(dependent),
           col: selectedValue.col,
-          dependents: []
+          dependents: [],
+          hidden: (dependent.hidden ? true : false)
         }
 
       }

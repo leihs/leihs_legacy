@@ -12,7 +12,8 @@
       return {
         loadingFields: 'initial',
         fields: null,
-        showInvalids: false
+        showInvalids: false,
+        fieldModels: []
       }
     },
 
@@ -23,10 +24,81 @@
       }).done((data) => {
         this.setState({
           loadingFields: 'done',
-          fields: data
+          fields: data,
+          fieldModels: this._createFieldModels(data)
         })
       })
     },
+
+
+
+
+    _onlyMainFields(fields) {
+
+      return fields.filter((f) => {
+        return !f['visibility_dependency_field_id'] && !f['values_dependency_field_id']
+      })
+    },
+
+    _createFieldModels(fields) {
+
+      var fms = this._onlyMainFields(fields).map((field) => {
+          return {
+              field: field,
+              value: this._createEmptyValue(field),
+              dependents: [],
+              hidden: (field.hidden ? true : false)
+            }
+        })
+
+      this._ensureDependents(fms, fields)
+
+      return fms
+    },
+
+    _getTodayAsString() {
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1;
+      var yyyy = today.getFullYear();
+
+      if(dd < 10) {
+          dd = '0' + dd
+      }
+      if(mm < 10) {
+          mm = '0' + mm
+      }
+      today = dd + '.' + mm + '.' + yyyy;
+
+      return today
+    },
+
+    _createEmptyValue(field) {
+      if(field.id == 'inventory_code') {
+        return {text: this.props.next_code}
+      } else if(field.id == 'owner_id') {
+        return {
+          text: this.props.inventory_pool.name,
+          id: this.props.inventory_pool.id
+        }
+      } else if(field.id == 'last_check') {
+
+        return {
+          at: this._getTodayAsString()
+        }
+      } else {
+        return CreateItemFieldSwitch._createEmptyValue(field)
+      }
+    },
+
+    _ensureDependents(fieldModels, fields) {
+      EnsureDependents._ensureDependents(fieldModels, fields, {
+        _hasValue: CreateItemFieldSwitch._hasValue,
+        _createEmptyValue: CreateItemFieldSwitch._createEmptyValue,
+        _isDependencyValue: CreateItemFieldSwitch._isDependencyValue
+      })
+    },
+
 
     componentDidMount () {
       this._fetchFields()
@@ -48,10 +120,61 @@
       )
     },
 
+    _onShowAll() {
+
+      var url = '/manage/' + this.props.inventory_pool.id + '/fields'
+      $.ajax({
+        url: url,
+        type: 'post',
+        data: {
+          _method: 'delete'
+        }
+      }).done((data) => {
+
+        _.each(
+          this.state.fieldModels,
+          (fm) => {
+            fm.hidden = false
+          }
+        )
+
+        this.setState({fieldModels: this.state.fieldModels})
+      })
+
+    },
+
+    _onClose(fieldModel) {
+      var url = '/manage/' + this.props.inventory_pool.id + '/fields/' + fieldModel.field.id
+      $.ajax({
+        url: url,
+        type: 'post',
+      }).done((data) => {
+
+        _.each(
+          this.state.fieldModels,
+          (fm) => {
+            if(fm.field.id == fieldModel.field.id) {
+              fieldModel.hidden = true
+            }
+          }
+        )
+
+        this.setState({fieldModels: this.state.fieldModels})
+      })
+    },
+
+    onChange() {
+      this._ensureDependents(this.state.fieldModels, this.state.fields)
+      this.setState({fieldModels: this.state.fieldModels})
+    },
+
+
     _readyContent() {
       return (
-        <CreateItemContent ref={(component) => this.createItemContent = component} fields={this.state.fields}
-          createItemProps={this.props} showInvalids={this.state.showInvalids} />
+        <CreateItemContent fields={this.state.fields}
+          fieldModels={this.state.fieldModels}
+          onChange={this.onChange}
+          createItemProps={this.props} showInvalids={this.state.showInvalids} onClose={this._onClose} />
       )
     },
 
@@ -70,8 +193,8 @@
     _renderTitle() {
       return (
         <div className='col1of2'>
-          <h1 className='headline-l'>Neuen Gegenstand erstellen</h1>
-          <h2 className='headline-s light'>Geben Sie alle erforderlichen Informationen an</h2>
+          <h1 className='headline-l'>{_jed('Create new item')}</h1>
+          <h2 className='headline-s light'>{_jed('Insert all required information')}</h2>
         </div>
       )
     },
@@ -113,7 +236,8 @@
           return value.selection
           break
         case 'date':
-          return value.at
+          var dmy = CreateItemFieldSwitch._parseDayMonthYear(value.at)
+          return CreateItemFieldSwitch._dmyToString(dmy)
           break
         case 'attachment':
           return ''
@@ -144,7 +268,7 @@
 
     _flatFieldModels() {
       return _.reduce(
-        this.createItemContent.state.fieldModels,
+        this.state.fieldModels,
         (result, fieldModel) => {
           return result.concat(
             this._recursiveFieldModels(fieldModel, [])
@@ -235,7 +359,7 @@
     _clientValidation() {
 
       return _.reduce(
-        this.createItemContent.state.fieldModels,
+        this.state.fieldModels,
         (memo, fm) => {
           return memo && this._isValid(fm)
         },
@@ -245,7 +369,7 @@
 
 
     _attachmentsFieldModel() {
-      return _.find(this.createItemContent.state.fieldModels, (fm) => fm.field.id == 'attachments')
+      return _.find(this.state.fieldModels, (fm) => fm.field.id == 'attachments')
     },
 
     _attachementFiles() {
@@ -435,15 +559,31 @@
       }
     },
 
+    _hasHiddenFields() {
+
+      return _.reduce(
+        this._flatFieldModels(),
+        (result, fm) => {
+          return result || fm.hidden
+        },
+        false
+      )
+    },
+
     _renderTitleButtons() {
+
+      var displayAllStyle = {}
+      if(!this._hasHiddenFields()) {
+        displayAllStyle.display = 'none'
+      }
 
       return (
         <div className='col1of2 text-align-right'>
-          <button className='button white' data-placement='top' data-toggle='tooltip' id='show-all-fields' style={{display: 'none'}} title='Alle versteckten Felder wieder anzeigen'>Alle Felder anzeigen</button>
+          <button onClick={this._onShowAll} className='button white' data-placement='top' data-toggle='tooltip' id='show-all-fields' style={displayAllStyle} title='Alle versteckten Felder wieder anzeigen'>Alle Felder anzeigen</button>
           <a className='button grey' href={this.props.inventory_path}>{_jed('Cancel')}</a>
           <div className='multibutton'>
             <button autoComplete='off' className='button green' id='save' onClick={this._onSave}>
-              {_jed('Save Item')}
+              {_jed('Save %s', _jed('Item'))}
             </button>
             <div className='dropdown-holder inline-block'>
               <div className='button green dropdown-toggle'>

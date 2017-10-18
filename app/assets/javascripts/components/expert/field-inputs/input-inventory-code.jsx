@@ -62,11 +62,14 @@
       if(this.props.error) {
         fieldClass += ' error'
       }
+      if(selectedValue.hidden) {
+        fieldClass += ' hidden'
+      }
 
       return (
         <div className={fieldClass} data-editable='true' data-id='inventory_code' data-required='true' data-type='field'>
           <div className='row'>
-            {RenderFieldLabel._renderFieldLabel(selectedValue.field)}
+            {RenderFieldLabel._renderFieldLabel(selectedValue.field, this.props.onClose)}
             <InputText selectedValue={selectedValue} onChange={this.props.onChange} />
           </div>
 

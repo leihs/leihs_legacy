@@ -31,27 +31,12 @@ window.CreateItemFieldSwitch = {
     }
   },
 
-  _checkDateStringIsValid(d) {
 
-    var parts = []
-
-    if(d.indexOf('.') > -1) {
-      parts = d.split('.')
-    } else if(d.indexOf('/') > -1) {
-      parts = d.split('/')
-    }
-    if(parts.length != 3) {
-      return false
-    }
-
-    try {
-      var dayString = parts[0]
-      var monthString = parts[1]
-      var yearString = parts[2]
-
-      if(dayString.length < 1 || monthString.length < 1 || yearString.length < 1) {
-        return false
-      }
+  _dmyToString(dmy) {
+    if(dmy) {
+      var dayString = '' + (dmy.day + 1)
+      var monthString = '' + (dmy.month + 1)
+      var yearString = '' + dmy.year
 
       if(dayString.length == 1) {
         dayString = '0' + dayString
@@ -59,19 +44,84 @@ window.CreateItemFieldSwitch = {
       if(monthString.length == 1) {
         monthString = '0' + monthString
       }
-      while(yearString.length < 4) {
-        yearString = '0' + yearString
-      }
 
+      return yearString + '-' + monthString + '-' + dayString
+
+    } else {
+      return null
+    }
+
+  },
+
+  _parseDate(string) {
+
+    var parts = []
+
+    if(string.indexOf('.') > - 1) {
+      parts = string.split('.')
+    }
+    if(parts.length != 3) {
+      return null
+    }
+
+    var dayString = parts[0]
+    var monthString = parts[1]
+    var yearString = parts[2]
+
+    if(dayString.length < 1 || monthString.length < 1 || yearString.length < 1) {
+      return false
+    }
+
+    if(dayString.length == 1) {
+      dayString = '0' + dayString
+    }
+    if(monthString.length == 1) {
+      monthString = '0' + monthString
+    }
+
+    try {
       var toParse = yearString + '-' + monthString + '-' + dayString
-      if(isNaN(Date.parse(toParse))) {
-        return false
+      var timestamp = Date.parse(toParse)
+      if(isNaN(timestamp)) {
+        return null
       }
 
-      return true
+      var date = new Date(timestamp);
+
+      return date
 
 
     } catch (error) {
+      return null
+    }
+
+
+  },
+
+  _parseDayMonthYear(string) {
+    var date = this._parseDate(string);
+    if(!date) {
+      return null
+    }
+
+    return this._getDayMonthYear(date);
+
+
+  },
+
+  _getDayMonthYear(date) {
+    return {
+      day: date.getDate() - 1,
+      month: date.getMonth(),
+      year: date.getFullYear()
+    }
+  },
+
+  _checkDateStringIsValid(d) {
+
+    if(this._parseDate(d)) {
+      return true
+    } else {
       return false
     }
 
@@ -178,9 +228,9 @@ window.CreateItemFieldSwitch = {
       case 'date':
         return <InputDate selectedValue={selectedValue} onChange={onChangeSelectedValue} />
         break
-      case 'attachment':
-        return <InputAttachment selectedValue={selectedValue} onChange={onChangeSelectedValue} />
-        break
+      // case 'attachment':
+      //   return <InputAttachment selectedValue={selectedValue} onChange={onChangeSelectedValue} />
+      //   break
       default:
         throw 'Unexpected type: ' + selectedValue.field.type
     }
@@ -194,21 +244,21 @@ window.CreateItemFieldSwitch = {
     }
   },
 
-  renderField (selectedValue, dependencyValue, onChange, createItemProps, showInvalids) {
+  renderField (selectedValue, dependencyValue, onChange, createItemProps, showInvalids, onClose) {
 
     var error = showInvalids && this._isFieldInvalid(selectedValue)
 
     if(selectedValue.field.id == 'inventory_code') {
 
       return (
-        <InputInventoryCode selectedValue={selectedValue} onChange={onChange} createItemProps={createItemProps} error={error} />
+        <InputInventoryCode onClose={onClose} selectedValue={selectedValue} onChange={onChange} createItemProps={createItemProps} error={error} />
       )
 
 
     } else if(selectedValue.field.type == 'attachment') {
 
       return (
-        <InputAttachment selectedValue={selectedValue} onChange={onChange} error={error} />
+        <InputAttachment onClose={onClose} selectedValue={selectedValue} onChange={onChange} error={error} />
       )
 
     } else {
@@ -217,12 +267,15 @@ window.CreateItemFieldSwitch = {
       if(error) {
         fieldClass += ' error'
       }
+      if(selectedValue.hidden) {
+        fieldClass += ' hidden'
+      }
 
       return (
 
         <div className={fieldClass} data-editable='true' data-id='inventory_code' data-required='true' data-type='field'>
           <div className='row'>
-            {RenderFieldLabel._renderFieldLabel(selectedValue.field)}
+            {RenderFieldLabel._renderFieldLabel(selectedValue.field, onClose)}
             {this._inputByType(selectedValue, onChange, dependencyValue)}
           </div>
         </div>

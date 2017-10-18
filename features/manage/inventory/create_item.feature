@@ -120,7 +120,7 @@ Feature: Create item
       | Supply Category        | select       | Workshop Technology |
       | Move                   | select       | sofort entsorgen    |
       | Target area            |              | Test room           |
-      | Check-In Date          |              | 01/01/2013          |
+      | Check-In Date          |              | 01.01.2013          |
       | Check-In State         | select       | transportschaden    |
       | Check-In Note          |              | Test note           |
       | Serial Number          |              | Test serial number  |
@@ -134,11 +134,11 @@ Feature: Create item
       | Reference              | radio must   | Investment          |
       | Project Number         |              | Test number         |
       | Invoice Number         |              | Test number         |
-      | Invoice Date           |              | 01/01/2013          |
+      | Invoice Date           |              | 01.01.2013          |
       | Initial Price          |              | 50.00               |
-      | Warranty expiration    |              | 01/01/2013          |
-      | Contract expiration    |              | 01/01/2013          |
-      | Last Checked           |              | 01/01/2013          |
+      | Warranty expiration    |              | 01.01.2013          |
+      | Contract expiration    |              | 01.01.2013          |
+      | Last Checked           |              | 01.01.2013          |
       | Responsible department | autocomplete | A-Ausleihe          |
       | Responsible person     |              | Matus Kmit          |
       | User/Typical usage     |              | Test use            |

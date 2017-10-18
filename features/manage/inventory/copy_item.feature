@@ -13,16 +13,16 @@ Feature: Copy item
       | Borrowable             | radio        | OK                  |
       # FIX: IS BROKEN ON CIDER!!!
       | Building               | autocomplete | general building  |
-      | Check-In Date          |              | 01/01/2013          |
+      | Check-In Date          |              | 01.01.2013          |
       | Check-In Note          |              | Test note           |
       | Check-In State         | select       | transportschaden    |
       | Completeness           | radio        | OK                  |
-      | Contract expiration    |              | 01/01/2013          |
+      | Contract expiration    |              | 01.01.2013          |
       | IMEI-Number            |              | Test IMEI number    |
       | Initial Price          |              | 50.00               |
-      | Invoice Date           |              | 01/01/2013          |
+      | Invoice Date           |              | 01.01.2013          |
       | Invoice Number         |              | Test number         |
-      | Last Checked           |              | 01/01/2013          |
+      | Last Checked           |              | 01.01.2013          |
       | MAC-Address            |              | Test MAC address    |
       | Model                  | autocomplete | Sharp Beamer 456    |
       | Move                   | select       | sofort entsorgen    |
@@ -40,7 +40,7 @@ Feature: Copy item
       | Supply Category        | select       | Workshop Technology |
       | Target area            |              | Test room           |
       | User/Typical usage     |              | Test use            |
-      | Warranty expiration    |              | 01/01/2013          |
+      | Warranty expiration    |              | 01.01.2013          |
       | Working order          | radio        | OK                  |
     When I save and copy
     Then the item is saved

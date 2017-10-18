@@ -55,7 +55,17 @@ Then(/^all fields except the following were copied:$/) do |table|
             expect(find('input,textarea', match: :first).value.blank?).to be true
           end
         else
-          expect(find('input,textarea', match: :first).value).to eq field_value
+          field = Field.all.detect { |f| _(f.data['label']) == field_name }
+          if field.data["type"] == 'date'
+            input_value = find('input', match: :first).value
+            if input_value.include?('/')
+              expect(input_value.gsub!('/', '.')).to eq field_value
+            else
+              expect(input_value).to eq field_value
+            end
+          else
+            expect(find('input,textarea', match: :first).value).to eq field_value
+          end
         end
       end
     end

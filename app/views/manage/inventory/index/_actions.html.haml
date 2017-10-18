@@ -25,14 +25,9 @@
           %a.dropdown-item{:href => manage_new_model_path(current_inventory_pool)}
             = _("Model")
 
-        -#OLD
         %li
-          %a.dropdown-item{:href => manage_new_item_path(current_inventory_pool)}
+          %a.dropdown-item{:href => manage_new_item_react_path(current_inventory_pool)}
             = _("Item")
-        -# NEW
-        -# %li
-        -#   %a.dropdown-item{:href => manage_new_item_react_path(current_inventory_pool)}
-        -#     = _("Item")
 
         %li
           %a.dropdown-item{:href => manage_new_option_path(current_inventory_pool)}

@@ -75,12 +75,15 @@
       if(this.props.error) {
         fieldClass += ' error'
       }
+      if(selectedValue.hidden) {
+        fieldClass += ' hidden'
+      }
 
       return (
 
         <div className={fieldClass} data-editable='true' data-id='attachments' data-required='' data-type='field'>
           <div className='row'>
-            {RenderFieldLabel._renderFieldLabel(selectedValue.field)}
+            {RenderFieldLabel._renderFieldLabel(selectedValue.field, this.props.onClose)}
 
             <div className='col1of2' data-type='value'>
               <button onClick={(event) => this.inputElement.click()} type='button' className='button inset width-full' data-type='select'>

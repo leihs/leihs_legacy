@@ -152,7 +152,7 @@
 
       var selected = false
       if(this.props.value) {
-        var date = this._parseDate(this.props.value)
+        var date = CreateItemFieldSwitch._parseDayMonthYear(this.props.value)
         if(date) {
           selected = date.year == this.state.year && date.month == this.state.month && date.day == index
         }

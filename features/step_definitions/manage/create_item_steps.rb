@@ -38,7 +38,7 @@ end
 
 Then(/^I can create an item$/) do
   step 'I add a new Item'
-  expect(current_path).to eq manage_new_item_path(@current_inventory_pool)
+  expect(current_path).to eq manage_new_item_react_path(@current_inventory_pool)
 end
 
 
@@ -136,7 +136,16 @@ Then(/^the item has all previously entered values$/) do
       when 'radio must'
         expect(matched_field.find('label', text: field_value).find('input').checked?).to eq true
       when ''
-        expect(matched_field.find('input,textarea').value).to eq field_value
+        if field.data["type"] == 'date'
+          input_value = matched_field.find('input').value
+          if input_value.include?('/')
+            expect(input_value.gsub!('/', '.')).to eq field_value
+          else
+            expect(input_value).to eq field_value
+          end
+        else
+          expect(matched_field.find('input,textarea').value).to eq field_value
+        end
     end
   end
 end
@@ -224,7 +233,7 @@ end
 
 
 Then(/^The date this item was last checked is today's date$/) do
-  expect(find('.row.emboss', match: :prefer_exact, text: 'Last Checked').find('input').value).to eq Date.today.strftime('%d/%m/%Y')
+  expect(find('.row.emboss', match: :prefer_exact, text: 'Last Checked').find('input').value).to eq Date.today.strftime('%d.%m.%Y')
 end
 
 

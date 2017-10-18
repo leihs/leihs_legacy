@@ -16,7 +16,7 @@
 
       return {
         visible: false,
-        value: ''
+        value: (this.props.value ? this.props.value : '')
       }
     },
 
@@ -31,7 +31,7 @@
 
     _onSelect (day, month, year) {
 
-      var value = this._leadingZero(day) + '/' + this._leadingZero(month) + '/' + year
+      var value = this._leadingZero(day) + '.' + this._leadingZero(month) + '.' + year
       this.setState({
         value: value,
         visible: false
