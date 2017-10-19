@@ -9,7 +9,9 @@
         {{>itemVersion() + ', '}}
       {{/if}}
       {{if ~additionalDataFetched}}
-      {{>current_location + ', '}}
+        {{if current_location}}
+          {{>current_location + ', '}}
+        {{/if}}
       {{else}}
       <span>
         {{partial "views/loading" {"size":"micro"}/}}
