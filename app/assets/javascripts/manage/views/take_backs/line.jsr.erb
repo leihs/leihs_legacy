@@ -3,7 +3,7 @@
   <div class='line-info red'></div>
   {{/if}}
   {{partial 'manage/views/users/cell' user() '{"grid":"col1of5"}'/}}
-  <div class='col1of5 line-col tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{jed "tooltip_date_of_planned_delivery_or_return"/}}'>
+  <div class='col1of5 line-col'>
     {{if isOverdue()}}
     <strong>{{diffToday date/}}</strong>
     {{else}}

@@ -2,7 +2,7 @@
   <div class='col1of5 line-col'>
     <div class='row'>
       <div class='col1of2'>
-        <button class='button inset small width-full tooltip' data-type='inventory-expander' data-tooltip-template='manage/views/purposes/tooltip' title='{{jed "tooltip_total_number_of_filtered_items_of_a_model"/}}'>
+        <button class='button inset small width-full' data-type='inventory-expander' title='{{if is_package}}{{jed 'Packages'/}}{{else}}{{jed 'Items'/}}{{/if}}'>
           {{if licenses().count()>0}}
           <i class='arrow right'></i>
           {{/if}}

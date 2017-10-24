@@ -4513,42 +4513,6 @@ window.i18n.locale_data = {
       "Fields have been updated successfully.": [
          null,
          "Die Felder wurden erfolgreich aktualisiert."
-      ],
-      "tooltip_reserverd_resp_further_available_models_count": [
-         null,
-         "Anzahl reservierte Modelle / Anzahl weitere verfügbare Modelle"
-      ],
-      "tooltip_contract_creation_date": [
-         null,
-         "Vertragserstellungsdatum"
-      ],
-      "tooltip_lending_duration": [
-         null,
-         "Ausleihdauer"
-      ],
-      "tooltip_order_arrival": [
-         null,
-         "Eingang der Bestellung"
-      ],
-      "tooltip_number_of_lending_days": [
-         null,
-         "Anzahl Ausleihtage"
-      ],
-      "tooltip_date_of_planned_delivery_or_return": [
-         null,
-         "Zeitpunkt der geplanten Aushändigung oder Rückgabe"
-      ],
-      "tooltip_number_of_lending_days_or_date_of_last_reminder": [
-         null,
-         "Anzahl Ausleihtage oder Zeitpunkt der letzten Erinnerung"
-      ],
-      "tooltip_total_number_of_filtered_items_of_a_model": [
-         null,
-         "Total Anzahl Gegenstände eines Modells (gem. Filtereinstellungen)"
-      ],
-      "tooltip_available_respectively_totally_borrowable_if_in_stock": [
-         null,
-         "verfügbar / total ausleihbar wenn an Lager"
       ]
    }
 }

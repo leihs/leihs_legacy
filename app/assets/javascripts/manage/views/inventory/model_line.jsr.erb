@@ -2,7 +2,7 @@
   <div class='col1of5 line-col'>
     <div class='row'>
       <div class='col1of2'>
-        <button class='button inset small width-full tooltip' data-type='inventory-expander' data-tooltip-template='manage/views/purposes/tooltip' title='{{jed "tooltip_total_number_of_filtered_items_of_a_model"/}}'>
+        <button class='button inset small width-full' data-type='inventory-expander' title='{{if is_package}}{{jed 'Packages'/}}{{else}}{{jed 'Items'/}}{{/if}}'>
           {{if items().count()>0}}
           <i class='arrow right'></i>
           {{/if}}
@@ -28,10 +28,10 @@
       {{> name()}}
     </strong>
   </div>
-  <div class='col1of5 line-col text-align-center tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{jed "tooltip_available_respectively_totally_borrowable_if_in_stock"/}}'>
-    <span>{{> availability().in_stock}}</span>
+  <div class='col1of5 line-col text-align-center'>
+    <span title='{{jed 'in stock'/}}'>{{> availability().in_stock}}</span>
     /
-    <span>{{> availability().total_rentable}}</span>
+    <span title='{{jed 'rentable'/}}'>{{> availability().total_rentable}}</span>
   </div>
   <div class='col1of5 line-col line-actions padding-right-xs'>
     {{if ~accessRight.atLeastRole(~currentUserRole, "lending_manager") }}

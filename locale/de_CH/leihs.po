@@ -3488,30 +3488,3 @@ msgstr "Aktualisieren"
 
 msgid "Fields have been updated successfully."
 msgstr "Die Felder wurden erfolgreich aktualisiert."
-
-msgid "tooltip_reserverd_resp_further_available_models_count"
-msgstr "Anzahl reservierte Modelle / Anzahl weitere verfügbare Modelle"
-
-msgid "tooltip_contract_creation_date"
-msgstr "Vertragserstellungsdatum"
-
-msgid "tooltip_lending_duration"
-msgstr "Ausleihdauer"
-
-msgid "tooltip_order_arrival"
-msgstr "Eingang der Bestellung"
-
-msgid "tooltip_number_of_lending_days"
-msgstr "Anzahl Ausleihtage"
-
-msgid "tooltip_date_of_planned_delivery_or_return"
-msgstr "Zeitpunkt der geplanten Aushändigung oder Rückgabe"
-
-msgid "tooltip_number_of_lending_days_or_date_of_last_reminder"
-msgstr "Anzahl Ausleihtage oder Zeitpunkt der letzten Erinnerung"
-
-msgid "tooltip_total_number_of_filtered_items_of_a_model"
-msgstr "Total Anzahl Gegenstände eines Modells (gem. Filtereinstellungen)"
-
-msgid "tooltip_available_respectively_totally_borrowable_if_in_stock"
-msgstr "verfügbar / total ausleihbar wenn an Lager"
