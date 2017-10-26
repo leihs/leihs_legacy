@@ -44,7 +44,8 @@ class Order < ApplicationRecord
           % inventory_pool.name
     end
 
-    if user.access_right_for(inventory_pool).try(&:suspended?)
+    if user.access_right_for(inventory_pool).try(&:suspended?) \
+        and state != 'rejected'
       errors.add \
         :base,
         _('This user is suspended for inventory pool: %s') \

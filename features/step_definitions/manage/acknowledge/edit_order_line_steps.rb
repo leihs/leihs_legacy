@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 When(/^I open a contract for acknowledgement( with more then one line)?(, whose start date is not in the past)?$/) do |arg1, arg2|
-  contracts = @current_inventory_pool.orders.submitted
+  contracts = @current_inventory_pool.orders.submitted.select { |o| not o.user.suspended?(@current_inventory_pool) }
   contracts = contracts.select { |c| c.reservations.size > 1 and c.reservations.map(&:model_id).uniq.size > 1 } if arg1
   contracts = contracts.select { |c| c.min_date >= Time.zone.today } if arg2
 

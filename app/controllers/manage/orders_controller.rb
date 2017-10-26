@@ -44,7 +44,7 @@ class Manage::OrdersController < Manage::ApplicationController
       @order.update_attributes!(purpose: purpose_param)
       render json: @order, status: 200
     rescue => e
-      format.json { render plain: e.message, status: 500 }
+      render plain: e.message, status: 500
     end
   end
 
