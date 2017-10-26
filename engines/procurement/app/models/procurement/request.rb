@@ -87,6 +87,7 @@ module Procurement
     def editable?(user)
       Access.requesters.find_by(user_id: user_id) and
         (
+         (Procurement::Access.admin?(user) and not budget_period.past?) or
          (category.inspectable_by?(user) and not budget_period.past?) or
          (requested_by?(user) and budget_period.in_requesting_phase?)
         )

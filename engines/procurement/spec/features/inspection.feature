@@ -47,8 +47,8 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | state                 |
 
   @inspection
-  Scenario: Which fields are not editable
-    Given I am Barbara
+  Scenario Outline: Which fields are not editable
+    Given I am <username>
     And a request with following data exist
       | key                | value   |
       | user               | Roger   |
@@ -56,10 +56,14 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     Then the following fields are not editable
       | Motivation         |
       | Priority           |
+  Examples:
+    | username  |
+    | Barbara   | # Inspector
+    | Hans Ueli | # Admin
 
   @inspection
-  Scenario: Editing a request in the overview
-    Given I am Barbara
+  Scenario Outline: Editing a request in the overview
+  Given I am <username>
     And a room 'Room 2' for building 'Building 2' exists
     And a request with following data exist
       | key                        | value       |
@@ -78,6 +82,7 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
      And I open the requests main category
      And I open the requests category
     Then I see the request line
+
 
     When I click on the request line
     Then I see the request inline edit form
@@ -99,6 +104,10 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     Then I see the updated request line
     And the request with all given information was updated successfully in the database
     And the uploaded file is now an attachment of the request
+  Examples:
+    | username  |
+    | Barbara   | # Inspector
+    | Hans Ueli | # Admin
 
   @inspection
   Scenario: Using the filters as inspector

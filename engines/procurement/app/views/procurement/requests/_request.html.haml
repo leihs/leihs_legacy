@@ -1,17 +1,30 @@
 :ruby
-  visible_accounting_fields = request.category.inspectable_by?(current_user)
-  editable_accounting_fields = (visible_accounting_fields and not request.budget_period.past?)
+  is_admin = procurement_admin?
+  is_inspector = (procurement_inspector? or is_admin)
+
+  request_editable = request.editable?(current_user)
+  request_is_current = (not request.budget_period.past?)
+
+  is_requester = request.requested_by?(current_user)
+  is_category_inspector = (request.category.inspectable_by?(current_user) \
+    or (is_admin and request_is_current))
+
+  is_requester_or_category_inspector = (is_requester or is_category_inspector)
+  not_from_template_or_category_inspector = (request.template_id.nil? or is_category_inspector)
+
+  visible_accounting_fields = is_category_inspector
+  editable_accounting_fields = (visible_accounting_fields and request_is_current)
 
 .row.request{data: {request_id: request.id, template_id: request.template_id}}
   .col-xs-6
-    - if request.editable?(current_user)
+    - if request_editable
       %input{type: :hidden, name: "requests[#{request.id}][id]", value: request.id}
 
     .form-group
       %label.col-xs-4.control-label
         = _('Article or Project')
       .col-xs-8
-        - if request.editable?(current_user) and (request.template_id.nil? or request.category.inspectable_by?(current_user))
+        - if request_editable and not_from_template_or_category_inspector
           %input.form-control{name: "requests[#{request.id}][article_name]", placeholder: _('Article or Project'), value: request.article_name, data: {toggle: 'tooltip'}, title: request.article_name, required: true}
           %input{type: :hidden, name: "requests[#{request.id}][model_id]", value: request.model_id}
         - else
@@ -21,7 +34,7 @@
       %label.col-xs-4.control-label
         = _('Article nr. or Producer nr.')
       .col-xs-8
-        - if request.editable?(current_user) and (request.template_id.nil? or request.category.inspectable_by?(current_user))
+        - if request_editable and not_from_template_or_category_inspector
           %input.form-control{name: "requests[#{request.id}][article_number]", placeholder: _('Article nr. or Producer nr.'), value: request.article_number}
         - else
           = request.article_number
@@ -30,7 +43,7 @@
       %label.col-xs-4.control-label
         = _('Supplier')
       .col-xs-8
-        - if request.editable?(current_user) and (request.template_id.nil? or request.category.inspectable_by?(current_user))
+        - if request_editable and not_from_template_or_category_inspector
           %input.form-control{name: "requests[#{request.id}][supplier_name]", placeholder: _('Supplier'), value: request.supplier_name}
           %input{type: :hidden, name: "requests[#{request.id}][supplier_id]", value: request.supplier_id}
         - else
@@ -40,7 +53,7 @@
       %label.col-xs-4.control-label
         = _('Name of receiver')
       .col-xs-8
-        - if request.editable?(current_user)
+        - if request_editable
           %input.form-control{name: "requests[#{request.id}][receiver]", value: request.receiver, placeholder: _('Name of receiver'), autocomplete: :off}
         - else
           = request.receiver
@@ -49,7 +62,7 @@
       %label.col-xs-4.control-label
         = _('Building')
       .col-xs-8
-        - if request.editable?(current_user)
+        - if request_editable
           - building = request.room.try(&:building)
           = select_tag "requests[#{request.id}][building_id]",
             options_from_collection_for_select(@buildings, :id, :to_s, building.try(&:id)),
@@ -74,7 +87,7 @@
         %label.col-xs-4.control-label
           = _('Room')
         .col-xs-8
-          - if request.editable?(current_user)
+          - if request_editable
             = select_tag "requests[#{request.id}][room_id]",
               options_from_collection_for_select(building.rooms, :id, :to_s, request.room.id),
               { class: 'form-control' }
@@ -85,7 +98,7 @@
       %label.col-xs-4.control-label
         = _('Motivation')
       .col-xs-8
-        - if request.editable?(current_user) and request.requested_by?(current_user)
+        - if request_editable and is_requester
           %textarea.form-control{name: "requests[#{request.id}][motivation]", placeholder: _('Motivation'), maxlength: 255, autocomplete: :off, title: _('max 255 characters'), data: {toggle: 'tooltip'}, required: true}= request.motivation
         - else
           = request.motivation
@@ -94,7 +107,7 @@
       %label.col-xs-4.control-label
         = _('Priority')
       .col-xs-8
-        - if request.editable?(current_user) and request.requested_by?(current_user)
+        - if request_editable and is_requester
           - ['High', 'Normal'].each do |priority|
             %label
               %input{type: :radio, name: "requests[#{request.id}][priority]", value: priority.downcase, checked: request.priority == priority.downcase}
@@ -102,24 +115,24 @@
         - else
           .label.label-default= _(request.priority.capitalize)
 
-    - if procurement_admin? or procurement_inspector?
+    - if is_admin or is_inspector
       .form-group
         %label.col-xs-4.control-label
           = _("Inspector's priority")
         .col-xs-8
-          - if not request.budget_period.past? and request.category.inspectable_by?(current_user)
+          - if request_is_current and is_category_inspector
             - ['Mandatory', 'High', 'Medium', 'Low'].each do |inspector_priority|
               %label
                 %input{type: :radio, name: "requests[#{request.id}][inspector_priority]", value: inspector_priority.downcase, checked: request.inspector_priority == inspector_priority.downcase}
                 .label.label-default= _(inspector_priority)
-          - elsif procurement_admin? or procurement_inspector?
+          - elsif is_admin or is_inspector
             .label.label-default= _(request.inspector_priority.capitalize)
 
     .form-group
       %label.col-xs-4.control-label
         = format('%s / %s', _('Replacement'), _('New'))
       .col-xs-8
-        - if request.editable?(current_user) and (request.requested_by?(current_user) or request.category.inspectable_by?(current_user))
+        - if request_editable and is_requester_or_category_inspector
           %label
             %input{type: :radio, name: "requests[#{request.id}][replacement]", value: 1, checked: request.replacement}
             .label.label-default= _('Replacement')
@@ -135,7 +148,7 @@
         = format('%s %s', _('Item price'), MoneyRails.default_currency)
         %span.small= _('incl. VAT')
       .col-xs-4
-        - if request.editable?(current_user) and (request.template_id.nil? or request.category.inspectable_by?(current_user))
+        - if request_editable and not_from_template_or_category_inspector
           %input.form-control{name: "requests[#{request.id}][price]", type: :number, min: 0, value: request.price.to_i, placeholder: format('%s %s', _('Item price'), _('incl. VAT')), autocomplete: :off}
         - else
           .label.label-custom
@@ -146,36 +159,36 @@
       %label.col-xs-4.control-label
         = _('Requested quantity')
       .col-xs-4
-        - if request.editable?(current_user) and (request.requested_by?(current_user) or request.category.inspectable_by?(current_user))
+        - if request_editable and is_requester_or_category_inspector
           %input.form-control{name: "requests[#{request.id}][requested_quantity]", type: :number, min: 1, value: request.requested_quantity, placeholder: _('Requested quantity'), autocomplete: :off, required: true}
         - else
           .label.label-primary.requested_quantity
             = request.requested_quantity
       .col-xs-4
 
-    - if procurement_admin? or procurement_inspector? or request.requested_by?(current_user)
+    - if is_admin or is_inspector or is_requester
       .form-group
         %label.col-xs-4.control-label
           = _('Approved quantity')
         .col-xs-4
-          - if not request.budget_period.past? and request.category.inspectable_by?(current_user)
+          - if request_is_current and is_category_inspector
             %input.form-control{name: "requests[#{request.id}][approved_quantity]", type: :number, min: 0, value: request.approved_quantity, placeholder: _('Approved quantity'), autocomplete: :off}
           - elsif request.approved_quantity
-            - if procurement_admin? or procurement_inspector? or (request.requested_by?(current_user) and request.budget_period.past?)
+            - if is_admin or is_inspector or (is_requester and request.budget_period.past?)
               :ruby
                 state, label_class = state_label(request)
               .label{class: label_class}
                 = request.approved_quantity
         .col-xs-4
 
-    - if procurement_admin? or procurement_inspector?
+    - if is_admin or is_inspector
       .form-group
         %label.col-xs-4.control-label
           = _('Order quantity')
         .col-xs-4
-          - if not request.budget_period.past? and request.category.inspectable_by?(current_user)
+          - if request_is_current and is_category_inspector
             %input.form-control{name: "requests[#{request.id}][order_quantity]", type: :number, min: 0, value: request.order_quantity, placeholder: _('Order quantity'), autocomplete: :off}
-          - elsif procurement_admin? or procurement_inspector?
+          - elsif is_admin or is_inspector
             .label{class: label_class}
               = request.order_quantity
         .col-xs-4
@@ -188,12 +201,12 @@
         .label.label-primary.total_price{data: {total: request.total_price(current_user)}}
           = money_without_cents_and_with_symbol request.total_price(current_user)
 
-    - if procurement_admin? or procurement_inspector? or request.requested_by?(current_user)
+    - if is_admin or is_inspector or is_requester
       .form-group
         %label.col-xs-4.control-label
           = _('Inspection comment')
         .col-xs-8
-          - if not request.budget_period.past? and request.category.inspectable_by?(current_user)
+          - if request_is_current and is_category_inspector
             - if settings.inspection_comments.any?
               = select_tag "request_edit_select_inspection_comment_templates",
                 options_for_select(settings.inspection_comments),
@@ -203,14 +216,14 @@
             = text_area_tag("requests[#{request.id}][inspection_comment]",
               request.inspection_comment,
               placeholder: _('Inspection comment'), maxlength: 255, data: {toggle: 'tooltip'}, title: _('max 255 characters'), class: 'form-control')
-          - elsif procurement_admin? or procurement_inspector? or (request.requested_by?(current_user) and request.budget_period.past?)
+          - elsif is_admin or is_inspector or (is_requester and not request_is_current)
             = request.inspection_comment
 
     .form-group.attachments
       %label.col-xs-4.control-label
         = _('Attachments')
       .col-xs-8
-        - if request.editable?(current_user)
+        - if request_editable
           %input{type: :file, name: "requests[#{request.id}][attachments_attributes][][file]", multiple: true, style: "color:transparent;", onchange: "this.style.color = 'black';"}
         %ul
           - request.attachments.each do |attachment|
@@ -218,7 +231,7 @@
               %input{type: :hidden, name: "requests[#{request.id}][attachments_delete][#{attachment.id}]"}
               %a{href: get_attachment_path(attachment.id), target: '_blank'}
                 = attachment.filename
-              - if request.editable?(current_user)
+              - if request_editable
                 %a.delete{href: '#', data: {confirm: _("Are you sure you want to delete '%s'?") % attachment.filename}}
                   %i.fa.fa-trash
               - if attachment.content_type =~ /image/
@@ -277,7 +290,7 @@
         = render partial: 'state', locals: {request: request}
 
       .col-xs-2.text-right
-        - if request.editable?(current_user)
+        - if request_editable
           .btn-group{title: _('Options'), data: {toggle: 'tooltip'}}
             %button.btn.btn-default.btn-sm.dropdown-toggle{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
               %i.fa.fa-gear

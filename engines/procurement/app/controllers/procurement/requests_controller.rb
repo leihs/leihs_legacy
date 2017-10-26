@@ -24,9 +24,7 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
       #############################################################################
@@ -75,9 +73,7 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
       #############################################################################
@@ -85,9 +81,7 @@ module Procurement
       @request = Request.find(id_param)
       @user = @request.user
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
 
@@ -118,9 +112,7 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
       #############################################################################
@@ -160,9 +152,7 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
       #############################################################################
@@ -206,9 +196,7 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
       #############################################################################
@@ -237,9 +225,7 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
       #############################################################################
@@ -272,9 +258,7 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
       #############################################################################
@@ -330,9 +314,7 @@ module Procurement
         @budget_period = BudgetPeriod.find(params[:budget_period_id])
       end
 
-      unless (@user == current_user or
-          Procurement::Category.inspector_of_any_category?(current_user) or
-          Procurement::Access.admin?(current_user))
+      unless @user == current_user or procurement_inspector? or procurement_admin?
         raise Errors::ForbiddenError
       end
       #############################################################################
@@ -429,7 +411,7 @@ module Procurement
 
     def initialize_keys(category:, new_request: false)
       keys = Request::REQUESTER_EDIT_KEYS
-      if category.inspectable_by?(current_user)
+      if category.inspectable_by?(current_user) or procurement_admin?
         keys += Request::INSPECTOR_KEYS
       end
       if new_request

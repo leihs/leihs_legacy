@@ -210,10 +210,19 @@ module RequestSteps
   step 'the request with all given information ' \
        'was :updated_or_created successfully in the database' do |_|
     user = @user || @current_user
-    if price = @changes.delete(:price)
-      @changes[:price_cents] = price * 100
+    changed = @changes
+    if price = changed.delete(:price)
+      changed[:price_cents] = price * 100
     end
-    expect(@category.requests.where(user_id: user).find_by(@changes)).to be
+    # NOTE: 2nd expectation just for more specific error messages
+    expect(@category.requests.where(user_id: user).find_by(@changes)).to \
+      be, lambda {
+            changed = changed.map do |k, v|
+              v.is_a?(ApplicationRecord) ? ["#{k}_id".to_sym, v.id] : [k, v]
+            end.to_h
+            saved = @request.reload.attributes.deep_symbolize_keys
+            expect(saved).to eq saved.merge(changed)
+          }
   end
 
   step 'the status is set to :state' do |state|
