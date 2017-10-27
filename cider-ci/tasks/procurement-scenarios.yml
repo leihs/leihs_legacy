@@ -208,46 +208,46 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:267
-- name: engines/procurement/spec/features/inspection.feature:287
+- name: engines/procurement/spec/features/inspection.feature:288
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:287
-- name: engines/procurement/spec/features/inspection.feature:306
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:288
+- name: engines/procurement/spec/features/inspection.feature:308
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:306
-- name: engines/procurement/spec/features/inspection.feature:324
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:308
+- name: engines/procurement/spec/features/inspection.feature:326
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:324
-- name: engines/procurement/spec/features/inspection.feature:340
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:326
+- name: engines/procurement/spec/features/inspection.feature:342
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:340
-- name: engines/procurement/spec/features/inspection.feature:361
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:342
+- name: engines/procurement/spec/features/inspection.feature:363
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:361
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:363
 - name: engines/procurement/spec/features/inspection.feature:50
   scripts:
     test:

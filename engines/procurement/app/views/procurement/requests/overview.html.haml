@@ -59,25 +59,17 @@
 :coffeescript
   $(document).ready ->
 
-
-
-
-    ###
-
-    - mark numbers/sums as "dirty" if in same subcat/cat/period ('[data-shows_sum]')
-
-    ###
-
-    ###############################################################################
-
     currentEditForm = false
     $filterPanel = $('form#filter_panel')
 
     # prevent closing collapses if edit form is inside…
     $(window).on('hide.bs.collapse', (event) ->
       if currentEditForm && $.contains(event.target, currentEditForm[0])
-        event.preventDefault()
-        currentEditForm.trigger('highlight-editing-form')
+        unless currentEditForm.data('hasChanged')
+          currentEditForm.trigger('close-editing-form')
+        else
+          event.preventDefault()
+          currentEditForm.trigger('highlight-editing-form')
     )
 
     $('#column-titles a').on('click', (event) ->
@@ -118,7 +110,12 @@
       event.preventDefault()
 
       # only 1 form can be openend at a time:
-      if currentEditForm then return currentEditForm.trigger('highlight-editing-form')
+      if currentEditForm
+        unless currentEditForm.data('hasChanged')
+          currentEditForm.trigger('close-editing-form')
+        else
+          currentEditForm.trigger('highlight-editing-form')
+          return
 
       # prepare
       formHelper = App.RequestEditFormBehaviour
@@ -129,17 +126,17 @@
       # in case ajax goes wrong, we follow the original link:
       fallbackHref = $el.attr('href')
 
-
       # helpers
       closeInlineForm = ->
         return if formIsClosing
         formIsClosing = true
+        currentEditForm && currentEditForm.data('hasChanged', false)
         $wrapper.slideUp(->
           $wrapper.remove()
           formIsClosing = false
         )
         $el.slideDown()
-        currentEditForm = false
+        currentEditForm = null
         window.onbeforeunload = null
         $filterPanel.removeClass('disabled')
 
@@ -168,7 +165,7 @@
 
       # setup
       currentEditForm.bind('highlight-editing-form', highlightEditingForm)
-      $filterPanel.addClass('disabled')
+      currentEditForm.bind('close-editing-form', closeInlineForm)
       $status.hide()
       $wrapper.append($status)
       $el.after($wrapper)
@@ -206,9 +203,11 @@
             currentEditForm.data('hasChanged', true)
             $form.find("button[type='submit']").removeAttr('disabled')
             window.onbeforeunload = formHelper.unsavedChangesConfirmation
+            $filterPanel.addClass('disabled')
           isSame: ()->
             currentEditForm.data('hasChanged', false)
             $form.find("button[type='submit']").attr('disabled', 'true')
+            $filterPanel.removeClass('disabled')
             window.onbeforeunload = null
         })
 

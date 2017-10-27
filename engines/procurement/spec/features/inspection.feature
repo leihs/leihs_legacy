@@ -264,7 +264,7 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     And the changes are saved successfully to the database
 
   @inspection
-  Scenario: Overview Edit Form can only be opened one at a time
+  Scenario: Overview Edit Form with changes can only be opened one at a time
     Given I am Barbara
     And a request with following data exist
       | key                | value       |
@@ -280,11 +280,12 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     When I open this request
     Then I see the 1. request inline edit form
 
-    When I try to open the 2. request
+    When I change any text input field in the request form
+    And I try to open the 2. request
     Then I see the 1. request inline edit form
 
   @inspection
-  Scenario: Overview Edit Form can not be hidden
+  Scenario: Overview Edit Form with changes can not be hidden
     Given I am Barbara
     And a request with following data exist
       | key                | value       |
@@ -292,6 +293,7 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
       | user               | Roger       |
       | article or project | MyProject2  |
     And I open this request
+    And I change any text input field in the request form
 
     When I try to close the requests main category
     Then I see the request inline edit form
