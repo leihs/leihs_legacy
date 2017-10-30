@@ -2,6 +2,13 @@ FactoryGirl.define do
   factory :procurement_main_category, class: Procurement::MainCategory do
     name { Faker::Lorem.sentence }
 
+    after(:create) do |mc|
+      Procurement::BudgetPeriod.all.each do |bp|
+        FactoryGirl.create(
+          :procurement_budget_limit, main_category: mc, budget_period: bp)
+      end
+    end
+
     trait :with_image do
       transient do
         filename 'image1.jpg'

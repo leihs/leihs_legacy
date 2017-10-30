@@ -10,16 +10,17 @@
   .col-sm-1
     - total_price = requests.select{|r| main_category.category_ids.include? r.category_id }.map {|r| r.total_price(current_user) }.sum
     - if @user.nil?
-      - budget_limit_amount = main_category.budget_limits.find_by(budget_period_id: budget_period.id).try(:amount)
-      .label.label-default.budget_limit{title: _('Limit of category for this budget period'), data: {toggle: 'tooltip', shows_sum: 'category_limit'}}
-        %i.fa.fa-pie-chart
-        = money_without_cents_and_with_symbol budget_limit_amount, false
-      %br
+      - budget_limit_amount = main_category.budget_limits.find_by(budget_period_id: budget_period.id).try(:amount) || 0
+      - if budget_limit_amount > 0
+        .label.label-default.budget_limit{title: _('Limit of category for this budget period'), data: {number: budget_limit_amount, toggle: 'tooltip', shows_sum: 'category_limit'}}
+          %i.fa.fa-pie-chart
+          = money_without_cents_and_with_symbol budget_limit_amount, false
+        %br
     .label.label-primary.big_total_price{title: _('Current total of category'), data: {toggle: 'tooltip', shows_sum: 'category_total'}}
       %i.fa.fa-shopping-cart
       = money_without_cents_and_with_symbol total_price, false
   .col-sm-2
-    - if @user.nil?
+    - if @user.nil? and budget_limit_amount > 0
       = render partial: 'procurement/requests/progress_radial', locals: {used: total_price, max: budget_limit_amount}
 
 .collapse{id: "collapse_mc_#{budget_period.id}_#{main_category.id}"}

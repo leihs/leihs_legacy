@@ -69,7 +69,13 @@ steps_for :inspection do
           amount = main_category.budget_limits \
             .find_by(budget_period_id: budget_period) \
             .try(:amount) || 0
-          find '.budget_limit', text: amount
+
+          limit_label = ".budget_limit[data-number=\"#{amount}\"]"
+          if amount.to_f > 0
+            expect(page).to have_selector limit_label
+          else
+            expect(page).to not_have_selector limit_label
+          end
         end
       end
     end
@@ -149,7 +155,12 @@ steps_for :inspection do
             .find_by(budget_period_id: budget_period) \
             .try(:amount) || 0
         end.sum
-        find '.budget_limit', text: amount
+        limit_label = ".budget_limit[data-number=\"#{amount}\"]"
+        if amount.to_f > 0
+          expect(page).to have_selector limit_label
+        else
+          expect(page).to not_have_selector limit_label
+        end
       end
     end
   end

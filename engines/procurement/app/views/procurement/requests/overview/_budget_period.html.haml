@@ -11,21 +11,26 @@
           = budget_period
       .col-sm-5
         = render partial: 'procurement/budget_periods/phases', locals: {budget_period: budget_period}
+
       .col-sm-1
         - if @user.nil?
-          - budget_limit_amount = grouped_categories.keys.map {|mc| mc.budget_limits.find_by(budget_period_id: budget_period.id).try(:amount) || 0 }.sum
-          .label.label-default.budget_limit{data: {toggle: 'tooltip', shows_sum: 'budget_period_limit', },
-                                            title: _('Total of limits this budget period'), }
-            %i.fa.fa-pie-chart
-            = money_without_cents_and_with_symbol budget_limit_amount, false
-          %br
+          - budget_limits = grouped_categories.keys.map {|mc| mc.budget_limits.find_by(budget_period_id: budget_period.id).try(:amount) || 0 }
+          - budget_limit_amount = budget_limits.all? {|n| n > 0} ? budget_limits.sum : 0
+          - if budget_limit_amount > 0
+            .label.label-default.budget_limit{data: {number: budget_limit_amount, toggle: 'tooltip', shows_sum: 'budget_period_limit', },
+                                              title: _('Total of limits this budget period'), }
+              %i.fa.fa-pie-chart
+              = money_without_cents_and_with_symbol budget_limit_amount, false
+            %br
+
         - total_price = requests.map {|r| r.total_price(current_user) }.sum
         .label.label-primary.big_total_price{data: {toggle: 'tooltip', shows_sum: 'budget_period'},
                                              title: _('Current total of budget period')}
           %i.fa.fa-shopping-cart
           = money_without_cents_and_with_symbol total_price, false
+
       .col-sm-2
-        - if @user.nil?
+        - if @user.nil? and budget_limit_amount > 0
           = render partial: 'procurement/requests/progress_radial', locals: {used: total_price, max: budget_limit_amount}
 
   .panel-body

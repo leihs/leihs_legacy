@@ -266,9 +266,7 @@ steps_for :roles do
 
   step 'I can not see budget limits' do
     prepare_request
-    FactoryGirl.create(:procurement_budget_limit,
-                       main_category: @category.main_category,
-                       budget_period: @budget_period)
+    prepare_all_budget_limits
     go_to_request
     expect(page).to have_no_selector '.budget_limit'
   end
@@ -379,9 +377,7 @@ steps_for :roles do
 
   step 'I can see all budget limits' do
     prepare_request
-    FactoryGirl.create(:procurement_budget_limit,
-                       main_category: @category.main_category,
-                       budget_period: @budget_period)
+    prepare_all_budget_limits
     visit procurement.overview_requests_path
     expect(page).to have_selector '.budget_limit'
   end
@@ -505,4 +501,20 @@ steps_for :roles do
   def close_popup_if_present
     page.driver.browser.switch_to.alert.accept rescue nil
   end
+
+  def find_or_create_budget_limit(attrs)
+    budget_limit = Procurement::BudgetLimit.find_by(**attrs)
+    unless budget_limit.present?
+        FactoryGirl.create(:procurement_budget_limit, **attrs)
+    end
+  end
+
+  def prepare_all_budget_limits
+    Procurement::BudgetPeriod.all.each do |bp|
+      Procurement::MainCategory.all.each do |mc|
+        find_or_create_budget_limit(main_category: mc, budget_period: bp)
+      end
+    end
+  end
+
 end
