@@ -62,6 +62,14 @@ Given /^I (open|return to) the daily view$/ do |arg1|
   find('#daily-view')
 end
 
+When(/^I edit an order for a user who is not suspended$/) do
+  @event = 'order'
+  @order = @current_inventory_pool.orders.submitted.detect { |o| not o.user.suspended?(@current_inventory_pool) }
+  @user = @order.user
+  @customer = @order.user
+  step 'I edit the order'
+end
+
 When(/^I edit an order$/) do
   @event = 'order'
   @order = @current_inventory_pool.orders.submitted.first

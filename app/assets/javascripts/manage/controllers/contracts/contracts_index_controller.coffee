@@ -63,6 +63,7 @@ class window.App.ContractsIndexController extends Spine.Controller
       App.User.fetchDelegators users
 
   render: (target, data, page)=>
+    target.removeClass('loading-page')
     target.html App.Render "manage/views/contracts/line", data, { accessRight: App.AccessRight, currentUserRole: App.User.current.role }
     if !@finished && $('.loading-page').length == 0
       nextPage = page + 1

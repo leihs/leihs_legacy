@@ -11,7 +11,7 @@ Feature: Purpose
     Then I see the assigned purpose on each line
 
   Scenario: Places where I can edit the purpose
-    When I edit an order
+    When I edit an order for a user who is not suspended
     Then I can edit the purpose
 
   Scenario: Handing over items of which some have purpose
