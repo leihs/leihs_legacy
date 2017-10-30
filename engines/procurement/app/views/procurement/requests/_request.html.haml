@@ -12,8 +12,8 @@
   is_requester_or_category_inspector = (is_requester or is_category_inspector)
   not_from_template_or_category_inspector = (request.template_id.nil? or is_category_inspector)
 
-  visible_accounting_fields = is_category_inspector
-  editable_accounting_fields = (visible_accounting_fields and request_is_current)
+  visible_accounting_fields = is_inspector
+  editable_accounting_fields = (visible_accounting_fields and is_category_inspector and request_is_current)
 
 .row.request{data: {request_id: request.id, template_id: request.template_id}}
   .col-xs-6
