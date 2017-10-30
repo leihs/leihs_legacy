@@ -4451,6 +4451,10 @@ window.i18n.locale_data = {
       "admin_all": [
          null,
          "Tous"
+      ],
+      "Refresh Page": [
+         null,
+         "Rafraîchir la page"
       ]
    }
 }

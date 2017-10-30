@@ -59,6 +59,14 @@
 :coffeescript
   $(document).ready ->
 
+    # refresh button
+    $('body').delegate('.overview-header button.refresh-page, [data-toggle-refresh]', 'click', (event) ->
+      event?.preventDefault?()
+      try $(this).find('i').addClass('fa-spin')
+      window.location.reload()
+    )
+
+
     currentEditForm = false
     $filterPanel = $('form#filter_panel')
 
@@ -96,8 +104,9 @@
       $('[data-shows_sum]').each(->
         $(this)
           .tooltip('destroy')
-          .css('color', 'transparent')
-          .attr('title', 'Stale data, refresh browser to update')
+          .attr('data-toggle-refresh', true)
+          .html('<i class="fa fa-refresh"/>')
+          .attr('title', 'Stale data, click to reload page')
           .tooltip()
       )
 

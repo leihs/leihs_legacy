@@ -4513,6 +4513,10 @@ window.i18n.locale_data = {
       "Fields have been updated successfully.": [
          null,
          "Die Felder wurden erfolgreich aktualisiert."
+      ],
+      "Refresh Page": [
+         null,
+         "Seite neuladen"
       ]
    }
 }

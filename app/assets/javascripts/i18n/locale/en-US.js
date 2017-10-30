@@ -3904,6 +3904,10 @@ window.i18n.locale_data = {
       "admin_all": [
          null,
          "All"
+      ],
+      "Refresh Page": [
+         null,
+         ""
       ]
    }
 }

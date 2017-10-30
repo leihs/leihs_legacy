@@ -608,3 +608,6 @@ msgstr ""
 
 msgid "Options"
 msgstr ""
+
+msgid "Refresh Page"
+msgstr "Actualizar página"

@@ -40,8 +40,10 @@ test $DO_RESET && {
   done
 }
 
-#npm install
+# i18n/locales
 bundle exec rake app:i18n:po2json
+git add app/assets/javascripts/i18n/locale/
+
 ./bin/recompile-assets
 
 # commit & push assets/modules

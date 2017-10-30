@@ -2953,3 +2953,6 @@ msgstr "Inactive"
 
 msgid "admin_all"
 msgstr "All"
+
+msgid "Refresh Page"
+msgstr ""

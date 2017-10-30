@@ -870,6 +870,10 @@ window.i18n.locale_data = {
       "Options": [
          null,
          ""
+      ],
+      "Refresh Page": [
+         null,
+         "Actualizar página"
       ]
    }
 }

@@ -3879,6 +3879,10 @@ window.i18n.locale_data = {
       "admin_all": [
          null,
          "Alli"
+      ],
+      "Refresh Page": [
+         null,
+         "Siite neulade"
       ]
    }
 }

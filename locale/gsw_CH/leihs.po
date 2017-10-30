@@ -2925,3 +2925,6 @@ msgstr "Inaktiv"
 
 msgid "admin_all"
 msgstr "Alli"
+
+msgid "Refresh Page"
+msgstr "Siite neulade"
