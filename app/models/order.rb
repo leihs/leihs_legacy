@@ -190,7 +190,7 @@ class Order < ApplicationRecord
   #################################################################################
 
   def reject(comment, current_user)
-    update_attributes(state: :rejected) and
+    update_attributes(state: :rejected, reject_reason: comment) and
       reservations.all? { |line| line.update_attributes(status: :rejected) } and
       Notification.order_rejected(self, comment, true, current_user)
   end

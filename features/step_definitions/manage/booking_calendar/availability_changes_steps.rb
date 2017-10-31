@@ -4,7 +4,6 @@ When /^I open a booking calendar to edit a singe line$/ do
   @order = @contract = @current_inventory_pool.orders.submitted.detect {|c| c.reservations.any? {|cl| cl.model_id == @model.id} }
   step 'I edit the order'
   @edited_line = find('.line', text: @model.name, match: :first)
-  binding.pry
   @edited_line.find('[data-edit-lines]').click
   find('.modal')
 end
