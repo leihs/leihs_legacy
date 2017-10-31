@@ -18,9 +18,15 @@ class window.App.SwapUsersController extends Spine.Controller
     @el = @modal.el
     super
 
+    @submitButton.attr('disabled', true)
+
     @searchSetUserController = new App.SearchSetUserController
       el: @el.find("#user #swapped-person")
-      selectCallback: if @manageContactPerson then => @setupContactPerson() else null
+      selectCallback: =>
+        @submitButton.attr('disabled', false)
+        @setupContactPerson() if @manageContactPerson
+      removeCallback: =>
+        @submitButton.attr('disabled', true)
 
     @setupContactPerson() if @manageContactPerson
 
@@ -48,7 +54,7 @@ class window.App.SwapUsersController extends Spine.Controller
 
   swapReservations: =>
     App.Reservation.swapUser(@reservations, @searchSetUserController.selectedUserId)
-    .done => 
+    .done =>
       window.location = App.User.find(@searchSetUserController.selectedUserId).url("hand_over")
     .fail =>
       @errorsContainer.removeClass "hidden"
@@ -73,3 +79,5 @@ class window.App.SwapUsersController extends Spine.Controller
           customAutocompleteOptions:
             source: ( $.extend App.User.find(datum.id), { label: datum.name } for datum in data )
             minLength: 0
+          selectCallback: => @submitButton.attr('disabled', false)
+          removeCallback: => @submitButton.attr('disabled', true)

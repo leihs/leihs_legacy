@@ -55,3 +55,4 @@ class window.App.SearchSetUserController extends Spine.Controller
     @input.show().autocomplete("enable").val("").focus()
     @selectedUserId = null
     @selectedUser.html ""
+    @removeCallback?()
