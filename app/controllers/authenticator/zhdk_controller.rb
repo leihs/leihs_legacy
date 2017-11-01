@@ -38,6 +38,11 @@ class Authenticator::ZhdkController < Authenticator::AuthenticatorController
 
   def target
     Rails.logger.info "Setting.external_base_url: #{Setting.external_base_url}"
+
+    unless defined? AUTHENTICATION_URL
+      throw 'Missing AUTHENTICATION_URL. Check agw_info_template.rb!'
+    end
+
     AUTHENTICATION_URL \
       + '&url_postlogin=' \
       + CGI::escape("#{Setting.external_base_url}/" \
