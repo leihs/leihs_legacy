@@ -88,6 +88,7 @@ class Order < ApplicationRecord
     where.not(
       id: \
         Order
+        .unscoped # have to be used here, `Order` uses current scope (WTF) !!!
         .joins(:reservations)
         .with_verifiable_user_and_model
         .select(:id)
@@ -149,6 +150,7 @@ class Order < ApplicationRecord
     orders.default_paginate(params)
   end
 
+  # NOTE: assumes `joins(:reservations)`
   def self.search(query)
     return all if query.blank?
 

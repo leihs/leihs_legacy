@@ -114,33 +114,38 @@ class Contract < ApplicationRecord
     SQL
   end)
 
-  PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION = <<-SQL
-    SELECT 1
-    FROM partitions
-    INNER JOIN reservations ON reservations.model_id = partitions.model_id
-    AND partitions.inventory_pool_id = reservations.inventory_pool_id
-    AND reservations.contract_id = contracts.id
-    INNER JOIN groups ON groups.id = partitions.group_id
-    AND groups.is_verification_required IS TRUE
-    AND groups.inventory_pool_id = contracts.inventory_pool_id
-    INNER JOIN groups_users ON groups.id = groups_users.group_id
-    AND groups_users.user_id = contracts.user_id
-  SQL
-
+  # NOTE: assumes `joins(:reservations)`
   scope :with_verifiable_user_and_model, (lambda do
-    where <<-SQL
-      EXISTS (#{PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION})
+    joins(<<-SQL)
+      INNER JOIN partitions
+      ON partitions.model_id = reservations.model_id
+      AND partitions.inventory_pool_id = reservations.inventory_pool_id
     SQL
+      .joins('INNER JOIN groups ON partitions.group_id = groups.id')
+      .joins('INNER JOIN groups_users ON groups.id = groups_users.group_id')
+      .where('groups.inventory_pool_id = reservations.inventory_pool_id')
+      .where(groups: { is_verification_required: true })
+      .where('groups_users.user_id = reservations.user_id')
+      .distinct
   end)
 
   scope :no_verification_required, (lambda do
-    where <<-SQL
-      NOT EXISTS (#{PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION})
-    SQL
+    where.not(
+      id: \
+        Contract
+        .unscoped # have to be used here, `Contract` uses current scope (WTF) !!!
+        .joins(:reservations)
+        .with_verifiable_user_and_model
+        .select(:id)
+    )
   end)
 
   def to_be_verified?
-    Contract.with_verifiable_user_and_model.where(id: id).exists?
+    Contract
+      .joins(:reservations)
+      .with_verifiable_user_and_model
+      .where(id: id)
+      .exists?
   end
 
   #########################################################################
@@ -156,6 +161,7 @@ class Contract < ApplicationRecord
 
     contracts = \
       contracts
+      .joins(:reservations)
       .scope_if_presence(params[:status]) do |contracts, states|
         contracts.where(state: states)
       end
@@ -187,11 +193,11 @@ class Contract < ApplicationRecord
 
   #########################################################################
 
+  # NOTE: assumes `joins(:reservations)`
   def self.search(query)
     return all if query.blank?
 
-    sql = distinct
-      .joins('INNER JOIN reservations ON contracts.id = reservations.contract_id')
+    sql = distinct \
       .joins('INNER JOIN users ON users.id = reservations.user_id')
       .joins(<<-SQL)
         LEFT JOIN users delegated_users
