@@ -24,9 +24,9 @@ class Order < ApplicationRecord
       where(state: :approved)
     end
 
+    # NOTE: assumes `joins(:reservations)`
     def with_some_line_not_in_any_contract
-      joins('INNER JOIN reservations AS rs1 ON rs1.order_id = orders.id')
-        .where('rs1.contract_id IS NULL')
+      where(reservations: { contract: nil })
         .distinct
     end
   end
@@ -69,35 +69,36 @@ class Order < ApplicationRecord
     SQL
   end)
 
+  # NOTE: assumes `joins(:reservations)`
   scope :with_verifiable_user_and_model, (lambda do
-    joins('INNER JOIN reservations AS rs2 ON rs2.order_id = orders.id')
-      .joins(<<-SQL)
-        INNER JOIN partitions
-        ON partitions.model_id = rs2.model_id
-        AND partitions.inventory_pool_id = rs2.inventory_pool_id
-      SQL
+    joins(<<-SQL)
+      INNER JOIN partitions
+      ON partitions.model_id = reservations.model_id
+      AND partitions.inventory_pool_id = reservations.inventory_pool_id
+    SQL
       .joins('INNER JOIN groups ON partitions.group_id = groups.id')
       .joins('INNER JOIN groups_users ON groups.id = groups_users.group_id')
-      .where('groups.inventory_pool_id = rs2.inventory_pool_id')
+      .where('groups.inventory_pool_id = reservations.inventory_pool_id')
       .where(groups: { is_verification_required: true })
-      .where('groups_users.user_id = rs2.user_id')
+      .where('groups_users.user_id = reservations.user_id')
       .distinct
   end)
 
   scope :no_verification_required, (lambda do
-    # TODO: although kind of default scope, `with_some_line_not_in_any_contract`
-    # should not be implicitly used here, as it makes the composition
-    # unpredictable. However, it makes things considerably faster.
     where.not(
       id: \
         Order
-        .with_some_line_not_in_any_contract
-        .with_verifiable_user_and_model.select(:id)
+        .joins(:reservations)
+        .with_verifiable_user_and_model
+        .select(:id)
     )
   end)
 
+  # NOTE: assumes `joins(:reservations)`
   def to_be_verified?
-    Order.with_verifiable_user_and_model.where(id: id).exists?
+    Order
+      .joins(:reservations)
+      .with_verifiable_user_and_model.where(id: id).exists?
   end
 
   #################################################################################
@@ -112,7 +113,9 @@ class Order < ApplicationRecord
              end
 
     orders = \
-      orders.with_some_line_not_in_any_contract
+      orders
+      .joins(:reservations)
+      .with_some_line_not_in_any_contract
       .scope_if_presence(params[:status]) do |orders, states|
         orders.where(state: states)
       end
@@ -124,7 +127,6 @@ class Order < ApplicationRecord
       end
       .scope_if_presence(params[:reservation_ids]) do |orders, reservation_ids|
         orders
-          .joins(:reservations)
           .where(reservations: { id: reservation_ids })
           .distinct
       end
@@ -151,7 +153,6 @@ class Order < ApplicationRecord
     return all if query.blank?
 
     sql = distinct
-      .joins('INNER JOIN reservations ON orders.id = reservations.order_id')
       .joins('INNER JOIN users ON users.id = reservations.user_id')
       .joins(<<-SQL)
         LEFT JOIN users delegated_users
