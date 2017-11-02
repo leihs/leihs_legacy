@@ -79,7 +79,7 @@ class window.App.HandOverController extends Spine.Controller
       this[filterFunctionName] = => filterHelper modelClassName, itemClassName
       this["fetch" + itemClassName + "s"] = => fetchHelper itemClassName, do this[filterFunctionName]
 
-  render: (renderAvailability)=> 
+  render: (renderAvailability)=>
     @reservationsContainer.html App.Render "manage/views/reservations/grouped_lines_with_action_date", App.Modules.HasLines.groupByDateRange(@getLines(), false, "start_date"),
       linePartial: "manage/views/reservations/hand_over_line"
       renderAvailability: renderAvailability
@@ -87,8 +87,12 @@ class window.App.HandOverController extends Spine.Controller
 
   handOver: =>
     if @validate()
-      new App.HandOverDialogController
-        user: @user
+      HandOverDialogUtil.loadHandOverDialogData({
+        user: @user,
+        reservations: (App.Reservation.find id for id in App.LineSelectionController.selected),
+      }, (reservations, purpose) =>
+        new App.HandOverDialogController(reservations, @user, purpose)
+      )
     else
       App.Flash
         type: "error"

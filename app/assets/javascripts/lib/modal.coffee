@@ -14,14 +14,15 @@ class window.App.Modal
 
   @all = []
 
-  constructor: (el)->
+  constructor: (el, onDestroyReact)->
     @el = $(el)
+    @onDestroyReact = onDestroyReact
     @isDestroyable = true
     do @delegateEvents
     modal.destroyable().destroy(true) for modal in App.Modal.all
     App.Modal.all.push @
     App.Tooltip.hideAll()
-    @el.modal 
+    @el.modal
       backdrop: true
 
   delegateEvents: ->
@@ -30,7 +31,7 @@ class window.App.Modal
     $(window).on "resize", @setModalBodyMaxHeight
     @el.on "click", ".modal-close", => @destroy(true)
     @el.on "hide", (e)=> false unless @isDestroyable
-    
+
   setModalBodyMaxHeight: =>
     height = $(window).height() - @el.outerHeight() - ($(window).height()/100*20) + @el.find(".modal-body").height()
     height = 10 if height < 10
@@ -41,19 +42,21 @@ class window.App.Modal
       @el.remove()
       $(window).off "resize", @setModalBodyMaxHeight
       $(".modal-backdrop").remove() if removeBackdrop? and removeBackdrop
+    if @onDestroyReact
+      @onDestroyReact(@)
 
   shown: =>
     @el.addClass "ui-shown"
     @el.find("[autofocus=autofocus]").focus().select()
-    do @setModalBodyMaxHeight    
+    do @setModalBodyMaxHeight
 
-  destroyable: => 
+  destroyable: =>
     @isDestroyable = true
     return @
 
-  undestroyable: => 
+  undestroyable: =>
     @isDestroyable = false
     return @
 
-  @destroyAll: (removeBackdrop)=> 
+  @destroyAll: (removeBackdrop)=>
     modal.destroy(removeBackdrop) for modal in App.Modal.all
