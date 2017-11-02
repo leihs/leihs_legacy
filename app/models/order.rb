@@ -25,14 +25,9 @@ class Order < ApplicationRecord
     end
 
     def with_some_line_not_in_any_contract
-      where <<-SQL
-        EXISTS (
-          SELECT 1
-          FROM reservations
-          WHERE reservations.order_id = orders.id
-            AND reservations.contract_id IS NULL
-        )
-      SQL
+      joins('INNER JOIN reservations AS rs1 ON rs1.order_id = orders.id')
+        .where('rs1.contract_id IS NULL')
+        .distinct
     end
   end
 
@@ -74,29 +69,31 @@ class Order < ApplicationRecord
     SQL
   end)
 
-  PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION = <<-SQL
-    SELECT 1
-    FROM partitions
-    INNER JOIN reservations ON reservations.model_id = partitions.model_id
-    AND partitions.inventory_pool_id = reservations.inventory_pool_id
-    AND reservations.order_id = orders.id
-    INNER JOIN groups ON groups.id = partitions.group_id
-    AND groups.is_verification_required IS TRUE
-    AND groups.inventory_pool_id = orders.inventory_pool_id
-    INNER JOIN groups_users ON groups.id = groups_users.group_id
-    AND groups_users.user_id = orders.user_id
-  SQL
-
   scope :with_verifiable_user_and_model, (lambda do
-    where <<-SQL
-      EXISTS (#{PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION})
-    SQL
+    joins('INNER JOIN reservations AS rs2 ON rs2.order_id = orders.id')
+      .joins(<<-SQL)
+        INNER JOIN partitions
+        ON partitions.model_id = rs2.model_id
+        AND partitions.inventory_pool_id = rs2.inventory_pool_id
+      SQL
+      .joins('INNER JOIN groups ON partitions.group_id = groups.id')
+      .joins('INNER JOIN groups_users ON groups.id = groups_users.group_id')
+      .where('groups.inventory_pool_id = rs2.inventory_pool_id')
+      .where(groups: { is_verification_required: true })
+      .where('groups_users.user_id = rs2.user_id')
+      .distinct
   end)
 
   scope :no_verification_required, (lambda do
-    where <<-SQL
-      NOT EXISTS (#{PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION})
-    SQL
+    # TODO: although kind of default scope, `with_some_line_not_in_any_contract`
+    # should not be implicitly used here, as it makes the composition
+    # unpredictable. However, it makes things considerably faster.
+    where.not(
+      id: \
+        Order
+        .with_some_line_not_in_any_contract
+        .with_verifiable_user_and_model.select(:id)
+    )
   end)
 
   def to_be_verified?

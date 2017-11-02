@@ -20,4 +20,3 @@ class window.App.Order extends Spine.Model
     _.reduce @.reservations().all(), ((mem, line) -> mem + line["quantity"]), 0
 
   concatenatedPurposes: => @purpose
-

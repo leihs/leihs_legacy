@@ -1,5 +1,7 @@
 When /^I reject a contract$/ do
-  @contract = @current_inventory_pool.orders.submitted.first
+  @contract = @current_inventory_pool.orders.submitted.detect do |o|
+    o.to_be_verified?
+  end
 
   step %Q(I uncheck the "No verification required" button)
 

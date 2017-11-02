@@ -71,9 +71,9 @@ class Manage::ApplicationController < ApplicationController
     elsif [:group_manager, nil].include?(role_for_last_ip) \
       and current_user.access_rights.active.where(role: :group_manager).exists?
       ip ||= current_user.inventory_pools.managed(:group_manager).first
-      redirect_to manage_contracts_path(ip, status: [:approved,
-                                                     :submitted,
-                                                     :rejected])
+      redirect_to manage_orders_path(ip, status: [:approved,
+                                                  :submitted,
+                                                  :rejected])
     else
       head :bad_request
     end

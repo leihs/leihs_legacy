@@ -326,9 +326,6 @@ When(/^I search( globally)? for (an order|a contract|a visit)( with its purpose)
   else
     el = arg1 == 'a visit' ? '#visits-index-view' : '#contracts-index-view'
     within el do
-      if arg1 != 'a visit'
-        step %Q(I uncheck the "No verification required" button)
-      end
       step %Q(I search for "%s") % @search_term
     end
   end
