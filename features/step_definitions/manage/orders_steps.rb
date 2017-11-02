@@ -29,7 +29,7 @@ def ensure_suspended_user(user, inventory_pool, suspended_until = rand(1.years.f
 end
 
 Given(/^an order contains overbooked models$/) do
-  @contract = @current_inventory_pool.orders.submitted.with_verifiable_user_and_model.detect {|c| not c.approvable?}
+  @contract = @current_inventory_pool.orders.submitted.joins(:reservations).with_verifiable_user_and_model.detect {|c| not c.approvable?}
   expect(@contract).not_to be_nil
 end
 
@@ -63,7 +63,7 @@ end
 
 
 Given(/^a verifiable order exists$/) do
-  @contract = Order.with_verifiable_user_and_model.first
+  @contract = Order.joins(:reservations).with_verifiable_user_and_model.first
   expect(@contract).not_to be_nil
 end
 
@@ -87,6 +87,7 @@ Then(/^I see all verifiable orders$/) do
     @current_inventory_pool
     .orders
     .where(state: [:submitted, :approved, :rejected])
+    .joins(:reservations)
     .with_verifiable_user_and_model
     .with_some_line_not_in_any_contract
   @contracts.each {|c|
@@ -105,6 +106,7 @@ Then(/^I see all pending verifiable orders$/) do
     @current_inventory_pool
     .orders
     .where(state: :submitted)
+    .joins(:reservations)
     .with_verifiable_user_and_model
   @contracts.each {|c|
     expect(has_selector?("[data-type='order'][data-id='#{c.id}']")).to be true
@@ -173,6 +175,7 @@ Then(/^I see all verified and approved orders$/) do
     @current_inventory_pool
     .orders
     .where(state: :approved)
+    .joins(:reservations)
     .with_verifiable_user_and_model
     .with_some_line_not_in_any_contract
   @contracts.each {|c|
@@ -192,6 +195,7 @@ Then(/^I see all verifiable rejected orders$/) do
     @current_inventory_pool
     .orders
     .where(state: :rejected)
+    .joins(:reservations)
     .with_verifiable_user_and_model
   @contracts.each {|c|
     expect(has_selector?("[data-type='order'][data-id='#{c.id}']")).to be true
@@ -210,6 +214,7 @@ Then(/^I see orders placed by users in groups requiring verification$/) do
     @contracts = \
       @current_inventory_pool
       .orders
+      .joins(:reservations)
       .where(state: [:submitted, :approved, :rejected])
       .with_verifiable_user
       .with_some_line_not_in_any_contract
@@ -309,7 +314,7 @@ When(/^I search( globally)? for (an order|a contract|a visit)( with its purpose)
   if arg1 == 'a contract'
     @contract = @current_inventory_pool.contracts.first
   elsif arg1 == 'an order'
-    @contract = @current_inventory_pool.orders.with_some_line_not_in_any_contract.first
+    @contract = @current_inventory_pool.orders.joins(:reservations).with_some_line_not_in_any_contract.first
   elsif arg1 == 'a visit'
     @contract = @current_inventory_pool.visits.where(status: ['approved', 'signed']).first
   end

@@ -95,7 +95,6 @@ class Order < ApplicationRecord
     )
   end)
 
-  # NOTE: assumes `joins(:reservations)`
   def to_be_verified?
     Order
       .joins(:reservations)
