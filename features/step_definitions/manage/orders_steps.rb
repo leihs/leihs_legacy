@@ -310,6 +310,34 @@ Given(/^(orders|contracts|visits) exist$/) do |arg1|
   expect(@contracts.exists?).to be true
 end
 
+When(/^I search for an order which does not need verification using the user name$/) do
+  @contract = \
+    @current_inventory_pool
+    .orders
+    .joins(:reservations)
+    .with_some_line_not_in_any_contract
+    .no_verification_required
+    .first
+  @search_term = @contract.user.to_s
+  within '#contracts-index-view' do
+    step %Q(I search for "%s") % @search_term
+  end
+end
+
+When(/^I search for an order which does not need verification using the purpose$/) do
+  @contract = \
+    @current_inventory_pool
+    .orders
+    .joins(:reservations)
+    .with_some_line_not_in_any_contract
+    .no_verification_required
+    .first
+  @search_term = @contract.purpose
+  within '#contracts-index-view' do
+    step %Q(I search for "%s") % @search_term
+  end
+end
+
 When(/^I search( globally)? for (an order|a contract|a visit)( with its purpose)?$/) do |arg0, arg1, arg2|
   if arg1 == 'a contract'
     @contract = @current_inventory_pool.contracts.first

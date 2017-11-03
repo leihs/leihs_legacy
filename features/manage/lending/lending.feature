@@ -131,13 +131,13 @@ Feature: Lending
   Scenario: Searching within orders
     Given orders exist
     When I am listing the orders
-    And I search for an order
+    And I search for an order which does not need verification using the user name
     Then all listed orders match the search term
 
   Scenario: Searching purpose within orders
     Given orders exist
     When I am listing the orders
-    And I search for an order with its purpose
+    And I search for an order which does not need verification using the purpose
     Then all listed orders match the search term
 
   Scenario: Searching purpose globally
