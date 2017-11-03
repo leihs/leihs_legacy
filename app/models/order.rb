@@ -145,6 +145,7 @@ class Order < ApplicationRecord
         orders.where('orders.created_at <= ?', end_date)
       end
       .order('orders.created_at DESC')
+      .distinct
 
     orders.default_paginate(params)
   end
