@@ -15,8 +15,7 @@ Feature: Quick Approve orders
 
   Scenario: Approve anyway on daily view
     Given I navigate to the open orders
-    And the checkbox "No verification required" is already checked and I can uncheck
-    And I scroll loading all pages
+    And I scroll to the bottom of the page
     And I try to approve a contract that has problems
     Then I got an information that this contract has problems
     When I approve anyway
