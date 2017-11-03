@@ -24,15 +24,10 @@ class Order < ApplicationRecord
       where(state: :approved)
     end
 
+    # NOTE: assumes `joins(:reservations)`
     def with_some_line_not_in_any_contract
-      where <<-SQL
-        EXISTS (
-          SELECT 1
-          FROM reservations
-          WHERE reservations.order_id = orders.id
-            AND reservations.contract_id IS NULL
-        )
-      SQL
+      where(reservations: { contract: nil })
+        .distinct
     end
   end
 
@@ -74,33 +69,36 @@ class Order < ApplicationRecord
     SQL
   end)
 
-  PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION = <<-SQL
-    SELECT 1
-    FROM partitions
-    INNER JOIN reservations ON reservations.model_id = partitions.model_id
-    AND partitions.inventory_pool_id = reservations.inventory_pool_id
-    AND reservations.order_id = orders.id
-    INNER JOIN groups ON groups.id = partitions.group_id
-    AND groups.is_verification_required IS TRUE
-    AND groups.inventory_pool_id = orders.inventory_pool_id
-    INNER JOIN groups_users ON groups.id = groups_users.group_id
-    AND groups_users.user_id = orders.user_id
-  SQL
-
+  # NOTE: assumes `joins(:reservations)`
   scope :with_verifiable_user_and_model, (lambda do
-    where <<-SQL
-      EXISTS (#{PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION})
+    joins(<<-SQL)
+      INNER JOIN partitions
+      ON partitions.model_id = reservations.model_id
+      AND partitions.inventory_pool_id = reservations.inventory_pool_id
     SQL
+      .joins('INNER JOIN groups ON partitions.group_id = groups.id')
+      .joins('INNER JOIN groups_users ON groups.id = groups_users.group_id')
+      .where('groups.inventory_pool_id = reservations.inventory_pool_id')
+      .where(groups: { is_verification_required: true })
+      .where('groups_users.user_id = reservations.user_id')
+      .distinct
   end)
 
   scope :no_verification_required, (lambda do
-    where <<-SQL
-      NOT EXISTS (#{PARTITIONS_SUBQUERY_FOR_EXISTS_CONDITION})
-    SQL
+    where.not(
+      id: \
+        Order
+        .unscoped # have to be used here, `Order` uses current scope (WTF) !!!
+        .joins(:reservations)
+        .with_verifiable_user_and_model
+        .select(:id)
+    )
   end)
 
   def to_be_verified?
-    Order.with_verifiable_user_and_model.where(id: id).exists?
+    Order
+      .joins(:reservations)
+      .with_verifiable_user_and_model.where(id: id).exists?
   end
 
   #################################################################################
@@ -115,7 +113,9 @@ class Order < ApplicationRecord
              end
 
     orders = \
-      orders.with_some_line_not_in_any_contract
+      orders
+      .joins(:reservations)
+      .with_some_line_not_in_any_contract
       .scope_if_presence(params[:status]) do |orders, states|
         orders.where(state: states)
       end
@@ -127,7 +127,6 @@ class Order < ApplicationRecord
       end
       .scope_if_presence(params[:reservation_ids]) do |orders, reservation_ids|
         orders
-          .joins(:reservations)
           .where(reservations: { id: reservation_ids })
           .distinct
       end
@@ -150,11 +149,11 @@ class Order < ApplicationRecord
     orders.default_paginate(params)
   end
 
+  # NOTE: assumes `joins(:reservations)`
   def self.search(query)
     return all if query.blank?
 
     sql = distinct
-      .joins('INNER JOIN reservations ON orders.id = reservations.order_id')
       .joins('INNER JOIN users ON users.id = reservations.user_id')
       .joins(<<-SQL)
         LEFT JOIN users delegated_users

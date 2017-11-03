@@ -6,7 +6,7 @@ Given /^I search for the inventory code of an item that is in a contract$/ do
 end
 
 Then /^I see the contract this item is assigned to in the list of results$/ do
-  expect(@current_user.inventory_pools.first.contracts.search(@item.inventory_code)).to include @contract
+  expect(@current_user.inventory_pools.first.contracts.joins(:reservations).search(@item.inventory_code)).to include @contract
 end
 
 Given(/^there is a user with contracts who no longer has access to the current inventory pool$/) do

@@ -29,13 +29,16 @@ class window.App.OrdersRejectController extends Spine.Controller
         modelIds.push(line.model_id) unless App.Model.exists(line.model_id)?
       else if line.option_id?
         optionIds.push(line.option_id) unless App.Option.exists(line.option_id)?
-    @fetchModels(modelIds).done => @fetchOptions(optionIds).done => do callback
+    @fetchModels(modelIds).done =>
+      @fetchOptions(optionIds).done =>
+        do callback
 
   fetchModels: (ids)=>
     if ids.length
       App.Model.ajaxFetch
         data: $.param
           ids: ids
+          paginate: false
     else
       {done: (c)->c()}
 
@@ -44,5 +47,6 @@ class window.App.OrdersRejectController extends Spine.Controller
       App.Option.ajaxFetch
         data: $.param
           ids: ids
+          paginate: false
     else
       {done: (c)->c()}

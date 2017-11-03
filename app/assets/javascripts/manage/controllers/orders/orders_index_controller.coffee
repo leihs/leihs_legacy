@@ -36,7 +36,13 @@ class window.App.OrdersIndexController extends Spine.Controller
       search_term: @search.term()
       page: page
       range: @range.get()
-    data = $.extend data, { from_verifiable_users: true } if App.User.current.role == "group_manager"
+
+    if not data['to_be_verified'] and App.User.current.role == "group_manager"
+      data = $.extend data, { from_verifiable_users: true }
+
+    if not data['no_verification_required'] and App.User.current.role != "group_manager"
+      data = $.extend data, { to_be_verified: true }
+
     App.Order.ajaxFetch({ data: $.param data })
     .done (data, status, xhr) =>
       @pagination.set JSON.parse(xhr.getResponseHeader("X-Pagination"))

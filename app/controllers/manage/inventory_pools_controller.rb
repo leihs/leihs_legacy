@@ -20,8 +20,8 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
   def daily(date = params[:date])
     if group_manager? and not lending_manager?
       redirect_to \
-        manage_contracts_path(current_inventory_pool,
-                              status: [:approved, :submitted, :rejected]),
+        manage_orders_path(current_inventory_pool,
+                           status: [:approved, :submitted, :rejected]),
         flash: params[:flash] and return
     end
 

@@ -16,5 +16,5 @@ Given(/^I am a customer with contracts$/) do
 end
 
 When(/^I am in an inventory pool with verifiable orders$/) do
-  @current_inventory_pool = @current_user.inventory_pools.managed.find {|ip| not ip.orders.with_verifiable_user_and_model.empty? }
+  @current_inventory_pool = @current_user.inventory_pools.managed.find {|ip| not ip.orders.joins(:reservations).with_verifiable_user_and_model.empty? }
 end
