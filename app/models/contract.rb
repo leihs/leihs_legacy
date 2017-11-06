@@ -187,6 +187,7 @@ class Contract < ApplicationRecord
       end
       .scope_if_presence(params[:global_contracts_search],
                          &:sort_for_global_search)
+      .distinct
 
     contracts.default_paginate(params)
   end
