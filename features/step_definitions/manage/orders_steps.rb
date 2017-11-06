@@ -336,15 +336,28 @@ When(/^I search( globally)? for (an order|a contract|a visit)( with its purpose)
   end
 end
 
-Then(/^all listed (orders|contracts|visits) match the search term$/) do |arg1|
-  el = arg1 == 'visits' ? '#visits-index-view' : '#contracts-index-view'
-  within el do
-    within '.list-of-lines' do
-      find(".line[data-id='#{@contract.id}']")
-      contract_ids = all('.line').map{|x| x['data-id'] }.sort
-      matching_contracts_ids = @contracts.filter(search_term: @search_term).map(&:id).map(&:to_s).sort
-      expect(contract_ids).to eq matching_contracts_ids
-    end
+Then(/^all listed visits match the search term$/) do
+  within '.list-of-lines' do
+    find(".line[data-id='#{@contract.id}']")
+    contract_ids = all('.line').map{|x| x['data-id'] }.sort
+    matching_contracts_ids = \
+      @contracts
+      .filter(search_term: @search_term)
+      .map(&:id).map(&:to_s).sort
+    expect(contract_ids).to eq matching_contracts_ids
+  end
+end
+
+Then(/^all listed (?:orders|contracts) match the search term$/) do
+  within '.list-of-lines' do
+    find(".line[data-id='#{@contract.id}']")
+    contract_ids = all('.line').map{|x| x['data-id'] }.sort
+    matching_contracts_ids = \
+      @contracts
+      .no_verification_required
+      .filter(search_term: @search_term)
+      .map(&:id).map(&:to_s).sort
+    expect(contract_ids).to eq matching_contracts_ids
   end
 end
 

@@ -7,7 +7,7 @@ Feature: Edit contract line during hand over process
   Background:
     Given I am Pius
 
-  @flapping
+  @broken
   Scenario: Change the time range of a single contract line
      When I open a hand over
       And I change a contract reservations time range

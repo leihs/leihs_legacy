@@ -188,21 +188,33 @@ class Manage::ReservationsController < Manage::ApplicationController
     returned_quantity = params[:returned_quantity]
     reservations = current_inventory_pool.reservations.find(params[:ids])
 
-    returned_quantity.each_pair do |k, v|
-      line = reservations.detect { |l| l.id == k }
-      next unless line and Integer(v) < line.quantity
-      new_line = line.dup # NOTE use .dup instead of .clone (from Rails 3.1)
-      new_line.quantity -= Integer(v)
-      new_line.save
-      line.update_attributes(quantity: Integer(v))
-    end if returned_quantity
+    begin
+      ApplicationRecord.transaction do
+        if returned_quantity
+          returned_quantity.each_pair do |k, v|
+            line = reservations.detect { |l| l.id == k }
+            next unless line and Integer(v) < line.quantity
+            new_line = line.dup
+            new_line.quantity -= Integer(v)
+            new_line.save!
+            line.update_attributes!(quantity: Integer(v))
+          end
+        end
 
-    reservations.each do |l|
-      l.update_attributes(returned_date: Time.zone.today,
-                          returned_to_user_id: current_user.id)
+        reservations.each do |l|
+          l.update_attributes!(returned_date: Time.zone.today,
+                               returned_to_user_id: current_user.id)
+
+          if l.last_closed_reservation_of_contract?
+            l.contract.update_attributes!(state: :closed)
+          end
+        end
+
+        head :ok
+      end
+    rescue => e
+      render status: :bad_request, plain: e.message
     end
-
-    head :ok
   end
 
   # for hand over

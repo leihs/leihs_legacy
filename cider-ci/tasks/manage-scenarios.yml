@@ -224,14 +224,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/availability/availability.feature:47
-- name: features/manage/booking_calendar/availability_changes.feature:10
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/booking_calendar/availability_changes.feature:10
 - name: features/manage/booking_calendar/summary_of_lines_in_calendar.feature:10
   scripts:
     test:
@@ -280,14 +272,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/change_language.feature:9
-- name: features/manage/daily_view/daily_view.feature:14
+- name: features/manage/daily_view/daily_view.feature:13
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/daily_view/daily_view.feature:14
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/daily_view/daily_view.feature:13
 - name: features/manage/daily_view/daily_view.feature:7
   scripts:
     test:

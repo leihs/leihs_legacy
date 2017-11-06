@@ -87,8 +87,13 @@ class Contract < ApplicationRecord
         errors.add(:base, _('This contract is not signable because ' \
                             'some reservations are not assigned.'))
       end
-      if reservations.any? { |l| l.end_date < Time.zone.today }
-        errors.add(:base, _('Start Date must be before End Date'))
+      if reservations
+        .where(status: :signed)
+        .any? { |l| l.end_date < Time.zone.today }
+        errors.add(
+          :base,
+          _('End date of a take back line can not be in the past.')
+        )
       end
       if reservations.map(&:delegated_user).uniq.count > 1
         errors.add(:base, _("Contract can't have multiple delegated users."))
