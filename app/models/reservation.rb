@@ -211,6 +211,10 @@ class Reservation < ApplicationRecord
     end
   end
 
+  def last_closed_reservation_of_contract?
+    contract.reservations.all? { |r| r.status == :closed }
+  end
+
   ############################################
 
   private
@@ -224,5 +228,4 @@ class Reservation < ApplicationRecord
     # errors.add(:base, _("Start Date cannot be a past date"))
     # if start_date < Date.today
   end
-
 end

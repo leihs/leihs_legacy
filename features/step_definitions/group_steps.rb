@@ -138,6 +138,11 @@ end
 When /^"([^"]*)" returns the item$/ do |user|
   @user = User.where(login: user).first
   cl = @user.reservations.last
-  cl.update_attributes(returned_date: Date.today)
+  ApplicationRecord.transaction do
+    cl.update_attributes(returned_date: Date.today)
+    if cl.last_closed_reservation_of_contract?
+      cl.contract.update_attributes(state: :closed)
+    end
+  end
   expect(cl.status).to be :closed
 end
