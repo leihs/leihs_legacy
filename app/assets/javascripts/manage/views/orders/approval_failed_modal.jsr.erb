@@ -15,7 +15,7 @@
           </a>
           {{if ~accessRight.atLeastRole(~currentUserRole, "lending_manager") }}
           <div class='multibutton'>
-            <a class='button white text-ellipsis' href='/manage/{{current_inventory_pool_id/}}/contracts/{{>id}}/edit'>
+            <a class='button white text-ellipsis' href='/manage/{{current_inventory_pool_id/}}/orders/{{>id}}/edit'>
               {{jed "Edit Order"/}}
             </a>
             <div class='dropdown-holder inline-block'>
@@ -33,7 +33,7 @@
             </div>
           </div>
           {{else}}
-          <a class='button white text-ellipsis' href='/manage/{{current_inventory_pool_id/}}/contracts/{{>id}}/edit'>
+          <a class='button white text-ellipsis' href='/manage/{{current_inventory_pool_id/}}/orders/{{>id}}/edit'>
             {{jed "Edit Order"/}}
           </a>
           {{/if}}
