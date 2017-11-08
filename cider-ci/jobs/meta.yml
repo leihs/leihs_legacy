@@ -13,12 +13,39 @@ jobs:
         exclude_match: '^.*(no-ci|hotspot).*$'
 
     context:
+      include:
+        - cider-ci/shared/main-context.yml
+
       task_defaults:
         max_trials: 1
         traits:
           Ruby: true
 
       tasks:
+        migration-of-demo-dump:
+          include:
+            - cider-ci/task-components/database.yml
+
+          environment_variables:
+            RAILS_ENV: production
+
+          name: "Check if demo dump needs to be and has been migrated"
+
+          scripts:
+            test:
+              body: |
+                #!/usr/bin/env bash
+                set -exu
+                export PATH=~/.rubies/$RUBY/bin:$PATH
+                export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
+                bundle exec rake db:drop db:create db:pg:structure_and_data:restore FILE=./features/personas/demo.pgbin
+                if rake db:migrate:status | grep -q ".*down.*\d.*\s.*"; then
+                  exit 0
+                else
+                  "run ./bin/migrate-and-dump-demo"
+                  exit 1
+                fi
+
         git-branch-current:
           name: "Git tree contains latest commit from origin/master"
           scripts:

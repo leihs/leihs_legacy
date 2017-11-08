@@ -16,6 +16,6 @@ scripts:
           'username' => ENV['PGUSER'],
           'password' =>  ENV['PGPASSWORD'],
           'database' => ENV['DATABASE']}
-        config = { 'test' => db_config}
+        config = { ENV['RAILS_ENV'] => db_config}
         File.open('config/database.yml','w') { |file| file.write config.to_yaml }
       end
