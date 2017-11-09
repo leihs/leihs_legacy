@@ -17,6 +17,24 @@ module Manage
                                        user: user)
       end
 
+      step 'the contract has an item line' do
+        @option_line = \
+          FactoryGirl.create(:option_line,
+                             user: @contract.user,
+                             inventory_pool: @contract.inventory_pool,
+                             contract: @contract,
+                             status: :signed)
+      end
+
+      step 'the contract has an option line' do
+        @item_line = \
+          FactoryGirl.create(:item_line, :with_assigned_item,
+                             user: @contract.user,
+                             inventory_pool: @contract.inventory_pool,
+                             contract: @contract,
+                             status: :signed)
+      end
+
       step 'I open the take back page for the user of this contract' do
         visit manage_take_back_path(@current_inventory_pool, @contract.user)
       end
@@ -47,6 +65,20 @@ module Manage
       step 'all the reservations of the contract are :state' do |state|
         @contract.reload.reservations.each do |r|
           expect(r.status).to be == state.to_sym
+        end
+      end
+
+      step 'I hover over the purpose icon of the item line' do
+        find(".line[data-id='#{@item_line.id}'] .fa-comment").hover
+      end
+
+      step 'I hover over the purpose icon of the option line' do
+        find(".line[data-id='#{@option_line.id}'] .fa-comment").hover
+      end
+
+      step 'I see the contract\'s purpose in the shown tooltip' do
+        within '.tooltipster-base' do
+          expect(current_scope).to have_content @contract.purpose
         end
       end
     end

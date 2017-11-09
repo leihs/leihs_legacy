@@ -28,11 +28,9 @@
     <strong class='test-fix-timeline'>{{>option().name()}}</strong>
   </div>
   <div class='col1of10 line-col text-align-center'>
-    {{if purpose_id}}
-    <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>purpose().description}}'>
+    <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>contract().purpose}}'>
       <i class='fa fa-comment grey'></i>
     </div>
-    {{/if}}
   </div>
   <div class='col1of10 line-col text-align-center'>
     {{if ~renderAvailability && anyProblems()}}

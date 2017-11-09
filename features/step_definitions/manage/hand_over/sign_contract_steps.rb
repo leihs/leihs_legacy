@@ -17,12 +17,21 @@ When(/^I open the hand over page containing this reservation$/) do
 end
 
 When(/^I open a hand over$/) do
-  @current_inventory_pool = @current_user.inventory_pools.managed.detect do |ip|
-    @customer = ip.users.not_as_delegations.detect do |user|
-      user.visits.hand_over.any? { |v| v.reservations.size >= 3 }
-    end
+  @customer = FactoryGirl.create(:customer,
+                                 inventory_pool: @current_inventory_pool)
+  @contract = @order = FactoryGirl.create(:order,
+                                          state: :approved,
+                                          user: @customer,
+                                          inventory_pool: @current_inventory_pool)
+  3.times do
+    FactoryGirl.create(:reservation,
+                       status: :approved,
+                       user: @customer,
+                       order: @order,
+                       inventory_pool: @current_inventory_pool)
   end
-  open_hand_over_and_set_contract
+  step 'I open a hand over for this customer'
+  expect(has_selector?('#hand-over-view', visible: true)).to be true
 end
 
 When(/^I open a hand over with at least one unassigned line for today$/) do
