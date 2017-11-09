@@ -253,7 +253,7 @@ module ExpertComparators
         serial_number
         shelf
         status_note
-        user_name
+        usage
       )
     end
 

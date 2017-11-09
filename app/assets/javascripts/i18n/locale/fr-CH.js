@@ -2212,9 +2212,9 @@ window.i18n.locale_data = {
          null,
          "Utilisateur inconnu"
       ],
-      "User/Typical usage": [
+      "Usage": [
          null,
-         "Utilisateur/Utilisation typique"
+         "Utilisation"
       ],
       "Username": [
          null,

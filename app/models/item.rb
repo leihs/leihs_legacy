@@ -93,7 +93,7 @@ class Item < ApplicationRecord
                          invoice_number
                          note
                          name
-                         user_name
+                         usage
                          properties)
 
   scope :search, lambda { |query|

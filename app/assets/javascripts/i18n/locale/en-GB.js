@@ -2069,7 +2069,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "User/Typical usage": [
+      "Usage": [
          null,
          ""
       ],

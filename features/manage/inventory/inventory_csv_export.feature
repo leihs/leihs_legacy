@@ -39,7 +39,7 @@ Feature: Inventory (CSV export)
       | Last Checked                  |
       | Responsible department        |
       | Responsible person            |
-      | User/Typical usage            |
+      | Usage                         |
       | Supply Category               |
       | Reference                     |
       | Project Number                |

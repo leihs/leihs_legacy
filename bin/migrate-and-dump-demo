@@ -10,3 +10,4 @@ bundle exec rake db:drop db:create
 bundle exec rake db:pg:structure_and_data:restore FILE=features/personas/demo.pgbin
 bundle exec rake db:migrate
 bundle exec rake db:environment:set
+bundle exec rake db:pg:structure_and_data:dump FILE=features/personas/demo.pgbin
