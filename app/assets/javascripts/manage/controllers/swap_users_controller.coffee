@@ -18,23 +18,31 @@ class window.App.SwapUsersController extends Spine.Controller
     @el = @modal.el
     super
 
-    @submitButton.attr('disabled', true)
+    @disableForm()
 
     @searchSetUserController = new App.SearchSetUserController
       el: @el.find("#user #swapped-person")
       selectCallback: =>
-        @submitButton.attr('disabled', false)
+        @enableForm()
         @setupContactPerson() if @manageContactPerson
       removeCallback: =>
-        @submitButton.attr('disabled', true)
+        @disableForm()
 
     @setupContactPerson() if @manageContactPerson
 
   delegateEvents: =>
     super
 
+  disableForm: -> @submitButton.attr('disabled', true)
+  enableForm: -> @submitButton.attr('disabled', false)
+  isDisabledForm: -> !!@submitButton.attr('disabled')
+
   submit: (e)->
     e.preventDefault()
+
+    # NOTE: Needed for Safari wich does implicit submit even when disabled!
+    return if @isDisabledForm()
+
     @errorsContainer.addClass "hidden"
     App.Button.disable @submitButton
     if @reservations?
@@ -79,5 +87,7 @@ class window.App.SwapUsersController extends Spine.Controller
           customAutocompleteOptions:
             source: ( $.extend App.User.find(datum.id), { label: datum.name } for datum in data )
             minLength: 0
-          selectCallback: => @submitButton.attr('disabled', false)
-          removeCallback: => @submitButton.attr('disabled', true)
+          selectCallback: =>
+            @enableForm()
+          removeCallback: =>
+            @disableForm()
