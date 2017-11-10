@@ -217,7 +217,8 @@ class Contract < ApplicationRecord
     query.split.map(&:strip).each do |q|
       qq = "%#{q}%"
       sql = sql.where(
-        User.arel_table[:login].matches(qq)
+        self.arel_table[:compact_id].matches(qq)
+          .or(User.arel_table[:login].matches(qq))
           .or(User.arel_table[:firstname].matches(qq))
           .or(User.arel_table[:lastname].matches(qq))
           .or(User.arel_table[:badge_id].matches(qq))
