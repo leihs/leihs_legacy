@@ -30,7 +30,8 @@ Rails.application.configure do
     (YAML.load(ENV['RAILS_SERVE_STATIC_FILES'].presence || "no") == true)
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  # NOTE: 'mangle: true' option makes the build non-reproducible!
+  config.assets.js_compressor = Uglifier.new(mangle: false)
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.

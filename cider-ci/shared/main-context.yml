@@ -23,6 +23,10 @@ task_defaults:
     logs:
       include_match: log\/.*\.log$
       content_type: text/plain
+    debugging: 
+      include_match: tmp\/attach\/.*\.tar(\.gz)?$
+      content_type: application/octet-stream
+
 
   tree_attachments:
     deprecation-warnings:

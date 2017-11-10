@@ -71,10 +71,21 @@ jobs:
 
         assets compiled if changed:
           name: "Assets have been compiled if changed"
+          include: [ cider-ci/task-components/database.yml ]
+          environment_variables: { RAILS_ENV: production }
           scripts:
             test:
-              body:
-                read_and_replace_with: cider-ci/bin/check-assets-are-compiled
+              timeout: 10 Minutes
+              body: |
+                set -exu
+                export PATH=~/.rubies/$RUBY/bin:$PATH
+                mv public/assets tmp/checked_in_assets
+                bin/recompile-assets
+
+                # tmp:
+                mkdir -p tmp/attach && tar czf tmp/attach/assets.tar.gz public/assets
+
+                cider-ci/bin/check-precompiled-assets tmp/checked_in_assets public/assets
 
         "rails bug 25198 is open":
           name: "Check if Rails bug 25198 is still open. If it isn't we have to fix our code."
