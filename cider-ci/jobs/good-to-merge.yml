@@ -7,19 +7,10 @@ jobs:
     description: |
       This job depends on all other tests and checks
       and it will pass if and only if all dependencies have passed.
+      It also include *git* meta checks (only relevant for pushing to master).
       Status of this job is **used by github's "branch protection"**!
 
     depends_on:
-      meta passed:
-        type: job
-        job_key: meta
-        states: [passed]
-      all tests passed:
-        type: job
-        job_key: all-tests
-        states: [passed]
-
-    run_when:
       meta passed:
         type: job
         job_key: meta
@@ -33,11 +24,5 @@ jobs:
       task_defaults:
         max_trials: 1
       tasks:
-        all relevant tests have passed:
-          name: "All tests and meta checks have passed, thus good to merge"
-          scripts:
-            main:
-              body: echo 'All relevant tests and meta checks have passed' ; exit 0
-
         include:
           - path: cider-ci/context-components/merged-submodules-check.yml
