@@ -4,7 +4,7 @@
   /* global _jed */
   const React = window.React
 
-  window.HandOverDialog = React.createClass({
+  window.HandOverDialog = window.createReactClass({
     propTypes: {
     },
 

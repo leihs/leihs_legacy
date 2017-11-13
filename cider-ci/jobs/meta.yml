@@ -69,22 +69,30 @@ jobs:
                 test -z "$(git status --porcelain cider-ci/tasks)"
 
         assets compiled if changed:
-          name: "Assets have been compiled if changed"
+          name: "Assets have been precompiled and checked in"
           include: [ cider-ci/task-components/database.yml ]
           environment_variables: { RAILS_ENV: production }
+          traits: [ g2016 ] # fast machines only
           scripts:
             test:
               timeout: 10 Minutes
               body: |
-                set -exu
-                export PATH=~/.rubies/$RUBY/bin:$PATH
+                set -eu
+                # rails-webpacker wants to use yarn, so put node_modules in PATH and install it
+                export PATH=./node_modules/.bin:~/.rubies/$RUBY/bin:$PATH
+                npm install yarn
+
                 mv public/assets tmp/checked_in_assets
+                bundle exec rake app:i18n:po2json
                 bin/recompile-assets
 
-                # tmp:
+                # attach for easy local debugging:
                 mkdir -p tmp/attach && tar czf tmp/attach/assets.tar.gz public/assets
 
                 cider-ci/bin/check-precompiled-assets tmp/checked_in_assets public/assets
+
+                # don't keep the attachment if there was no failure!
+                rm tmp/attach/assets.tar.gz
 
         "rails bug 25198 is open":
           name: "Check if Rails bug 25198 is still open. If it isn't we have to fix our code."

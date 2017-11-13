@@ -4,7 +4,7 @@
   /* global _jed */
   const React = window.React
 
-  window.Inventory = React.createClass({
+  window.Inventory = window.createReactClass({
     propTypes: {
     },
 

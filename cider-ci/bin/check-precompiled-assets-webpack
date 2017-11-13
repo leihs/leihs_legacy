@@ -1,0 +1,25 @@
+#!/bin/bash -eu
+
+# check webpack-compiled assets
+
+IGNORED_FILES=(stats.json report.html)
+
+STASH=$(mktemp -d -t 'check-webpack-assets.XXXXX') && mkdir "${STASH}/a" && mkdir "${STASH}/b"
+for FILE in ${IGNORED_FILES[*]}; do
+  mv "${1}/${FILE}" "${STASH}/a/${FILE}"
+  mv "${2}/${FILE}" "${STASH}/b/${FILE}"
+done
+
+printf 'check all files in build directory against repo'
+git diff --quiet --no-index "$1" "$2" \
+  && echo ' ✔︎' \
+  || {
+    echo " - FAIL! See diff:"
+    git diff --stat=120 --no-color --no-index "$1" "$2"
+  }
+
+# cleanup
+for FILE in ${IGNORED_FILES[*]}; do
+  mv "${STASH}/a/${FILE}" "${1}/${FILE}"
+  mv "${STASH}/b/${FILE}" "${2}/${FILE}"
+done

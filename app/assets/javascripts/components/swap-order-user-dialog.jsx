@@ -4,7 +4,7 @@
   /* global _jed */
   const React = window.React
 
-  window.SwapOrderUserDialog = React.createClass({
+  window.SwapOrderUserDialog = window.createReactClass({
     propTypes: {
     },
 

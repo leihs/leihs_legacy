@@ -6,7 +6,7 @@
   const ReactDOM = window.ReactDOM
   React.findDOMNode = ReactDOM.findDOMNode
 
-  window.FieldAutocompletePreload = React.createClass({
+  window.FieldAutocompletePreload = window.createReactClass({
     propTypes: {
     },
 

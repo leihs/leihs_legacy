@@ -1,0 +1,14 @@
+= 'DebugProps / Dummy Component / smokescreen test for react-rails integration'
+- time = Time.now.utc
+
+%hr.separated-bottom.margin-vertical-m
+
+%h3= 'client-side render'
+= react_component('DebugProps', {foo: 'bar', time: time, prerendered: false}, {prerender: false})
+
+%hr.separated-bottom.margin-vertical-m
+
+%h3= 'server-side render'
+= react_component('DebugProps', {foo: 'baz', time: time, prerendered: true}, {prerender: true})
+
+%hr.separated-bottomargin-vertical-m

@@ -7,7 +7,7 @@
   const Autocomplete = window.ReactAutocomplete
   React.findDOMNode = ReactDOM.findDOMNode // NOTE: autocomplete lib needs this
 
-  window.InputDateRange = React.createClass({
+  window.InputDateRange = window.createReactClass({
     propTypes: {
     },
 

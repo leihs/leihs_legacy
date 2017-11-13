@@ -4,7 +4,7 @@
   /* global _jed */
   const React = window.React
 
-  window.ChooseUserPreload = React.createClass({
+  window.ChooseUserPreload = createReactClass({
     propTypes: {
     },
 

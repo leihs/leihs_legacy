@@ -6,7 +6,7 @@
   const ReactDOM = window.ReactDOM
   React.findDOMNode = ReactDOM.findDOMNode // NOTE: autocomplete lib needs this
 
-  window.SearchMaskState = React.createClass({
+  window.SearchMaskState = window.createReactClass({
     propTypes: {
     },
 

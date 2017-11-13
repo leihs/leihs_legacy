@@ -11,7 +11,7 @@
   // - Highlighting of current day and current selected date in picker.
   // - Make sure no SQL injections are possible.
 
-  window.Expert = React.createClass({
+  window.Expert = window.createReactClass({
     propTypes: {
     },
 

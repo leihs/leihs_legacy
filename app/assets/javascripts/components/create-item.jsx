@@ -4,7 +4,7 @@
   /* global _jed */
   const React = window.React
 
-  window.CreateItem = React.createClass({
+  window.CreateItem = window.createReactClass({
     propTypes: {
     },
 

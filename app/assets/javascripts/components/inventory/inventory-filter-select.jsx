@@ -4,7 +4,7 @@
   /* global _jed */
   const React = window.React
 
-  window.InventoryFilterSelect = React.createClass({
+  window.InventoryFilterSelect = window.createReactClass({
     propTypes: {
     },
 

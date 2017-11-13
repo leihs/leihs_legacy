@@ -40,6 +40,12 @@ test $DO_RESET && {
   done
 }
 
+# NOTE: this is all handled by just `yarn`
+# make sure node_modules are installed (yarn does it too but is faster when prepared)
+# npm install
+# make sure we don't depend on node_modules not listed in package.json
+# npm prune
+
 # i18n/locales
 bundle exec rake app:i18n:po2json
 git add app/assets/javascripts/i18n/locale/

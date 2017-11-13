@@ -6,7 +6,7 @@
   const ReactDOM = window.ReactDOM
   React.findDOMNode = ReactDOM.findDOMNode // NOTE: autocomplete lib needs this
 
-  window.TitleAndExport = React.createClass({
+  window.TitleAndExport = window.createReactClass({
     propTypes: {
     },
 

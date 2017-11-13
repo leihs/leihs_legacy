@@ -2,7 +2,7 @@
 
   const React = window.React
 
-  window.CreateItemContent = React.createClass({
+  window.CreateItemContent = window.createReactClass({
     propTypes: {
     },
 

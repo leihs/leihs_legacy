@@ -1,3 +1,5 @@
 set -eux
 
-RAILS_ENV=production bundle exec rake assets:precompile assets:clean
+export RAILS_ENV=production
+export NODE_ENV=production
+bundle exec rake webpacker:clobber assets:precompile assets:clean
