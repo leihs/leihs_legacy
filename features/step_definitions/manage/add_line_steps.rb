@@ -15,7 +15,7 @@ Then(/^the availability of the model is displayed as: "(?:.*?)"$/) do
       name = item.find('.col3of4 strong').text
       model = Model.find_by_name(name)
       av = model.availability_in(@current_inventory_pool)
-      max_available = av.maximum_available_in_period_for_groups(start_date, end_date, @customer.group_ids)
+      max_available = av.maximum_available_in_period_for_groups(start_date, end_date, @customer.entitlement_group_ids)
       max_available_in_total = av.maximum_available_in_period_summed_for_groups(start_date, end_date)
       total_rentable = \
           model

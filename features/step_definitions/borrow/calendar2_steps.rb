@@ -42,7 +42,7 @@ When(/^I try to add a model to the order that is not available$/) do
   @quantity = 3
   inventory_pool = @current_user.inventory_pools.detect do |ip|
     @model = @current_user.models.borrowable.detect do |m|
-      m.availability_in(ip).maximum_available_in_period_summed_for_groups(start_date, end_date, @current_user.group_ids) < @quantity and
+      m.availability_in(ip).maximum_available_in_period_summed_for_groups(start_date, end_date, @current_user.entitlement_group_ids) < @quantity and
       m.total_borrowable_items_for_user(@current_user, ip) >= @quantity
     end
   end
@@ -231,7 +231,7 @@ Then(/^that model's availability is shown in the calendar$/) do
         change_date_el = find('.fc-widget-content:not(.fc-other-month) .fc-day-number', match: :prefer_exact, text: /#{next_date.day}/).first(:xpath, '../..')
         next unless @current_inventory_pool.open_on? change_date_el[:"data-date"].to_date
         # check borrower availability
-        quantity_for_borrower = av.maximum_available_in_period_summed_for_groups next_date, next_date, @current_user.group_ids
+        quantity_for_borrower = av.maximum_available_in_period_summed_for_groups next_date, next_date, @current_user.entitlement_group_ids
         change_date_el.find('.fc-day-content div', text: quantity_for_borrower)
         next_date += 1.day
       end
@@ -383,15 +383,15 @@ end
 
 When(/^a model exists that is only available to a group$/) do
   @model = Model.all.detect do |m|
-    partitions = Partition.with_generals(model_ids: [m.id])
-    partitions.count > 1 and partitions.find{|p| p.group_id == nil}.quantity == 0
+    partitions = Entitlement.with_generals(model_ids: [m.id])
+    partitions.count > 1 and partitions.find{|p| p.entitlement_group_id == nil}.quantity == 0
   end
   expect(@model.blank?).to be false
-  @partition = @model.partitions.first
+  @partition = @model.entitlements.first
 end
 
 Then(/^I cannot order that model unless I am part of that group$/) do
-  @current_user.groups << Group.find(@partition.group_id)
+  @current_user.entitlement_groups << EntitlementGroup.find(@partition.entitlement_group_id)
   visit borrow_model_path(@model)
   find("[data-create-order-line][data-model-id='#{@model.id}']").click
   date = @current_user.inventory_pools.first.next_open_date

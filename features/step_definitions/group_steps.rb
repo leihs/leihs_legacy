@@ -1,17 +1,17 @@
 #
-# Models in Groups
+# Models in EntitlementGroups
 #
 Then 'that model should not be available in any other group'  do
   # FIXME how can be executed the next line ?? where is implemented the maximum method ??
-  # quantities = @model.in(@inventory_pool).maximum_available_in_period_for_groups(@inventory_pool.groups.where(['id != ?',@group]).pluck(:id))
+  # quantities = @model.in(@inventory_pool).maximum_available_in_period_for_groups(@inventory_pool.entitlement_groups.where(['id != ?',@group]).pluck(:id))
   # quantities.values.reduce(:+).to_i.should == 0
 end
 
 Then /^(\w+) item(s?) of that model should be available in group '([^"]*)'( only)?$/ do |n, plural, group_name, exclusivity|
   n = to_number(n)
-  @group = @inventory_pool.groups.find_by_name(group_name)
-  all_groups = [Group::GENERAL_GROUP_ID] + @inventory_pool.group_ids
-  quantities = Partition.hash_with_generals(@inventory_pool, @model)
+  @group = @inventory_pool.entitlement_groups.find_by_name(group_name)
+  all_groups = [EntitlementGroup::GENERAL_GROUP_ID] + @inventory_pool.entitlement_group_ids
+  quantities = Entitlement.hash_with_generals(@inventory_pool, @model)
   expect(quantities[@group.id].to_i).to eq to_number(n)
 
   all_groups.each do |group|
@@ -20,7 +20,7 @@ Then /^(\w+) item(s?) of that model should be available in group '([^"]*)'( only
 end
 
 Then 'that model should not be available in any group'  do
-  expect(Partition.hash_with_generals(@inventory_pool, @model).reject { |group_id, num| group_id == Group::GENERAL_GROUP_ID }.size).to eq 0
+  expect(Entitlement.hash_with_generals(@inventory_pool, @model).reject { |group_id, num| group_id == EntitlementGroup::GENERAL_GROUP_ID }.size).to eq 0
 end
 
 # TODO: currently unused
@@ -42,11 +42,11 @@ end
 
 When /^I assign (\w+) item(s?) to group "([^"]*)"$/ do |n, plural, to_group_name|
   n = to_number(n)
-  to_group = @inventory_pool.groups.find_by_name to_group_name
-  partition = Partition.hash_with_generals(@inventory_pool, @model)
+  to_group = @inventory_pool.entitlement_groups.find_by_name to_group_name
+  partition = Entitlement.hash_with_generals(@inventory_pool, @model)
   partition[to_group.id] ||= 0
   partition[to_group.id] += n
-  @model.partitions.set_in(@inventory_pool, partition)
+  @model.entitlements.set_in(@inventory_pool, partition)
 end
 
 Then 'that model should not be available to anybody' do
@@ -61,18 +61,18 @@ end
 
 Then /^(\w+) item(s?) of that model should be available to "([^"]*)"$/ do |n, plural, user|
   @user = User.find_by_login user
-  expect(@model.availability_in(@inventory_pool.reload).maximum_available_in_period_for_groups(Date.today, Date.tomorrow, @user.group_ids)).to eq n.to_i
+  expect(@model.availability_in(@inventory_pool.reload).maximum_available_in_period_for_groups(Date.today, Date.tomorrow, @user.entitlement_group_ids)).to eq n.to_i
 end
 
 #
-# Groups
+# EntitlementGroups
 #
 Given /^a group '([^']*)'( exists)?$/ do |name,foo|
   step "I add a group called \"#{name}\""
 end
 
 When /^I add a group called "([^"]*)"$/ do |name|
-  @inventory_pool.groups.create(name: name)
+  @inventory_pool.entitlement_groups.create(name: name)
 end
 
 # TODO: currently unused
@@ -86,7 +86,7 @@ do |group, filler, inventory_pool|
     inventory_pools = @user.inventory_pools
   end
 
-  groups = inventory_pools.collect { |ip| ip.groups.where(name: group).first }
+  groups = inventory_pools.collect { |ip| ip.entitlement_groups.where(name: group).first }
   groups.each do |group|
     expect(group.users.find_by_id( @user.id )).not_to be_nil
   end
@@ -97,7 +97,7 @@ end
 #
 Given /^the customer "([^"]*)" is added to group "([^"]*)"$/ do |user, group|
   @user = User.find_by_login user
-  @group = @inventory_pool.groups.find_by_name(group)
+  @group = @inventory_pool.entitlement_groups.find_by_name(group)
   @group.users << @user
   @group.save!
 end

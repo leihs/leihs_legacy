@@ -189,7 +189,25 @@ class Manage::ModelsController < Manage::ApplicationController
     # TODO: # Rails bug: https://github.com/rails/rails/issues/25198
     deal_with_destroy_nested_attributes!(params[:model])
     ###############################################################################
-    model.update_attributes(params[:model]) and model.save
+    p = ActionController::Parameters.new(params[:model].map do |k, v|
+      case k
+      when 'partitions_attributes'
+        [:entitlements_attributes, ActionController::Parameters.new(v.map do |k, v|
+          [k, ActionController::Parameters.new(v.map do |k, v|
+            case k
+            when 'group_id'
+              [:entitlement_group_id, v]
+            else
+              [k, v]
+            end
+          end.to_h)]
+        end.to_h)]
+      else
+        [k, v]
+      end
+    end.to_h)
+    p.permit!
+    model.update_attributes(p) and model.save
   end
 
 end

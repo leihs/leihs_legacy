@@ -47,19 +47,21 @@ class Model < ApplicationRecord
   has_many :rooms, -> { distinct }, through: :items
   has_many :inventory_pools, -> { distinct }, through: :items
 
-  has_many :partitions, dependent: :delete_all do
-    def set_in(inventory_pool, new_partitions)
+  has_many :entitlements, dependent: :delete_all do
+    def set_in(inventory_pool, new_entitlements)
       where(inventory_pool_id: inventory_pool).scoping do
         delete_all
-        new_partitions.delete(Group::GENERAL_GROUP_ID)
-        unless new_partitions.blank?
-          valid_group_ids = inventory_pool.group_ids
-          new_partitions.each_pair do |group_id, quantity|
-            group_id = group_id
+        new_entitlements.delete(EntitlementGroup::GENERAL_GROUP_ID)
+        unless new_entitlements.blank?
+          valid_entitlement_group_ids = inventory_pool.entitlement_group_ids
+          new_entitlements.each_pair do |entitlement_group_id, quantity|
+            entitlement_group_id = entitlement_group_id
             quantity = Integer(quantity.presence || 0)
-            if valid_group_ids.include?(group_id) and quantity > 0
-              create(group_id: group_id, quantity: quantity)
-            end
+            next unless (
+              valid_entitlement_group_ids.include?(entitlement_group_id) \
+              and quantity > 0)
+            create(entitlement_group_id: entitlement_group_id,
+                   quantity: quantity)
           end
         end
         # if there's no more items of a model in a group accessible to
@@ -68,7 +70,7 @@ class Model < ApplicationRecord
       end
     end
   end
-  accepts_nested_attributes_for :partitions, allow_destroy: true
+  accepts_nested_attributes_for :entitlements, allow_destroy: true
 
   has_many :reservations, dependent: :restrict_with_exception
   has_many :properties, dependent: :destroy
@@ -424,16 +426,16 @@ class Model < ApplicationRecord
   #############################################
 
   def total_borrowable_items_for_user(user, inventory_pool = nil)
-    groups = user.groups.with_general
+    groups = user.entitlement_groups.with_general
     if inventory_pool
-      Partition.hash_with_generals(inventory_pool, self, groups)
+      Entitlement.hash_with_generals(inventory_pool, self, groups)
         .values
         .sum
     else
       inventory_pools
         .to_a
         .sum do |ip|
-          Partition.hash_with_generals(ip, self, groups)
+          Entitlement.hash_with_generals(ip, self, groups)
             .values
             .sum
         end

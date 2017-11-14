@@ -64,9 +64,9 @@ class InventoryPool < ApplicationRecord
   has_many :orders
   has_many :contracts
 
-  has_many :groups do
+  has_many :entitlement_groups do
     def with_general
-      all + [Group::GENERAL_GROUP_ID]
+      all + [EntitlementGroup::GENERAL_GROUP_ID]
     end
   end
 
@@ -109,10 +109,11 @@ class InventoryPool < ApplicationRecord
            (lambda do
               select('id, inventory_pool_id, model_id, item_id, quantity, ' \
                      'start_date, end_date, returned_date, status, ' \
-                     "string_agg(groups_users.group_id::text, ',') " \
+                     'string_agg( ' \
+                     "entitlement_groups_users.entitlement_group_id::text, ',') " \
                      'AS concat_group_ids')
-                .joins('LEFT JOIN groups_users ' \
-                       'ON groups_users.user_id = reservations.user_id')
+                .joins('LEFT JOIN entitlement_groups_users ' \
+                     'ON entitlement_groups_users.user_id = reservations.user_id')
                 .where.not(status: [:rejected, :closed])
                 .where.not("status = '#{:unsubmitted}' " \
                            'AND updated_at < ' \

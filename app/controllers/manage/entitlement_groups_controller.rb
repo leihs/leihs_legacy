@@ -1,16 +1,36 @@
-class Manage::GroupsController < Manage::ApplicationController
+class Manage::EntitlementGroupsController < Manage::ApplicationController
 
   before_action do
     params[:group_id] ||= params[:id] if params[:id]
     if params[:group_id]
-      @group = current_inventory_pool.groups.find(params[:group_id])
+      @group = current_inventory_pool.entitlement_groups.find(params[:group_id])
     end
+  end
+
+  def map_params(params)
+    ActionController::Parameters.new(params[:group].map do |k, v|
+      case k
+      when 'partitions_attributes'
+        [:entitlements_attributes, v.map do |ep|
+          ActionController::Parameters.new (ep.map do |k, v|
+            case k
+            when 'group_id'
+              [:entitlement_group_id, v]
+            else
+              [k, v]
+            end
+          end.to_h)
+        end]
+      else
+        [k, v]
+      end
+    end.to_h)
   end
 
   ######################################################################
 
   def index
-    @groups = current_inventory_pool.groups
+    @groups = current_inventory_pool.entitlement_groups
     @groups = @groups.where(id: params[:group_ids]) if params[:group_ids]
     @groups = @groups.search(params[:search_term]) if params[:search_term]
     @groups = @groups.order(:name)
@@ -23,12 +43,15 @@ class Manage::GroupsController < Manage::ApplicationController
   end
 
   def create
-    @group = Group.new name: params[:group][:name]
+    @group = EntitlementGroup.new name: params[:group][:name]
     @group.inventory_pool = current_inventory_pool
     if params[:group].key?(:users)
       update_users(@group, params[:group].delete(:users))
     end
-    if @group.save and @group.update_attributes(params[:group])
+    mapped_params = map_params params
+    mapped_params.permit!
+    mapped_params.delete(:users)
+    if @group.save and @group.update_attributes(mapped_params)
       redirect_to manage_inventory_pool_groups_path,
                   flash: { success: _('%s created') % _('Group') }
     else
@@ -41,7 +64,10 @@ class Manage::GroupsController < Manage::ApplicationController
     if params[:group].key?(:users)
       update_users(@group, params[:group].delete(:users))
     end
-    if @group.update_attributes(params[:group])
+    mapped_params = map_params params
+    mapped_params.permit!
+    mapped_params.delete(:users)
+    if @group.update_attributes(mapped_params)
       redirect_to manage_inventory_pool_groups_path,
                   flash: { success: _('%s saved') % _('Group') }
     else

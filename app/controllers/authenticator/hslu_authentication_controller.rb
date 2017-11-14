@@ -132,9 +132,11 @@ class Authenticator::HsluAuthenticationController \
       .first
       .scan(ldaphelper.video_displayname.to_s)
       .empty?
-      video_group = Group.where(name: 'Video').first
+      video_group = EntitlementGroup.where(name: 'Video').first
       unless video_group.nil?
-        user.groups << video_group unless user.groups.include?(video_group)
+        unless user.entitlement_groups.include?(video_group)
+          user.entitlement_groups << video_group
+        end
       end
     end
   end

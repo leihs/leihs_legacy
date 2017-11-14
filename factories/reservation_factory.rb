@@ -26,7 +26,7 @@ FactoryGirl.define do
     model do
       inventory_pool.models.shuffle.detect do |model|
         av = model.availability_in(inventory_pool)
-        av.partitions[nil] > 0 and av.running_reservations.empty?
+        av.entitlements[nil] > 0 and av.running_reservations.empty?
       end || FactoryGirl.create(:model_with_items, inventory_pool: inventory_pool)
     end
 

@@ -1,4 +1,4 @@
-class Group < ApplicationRecord
+class EntitlementGroup < ApplicationRecord
   include Availability::Group
   include Search::Name
   audited
@@ -7,11 +7,11 @@ class Group < ApplicationRecord
 
   has_and_belongs_to_many :users
 
-  has_many :partitions, dependent: :restrict_with_exception
-  accepts_nested_attributes_for :partitions, allow_destroy: true
+  has_many :entitlements, dependent: :restrict_with_exception
+  accepts_nested_attributes_for :entitlements, allow_destroy: true
   has_many(:models,
            -> { distinct },
-           through: :partitions,
+           through: :entitlements,
            dependent: :restrict_with_exception)
 
   validates_presence_of :inventory_pool_id # tmp#2
@@ -20,6 +20,10 @@ class Group < ApplicationRecord
   # tmp#2 scope :general, -> {where(:name => 'General', :inventory_pool_id => nil)}
 
   ##########################################
+
+  def label_for_audits
+    name
+  end
 
   def to_s
     name

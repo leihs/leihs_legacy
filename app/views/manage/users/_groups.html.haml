@@ -7,4 +7,4 @@
 
   .row.list-of-lines.even{:"data-group-list" => true}
 
-    = render partial: "group_inline_entry", collection: @user.groups, as: :group unless @user.groups.blank?
+    = render partial: "group_inline_entry", collection: @user.entitlement_groups, as: :group unless @user.entitlement_groups.blank?

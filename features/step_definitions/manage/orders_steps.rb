@@ -68,12 +68,12 @@ Given(/^a verifiable order exists$/) do
 end
 
 Then(/^this order was created by a user that is in a group whose orders require verification$/) do
-  Group.where(is_verification_required: true).flat_map(&:users).uniq.include? @contract.user
+  EntitlementGroup.where(is_verification_required: true).flat_map(&:users).uniq.include? @contract.user
 end
 
 Then(/^this order contains a model from a group whose orders require verification$/) do
   @contract.models.any? do |m|
-    Group.where(is_verification_required: true).flat_map(&:models).uniq.include? m
+    EntitlementGroup.where(is_verification_required: true).flat_map(&:models).uniq.include? m
   end
 end
 

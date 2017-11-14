@@ -124,7 +124,7 @@ end
 
 
 Given /^the customer is in multiple groups$/ do
-  @customer = @current_inventory_pool.users.detect{|u| u.groups.exists? }
+  @customer = @current_inventory_pool.users.detect{|u| u.entitlement_groups.exists? }
   expect(@customer).not_to be_nil
 end
 
@@ -137,7 +137,7 @@ end
 
 
 When /^I edit a line containing group partitions$/ do
-  @inventory_code = @current_inventory_pool.models.detect {|m| m.partitions.size > 1}.items.in_stock.borrowable.first.inventory_code
+  @inventory_code = @current_inventory_pool.models.detect {|m| m.entitlements.size > 1}.items.in_stock.borrowable.first.inventory_code
   @model = Item.find_by_inventory_code(@inventory_code).model
   step 'I assign an item to the hand over by providing an inventory code and a date range'
   find(:xpath, "//*[contains(@class, 'line') and descendant::input[@data-assign-item and @value='#{@inventory_code}']]", match: :first).find('button[data-edit-lines]').click
@@ -150,20 +150,25 @@ end
 
 
 Then /^I see which groups the customer is a member of$/ do
-  @customer_group_ids = @customer.groups.map(&:id)
-  @model.partitions.each do |partition|
-    next if partition.group_id.nil?
-    if @customer_group_ids.include? partition.group_id
-      expect(find("#booking-calendar-partitions optgroup[label='#{_("Groups of this customer")}']").has_content? partition.group.name).to be true
+  @customer_group_ids = @customer.entitlement_groups.map(&:id)
+  @model.entitlements.each do |partition|
+    unless partition.entitlement_group_id.nil?
+      if @customer_group_ids.include? partition.entitlement_group_id
+        expect(
+          find("#booking-calendar-partitions optgroup[label='#{_("Groups of this customer")}']")
+        ).to have_content partition.entitlement_group.name
+      end
     end
   end
 end
 
 Then /^I see which groups the customer is not a member of$/ do
-  @model.partitions.each do |partition|
-    next if partition.group_id.nil?
-    unless @customer_group_ids.include?(partition.group_id)
-      expect(find("#booking-calendar-partitions optgroup[label='#{_("Other groups")}']").has_content? partition.group.name).to be true
+  @model.entitlements.each do |entitlement|
+    unless entitlement.entitlement_group_id.nil? &&
+        @customer_group_ids.include?(entitlement.entitlement_group_id)
+      expect(
+        find( "#booking-calendar-partitions optgroup[label='#{_("Other groups")}']")
+      ).to have_content entitlement.entitlement_group.name
     end
   end
 end

@@ -459,7 +459,7 @@ end
 ####################################################################
 
 Then(/^I can add groups using a list with autocomplete$/) do
-  @groups_added = (@inventory_pool.groups - @customer.groups)
+  @groups_added = (@inventory_pool.entitlement_groups - @customer.entitlement_groups)
   @groups_added.each do |group|
     find('.row.emboss', match: :prefer_exact, text: _('Groups')).find('.autocomplete').click
     find('.ui-autocomplete .ui-menu-item a', text: group.name).click
@@ -467,7 +467,7 @@ Then(/^I can add groups using a list with autocomplete$/) do
 end
 
 Then(/^I can remove groups$/) do
-  @groups_removed = @customer.groups
+  @groups_removed = @customer.entitlement_groups
   @groups_removed.each do |group|
     find('.row.emboss', match: :prefer_exact, text: _('Groups')).find('.field-inline-entry', text: group.name).find('.clickable', text: _('Remove')).click
   end
@@ -480,10 +480,10 @@ end
 
 Then(/^their group membership is saved$/) do
   @groups_removed.each do |group|
-    expect(@customer.reload.groups.include?(group)).to be false
+    expect(@customer.reload.entitlement_groups.include?(group)).to be false
   end
   @groups_added.each do |group|
-    expect(@customer.reload.groups.include?(group)).to be true
+    expect(@customer.reload.entitlement_groups.include?(group)).to be true
   end
 end
 
@@ -521,7 +521,7 @@ When(/^I choose the following roles$/) do |table|
 end
 
 When(/^I assign multiple groups$/) do
-  @current_inventory_pool.groups.each do |group|
+  @current_inventory_pool.entitlement_groups.each do |group|
     find('#change-groups input').click
     within '.ui-autocomplete' do
       find('.ui-menu-item a', text: group.name).click
@@ -535,7 +535,7 @@ Then(/^the user and all their information is saved$/) do
   user = User.find_by_lastname 'test'
   expect(user).not_to be_nil
   expect(user.access_right_for(@current_inventory_pool).role).to eq @role_hash[:role].to_sym
-  expect(user.groups).to eq @current_inventory_pool.groups
+  expect(user.entitlement_groups).to eq @current_inventory_pool.entitlement_groups
 end
 
 When(/^all required fields are filled in$/) do

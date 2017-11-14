@@ -127,11 +127,11 @@ Given(/^the model "(.*)" has following partitioning in inventory pool "(.*)":$/)
     group_id = if h['group'] == 'General'
                  nil
                else
-                 Group.find_by(name: h['group']).id
+                 EntitlementGroup.find_by(name: h['group']).id
                end
-    partitions = Partition.with_generals(model_ids: [@model.id],
+    partitions = Entitlement.with_generals(model_ids: [@model.id],
                                          inventory_pool_id: @inventory_pool.id).select do |partition|
-      partition.group_id == group_id
+      partition.entitlement_group_id == group_id
     end
     expect(partitions.count).to eq 1
     expect(partitions.first.quantity).to eq h['quantity'].to_i
@@ -139,7 +139,7 @@ Given(/^the model "(.*)" has following partitioning in inventory pool "(.*)":$/)
 end
 
 When(/^I am( not)? member of group "(.*?)"$/) do |arg1, arg2|
-  group = Group.find_by_name arg2
+  group = EntitlementGroup.find_by_name arg2
   if arg1
     group.users.delete(@current_user)
   else
@@ -148,28 +148,28 @@ When(/^I am( not)? member of group "(.*?)"$/) do |arg1, arg2|
 end
 
 When(/^I am not member of any group$/) do
-  @current_user.groups.clear
-  expect(@current_user.groups.reload).to be_empty
+  @current_user.entitlement_groups.clear
+  expect(@current_user.entitlement_groups.reload).to be_empty
 end
 
 Then(/^the maximum available quantity of this model for me is (\d+)$/) do |n|
-  m = @model.availability_in(@inventory_pool).maximum_available_in_period_summed_for_groups(Date.today+99.years, Date.today+99.years, @current_user.groups.reload.map(&:id))
+  m = @model.availability_in(@inventory_pool).maximum_available_in_period_summed_for_groups(Date.today+99.years, Date.today+99.years, @current_user.entitlement_groups.reload.map(&:id))
   expect(m).to eq n.to_i
 end
 
 Then(/^the general group is used last in assignments$/) do
   av = @model.availability_in(@inventory_pool.reload) # NOTE reload is to refresh the running_lines association
   date = av.changes.to_a.last.first
-  quantity_in_general = av.partitions[Group::GENERAL_GROUP_ID]
-  quantity_not_in_general = av.partitions.values.sum - av.partitions[Group::GENERAL_GROUP_ID]
+  quantity_in_general = av.entitlements[EntitlementGroup::GENERAL_GROUP_ID]
+  quantity_not_in_general = av.entitlements.values.sum - av.entitlements[EntitlementGroup::GENERAL_GROUP_ID]
 
   quantity_not_in_general.times.map { FactoryGirl.create :reservation, status: :approved, user: @current_user, inventory_pool: @inventory_pool, model: @model, start_date: date, end_date: date }
   av = @model.availability_in(@inventory_pool.reload) # NOTE reload is to refresh the running_lines association
-  expect(av.changes[date][Group::GENERAL_GROUP_ID][:in_quantity]).to eq quantity_in_general
+  expect(av.changes[date][EntitlementGroup::GENERAL_GROUP_ID][:in_quantity]).to eq quantity_in_general
 
   FactoryGirl.create :reservation, status: :approved, user: @current_user, inventory_pool: @inventory_pool, model: @model, start_date: date, end_date: date
   av = @model.availability_in(@inventory_pool.reload) # NOTE reload is to refresh the running_lines association
-  expect(av.changes[date][Group::GENERAL_GROUP_ID][:in_quantity]).to eq quantity_in_general - 1
+  expect(av.changes[date][EntitlementGroup::GENERAL_GROUP_ID][:in_quantity]).to eq quantity_in_general - 1
 end
 
 When(/^I have (\d+) approved reservations for this model in this inventory pool$/) do |arg1|
@@ -179,7 +179,7 @@ When(/^I have (\d+) approved reservations for this model in this inventory pool$
 end
 
 Then(/^(\d+) of these reservations (is|are) allocated to group "(.*?)"$/) do |arg1, arg2, arg3|
-  group_id = arg3 == "General" ? Group::GENERAL_GROUP_ID : Group.find_by_name(arg3).id
+  group_id = arg3 == "General" ? EntitlementGroup::GENERAL_GROUP_ID : EntitlementGroup.find_by_name(arg3).id
   expect(@av.changes[@date][group_id][:running_reservations].size).to eq arg1.to_i
   expect(@av.changes[@date][group_id][:running_reservations].all? {|id| @reservations.map(&:id).include? id }).to be true
 end

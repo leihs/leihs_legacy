@@ -259,12 +259,12 @@ Rails.application.routes.draw do
       get 'partitions', to: "partitions#index"
 
       # Groups
-      get     'groups',           to: "groups#index",      as: "inventory_pool_groups"
-      get     'groups/:id/edit',  to: "groups#edit",       as: "edit_inventory_pool_group"
-      get     'groups/new',       to: "groups#new",        as: "new_inventory_pool_group"
-      post    'groups',           to: "groups#create"
-      put     'groups/:id',       to: "groups#update",     as: "update_inventory_pool_group"
-      delete  'groups/:id',       to: "groups#destroy",    as: "delete_inventory_pool_group"
+      get     'groups',           to: "entitlement_groups#index",      as: "inventory_pool_groups"
+      get     'groups/:id/edit',  to: "entitlement_groups#edit",       as: "edit_inventory_pool_group"
+      get     'groups/new',       to: "entitlement_groups#new",        as: "new_inventory_pool_group"
+      post    'groups',           to: "entitlement_groups#create"
+      put     'groups/:id',       to: "entitlement_groups#update",     as: "update_inventory_pool_group"
+      delete  'groups/:id',       to: "entitlement_groups#destroy",    as: "delete_inventory_pool_group"
 
       # ModelLinks
       get 'model_links', to: "model_links#index"

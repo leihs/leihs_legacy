@@ -6,13 +6,13 @@ end
 
 
 Then(/^I am listing groups$/) do
-  @current_inventory_pool.groups.reload.each do |group|
+  @current_inventory_pool.entitlement_groups.reload.each do |group|
     find('.list-of-lines .line strong', text: group.name)
   end
 end
 
 Then(/^each group shows the number of users assigned to it$/) do
-  @current_inventory_pool.groups.each do |group|
+  @current_inventory_pool.entitlement_groups.each do |group|
     within('.line', text: group.name) do
       find('.line-col', text: '%d %s' % [group.users.size, _('Users')])
     end
@@ -20,16 +20,16 @@ Then(/^each group shows the number of users assigned to it$/) do
 end
 
 Then(/^each group shows how many of each model are assigned to it$/) do
-  @current_inventory_pool.groups.each do |group|
+  @current_inventory_pool.entitlement_groups.each do |group|
     within('.line', text: group.name) do
       find('.line-col', text: '%d %s' % [group.models.size, _('Models')])
-      find('.line-col', text: '%d %s' % [group.partitions.to_a.sum(&:quantity), _('Allocations')])
+      find('.line-col', text: '%d %s' % [group.entitlements.to_a.sum(&:quantity), _('Allocations')])
     end
   end
 end
 
 Then(/^the list is sorted alphabetically$/) do
-  expect((all('.list-of-lines .line strong').map(&:text).to_json == @current_inventory_pool.groups.map(&:name).sort.to_json)).to be true
+  expect((all('.list-of-lines .line strong').map(&:text).to_json == @current_inventory_pool.entitlement_groups.map(&:name).sort.to_json)).to be true
 end
 
 When(/^I create a group$/) do
@@ -68,13 +68,13 @@ end
 
 Then(/^the group is saved$/) do
   step 'I receive a notification of success'
-  @group = Group.find_by_name @name
+  @group = EntitlementGroup.find_by_name @name
   expect(@group).not_to be_nil
 end
 
 Then(/^the group has users as well as models and their capacities$/) do
   expect(@group.users.reload.map(&:id).sort).to eq @users.map(&:id).sort
-  expect(Set.new(@group.partitions.map{|p| {model_id: p.model_id, quantity: p.quantity}})).to eq Set.new(@partitions)
+  expect(Set.new(@group.entitlements.map{|p| {model_id: p.model_id, quantity: p.quantity}})).to eq Set.new(@partitions)
 end
 
 Then(/^the group list is sorted alphabetically$/) do
@@ -83,7 +83,7 @@ Then(/^the group list is sorted alphabetically$/) do
 end
 
 When(/^I edit an existing( non verifiable| verifiable)? group$/) do |arg1|
-  groups = @current_inventory_pool.groups
+  groups = @current_inventory_pool.entitlement_groups
   groups = case arg1
              when ' non verifiable'
                groups.where(is_verification_required: false)
@@ -138,7 +138,7 @@ Then(/^I see any capacities that are still available for assignment$/) do
 end
 
 When(/^I delete a group$/) do
-  @group = @current_inventory_pool.groups.detect &:can_destroy?
+  @group = @current_inventory_pool.entitlement_groups.detect &:can_destroy?
   visit manage_inventory_pool_groups_path @current_inventory_pool
   within('.list-of-lines .line', text: @group.name) do
     within('.multibutton') do
@@ -149,7 +149,7 @@ When(/^I delete a group$/) do
 end
 
 Then(/^the group has been deleted from the database$/) do
-  expect(Group.find_by_name(@group.name)).to eq nil
+  expect(EntitlementGroup.find_by_name(@group.name)).to eq nil
 end
 
 

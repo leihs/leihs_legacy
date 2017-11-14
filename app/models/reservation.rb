@@ -19,7 +19,7 @@ class Reservation < ApplicationRecord
   belongs_to :handed_over_by_user, class_name: 'User'
   belongs_to :returned_to_user, class_name: 'User'
 
-  has_many :groups, through: :user
+  has_many :entitlement_groups, through: :user
 
   def created_at_date_if_submitted
     created_at.strftime('%Y-%m-%d') if status == :submitted
