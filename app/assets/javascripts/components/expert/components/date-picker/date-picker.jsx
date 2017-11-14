@@ -89,9 +89,8 @@
       event.preventDefault()
 
       var year = this.state.year
-      var month = this.state.month + 1
-      var day = index + 1
-      console.log('selected: ' + day + '.' + month + '.' + year)
+      var month = this.state.month
+      var day = index
 
       if(this.props.onSelect) {
         this.props.onSelect(day, month, year)
@@ -152,10 +151,8 @@
 
       var selected = false
       if(this.props.value) {
-        var date = CreateItemFieldSwitch._parseDayMonthYear(this.props.value)
-        if(date) {
-          selected = date.year == this.state.year && date.month == this.state.month && date.day == index
-        }
+        var dayMonthYear = this.props.value
+        selected = dayMonthYear.year == this.state.year && dayMonthYear.month == this.state.month && dayMonthYear.day == index
       }
 
 

@@ -17,10 +17,12 @@ class Manage::InventoryController < Manage::ApplicationController
   def index
     respond_to do |format|
       format.html do
+
         session[:params] = nil if params[:filters] == 'reset'
+
         items = Item.filter(params.clone.merge(paginate: 'false', all: 'true'),
                             current_inventory_pool)
-        @responsibles = \
+        responsibles = \
           InventoryPool
             .distinct
             .joins(:items)
@@ -30,6 +32,29 @@ class Manage::InventoryController < Manage::ApplicationController
                 .arel_table[:id]
                 .eq(Item.arel_table[:inventory_pool_id])
             )
+
+        @props = {
+          lending_manager:
+            lending_manager?,
+          csv_import_url:
+            "/manage/#{current_inventory_pool.id}/inventory/csv_import",
+          csv_export_url:
+            manage_inventory_csv_export_path(current_inventory_pool),
+          excel_export_url:
+            manage_inventory_excel_export_path(current_inventory_pool),
+          create_model_url:
+            manage_new_model_path(current_inventory_pool),
+          create_item_url:
+            manage_new_item_react_path(current_inventory_pool),
+          create_option_url:
+            manage_new_option_path(current_inventory_pool),
+          create_software_url:
+            manage_new_model_path(current_inventory_pool, type: 'software'),
+          create_license_url:
+            manage_new_item_path(current_inventory_pool, type: 'license'),
+          responsibles:
+            responsibles
+        }
       end
       format.json do
         session[:params] = params.to_unsafe_hash.symbolize_keys

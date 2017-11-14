@@ -49,6 +49,7 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def edit
+    @return_url = params[:return_url] if params[:return_url]
     fetch_item_by_id
   end
 

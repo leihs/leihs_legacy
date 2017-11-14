@@ -16,7 +16,11 @@
 
           %button#show-all-fields.button.white{style: "display: none", data: {toggle: 'tooltip', placement: 'top'}, title: _("Reset visibility of all fields on the item forms")}= _("Show all fields")
 
-          = link_to _('Cancel'), :back, class: 'button grey'
+
+          - if @return_url
+            = link_to _('Cancel'), @return_url, class: 'button grey'
+          - else
+            = link_to _('Cancel'), :back, class: 'button grey'
 
           .multibutton
             %button#save.button.green{:autocomplete => :off}
@@ -50,7 +54,7 @@
   item['attachments'] = attachments
 
 :coffeescript
-  
+
   jQuery ->
     new App.ItemEditController
       el: $("#edit-item-view")

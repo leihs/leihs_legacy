@@ -3,8 +3,10 @@
 def check_existing_inventory_codes(items)
   inventory = find '#inventory'
   # clicking on all togglers via javascript is significantly faster than doing it with capybara in this case
-  page.execute_script %Q( $(".button[data-type='inventory-expander']").click() )
-  inventory_text = inventory.text
+  # page.execute_script %Q( $(".button[data-type='inventory-expander']").click() )
+  all(".button[data-type='inventory-expander']").each { |b| b.click }
+  # binding.pry
+  inventory_text = find('#inventory').text
   items.each do |i|
     expect(inventory_text).to match /#{i.inventory_code}/
   end
@@ -12,6 +14,10 @@ end
 
 def check_amount_of_lines(amount)
   within '#inventory' do
+    while(all('.loading-bg').length > 0) do
+      page.execute_script 'window.scrollBy(0,10000)'
+    end
+    # binding.pry
     expect(all('.line').count).to eq amount
   end
 end
@@ -430,10 +436,16 @@ end
 
 When(/^I search for "(.+)"$/) do |search_term|
   if @current_inventory_pool
+    field = find('#list-search')
+    field.set ''
+    field.set search_term
     fill_in 'list-search', with: search_term
-    sleep(0.55) # NOTE this sleep is required waiting the search result
+    field.native.send_key :enter
+    # sleep(0.55) # NOTE this sleep is required waiting the search result
   else
+    # binding.pry
     field = find("#list-filters input[name='search_term']")
+    field.set ''
     field.set search_term
     field.native.send_key :enter
   end

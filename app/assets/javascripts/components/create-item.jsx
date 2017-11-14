@@ -450,10 +450,11 @@
     },
 
     _forward(redirectUrl) {
+      var flash = '?flash[success]=' + _jed('Item saved')
       if(redirectUrl) {
-        window.location = redirectUrl + '?flash[success]=' + _jed('Item saved')
+        window.location = redirectUrl + flash
       } else {
-        window.location = this.props.inventory_path
+        window.location = this.props.inventory_path + flash
       }
     },
 

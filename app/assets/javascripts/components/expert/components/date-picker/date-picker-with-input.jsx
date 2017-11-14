@@ -20,26 +20,22 @@
       }
     },
 
-    _leadingZero (n) {
-
-      if(n < 10) {
-        return '0' + n
-      } else {
-        return '' + n
-      }
-    },
-
     _onSelect (day, month, year) {
 
-      var value = this._leadingZero(day) + '.' + this._leadingZero(month) + '.' + year
+      var mom = moment().year(year).month(month).date(day + 1);
+
+      var value = mom.format(i18n.date.L)
       this.setState({
         value: value,
         visible: false
+      }, () => {
+
+        if(this.props.onChange) {
+          this.props.onChange(value)
+        }
+
       })
 
-      if(this.props.onChange) {
-        this.props.onChange(value)
-      }
 
     },
 
@@ -66,7 +62,7 @@
       return (
         <div style={{position: 'relative'}}>
           <div style={{position: 'absolute', zIndex: '1', display: (this.state.visible ? 'block' : 'none')}}>
-            <DatePicker value={this.state.value} visible={this.state.visible} onSelect={this._onSelect} onClose={this._onClose} />
+            <DatePicker value={CreateItemFieldSwitch._parseDayMonthYear(this.state.value)} visible={this.state.visible} onSelect={this._onSelect} onClose={this._onClose} />
           </div>
         </div>
       )
@@ -89,17 +85,27 @@
       const props = this.props
 
 
-      return (
-        // TODO Dummy wrapper. Remove when React supports arrays as return value.
-        <span>
-          <input value={this.state.value} onChange={this._onChange} name={this.props.name} autoComplete='off' onFocus={this._onFocus} className='width-full hasDatepicker' type='text' />
+      if(props.customRenderer) {
 
-          {this._renderPicker()}
+        return props.customRenderer({value: this.state.value, onChange: this._onChange, onFocus: this._onFocus, renderPicker: this._renderPicker})
 
-        </span>
+      } else {
+
+        return (
+          // TODO Dummy wrapper. Remove when React supports arrays as return value.
+          <span>
+            <input value={this.state.value} onChange={this._onChange} name={this.props.name} autoComplete='off' onFocus={this._onFocus} className='width-full hasDatepicker' type='text' />
+
+            {this._renderPicker()}
+
+          </span>
 
 
-      )
+        )
+
+      }
+
+
     }
   })
 })()

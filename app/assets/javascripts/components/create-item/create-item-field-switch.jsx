@@ -55,6 +55,10 @@ window.CreateItemFieldSwitch = {
 
   _parseDate(string) {
 
+    if(!string) {
+      return null
+    }
+
     var parts = []
 
     if(string.indexOf('.') > - 1) {
@@ -99,21 +103,27 @@ window.CreateItemFieldSwitch = {
   },
 
   _parseDayMonthYear(string) {
-    var date = this._parseDate(string);
-    if(!date) {
+
+    if(!string) {
       return null
     }
 
-    return this._getDayMonthYear(date);
+    var mom = moment(string, i18n.date.L)
+
+    if(!mom._isValid) {
+      return null
+    }
+
+    return this._getDayMonthYear(mom);
 
 
   },
 
-  _getDayMonthYear(date) {
+  _getDayMonthYear(mom) {
     return {
-      day: date.getDate() - 1,
-      month: date.getMonth(),
-      year: date.getFullYear()
+      day: mom.date() - 1,
+      month: mom.month(),
+      year: mom.year()
     }
   },
 
