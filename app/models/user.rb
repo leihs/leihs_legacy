@@ -35,28 +35,28 @@ class User < ApplicationRecord
       # TODO: dry with_borrowable_items
       joins(:items)
         .where(items: { retired: nil, is_borrowable: true, parent_id: nil })
-        .joins("INNER JOIN (#{Partition.query}) AS pwg " \
+        .joins("INNER JOIN (#{Entitlement.query}) AS pwg " \
                'ON models.id = pwg.model_id ' \
                'AND inventory_pools.id = pwg.inventory_pool_id ' \
                'AND pwg.quantity > 0 ' \
-               'AND (pwg.group_id IN ' \
-                 '(SELECT group_id FROM groups_users ' \
+               'AND (pwg.entitlement_group_id IN ' \
+                 '(SELECT entitlement_group_id FROM entitlement_groups_users ' \
                  "WHERE user_id = '#{proxy_association.owner.id}') " \
-                   'OR pwg.group_id IS NULL)')
+                   'OR pwg.entitlement_group_id IS NULL)')
     end
   end
 
   has_many(:categories, -> { distinct }, through: :models) do
     def with_borrowable_items
       where(items: { retired: nil, is_borrowable: true, parent_id: nil })
-      .joins("INNER JOIN (#{Partition.query}) AS pwg " \
+      .joins("INNER JOIN (#{Entitlement.query}) AS pwg " \
              'ON models.id = pwg.model_id ' \
              'AND inventory_pools.id = pwg.inventory_pool_id ' \
              'AND pwg.quantity > 0 ' \
-             'AND (pwg.group_id IN ' \
-               '(SELECT group_id FROM groups_users ' \
+             'AND (pwg.entitlement_group_id IN ' \
+               '(SELECT entitlement_group_id FROM entitlement_groups_users ' \
                "WHERE user_id = '#{proxy_association.owner.id}') " \
-                 'OR pwg.group_id IS NULL)')
+                 'OR pwg.entitlement_group_id IS NULL)')
     end
   end
 
@@ -103,11 +103,12 @@ class User < ApplicationRecord
   validates :email, format: /.+@.+\..+/, allow_blank: true
 
   # tmp#2#, :finder_sql => 'SELECT * FROM groups
-  # INNER JOIN groups_users ON groups.id = groups_users.group_id
-  # OR groups.inventory_pool_id IS NULL WHERE (groups_users.user_id = #{id})'
-  has_and_belongs_to_many :groups do
+  # INNER JOIN groups_users ON groups.id = groups_users.entitlement_group_id
+  # OR entitlement_groups.inventory_pool_id IS
+  # NULL WHERE (groups_users.user_id = #{id})'
+  has_and_belongs_to_many :entitlement_groups do
     def with_general
-      to_a + [Group::GENERAL_GROUP_ID]
+      to_a + [EntitlementGroup::GENERAL_GROUP_ID]
     end
   end
 

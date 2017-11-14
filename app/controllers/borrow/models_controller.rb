@@ -15,7 +15,7 @@ class Borrow::ModelsController < Borrow::ApplicationController
             model
               .availability_in(ip)
               .maximum_available_in_period_summed_for_groups(
-                start_date, end_date, current_user.groups.map(&:id)
+                start_date, end_date, current_user.entitlement_groups.map(&:id)
               )
         }
       end

@@ -63,7 +63,7 @@ Given(/^there is a? (.+) with the following conditions:$/) do |entity, table|
       when 'has no licenses'
         lambda {|m| m.items.licenses.empty?}
       when 'has group capacities'
-        lambda {|m| Partition.find_by_model_id(m.id)}
+        lambda {|m| Entitlement.find_by_model_id(m.id)}
       when 'has properties'
         lambda {|m| not m.properties.empty?}
       when 'has accessories'
@@ -110,7 +110,7 @@ Then(/^I cannot delete the model from the list$/) do
 end
 
 Then(/^all associations have been deleted as well$/) do
-  expect(Partition.find_by_model_id(@model.id)).to eq nil
+  expect(Entitlement.find_by_model_id(@model.id)).to eq nil
   expect(Property.where(model_id: @model.id).empty?).to be true
   expect(Accessory.where(model_id: @model.id).empty?).to be true
   expect(Image.where(target_id: @model.id).empty?).to be true
@@ -126,7 +126,7 @@ Then(/^the (?:.+) was deleted from the list$/) do
 end
 
 Given(/^I edit a model that exists and has group capacities allocated to it$/) do
-  @model = @current_inventory_pool.models.find{|m| m.partitions.exists? }
+  @model = @current_inventory_pool.models.find{|m| m.entitlements.exists? }
   visit manage_edit_model_path(@current_inventory_pool, @model)
 end
 
@@ -135,7 +135,7 @@ When(/^I remove existing allocations$/) do
 end
 
 When(/^I add new allocations$/) do
-  @groups = @current_inventory_pool.groups - @model.partitions.map(&:group)
+  @groups = @current_inventory_pool.entitlement_groups - @model.entitlements.map(&:entitlement_group)
 
   @groups.each do |group|
     fill_in_autocomplete_field _('Allocations'), group.name
@@ -144,7 +144,7 @@ end
 
 Then(/^the changed allocations are saved$/) do
   find('#flash')
-  model_group_ids = @model.reload.partitions.map(&:group_id)
+  model_group_ids = @model.reload.entitlements.map(&:entitlement_group_id)
   expect(model_group_ids).to match_array @groups.map(&:id)
 end
 

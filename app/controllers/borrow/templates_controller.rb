@@ -24,7 +24,7 @@ class Borrow::TemplatesController < Borrow::ApplicationController
             .maximum_available_in_period_summed_for_groups(
               l[:start_date],
               l[:end_date],
-              current_user.groups.map(&:id)) >= l[:quantity]
+              current_user.entitlement_groups.map(&:id)) >= l[:quantity]
     end
 
     if not unavailable_lines.empty? and params[:force_continue].blank?
@@ -99,7 +99,7 @@ class Borrow::TemplatesController < Borrow::ApplicationController
                   .maximum_available_in_period_summed_for_groups(
                     start_date,
                     end_date,
-                    current_user.groups.map(&:id)) >= quantity) and
+                    current_user.entitlement_groups.map(&:id)) >= quantity) and
                 ip.open_on?(start_date) and
                 ip.open_on?(end_date) and
                 (inventory_pool = ip)

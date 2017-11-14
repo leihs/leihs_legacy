@@ -54,11 +54,11 @@ Then /^I see all availabilities in that calendar, where the small number is the 
           #######################################################################################################################
           # check selected partition/borrower quantity (big number)
 
-          quantity_for_borrower = av.maximum_available_in_period_summed_for_groups next_date, next_date, @contract.user.group_ids
+          quantity_for_borrower = av.maximum_available_in_period_summed_for_groups next_date, next_date, @contract.user.entitlement_group_ids
 
           # the quantity is considering only the partitions with groups we are member of (exclude soft overbookings)
           if change_date_el[:class].match('selected') != nil
-            x = change[2].select {|h| ([nil] + @contract.user.group_ids).include? h[:group_id]}
+            x = change[2].select {|h| ([nil] + @contract.user.entitlement_group_ids).include? h[:group_id]}
             y = x.flat_map {|h| h[:running_reservations] }
             quantity_to_restore = (y & @contract.reservations.pluck(:id)).size
             quantity_for_borrower += quantity_to_restore

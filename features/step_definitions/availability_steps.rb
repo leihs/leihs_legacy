@@ -92,25 +92,25 @@ When "$who checks availability for '$what' on $date" do |who, model, date|
 end
 
 Then 'it should always be available' do
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(Date.today, Availability::ETERNITY, @user.group_ids)).to be > 0
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(Date.today, Availability::ETERNITY, @user.entitlement_group_ids)).to be > 0
 end
 
 Then '$quantity should be available from $from to $to' do |quantity, from, to|
   from = to_date( from )
   to   = to_date( to )
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(from, to, @user.group_ids)).to eq quantity.to_i
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(from, to, @user.entitlement_group_ids)).to eq quantity.to_i
 end
 
 Then 'the maximum available quantity on $date is $quantity' do |date, quantity|
   date = to_date(date)
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(date, date, @user.group_ids)).to eq quantity.to_i
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(date, date, @user.entitlement_group_ids)).to eq quantity.to_i
 end
 
 Then 'if I check the maximum available quantity for $date it is $quantity on $current_date' do |date, quantity, current_date|
   date = to_date(date)
   Dataset.back_to_date( to_date(current_date) )
   @inventory_pool.reload
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(date, date, @user.group_ids)).to eq quantity.to_i
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(date, date, @user.entitlement_group_ids)).to eq quantity.to_i
   Dataset.back_to_date
   @inventory_pool.reload
 end
@@ -118,7 +118,7 @@ end
 Then 'the maximum available quantity from $start_date to $end_date is $quantity' do |start_date, end_date, quantity|
   start_date = to_date(start_date)
   end_date   = to_date(end_date)
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(start_date, end_date, @user.group_ids)).to eq quantity.to_i
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(start_date, end_date, @user.entitlement_group_ids)).to eq quantity.to_i
 end
 
 # When "I check the availability changes for '$model'" do |model|

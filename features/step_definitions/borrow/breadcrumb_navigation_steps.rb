@@ -75,7 +75,7 @@ When(/^I am listing some available models$/) do
     c.models.any? do |m|
       m.availability_in(@current_user.inventory_pools.first)
         .maximum_available_in_period_summed_for_groups(
-          Date.today, Date.today, @current_user.group_ids) >= 1
+          Date.today, Date.today, @current_user.entitlement_group_ids) >= 1
     end
   end
   visit borrow_models_path(category_id: @category.id)

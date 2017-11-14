@@ -53,7 +53,7 @@ module Availability
 
   class Main
     attr_reader(:running_reservations,
-                :partitions,
+                :entitlements,
                 :changes,
                 :inventory_pool_and_model_group_ids)
 
@@ -63,14 +63,15 @@ module Availability
       @running_reservations = @inventory_pool.running_reservations
                                   .where(model_id: @model.id)
                                   .order(:start_date, :end_date)
-      @partitions = \
-        Partition.hash_with_generals(@inventory_pool, @model)
+      @entitlements = \
+        Entitlement.hash_with_generals(@inventory_pool, @model)
       @inventory_pool_and_model_group_ids = \
-        (@inventory_pool.loaded_group_ids ||= @inventory_pool.group_ids) \
-          & @partitions.keys
+        (@inventory_pool.loaded_group_ids \
+         ||= @inventory_pool.entitlement_group_ids) \
+          & @entitlements.keys
 
       initial_change = {}
-      @partitions.each_pair do |group_id, quantity|
+      @entitlements.each_pair do |group_id, quantity|
         initial_change[group_id] = { in_quantity: quantity,
                                      running_reservations: [] }
       end
@@ -110,13 +111,14 @@ module Availability
         # 3. groups which the user is not even member
         groups_to_check = \
           (reservation_group_ids & @inventory_pool_and_model_group_ids) \
-          + [Group::GENERAL_GROUP_ID] \
+          + [EntitlementGroup::GENERAL_GROUP_ID] \
           + (@inventory_pool_and_model_group_ids - reservation_group_ids)
         maximum = min_quantities_among_groups(groups_to_check, inner_changes)
         # if still no group has enough available quantity,
         # we allocate to general as fallback
         reservation.allocated_group_id = \
-          groups_to_check.detect(proc { Group::GENERAL_GROUP_ID }) do |group_id|
+          groups_to_check.detect(
+            proc { EntitlementGroup::GENERAL_GROUP_ID }) do |group_id|
             maximum[group_id] >= reservation.quantity
           end
 
@@ -130,7 +132,7 @@ module Availability
 
     def maximum_available_in_period_for_groups(start_date, end_date, group_ids)
       min_quantities_among_groups(
-        [Group::GENERAL_GROUP_ID] + \
+        [EntitlementGroup::GENERAL_GROUP_ID] + \
           (group_ids & @inventory_pool_and_model_group_ids),
         @changes.between(start_date, end_date)
       ).values.max
@@ -141,7 +143,7 @@ module Availability
                                                       group_ids = nil)
       group_ids ||= @inventory_pool_and_model_group_ids
       summed_quantities_for_groups(
-        [Group::GENERAL_GROUP_ID] + \
+        [EntitlementGroup::GENERAL_GROUP_ID] + \
           (group_ids & @inventory_pool_and_model_group_ids),
         @changes.between(start_date, end_date)
       ).min

@@ -47,7 +47,7 @@
 
               .row.list-of-lines.even{:"data-models-list" => true}
 
-                = render partial: "partition_inline_entry", collection: @group.partitions.sort{|p1, p2| p1.model.name <=> p2.model.name}, as: :partition
+                = render partial: "partition_inline_entry", collection: @group.entitlements.sort{|p1, p2| p1.model.name <=> p2.model.name}, as: :partition
 
           .col1of2.padding-left-xs
 

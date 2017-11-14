@@ -409,7 +409,7 @@ Then(/^the edited delegation is saved with its current information$/) do
   expect(@delegation.reload.delegator_user).to eq @responsible
   @delegation.delegated_users.each {|du| @delegated_users.include? du}
   @delegation.delegated_users.count == (@delegated_users + [@responsible]).uniq.count
-  expect(@delegation.groups).to match_array @current_inventory_pool.groups
+  expect(@delegation.entitlement_groups).to match_array @current_inventory_pool.entitlement_groups
 end
 
 When(/^I edit a delegation that has access to the current inventory pool$/) do

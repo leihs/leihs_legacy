@@ -20,7 +20,7 @@ class Manage::OrdersController < Manage::ApplicationController
   def edit
     @order = Order.find(id_param)
     @user = @order.user
-    @group_ids = @user.group_ids
+    @group_ids = @user.entitlement_group_ids
     add_visitor(@user)
     @reservations = @order.reservations
     @models = @reservations.map(&:model).select { |m| m.type == 'Model' }.uniq

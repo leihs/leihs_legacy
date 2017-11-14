@@ -28,13 +28,13 @@ Given /^a model is no longer available$/ do
     expect(reservation).to be
     @model = reservation.model
     @initial_quantity = @entity.reservations.where(model_id: @model.id).count
-    @max_before = reservation.model.availability_in(@entity.inventory_pool).maximum_available_in_period_summed_for_groups(reservation.start_date, reservation.end_date, reservation.group_ids) || 0
+    @max_before = reservation.model.availability_in(@entity.inventory_pool).maximum_available_in_period_summed_for_groups(reservation.start_date, reservation.end_date, reservation.entitlement_group_ids) || 0
     step 'I add so many reservations that I break the maximal quantity of a model'
   else
     reservation = @reservations_to_take_back.where(option_id: nil).first
     @model = reservation.model
     step 'I open a hand over to this customer'
-    @max_before = @model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(reservation.start_date, reservation.end_date, reservation.group_ids) || 0
+    @max_before = @model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(reservation.start_date, reservation.end_date, reservation.entitlement_group_ids) || 0
     step 'I add so many reservations that I break the maximal quantity of a model'
     visit manage_take_back_path(@current_inventory_pool, @customer)
   end
@@ -81,7 +81,7 @@ Then /^"(.*?)" are available for the user, also counting availability from group
   max = if [:unsubmitted, :submitted].include? @line.status
           @initial_quantity + @max_before
         elsif [:approved, :signed].include? @line.status
-          (@av.maximum_available_in_period_summed_for_groups(@line.start_date, @line.end_date, @line.group_ids) || 0) \
+          (@av.maximum_available_in_period_summed_for_groups(@line.start_date, @line.end_date, @line.entitlement_group_ids) || 0) \
             + 1 # free up self blocking
         else
           @max_before - @quantity_added

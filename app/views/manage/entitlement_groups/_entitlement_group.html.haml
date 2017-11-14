@@ -1,0 +1,41 @@
+.row.line
+  - if entitlement_group.entitlements.select {|partition| partition.quantity > partition.model.items.where(inventory_pool_id: partition.inventory_pool_id).size}.length > 0
+    .line-info.red
+
+  .col1of5.line-col
+    %strong= entitlement_group.name
+
+  .col1of5.line-col
+    = entitlement_group.users.size
+    = _("Users")
+
+  .col1of5.line-col
+    = entitlement_group.models.size
+    = _("Models")
+
+  .col1of5.line-col
+    = entitlement_group.entitlements.to_a.sum(&:quantity)
+    = _("Allocations")
+
+  .col1of5.line-col.line-actions
+
+    - if entitlement_group.can_destroy?
+
+      .multibutton
+
+        %a.button.white{href: manage_edit_inventory_pool_group_path(current_inventory_pool, entitlement_group)}= _("Edit")
+
+        .dropdown-holder.inline-block
+          .button.white.dropdown-toggle
+            .arrow.down
+
+          %ul.dropdown.right
+
+            %li
+              %a.dropdown-item.red{href: manage_delete_inventory_pool_group_path(current_inventory_pool, entitlement_group), :"data-method" => :delete}
+                %i.fa.fa-trash
+                = _("Delete")
+
+    - else
+
+      %a.button.white{href: manage_edit_inventory_pool_group_path(current_inventory_pool, entitlement_group)}= _("Edit")

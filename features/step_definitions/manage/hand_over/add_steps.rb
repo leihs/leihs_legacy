@@ -167,9 +167,9 @@ When /^I add so many reservations that I break the maximal quantity of a model$/
   end_date = Date.parse find('#add-end-date').value
   av = @model.availability_in(@current_inventory_pool)
   quantity_to_add = if @contract
-                      av.maximum_available_in_period_summed_for_groups start_date, end_date, @contract.user.groups.map(&:id)
+                      av.maximum_available_in_period_summed_for_groups start_date, end_date, @contract.user.entitlement_groups.map(&:id)
                     elsif @order
-                      av.maximum_available_in_period_summed_for_groups start_date, end_date, @order.user.groups.map(&:id)
+                      av.maximum_available_in_period_summed_for_groups start_date, end_date, @order.user.entitlement_groups.map(&:id)
                     else
                       @model.items.size
                     end

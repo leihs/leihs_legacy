@@ -69,7 +69,8 @@ class Manage::UsersController < Manage::ApplicationController
 
     @user = User.new(params[:user])
     @user.login = params[:db_auth][:login] if params.key?(:db_auth)
-    @user.groups = groups.map { |g| Group.find g['id'] } if groups
+    @user.entitlement_groups =
+      groups.map { |g| EntitlementGroup.find g['id'] } if groups
 
     begin
       User.transaction do
@@ -123,7 +124,7 @@ class Manage::UsersController < Manage::ApplicationController
   def update
     if params[:user]
       if params[:user].key?(:groups) and (groups = params[:user].delete(:groups))
-        @user.groups = groups.map { |g| Group.find g['id'] }
+        @user.entitlement_groups = groups.map { |g| EntitlementGroup.find g['id'] }
       end
 
       delegated_user_ids = get_delegated_users_ids params
@@ -257,7 +258,7 @@ class Manage::UsersController < Manage::ApplicationController
 
   def set_shared_visit_variables(date_index)
     @user = User.find(params[:id]) if params[:id]
-    @group_ids = @user.group_ids
+    @group_ids = @user.entitlement_group_ids
     yield
     @grouped_lines = @reservations.group_by { |g| [g.start_date, g.end_date] }
     @grouped_lines.each_pair do |k, reservations|

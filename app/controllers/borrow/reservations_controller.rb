@@ -79,9 +79,10 @@ class Borrow::ReservationsController < Borrow::ApplicationController
   def quantity_available?(model, quantity)
     model
       .availability_in(@inventory_pool)
-      .maximum_available_in_period_summed_for_groups(@start_date,
-                                                     @end_date,
-                                                     current_user.group_ids) \
-      >= quantity
+      .maximum_available_in_period_summed_for_groups(
+        @start_date,
+        @end_date,
+        current_user.entitlement_group_ids) \
+   >= quantity
   end
 end

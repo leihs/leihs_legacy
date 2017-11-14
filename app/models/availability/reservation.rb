@@ -40,7 +40,7 @@ module Availability
 
           # first we check if the user is member of the
           # allocated group (if false, then it's a soft-overbooking)
-          (group_id.nil? or self.user.group_ids.include?(group_id)) and
+          (group_id.nil? or self.user.entitlement_group_ids.include?(group_id)) and
             # then we check if all changes related to the time range
             # and allocated group are non-negative (then it's a real-overbooking)
             a.changes.between(start_date, end_date)
@@ -65,7 +65,7 @@ module Availability
         .availability_in(inventory_pool)
         .maximum_available_in_period_for_groups(start_date,
                                                 end_date,
-                                                group_ids)
+                                                entitlement_group_ids)
     end
 
   end

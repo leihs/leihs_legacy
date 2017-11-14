@@ -61,7 +61,7 @@ Given(/^there is a hand over with at least (one problematic line|an item without
         case arg1
           when 'one problematic line'
             #old#
-            # av = l.model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(l.start_date, l.end_date, ho.user.group_ids)
+            # av = l.model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(l.start_date, l.end_date, ho.user.entitlement_group_ids)
             # l.start_date.past? and av > 1
             not l.complete?
           when 'an item without room or shelf'
@@ -127,7 +127,7 @@ Then(/^problem notifications are shown for the problematic model$/) do
   @reservation = @hand_over.reservations.find do |l|
     if l.is_a? ItemLine
       #old#
-      # av = l.model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(l.start_date, l.end_date, @hand_over.user.group_ids)
+      # av = l.model.availability_in(@current_inventory_pool).maximum_available_in_period_summed_for_groups(l.start_date, l.end_date, @hand_over.user.entitlement_group_ids)
       # l.start_date.past? and av > 1
       not l.complete?
     end

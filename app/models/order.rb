@@ -60,11 +60,12 @@ class Order < ApplicationRecord
     where <<-SQL
       EXISTS (
         SELECT 1
-        FROM groups_users
-        INNER JOIN groups ON groups.id = groups_users.group_id
-        WHERE groups_users.user_id = orders.user_id
-          AND groups.is_verification_required = TRUE
-          AND groups.inventory_pool_id = orders.inventory_pool_id
+        FROM entitlement_groups_users
+        INNER JOIN entitlement_groups
+          ON entitlement_groups.id = entitlement_groups_users.entitlement_group_id
+        WHERE entitlement_groups_users.user_id = orders.user_id
+          AND entitlement_groups.is_verification_required = TRUE
+          AND entitlement_groups.inventory_pool_id = orders.inventory_pool_id
       )
     SQL
   end)
@@ -72,15 +73,18 @@ class Order < ApplicationRecord
   # NOTE: assumes `joins(:reservations)`
   scope :with_verifiable_user_and_model, (lambda do
     joins(<<-SQL)
-      INNER JOIN partitions
-      ON partitions.model_id = reservations.model_id
-      AND partitions.inventory_pool_id = reservations.inventory_pool_id
+      INNER JOIN entitlements
+      ON entitlements.model_id = reservations.model_id
+      AND entitlements.inventory_pool_id = reservations.inventory_pool_id
     SQL
-      .joins('INNER JOIN groups ON partitions.group_id = groups.id')
-      .joins('INNER JOIN groups_users ON groups.id = groups_users.group_id')
-      .where('groups.inventory_pool_id = reservations.inventory_pool_id')
-      .where(groups: { is_verification_required: true })
-      .where('groups_users.user_id = reservations.user_id')
+      .joins('INNER JOIN entitlement_groups
+        ON entitlements.entitlement_group_id = entitlement_groups.id')
+      .joins('INNER JOIN entitlement_groups_users
+        ON entitlement_groups.id = entitlement_groups_users.entitlement_group_id')
+      .where('entitlement_groups.inventory_pool_id
+          = reservations.inventory_pool_id')
+      .where(entitlement_groups: { is_verification_required: true })
+      .where('entitlement_groups_users.user_id = reservations.user_id')
       .distinct
   end)
 
