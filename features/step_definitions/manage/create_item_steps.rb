@@ -38,14 +38,14 @@ end
 
 Then(/^I can create an item$/) do
   step 'I add a new Item'
-  expect(current_path).to eq manage_new_item_react_path(@current_inventory_pool)
+  expect(current_path).to eq manage_new_item_path(@current_inventory_pool)
 end
 
 
 Given(/^I create an? (item|license)$/) do |object_type|
   opts = {}
   opts.merge! type: :license if object_type == 'license'
-  visit manage_new_item_react_path(@current_inventory_pool, opts)
+  visit manage_new_item_path(@current_inventory_pool, opts)
   expect(has_selector?('.row.emboss')).to be true
 end
 
@@ -138,11 +138,7 @@ Then(/^the item has all previously entered values$/) do
       when ''
         if field.data["type"] == 'date'
           input_value = matched_field.find('input').value
-          if input_value.include?('/')
-            expect(input_value.gsub!('/', '.')).to eq field_value
-          else
-            expect(input_value).to eq field_value
-          end
+          expect(input_value).to eq field_value
         else
           expect(matched_field.find('input,textarea').value).to eq field_value
         end
@@ -166,7 +162,7 @@ When(/^these required fields are filled in:$/) do |table|
         @project_number_field = find('.row.emboss', match: :prefer_exact, text: must_field_name).find('input,textarea')
         @project_number_field.set @project_number_value
       when 'Supply Category'
-        find('.row.emboss', match: :prefer_exact, text: 'Supply Category').find("select option:not([value='0'])", match: :first).select_option
+        find('.row.emboss', match: :prefer_exact, text: 'Supply Category').find("select option:not([value=''])", match: :first).select_option
       when 'Building'
         fill_in_autocomplete_field must_field_name, Building.general.name
       when 'Room'
@@ -191,7 +187,7 @@ When(/^these required fields are blank:$/) do |table|
         find('.row.emboss', match: :prefer_exact, text: 'Reference').find('label', text: 'Investment').click
         find('.row.emboss', match: :prefer_exact, text: must_field_name).find('input,textarea').set ''
       when 'Supply Category'
-        find('.row.emboss', match: :prefer_exact, text: must_field_name).find("select option[value='0']").select_option
+        find('.row.emboss', match: :prefer_exact, text: must_field_name).find("select option[value='']").select_option
       else
         raise 'unknown field'
     end
@@ -204,7 +200,7 @@ When(/^I leave the field "(.+)" empty$/) do |must_field_name|
   if not find('.row.emboss', match: :prefer_exact, text: @must_field_name).all('input,textarea').empty?
     find('.row.emboss', match: :prefer_exact, text: @must_field_name).find('input,textarea').set ''
   elsif not find('.row.emboss', match: :prefer_exact, text: @must_field_name).all('select').empty?
-    find('.row.emboss', match: :prefer_exact, text: @must_field_name).find("select option[value='0']").select_option
+    find('.row.emboss', match: :prefer_exact, text: @must_field_name).find("select option[value='']").select_option
   else
     raise 'unkown field'
   end
@@ -233,7 +229,7 @@ end
 
 
 Then(/^The date this item was last checked is today's date$/) do
-  expect(find('.row.emboss', match: :prefer_exact, text: 'Last Checked').find('input').value).to eq Date.today.strftime('%d.%m.%Y')
+  expect(find('.row.emboss', match: :prefer_exact, text: 'Last Checked').find('input').value).to eq Date.today.strftime('%d/%m/%Y')
 end
 
 
@@ -267,7 +263,7 @@ end
 
 
 Then(/^(a new|no new) supplier is created$/) do |arg1|
-  expect(has_content?(_('List of Inventory'))).to be true
+  find('h1', text: _('List of Inventory'))
   find('#inventory')
   expect(Supplier.find_by_name(@new_supplier)).not_to be_nil
   expect(Supplier.where(name: @new_supplier).count).to eq 1

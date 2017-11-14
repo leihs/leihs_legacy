@@ -8,12 +8,15 @@ window.RenderCreateItem = {
       return other.field.id == fieldModel.field.values_dependency_field_id
     }))
 
-
+    var dataDependency = _.first(_.filter(fieldModels, (other) => {
+      return other.field.id == fieldModel.field.data_dependency_field_id
+    }))
 
     return (
       CreateItemFieldSwitch.renderField(
         fieldModel,
         dependencyValue,
+        dataDependency,
         onChange,
         createItemProps,
         showInvalids,

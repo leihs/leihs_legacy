@@ -13,7 +13,7 @@ window.RenderFieldLabel = {
 
     var closeIcon = null
 
-    if(!field.required) {
+    if(!field.required && !field.visibility_dependency_field_id) {
       closeIcon = (
         <a onClick={onClose} className='font-size-m link grey padding-inset-xs' data-placement='top' data-toggle='tooltip' data-type='remove-field' title='Dieses Feld beim Editieren von Gegenständen nicht mehr anzeigen'>
           <i className='fa fa-times-circle'></i>

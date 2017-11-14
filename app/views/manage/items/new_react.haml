@@ -1,8 +1,0 @@
--content_for :title, _("Create new item")
--content_for :inventory_section, "active"
-
-#inventory-helper-view.wrapper.margin-top-m
-
-  = render :partial => 'manage/tabs/inventory', :locals => {:active_tab => :inventory}
-
-  = react_component('CreateItem', @props)

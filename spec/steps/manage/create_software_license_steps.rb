@@ -45,7 +45,7 @@ module Manage
 
       step 'for :field one can select a date' do |field|
         within find('.field', text: _(field)) do
-          find("input[data-type='datepicker']")
+          find('input')
         end
       end
 
@@ -57,14 +57,14 @@ module Manage
 
       step 'for :field one can choose a value via autocomplete' do |field|
         within find('.field', text: _(field)) do
-          find("input[data-type='autocomplete']")
+          find('input')
         end
       end
 
       step 'the default radio button for :field is :value' do |field, value|
         within find('.field', text: _(field)) do
           within('label', text: _(value)) do
-            find('input[checked]')
+            expect(find('input').checked?).to eq(true)
           end
         end
       end
@@ -81,7 +81,7 @@ module Manage
       end
 
       step 'I fill in the software' do
-        selector = "input[data-autocomplete_value_target='item[model_id]']"
+        selector = 'div#software_model_id input'
         type_into_and_select_from_autocomplete(selector, @software.name)
         @attributes = { model_id: @software.id }
       end

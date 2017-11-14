@@ -28,9 +28,10 @@ module Manage
       step 'I select a model' do
         model = @current_inventory_pool.models.first
         type_into_and_select_from_autocomplete(
-          "[data-autocomplete_value_target='item[model_id]']",
+          'div#model_id input',
           model.name
         )
+        find('.ui-autocomplete li', count: 1)
       end
 
       step 'I select a supply category' do
@@ -39,7 +40,7 @@ module Manage
 
       step 'I see an error message in regards to ' \
            'already existing inventory code' do
-         find('#flash .error', text: _('Inventory code has already been taken'))
+         find('#error-modal', text: _('Inventory code has already been taken'))
       end
 
       step 'the item was not saved' do
@@ -101,13 +102,13 @@ module Manage
 
       step 'I choose a building' do
         type_into_and_select_from_autocomplete \
-          "[data-autocomplete_value_target='item[room][building_id]'",
+          'div#building_id input[name="item[building_id]"]',
           Building.general.name
       end
 
       step 'I choose a room' do
         type_into_and_select_from_autocomplete \
-          "[data-autocomplete_value_target='item[room_id]'",
+          'div#room_id input[name="item[room_id]"]',
           Building.general.rooms.find_by_general(true).name
       end
     end

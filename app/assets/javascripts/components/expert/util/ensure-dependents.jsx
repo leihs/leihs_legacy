@@ -1,9 +1,13 @@
 
 window.EnsureDependents = {
 
-  _ensureDependentsRecursive(selectedValue, fields, fieldSpecific) {
+  _determineDependents(fields, selectedValue, fieldSpecific) {
 
     var dependents = fields.filter((field) => {
+
+      // if(field.id == 'properties_quantity_allocations') {
+      //   return false;
+      // }
 
       if(field.values_dependency_field_id == selectedValue.field.id && fieldSpecific._hasValue(selectedValue)) {
         return true;
@@ -14,7 +18,7 @@ window.EnsureDependents = {
         return false;
       }
 
-      var correctDependencyValue = fieldSpecific._isDependencyValue(selectedValue, field.visibility_dependency_value)
+      var correctDependencyValue = !field.visibility_dependency_value || fieldSpecific._isDependencyValue(selectedValue, field.visibility_dependency_value)
       if(!correctDependencyValue) {
         return false;
       }
@@ -22,6 +26,13 @@ window.EnsureDependents = {
       return true
 
     })
+
+    return dependents
+  },
+
+  _ensureDependentsRecursive(selectedValue, fields, fieldSpecific) {
+
+    var dependents = this._determineDependents(fields, selectedValue, fieldSpecific)
 
 
     selectedValue.dependents = dependents.map((dependent) => {

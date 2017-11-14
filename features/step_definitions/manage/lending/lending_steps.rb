@@ -113,6 +113,11 @@ Then /^I see an error message( within the booking calendar)?$/ do |arg1|
   end
 end
 
+Then /^I see an error message in modal$/ do
+  find('#error-modal')
+end
+
+
 Then /^I cannot hand over the items$/ do
   expect(has_no_selector?('.hand_over .summary')).to be true
 end

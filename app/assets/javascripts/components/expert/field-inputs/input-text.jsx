@@ -23,7 +23,7 @@
 
       return (
         <div className='col1of2' data-type='value'>
-          <input autoComplete='off' className='width-full' name={'item[' + selectedValue.field.id + ']'}
+          <input autoComplete='off' className='width-full' name={'item' + BackwardTestCompatibility._getFormName(selectedValue)}
             type='text' value={selectedValue.value.text} onChange={this._onChange} />
         </div>
       )

@@ -38,20 +38,20 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  def new
-    @type = params[:type] ? params[:type] : 'item'
-    @item = Item.new(owner: current_inventory_pool)
-    @item.inventory_code = Item.proposed_inventory_code(current_inventory_pool)
-    unless @current_user.has_role?(:lending_manager, current_inventory_pool)
-      @item.inventory_pool = current_inventory_pool
-    end
-    @item.is_inventory_relevant = (super_user? ? true : false)
-  end
-
-  def edit
-    @return_url = params[:return_url] if params[:return_url]
-    fetch_item_by_id
-  end
+  # def new
+  #   @type = params[:type] ? params[:type] : 'item'
+  #   @item = Item.new(owner: current_inventory_pool)
+  #   @item.inventory_code = Item.proposed_inventory_code(current_inventory_pool)
+  #   unless @current_user.has_role?(:lending_manager, current_inventory_pool)
+  #     @item.inventory_pool = current_inventory_pool
+  #   end
+  #   @item.is_inventory_relevant = (super_user? ? true : false)
+  # end
+  #
+  # def edit
+  #   @return_url = params[:return_url] if params[:return_url]
+  #   fetch_item_by_id
+  # end
 
   def create
     @item = Item.new(owner: current_inventory_pool)
@@ -98,6 +98,22 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def update
+    puts ''
+    puts ''
+    puts ''
+    puts ''
+    puts ''
+    puts ''
+    puts ''
+    puts '#############################################################'
+    puts params.as_json
+    puts '#############################################################'
+    puts ''
+    puts ''
+    puts ''
+    puts ''
+    puts ''
+
     fetch_item_by_id
 
     if @item
@@ -115,7 +131,6 @@ class Manage::ItemsController < Manage::ApplicationController
       end
 
     end
-
     respond_to do |format|
       format.json do
         if saved
@@ -154,6 +169,23 @@ class Manage::ItemsController < Manage::ApplicationController
     @item.serial_number = nil
     @item.name = nil
     @item.last_check = Date.today
+    @item.attachments = []
+
+    @props = {
+      next_code: Item.proposed_inventory_code(current_inventory_pool),
+      lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
+      highest_code: Item.proposed_inventory_code(current_inventory_pool, :highest),
+      inventory_pool: current_inventory_pool,
+      is_inventory_relevant: (super_user? ? true : false),
+      save_path: manage_create_item_path,
+      store_attachment_path: manage_item_store_attachment_react_path,
+      inventory_path: manage_inventory_path,
+
+      item: @item.as_json(Manage::ItemsController::JSON_SPEC),
+      item_type: @item.type.downcase,
+      attachments: []
+    }
+
     render :new
   end
 
@@ -182,7 +214,7 @@ class Manage::ItemsController < Manage::ApplicationController
     head :ok
   end
 
-  def new_react
+  def new
     @props = {
       next_code: Item.proposed_inventory_code(current_inventory_pool),
       lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
@@ -191,7 +223,63 @@ class Manage::ItemsController < Manage::ApplicationController
       is_inventory_relevant: (super_user? ? true : false),
       save_path: manage_create_item_path,
       store_attachment_path: manage_item_store_attachment_react_path,
-      inventory_path: manage_inventory_path
+      inventory_path: manage_inventory_path,
+      item_type: (params[:type] == 'license' ? 'license' : 'item')
+    }
+  end
+
+  def edit
+    item = fetch_item_by_id
+
+    parent = nil
+    if item.parent
+      parent = {
+        json: item.parent.as_json(
+          Manage::ItemsController::JSON_SPEC),
+        edit_path: manage_edit_item_path(current_inventory_pool, item.parent)
+      }
+    end
+
+    children = nil
+    if item.children && item.children.length > 0
+      children = item.children.map do |child|
+        {
+          json: child.as_json(
+            Manage::ItemsController::JSON_SPEC),
+          edit_path: manage_edit_item_path(current_inventory_pool, child)
+        }
+      end
+    end
+
+    attachments = @item.attachments.map do |attachment|
+      {
+        id: attachment.id,
+        filename: attachment.filename,
+        public_filename: get_attachment_path(attachment.id)
+      }
+    end
+
+    model_attachments = @item.model.attachments.map do |attachment|
+      {
+        id: attachment.id,
+        filename: attachment.filename,
+        public_filename: get_attachment_path(attachment.id)
+      }
+    end
+
+    @props = {
+      edit: true,
+      item: item.as_json(Manage::ItemsController::JSON_SPEC),
+      item_type: item.type.downcase,
+      inventory_pool: current_inventory_pool,
+      save_path: manage_update_item_path,
+      store_attachment_path: manage_item_store_attachment_react_path,
+      inventory_path: manage_inventory_path,
+      parent: parent,
+      children: children,
+      attachments: attachments,
+      model_attachments: model_attachments,
+      return_url: (params[:return_url] ? params[:return_url] : nil)
     }
   end
 

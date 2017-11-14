@@ -45,7 +45,7 @@ class Manage::InventoryController < Manage::ApplicationController
           create_model_url:
             manage_new_model_path(current_inventory_pool),
           create_item_url:
-            manage_new_item_react_path(current_inventory_pool),
+            manage_new_item_path(current_inventory_pool),
           create_option_url:
             manage_new_option_path(current_inventory_pool),
           create_software_url:

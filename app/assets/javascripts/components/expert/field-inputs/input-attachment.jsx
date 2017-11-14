@@ -17,6 +17,7 @@
 
       var file = event.target.files[0];
       this.props.selectedValue.value.fileModels.push({
+        type: 'new',
         file: file,
         result: 'pending'
       })
@@ -25,7 +26,7 @@
     },
 
     _renderFileRows() {
-
+      // debugger
       return this.props.selectedValue.value.fileModels.map((fileModel, index) => {
         return (
           this._renderFileRow(fileModel, index)
@@ -34,30 +35,122 @@
 
     },
 
-    _removeFile(index) {
+    _undoRemove(index) {
 
-      this.props.selectedValue.value.fileModels.splice(index, 1)
+      var fileModels = this.props.selectedValue.value.fileModels
+      fileModels[index].delete = false
 
       this.props.onChange()
     },
 
-    _renderFileRow(fileModel, index) {
+    _removeNewFile(index) {
+
+      var fileModels = this.props.selectedValue.value.fileModels
+      if(fileModels[index].type == 'new') {
+        this.props.selectedValue.value.fileModels.splice(index, 1)
+      } else {
+        fileModels[index].delete = true
+      }
+
+
+      this.props.onChange()
+    },
+
+    _renderFilename(fileModel) {
+      return (
+        <a className='blue' href={fileModel.public_filename} target='_blank'>
+          {fileModel.filename}
+        </a>
+      )
+    },
+
+    _renderUploadIcon(fileModel) {
 
       return (
-        <div key={'key_' + index} className='row line font-size-xs focus-hover-thin' data-new='' data-type='inline-entry'>
-          <div className='line-col text-align-center' title='Datei wird beim speichern hochgeladen'>
-            <i className='fa fa-cloud-upload'></i>
-          </div>
-          <div className='line-col col7of10 text-align-left'>
-            {fileModel.file.name}
-          </div>
-          <div className='line-col col3of10 text-align-right'>
-            <button onClick={(event) => this._removeFile(index)} className='button small inset' data-remove='' type='button'>
-              Entfernen
-            </button>
-          </div>
+        <div className='line-col text-align-center' title='Datei wird beim speichern hochgeladen'>
+          <i className='fa fa-cloud-upload'></i>
         </div>
       )
+    },
+
+
+    _renderDeleteIcon(fileModel) {
+
+      if(fileModel.delete) {
+        return (
+          <div className='line-col text-align-center' title='Datei wird beim speichern hochgeladen'>
+            <i className='fa fa-trash'></i>
+          </div>
+        )
+      } else {
+        return null
+      }
+    },
+
+
+    _renderDeleteButton(fileModel, index) {
+
+      if(fileModel.delete) {
+        return (
+          <button onClick={(event) => this._undoRemove(index)} className='button small inset' data-remove='' type='button'>
+            Undo
+          </button>
+        )
+
+      } else {
+        return (
+          <button onClick={(event) => this._removeNewFile(index)} className='button small inset' data-remove='' type='button'>
+            Entfernen
+          </button>
+        )
+      }
+
+
+    },
+
+    _renderFileRow(fileModel, index) {
+
+      if(fileModel.type == 'new') {
+
+        return (
+          <div key={'key_' + index} className='row line font-size-xs focus-hover-thin' data-new='' data-type='inline-entry'>
+            {this._renderUploadIcon(fileModel)}
+            <div className='line-col col7of10 text-align-left'>
+              {fileModel.file.name}
+            </div>
+            <div className='line-col col3of10 text-align-right'>
+              <button onClick={(event) => this._removeNewFile(index)} className='button small inset' data-remove='' type='button'>
+                Entfernen
+              </button>
+            </div>
+          </div>
+        )
+
+
+
+      } else if(fileModel.type == 'edit') {
+
+        var klass = 'row line font-size-xs focus-hover-thin'
+        if(fileModel.delete) {
+          klass += ' striked'
+        }
+
+        return (
+          <div key={'key_' + index} className={klass} data-new='' data-type='inline-entry'>
+            {this._renderDeleteIcon(fileModel)}
+            <div className='line-col col7of10 text-align-left'>
+              {this._renderFilename(fileModel)}
+            </div>
+            <div className='line-col col3of10 text-align-right'>
+              {this._renderDeleteButton(fileModel, index)}
+            </div>
+          </div>
+        )
+
+
+      } else {
+        throw 'Not implemented for type: ' + fileModel.type
+      }
 
     },
 

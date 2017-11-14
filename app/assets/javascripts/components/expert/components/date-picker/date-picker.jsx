@@ -118,25 +118,6 @@
 
     },
 
-    _parseDate(string) {
-      var parts = string.split('/')
-      if(parts.length != 3) {
-        return null
-      }
-      var day = parseInt(parts[0])
-      var month = parseInt(parts[1])
-      var year = parseInt(parts[2])
-
-      if(isNaN(day) || isNaN(month) || isNaN(year)) {
-        return null
-      }
-
-      return {
-        day: day - 1,
-        month: month - 1,
-        year: year
-      }
-    },
 
     _renderNumber (index) {
 

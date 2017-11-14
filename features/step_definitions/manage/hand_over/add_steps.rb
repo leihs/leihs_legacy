@@ -73,6 +73,7 @@ Then /^the (.*?) is added to the hand over$/ do |type|
         .find_by(inventory_pool_id: @current_inventory_pool, option_id: option)
       expect(@reservation).to be
     when 'model'
+      find('#flash', text: 'Added')
       @item_line = @reservation = \
         @customer
         .reservations

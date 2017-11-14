@@ -50,6 +50,7 @@
       return (
         <FieldAutocomplete label={this.props.label}
           doSearch={doSearch} onChange={this.props.onChange}
+          initialText={this.props.initialText}
           name={this.props.name} />
       )
     }

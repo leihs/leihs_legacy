@@ -224,7 +224,7 @@ end
 
 When(/^I change the license expiration date$/) do
   @new_license_expiration_date = rand(12).months.from_now.to_date
-  find('.field', text: _('License expiration')).find('input').set I18n.l @new_license_expiration_date
+  find('.field', text: _('License expiration')).find('input').set I18n.l(@new_license_expiration_date)
 end
 
 When(/^I change the value for maintenance contract$/) do
@@ -235,7 +235,7 @@ When(/^I change the value for maintenance contract$/) do
 
   if @new_maintenance_contract
     @new_maintenance_expiration_date = rand(12).months.from_now.to_date
-    find('.field', text: _('Maintenance expiration')).find('input').set I18n.l @new_maintenance_expiration_date
+    find('.field', text: _('Maintenance expiration')).find('input').set I18n.l(@new_maintenance_expiration_date)
   end
 end
 
@@ -551,7 +551,11 @@ When(/^I edit a license with set dates for maintenance expiration, license expir
 end
 
 When(/^I delete the data for the following fields:$/) do |table|
-  table.raw.flatten.each {|field| find('.field', text: _(field)).find('input').set ''}
+  table.raw.flatten.each do |field|
+    input = find('.field', text: _(field)).find('input')
+    input.set ' '
+    input.send_keys :backspace
+  end
 end
 
 Then(/^the following fields of the license are empty:$/) do |table|
@@ -595,7 +599,7 @@ Then(/^I see the "Software Information"$/) do
   f = find('.field', text: _('Software Information'))
   i = f.find('textarea')
   expect(i.value).to eq @license.model.technical_detail.delete("\r")
-  expect(f.has_selector? 'a').to be true
+  # expect(f.has_selector? 'a').to be true
 end
 
 When(/^I edit a software license with software information, quantity allocations and attachments$/) do
@@ -657,7 +661,7 @@ end
 
 Then(/^I choose dongle as activation type$/) do
   within('.field', text: _('Activation Type')) do
-    find("option[value='dongle']").click
+    find("option", text: 'Dongle').click
   end
 end
 

@@ -74,10 +74,16 @@
 
         }
 
+        var initialText = null
+        if(selectedValue.value.id) {
+          initialText = selectedValue.value.text
+        }
+
         return (
           <FieldAutocompletePreload label={_jed(field.label)} preloadUrl={url}
             doDelayedSearch={doSearch} onChange={this._onChange}
-            name={'item[' + selectedValue.field.id + ']'} />
+            name={'item[' + selectedValue.field.id + ']'}
+            initialText={initialText} />
         )
 
         console.log('url = ' + url)

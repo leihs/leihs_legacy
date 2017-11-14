@@ -1,66 +1,8 @@
-- content_for :title, _("Edit %s") % ( @item.type == "License" ? _("Software License") : _("Item") )
-- content_for :inventory_section, "active"
+-content_for :title, _("Edit Item")
+-content_for :inventory_section, "active"
 
-#edit-item-view.wrapper.margin-top-m
+#inventory-helper-view.wrapper.margin-top-m
 
   = render :partial => 'manage/tabs/inventory', :locals => {:active_tab => :inventory}
 
-  .row.content-wrapper.min-height-xl.min-width-full.straight-top
-
-    .margin-top-l.padding-horizontal-m
-      .row
-        .col1of2
-          %h1.headline-l= yield :title
-          %h2.headline-s.light= _("Make changes and save")
-        .col1of2.text-align-right
-
-          %button#show-all-fields.button.white{style: "display: none", data: {toggle: 'tooltip', placement: 'top'}, title: _("Reset visibility of all fields on the item forms")}= _("Show all fields")
-
-
-          - if @return_url
-            = link_to _('Cancel'), @return_url, class: 'button grey'
-          - else
-            = link_to _('Cancel'), :back, class: 'button grey'
-
-          .multibutton
-            %button#save.button.green{:autocomplete => :off}
-              = _("Save %s") % ( @item.type == "License" ? _("License") : _("Item") )
-            .dropdown-holder.inline-block
-              .button.green.dropdown-toggle
-                .arrow.down
-              %ul.dropdown.right
-                %li
-                  %a#item-save-and-copy.dropdown-item
-                    %i.fa.fa-copy
-                    = _("Save and copy")
-
-    .padding-horizontal-m
-
-      #notifications.padding-vertical-m= render :partial => "notifications"
-
-      %form#form
-        %input{:type => :hidden, :name => "copy", :disabled => :disabled}
-
-        #flexible-fields
-          .height-s
-          %img.margin-horziontal-auto.margin-top-xxl.margin-bottom-xxl{:src => asset_path("loading.gif")}
-          .height-s
-
-      = render "software_details" if @item.type == "License" and ( not @item.model.technical_detail.blank? or not @item.model.attachments.empty? )
-
-:ruby
-  item = @item.as_json(Manage::ItemsController::JSON_SPEC)
-  attachments = @item.attachments.as_json.map { |a| a.except('content').merge(public_filename: get_attachment_path(a['id'])) }
-  item['attachments'] = attachments
-
-:coffeescript
-
-  jQuery ->
-    new App.ItemEditController
-      el: $("#edit-item-view")
-      itemData: #{item.to_json}
-      itemType: "#{@item.type.downcase}"
-      item: new App.Item #{@item.to_json}
-      writeable: true
-      url: "#{manage_update_item_path(current_inventory_pool, @item)}"
-      method: "PUT"
+  = react_component('CreateItem', @props)

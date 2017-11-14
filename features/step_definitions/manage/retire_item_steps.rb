@@ -40,7 +40,7 @@ Then(/^I cannot retire such a (?:item|license)$/) do
     field = find("[data-type='field']", text: _('Reason for Retirement'))
     field.find('textarea').set 'test'
     find('#save').click
-    step 'I see an error message'
+    step 'I see an error message in modal'
   end
   @item.reload
   expect(@item.retired).to eq nil

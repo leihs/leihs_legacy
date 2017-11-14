@@ -94,7 +94,7 @@
         return (
           // TODO Dummy wrapper. Remove when React supports arrays as return value.
           <span>
-            <input value={this.state.value} onChange={this._onChange} name={this.props.name} autoComplete='off' onFocus={this._onFocus} className='width-full hasDatepicker' type='text' />
+            <input placeholder={i18n.date.L} value={this.state.value} onChange={this._onChange} name={this.props.name} autoComplete='off' onFocus={this._onFocus} className='width-full hasDatepicker' type='text' />
 
             {this._renderPicker()}
 

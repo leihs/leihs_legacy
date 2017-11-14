@@ -11,21 +11,21 @@
     propTypes: {
     },
 
-    _onChange(event, index) {
+    _onChange(event, value) {
       console.log('radio on change')
-      this.props.selectedValue.value.selection = this.props.selectedValue.field.values[index].value
+      this.props.selectedValue.value.selection = value
       this.props.onChange()
     },
 
     _renderRadioValues(selectedValue) {
 
 
-      return selectedValue.field.values.map((value, index) => {
+      return selectedValue.field.values.map((value) => {
 
         var checked = value.value === selectedValue.value.selection
         return (
-          <label onClick={(event) => {this._onChange(event, index)}} key={'' + index} className='padding-inset-xxs' htmlFor={selectedValue.field.id + '_' + index}>
-            <input id={selectedValue.field.id + '_' + index} onChange={(event) => {this._onChange(event, index)}} checked={checked} type='radio' value={'' + index} />
+          <label onClick={(event) => {this._onChange(event, value.value)}} key={value.value} className='padding-inset-xxs' htmlFor={selectedValue.field.id + '_' + value.value}>
+            <input id={selectedValue.field.id + '_' + value.value} onChange={(event) => {this._onChange(event, value.value)}} checked={checked} type='radio' value={value.value} />
             <span className='font-size-m'>{' ' + _jed(value.label)}</span>
           </label>
         )

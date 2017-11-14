@@ -79,7 +79,7 @@
 
         <FieldAutocomplete label={_jed(field.label)}
           doSearch={doSearch} onChange={this._onChange}
-          name={this.props.name} />
+          name={this.props.name} initialText={selectedValue.value.text}/>
 
       )
     }

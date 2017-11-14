@@ -133,6 +133,12 @@
 
 
     _ul () {
+
+
+      if(this.props.result.length == 0) {
+        return null
+      }
+
       return (
         <ul ref={(ref) => this.ulReference = ref} className='ui-autocomplete ui-front ui-menu ui-widget ui-widget-content'
           tabIndex='0' style={{display: 'block', width: this.props.dropdownWidth}}>

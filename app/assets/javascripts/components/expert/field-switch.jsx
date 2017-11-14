@@ -125,7 +125,7 @@ window.FieldSwitch = {
         return <InputTextarea selectedValue={selectedValue} onChange={onChangeSelectedValue} />
         break
       case 'select':
-        return <InputSelect selectedValue={selectedValue} onChange={onChangeSelectedValue} />
+        return <InputSelectWithIndex selectedValue={selectedValue} onChange={onChangeSelectedValue} />
         break
       case 'radio':
         return <InputRadio selectedValue={selectedValue} onChange={onChangeSelectedValue} />

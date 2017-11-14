@@ -78,16 +78,18 @@ When(/^"(.*?)" is selected for "(.*?)", "(.*?)" must also be selected$/) do |val
 end
 
 When(/^I delete the supplier$/) do
-  find('.row.emboss', match: :prefer_exact, text: _('Supplier')).find('input').set ''
+  input = find('.row.emboss', match: :prefer_exact, text: _('Supplier')).find('input')
+  input.set ' '
+  input.send_keys :backspace
 end
 
 Then(/^the new supplier is deleted$/) do
-  expect(has_content?(_('List of Inventory'))).to be true
+  find('h1', text: _('List of Inventory'))
   expect(Supplier.find_by_name(@new_supplier)).not_to be_nil
 end
 
 Then(/^the item has no supplier$/) do
-  expect(has_content?(_('List of Inventory'))).to be true
+  find('h1', text: _('List of Inventory'))
   expect(@item.reload.supplier).to eq nil
 end
 
@@ -132,7 +134,7 @@ When(/^I assign this model to the item$/) do
 end
 
 Then(/^there is only product name in the input field of the model$/) do
-  expect(find("input[data-autocomplete_value_target='item[model_id]']").value).to eq @model.product
+  expect(find('div.field[data-id=model_id]').find('input').value).to eq @model.product
 end
 
 Given(/^exists an item that belongs to the current inventory pool but is not owned by it$/) do
