@@ -32,7 +32,7 @@ if ApplicationRecord.connection.tables.include?("settings") and not Rails.env.te
     h[:deliver_order_notifications]   ||= false
     h[:user_image_url]                ||= nil
     h[:logo_url]                      ||= nil
-    h[:mail_delivery_method]          ||= 'smtp'
+    h[:mail_delivery_method]          ||= 'test'
 
     setting = Setting.new(h) unless h.empty?
     if setting.save
@@ -41,11 +41,6 @@ if ApplicationRecord.connection.tables.include?("settings") and not Rails.env.te
       raise "Settings could not be created: #{setting.errors.full_messages}"
     end
 
-  end
-
-  if Rails.env.development? and not Setting.mail_delivery_method == 'test'
-    Setting.first.update_attributes(mail_delivery_method: :test)
-    puts "Mail delivery method set to :test"
   end
 
 end
