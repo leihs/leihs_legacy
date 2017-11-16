@@ -251,8 +251,14 @@
 
           loading: true,
           openModels: {},
-          openItems: {}
+          openItems: {},
 
+          showCategories: false,
+          categoriesTerm: '',
+          categoriesPath: [],
+          categories: null,
+          categoryLinks: null,
+          searchMode: false
 
         }
 
@@ -278,8 +284,14 @@
 
           loading: true,
           openModels: {},
-          openItems: {}
+          openItems: {},
 
+          showCategories: false,
+          categoriesTerm: '',
+          categoriesPath: [],
+          categories: null,
+          categoryLinks: null,
+          searchMode: false
 
         }
       }
@@ -305,6 +317,10 @@
 
       params.search_term = this.state.search_term
       params.type =  this.state.tabConfig.type
+
+      if(this._currentCategory()) {
+        params.category_id = this._currentCategory().id
+      }
 
       if(params.type != 'option') {
 
@@ -597,14 +613,34 @@
       }
     },
 
+    _toggleCategories(event) {
+      event.preventDefault()
+      this.setState({
+        showCategories: !this.state.showCategories,
+        categoriesTerm: '',
+        categoriesPath: [],
+        searchMode: false
+      }, this._reloadList)
+      this._loadCategories()
+    },
+
+    _loadCategories() {
+      App.Category.ajaxFetch().done((data) => {
+        this.setState({categories: data.map((d) => App.Category.find(d.id))})
+      })
+      App.CategoryLink.ajaxFetch().done((data) => {
+        this.setState({categoryLinks: data.map((d) => App.CategoryLink.find(d.id))})
+      })
+    },
+
     _renderToggleAndSearch() {
 
-      var showCategories = false
+      var showCategories = true
       if(showCategories) {
         return (
           <div className='row'>
             <div className='col1of6 padding-right-xs'>
-              <button className='button inset width-full height-full no-padding text-align-center' id='categories-toggle'>
+              <button onClick={this._toggleCategories} className='button inset width-full height-full no-padding text-align-center' id='categories-toggle'>
                 <i className='fa fa-reorder vertical-align-middle'></i>
               </button>
             </div>
@@ -624,6 +660,224 @@
       }
 
 
+    },
+
+
+    _filteredCategories(term) {
+      return _.filter(
+        App.Category.all(),
+        (c) => c.name.match(RegExp(term, 'i'))
+      )
+    },
+
+    _currentCategory() {
+      if(this.state.categoriesPath.length == 0) {
+        return null
+      } else {
+        return _.last(this.state.categoriesPath)
+      }
+    },
+
+    _categoriesForPath() {
+      return this._currentCategory().children()
+    },
+
+    _rootCategories() {
+      return App.Category.roots()
+    },
+
+    _categoriesToRender() {
+
+      if(this.state.searchMode) {
+        return this._filteredCategories(this.state.categoriesTerm)
+      } else if(this.state.categoriesPath.length > 0) {
+        return this._categoriesForPath()
+      } else {
+        return this._rootCategories()
+      }
+
+    },
+
+    _onCategoryLine(event, category) {
+      event.preventDefault()
+      this.setState(
+        {
+          categoriesPath: this.state.categoriesPath.concat(category),
+          searchMode: false
+        },
+        this._reloadList
+      )
+    },
+
+    _renderCategoryLine(c) {
+      return (
+        <a onClick={(e) => this._onCategoryLine(e, c)} key={'category_' + c.id} className='links black row focus-hover-thin font-size-m padding-horizontal-s padding-vertical-xs round-border-on-hover' data-id={c.id} data-type='category-filter'>
+          {c.name}
+        </a>
+      )
+    },
+
+    _renderCategoriesLines() {
+
+      return this._categoriesToRender().map((c) => {
+        return this._renderCategoryLine(c)
+      })
+    },
+
+    _renderCategoriesResult() {
+
+      return (
+        <div className='row padding-bottom-s' id='category-list'>
+          {this._renderCategoriesLines()}
+        </div>
+      )
+
+    },
+
+    _renderCategoriesContent() {
+
+      if(this.state.categories && this.state.categoryLinks) {
+
+        return this._renderCategoriesResult()
+
+        // <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading-4eebf3d6e9139e863f2be8c14cad4638df21bf050cea16117739b3431837ee0a.gif' />
+
+
+      } else {
+        return (
+          <div className='row padding-bottom-s' id='category-list'>
+            <div className='height-xs'></div>
+            <div className='loading-bg'></div>
+          </div>
+
+        )
+      }
+
+    },
+
+    _onCategoriesTerm(event) {
+      event.preventDefault()
+      debugger
+      this.setState(
+        {
+          categoriesTerm: event.target.value,
+          categoriesPath: [],
+          searchMode: event.target.value.length > 0
+        },
+        this._reloadList
+      )
+
+    },
+
+    _onParentClick(event) {
+      event.preventDefault()
+      this.setState(
+        {
+          categoriesPath: _.first(this.state.categoriesPath, this.state.categoriesPath.length - 1),
+          searchMode: false
+        },
+        this._reloadList
+      )
+
+    },
+
+    _onRootClick(event) {
+      event.preventDefault()
+      this.setState(
+        {
+          categoriesPath: [_.first(this.state.categoriesPath)],
+          searchMode: false
+        },
+        this._reloadList
+      )
+
+    },
+
+    _renderRootCategoryContent() {
+      if(this.state.categoriesPath.length > 1 && !this.state.searchMode) {
+        var c = this.state.categoriesPath[0]
+        return (
+          <a onClick={this._onRootClick} className='emboss links black row focus-hover-thin font-size-m padding-horizontal-s padding-vertical-xs round-border-on-hover' data-id={c.id} data-type='category-root'>
+            <strong>{c.name}</strong>
+          </a>
+
+        )
+
+      } else {
+        return null
+      }
+    },
+
+    _renderRootCategory() {
+      return (
+        <div id='category-root'>
+          {this._renderRootCategoryContent()}
+        </div>
+      )
+    },
+
+
+    _renderCurrentCategoryContent() {
+      if(this.state.categoriesPath.length > 0 && !this.state.searchMode) {
+        var c = this._currentCategory()
+        return (
+          <a onClick={this._onParentClick} className='emboss links black row focus-hover-thin font-size-m padding-horizontal-s padding-vertical-xs round-border-on-hover' data-id={c.id} data-type='category-current'>
+            <i className='arrow left'></i>
+            {' '}
+            {c.name}
+          </a>
+        )
+
+      } else {
+        return null
+      }
+    },
+
+    _renderCurrentCategory() {
+      return (
+        <div id='category-current'>
+          {this._renderCurrentCategoryContent()}
+        </div>
+      )
+    },
+
+    _renderCategories() {
+
+      var classes = 'table-cell separated-top separated-right'
+      if(this.state.showCategories) {
+        classes += ' col1of5'
+      } else {
+        classes += ' hidden'
+      }
+
+
+      return (
+        <div className={classes} id='categories'>
+          <div className='row padding-inset-s'>
+            <input onChange={this._onCategoriesTerm} value={this.state.categoriesTerm} autoComplete='off' className='small' id='category-search' placeholder={_jed('Search Category')} type='text' />
+          </div>
+          {this._renderRootCategory()}
+          {this._renderCurrentCategory()}
+          {this._renderCategoriesContent()}
+        </div>
+
+      )
+    },
+
+
+    _renderLinesTable() {
+
+      var classes = 'table-cell list-of-lines even separated-top padding-bottom-s min-height-l'
+      if(this.state.showCategories) {
+        classes += ' col4of5'
+      }
+
+      return (
+        <div className={classes} id='inventory'>
+          {this._renderPages(this.state.inventory)}
+          {this._renderPaginationLoading()}
+        </div>
+      )
     },
 
 
@@ -783,26 +1037,16 @@
 
     _renderLoadingOrNothing(child) {
 
+      var classes = 'table-cell list-of-lines even separated-top padding-bottom-s min-height-l'
+      if(this.state.showCategories) {
+        classes += ' col4of5'
+      }
+
       return (
-        <div className='table'>
-          <div className='table-row'>
-            <div className='table-cell hidden separated-top separated-right' id='categories'>
-              <div className='row padding-inset-s'>
-                <input autoComplete='off' className='small' id='category-search' placeholder='Search Category' type='text' />
-              </div>
-              <div id='category-root'></div>
-              <div id='category-current'></div>
-              <div className='row padding-bottom-s' id='category-list'>
-                <div className='height-xs'></div>
-                <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading-4eebf3d6e9139e863f2be8c14cad4638df21bf050cea16117739b3431837ee0a.gif' />
-              </div>
-            </div>
-            <div className='table-cell list-of-lines even separated-top padding-bottom-s min-height-l' id='inventory'>
-              <div className='height-s'></div>
-              {child}
-              <div className='height-s'></div>
-            </div>
-          </div>
+        <div className={classes} id='inventory'>
+          <div className='height-s'></div>
+          {child}
+          <div className='height-s'></div>
         </div>
       )
 
@@ -1408,21 +1652,8 @@
       return (
         <div className='table'>
           <div className='table-row'>
-            <div className='table-cell hidden separated-top separated-right' id='categories'>
-              <div className='row padding-inset-s'>
-                <input autoComplete='off' className='small' id='category-search' placeholder='Search Category' type='text' />
-              </div>
-              <div id='category-root'></div>
-              <div id='category-current'></div>
-              <div className='row padding-bottom-s' id='category-list'>
-                <div className='height-xs'></div>
-                <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading-4eebf3d6e9139e863f2be8c14cad4638df21bf050cea16117739b3431837ee0a.gif' />
-              </div>
-            </div>
-            <div className='table-cell list-of-lines even separated-top padding-bottom-s min-height-l' id='inventory'>
-              {this._renderPages(this.state.inventory)}
-              {this._renderPaginationLoading()}
-            </div>
+            {this._renderCategories()}
+            {this._renderResult()}
           </div>
         </div>
       )
@@ -1436,7 +1667,7 @@
       } else if(this.state.inventory[0].length == 0){
         return this._renderResultNothingFound()
       } else {
-        return this._renderTable()
+        return this._renderLinesTable()
       }
 
 
@@ -1448,7 +1679,7 @@
         <div className='row margin-top-l'>
           {this._renderSubTabs()}
           {this._renderFilters()}
-          {this._renderResult()}
+          {this._renderTable()}
         </div>
       )
 

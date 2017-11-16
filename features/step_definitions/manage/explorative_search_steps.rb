@@ -69,7 +69,7 @@ When(/^I search for a category name$/) do
   @category = Category.first
   @search_term = @category.name[0..-2]
   find('#category-search').set @search_term
-  find('#category-root', text: @search_term)
+  # find('#category-root', text: @search_term)
   find('.line', match: :first)
 end
 
@@ -83,8 +83,8 @@ Then(/^all categories whose names match the search term are shown$/) do
 end
 
 Then(/^I see a search indicator with the current search term as well the currently selected category and its children$/) do
-  find('#category-root .fa.fa-search')
-  find('#category-root', text: @search_term)
+  # find('#category-root .fa.fa-search')
+  # find('#category-root', text: @search_term)
   find('#category-current', text: @child_category.name)
   @child_category.children.each do |child|
     find('#category-list', text: child.name)
@@ -117,9 +117,17 @@ When(/^I select the not categorized filter$/) do
 end
 
 Then(/^I see the models not assigned to any category$/) do
-  step 'I fetch all pages of the list'
+  expected_models = @current_inventory_pool.models.select {|model| model.categories.empty? }
+
+  # step 'I fetch all pages of the list'
+  within '#inventory' do
+    while(all('.loading-bg').length > 0 || all('.line').length < expected_models.count) do
+      page.execute_script 'window.scrollBy(0,10000)'
+    end
+  end
+
   within('#inventory') do
-    @current_inventory_pool.models.select {|model| model.categories.empty? }.each do |model|
+    expected_models.each do |model|
       find(".line[data-id='#{model.id}']", match: :prefer_exact, text: model.name)
     end
   end
