@@ -2593,6 +2593,9 @@ msgstr ""
 msgid "The model was saved, but there were problems uploading files"
 msgstr ""
 
+msgid "%s was saved, but there were problems uploading files"
+msgstr ""
+
 msgid "Uploading files - please wait"
 msgstr ""
 

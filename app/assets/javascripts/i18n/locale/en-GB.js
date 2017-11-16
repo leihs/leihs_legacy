@@ -3475,6 +3475,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "%s was saved, but there were problems uploading files": [
+         null,
+         ""
+      ],
       "Uploading files - please wait": [
          null,
          ""
