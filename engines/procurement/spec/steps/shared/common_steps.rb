@@ -275,6 +275,9 @@ module CommonSteps
   end
 
   def travel_to_date(datetime = nil)
+    # Timecop can cause problems with the Settings.sessions_max_lifetime_secs
+    # we increase it to 5 years
+    Setting.first.update_attributes! sessions_max_lifetime_secs: 5 * 365 * 24 * 60 * 60
     if datetime
       Timecop.travel datetime
     else
