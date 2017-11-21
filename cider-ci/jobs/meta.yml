@@ -39,7 +39,7 @@ jobs:
                 export PATH=~/.rubies/$RUBY/bin:$PATH
                 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
                 bundle exec rake db:drop db:create db:pg:structure_and_data:restore FILE=./features/personas/demo.pgbin
-                if rake db:migrate:status | grep -q ".*down.*\d.*\s.*"; then
+                if bundle exec rake db:migrate:status | grep -q ".*down.*\d.*\s.*"; then
                   exit 0
                 else
                   "run ./bin/migrate-and-dump-demo"
