@@ -75,7 +75,11 @@ end
 Given(/^I am logged in as "(.*?)"$/) do |persona|
   step 'I make sure I am logged out'
   @current_user = User.where(login: persona.downcase).first
+  click_on "Login"
+  find("input#username").set @current_user.login
+  find("input#password").set "password"
+  click_on "Login"
   I18n.locale = if @current_user.language then @current_user.language.locale_name.to_sym else Language.default_language end
-  page.set_rack_session user_id: @current_user.id
   step 'I visit the homepage'
+  expect(page).to have_content  @current_user.lastname
 end
