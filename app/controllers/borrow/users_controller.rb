@@ -18,6 +18,7 @@ class Borrow::UsersController < Borrow::ApplicationController
 
   def switch_to_delegation
     if delegation = current_user.delegations.find(params[:id])
+      raise 'fix this'
       session[:delegated_user_id] = current_user.id
       self.current_user = delegation
     end
@@ -26,6 +27,7 @@ class Borrow::UsersController < Borrow::ApplicationController
 
   def switch_back
     if current_user.delegated_users.exists? @current_delegated_user
+      raise 'fix this'
       session[:delegated_user_id] = nil
       self.current_user = @current_delegated_user
       @current_delegated_user = nil
