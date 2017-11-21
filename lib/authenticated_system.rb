@@ -125,7 +125,8 @@ module AuthenticatedSystem
       CiderCi::OpenSession::Encryptor.encrypt(
         secret, user_id: user.id,
         token: token)
-    if Setting.first.try(:sessions_force_uniqueness)
+    if Setting.first.try(:sessions_force_uniqueness) \
+        && !user.delegation?
       UserSession.destroy_all(user_id: user.id)
     end
     @user_session = UserSession.create user_id: user.id, token_hash: token_hash
