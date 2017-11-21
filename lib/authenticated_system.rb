@@ -95,7 +95,8 @@ module AuthenticatedSystem
 
   def validate_lifetime!(user_session)
     lifetime = Time.zone.now - user_session.created_at
-    if lifetime > Setting.first.sessions_max_lifetime_secs
+    if lifetime >
+      (Setting.first.try(:sessions_max_lifetime_secs) || (5*24*60*60))
       raise 'The session has expired!'
     end
   end
@@ -124,7 +125,7 @@ module AuthenticatedSystem
       CiderCi::OpenSession::Encryptor.encrypt(
         secret, user_id: user.id,
         token: token)
-    if Setting.first.sessions_force_uniqueness
+    if Setting.first.try(:sessions_force_uniqueness)
       UserSession.destroy_all(user_id: user.id)
     end
     @user_session = UserSession.create user_id: user.id, token_hash: token_hash
