@@ -13,7 +13,7 @@ module AuthenticatedSystem
   def current_user
     @current_user ||=
       unless @current_user == false
-        user_session
+        user_by_session
       end
   end
 
@@ -87,14 +87,27 @@ module AuthenticatedSystem
       || raise('secret_key_base is missing')
   end
 
-  def user_session
+  def validate_lifetime_duration!(lifetime, max_lifetime)
+    if lifetime > max_lifetime
+      raise 'The session has expired!'
+    end
+  end
+
+  def validate_lifetime!(user_session)
+    lifetime = Time.zone.now - user_session.created_at
+    if lifetime > Setting.first.sessions_max_lifetime_secs
+      raise 'The session has expired!'
+    end
+  end
+
+  def user_by_session
     if user_session_cookie = cookies[USER_SESSION_COOKIE_NAME].presence
       begin
         session_object = CiderCi::OpenSession::Encryptor.decrypt(
           secret, user_session_cookie).deep_symbolize_keys
-          session = Session.find_by! token_hash: Digest::SHA256.hexdigest(session_object[:token])
-          #validate_lifetime!(user, session_object)
-          session.user
+          @user_session= UserSession.find_by! token_hash: Digest::SHA256.hexdigest(session_object[:token])
+          validate_lifetime!(@user_session)
+          @user_session.user
       rescue Exception => e
         Rails.logger.warn e
         reset_session
@@ -110,10 +123,11 @@ module AuthenticatedSystem
     cookies.permanent[USER_SESSION_COOKIE_NAME] =
       CiderCi::OpenSession::Encryptor.encrypt(
         secret, user_id: user.id,
-        token: token,
-        issued_at: Time.zone.now.iso8601)
-    # TODO nuke all other session of the user if so set in settings
-    @session = Session.create user_id: user.id, token_hash: token_hash
+        token: token)
+    if Setting.first.sessions_force_uniqueness
+      UserSession.destroy_all(user_id: user.id)
+    end
+    @user_session = UserSession.create user_id: user.id, token_hash: token_hash
   end
 
 end
