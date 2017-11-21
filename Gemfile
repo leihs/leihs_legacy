@@ -5,10 +5,13 @@ gem 'procurement', path: "engines/procurement"
 
 gem 'puma'
 
-gem 'axlsx', '~> 2.0', '>= 2.0.1'
+# gem 'mysql2', '~> 0.4', platform: :mri
 gem 'audited', git: 'https://github.com/leihs/audited', branch: 'master'
+gem 'axlsx', '~> 2.0', '>= 2.0.1'
 gem 'barby', '~> 0.5.0'
+gem 'chronic_duration'
 gem 'chunky_png', '~> 1.2'
+gem 'cider_ci-open_session', '~> 2.0.1'
 gem 'coffee-rails', '~> 4.0'
 gem 'coffee-script', '~> 2.2'
 gem 'compass-rails', '~> 3.0'
@@ -21,9 +24,9 @@ gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'jruby-openssl', platform: :jruby
 gem 'json', '~> 1.8'
 gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'master'
+gem 'kramdown' # markdown rendering
 gem 'liquid', '~> 3.0'
 gem 'mini_magick', '~> 3.4'
-# gem 'mysql2', '~> 0.4', platform: :mri
 gem 'net-ldap', require: 'net/ldap'
 gem 'nilify_blanks', '~> 1.1'
 gem 'rails_autolink', '~> 1.0'
@@ -37,7 +40,7 @@ gem 'therubyracer', platform: :mri
 gem 'therubyrhino', platform: :jruby
 gem 'uglifier', '~> 2.4'
 gem 'will_paginate', '~> 3.0'
-gem 'kramdown' # markdown rendering
+
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-accounting.js', '~> 0.4'

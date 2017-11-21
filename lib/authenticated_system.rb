@@ -1,76 +1,119 @@
+require 'cider_ci/open_session/encryptor'
+
 module AuthenticatedSystem
   protected
 
-    # Returns true or false if the user is logged in.
-    # Preloads @current_user with the user model if they're logged in.
-    def logged_in?
-      current_user != nil
-    end
+  # Returns true or false if the user is logged in.
+  def logged_in?
+    current_user != nil
+  end
 
-    # Accesses the current user from the session.
-    # Future calls avoid the database because nil is not equal to false.
-    def current_user
-      @current_user ||= login_from_session unless @current_user == false
-    end
+  # Accesses the current user from the session.
+  # Future calls avoid the database because nil is not equal to false.
+  def current_user
+    @current_user ||=
+      unless @current_user == false
+        user_session
+      end
+  end
 
-    # Store the given user id in the session.
-    def current_user=(new_user)
-      session[:user_id] = new_user ? new_user.id : nil
-      @current_user = new_user || false
-    end
+  def current_user=(user)
+    create_user_session(user) if user
+    @current_user = user || false
+  end
 
-    # Redirect as appropriate when an access request fails.
-    #
-    # The default action is to redirect to the login screen.
-    #
-    # Override this method in your controllers if you want to have special
-    # behavior in case the user is not authorized
-    # to access the requested action.  For example, a popup window might
-    # simply close itself.
-    def access_denied
-      if request.get?
-        store_location
-        redirect_to login_path
-      else
-        # NOTE in case of post requests
-        render status: :method_not_allowed,
-               plain: _("You don't have permission to perform this action")
+
+  # Redirect as appropriate when an access request fails.
+  #
+  # The default action is to redirect to the login screen.
+  #
+  # Override this method in your controllers if you want to have special
+  # behavior in case the user is not authorized
+  # to access the requested action.  For example, a popup window might
+  # simply close itself.
+  def access_denied
+    if request.get?
+      store_location
+      redirect_to login_path
+    else
+      # NOTE in case of post requests
+      render status: :method_not_allowed,
+        plain: _("You don't have permission to perform this action")
+    end
+  end
+
+  # Store the URI of the current request in the session.
+  #
+  # We can return to this location by calling #redirect_back_or_default.
+  def store_location
+    session[:return_to] = \
+      request.fullpath # sellittf#Rails3.1# request.request_uri
+  end
+
+  # Redirect to the URI stored by the most recent store_location call or
+  # to the passed default.
+  def redirect_back_or_default(default)
+    redirect_to(session[:return_to] || default)
+    session[:return_to] = nil
+  end
+
+  # Inclusion hook to make #current_user and #logged_in?
+  # available as ActionView helper methods.
+  def self.included(base)
+    base.send :helper_method, :current_user, :logged_in?
+  end
+
+  # Called from #current_user.
+  # First attempt to login by the user id stored in the session.
+  def login_from_session
+    self.current_user = User.find_by_id(session[:user_id]) if session[:user_id]
+  end
+
+  def require_role(role, inventory_pool = nil)
+    if current_user and current_user.has_role?(role, inventory_pool)
+      true
+    else
+      access_denied
+    end
+  end
+
+
+  ### leihs-user-session cookie stuff #########################################
+
+  USER_SESSION_COOKIE_NAME = 'leihs-user-session'
+
+  def secret
+    Rails.application.secrets.secret_key_base.presence \
+      || raise('secret_key_base is missing')
+  end
+
+  def user_session
+    if user_session_cookie = cookies[USER_SESSION_COOKIE_NAME].presence
+      begin
+        session_object = CiderCi::OpenSession::Encryptor.decrypt(
+          secret, user_session_cookie).deep_symbolize_keys
+          session = Session.find_by! token_hash: Digest::SHA256.hexdigest(session_object[:token])
+          #validate_lifetime!(user, session_object)
+          session.user
+      rescue Exception => e
+        Rails.logger.warn e
+        reset_session
+        cookies.delete USER_SESSION_COOKIE_NAME
+        nil
       end
     end
+  end
 
-    # Store the URI of the current request in the session.
-    #
-    # We can return to this location by calling #redirect_back_or_default.
-    def store_location
-      session[:return_to] = \
-        request.fullpath # sellittf#Rails3.1# request.request_uri
-    end
-
-    # Redirect to the URI stored by the most recent store_location call or
-    # to the passed default.
-    def redirect_back_or_default(default)
-      redirect_to(session[:return_to] || default)
-      session[:return_to] = nil
-    end
-
-    # Inclusion hook to make #current_user and #logged_in?
-    # available as ActionView helper methods.
-    def self.included(base)
-      base.send :helper_method, :current_user, :logged_in?
-    end
-
-    # Called from #current_user.
-    # First attempt to login by the user id stored in the session.
-    def login_from_session
-      self.current_user = User.find_by_id(session[:user_id]) if session[:user_id]
-    end
-
-    def require_role(role, inventory_pool = nil)
-      if current_user and current_user.has_role?(role, inventory_pool)
-        true
-      else
-        access_denied
-      end
-    end
+  def create_user_session(user)
+    token = SecureRandom.uuid
+    token_hash = Digest::SHA256.hexdigest token
+    cookies.permanent[USER_SESSION_COOKIE_NAME] =
+      CiderCi::OpenSession::Encryptor.encrypt(
+        secret, user_id: user.id,
+        token: token,
+        issued_at: Time.zone.now.iso8601)
+    # TODO nuke all other session of the user if so set in settings
+    @session = Session.create user_id: user.id, token_hash: token_hash
+  end
 
 end
