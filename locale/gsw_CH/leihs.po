@@ -1577,8 +1577,8 @@ msgstr "Benutzer gwächslet vo %{from} zu %{to}"
 msgid "User unknown"
 msgstr "Unbekannte Benutzer"
 
-msgid "Usage"
-msgstr "Verwändig"
+msgid "User/Typical usage"
+msgstr "Benutzer/Verwändig"
 
 msgid "Username"
 msgstr "Benutzername"

@@ -26,7 +26,7 @@ Feature: Editing an item
       | Last Checked               |
       | Responsible department     |
       | Responsible person         |
-      | Usage                      |
+      | User/Typical usage         |
       | - Move -                   |
       | Move                       |
       | Target area                |
@@ -135,7 +135,7 @@ Feature: Editing an item
       | Last Checked           |              | 01/01/2013          |
       | Responsible department | autocomplete | A-Ausleihe          |
       | Responsible person     |              | Matus Kmit          |
-      | Usage                  |              | Test use            |
+      | User/Typical usage     |              | Test use            |
     And I save
     Then I am redirected to the inventory list
     And the item is saved with all the entered information

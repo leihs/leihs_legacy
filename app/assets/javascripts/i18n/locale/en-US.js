@@ -2162,7 +2162,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Usage": [
+      "User/Typical usage": [
          null,
          ""
       ],

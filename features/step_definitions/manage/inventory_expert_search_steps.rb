@@ -1076,10 +1076,10 @@ def fields_config
     field_config_inventory_pool_id,
     field_config_responsible,
      {
-        "id":"usage",
+        "id":"user_name",
         "data":{
-           "label":"Usage",
-           "attribute":"usage",
+           "label":"User/Typical usage",
+           "attribute":"user_name",
            "permissions":{
               "role":"inventory_manager",
               "owner":true

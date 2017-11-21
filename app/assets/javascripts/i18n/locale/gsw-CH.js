@@ -2113,9 +2113,9 @@ window.i18n.locale_data = {
          null,
          "Unbekannte Benutzer"
       ],
-      "Usage": [
+      "User/Typical usage": [
          null,
-         "Verwändig"
+         "Benutzer/Verwändig"
       ],
       "Username": [
          null,

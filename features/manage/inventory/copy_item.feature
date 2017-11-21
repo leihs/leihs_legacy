@@ -39,7 +39,7 @@ Feature: Copy item
       | Shelf                  |              | Test shelf          |
       | Supply Category        | select       | Workshop Technology |
       | Target area            |              | Test room           |
-      | Usage                  |              | Test use            |
+      | User/Typical usage     |              | Test use            |
       | Warranty expiration    |              | 01/01/2013          |
       | Working order          | radio        | OK                  |
     When I save and copy

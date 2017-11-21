@@ -45,7 +45,7 @@ Feature: Create model with packages
     | Relevant for inventory | select       | Yes             |
     | Responsible department | autocomplete | A-Ausleihe      |
     | Responsible person     |              | Matus Kmit      |
-    | Usage                  |              | Test Verwendung |
+    | User/Typical usage     |              | Test Verwendung |
     | Name                   |              | Test Name       |
     | Note                   |              | Test Notiz      |
     | Building               | autocomplete | general building |
@@ -81,7 +81,7 @@ Feature: Create model with packages
     | Relevant for inventory | select       | Yes             |
     | Responsible department | autocomplete | A-Ausleihe      |
     | Responsible person     |              | Matus Kmit      |
-    | Usage                  |              | Test Verwendung |
+    | User/Typical usage     |              | Test Verwendung |
     | Name                   |              | Test Name       |
     | Note                   |              | Test Notiz      |
     | Building               | autocomplete | general building |

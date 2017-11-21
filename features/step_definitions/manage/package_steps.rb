@@ -202,7 +202,7 @@ When(/^I enter the package properties$/) do
     | Last Checked           |              | 01/01/2013      |
     | Responsible department | autocomplete | A-Ausleihe      |
     | Responsible person     |              | Matus Kmit      |
-    | Usage                  |              | Test Verwendung |
+    | User/Typical usage     |              | Test Verwendung |
     | Name                   |              | Test Name       |
     | Note                   |              | Test Notiz      |
     | Building               | autocomplete | general building |

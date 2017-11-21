@@ -1659,8 +1659,8 @@ msgstr "Benutzer geändert von %{from} zu %{to}"
 msgid "User unknown"
 msgstr "Benutzer unbekannt"
 
-msgid "Usage"
-msgstr "Verwendung"
+msgid "User/Typical usage"
+msgstr "Benutzer/Verwendung"
 
 msgid "Username"
 msgstr "Benutzername"

@@ -1620,7 +1620,7 @@ msgstr ""
 msgid "User unknown"
 msgstr ""
 
-msgid "Usage"
+msgid "User/Typical usage"
 msgstr ""
 
 msgid "Username"
