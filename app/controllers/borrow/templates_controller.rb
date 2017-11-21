@@ -30,7 +30,6 @@ class Borrow::TemplatesController < Borrow::ApplicationController
     if not unavailable_lines.empty? and params[:force_continue].blank?
       availability and render :availability
     else
-      raise 'fix this'
       available_lines.each do |l|
         create_lines(model: l[:model],
                      quantity: l[:quantity],

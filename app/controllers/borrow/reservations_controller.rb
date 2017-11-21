@@ -34,7 +34,6 @@ class Borrow::ReservationsController < Borrow::ApplicationController
     end
 
     if @errors.empty?
-      raise 'fix this'
       reservations = create_lines(model: model,
                                   quantity: quantity,
                                   status: :unsubmitted,
