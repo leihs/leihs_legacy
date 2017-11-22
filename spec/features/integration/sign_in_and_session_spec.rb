@@ -45,8 +45,8 @@ describe 'sign in and session' do
         sign_in_as 'admin', 'password'
 
         click_on _('Settings')
-        fill_in _("sessions_max_lifetime_secs"), with: 15
         page.execute_script %[ $(".navbar").remove() ]
+        fill_in _("sessions_max_lifetime_secs"), with: 15
         click_on _('Save Settings')
 
         # we will get sigend out me
@@ -72,9 +72,15 @@ describe 'sign in and session' do
           expect(sessions.count).to be== 1
 
           click_on _("Settings")
-          check _('sessions_force_uniqueness')
           page.execute_script %[ $(".navbar").remove() ]
+
+          check _('sessions_force_uniqueness')
           click_on _('Save Settings')
+
+          # we need to resort to the following because a normal sign out
+          # would also destroy the @user_session, and here we want to test
+          # that a new sign in destroys existing sessions
+          Capybara.current_session.driver.browser.manage.delete_all_cookies
 
           # after signing out and signing in there is again exactly one new(!) session
           sign_in_as 'admin', 'password'
@@ -96,8 +102,8 @@ describe 'sign in and session' do
           expect(sessions.count).to be== 1
 
           click_on _("Settings")
-          uncheck _('sessions_force_uniqueness')
           page.execute_script %[ $(".navbar").remove() ]
+          uncheck _('sessions_force_uniqueness')
           click_on _('Save Settings')
 
           # we need to resort to the following because a normal sign out
