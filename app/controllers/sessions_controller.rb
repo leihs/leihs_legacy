@@ -33,11 +33,10 @@ class SessionsController < ApplicationController
     # delete cookie and reset session
     cookies.delete :auth_token
     cookies.delete 'leihs-user-session'
-    reset_session
+    @user_session.try(:destroy)
     # redirect and flash
     flash[:notice] = _('You have been logged out.')
-    # TODO move this to a user property
-    session[:locale] = current_user.language.locale_name if current_user
+    session[:locale] = current_user.try(:language).try(:locale_name)
     redirect_back_or_default('/')
   end
 end
