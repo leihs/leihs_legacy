@@ -38,7 +38,7 @@ RSpec.configure do |config|
     end
     page.driver.quit # OPTIMIZE force close browser popups
     Capybara.current_driver = Capybara.default_driver
-    PgTasks.truncate_tables()
+    # PgTasks.truncate_tables()
   end
 
   def take_screenshot(screenshot_dir = nil, name = nil)
