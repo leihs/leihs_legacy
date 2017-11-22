@@ -43,7 +43,6 @@ Feature: Retire item
     And I pick a retired <object> that the current inventory pool is the owner of
     And I go to this <object>'s edit page
     When I unretire this <object>
-    And I fill in the supply category
     And I save
     Then I am redirected to the inventory list
     And this <object> is not retired

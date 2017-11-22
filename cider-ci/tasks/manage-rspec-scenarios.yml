@@ -1,21 +1,21 @@
 ---
 tasks:
-- name: spec/features/manage/case_insensitive_inventory_code.feature:21
+- name: spec/features/manage/case_insensitive_inventory_code.feature:20
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:21
-- name: spec/features/manage/case_insensitive_inventory_code.feature:31
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:20
+- name: spec/features/manage/case_insensitive_inventory_code.feature:30
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:31
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:30
 - name: spec/features/manage/case_insensitive_inventory_code.feature:7
   scripts:
     test:
@@ -160,30 +160,30 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/model_crud.feature:7
-- name: spec/features/manage/serial_number_validation.feature:25
+- name: spec/features/manage/serial_number_validation.feature:24
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:25
-- name: spec/features/manage/serial_number_validation.feature:43
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:24
+- name: spec/features/manage/serial_number_validation.feature:41
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:43
-- name: spec/features/manage/serial_number_validation.feature:57
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:41
+- name: spec/features/manage/serial_number_validation.feature:55
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:57
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:55
 - name: spec/features/manage/serial_number_validation.feature:7
   scripts:
     test:
@@ -192,14 +192,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:7
-- name: spec/features/manage/serial_number_validation.feature:71
+- name: spec/features/manage/serial_number_validation.feature:69
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:71
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:69
 - name: spec/features/manage/take_back.feature:19
   scripts:
     test:

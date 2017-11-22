@@ -21,7 +21,6 @@ Feature: Editing an item
       | Status note                |
       | - Inventory -              |
       | Relevant for inventory     |
-      | Supply Category            |
       | Owner                      |
       | Last Checked               |
       | Responsible department     |
@@ -78,7 +77,6 @@ Feature: Editing an item
       | Borrowable             | radio        | OK                  |
 
       | Relevant for inventory | select       | Yes                 |
-      | Supply Category        | select       | Workshop Technology |
     And I save
     Then I am redirected to the inventory list
     And the item is saved with all the entered information
@@ -110,7 +108,6 @@ Feature: Editing an item
       | Inventory Code         |              | Test Inventory Code |
       | Model                  | autocomplete | Sharp Beamer 456    |
       | Relevant for inventory | select       | Yes                 |
-      | Supply Category        | select       | Workshop Technology |
       | Move                   | select       | sofort entsorgen    |
       | Target area            |              | Test room           |
       | Check-In Date          |              | 01/01/2013          |
@@ -144,7 +141,6 @@ Feature: Editing an item
     Given I edit an item that belongs to the current inventory pool
     Then "Reference" must be selected in the "Invoice Information" section
     When "Investment" is selected for "Reference", "Project Number" must also be supplied
-    When "Yes" is selected for "Relevant for inventory", "Supply Category" must also be selected
     When "Yes" is selected for "Retirement", "Reason for Retirement" must also be supplied
     Then all required fields are marked with an asterisk
     And I cannot save the item if a required field is empty

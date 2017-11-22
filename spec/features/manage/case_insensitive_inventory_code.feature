@@ -10,7 +10,6 @@ Feature: Case insensitive inventory code feature
     And I open the page for creating a new item
     When I enter the inventory code of this item in lowercase
     And I select a model
-    And I select a supply category
     And I choose a building
     And I choose a room
     And I save

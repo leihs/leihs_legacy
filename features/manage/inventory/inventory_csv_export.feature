@@ -40,7 +40,6 @@ Feature: Inventory (CSV export)
       | Responsible department        |
       | Responsible person            |
       | User/Typical usage            |
-      | Supply Category               |
       | Reference                     |
       | Project Number                |
       | Invoice Number                |

@@ -37,7 +37,6 @@ Feature: Copy item
       | Room                   | autocomplete | general room      |
       | Serial Number          |              | Test serial number  |
       | Shelf                  |              | Test shelf          |
-      | Supply Category        | select       | Workshop Technology |
       | Target area            |              | Test room           |
       | User/Typical usage     |              | Test use            |
       | Warranty expiration    |              | 01/01/2013          |

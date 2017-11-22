@@ -30,7 +30,6 @@ Feature: Inventory helper
   Scenario: Required fields
     Given I go to the inventory helper screen
     When "Reference" is selected and set to "Investment", then "Project Number" must also be filled in
-    When "Relevant for inventory" is selected and set to "Yes", then "Supply Category" must also be filled in
     When "Retirement" is selected and set to "Yes", then "Reason for Retirement" must also be filled in
     Then all required fields are marked with an asterisk
     When a required field is blank, the inventory helper cannot be used

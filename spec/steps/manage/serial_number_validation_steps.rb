@@ -26,15 +26,10 @@ module Manage
 
       step 'I select a model' do
         model = @current_inventory_pool.models.first
-        type_into_and_select_from_autocomplete(
+        type_into_and_select_from_autocomplete_single_result(
           'div#model_id input',
           model.name
         )
-        find('.ui-autocomplete li', count: 1)
-      end
-
-      step 'I select a supply category' do
-        select 'AV Technology', from: 'item[properties][anschaffungskategorie]'
       end
 
       step 'I enter serial number :serial_number' do |serial_number|

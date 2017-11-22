@@ -56,11 +56,8 @@ When(/^I enter the following item information$/) do |table|
     field_name = hash_row['field']
     field_value = hash_row['value']
     field_type = hash_row['type']
-    matched_field = \
-      wait_until do
-        all('.row.emboss').detect { |el| el.text.match /^#{field_name}/ }
-      end
-    expect(matched_field).to be
+    field_id = Field.all.select { |f| _(f.data['label']) == _(field_name) }.first.id
+    matched_field = find('.row.emboss[data-id="' + field_id + '"]')
 
     case field_type
     when 'radio', 'radio must'
@@ -161,8 +158,6 @@ When(/^these required fields are filled in:$/) do |table|
         @project_number_value = 'test'
         @project_number_field = find('.row.emboss', match: :prefer_exact, text: must_field_name).find('input,textarea')
         @project_number_field.set @project_number_value
-      when 'Supply Category'
-        find('.row.emboss', match: :prefer_exact, text: 'Supply Category').find("select option:not([value=''])", match: :first).select_option
       when 'Building'
         fill_in_autocomplete_field must_field_name, Building.general.name
       when 'Room'
@@ -186,8 +181,6 @@ When(/^these required fields are blank:$/) do |table|
       when 'Project Number'
         find('.row.emboss', match: :prefer_exact, text: 'Reference').find('label', text: 'Investment').click
         find('.row.emboss', match: :prefer_exact, text: must_field_name).find('input,textarea').set ''
-      when 'Supply Category'
-        find('.row.emboss', match: :prefer_exact, text: must_field_name).find("select option[value='']").select_option
       else
         raise 'unknown field'
     end
@@ -235,19 +228,6 @@ end
 
 Then(/^the following fields have their default values$/) do |table|
   check_fields_and_their_values table
-end
-
-
-Then(/^the field 'Supply Category' offers the following choices$/) do |table|
-  expected_values = table.raw.flatten
-  discovered_values = []
-  within "select[name='item[properties][anschaffungskategorie]']" do
-    all('option').each do |option|
-      option_text = option.text
-      discovered_values << option_text unless option_text.blank?
-    end
-  end
-  expect(expected_values.sort).to eq(discovered_values.sort)
 end
 
 When(/^I enter a supplier( that does not exist)?$/) do |supplier_string|

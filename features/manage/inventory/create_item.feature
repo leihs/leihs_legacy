@@ -22,7 +22,6 @@ Feature: Create item
       | Status note                |
       | - Inventory -              |
       | Relevant for inventory     |
-      | Supply Category            |
       | Owner                      |
       | Last Checked               |
       | Responsible department     |
@@ -63,7 +62,6 @@ Feature: Create item
     | Model           |
     | Inventory Code  |
     | Project Number  |
-    | Supply Category |
     Then the model cannot be created
     And I see an error message
 
@@ -75,7 +73,6 @@ Feature: Create item
     | Model           |
     | Inventory Code  |
     | Project Number  |
-    | Supply Category |
     When I leave the field "<required_field>" empty
     Then the model cannot be created
     And I see an error message
@@ -85,7 +82,6 @@ Feature: Create item
       | Model           |
       | Inventory Code  |
       | Project Number  |
-      | Supply Category |
 
   Scenario: Areas where you can create an item
     Given I am Matti
@@ -101,7 +97,6 @@ Feature: Create item
     | Model        |
     | Inventory Code|
     | Project Number |
-    | Supply Category |
     | Building |
     | Room |
     When I enter a supplier that does not exist
@@ -117,7 +112,6 @@ Feature: Create item
       | Inventory Code         |              | Test Inventory Code |
       | Model                  | autocomplete | Sharp Beamer 456    |
       | Relevant for inventory | select       | Yes                 |
-      | Supply Category        | select       | Workshop Technology |
       | Move                   | select       | sofort entsorgen    |
       | Target area            |              | Test room           |
       | Check-In Date          |              | 01/01/2013          |
@@ -157,19 +151,6 @@ Feature: Create item
     | Relevant for inventory | select | Yes          |
     | Working order          | radio  | OK           |
     | Completeness           | radio  | OK           |
-    | Supply Category        | select |              |
-
-  Scenario: Specifying values for supply category
-    Given I am Matti
-    And I create an item
-    Then the field 'Supply Category' offers the following choices
-    | Workshop Technology   |
-    | Production Technology |
-    | AV Technology         |
-    | Musical Instrument    |
-    | Facility Management   |
-    | IT/Software           |
-    | Durch Kunde beschafft |
 
   Scenario: Add and remove attachments (attachments field is writable)
     Given I am Matti
@@ -178,7 +159,6 @@ Feature: Create item
     | Model           |
     | Inventory Code  |
     | Project Number  |
-    | Supply Category |
     | Building        |
     | Room            |
     And I add 2 attachments
