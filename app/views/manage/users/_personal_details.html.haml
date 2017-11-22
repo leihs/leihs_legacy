@@ -1,51 +1,53 @@
+:css
+  label {font-weight: bold};
 %h2.headline-m.padding-left-s= _("Basic Information")
 
 .row.margin-vertical-s
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= "#{_("Last name")} *"
+      %label.font-size-m{for: "user-lastname"}="#{_("Last name")} *"
     .col1of2.text-align-right
-      %input{type: "text", name: "user[lastname]", value: @user.lastname}
+      %input#user-lastname{type: "text", name: "user[lastname]", value: @user.lastname}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= "#{_("First name")} *"
+      %label.font-size-m{for: "user-firstname"}= "#{_("First name")} *"
     .col1of2.text-align-right
-      %input{type: "text", name: "user[firstname]", value: @user.firstname}
+      %input#user-firstname{type: "text", name: "user[firstname]", value: @user.firstname}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= _("Address")
+      %label.font-size-m{for: 'user-address'}= _("Address")
     .col1of2.text-align-right
-      %input{type: "text", name: "user[address]", value: @user.address}
+      %input#user-address{type: "text", name: "user[address]", value: @user.address}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= _("Zip")
+      %label.font-size-m{for: 'user-zip'}= _("Zip")
     .col1of2.text-align-right
-      %input{type: "text", name: "user[zip]", value: @user.zip}
+      %input#user-zip{type: "text", name: "user[zip]", value: @user.zip}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= _("City")
+      %label.font-size-m{for: 'user-city'}= _("City")
     .col1of2.text-align-right
-      %input{type: "text", name: "user[city]", value: @user.city}
+      %input#user-city{type: "text", name: "user[city]", value: @user.city}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= _("Country")
+      %label.font-size-m{for: 'user-country'}= _("Country")
     .col1of2.text-align-right
-      %input{type: "text", name: "user[country]", value: @user.country}
+      %input#user-country{type: "text", name: "user[country]", value: @user.country}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= _("Phone")
+      %label.font-size-m{for: 'user-phone'}= _("Phone")
     .col1of2.text-align-right
-      %input{type: "text", name: "user[phone]", value: @user.phone}
+      %input#user-phone{type: "text", name: "user[phone]", value: @user.phone}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= "#{_("E-Mail")} *"
+      %label.font-size-m{for: 'user-email'}= "#{_("E-Mail")} *"
     .col1of2.text-align-right
-      %input{type: "text", name: "user[email]", value: @user.email}
+      %input#user-email{type: "text", name: "user[email]", value: @user.email}

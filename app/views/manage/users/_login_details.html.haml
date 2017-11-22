@@ -1,21 +1,24 @@
+:css
+  label {font-weight: bold};
+
 %h2.headline-m.padding-left-s= _("Login Details")
 
 .row.margin-vertical-s
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= "#{_("Login")} *"
+      %label.font-size-m{for: 'db-auth-login'}= "#{_("Login")} *"
     .col1of2.text-align-right
-      %input{type: "text", name: "db_auth[login]", value: @db_auth.try(:login)}
+      %input#db-auth-login{type: "text", name: "db_auth[login]", value: @db_auth.try(:login)}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= "#{_("Password")} *"
+      %label.font-size-m{for: 'db-auth-password'}= "#{_("Password")} *"
     .col1of2.text-align-right
-      %input{type: "password", name: "db_auth[password]", value: "#{"_password_" if @db_auth}"}
+      %input#db-auth-password{type: "password", name: "db_auth[password]", value: "#{"_password_" if @db_auth}"}
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %strong.font-size-m= "#{_("Password Confirmation")} *"
+      %label.font-size-m{for: 'db-auth-password-confirmation'}= "#{_("Password Confirmation")} *"
     .col1of2.text-align-right
-      %input{type: "password", name: "db_auth[password_confirmation]", value: "#{"_password_" if @db_auth}"}
+      %input#db-auth-password-confirmation{type: "password", name: "db_auth[password_confirmation]", value: "#{"_password_" if @db_auth}"}

@@ -1,21 +1,20 @@
 jobs:
 
-  rspec-model-tests:
+  rspec-integration-tests:
 
-    name: RSpec Model Tests
-    description: Run model specs.
+    name: RSpec Integration Scenarios
 
     priority: 1
 
     run_when:
-      always:
+      branch name matches master or manage:
         type: branch
-        include_match: '^.*$'
+        include_match: '^.*(master|integration).*$'
         exclude_match: '^.*(no-ci|hotspot).*$'
 
     context:
       generate_tasks:
-        include_match: spec/models/.*_spec.rb
+        include_match: spec/features/integration/.*_spec.rb
 
       task_defaults:
         max_trials: 3
