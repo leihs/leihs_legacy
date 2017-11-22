@@ -41,11 +41,6 @@ module Spec
       end
     end
 
-    def type_into_and_select_from_autocomplete_single_result(selector, value)
-      type_into_autocomplete(selector, value)
-      find('.ui-autocomplete li', count: 1).click
-    end
-
     step 'I close the flash message if visible' do
       flash = first('#flash')
       if flash

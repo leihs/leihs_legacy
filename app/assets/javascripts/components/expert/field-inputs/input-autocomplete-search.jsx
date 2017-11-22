@@ -14,6 +14,7 @@
 
     _onChange(result) {
 
+      this.abortAjaxCall()
       this.props.selectedValue.value = {
         text: result.term,
         id: result.id
@@ -21,7 +22,13 @@
       this.props.onChange()
     },
 
+    ajaxCall: null,
 
+    abortAjaxCall() {
+      if(this.ajaxCall) {
+        this.ajaxCall.abort()
+      }
+    },
 
     render () {
       const props = this.props
@@ -56,7 +63,9 @@
 
         if(term.trim() != '') {
 
-          App.Model.ajaxFetch(
+          this.abortAjaxCall()
+
+          this.ajaxCall = $.ajax(
             {
               url: dataUrl,
               data: $.param({

@@ -366,13 +366,8 @@ class Item < ApplicationRecord
   def supplier_with_params=(v)
     self.supplier_without_params =
       if v.is_a? Hash
-        if not v[:id].blank?
-          # if id is provided, then use an already existing supplier
+        unless v[:id].blank?
           Supplier.find v[:id]
-        elsif v[:id].blank? and not v[:name].blank?
-          # if id is empty, but name is provided,
-          # then find existing or create a supplier
-          Supplier.find_or_create_by(name: v[:name])
         end
         # otherwise, item.supplier is set to nil automatically
       else

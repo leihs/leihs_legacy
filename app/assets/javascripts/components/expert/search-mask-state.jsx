@@ -64,7 +64,7 @@
     _fireSelectedValuesChanged(selectedValues) {
 
       EnsureDependents._ensureDependents(selectedValues, this.props.fields, {
-        _hasValue: FieldSwitch._hasValue,
+        _hasValidValue: FieldSwitch._hasValue,
         _createEmptyValue: FieldSwitch._createEmptyValue,
         _isDependencyValue: FieldSwitch._isDependencyValue
       })

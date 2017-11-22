@@ -198,7 +198,7 @@
 
     _fieldSwitch() {
       return {
-        _hasValue: CreateItemFieldSwitch._hasValue,
+        _hasValidValue: CreateItemFieldSwitch._hasValidValue,
         _createEmptyValue: CreateItemFieldSwitch._createEmptyValue,
         _isDependencyValue: CreateItemFieldSwitch._isDependencyValue
       }

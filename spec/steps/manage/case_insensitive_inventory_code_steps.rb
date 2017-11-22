@@ -31,7 +31,6 @@ module Manage
           'div#model_id input',
           model.name
         )
-        find('.ui-autocomplete li', count: 1).click
       end
 
       step 'I see an error message in regards to ' \

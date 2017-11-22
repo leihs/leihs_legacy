@@ -9,7 +9,7 @@ window.EnsureDependents = {
       //   return false;
       // }
 
-      if(field.values_dependency_field_id == selectedValue.field.id && fieldSpecific._hasValue(selectedValue)) {
+      if(field.values_dependency_field_id == selectedValue.field.id && fieldSpecific._hasValidValue(selectedValue)) {
         return true;
       }
 

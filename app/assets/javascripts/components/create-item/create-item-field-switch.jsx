@@ -11,10 +11,10 @@ window.CreateItemFieldSwitch = {
         return selectedValue.value.text.trim().length > 0
         break
       case 'autocomplete-search':
-        return selectedValue.value.id != null
+        return selectedValue.value.id != null || selectedValue.value.text != ''
         break
       case 'autocomplete':
-        return selectedValue.value.id != null
+        return selectedValue.value.id != null || selectedValue.value.text != ''
         break
       case 'textarea':
         return selectedValue.value.text.trim().length > 0
@@ -108,6 +108,15 @@ window.CreateItemFieldSwitch = {
 
       var d = selectedValue.value.at
       return this._checkDateStringIsValid(d)
+
+    } else if(selectedValue.field.type == 'autocomplete') {
+
+      debugger
+      return selectedValue.value.text != '' && selectedValue.value.id || selectedValue.value.text == '' && !selectedValue.value.id
+
+    } else if(selectedValue.field.type == 'autocomplete-search') {
+
+      return selectedValue.value.text != '' && selectedValue.value.id || selectedValue.value.text == '' && !selectedValue.value.id
 
     } else {
       return true
@@ -278,10 +287,14 @@ window.CreateItemFieldSwitch = {
     }
   },
 
+  _hasValidValue(selectedValue) {
+    return CreateItemFieldSwitch._hasValue(selectedValue) && CreateItemFieldSwitch._isValid(selectedValue)
+  },
+
   _isDependencyValue(selectedValue, fieldDependencyValue) {
 
     if(!fieldDependencyValue) {
-      return this._hasValue(selectedValue)
+      return this._hasValidValue(selectedValue)
     }
 
 

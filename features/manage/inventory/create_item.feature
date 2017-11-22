@@ -88,22 +88,6 @@ Feature: Create item
     And I open the inventory
     Then I can create an item
 
-  @flapping
-  Scenario: Creating a new supplier if it does not already exist
-    Given I am Mike
-    And I create an item
-    And I choose "Investment" as reference
-    And these required fields are filled in:
-    | Model        |
-    | Inventory Code|
-    | Project Number |
-    | Building |
-    | Room |
-    When I enter a supplier that does not exist
-    And I save
-    Then a new supplier is created
-    And the created item has the new supplier
-
   Scenario: Creating an item with all its information
     Given I am Matti
     And I create an item

@@ -26,7 +26,7 @@ module Manage
 
       step 'I select a model' do
         model = @current_inventory_pool.models.first
-        type_into_and_select_from_autocomplete_single_result(
+        type_into_and_select_from_autocomplete(
           'div#model_id input',
           model.name
         )
