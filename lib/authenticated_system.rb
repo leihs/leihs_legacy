@@ -3,6 +3,8 @@ require 'cider_ci/open_session/encryptor'
 module AuthenticatedSystem
   protected
 
+  attr_accessor :user_session
+
   # Returns true or false if the user is logged in.
   def logged_in?
     current_user != nil
@@ -60,7 +62,7 @@ module AuthenticatedSystem
   # Inclusion hook to make #current_user and #logged_in?
   # available as ActionView helper methods.
   def self.included(base)
-    base.send :helper_method, :current_user, :logged_in?
+    base.send :helper_method, :current_user, :user_session, :logged_in?
   end
 
   # Called from #current_user.

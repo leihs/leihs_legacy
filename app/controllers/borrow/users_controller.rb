@@ -18,8 +18,7 @@ class Borrow::UsersController < Borrow::ApplicationController
 
   def switch_to_delegation
     if delegation = current_user.delegations.find(params[:id])
-      session[:delegated_user_id] = current_user.id
-      self.current_user = delegation
+      user_session.update_attributes! delegation_id: delegation.id
     end
     redirect_to borrow_root_path
   end
