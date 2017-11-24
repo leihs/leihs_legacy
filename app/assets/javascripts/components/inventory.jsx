@@ -526,18 +526,51 @@
             return
           }
 
-          App.Software.ajaxFetch({
-            data: $.param({
-              ids: modelIds,
-              paginate: false,
-              include_package_models: true
-            })
-          }).done(() => {
+          this._loadLicensesPackageModels(modelIds, page, callback)
 
-            callback(page)
-          })
         })
       }
+    },
+
+    _loadLicensesPackageModels(modelIds, page, callback) {
+
+      if(modelIds.length == 0) {
+        callback(page)
+        return
+      }
+
+      App.Software.ajaxFetch({
+        data: $.param({
+          ids: _.first(modelIds, 20),
+          paginate: false,
+          include_package_models: true
+        })
+      }).done(() => {
+
+        this._loadLicensesPackageModels(_.rest(modelIds, 20), page, callback)
+      })
+
+    },
+
+
+    _loadItemsPackageModels(modelIds, page, callback) {
+
+      if(modelIds.length == 0) {
+        callback(page)
+        return
+      }
+
+      App.Model.ajaxFetch({
+        data: $.param({
+          ids: _.first(modelIds, 20),
+          paginate: false,
+          include_package_models: true
+        })
+      }).done(() => {
+
+        this._loadItemsPackageModels(_.rest(modelIds, 20), page, callback)
+      })
+
     },
 
     _fetchItems(page, inventoryPage, request, callback) {
@@ -581,17 +614,7 @@
             return
           }
 
-          App.Model.ajaxFetch({
-            data: $.param({
-              ids: modelIds,
-              paginate: false,
-              include_package_models: true
-            })
-          }).done(() => {
-
-            callback(page)
-          })
-
+          this._loadItemsPackageModels(modelIds, page, callback)
         })
       }
     },
