@@ -27,11 +27,11 @@
         %a{href: main_app.borrow_user_delegations_path}
           .fa.fa-group
           = _("Delegations")
-    - elsif current_user.delegation? and @current_delegated_user
+    - elsif current_user.delegation?
       %li
         %a{href: main_app.borrow_user_switch_back_path}
-          %img.max-height-xxxs.max-width-xxs{:src => @current_delegated_user.image_url}
-          = _("Back to %s") % @current_delegated_user.to_s
+          %img.max-height-xxxs.max-width-xxs{:src => user_session.user.image_url}
+          = _("Back to %s") % user_session.user
 
     %li
       %a{href: main_app.logout_path}

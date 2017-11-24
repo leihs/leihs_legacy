@@ -37,7 +37,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
           reservations.each do |reservation|
             if reservation.user.delegation?
               reservation.delegated_user = \
-                reservation.user.delegated_users.find(session[:delegated_user_id])
+                reservation.user.delegated_users.find(user_session.user_id)
             end
             reservation.order = order
             reservation.status = :submitted
@@ -51,6 +51,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
                            'but is NOT YET APPROVED.')
         redirect_to borrow_root_path
       rescue => e
+        Rails.logger.warn e
         flash[:error] = e.message
         redirect_to borrow_current_order_path
         raise ActiveRecord::Rollback

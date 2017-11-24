@@ -1,7 +1,9 @@
+# TODO: needs refactoring, in particular wrt. the required authenticated_system.rb
 module MainHelpers
   extend ActiveSupport::Concern
 
   included do
+    include Concerns::UserSessionController
     require File.join(Rails.root, 'lib', 'authenticated_system.rb')
     include AuthenticatedSystem
 
@@ -92,7 +94,7 @@ module MainHelpers
     ####### Helper Methods #######
 
     def admin?
-      current_user.has_role?(:admin)
+      current_user && current_user.has_role?(:admin)
     end
 
     def permit_params

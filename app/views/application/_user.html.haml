@@ -30,12 +30,12 @@
           .width-xxxs.inline-block.text-align-center
             .fa.fa-group
           = _("Delegations")
-    - elsif current_user.delegation? and @current_delegated_user
+    - elsif current_user.delegation?
       %li.separated-top
         %a.dropdown-item{href: main_app.borrow_user_switch_back_path}
           .width-xxxs.inline-block.text-align-center
-            %img.max-height-xxxs.max-width-xxs.emboss.deep{:src => @current_delegated_user.image_url}
-          = _("Back to %s") % @current_delegated_user.to_s
+            %img.max-height-xxxs.max-width-xxs.emboss.deep{:src => user_session.user.image_url}
+          = _("Back to %s") % user_session.user
 
     %li.separated-top
       %a.dropdown-item{href: main_app.logout_path}

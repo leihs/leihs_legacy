@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include MainHelpers
+  include Concerns::UserSessionController
 
   layout 'splash'
 

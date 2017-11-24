@@ -5,6 +5,9 @@ jobs:
 include:
   - cider-ci/jobs/rspec-model-tests.yml
 
+  ## INTEGRATION
+  - cider-ci/jobs/rspec-integration-tests.yml
+
   ## BORROW/MANAGE - on branches foo/borrow-bar or foo/manage-bar
   - cider-ci/jobs/borrow-manage-code-checks.yml
 

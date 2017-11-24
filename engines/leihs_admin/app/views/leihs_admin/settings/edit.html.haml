@@ -14,7 +14,7 @@
     - next if k == "id"
     .row.form-group
       .col-sm-4
-        %strong= k
+        %label{for: "setting_#{k}"}= k
       .col-sm-8
         - if k == "time_zone"
           = f.time_zone_select k
