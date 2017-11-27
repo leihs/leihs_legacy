@@ -36,6 +36,7 @@ class window.App.OrdersIndexController extends Spine.Controller
       search_term: @search.term()
       page: page
       range: @range.get()
+      order_by_created_at_group_by_user: true
 
     if not data['to_be_verified'] and App.User.current.role == "group_manager"
       data = $.extend data, { from_verifiable_users: true }

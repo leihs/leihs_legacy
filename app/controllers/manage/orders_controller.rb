@@ -10,6 +10,17 @@ class Manage::OrdersController < Manage::ApplicationController
       format.html
       format.json do
         @orders = Order.filter(params, nil, current_inventory_pool)
+
+        if params[:order_by_created_at_group_by_user]
+          @orders = @orders.select('orders.*').select(
+            <<-SQL
+              first_value(orders.created_at)
+              over (partition by orders.user_id order by orders.created_at desc)
+              as newest_created_at_per_user
+            SQL
+          ).reorder('newest_created_at_per_user desc, user_id, created_at desc')
+        end
+
         set_pagination_header @orders, disable_total_count: (
           params[:disable_total_count] == 'true' ? true : false
         )
