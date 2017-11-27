@@ -16,7 +16,7 @@ class window.App.OrdersEditController extends Spine.Controller
     "click [data-destroy-selected-lines]": "validateLineDeletion"
 
   constructor: ->
-    super 
+    super
     do @setupLineSelection
     do @fetchAvailability
     do @setupAddLine
@@ -98,7 +98,7 @@ class window.App.OrdersEditController extends Spine.Controller
       @status.html App.Render "manage/views/availabilities/loaded"
       @render true
 
-  render: (renderAvailability)=> 
+  render: (renderAvailability)=>
     @reservationsContainer.html App.Render "manage/views/reservations/grouped_lines", @order.groupedLinesByDateRange(true),
       linePartial: "manage/views/reservations/order_line"
       renderAvailability: renderAvailability
@@ -110,10 +110,24 @@ class window.App.OrdersEditController extends Spine.Controller
       callback: @renderPurpose
 
   swapUser: =>
-    new App.SwapUsersController
-      order: @order
-      manageContactPerson: true
-      user: @order.user()
+    jModal = $("<div class='modal medium hide fade ui-modal padding-inset-m padding-horizontal-l' role='dialog' tabIndex='-1' />")
+    @modal = new App.Modal(
+      jModal,
+      () =>
+        ReactDOM.unmountComponentAtNode(jModal.get()[0])
+    )
+    @swapOrderUserDialog = ReactDOM.render(
+      React.createElement(SwapOrderUserDialog, {
+          data: {},
+          other: {
+            order: @order,
+            manageContactPerson: true,
+            user: @order.user()
+          }
+      }),
+      @modal.el.get()[0]
+    )
+    @el = @modal.el
 
   renderPurpose: => @purposeContainer.html @order.purpose
 

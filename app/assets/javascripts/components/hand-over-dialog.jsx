@@ -11,127 +11,12 @@
     getInitialState () {
       return {
         showPurposeInput: (this._purpose() ? false : true),
-        userDataLoaded: false,
-        personInput: '',
-        userData: [],
-        delegatedUser: null,
-        hideDropdown: false
+        delegatedUser: null
       }
     },
 
     _userId() {
       return this.props.data.user.id
-    },
-
-    componentDidMount() {
-      document.addEventListener('mousedown', this._handleClickOutside);
-      this._loadUsers()
-    },
-
-    componentWillUnmount() {
-      document.removeEventListener('mousedown', this._handleClickOutside);
-    },
-
-    _loadUsers() {
-      if(!this._isUserDelegation()) {
-        return
-      }
-
-      App.User.ajaxFetch({
-        data: $.param({
-          delegation_id: this._userId()
-        })
-      })
-      .done((data) => {
-        this.setState({userDataLoaded: true, userData: data})
-      })
-    },
-
-    _onChangePersonInput(event) {
-      this.setState({personInput: event.target.value})
-    },
-
-    _onUserClick(event, user) {
-      event.preventDefault()
-      this.props.onDelegatedUser(user)
-      this.setState({delegatedUser: user, personInput: ''})
-    },
-
-    _userAddress(user) {
-      return (user.address ? user.address : '')
-        + ' '
-        + (user.city ? user.city : '')
-    },
-
-    _renderDropdownLine(user) {
-      return (
-        <li key={user.id} className='separated-bottom exclude-last-child ui-menu-item'>
-           <a onClick={(event) => this._onUserClick(event, user)} className='row ui-menu-item-wrapper' title='Christophe Besch' id='ui-id-62' tabIndex='-1'>
-              <div className='row text-ellipsis'>
-                <strong>
-                  {user.name}
-                </strong>
-              </div>
-              <div className='row text-ellipsis'>
-                {this._userAddress(user)}
-              </div>
-           </a>
-        </li>
-      )
-    },
-
-    _renderDropdownLines() {
-      return this._dropdownData().map((u) => {
-        return this._renderDropdownLine(u)
-      })
-    },
-
-    _dropdownData() {
-
-      var input = this.state.personInput
-
-      if(input == '') {
-        return this.state.userData
-      }
-
-      var contains = (string, part) => {
-        if(!string || !part) {
-          return false
-        }
-        return string.toLowerCase().indexOf(part.toLowerCase()) > - 1
-      }
-
-      return _.filter(
-        this.state.userData,
-        (u) => {
-          return contains(u.name, input) || contains(u.address, input) || contains(u.city, input)
-        }
-      )
-    },
-
-
-    _handleClickOutside(event) {
-      if (this.ulReference && !this.ulReference.contains(event.target)) {
-        this._onHideDropdown()
-      }
-    },
-
-    _onHideDropdown() {
-      this.setState({hideDropdown: true})
-    },
-
-    _renderDropdown() {
-
-      var display = 'none'
-      if(this._dropdownData().length > 0 && !this.state.delegatedUser && !this.state.hideDropdown) {
-        display = 'block'
-      }
-
-      return (
-        <ul ref={(ref) => this.ulReference = ref} id='ui-id-1' tabIndex='0' className='ui-menu ui-widget ui-widget-content ui-autocomplete ui-front ui-autocomplete-disabled' style={{display: display, top: '30px', left: '0px', width: '231px'}}>
-          {this._renderDropdownLines()}
-        </ul>
-      )
     },
 
 
@@ -149,60 +34,22 @@
       return this.props.data.user.isDelegation()
     },
 
-    _placeholder() {
-      return _jed('Contact person') + ' ' + _jed('Name / ID')
-    },
 
-    _onClearUser() {
-      this.props.onDelegatedUser(null)
-      this.setState({delegatedUser: null})
-    },
-
-    _renderDelegatedUser() {
-
-      if(!this.state.delegatedUser) {
-        return null
-      }
-
-      return (
-        <div className='emboss white padding-inset-xxs'>
-           <div className='row'>
-              <p className='paragraph-s'>
-                 <strong>
-                 {this.state.delegatedUser.name}
-                 </strong>
-              </p>
-              <div className='position-absolute-topright padding-inset-xxs'>
-                 <a onClick={this._onClearUser} className='grey padding-inset-xxs' id='remove-user'>
-                   <i className='fa fa-times-circle icon-m'></i>
-                 </a>
-              </div>
-           </div>
-        </div>
-      )
-    },
-
-    _onInputFocus() {
-      this.setState({hideDropdown: false})
+    _onDelegatedUser(user) {
+      this.setState({
+        delegatedUser: user
+      })
+      this.props.onDelegatedUser(user)
     },
 
     _renderContactPerson() {
 
       if(this._isUserDelegation()) {
 
-        var display = 'inline-block'
-        if(this.state.delegatedUser) {
-          display = 'none'
-        }
-
         return (
           <div className='row margin-bottom-l'>
             <div className='col1of3' id='contact-person'>
-              <input style={{display: display}} onFocus={this._onInputFocus} onChange={this._onChangePersonInput} value={this.state.personInput} autoComplete='off' autoFocus='autofocus' className='width-full' data-barcode-scanner-target data-prevent-barcode-scanner-submit id='user-id' placeholder={this._placeholder()} type='text' />
-              <div id='selected-user'>
-                {this._renderDelegatedUser()}
-              </div>
-              {this._renderDropdown()}
+              <ChooseUserPreload delegationId={this._userId()} delegatedUser={this.state.delegatedUser} onDelegatedUser={this._onDelegatedUser} />
             </div>
           </div>
         )
