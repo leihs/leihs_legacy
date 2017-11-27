@@ -184,17 +184,18 @@
 
     _renderDelegatedUser() {
 
-      return null
-
-      if(!this.props.other.order.user().delegator_user()) {
+      if(!this.props.other.order.delegated_user) {
         return null
       }
+
+      var delegatedUser = App.User.find(this.props.other.order.delegated_user.id)
 
       return (
         <p className='paragraph-s padding-top-xxs margin-top-xxs'>
           <strong>
-            {this.props.other.order.user().delegator_user().firstname}
-            {this.props.other.order.user().delegator_user().lastname}
+            {delegatedUser.firstname}
+            {' '}
+            {delegatedUser.lastname}
           </strong>
         </p>
       )
@@ -332,9 +333,9 @@
               <div className='col4of9 text-align-center'>
                 <p className='paragraph-s padding-top-xxs margin-top-xxs'>
                   <strong>
-                    {this.props.other.user.firstname}
+                    {this.props.other.order.user().firstname}
                     {' '}
-                    {this.props.other.user.lastname}
+                    {this.props.other.order.user().lastname}
                   </strong>
                 </p>
               </div>

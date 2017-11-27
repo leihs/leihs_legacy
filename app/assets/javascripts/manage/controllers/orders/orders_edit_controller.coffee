@@ -121,8 +121,7 @@ class window.App.OrdersEditController extends Spine.Controller
           data: {},
           other: {
             order: @order,
-            manageContactPerson: true,
-            user: @order.user()
+            manageContactPerson: true
           }
       }),
       @modal.el.get()[0]

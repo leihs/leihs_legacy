@@ -42,13 +42,13 @@
     #lines.padding-inset-m= render :partial => "manage/reservations/grouped_lines", :locals => {:grouped_lines => @grouped_lines, :line_partial => "manage/reservations/order"}
 
 :coffeescript
-  
+
   jQuery ->
 
     App.User.addRecord new App.User $.extend {groupIds: #{@group_ids}}, #{@user.to_json(methods: :image_url, except: :extended_info)}
     App.User.addRecord new App.User(#{@order.delegated_user.to_json(except: :extended_info)})
 
-    App.Order.addRecord new App.Order #{@order.to_json}
+    App.Order.addRecord new App.Order #{@order.to_json(include: :delegated_user)}
     App.Order.current = App.Order.find("#{@order.id}")
 
     for model in #{@models.to_json}
