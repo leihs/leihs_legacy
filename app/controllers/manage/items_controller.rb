@@ -224,7 +224,8 @@ class Manage::ItemsController < Manage::ApplicationController
       save_path: manage_create_item_path,
       store_attachment_path: manage_item_store_attachment_react_path,
       inventory_path: manage_inventory_path,
-      item_type: (params[:type] == 'license' ? 'license' : 'item')
+      item_type: (params[:type] == 'license' ? 'license' : 'item'),
+      return_url: (params[:return_url] ? params[:return_url] : nil)
     }
   end
 

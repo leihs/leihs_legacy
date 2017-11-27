@@ -15,7 +15,7 @@
           %h2.headline-s.light= _("Make changes and save")
         .col1of2.text-align-right
 
-          = link_to _('Cancel'), :back, class: 'button grey'
+          = link_to _('Cancel'), (params[:return_url] ? params[:return_url] : :back), class: 'button grey'
 
           %button#save.button.green{:autocomplete => :off}
             = _("Save %s") % ( @model.is_a?(Software) ? _("Software") : _("Model") )
@@ -27,7 +27,7 @@
         = render :partial => "form"
 
 :coffeescript
-  
+
   App.Model.addRecord new App.Model #{@model.to_json}
 
   jQuery -> new App.ModelsEditController

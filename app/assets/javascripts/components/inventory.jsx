@@ -757,7 +757,6 @@
 
     _onCategoriesTerm(event) {
       event.preventDefault()
-      debugger
       this.setState(
         {
           categoriesTerm: event.target.value,
@@ -1282,19 +1281,19 @@
     },
 
     _itemEditLink(item) {
-      return App.Inventory.url().replace('/inventory', '') + '/items/' + item.id + '/edit' + '?' + $.param({returnUrl: App.Inventory.url()})
+      return App.Inventory.url().replace('/inventory', '') + '/items/' + item.id + '/edit' + '?' + $.param({return_url: App.Inventory.url()})
     },
 
     _itemCopyLink(item) {
-      return App.Inventory.url().replace('/inventory', '') + '/items/' + item.id + '/copy'
+      return App.Inventory.url().replace('/inventory', '') + '/items/' + item.id + '/copy' + '?' + $.param({return_url: App.Inventory.url()})
     },
 
     _optionEditLink(option) {
-      return App.Inventory.url().replace('/inventory', '') + '/options/' + option.id + '/edit'
+      return App.Inventory.url().replace('/inventory', '') + '/options/' + option.id + '/edit' + '?' + $.param({return_url: App.Inventory.url()})
     },
 
     _modelEditLink(model) {
-      return App.Inventory.url().replace('/inventory', '') + '/models/' + model.id + '/edit'
+      return App.Inventory.url().replace('/inventory', '') + '/models/' + model.id + '/edit' + '?' + $.param({return_url: App.Inventory.url()})
     },
 
     _modelImageUrl(model) {

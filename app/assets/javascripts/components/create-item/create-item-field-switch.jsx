@@ -111,7 +111,6 @@ window.CreateItemFieldSwitch = {
 
     } else if(selectedValue.field.type == 'autocomplete') {
 
-      debugger
       return selectedValue.value.text != '' && selectedValue.value.id || selectedValue.value.text == '' && !selectedValue.value.id
 
     } else if(selectedValue.field.type == 'autocomplete-search') {
