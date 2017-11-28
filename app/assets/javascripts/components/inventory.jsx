@@ -248,8 +248,8 @@
 
           inventory: [],
           pagination: null,
+          loadingFirst: true,
 
-          loading: true,
           openModels: {},
           openItems: {},
 
@@ -258,7 +258,9 @@
           categoriesPath: [],
           categories: null,
           categoryLinks: null,
-          searchMode: false
+          searchMode: false,
+
+          currentPage: 1
 
         }
 
@@ -281,8 +283,8 @@
 
           inventory: [],
           pagination: null,
+          loadingFirst: true,
 
-          loading: true,
           openModels: {},
           openItems: {},
 
@@ -291,8 +293,9 @@
           categoriesPath: [],
           categories: null,
           categoryLinks: null,
-          searchMode: false
+          searchMode: false,
 
+          currentPage: 1
         }
       }
 
@@ -413,7 +416,18 @@
 
     componentDidMount() {
       new App.TimeLineController({el: $('#inventory')})
+
+      Scrolling.mount(this._onScroll)
+
       this._reloadList()
+    },
+
+    componentWillUnmount() {
+      Scrollling.unmount(this._onScroll)
+    },
+
+    _onScroll() {
+      this._tryLoadNext()
     },
 
     _flushLocalCache() {
@@ -434,17 +448,37 @@
       this._writeInventoryFilter()
       this.setState({
         inventory: [],
-        loading: true,
+        loadingFirst: true,
+        currentPage: 1,
         openModels: {},
-        openItems: {}
+        openItems: {},
+        pagination: null
       }, () => {
         this.currentRequest++
-        this._fetchNextPage(1, this.currentRequest)
+        this.loading = false
+        this._tryLoadNext()
       })
     },
 
     _isPaginationNotFinished(pagination) {
+      if(!pagination) {
+        return true
+      }
       return pagination.offset + pagination.per_page < pagination.total_count
+    },
+
+    _tryLoadNext() {
+
+      if(this.loading) {
+        return
+      }
+
+      if(this._isPaginationNotFinished(this.state.pagination) && Scrolling._isBottom()) {
+        this.loading = true
+        this._fetchNextPage(this.state.currentPage, this.currentRequest)
+      }
+
+
     },
 
     _checkForNextFetch(page, request, pagination, inventoryPage) {
@@ -454,14 +488,15 @@
       inventory[page - 1] = inventoryPage
 
       this.setState({
-        loading: false,
+        loadingFirst: false,
+        currentPage: page + 1,
         inventory: inventory,
         pagination: pagination
       }, () =>{
 
-        if(this._isPaginationNotFinished(pagination)) {
-          this._fetchNextPage(page + 1, request)
-        }
+        this.loading = false
+
+        this._tryLoadNext()
       })
 
 
@@ -1685,7 +1720,7 @@
 
     _renderResult() {
 
-      if(this.state.loading) {
+      if(this.state.loadingFirst) {
         return this._renderResultLoading()
       } else if(this.state.inventory[0].length == 0){
         return this._renderResultNothingFound()
