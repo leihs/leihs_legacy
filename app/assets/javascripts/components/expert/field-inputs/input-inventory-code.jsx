@@ -53,6 +53,29 @@
       )
     },
 
+    _renderButtons() {
+      if(this.props.editMode) {
+        return null
+      }
+
+      return (
+        <div className='row text-align-right' id='switch'>
+          <button type='button' onClick={this._plusOne} className={'button small ' + (this.state.selected == 'plusOne' ? 'green' : 'white')}>
+            {' zuletzt verwendet +1 '}
+          </button>
+          {' '}
+          <button type='button' onClick={this._fillGap} className={'button small ' + (this.state.selected == 'fillGap' ? 'green' : 'white')}>
+            {' Lücken auffüllen '}
+          </button>
+          {' '}
+          <button type='button' onClick={this._maximum} className={'button small ' + (this.state.selected == 'maximum' ? 'green' : 'white')}>
+            {' höchstmöglich '}
+          </button>
+        </div>        
+      )
+
+    },
+
     render () {
 
       const props = this.props
@@ -71,20 +94,6 @@
           <div className='row'>
             {RenderFieldLabel._renderFieldLabel(selectedValue.field, this.props.onClose)}
             <InputText selectedValue={selectedValue} onChange={this.props.onChange} />
-          </div>
-
-          <div className='row text-align-right' id='switch'>
-            <button type='button' onClick={this._plusOne} className={'button small ' + (this.state.selected == 'plusOne' ? 'green' : 'white')}>
-              {' zuletzt verwendet +1 '}
-            </button>
-            {' '}
-            <button type='button' onClick={this._fillGap} className={'button small ' + (this.state.selected == 'fillGap' ? 'green' : 'white')}>
-              {' Lücken auffüllen '}
-            </button>
-            {' '}
-            <button type='button' onClick={this._maximum} className={'button small ' + (this.state.selected == 'maximum' ? 'green' : 'white')}>
-              {' höchstmöglich '}
-            </button>
           </div>
         </div>
       )

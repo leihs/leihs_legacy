@@ -68,10 +68,16 @@ window.LeftOrRightColumn = {
   },
 
 
-  _groupFields(fields) {
+  _rootFields(fields) {
+    return _.filter(fields, (field) => {
+      return !field.visibility_dependency_field_id //&& !field.values_dependency_field_id
+    })
+  },
+
+  _groupRootFields(fields) {
     return (
-      [ this._baseGroup(fields) ]
-      .concat(this._otherGroups(fields))
+      [ this._baseGroup(this._rootFields(fields)) ]
+      .concat(this._otherGroups(this._rootFields(fields)))
     )
   },
 
@@ -80,7 +86,7 @@ window.LeftOrRightColumn = {
 
     return this._columnedGroupsRecursive(
       {
-        groupsToDivide: this._groupFields(fields),
+        groupsToDivide: this._groupRootFields(fields),
         left: [],
         right: []
       },
@@ -99,7 +105,7 @@ window.LeftOrRightColumn = {
   _countFieldsForModel(field, allFields) {
     var dependents = this._dependents(field, allFields)
     if(dependents.length > 0) {
-      return 1 + this._countFieldsForModel(dependents[0], allFields)
+      return 1// + this._countFieldsForModel(dependents[0], allFields)
     } else {
       return 1
     }
