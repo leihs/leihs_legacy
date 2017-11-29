@@ -121,28 +121,28 @@
 
         <div className='text-align-right'>
           {this._renderCsvImport()}
-           <span> </span>
-           <div className='dropdown-holder inline-block'>
-              <div className='button white dropdown-toggle'>
-                 <i className='fa fa-table vertical-align-middle'></i>
-                   {this._surround(_jed('Export'))}
-                 <div className='arrow down'></div>
-              </div>
-              <ul className='dropdown right'>
-                 <li>
-                    <a className='dropdown-item' href={this._csvExportUrlWithParams()} id='csv-export' target='_blank'>
-                      {this._surround(_jed('CSV'))}
-                    </a>
-                 </li>
-                 <li>
-                    <a className='dropdown-item' href={this._excelExportUrlWithParams()} id='excel-export' target='_blank'>
-                      {this._surround(_jed('Excel'))}
-                    </a>
-                 </li>
-              </ul>
-           </div>
-           <span> </span>
-           {this._renderDropdown()}
+          <span> </span>
+          <div className='dropdown-holder inline-block'>
+            <div className='button white dropdown-toggle'>
+              <i className='fa fa-table vertical-align-middle'></i>
+              {this._surround(_jed('Export'))}
+              <div className='arrow down'></div>
+            </div>
+            <ul className='dropdown right'>
+              <li>
+                <a className='dropdown-item' href={this._csvExportUrlWithParams()} id='csv-export' target='_blank'>
+                  {this._surround(_jed('CSV'))}
+                </a>
+              </li>
+              <li>
+                <a className='dropdown-item' href={this._excelExportUrlWithParams()} id='excel-export' target='_blank'>
+                  {this._surround(_jed('Excel'))}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <span> </span>
+          {this._renderDropdown()}
         </div>
       )
     },
@@ -798,9 +798,6 @@
 
         return this._renderCategoriesResult()
 
-        // <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading-4eebf3d6e9139e863f2be8c14cad4638df21bf050cea16117739b3431837ee0a.gif' />
-
-
       } else {
         return (
           <div className='row padding-bottom-s' id='category-list'>
@@ -815,14 +812,12 @@
 
     _onCategoriesTerm(event) {
       event.preventDefault()
-      debugger
       this.setState(
         {
           categoriesTerm: event.target.value,
           categoriesPath: [],
           searchMode: event.target.value.length > 0
-        },
-        this._reloadList
+        }
       )
 
     },
@@ -912,7 +907,7 @@
       return (
         <div className={classes} id='categories'>
           <div className='row padding-inset-s'>
-            <input onChange={this._onCategoriesTerm} value={this.state.categoriesTerm} autoComplete='off' className='small' id='category-search' placeholder={_jed('Search Category')} type='text' />
+            <input onChange={this._onCategoriesTerm} value={this.state.categoriesTerm} autoComplete='off' className='small' id='category-search' placeholder={_jed('Search') + ' ' + _jed('Category')} type='text' />
           </div>
           {this._renderRootCategory()}
           {this._renderCurrentCategory()}
@@ -1120,7 +1115,7 @@
     _renderResultNothingFound() {
       return this._renderLoadingOrNothing(
         <h3 className='headline-s light padding-inset-xl text-align-center'>
-          No entries found
+          {_jed('No entries found')}
         </h3>
       )
     },
@@ -1197,10 +1192,16 @@
     },
 
     _renderModelDelete(model) {
+
+      if(this._modelItems(model).all().length > 0) {
+        return null
+      }
+
       return (
         <li>
           <a className='dropdown-item red' data-method='delete' href={this._modelDeleteLink(model)}>
             <i className='fa fa-trash'></i>
+            {' '}
             {_jed('Delete')}
           </a>
         </li>
@@ -1230,7 +1231,8 @@
               <ul className='dropdown right'>
                 <li>
                   <a className='dropdown-item' data-model-id={model.id} data-open-time-line=''>
-                  <i className='fa fa-align-left'></i>
+                    <i className='fa fa-align-left'></i>
+                    {' '}
                     {_jed('Timeline')}
                   </a>
                 </li>
@@ -1243,6 +1245,7 @@
         return (
           <a className='button white text-ellipsis' data-model-id={model.id} data-open-time-line>
             <i className='fa fa-align-left'></i>
+            {' '}
             {_jed('Timeline')}
           </a>
         )
@@ -1286,7 +1289,7 @@
           </div>
           <div className='col1of5 line-col text-align-center'>
             <span title={_jed('in stock')}>{model.availability().in_stock}</span>
-            /
+            {' / '}
             <span title={_jed('rentable')}>{model.availability().total_rentable}</span>
           </div>
           <div className='col1of5 line-col line-actions padding-right-xs'>
@@ -1416,7 +1419,8 @@
             <ul className='dropdown right'>
               <li>
                 <a className='dropdown-item' href={this._itemCopyLink(item)}>
-                <i className='fa fa-copy'></i>
+                  <i className='fa fa-copy'></i>
+                  {' '}
                   {copyLabel}
                 </a>
               </li>
