@@ -7,7 +7,8 @@ module MainHelpers
 
     before_action :set_gettext_locale, :load_settings, :permit_params
 
-    protect_from_forgery
+    # CSRF protection
+    protect_from_forgery with: :exception
 
     protected
 
