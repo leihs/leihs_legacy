@@ -10,6 +10,10 @@ for FILE in ${IGNORED_FILES[*]}; do
   mv "${2}/${FILE}" "${STASH}/b/${FILE}"
 done
 
+# NOTE: patch zip files to pretend they were created on UNIX!
+#       otherwise there might be a 1-byte difference (in the OS type header field)
+for ZIPFILE in ${1}/*.gz; do printf '\x03' | dd bs=1 of=${ZIPFILE} seek=9 conv=notrunc; done
+
 printf 'check all files in build directory against repo'
 git diff --quiet --no-index "$1" "$2" \
   && echo ' ✔︎' \
