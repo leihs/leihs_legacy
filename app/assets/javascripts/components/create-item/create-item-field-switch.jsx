@@ -343,7 +343,7 @@ window.CreateItemFieldSwitch = {
       return (
         <div className='col1of2' data-type='value'>
           <div className='padding-vertical-xs font-size-m' data-value='invoice'>
-            <span>{selectedValue.value.text}</span>
+            <span>{selectedValue.value.at}</span>
           </div>
         </div>
       )
