@@ -72,7 +72,7 @@
             value = CreateItemFieldSwitch._createEditValue(field, item, null, this.props.attachments)
           } else {
             var itemValue = this._itemValue(field, item)
-            if(itemValue) {
+            if(itemValue != null && itemValue != undefined) {
               value = CreateItemFieldSwitch._createEditValue(field, item, itemValue, null)
             } else {
               value = CreateItemFieldSwitch._createEmptyValue(field)
