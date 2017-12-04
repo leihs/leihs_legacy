@@ -5,7 +5,7 @@ gem 'procurement', path: "engines/procurement"
 
 gem 'puma'
 
-gem 'axlsx', '~> 2.0', '>= 2.0.1'
+gem 'axlsx', git: 'https://github.com/leihs/axlsx', ref: 'c8ac844572b25fda358cc01d2104720c4c42f450'
 gem 'audited', git: 'https://github.com/leihs/audited', branch: 'master'
 gem 'barby', '~> 0.5.0'
 gem 'chunky_png', '~> 1.2'
