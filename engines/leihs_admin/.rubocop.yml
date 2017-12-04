@@ -1,5 +1,7 @@
 inherit_from:
   - '../../.rubocop.yml'
+  # TODOs from rubocop upgrade:
+  - '../../.rubocop_todo_admin.yml'
 
 AllCops:
   Exclude:
