@@ -139,6 +139,9 @@ Rails.application.routes.draw do
     # Buildings
     get     'rooms',              to: 'rooms#index'
 
+    get 'rooms_diff', to: 'rooms#get_rooms_diff'
+    post 'rooms_diff', to: 'rooms#post_rooms_diff'
+
     scope ":inventory_pool_id/" do
 
       # maintenance
