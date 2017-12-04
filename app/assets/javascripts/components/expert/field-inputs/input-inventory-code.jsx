@@ -71,7 +71,7 @@
           <button type='button' onClick={this._maximum} className={'button small ' + (this.state.selected == 'maximum' ? 'green' : 'white')}>
             {' höchstmöglich '}
           </button>
-        </div>        
+        </div>
       )
 
     },
@@ -95,6 +95,7 @@
             {RenderFieldLabel._renderFieldLabel(selectedValue.field, this.props.onClose)}
             <InputText selectedValue={selectedValue} onChange={this.props.onChange} />
           </div>
+          {this._renderButtons()}
         </div>
       )
     }
