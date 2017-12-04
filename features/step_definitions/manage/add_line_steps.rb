@@ -22,6 +22,7 @@ Then(/^the availability of the model is displayed as: "(?:.*?)"$/) do
             .items
             .where(inventory_pool_id: @current_inventory_pool)
             .borrowable
+            .unretired
             .count
       availability_text = item.find('.col1of4 .row:nth-child(1)').text
       expect(availability_text).to eq "#{max_available}(#{max_available_in_total})/#{total_rentable}"

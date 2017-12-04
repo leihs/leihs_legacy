@@ -21,6 +21,7 @@ class Manage::AvailabilityController < Manage::ApplicationController
           model
             .items
             .where(inventory_pool_id: current_inventory_pool)
+            .unretired
             .borrowable
             .count,
         inventory_pool_id: current_inventory_pool.id,
@@ -37,12 +38,14 @@ class Manage::AvailabilityController < Manage::ApplicationController
             .items
             .where(inventory_pool_id: current_inventory_pool)
             .borrowable
+            .unretired
             .count,
         in_stock: \
           model
             .items
             .where(inventory_pool_id: current_inventory_pool)
             .borrowable
+            .unretired
             .in_stock
             .count,
         inventory_pool_id: current_inventory_pool.id,
