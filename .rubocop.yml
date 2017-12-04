@@ -1,3 +1,8 @@
+# TODOs from rubocop upgrade:
+inherit_from: .rubocop_todo.yml
+
+# # #
+
 AllCops:
   Exclude:
     - 'bin/**/*'
@@ -33,7 +38,7 @@ Lint/AssignmentInCondition:
 Lint/DeprecatedClassMethods:
   Enabled: false
 
-Lint/Eval:
+Security/Eval:
   Exclude:
     - 'lib/leihs/dbio.rb'
 
@@ -102,17 +107,17 @@ Style/Documentation:
 
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundBlockBody:
+Layout/EmptyLinesAroundBlockBody:
   Enabled: false
 
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundClassBody:
+Layout/EmptyLinesAroundClassBody:
   Enabled: false
 
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyLinesAroundModuleBody:
+Layout/EmptyLinesAroundModuleBody:
   Enabled: false
 
 # Configuration parameters: Exclude.
@@ -128,7 +133,7 @@ Style/IfUnlessModifier:
 
 # Cop supports --auto-correct.
 # Configuration parameters: Width.
-Style/IndentationWidth:
+Layout/IndentationWidth:
   Enabled: false
 
 Style/MultilineBlockChain:
@@ -136,7 +141,7 @@ Style/MultilineBlockChain:
 
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   Enabled: false
 
 # Cop supports --auto-correct.
@@ -194,4 +199,7 @@ Rails/ReadWriteAttribute:
 
 # Configuration parameters: Include.
 Rails/Validation:
+  Enabled: false
+
+Style/WordArray:
   Enabled: false

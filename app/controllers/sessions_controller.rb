@@ -3,10 +3,7 @@ class SessionsController < ApplicationController
   def authenticate(id = params[:id])
     @selected_system = AuthenticationSystem.active_systems.find(id) if id
     @selected_system ||= AuthenticationSystem.default_system.first
-    # TODO: try to get around without eval
-    # rubocop:disable Lint/Eval
-    sys = eval('Authenticator::' + @selected_system.class_name + 'Controller').new
-    # rubocop:enable Lint/Eval
+    sys = "Authenticator::#{@selected_system.class_name}Controller".constantize.new
     redirect_to sys.login_form_path
   rescue
     logger.error($!)

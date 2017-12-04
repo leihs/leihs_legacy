@@ -29,7 +29,7 @@ gem 'nilify_blanks', '~> 1.1'
 gem 'rails_autolink', '~> 1.0'
 gem 'rake' # So that cronjobs work -- otherwise they can't find rake
 gem 'rgl', '~> 0.4.0', require: 'rgl/adjacency' # use ruby-graphviz instead ?? (already in test group)
-gem 'rubocop', '0.35.1', require: false
+gem 'rubocop', '0.49.0', require: false
 gem 'ruby_parser', '~> 3.1' # gettext dependency that Bundler seems unable to resolve
 gem 'sass-rails', '~> 5.0'
 gem 'therubyracer', platform: :mri
