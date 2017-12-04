@@ -20,7 +20,7 @@ window.CreateItemFieldSwitch = {
         return selectedValue.value.text.trim().length > 0
         break
       case 'select':
-        return selectedValue.value.selection != null
+        return selectedValue.value.selection != null && selectedValue.value.selection != ''
         break
       case 'radio':
         return selectedValue.value.selection != null
