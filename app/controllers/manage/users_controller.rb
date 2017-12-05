@@ -241,13 +241,12 @@ class Manage::UsersController < Manage::ApplicationController
           .contracts
           .open
           .where(inventory_pool_id: current_inventory_pool)
-      @models = @reservations.map(&:model).select { |m| m.type == 'Model' }.uniq
+      @models = @reservations.map(&:model).uniq
       @options = \
         @reservations.where.not(option_id: nil).map(&:option).uniq
       @items = \
         @reservations.where.not(item_id: nil)
         .map(&:item)
-        .select { |i| i.type == 'Item' }
     end
     @start_date = @reservations.map(&:start_date).min || Time.zone.today
     @end_date = @reservations.map(&:end_date).max || Time.zone.today
