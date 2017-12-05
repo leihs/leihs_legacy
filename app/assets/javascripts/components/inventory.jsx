@@ -166,7 +166,7 @@
 
     _onSubTabClick(event, config) {
       event.preventDefault()
-      this.setState({tabConfig: config}, this._reloadList)
+      this.setState({tabConfig: config}, this._writeFilterAndReloadList)
     },
 
 
@@ -230,76 +230,68 @@
 
       var filterReset = URI.parseQuery(window.location.search).filters == 'reset'
 
+      var result = {
+        inventory: [],
+        pagination: null,
+
+        openModels: {},
+        openItems: {},
+
+        showCategories: false,
+        categoriesTerm: '',
+        categoriesPath: [],
+        categories: null,
+        categoryLinks: null,
+        searchMode: false,
+
+        currentPage: 1,
+
+        delayedReloads: []
+      }
+
       if(inventoryFilter && !filterReset) {
 
-        return {
-          selectedTab: inventoryFilter.selectedTab,
-          retired: inventoryFilter.retired,
-          used: inventoryFilter.used,
-          is_borrowable: inventoryFilter.is_borrowable,
-          responsible_inventory_pool_id: inventoryFilter.responsible_inventory_pool_id,
-          search_term: inventoryFilter.search_term,
-          owned: inventoryFilter.owned,
-          in_stock: inventoryFilter.in_stock,
-          incomplete: inventoryFilter.incomplete,
-          broken: inventoryFilter.broken,
-          tabConfig: inventoryFilter.tabConfig,
-          before_last_check: inventoryFilter.before_last_check,
-
-          inventory: [],
-          pagination: null,
-          loadingFirst: true,
-
-          openModels: {},
-          openItems: {},
-
-          showCategories: false,
-          categoriesTerm: '',
-          categoriesPath: [],
-          categories: null,
-          categoryLinks: null,
-          searchMode: false,
-
-          currentPage: 1
-
-        }
+        result = _.extend(
+          result,
+          {
+            selectedTab: inventoryFilter.selectedTab,
+            retired: inventoryFilter.retired,
+            used: inventoryFilter.used,
+            is_borrowable: inventoryFilter.is_borrowable,
+            responsible_inventory_pool_id: inventoryFilter.responsible_inventory_pool_id,
+            search_term: inventoryFilter.search_term,
+            owned: inventoryFilter.owned,
+            in_stock: inventoryFilter.in_stock,
+            incomplete: inventoryFilter.incomplete,
+            broken: inventoryFilter.broken,
+            tabConfig: inventoryFilter.tabConfig,
+            before_last_check: inventoryFilter.before_last_check,
+          }
+        )
 
       } else {
 
+        result = _.extend(
+          result,
+          {
+            selectedTab: null,
+            retired: 'false',
+            used: '',
+            is_borrowable: '',
+            responsible_inventory_pool_id: '',
+            search_term: '',
+            owned: false,
+            in_stock: false,
+            incomplete: false,
+            broken: false,
+            tabConfig: {},
+            before_last_check: '',
+          }
+        )
 
-        return {
-          selectedTab: null,
-          retired: 'false',
-          used: '',
-          is_borrowable: '',
-          responsible_inventory_pool_id: '',
-          search_term: '',
-          owned: false,
-          in_stock: false,
-          incomplete: false,
-          broken: false,
-          tabConfig: {},
-          before_last_check: '',
-
-          inventory: [],
-          pagination: null,
-          loadingFirst: true,
-
-          openModels: {},
-          openItems: {},
-
-          showCategories: false,
-          categoriesTerm: '',
-          categoriesPath: [],
-          categories: null,
-          categoryLinks: null,
-          searchMode: false,
-
-          currentPage: 1
-        }
       }
 
-
+      return result
 
     },
 
@@ -362,14 +354,13 @@
 
     _onSearchChange(event) {
       event.preventDefault()
-      this.setState({search_term: event.target.value}, this._reloadList)
+      this.setState({search_term: event.target.value}, this._writeFilterAndDelayedReloadList)
     },
-
 
     _onCheckboxChange(event, attribute) {
       // NOTE: Never preveent default for checkboxes.
       this.state[attribute] = event.target.checked
-      this.setState(this.state, this._reloadList)
+      this.setState(this.state, this._writeFilterAndReloadList)
     },
 
 
@@ -419,7 +410,7 @@
 
       Scrolling.mount(this._onScroll)
 
-      this._reloadList()
+      this._writeFilterAndReloadList()
     },
 
     componentWillUnmount() {
@@ -441,22 +432,49 @@
       )
     },
 
-    _reloadList() {
 
-      this._flushLocalCache()
-
+    _writeFilterAndDelayedReloadList() {
       this._writeInventoryFilter()
       this.setState({
+        delayedReloads: this.state.delayedReloads.concat([true])
+      }, () => {
+        setTimeout(
+          () => {
+
+            if(this.state.delayedReloads.length == 1) {
+              this._reloadList()
+            }
+            this.setState({
+              delayedReloads: _.tail(this.state.delayedReloads)
+            })
+
+          }, 800
+        )
+      })
+    },
+
+    _writeFilterAndReloadList() {
+      this._writeInventoryFilter()
+      this.setState({
+        delayedReloads: []
+      }, () => {
+        this._reloadList()
+      })
+    },
+
+    _reloadList() {
+
+      this.currentRequest++
+
+      this.setState({
         inventory: [],
-        loadingFirst: true,
         currentPage: 1,
         openModels: {},
         openItems: {},
         pagination: null
       }, () => {
-        this.currentRequest++
-        this.loading = false
-        this._tryLoadNext()
+        this._flushLocalCache()
+        this._loadNext()
       })
     },
 
@@ -467,6 +485,12 @@
       return pagination.offset + pagination.per_page < pagination.total_count
     },
 
+
+    _loadNext() {
+      this.loading = true
+      this._fetchNextPage(this.state.currentPage, this.currentRequest)
+    },
+
     _tryLoadNext() {
 
       if(this.loading) {
@@ -474,11 +498,8 @@
       }
 
       if(this._isPaginationNotFinished(this.state.pagination) && Scrolling._isBottom()) {
-        this.loading = true
-        this._fetchNextPage(this.state.currentPage, this.currentRequest)
+        this._loadNext()
       }
-
-
     },
 
     _checkForNextFetch(page, request, pagination, inventoryPage) {
@@ -488,7 +509,6 @@
       inventory[page - 1] = inventoryPage
 
       this.setState({
-        loadingFirst: false,
         currentPage: page + 1,
         inventory: inventory,
         pagination: pagination
@@ -678,7 +698,7 @@
         categoriesTerm: '',
         categoriesPath: [],
         searchMode: false
-      }, this._reloadList)
+      }, this._writeFilterAndReloadList)
       this._loadCategories()
     },
 
@@ -763,7 +783,7 @@
           categoriesPath: this.state.categoriesPath.concat(category),
           searchMode: false
         },
-        this._reloadList
+        this._writeFilterAndReloadList
       )
     },
 
@@ -829,7 +849,7 @@
           categoriesPath: _.first(this.state.categoriesPath, this.state.categoriesPath.length - 1),
           searchMode: false
         },
-        this._reloadList
+        this._writeFilterAndReloadList
       )
 
     },
@@ -841,7 +861,7 @@
           categoriesPath: [_.first(this.state.categoriesPath)],
           searchMode: false
         },
-        this._reloadList
+        this._writeFilterAndReloadList
       )
 
     },
@@ -969,7 +989,7 @@
               <InventoryFilterSelect
                 hide={!this._showSelectsOtherThanUsed()}
                 name={'retired'}
-                onChange={(value) => this.setState({retired: value}, this._reloadList)}
+                onChange={(value) => this.setState({retired: value}, this._writeFilterAndReloadList)}
                 value={this.state.retired}
                 values= {
                   [
@@ -984,7 +1004,7 @@
               <InventoryFilterSelect
                 hide={this._hideUsedSelect()}
                 name={'used'}
-                onChange={(value) => this.setState({used: value}, this._reloadList)}
+                onChange={(value) => this.setState({used: value}, this._writeFilterAndReloadList)}
                 value={this.state.used}
                 values= {
                   [
@@ -999,7 +1019,7 @@
               <InventoryFilterSelect
                 hide={!this._showSelectsOtherThanUsed()}
                 name={'is_borrowable'}
-                onChange={(value) => this.setState({is_borrowable: value}, this._reloadList)}
+                onChange={(value) => this.setState({is_borrowable: value}, this._writeFilterAndReloadList)}
                 value={this.state.is_borrowable}
                 values= {
                   [
@@ -1014,7 +1034,7 @@
               <InventoryFilterSelect
                 hide={!this._showSelectsOtherThanUsed()}
                 name={'responsible_inventory_pool_id'}
-                onChange={(value) => this.setState({responsible_inventory_pool_id: value}, this._reloadList)}
+                onChange={(value) => this.setState({responsible_inventory_pool_id: value}, this._writeFilterAndReloadList)}
                 value={this.state.responsible_inventory_pool_id}
                 values= {
                   [
@@ -1068,7 +1088,7 @@
     },
 
     _onDateChange(dateString) {
-      this.setState({before_last_check: dateString}, this._reloadList)
+      this.setState({before_last_check: dateString}, this._writeFilterAndReloadList)
 
     },
 
@@ -1724,7 +1744,7 @@
 
     _renderResult() {
 
-      if(this.state.loadingFirst) {
+      if(this.state.inventory.length == 0) {
         return this._renderResultLoading()
       } else if(this.state.inventory[0].length == 0){
         return this._renderResultNothingFound()
