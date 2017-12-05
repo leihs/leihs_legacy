@@ -494,6 +494,9 @@ class Controller extends Module
   tag: 'div'
 
   constructor: (options) ->
+    <%= Rails.env.development? &&
+      'console.debug "[Spine] Controller init", {_name: this.constructor.name, options}'
+    %>
     @options = options
 
     for key, value of @options
