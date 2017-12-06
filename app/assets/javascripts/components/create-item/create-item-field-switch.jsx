@@ -20,7 +20,7 @@ window.CreateItemFieldSwitch = {
         return selectedValue.value.text.trim().length > 0
         break
       case 'select':
-        return selectedValue.value.selection != null
+        return selectedValue.value.selection != null && selectedValue.value.selection != ''
         break
       case 'radio':
         return selectedValue.value.selection != null
@@ -334,7 +334,7 @@ window.CreateItemFieldSwitch = {
       return (
         <div className='col1of2' data-type='value'>
           <div className='padding-vertical-xs font-size-m' data-value='invoice'>
-            <span>QUANTITY ALLOCATIONS</span>
+            <span>Only visible if owner</span>
           </div>
         </div>
       )
@@ -355,7 +355,7 @@ window.CreateItemFieldSwitch = {
       return (
         <div className='col1of2' data-type='value'>
           <div className='padding-vertical-xs font-size-m' data-value='invoice'>
-            <span>{selectedValue.value.text}</span>
+            <span>{selectedValue.value.at}</span>
           </div>
         </div>
       )
@@ -370,7 +370,7 @@ window.CreateItemFieldSwitch = {
       return (
         <div className='col1of2' data-type='value'>
           <div className='padding-vertical-xs font-size-m' data-value='invoice'>
-            <span>{label}</span>
+            <span>{_jed(label)}</span>
           </div>
         </div>
       )
@@ -380,7 +380,7 @@ window.CreateItemFieldSwitch = {
       var labels = selectedValue.value.selections.map((s) => {
         var value = _.find(selectedValue.field.values, (value) => value.value == s)
         if(value) {
-          return value.label
+          return _jed(value.label)
         } else {
           return s
         }
@@ -405,7 +405,7 @@ window.CreateItemFieldSwitch = {
 
       var label = ''
       if(value) {
-        label = value.label
+        label = _jed(value.label)
       } else {
         // debugger
       }
@@ -591,7 +591,7 @@ window.CreateItemFieldSwitch = {
     } else if(selectedValue.field.id == 'inventory_code') {
 
       return (
-        <InputInventoryCode onClose={onClose} selectedValue={selectedValue} onChange={onChange} createItemProps={createItemProps} error={error} />
+        <InputInventoryCode onClose={onClose} selectedValue={selectedValue} onChange={onChange} createItemProps={createItemProps} error={error} editMode={createItemProps.edit} />
       )
 
 

@@ -121,28 +121,28 @@
 
         <div className='text-align-right'>
           {this._renderCsvImport()}
-           <span> </span>
-           <div className='dropdown-holder inline-block'>
-              <div className='button white dropdown-toggle'>
-                 <i className='fa fa-table vertical-align-middle'></i>
-                   {this._surround(_jed('Export'))}
-                 <div className='arrow down'></div>
-              </div>
-              <ul className='dropdown right'>
-                 <li>
-                    <a className='dropdown-item' href={this._csvExportUrlWithParams()} id='csv-export' target='_blank'>
-                      {this._surround(_jed('CSV'))}
-                    </a>
-                 </li>
-                 <li>
-                    <a className='dropdown-item' href={this._excelExportUrlWithParams()} id='excel-export' target='_blank'>
-                      {this._surround(_jed('Excel'))}
-                    </a>
-                 </li>
-              </ul>
-           </div>
-           <span> </span>
-           {this._renderDropdown()}
+          <span> </span>
+          <div className='dropdown-holder inline-block'>
+            <div className='button white dropdown-toggle'>
+              <i className='fa fa-table vertical-align-middle'></i>
+              {this._surround(_jed('Export'))}
+              <div className='arrow down'></div>
+            </div>
+            <ul className='dropdown right'>
+              <li>
+                <a className='dropdown-item' href={this._csvExportUrlWithParams()} id='csv-export' target='_blank'>
+                  {this._surround(_jed('CSV'))}
+                </a>
+              </li>
+              <li>
+                <a className='dropdown-item' href={this._excelExportUrlWithParams()} id='excel-export' target='_blank'>
+                  {this._surround(_jed('Excel'))}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <span> </span>
+          {this._renderDropdown()}
         </div>
       )
     },
@@ -166,7 +166,7 @@
 
     _onSubTabClick(event, config) {
       event.preventDefault()
-      this.setState({tabConfig: config}, this._reloadList)
+      this.setState({tabConfig: config}, this._writeFilterAndReloadList)
     },
 
 
@@ -230,73 +230,68 @@
 
       var filterReset = URI.parseQuery(window.location.search).filters == 'reset'
 
+      var result = {
+        inventory: [],
+        pagination: null,
+
+        openModels: {},
+        openItems: {},
+
+        showCategories: false,
+        categoriesTerm: '',
+        categoriesPath: [],
+        categories: null,
+        categoryLinks: null,
+        searchMode: false,
+
+        currentPage: 1,
+
+        delayedReloads: []
+      }
+
       if(inventoryFilter && !filterReset) {
 
-        return {
-          selectedTab: inventoryFilter.selectedTab,
-          retired: inventoryFilter.retired,
-          used: inventoryFilter.used,
-          is_borrowable: inventoryFilter.is_borrowable,
-          responsible_inventory_pool_id: inventoryFilter.responsible_inventory_pool_id,
-          search_term: inventoryFilter.search_term,
-          owned: inventoryFilter.owned,
-          in_stock: inventoryFilter.in_stock,
-          incomplete: inventoryFilter.incomplete,
-          broken: inventoryFilter.broken,
-          tabConfig: inventoryFilter.tabConfig,
-          before_last_check: inventoryFilter.before_last_check,
-
-          inventory: [],
-          pagination: null,
-
-          loading: true,
-          openModels: {},
-          openItems: {},
-
-          showCategories: false,
-          categoriesTerm: '',
-          categoriesPath: [],
-          categories: null,
-          categoryLinks: null,
-          searchMode: false
-
-        }
+        result = _.extend(
+          result,
+          {
+            selectedTab: inventoryFilter.selectedTab,
+            retired: inventoryFilter.retired,
+            used: inventoryFilter.used,
+            is_borrowable: inventoryFilter.is_borrowable,
+            responsible_inventory_pool_id: inventoryFilter.responsible_inventory_pool_id,
+            search_term: inventoryFilter.search_term,
+            owned: inventoryFilter.owned,
+            in_stock: inventoryFilter.in_stock,
+            incomplete: inventoryFilter.incomplete,
+            broken: inventoryFilter.broken,
+            tabConfig: inventoryFilter.tabConfig,
+            before_last_check: inventoryFilter.before_last_check,
+          }
+        )
 
       } else {
 
+        result = _.extend(
+          result,
+          {
+            selectedTab: null,
+            retired: 'false',
+            used: '',
+            is_borrowable: '',
+            responsible_inventory_pool_id: '',
+            search_term: '',
+            owned: false,
+            in_stock: false,
+            incomplete: false,
+            broken: false,
+            tabConfig: {},
+            before_last_check: '',
+          }
+        )
 
-        return {
-          selectedTab: null,
-          retired: 'false',
-          used: '',
-          is_borrowable: '',
-          responsible_inventory_pool_id: '',
-          search_term: '',
-          owned: false,
-          in_stock: false,
-          incomplete: false,
-          broken: false,
-          tabConfig: {},
-          before_last_check: '',
-
-          inventory: [],
-          pagination: null,
-
-          loading: true,
-          openModels: {},
-          openItems: {},
-
-          showCategories: false,
-          categoriesTerm: '',
-          categoriesPath: [],
-          categories: null,
-          categoryLinks: null,
-          searchMode: false
-
-        }
       }
 
-
+      return result
 
     },
 
@@ -359,14 +354,13 @@
 
     _onSearchChange(event) {
       event.preventDefault()
-      this.setState({search_term: event.target.value}, this._reloadList)
+      this.setState({search_term: event.target.value}, this._writeFilterAndDelayedReloadList)
     },
-
 
     _onCheckboxChange(event, attribute) {
       // NOTE: Never preveent default for checkboxes.
       this.state[attribute] = event.target.checked
-      this.setState(this.state, this._reloadList)
+      this.setState(this.state, this._writeFilterAndReloadList)
     },
 
 
@@ -413,7 +407,18 @@
 
     componentDidMount() {
       new App.TimeLineController({el: $('#inventory')})
-      this._reloadList()
+
+      Scrolling.mount(this._onScroll)
+
+      this._writeFilterAndReloadList()
+    },
+
+    componentWillUnmount() {
+      Scrollling.unmount(this._onScroll)
+    },
+
+    _onScroll() {
+      this._tryLoadNext()
     },
 
     _flushLocalCache() {
@@ -427,24 +432,74 @@
       )
     },
 
-    _reloadList() {
 
-      this._flushLocalCache()
-
+    _writeFilterAndDelayedReloadList() {
       this._writeInventoryFilter()
       this.setState({
-        inventory: [],
-        loading: true,
-        openModels: {},
-        openItems: {}
+        delayedReloads: this.state.delayedReloads.concat([true])
       }, () => {
-        this.currentRequest++
-        this._fetchNextPage(1, this.currentRequest)
+        setTimeout(
+          () => {
+
+            if(this.state.delayedReloads.length == 1) {
+              this._reloadList()
+            }
+            this.setState({
+              delayedReloads: _.tail(this.state.delayedReloads)
+            })
+
+          }, 800
+        )
+      })
+    },
+
+    _writeFilterAndReloadList() {
+      this._writeInventoryFilter()
+      this.setState({
+        delayedReloads: []
+      }, () => {
+        this._reloadList()
+      })
+    },
+
+    _reloadList() {
+
+      this.currentRequest++
+
+      this.setState({
+        inventory: [],
+        currentPage: 1,
+        openModels: {},
+        openItems: {},
+        pagination: null
+      }, () => {
+        this._flushLocalCache()
+        this._loadNext()
       })
     },
 
     _isPaginationNotFinished(pagination) {
+      if(!pagination) {
+        return true
+      }
       return pagination.offset + pagination.per_page < pagination.total_count
+    },
+
+
+    _loadNext() {
+      this.loading = true
+      this._fetchNextPage(this.state.currentPage, this.currentRequest)
+    },
+
+    _tryLoadNext() {
+
+      if(this.loading) {
+        return
+      }
+
+      if(this._isPaginationNotFinished(this.state.pagination) && Scrolling._isBottom()) {
+        this._loadNext()
+      }
     },
 
     _checkForNextFetch(page, request, pagination, inventoryPage) {
@@ -454,14 +509,14 @@
       inventory[page - 1] = inventoryPage
 
       this.setState({
-        loading: false,
+        currentPage: page + 1,
         inventory: inventory,
         pagination: pagination
       }, () =>{
 
-        if(this._isPaginationNotFinished(pagination)) {
-          this._fetchNextPage(page + 1, request)
-        }
+        this.loading = false
+
+        this._tryLoadNext()
       })
 
 
@@ -526,18 +581,51 @@
             return
           }
 
-          App.Software.ajaxFetch({
-            data: $.param({
-              ids: modelIds,
-              paginate: false,
-              include_package_models: true
-            })
-          }).done(() => {
+          this._loadLicensesPackageModels(modelIds, page, callback)
 
-            callback(page)
-          })
         })
       }
+    },
+
+    _loadLicensesPackageModels(modelIds, page, callback) {
+
+      if(modelIds.length == 0) {
+        callback(page)
+        return
+      }
+
+      App.Software.ajaxFetch({
+        data: $.param({
+          ids: _.first(modelIds, 20),
+          paginate: false,
+          include_package_models: true
+        })
+      }).done(() => {
+
+        this._loadLicensesPackageModels(_.rest(modelIds, 20), page, callback)
+      })
+
+    },
+
+
+    _loadItemsPackageModels(modelIds, page, callback) {
+
+      if(modelIds.length == 0) {
+        callback(page)
+        return
+      }
+
+      App.Model.ajaxFetch({
+        data: $.param({
+          ids: _.first(modelIds, 20),
+          paginate: false,
+          include_package_models: true
+        })
+      }).done(() => {
+
+        this._loadItemsPackageModels(_.rest(modelIds, 20), page, callback)
+      })
+
     },
 
     _fetchItems(page, inventoryPage, request, callback) {
@@ -581,17 +669,7 @@
             return
           }
 
-          App.Model.ajaxFetch({
-            data: $.param({
-              ids: modelIds,
-              paginate: false,
-              include_package_models: true
-            })
-          }).done(() => {
-
-            callback(page)
-          })
-
+          this._loadItemsPackageModels(modelIds, page, callback)
         })
       }
     },
@@ -620,7 +698,7 @@
         categoriesTerm: '',
         categoriesPath: [],
         searchMode: false
-      }, this._reloadList)
+      }, this._writeFilterAndReloadList)
       this._loadCategories()
     },
 
@@ -705,7 +783,7 @@
           categoriesPath: this.state.categoriesPath.concat(category),
           searchMode: false
         },
-        this._reloadList
+        this._writeFilterAndReloadList
       )
     },
 
@@ -740,9 +818,6 @@
 
         return this._renderCategoriesResult()
 
-        // <img className='margin-horziontal-auto margin-top-xxl margin-bottom-xxl' src='/assets/loading-4eebf3d6e9139e863f2be8c14cad4638df21bf050cea16117739b3431837ee0a.gif' />
-
-
       } else {
         return (
           <div className='row padding-bottom-s' id='category-list'>
@@ -762,8 +837,7 @@
           categoriesTerm: event.target.value,
           categoriesPath: [],
           searchMode: event.target.value.length > 0
-        },
-        this._reloadList
+        }
       )
 
     },
@@ -775,7 +849,7 @@
           categoriesPath: _.first(this.state.categoriesPath, this.state.categoriesPath.length - 1),
           searchMode: false
         },
-        this._reloadList
+        this._writeFilterAndReloadList
       )
 
     },
@@ -787,7 +861,7 @@
           categoriesPath: [_.first(this.state.categoriesPath)],
           searchMode: false
         },
-        this._reloadList
+        this._writeFilterAndReloadList
       )
 
     },
@@ -853,7 +927,7 @@
       return (
         <div className={classes} id='categories'>
           <div className='row padding-inset-s'>
-            <input onChange={this._onCategoriesTerm} value={this.state.categoriesTerm} autoComplete='off' className='small' id='category-search' placeholder={_jed('Search Category')} type='text' />
+            <input onChange={this._onCategoriesTerm} value={this.state.categoriesTerm} autoComplete='off' className='small' id='category-search' placeholder={_jed('Search') + ' ' + _jed('Category')} type='text' />
           </div>
           {this._renderRootCategory()}
           {this._renderCurrentCategory()}
@@ -915,7 +989,7 @@
               <InventoryFilterSelect
                 hide={!this._showSelectsOtherThanUsed()}
                 name={'retired'}
-                onChange={(value) => this.setState({retired: value}, this._reloadList)}
+                onChange={(value) => this.setState({retired: value}, this._writeFilterAndReloadList)}
                 value={this.state.retired}
                 values= {
                   [
@@ -930,7 +1004,7 @@
               <InventoryFilterSelect
                 hide={this._hideUsedSelect()}
                 name={'used'}
-                onChange={(value) => this.setState({used: value}, this._reloadList)}
+                onChange={(value) => this.setState({used: value}, this._writeFilterAndReloadList)}
                 value={this.state.used}
                 values= {
                   [
@@ -945,7 +1019,7 @@
               <InventoryFilterSelect
                 hide={!this._showSelectsOtherThanUsed()}
                 name={'is_borrowable'}
-                onChange={(value) => this.setState({is_borrowable: value}, this._reloadList)}
+                onChange={(value) => this.setState({is_borrowable: value}, this._writeFilterAndReloadList)}
                 value={this.state.is_borrowable}
                 values= {
                   [
@@ -960,7 +1034,7 @@
               <InventoryFilterSelect
                 hide={!this._showSelectsOtherThanUsed()}
                 name={'responsible_inventory_pool_id'}
-                onChange={(value) => this.setState({responsible_inventory_pool_id: value}, this._reloadList)}
+                onChange={(value) => this.setState({responsible_inventory_pool_id: value}, this._writeFilterAndReloadList)}
                 value={this.state.responsible_inventory_pool_id}
                 values= {
                   [
@@ -1014,7 +1088,7 @@
     },
 
     _onDateChange(dateString) {
-      this.setState({before_last_check: dateString}, this._reloadList)
+      this.setState({before_last_check: dateString}, this._writeFilterAndReloadList)
 
     },
 
@@ -1061,7 +1135,7 @@
     _renderResultNothingFound() {
       return this._renderLoadingOrNothing(
         <h3 className='headline-s light padding-inset-xl text-align-center'>
-          No entries found
+          {_jed('No entries found')}
         </h3>
       )
     },
@@ -1138,10 +1212,16 @@
     },
 
     _renderModelDelete(model) {
+
+      if(this._modelItems(model).all().length > 0) {
+        return null
+      }
+
       return (
         <li>
           <a className='dropdown-item red' data-method='delete' href={this._modelDeleteLink(model)}>
             <i className='fa fa-trash'></i>
+            {' '}
             {_jed('Delete')}
           </a>
         </li>
@@ -1171,7 +1251,8 @@
               <ul className='dropdown right'>
                 <li>
                   <a className='dropdown-item' data-model-id={model.id} data-open-time-line=''>
-                  <i className='fa fa-align-left'></i>
+                    <i className='fa fa-align-left'></i>
+                    {' '}
                     {_jed('Timeline')}
                   </a>
                 </li>
@@ -1184,6 +1265,7 @@
         return (
           <a className='button white text-ellipsis' data-model-id={model.id} data-open-time-line>
             <i className='fa fa-align-left'></i>
+            {' '}
             {_jed('Timeline')}
           </a>
         )
@@ -1227,7 +1309,7 @@
           </div>
           <div className='col1of5 line-col text-align-center'>
             <span title={_jed('in stock')}>{model.availability().in_stock}</span>
-            /
+            {' / '}
             <span title={_jed('rentable')}>{model.availability().total_rentable}</span>
           </div>
           <div className='col1of5 line-col line-actions padding-right-xs'>
@@ -1357,7 +1439,8 @@
             <ul className='dropdown right'>
               <li>
                 <a className='dropdown-item' href={this._itemCopyLink(item)}>
-                <i className='fa fa-copy'></i>
+                  <i className='fa fa-copy'></i>
+                  {' '}
                   {copyLabel}
                 </a>
               </li>
@@ -1661,7 +1744,7 @@
 
     _renderResult() {
 
-      if(this.state.loading) {
+      if(this.state.inventory.length == 0) {
         return this._renderResultLoading()
       } else if(this.state.inventory[0].length == 0){
         return this._renderResultNothingFound()

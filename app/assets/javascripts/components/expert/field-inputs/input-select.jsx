@@ -14,23 +14,34 @@
 
     _onChange(event) {
       event.preventDefault()
-      var newValue = event.target.value
-      if(newValue == '') {
-        newValue = null
-      }
+      var newValue = this._parseValue(event.target.value)
       this.props.selectedValue.value.selection = event.target.value
       this.props.onChange()
     },
 
 
+    _serializeValue(value) {
+      if(value == null || value == undefined) {
+        return ''
+      } else {
+        return value
+      }
+
+    },
+
+    _parseValue(value) {
+      if(value == '') {
+        return null
+      } else {
+        return value
+      }
+    },
+
 
     _renderSelectValues(selectedValue) {
       return selectedValue.field.values.map((value) => {
 
-        var renderValue = value.value
-        if(renderValue == null || renderValue == undefined) {
-          renderValue = ''
-        }
+        var renderValue = this._serializeValue(value.value)
 
         return (
           <option key={value.value} value={renderValue}>
@@ -47,7 +58,7 @@
 
       return (
         <div className='col1of2'>
-          <select className='width-full' onChange={this._onChange} value={selectedValue.value.selection}
+          <select className='width-full' onChange={this._onChange} value={this._serializeValue(selectedValue.value.selection)}
             name={'item' + BackwardTestCompatibility._getFormName(selectedValue)}>
             {this._renderSelectValues(selectedValue)}
           </select>

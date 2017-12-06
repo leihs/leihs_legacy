@@ -72,7 +72,7 @@
             value = CreateItemFieldSwitch._createEditValue(field, item, null, this.props.attachments)
           } else {
             var itemValue = this._itemValue(field, item)
-            if(itemValue) {
+            if(itemValue != null && itemValue != undefined) {
               value = CreateItemFieldSwitch._createEditValue(field, item, itemValue, null)
             } else {
               value = CreateItemFieldSwitch._createEmptyValue(field)
@@ -500,9 +500,18 @@
       return _.find(this.state.fieldModels, (fm) => fm.field.id == 'attachments')
     },
 
+    _attachmentsFileModels() {
+      if(this._attachmentsFieldModel()) {
+        return this._attachmentsFieldModel().value.fileModels
+      } else {
+        return []
+      }
+
+    },
+
     _newAttachementFiles() {
       return _.filter(
-        this._attachmentsFieldModel().value.fileModels,
+        this._attachmentsFileModels(),
         (fm) => {
           return fm.type == 'new'
         }
@@ -650,7 +659,7 @@
 
       data.item.attachments_attributes = {}
       _.each(
-        this._attachmentsFieldModel().value.fileModels,
+        this._attachmentsFileModels(),
         (fm) => {
           if(fm.delete) {
             data.item.attachments_attributes[fm.id] = {
