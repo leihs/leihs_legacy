@@ -3,7 +3,10 @@ class Manage::FieldsController < Manage::ApplicationController
   def index
     @fields = Field.all.select do |f|
       [params[:target_type], nil].include?(f.data['target_type']) \
-        and f.accessible_by?(current_user, current_inventory_pool)
+        and (
+          f.accessible_by?(current_user, current_inventory_pool) ||
+          f.id == 'inventory_code'
+        )
     end.sort_by do |f|
       [Field::GROUPS_ORDER.index(f.data['group']) || 999, f.position]
     end
