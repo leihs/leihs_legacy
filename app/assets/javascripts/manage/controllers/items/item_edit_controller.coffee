@@ -53,7 +53,7 @@ class window.App.ItemEditController extends App.FormWithUploadController
       @setupErrorModal(@item)
     else
       url = redirectUrl ? App.Inventory.url()
-      window.location = "#{url}?flash[success]=#{_jed('Item saved')}"
+      window.location = "#{url}?flash[success]=#{_jed('Item saved.')}"
 
   errorHandler: (e) =>
     if e.responseJSON.can_bypass_unique_serial_number_validation

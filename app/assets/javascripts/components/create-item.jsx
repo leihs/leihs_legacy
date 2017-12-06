@@ -583,7 +583,7 @@
     },
 
     _forward(redirectUrl) {
-      var flash = '?flash[success]=' + _jed('Item saved')
+      var flash = '?flash[success]=' + _jed('Item saved.')
       if(redirectUrl) {
         window.location = redirectUrl + flash
       } else {
