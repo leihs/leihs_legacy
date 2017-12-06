@@ -48,7 +48,6 @@ class window.App.ReservationAssignOrCreateController extends Spine.Controller
   getEndDate: => moment(@addEndDate.val(), i18n.date.L)
 
   submit: (inventoryCode)=>
-    console.log 'TEST', inventoryCode
     return false unless inventoryCode?.length
     App.Reservation.assignOrCreate
       start_date: @getStartDate().format("YYYY-MM-DD")
@@ -58,7 +57,6 @@ class window.App.ReservationAssignOrCreateController extends Spine.Controller
       user_id: (@order?.user_id or @user.id)
       inventory_pool_id: (@order?.inventory_pool_id or App.InventoryPool.current.id)
     .done((data) =>
-      console.log data
       @assignedOrCreated inventoryCode, data)
     .error (e)=>
       App.Flash
@@ -67,8 +65,6 @@ class window.App.ReservationAssignOrCreateController extends Spine.Controller
     @autocompleteController.getInstance().resetInput()
 
   assignedOrCreated: (inventoryCode, data)=>
-    console.log 'assignedOrCreated', {inventoryCode, data}, App.Reservation.exists(data.id)
-    # debugger
     done = =>
       if App.Reservation.exists(data.id) # assigned
         line = App.Reservation.update data.id, data
