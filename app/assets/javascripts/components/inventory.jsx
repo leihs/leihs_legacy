@@ -1507,6 +1507,10 @@
       return item.getProblems()
     },
 
+    _licenseProblems(license) {
+      return license.getProblems()
+    },
+
     _renderItemDetail(item) {
       if(item.parent_id) {
         return [
@@ -1569,7 +1573,9 @@
             <div className='row'>{this._itemInventoryCode(item)}</div>
             {this._renderLicenseDetail(item)}
           </div>
-          <div className='col1of5 line-col'></div>
+          <div className='col1of5 line-col text-align-center'>
+            <strong className='darkred-text'>{this._licenseProblems(item)}</strong>
+          </div>
           <div className='col1of5 line-col line-actions padding-right-xs'>
             {this._renderItemEditButtons(item)}
           </div>
