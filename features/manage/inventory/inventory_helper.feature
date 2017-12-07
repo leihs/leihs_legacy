@@ -52,7 +52,6 @@ Feature: Inventory helper
     Then I see all the values of the item in an overview with model name and the modified values are already saved
     And the changed values are highlighted
 
-  @flapping
   Scenario: Editing after automatic save
     Given I edit an item through the inventory helper using an inventory code
     When I use the edit feature

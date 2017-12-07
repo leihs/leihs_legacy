@@ -15,7 +15,6 @@ Feature: Option
     And I save
     Then the information is saved
 
-  @flapping
   Scenario: Editing an option
     Given I open the inventory
     When I edit an existing Option

@@ -26,7 +26,6 @@ Feature: Verification
     And I add a model which leads to an overbooking
     Then I see an error message
 
-  @flapping
   Scenario: Overbooking in orders not possible for Group Managers in calendar
     When I open a submitted order to be verified by a Group Manager
     And I open the booking calendar
@@ -45,4 +44,3 @@ Feature: Verification
     And I change the quantity of the model in the calendar which leads to an overbooking
     And I save the booking calendar
     Then I see an error message within the booking calendar
-

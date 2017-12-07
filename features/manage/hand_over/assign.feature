@@ -7,7 +7,6 @@ Feature: Assign items during hand over
   Background:
     Given I am Pius
 
-  @flapping
   Scenario: Assign an inventory code to an itemline
      When I open a hand over which has multiple unassigned reservations and models in stock
       And I click an inventory code input field of an item line

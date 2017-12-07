@@ -26,7 +26,6 @@ Feature: Create model with packages
     And I choose "general room" from room select box
     Then I can only save this package if I also assign items
 
-  @flapping
   Scenario: Remove single item from a package
     When I edit a package
     And I choose "general building" from building select box

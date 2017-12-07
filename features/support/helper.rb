@@ -103,3 +103,10 @@ def wait_until(wait_time = 60, &block)
     fail Timeout::Error.new(block.source), 'It timed out!'
   end
 end
+
+def do_and_wait_for_page_change(wait: 15, &block)
+  fail unless block_given?
+  old_hash = page.html.hash
+  yield
+  wait_until(wait) { old_hash != page.html.hash }
+end

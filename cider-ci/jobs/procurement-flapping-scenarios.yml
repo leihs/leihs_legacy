@@ -18,3 +18,6 @@ jobs:
         - cider-ci/shared/main-context.yml
         - cider-ci/shared/flapping-context-configuration.yml
         - cider-ci/tasks/procurement-flapping-scenarios.yml
+
+      script_defaults:
+        timeout: 10 minutes

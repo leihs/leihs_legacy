@@ -5,7 +5,9 @@ Given(/^I see the language list$/) do
 end
 
 When(/^I change the language to "(.*?)"$/) do |language|
-  find('footer a', text: language).click
+  do_and_wait_for_page_change do
+    find('footer a', text: language).click
+  end
 end
 
 Then(/^the language is "(.*?)"$/) do |language|

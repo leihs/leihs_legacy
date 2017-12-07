@@ -439,11 +439,8 @@ When(/^I search for "(.+)"$/) do |search_term|
     field = find('#list-search')
     field.set ''
     field.set search_term
-    fill_in 'list-search', with: search_term
     field.native.send_key :enter
-    # sleep(0.55) # NOTE this sleep is required waiting the search result
   else
-    # binding.pry
     field = find("#list-filters input[name='search_term']")
     field.set ''
     field.set search_term

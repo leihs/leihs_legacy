@@ -45,7 +45,6 @@ Feature: Add reservations during hand over
     When I select the option from the list
     Then the option is added to the hand over
 
-  @flapping
   Scenario: Add an model to the hand over picking an autocomplete element
     Given I open a hand over
     And I type the beginning of a model name to the add/assign input field
@@ -66,9 +65,3 @@ Feature: Add reservations during hand over
     Given I open a hand over
     When I enter a model name which is not related to my current pool
     Then only models related to my current pool are suggested
-
-
-
-
-
-

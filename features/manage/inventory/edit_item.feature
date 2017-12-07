@@ -54,7 +54,6 @@ Feature: Editing an item
       | Warranty expiration        |
       | Contract expiration        |
 
-  @flapping
   Scenario: Delete supplier
     Given I edit an item that belongs to the current inventory pool
     And I navigate to the edit page of an item that has a supplier
@@ -93,14 +92,12 @@ Feature: Editing an item
     And I save
     Then the edited item has the new supplier
 
-  @flapping
   Scenario: You can't change the responsible department for items that are not in stock
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I change the responsible department
     And I save
     Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
-  @flapping
   Scenario: Editing an item an all its information
     Given I edit an item that belongs to the current inventory pool and is in stock and is not part of any contract
     When I enter the following item information
@@ -147,7 +144,6 @@ Feature: Editing an item
     And I see an error message
     And the required fields are highlighted in red
 
-  @flapping
   Scenario: Do not create a new supplier if one of the same name already exists
     Given I edit an item that belongs to the current inventory pool
     When I enter a supplier
@@ -155,14 +151,12 @@ Feature: Editing an item
     Then no new supplier is created
     And the edited item has the existing supplier
 
-  @flapping
   Scenario: Can't change the model for items that are in contracts
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I change the model
     And I save
     Then I see an error message that I can't change the model because the item is already handed over or assigned to a contract
 
-  @flapping
   Scenario: Can't retire an item that is not in stock
     Given I edit an item that belongs to the current inventory pool and is not in stock
     When I retire the item

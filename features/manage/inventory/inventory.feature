@@ -84,15 +84,11 @@ Feature: Inventory
     | Normal Model |
     | AVZ40020     |
 
-    # this one is not really flapping but slow, so we make sure
-    # it runs on the newest hardware
-  @flapping
   Scenario: The tab 'All'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
       | All               |
 
-  @flapping
   Scenario: The tab 'Models'
     Then I can click one of the following tabs to filter inventory by:
       | Choice |
@@ -166,7 +162,7 @@ Feature: Inventory
     Then the tab "All" is active
 
   # # Not implemented
-  # 
+  #
   # Scenario: Default setting for the "Software" view
   #   # Undefined
   #   Then enthält die Auswahl "Software" Software und Software-Lizenzen
@@ -219,6 +215,7 @@ Feature: Inventory
       | Current borrower       |
       | End date of contract   |
 
+  @flapping
   Scenario: Look of a software license line
     Given there exists a software license
     And I see retired and not retired inventory
@@ -267,7 +264,7 @@ Feature: Inventory
   # # Not implemented
   # #73278620
   # # No steps for this seem to be defined?
-  #  
+  #
   # Scenario: Verhalten nach Speichern
   #   When ich einen Reiter auswähle
   #   And ich eine oder mehrere Filtermöglichkeiten verwende

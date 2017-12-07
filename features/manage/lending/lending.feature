@@ -32,7 +32,6 @@ Feature: Lending
     Then I see the error message "you cannot hand out reservations which are starting in the future"
     And I cannot hand over the items
 
-  @flapping
   Scenario: Booking calendar: Show the customer's groups in "show availability"
     Given the customer is in multiple groups
     When I open a hand over to this customer
@@ -57,7 +56,6 @@ Feature: Lending
     And I click on "Hand Over"
     Then there are inventory codes for item and license in the contract
 
-  @flapping
   Scenario: Inspection during take back
     Given I take back an item
     Then I can inspect each item
@@ -70,7 +68,6 @@ Feature: Lending
     And I save the inspection
     Then the item is saved with the currently set states
 
-  @flapping
   Scenario: Automatic printing during hand over
     When I open a hand over with models
     Then the print dialog opens automatically
@@ -98,6 +95,7 @@ Feature: Lending
     Then I can choose to see all results
     When I choose to see all results, I receive a separate list with all results from this category
 
+  @flapping
   Scenario: Merging the numbers in an item popup
     Given I navigate to the open orders
     And I hover over the number of items in a line

@@ -29,7 +29,6 @@ Feature: Edit contract line during hand over process
       And I change the time range for that option
      Then the time range for that option line is changed
 
-  @flapping
   Scenario: Change the quantity of an option line
      When I open a hand over
       And I add an option
@@ -38,7 +37,6 @@ Feature: Edit contract line during hand over process
      When I change the quantity through the edit dialog
      Then the quantity for that option line is changed
 
-  @flapping
   Scenario: Change the quantity directly on an option line
      When I open a hand over
       And I add an option

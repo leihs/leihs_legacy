@@ -3,7 +3,6 @@ Feature: Edit a hand over
   Background:
     Given I am Pius
 
-  @flapping
   Scenario: Feedback on a successful manual interaction during hand over
     Given there is a hand over with at least one unproblematic model and an option
     And I open the hand over
@@ -33,7 +32,6 @@ Feature: Edit a hand over
     And the user in this hand over is suspended
     Then I see the note 'Suspended!' next to their name
 
-  @flapping
   Scenario: System feedback when adding an option
     Given I open a hand over
     When I add an option

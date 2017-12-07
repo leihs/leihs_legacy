@@ -239,7 +239,7 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     And the status is set to "Denied"
     And the changes are saved successfully to the database
 
-  @inspection
+  @inspection @flapping
   Scenario: Give Reason when Partially Excepting
     Given I am Barbara
     And a request with following data exist
@@ -304,7 +304,7 @@ Feature: Inspection (state-behaviour described in seperate feature-file)
     When I try to toggle a filter
     Then I see the request inline edit form
 
-  @inspection
+  @inspection @flapping
   Scenario: Overview Edit Form with changes blocks navigation with confirmation
     Given I am Barbara
     And a request with following data exist

@@ -54,7 +54,6 @@ Feature: User documents
       | Quantity |
       | Value    |
 
-  @flapping
   Scenario: Opening a contract
     Given I am a customer with contracts
     And I go to the page showing my documents

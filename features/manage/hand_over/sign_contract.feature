@@ -19,7 +19,6 @@ Feature: Sign Contract
     When I click hand over inside the dialog
     Then the quantity of options is handed over
 
-  @flapping
   Scenario: Hand over reservations which start in the history
     When I open a hand over with overdue reservations
     And I select an overdue item line and assign an inventory code

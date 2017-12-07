@@ -123,7 +123,6 @@ Feature: Delegation
     Then I see the delegation's name
     And I see the contact person
 
-  @flapping
   Scenario: Definition of the contact person when creating an order
     Given I am Julie
     When I create an order for a delegation
@@ -162,7 +161,6 @@ Feature: Delegation
     When I try to change the contact person
     Then I can choose only those people that belong to the delegation group
 
-  @flapping
   Scenario: Changing contact person while editing an order
     Given I am Pius
     And I am editing a delegation's order
@@ -172,7 +170,6 @@ Feature: Delegation
     And I confirm the user change
     Then the contact person for the order has been changed accordingly
 
-  @flapping
   Scenario: Borrow: Creating an order with a delegation
     Given I am Julie
     When I hover over my name

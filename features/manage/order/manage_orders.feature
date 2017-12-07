@@ -6,7 +6,6 @@ Feature: Edit order
     And I open a take back for a suspended user
     Then I see the note 'Suspended!' next to their name
 
-  @flapping
   Scenario: Prevent 'approve anyway' for group managers
     Given I am Andi
     And an order contains overbooked models

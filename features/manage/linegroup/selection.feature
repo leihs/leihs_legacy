@@ -7,13 +7,12 @@ Feature: Select reservations or linegroups
   Background:
     Given I am Pius
 
-  @flapping
   Scenario: Select multiple reservations
-     When I open a take back, hand over or I edit a contract 
+     When I open a take back, hand over or I edit a contract
       And I select all reservations of an linegroup
      Then the linegroup is selected
       And the count matches the amount of selected reservations
      When I open a take back
-      And I select the linegroup 
+      And I select the linegroup
      Then all reservations of that linegroup are selected
       And the count matches the amount of selected reservations

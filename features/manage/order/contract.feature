@@ -63,7 +63,6 @@ Feature: Contract
     Given I open a contract during hand over
     Then I see the barcode in the top left
 
-  @flapping
   Scenario: Position of the borrower
     Given I open a contract during hand over
     Then I see the borrower in the top left corner
@@ -81,7 +80,6 @@ Feature: Contract
     Then I additionally see the following information
     | Serial number  |
 
-  @flapping
   Scenario: Rücknehmende Person
     Given I open a take back
     And I select all reservations of an open contract via Barcode

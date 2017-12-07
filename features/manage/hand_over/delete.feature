@@ -7,20 +7,17 @@ Feature: Sign Contract
   Background:
     Given I am Pius
 
-  @flapping
   Scenario: Delete a single line during the hand over
     When I open a hand over which has multiple reservations
     And I delete a line
     Then this line is deleted
 
-  @flapping
   Scenario: Delete multiple reservations during the hand over
     When I open a hand over which has multiple reservations
     And I select multiple reservations
     And I delete the seleted reservations
     Then these seleted reservations are deleted
 
-  @flapping
   Scenario: Delete reservations which changes other reservations availability
     When I open a hand over
     And I delete all reservations of a model thats availability is blocked by these reservations

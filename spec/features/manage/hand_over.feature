@@ -3,7 +3,7 @@ Feature: Hand over
   Background:
     Given personas dump is loaded
 
-  @manage_hand_over @flapping
+  @manage_hand_over
   Scenario: Handing over an item to the same user multiple times should not be possible
     Given I am Pius
     And a customer for my inventory pool exists
