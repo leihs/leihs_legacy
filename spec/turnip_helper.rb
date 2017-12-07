@@ -15,6 +15,7 @@ end
 
 Capybara.configure do |config|
   config.server = :puma
+  config.default_max_wait_time = 15
 end
 
 RSpec.configure do |config|

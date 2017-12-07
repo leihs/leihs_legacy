@@ -40,6 +40,7 @@ ActionController::Base.allow_rescue = false
 
 Capybara.configure do |config|
   config.server = :puma
+  config.default_max_wait_time = 15
 end
 
 ##################################################################################
