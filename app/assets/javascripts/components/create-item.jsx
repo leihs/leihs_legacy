@@ -302,33 +302,39 @@
       }
     },
 
-    _renderTitle() {
 
+    _subtitleMessage() {
       if(this.props.edit) {
-        return (
-          <div className='col1of2'>
-            <h1 className='headline-l'>{_jed('Edit Item')}</h1>
-            <h2 className='headline-s light'>{_jed('Make changes and save')}</h2>
-          </div>
-        )
+        _jed('Make changes and save')
       } else {
+        _jed('Insert all required information')
+      }
+    },
 
+    _titleMessage() {
+      if(this.props.edit) {
         if(this._targetType() == 'license') {
-          return (
-            <div className='col1of2'>
-              <h1 className='headline-l'>{_jed('Create new software license')}</h1>
-              <h2 className='headline-s light'>{_jed('Insert all required information')}</h2>
-            </div>
-          )
+          return _jed('Edit License')
         } else {
-          return (
-            <div className='col1of2'>
-              <h1 className='headline-l'>{_jed('Create new item')}</h1>
-              <h2 className='headline-s light'>{_jed('Insert all required information')}</h2>
-            </div>
-          )
+          return _jed('Edit Item')
+        }
+      } else {
+        if(this._targetType() == 'license') {
+          return _jed('Create new software license')
+        } else {
+          return _jed('Create new item')
         }
       }
+    },
+
+    _renderTitle() {
+
+      return (
+        <div className='col1of2'>
+          <h1 className='headline-l'>{this._titleMessage()}</h1>
+          <h2 className='headline-s light'>{this._subtitleMessage()}</h2>
+        </div>
+      )
     },
 
     _serializeExtensibleFieldValue(fieldModel) {
