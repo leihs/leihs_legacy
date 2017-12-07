@@ -113,6 +113,43 @@
       return !_.isEmpty(this.props.createItemProps.model_attachments)
     },
 
+    _technicalDetailLines() {
+      return this.props.createItemProps.item.model.technical_detail.split('\r\n')
+    },
+
+    _technicalDetailLinesWithLinks() {
+      return _.filter(this._technicalDetailLines(), (line) => {
+        return this._lineHasLink(line)
+      })
+    },
+
+    _linkRegex() {
+      return /(https?:\S*)/gi
+    },
+
+    _emailRegex() {
+      return /(\S+@\S+\.\S+)/gi
+    },
+
+    _lineHasLink(line) {
+      return line.match(this._linkRegex()) || line.match(this._emailRegex())
+    },
+
+    _renderTechnicalDetailLine(line, index) {
+
+      var innerHtml = line.replace(this._linkRegex(), '<a href=\'\$1\' target=\'_blank\'>\$1</a>').replace(this._emailRegex(), '<a href=\'mailto:\$1\'>\$1</a>')
+      return (
+        <div key={'technical_detail_' + index} className='row line font-size-m padding-inset-s' dangerouslySetInnerHTML={{__html: innerHtml}}>
+        </div>
+      )
+    },
+
+    _renderTechnicalDetailLines() {
+      return this._technicalDetailLinesWithLinks().map((line, index) => {
+        return this._renderTechnicalDetailLine(line, index)
+      })
+    },
+
     _renderTechnicalDetail() {
 
       if(this._hasTechnicalDetail()) {
@@ -130,9 +167,7 @@
                    </div>
                 </div>
                 <div className='list-of-lines even padding-bottom-xxs'>
-                   <div className='row line font-size-m padding-inset-s'>
-                     {this.props.createItemProps.item.model.technical_detail}
-                   </div>
+                  {this._renderTechnicalDetailLines()}
                 </div>
              </div>
           </div>
