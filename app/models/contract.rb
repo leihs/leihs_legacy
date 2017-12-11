@@ -33,7 +33,7 @@ class Contract < ApplicationRecord
   has_many :options, -> { distinct }, through: :option_lines
 
   belongs_to :user
-  belongs_to :inventory_pool
+  belongs_to :inventory_pool, -> { unscope(where: :is_active) }
 
   #########################################################################
 
