@@ -28,8 +28,9 @@ class Authenticator::DatabaseAuthenticationController \
 
   def change_password
     if request.post? and params[:db_auth][:password] != '_password_'
+      attrs = params.require(:db_auth).permit([:password, :password_confirmation])
       d = DatabaseAuthentication.find_by_user_id(current_user.id)
-      if d.update_attributes(params[:db_auth])
+      if d.update_attributes(attrs)
         flash[:success] = _('Password changed')
       else
         flash[:error] = d.errors.full_messages.uniq.join(', ')
