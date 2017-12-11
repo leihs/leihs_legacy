@@ -77,9 +77,8 @@ Spine.Model.include.call App.Reservation, App.Modules.LineProblems
 window.App.Reservation::assign = (item, callback = null)->
   $.post("/manage/#{App.InventoryPool.current.id}/reservations/#{@id}/assign", {inventory_code: item.inventory_code})
   .fail (e)=>
-    App.Flash
-      type: "error"
-      message: e.responseText
+    msg = e.responseJSON?.message || e.responseText
+    App.Flash(type: "error", message: msg)
   .done (data)=>
     @refresh data
     App.Reservation.trigger "update", @
