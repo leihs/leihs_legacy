@@ -160,7 +160,7 @@ class Contract < ApplicationRecord
 
   #########################################################################
 
-  def self.filter(params, user = nil, inventory_pool = nil)
+  def self.filter(params, user = nil, inventory_pool = nil, paginate: true)
     contracts = if user
                   user.contracts
                 elsif inventory_pool
@@ -199,7 +199,11 @@ class Contract < ApplicationRecord
                          &:sort_for_global_search)
       .distinct
 
-    contracts.default_paginate(params)
+    if paginate
+      contracts.default_paginate(params)
+    else
+      contracts
+    end
   end
 
   #########################################################################

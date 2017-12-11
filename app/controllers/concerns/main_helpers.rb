@@ -65,11 +65,13 @@ module MainHelpers
       end
     end
 
-    def set_pagination_header(paginated_active_record, disable_total_count: false)
+    def set_pagination_header(paginated_active_record,
+                              disable_total_count: false,
+                              custom_count: nil)
       headers['X-Pagination'] = {
-        total_count: (
-          disable_total_count ? nil : paginated_active_record.total_entries
-        ),
+        total_count: total_count(paginated_active_record,
+                                 disable: disable_total_count,
+                                 custom_count: custom_count),
         per_page: paginated_active_record.per_page,
         offset: paginated_active_record.offset
       }.to_json
@@ -99,6 +101,16 @@ module MainHelpers
 
     def permit_params
       params.permit!
+    end
+
+    def total_count(paginated_active_record, disable: false, custom_count: nil)
+      if disable
+        nil
+      elsif custom_count
+        custom_count
+      else
+        paginated_active_record.total_entries
+      end
     end
 
   end
