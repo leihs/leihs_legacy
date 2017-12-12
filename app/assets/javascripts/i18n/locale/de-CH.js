@@ -4517,6 +4517,14 @@ window.i18n.locale_data = {
       "Refresh Page": [
          null,
          "Seite neuladen"
+      ],
+      "is not a valid URL": [
+         null,
+         "ist keine gültige URL"
+      ],
+      "is not a HTTP(S) URL": [
+         null,
+         "ist keine HTTP(S) URL"
       ]
    }
 }

@@ -2727,3 +2727,9 @@ msgstr "All"
 
 msgid "Refresh Page"
 msgstr ""
+
+msgid "is not a valid URL"
+msgstr ""
+
+msgid "is not a HTTP(S) URL"
+msgstr ""

@@ -3491,3 +3491,9 @@ msgstr "Die Felder wurden erfolgreich aktualisiert."
 
 msgid "Refresh Page"
 msgstr "Seite neuladen"
+
+msgid "is not a valid URL"
+msgstr "ist keine gültige URL"
+
+msgid "is not a HTTP(S) URL"
+msgstr "ist keine HTTP(S) URL"

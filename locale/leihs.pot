@@ -3404,3 +3404,9 @@ msgstr ""
 
 msgid "Fields have been updated successfully."
 msgstr ""
+
+msgid "is not a valid URL"
+msgstr ""
+
+msgid "is not a HTTP(S) URL"
+msgstr ""

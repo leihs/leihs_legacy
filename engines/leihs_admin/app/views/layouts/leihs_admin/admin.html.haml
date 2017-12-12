@@ -1,3 +1,7 @@
+:ruby
+  product_name = 'leihs'
+  logo_link = Setting.logo_link.try(:strip).presence
+
 !!! 5
 %html{:lang => I18n.locale}
 
@@ -52,7 +56,11 @@
         .container
           .row
             .col-sm-2
-              %h2= "leihs"
+              %h2
+                - if logo_link
+                  %a{href: logo_link, style: 'color: inherit; margin: inherit'}= product_name
+                - else
+                  = product_name
             .col-sm-10
               .text-right
                 %i.fa.fa-globe.grey

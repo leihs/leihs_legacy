@@ -73,7 +73,7 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2013-01-14 13:11+0100",
-         "PO-Revision-Date": " 2017-08-14 17:17+0200",
+         "PO-Revision-Date": " 2017-12-14 08:56+0100",
          "Last-Translator": " Ramón Cahenzli <ramon.cahenzli@zhdk.ch>",
          "Language-Team": " Spanish <es@li.org>",
          "Language": " es",
@@ -81,7 +81,7 @@ window.i18n.locale_data = {
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
          "X-Launchpad-Export-Date": " 2010-01-27 15:44+0000",
-         "X-Generator": " Poedit 2.0.3"
+         "X-Generator": " Poedit 2.0.5"
       },
       " at the inventory pool ": [
          null,
@@ -874,6 +874,14 @@ window.i18n.locale_data = {
       "Refresh Page": [
          null,
          "Actualizar página"
+      ],
+      "is not a valid URL": [
+         null,
+         "no es una URL valida"
+      ],
+      "is not a HTTP(S) URL": [
+         null,
+         "no es una URL HTTP(S)"
       ]
    }
 }

@@ -1,3 +1,13 @@
+placeholder :boolish do
+  match(/(has the)/) { true }
+  match(/(has no)/) { false }
+end
+
+placeholder :optional_text do
+  match(/.*/) { |str| str }
+  match(//) { nil }
+end
+
 module LeihsAdmin
   module Spec
     module CommonSteps

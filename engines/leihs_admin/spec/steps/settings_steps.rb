@@ -9,6 +9,68 @@ module LeihsAdmin
       include ::LeihsAdmin::Spec::PersonasDumpSteps
       include ::Spec::LoginSteps
 
+      step 'I save the settings' do
+        # NOTE: fixed navbar scrolling hack:
+        page.execute_script %[ $(".navbar").remove() ]
+        find("button.btn.btn-success[type='submit']").click
+      end
+
+      step 'the settings are persisted' do
+        check_flash_message(:notice, _('Successfully set.'))
+        @new_settings.each_pair do |k, v|
+          expect(Setting.send(k).presence).to eq v.presence
+        end
+      end
+
+      step 'I go to the settings page' do
+        visit admin.settings_path
+      end
+
+      step 'I am on the settings page' do
+        expect(current_path).to be == admin.settings_path
+      end
+
+      step 'I fill in the :form_field with :text' do |form_field, text|
+        fill_in form_field, with: text
+      end
+
+      step 'the logo in the footer (in :text) :boolish link:optional_text' \
+          do |section, has_link, optional_text|
+        href = optional_text.strip.delete('"')
+        case section.to_sym
+        when :admin
+          visit admin_path
+          footer_logo = has_link ? find('footer h2 > a') : find('footer h2')
+        when :manage
+          visit manage_root_path
+          footer_logo = find('footer .headline-m', text: 'leihs')
+        when :borrow
+          visit borrow_root_path
+          footer_logo = find('footer .headline-m', text: 'leihs')
+        else
+          fail 'unknown section ' + section
+        end
+
+        if has_link
+          expect(footer_logo[:href]).to eq href
+        else
+          expect(footer_logo).to have_no_selector 'a'
+          expect(footer_logo[:href]).to be nil
+        end
+      end
+
+      step 'I get a message :text' do |text|
+        check_flash_message(:notice, text)
+      end
+
+      step 'I get an error message :text' do |text|
+        check_flash_message(:error, text)
+      end
+
+      def check_flash_message(type, text)
+        find("#flash .#{type}", text: _(text))
+      end
+
       step 'I edit the following settings' do |table|
         @new_settings = {}
         within("form#edit_setting[action='/admin/settings']") do
@@ -72,23 +134,9 @@ module LeihsAdmin
           end
         end
         scroll_to_top
-        find("button.btn.btn-success[type='submit']").click
+        step 'I save the settings'
       end
 
-      step 'the settings are persisted' do
-        find('#flash .notice', text: _('Successfully set.'))
-        @new_settings.each_pair do |k, v|
-          expect(Setting.send(k).presence).to eq v.presence
-        end
-      end
-
-      step 'I go to the settings page' do
-        visit admin.settings_path
-      end
-
-      step 'I am on the settings page' do
-        expect(current_path).to be == admin.settings_path
-      end
     end
   end
 end

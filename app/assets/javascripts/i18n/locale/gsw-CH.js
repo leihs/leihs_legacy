@@ -73,7 +73,7 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2012-10-22 12:39+0200",
-         "PO-Revision-Date": " 2017-08-14 17:29+0200",
+         "PO-Revision-Date": " 2017-12-14 08:58+0100",
          "Last-Translator": " Ramón Cahenzli <rca@psy-q.ch>",
          "Language-Team": " Swiss-German (Zürich area) <ramon.cahenzli@zhdk.ch>",
          "Language": " gsw_CH",
@@ -81,7 +81,7 @@ window.i18n.locale_data = {
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
          "Plural-Forms": " nplurals=2; plural=(n != 1);",
-         "X-Generator": " Poedit 2.0.3"
+         "X-Generator": " Poedit 2.0.5"
       },
       "Additional label in inventory codes": [
          null,
@@ -3883,6 +3883,14 @@ window.i18n.locale_data = {
       "Refresh Page": [
          null,
          "Siite neulade"
+      ],
+      "is not a valid URL": [
+         null,
+         "isch nöd eini gültige URL"
+      ],
+      "is not a HTTP(S) URL": [
+         null,
+         "isch nöd eini HTTP(S) URL"
       ]
    }
 }

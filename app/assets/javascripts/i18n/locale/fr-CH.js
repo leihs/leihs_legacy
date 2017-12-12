@@ -75,7 +75,7 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2012-10-22 12:39+0200",
-         "PO-Revision-Date": " 2017-08-14 17:35+0200",
+         "PO-Revision-Date": " 2017-12-14 08:59+0100",
          "Last-Translator": " Loïc Fürhoff <loic.furhoff@heig-vd.ch>",
          "Language-Team": " French (Switzerland)",
          "Language": " fr",
@@ -85,7 +85,7 @@ window.i18n.locale_data = {
          "Content-Transfer-Encoding": " 8bit",
          "X-Loco-Source-Locale": " fr_CH",
          "X-Launchpad-Export-Date": " 2008-12-18 06:16+0000",
-         "X-Generator": " Poedit 2.0.3",
+         "X-Generator": " Poedit 2.0.5",
          "X-Loco-Parser": " loco_parse_po"
       },
       "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\"": [
@@ -4455,6 +4455,14 @@ window.i18n.locale_data = {
       "Refresh Page": [
          null,
          "Rafraîchir la page"
+      ],
+      "is not a valid URL": [
+         null,
+         "n’est pas une URL valide"
+      ],
+      "is not a HTTP(S) URL": [
+         null,
+         "n’est pas une URL HTTP(S)"
       ]
    }
 }

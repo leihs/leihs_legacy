@@ -16,6 +16,17 @@ class Setting < ApplicationRecord
   validates_format_of :default_email,
                       with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
+  validates_each :logo_link, allow_blank: true do |record, attr, value|
+    begin
+      uri = URI.parse value
+    rescue
+      next record.errors.add attr, _('is not a valid URL')
+    end
+    unless uri.is_a?(URI::HTTP) or uri.is_a?(URI::HTTPS)
+      record.errors.add attr, _('is not a HTTP(S) URL')
+    end
+  end
+
   def self.method_missing(name, *_args, &_block)
     # TODO: replace class var with class instance var
     # rubocop:disable Style/ClassVars

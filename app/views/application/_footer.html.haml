@@ -1,4 +1,6 @@
 :ruby
+  product_name = 'leihs'
+  logo_link = Setting.logo_link.try(:strip).presence
   active_language = Language.find_by_locale_name(I18n.locale)
   version_name = RELEASE_INFO.try(:[], :version_name)
   is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :is_release) || false
@@ -11,8 +13,10 @@
   .wrapper.padding-top-m.padding-horizontal-s
 
     .col1of10.padding-top-xs.padding-left-xs
-      %a.headline-m.light{title: version_hint, href: version_link}
-        = "leihs"
+      - if logo_link
+        %a.headline-m.light{href: logo_link}= product_name
+      - else
+        %span.headline-m.light= product_name
 
     .col9of10.padding-top-xs
 

@@ -33,6 +33,19 @@ module Spec
       login_as_current_user
     end
 
+    step 'I have the roles' do |table|
+      user = @current_user
+      ip = @current_inventory_pool || @inventory_pool
+      fail unless user.present? && ip.present?
+      table.headers.each do |role|
+        next if AccessRight.find_by(user: user, inventory_pool: ip, role: role)
+        FactoryGirl.create(
+          :access_right,
+          user: user, inventory_pool: ip, role: role
+        )
+      end
+    end
+
     private
 
     def set_current_inventory_pool
