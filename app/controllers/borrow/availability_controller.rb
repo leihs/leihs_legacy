@@ -9,7 +9,11 @@ class Borrow::AvailabilityController < Borrow::ApplicationController
           changes: \
             model.availability_in(inventory_pool).available_total_quantities,
           total_borrowable: \
-            model.total_borrowable_items_for_user(current_user, inventory_pool),
+            model.total_borrowable_items_for_user(
+              current_user,
+              inventory_pool,
+              sanitize_negative_general_quantity: true
+            ),
           inventory_pool_id: inventory_pool.id,
           model_id: model.id
         }
