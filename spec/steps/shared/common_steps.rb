@@ -68,6 +68,10 @@ module Spec
       find('#flash .success')
     end
 
+    step 'I see a notification message' do
+      find('#flash .notice')
+    end
+
     def rescue_displaced_flash
       begin
         yield

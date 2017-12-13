@@ -123,8 +123,11 @@ class Manage::UsersController < Manage::ApplicationController
 
   def update
     if params[:user]
-      if params[:user].key?(:groups) and (groups = params[:user].delete(:groups))
+      if params[:user].key?(:groups)
+        groups = params[:user].delete(:groups)
         @user.entitlement_groups = groups.map { |g| EntitlementGroup.find g['id'] }
+      else
+        @user.entitlement_groups = []
       end
 
       delegated_user_ids = get_delegated_users_ids params
