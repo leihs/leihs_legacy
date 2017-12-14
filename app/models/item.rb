@@ -32,11 +32,14 @@ class Item < ApplicationRecord
   belongs_to :model, inverse_of: :items
   belongs_to :room, inverse_of: :items
   belongs_to(:owner,
+             -> { unscope(where: :is_active) },
              class_name: 'InventoryPool',
              foreign_key: 'owner_id',
              inverse_of: :own_items)
   belongs_to :supplier
-  belongs_to :inventory_pool, inverse_of: :items
+  belongs_to :inventory_pool,
+             -> { unscope(where: :is_active) },
+             inverse_of: :items
 
   has_many :item_lines, dependent: :restrict_with_exception
   alias_method :reservations, :item_lines

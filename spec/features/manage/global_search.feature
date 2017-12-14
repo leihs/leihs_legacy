@@ -39,3 +39,15 @@ Feature: Global search within an inventory pool
       | contract 3 |
       | contract 4 |
       | contract 5 |
+
+  @manage_global_search
+  Scenario: Searching for a retired item of an inactive pool
+    Given I am Pius
+    And there is a retired item
+    And there is an inactive inventory pool
+    And the owner of the item is the inactive inventory pool
+    And the responsible of the item is the inactive inventory pool
+    When I search globally for the inventory code of the item
+    Then I see within the items box the item
+    And the item line contains the name of the inactive inventory pool
+    And the item line has the label "Retired"

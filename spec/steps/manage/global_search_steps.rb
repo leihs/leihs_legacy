@@ -117,6 +117,47 @@ module Manage
         check_contracts_within_container '.list-of-lines', table
       end
 
+      step 'there is a retired item' do
+        @retired_item = FactoryGirl.create(:item,
+                                           retired: Date.today,
+                                           retired_reason: Faker::Lorem.sentence)
+      end
+
+      step 'there is an inactive inventory pool' do
+        @inactive_pool = FactoryGirl.create(:inventory_pool)
+      end
+
+      step 'the owner of the item is the inactive inventory pool' do
+        @retired_item.update_attributes!(owner: @inactive_pool)
+      end
+
+      step 'the responsible of the item is the inactive inventory pool' do
+        @retired_item.update_attributes!(inventory_pool: @inactive_pool)
+      end
+
+      step 'I search globally for the inventory code of the item' do
+        fill_in 'search_term', with: @retired_item.inventory_code
+        find('#search input').native.send_key :enter
+      end
+
+      step 'I see within the items box the item' do
+        within '#items' do
+          find('.line', text: @retired_item.inventory_code)
+        end
+      end
+
+      step 'the item line contains the name of the inactive inventory pool' do
+        within find('#items .line', text: @retired_item.inventory_code) do
+          expect(current_scope).to have_content @retired_item.inventory_pool
+        end
+      end
+
+      step 'the item line has the label :label' do |label|
+        within find('#items .line', text: @retired_item.inventory_code) do
+          expect(current_scope).to have_content _(label)
+        end
+      end
+
       private
 
       def check_contracts_within_container(css_path, table)
