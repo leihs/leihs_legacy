@@ -10,7 +10,6 @@ placeholder :input_label do
   end
 end
 
-# rubocop:disable Metrics/ModuleLength
 module LeihsAdmin
   module Spec
     module InventoryPoolsSteps
@@ -402,7 +401,6 @@ module LeihsAdmin
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength
 
 RSpec.configure do |config|
   config.include(LeihsAdmin::Spec::InventoryPoolsSteps,

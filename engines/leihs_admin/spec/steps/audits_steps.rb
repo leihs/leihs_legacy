@@ -7,7 +7,6 @@ placeholder :count do
   match /\d+/, &:to_i
 end
 
-# rubocop:disable Metrics/ModuleLength
 module LeihsAdmin
   module Spec
     module AuditsSteps
@@ -184,7 +183,6 @@ module LeihsAdmin
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength
 
 RSpec.configure do |config|
   config.include LeihsAdmin::Spec::AuditsSteps, leihs_admin_audits: true

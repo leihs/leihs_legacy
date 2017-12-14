@@ -21,7 +21,6 @@ module LeihsAdmin
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength
 
 RSpec.configure do |config|
   config.include LeihsAdmin::Spec::LanguagesSteps, leihs_admin_languages: true

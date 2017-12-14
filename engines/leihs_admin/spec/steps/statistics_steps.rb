@@ -1,7 +1,6 @@
 require_relative '../../../../spec/steps/shared/login_steps'
 require_relative 'shared/personas_dump_steps'
 
-# rubocop:disable Metrics/ModuleLength
 module LeihsAdmin
   module Spec
     module StatisticsSteps
@@ -266,7 +265,6 @@ module LeihsAdmin
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength
 
 RSpec.configure do |config|
   config.include LeihsAdmin::Spec::StatisticsSteps, leihs_admin_statistics: true

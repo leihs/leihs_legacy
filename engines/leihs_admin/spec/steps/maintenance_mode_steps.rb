@@ -8,7 +8,6 @@ placeholder :section_name do
   end
 end
 
-# rubocop:disable Metrics/ModuleLength
 module LeihsAdmin
   module Spec
     module MaintenanceModeSteps
@@ -183,7 +182,6 @@ module LeihsAdmin
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength
 
 RSpec.configure do |config|
   config.include(LeihsAdmin::Spec::MaintenanceModeSteps,
