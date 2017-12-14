@@ -49,7 +49,7 @@ module Spec
     end
 
     step 'I release the focus from this field' do
-      find('body').click # blur all possible focused autocomplete inputs
+      page.find('body').click # blur all possible focused autocomplete inputs
     end
 
     step 'I save' do

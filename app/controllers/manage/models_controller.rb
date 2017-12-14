@@ -132,6 +132,7 @@ class Manage::ModelsController < Manage::ApplicationController
           item.update_attributes data
           children['id'].each do |child_id|
             child = Item.find(child_id)
+            child.skip_serial_number_validation = true
             inherit_attributes_from_package!(item, child)
             item.children << child
           end
@@ -155,6 +156,7 @@ class Manage::ModelsController < Manage::ApplicationController
             item.children = []
             children['id'].each do |child_id|
               child = Item.find(child_id)
+              child.skip_serial_number_validation = true
               inherit_attributes_from_package!(item, child)
               item.children << child
             end

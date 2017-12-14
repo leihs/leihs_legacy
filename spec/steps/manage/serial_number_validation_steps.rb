@@ -128,6 +128,73 @@ module Manage
            'with serial number :serial_number' do |serial_number|
         expect(@item.reload.shelf).to be == @shelf
       end
+
+      step 'there is first item with serial number :serial_number' \
+        do |serial_number|
+        @item_1 = FactoryGirl.create(:item,
+                                     owner: @current_inventory_pool,
+                                     serial_number: serial_number)
+      end
+
+      step 'there is second item with serial number :serial_number' \
+        do |serial_number|
+        @item_2 = FactoryGirl.build(:item,
+                                    owner: @current_inventory_pool,
+                                    serial_number: serial_number)
+        @item_2.skip_serial_number_validation = true
+        @item_2.save!
+      end
+
+      step 'there is a package model' do
+        @model = FactoryGirl.create(:package_model)
+      end
+
+      step 'I open edit page of the model' do
+        visit manage_edit_model_path(@current_inventory_pool, @model)
+      end
+
+      step 'I click on :label' do |label|
+        click_on _(label)
+      end
+
+      step 'I add the first item' do
+        type_into_and_select_from_autocomplete('#search-item',
+                                               @item_1.inventory_code)
+      end
+
+      step 'I add the second item' do
+        type_into_and_select_from_autocomplete('#search-item',
+                                               @item_2.inventory_code)
+      end
+
+      step 'I choose the general building' do
+        within find('.field', text: _('Building')) do
+          find('input').click
+          find('input').set 'general building'
+        end
+        find('.ui-autocomplete')
+        within '.ui-autocomplete' do
+          find('.ui-menu-item', text: 'general building').click
+        end
+      end
+
+      step 'I choose the general room' do
+        within find('.field', text: _('Room')) do
+          find('input').click
+          find('input').set 'general room'
+        end
+        find('.ui-autocomplete')
+        within '.ui-autocomplete' do
+          find('.ui-menu-item', text: 'general room').click
+        end
+      end
+
+      step 'the package was created successfully and contains both the items' do
+        package = @model.items.first
+        expect(package.children.count).to be == 2
+        expect(package.children).to include @item_1
+        expect(package.children).to include @item_2
+      end
     end
   end
 end

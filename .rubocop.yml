@@ -180,6 +180,9 @@ Style/SpecialGlobalVars:
 Style/UnlessElse:
   Enabled: false
 
+Style/VariableNumber:
+  Enabled: false
+
 # Cop supports --auto-correct.
 # Configuration parameters: WordRegex.
 Style/WordArray:

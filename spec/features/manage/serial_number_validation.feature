@@ -76,3 +76,20 @@ Feature: Serial number validation
     And I apply the values on item with serial number "ABCD"
     Then I see a warning in regards to existing serial number
     And the values were successfully applied to the item with serial number "ABCD"
+
+  @manage_serial_number_validation
+  Scenario: Skip serial number validation automatically for items when creating a package
+    Given I am Mike
+    And there is first item with serial number "abcd"
+    And there is second item with serial number "abcd"
+    And there is a package model
+    When I open edit page of the model
+    And I click on "Add Package"
+    And I add the first item
+    And I add the second item
+    And I choose the general building
+    And I choose the general room
+    And I click on "Save Package"
+    And I click on "Save Model"
+    Then I see a success message
+    And the package was created successfully and contains both the items
