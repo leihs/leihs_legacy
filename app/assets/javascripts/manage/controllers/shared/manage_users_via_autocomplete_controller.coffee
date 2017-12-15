@@ -20,7 +20,6 @@ class window.App.ManageUsersViaAutocompleteController extends Spine.Controller
   fetchUsers: =>
     data =
       search_term: @input.val()
-      per_page: 5
     $.extend data, @fetchUsersParams
     App.User.ajaxFetch
       data: $.param data

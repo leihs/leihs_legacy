@@ -22,7 +22,6 @@ class window.App.GroupPartitionsController extends Spine.Controller
       data: $.param
         search_term: @input.val()
         borrowable: true
-        per_page: 5
 
   setupAutocomplete: (models) =>
     @input.autocomplete
