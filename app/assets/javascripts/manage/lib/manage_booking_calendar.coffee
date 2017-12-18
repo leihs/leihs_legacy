@@ -19,25 +19,46 @@ class window.App.ManageBookingCalendar extends App.BookingCalendar
     @models = options.models
     do @setupPartitionSelector
 
-  getGroupIds: => @partitionSelector_el.find("option:selected").data "value"
+  getGroupIds: =>
+    # This whole method is some ugly hack for something which did not work and its unclear how it should work.
+    # The ids returned were wrapped with [ ] brackets which obviously could not be found with active record.
+    # The calender however will be refactored anyway.
+    value = @partitionSelector_el.find("option:selected").data("value")
+    if value.constructor == Array
+      value.map(
+        (v) =>
+          if v.indexOf('[') > - 1
+            v.replace('[', '').replace(']', '')
+          else
+            v
+      )
+    else if typeof value == 'string'
+      if value.indexOf('[') > - 1
+        [value.replace('[', '').replace(']', '')]
+      else
+        [value]
+    else
+      [value]
 
   setDayElement: (date, dayElement, holidays)=>
     available = true
     for model in @models
       availability = model.availability().withoutLines(@reservations, true)
       requiredQuantity = if @quantity_el.val().length
-          parseInt @quantity_el.val() 
-        else 
+          parseInt @quantity_el.val()
+        else
           _.reduce @reservations, (mem, l) ->
             if l.model_id is model.id
-              mem+l.quantity 
+              mem+l.quantity
             else mem
           , 0
       totalQuantity = availability.maxAvailableInTotal(date, date)
       availableQuantity = availability.maxAvailableForGroups date, date, @getGroupIds()
+      console.log('date = ' + new Date(date).toString() + ' total = ' + totalQuantity + ' available = ' + availableQuantity + ' required = ' + requiredQuantity)
+      console.log('group ids = ' + @getGroupIds())
       available = availableQuantity >= requiredQuantity and available
       availableInTotal = totalQuantity >= requiredQuantity and availableInTotal
-      
+
     if @models.length > 1
       @setQuantityText dayElement, (if available then 1 else 0), (if availableInTotal then 1 else 0)
     else

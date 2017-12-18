@@ -1,5 +1,13 @@
 ---
 tasks:
+- name: spec/features/manage/availability_calendar.feature:7
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/availability_calendar.feature:7
 - name: spec/features/manage/case_insensitive_inventory_code.feature:20
   scripts:
     test:
