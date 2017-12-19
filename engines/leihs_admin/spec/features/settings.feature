@@ -35,24 +35,24 @@ Feature: Defining application settings through web interface
        | admin | inventory_manager |
 
     When I go to the settings page
-      And I fill in the "logo_link" with " "
+      And I fill in the "documentation_link" with " "
       And I save the settings
     Then the logo in the footer (in "borrow") has no link
       And the logo in the footer (in "manage") has no link
       And the logo in the footer (in "admin") has no link
 
     When I go to the settings page
-      And I fill in the "logo_link" with "not a valid uri"
+      And I fill in the "documentation_link" with "not a valid uri"
       And I save the settings
-    Then I get an error message "Logo link is not a valid URL"
+    Then I get an error message "Documentation link is not a valid URL"
 
     When I go to the settings page
-      And I fill in the "logo_link" with "gopher://leihs.pizza"
+      And I fill in the "documentation_link" with "gopher://leihs.pizza"
       And I save the settings
-    Then I get an error message "Logo link is not a HTTP(S) URL"
+    Then I get an error message "Documentation link is not a HTTP(S) URL"
 
     When I go to the settings page
-      And I fill in the "logo_link" with "http://ausleihe.example.com/"
+      And I fill in the "documentation_link" with "http://ausleihe.example.com/"
       And I save the settings
     Then I get a message "Successfully set."
       And the logo in the footer (in "borrow") has the link "http://ausleihe.example.com/"

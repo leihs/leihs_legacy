@@ -16,7 +16,7 @@ class Setting < ApplicationRecord
   validates_format_of :default_email,
                       with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
-  validates_each :logo_link, allow_blank: true do |record, attr, value|
+  validates_each :documentation_link, allow_blank: true do |record, attr, value|
     begin
       uri = URI.parse value
     rescue
