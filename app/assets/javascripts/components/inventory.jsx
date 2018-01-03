@@ -48,22 +48,6 @@
       return this.props.create_license_url
     },
 
-    _renderCsvImport() {
-
-      if(!this._isLendingManager()) {
-        return null
-      }
-
-      return (
-        <a className='button white' href={this._csvImportUrl()}>
-          <i className='fa fa-table vertical-align-middle'></i>
-          {this._surround(_jed('CSV import'))}
-        </a>
-      )
-
-    },
-
-
     _renderDropdown() {
 
       if(!this._isLendingManager()) {
@@ -120,7 +104,6 @@
       return (
 
         <div className='text-align-right'>
-          {this._renderCsvImport()}
           <span> </span>
           <div className='dropdown-holder inline-block'>
             <div className='button white dropdown-toggle'>
