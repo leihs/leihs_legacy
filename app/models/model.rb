@@ -114,8 +114,29 @@ class Model < ApplicationRecord
 
   #############################################
 
-  validates_presence_of :product
-  validates_uniqueness_of :version, scope: :product
+  validate do
+    if product.blank?
+      errors.add(:base, _('The model needs a product name.'))
+    else
+      exists = Model.where.not(
+        id: self.id
+      ).where(
+        product: product
+      ).where(
+        version: version
+      ).any?
+
+      if exists
+        if version.blank?
+          errors.add(:base, _('There exists already a model with ' \
+                              'the same product name with empty version.'))
+        else
+          errors.add(:base, _('There exists already a model with ' \
+                              'the same product name and version.'))
+        end
+      end
+    end
+  end
 
   #############################################
 

@@ -3589,6 +3589,18 @@ window.i18n.locale_data = {
          null,
          "Neues Modell erstellen"
       ],
+      "The model needs a product name.": [
+         null,
+         "Das Modell benötigt einen Produkt Namen."
+      ],
+      "There exists already a model with the same product name with empty version.": [
+         null,
+         "Es existiert bereits ein Modell mit demselben Produkt Namen und einer leeren Version."
+      ],
+      "There exists already a model with the same product name and version.": [
+         null,
+         "Es existiert bereits ein Modell mit demselben Produkt Namen und derselben Version. "
+      ],
       "Removed on save": [
          null,
          "Wird beim speichern entfernt"

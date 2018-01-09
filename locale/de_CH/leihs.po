@@ -2776,6 +2776,15 @@ msgstr "Nehmen Sie Änderungen vor und speichern Sie anschliessend"
 msgid "Create new model"
 msgstr "Neues Modell erstellen"
 
+msgid "The model needs a product name."
+msgstr "Das Modell benötigt einen Produkt Namen."
+
+msgid "There exists already a model with the same product name with empty version."
+msgstr "Es existiert bereits ein Modell mit demselben Produkt Namen und einer leeren Version."
+
+msgid "There exists already a model with the same product name and version."
+msgstr "Es existiert bereits ein Modell mit demselben Produkt Namen und derselben Version. "
+
 msgid "Removed on save"
 msgstr "Wird beim speichern entfernt"
 
