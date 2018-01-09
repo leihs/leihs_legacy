@@ -30,64 +30,63 @@
       }
     },
 
+    _transformResult(result) {
+
+      return result.map((entry) => {
+
+        var label = entry.product
+        if(entry.version) {
+          label += ' ' + entry.version
+        }
+
+        return {
+          label: label,
+          id: entry.id
+
+        }
+      })
+    },
+
+    _getField() {
+      return this.props.selectedValue.field
+    },
+
+    _doSearch(term, callback) {
+
+      var dataUrl = this._getField().search_path
+
+      if(term.trim() != '') {
+
+        this.abortAjaxCall()
+
+        this.ajaxCall = $.ajax(
+          {
+            url: dataUrl,
+            data: $.param({
+              format: 'json',
+              search_term: term
+            })
+          }
+        ).done((data) => {
+          callback(this._transformResult(data))
+        })
+
+
+      } else {
+        callback(null)
+      }
+
+
+    },
+
     render () {
       const props = this.props
       const selectedValue = props.selectedValue
 
-
-      var field = selectedValue.field
-
-      var transformResult = (result) => {
-
-        return result.map((entry) => {
-
-          var label = entry.product
-          if(entry.version) {
-            label += ' ' + entry.version
-          }
-
-          return {
-            label: label,
-            id: entry.id
-
-          }
-
-
-        })
-
-      }
-
-      var dataUrl = field.search_path
-
-      var doSearch = (term, callback) => {
-
-        if(term.trim() != '') {
-
-          this.abortAjaxCall()
-
-          this.ajaxCall = $.ajax(
-            {
-              url: dataUrl,
-              data: $.param({
-                format: 'json',
-                search_term: term
-              })
-            }
-          ).done((data) => {
-            callback(transformResult(data))
-          })
-
-
-        } else {
-          callback(null)
-        }
-
-      }
-
       return (
 
-        <FieldAutocomplete label={_jed(field.label)}
-          doSearch={doSearch} onChange={this._onChange}
+        <FieldAutocomplete label={_jed(this._getField().label)}
+          doSearch={this._doSearch} onChange={this._onChange}
           name={this.props.name} initialText={selectedValue.value.text}/>
 
       )

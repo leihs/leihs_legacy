@@ -11,6 +11,8 @@
     propTypes: {
     },
 
+    name: 'FieldAutocomplete',
+
     _onChange(result) {
       if(this.props.onChange) {
         this.props.onChange(result)
@@ -26,7 +28,7 @@
     render () {
       return (
         <div className='col1of2' data-type='value'>
-          <FieldAutocompleteWrapper
+          <BasicAutocomplete
             inputClassName='has-addon width-full ui-autocomplete-input ui-autocomplete-loading'
             element='label'
             inputId={null}

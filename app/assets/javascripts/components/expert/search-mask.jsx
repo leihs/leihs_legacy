@@ -130,7 +130,7 @@
       return (
         <div className='row margin-top-l padding-inset-m separated-bottom' style={{borderBottom: '0px'}}>
           <div className='row'>
-            <FieldSelection
+            <ExpertFieldSelection
               _onSelect={this.props.onSelect}
               fields={this.props.fields}
               selectedValues={this.props.selectedValues}

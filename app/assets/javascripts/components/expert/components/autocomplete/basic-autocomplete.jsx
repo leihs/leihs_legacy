@@ -7,9 +7,11 @@
   const Autocomplete = window.ReactAutocomplete
   React.findDOMNode = ReactDOM.findDOMNode // NOTE: autocomplete lib needs this
 
-  window.FieldAutocompleteWrapper = window.createReactClass({
+  window.BasicAutocomplete = window.createReactClass({
     propTypes: {
     },
+
+    displayName: 'BasicAutocomplete',
 
     getInitialState () {
       return {
@@ -25,7 +27,9 @@
     },
 
     _onFocus() {
-      this._makeCall()
+      if(!this.state.result) {
+        this._makeCall()
+      }
     },
 
     _onSelect(row) {
@@ -45,12 +49,6 @@
         id: row.id
       })
 
-    },
-
-    _onClose() {
-      this.setState({
-        result: null
-      })
     },
 
     _onTerm(term) {
@@ -78,7 +76,7 @@
 
     render () {
       return (
-        <FieldAutocompleteInside
+        <BasicAutocompleteInternals
           inputClassName={this.props.inputClassName}
           element={this.props.element}
           inputId={this.props.inputId}
@@ -89,7 +87,6 @@
           _onFocus={this._onFocus}
           _onTerm={this._onTerm}
           _onSelect={this._onSelect}
-          _onClose={this._onClose}
           name={this.props.name}
         />
       )

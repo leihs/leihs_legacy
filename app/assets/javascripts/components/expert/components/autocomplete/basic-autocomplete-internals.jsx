@@ -7,13 +7,16 @@
   const Autocomplete = window.ReactAutocomplete
   React.findDOMNode = ReactDOM.findDOMNode // NOTE: autocomplete lib needs this
 
-  window.FieldAutocompleteInside = window.createReactClass({
+  window.BasicAutocompleteInternals = window.createReactClass({
     propTypes: {
     },
 
+    displayName: 'BasicAutocompleteInternals',
+
     getInitialState() {
       return {
-        keyIndex: - 1
+        keyIndex: - 1,
+        hideDropdown: false
       }
     },
 
@@ -67,7 +70,7 @@
 
           var row = this.props.result[keyIndex]
 
-          this.reference.blur()
+          this.inputReference.blur()
 
           this.props._onSelect({
             label: _jed(row.label),
@@ -79,6 +82,12 @@
 
     _onFocus(event) {
       this.props._onFocus()
+      this.setState({hideDropdown: false})
+    },
+
+    _onClick(event) {
+      this.props._onFocus()
+      this.setState({hideDropdown: false})
     },
 
     _onChange(event) {
@@ -95,15 +104,16 @@
     },
 
     _handleClickOutside(event) {
-      if (this.ulReference && !this.ulReference.contains(event.target)) {
-        this.props._onClose()
+      if (this.ulReference && !this.ulReference.contains(event.target)
+        && this.inputReference && !this.inputReference.contains(event.target)) {
+        this.setState({hideDropdown: true})
       }
     },
 
     _onSelect (event, row) {
       event.preventDefault()
 
-      this.reference.blur()
+      this.inputReference.blur()
 
       this.props._onSelect({
         label: _jed(row.label),
@@ -135,7 +145,7 @@
     _ul () {
 
 
-      if(this.props.result.length == 0) {
+      if(this.props.result.length == 0 || this.state.hideDropdown) {
         return null
       }
 
@@ -173,8 +183,9 @@
             autoComplete='off'
             className={this.props.inputClassName}
             id={this.props.inputId}
-            ref={(ref) => this.reference = ref}
+            ref={(ref) => this.inputReference = ref}
             onChange={this._onChange} value={this.props.term}
+            onClick={this._onClick}
             onFocus={this._onFocus}
             onKeyDown={this._onKeyPress}
             placeholder={label} title={label} type='text'

@@ -6,9 +6,11 @@
   const ReactDOM = window.ReactDOM
   React.findDOMNode = ReactDOM.findDOMNode // NOTE: autocomplete lib needs this
 
-  window.FieldSelection = window.createReactClass({
+  window.ExpertFieldSelection = window.createReactClass({
     propTypes: {
     },
+
+    displayName: 'ExpertFieldSelection',
 
     _onChange(result) {
       if(!result.id) {
@@ -33,7 +35,7 @@
       return (
         <div className='col1of3'>
           <label className='row margin-bottom-xxs'>Feld auswählen</label>
-          <FieldAutocompleteWrapper
+          <BasicAutocomplete
             inputClassName='has-addon width-full ui-autocomplete-input'
             element='div'
             inputId='field-input'
