@@ -135,10 +135,33 @@
           klass += ' striked'
         }
 
+        var isImage = (fileModel) => {
+          return fileModel.content_type && fileModel.content_type.indexOf('image') == 0
+        }
+
+        var filenameClass = 'line-col col7of10 text-align-left'
+        if(isImage(fileModel)) {
+          filenameClass = 'line-col col6of10 text-align-left'
+        }
+
+        var renderImage = (fileModel) => {
+          if(!isImage(fileModel)) {
+            return null
+          }
+          return (
+            <div className='line-col col1of10 text-align-center'>
+              <a href={fileModel.public_filename} target='_blank'>
+                <img className='max-height-xxs max-width-xxs' src={fileModel.public_filename} />
+              </a>
+            </div>
+          )
+        }
+
         return (
           <div key={'key_' + index} className={klass} data-new='' data-type='inline-entry'>
             {this._renderDeleteIcon(fileModel)}
-            <div className='line-col col7of10 text-align-left'>
+            {renderImage(fileModel)}
+            <div className={filenameClass}>
               {this._renderFilename(fileModel)}
             </div>
             <div className='line-col col3of10 text-align-right'>

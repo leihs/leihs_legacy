@@ -213,7 +213,8 @@ window.CreateItemFieldSwitch = {
             id: a.id,
             public_filename: a.public_filename,
             filename: a.filename,
-            delete: false
+            delete: false,
+            content_type: a.content_type
           }
         })
         return {fileModels: fileModels}

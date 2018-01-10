@@ -256,7 +256,8 @@ class Manage::ItemsController < Manage::ApplicationController
       {
         id: attachment.id,
         filename: attachment.filename,
-        public_filename: get_attachment_path(attachment.id)
+        public_filename: get_attachment_path(attachment.id),
+        content_type: attachment.content_type
       }
     end
 
