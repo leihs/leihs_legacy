@@ -242,6 +242,7 @@ class Contract < ApplicationRecord
           .or(Option.arel_table[:version].matches(qq))
           .or(Item.arel_table[:inventory_code].matches(qq))
           .or(Order.arel_table[:purpose].matches(qq))
+          .or(Contract.arel_table[:purpose].matches(qq))
       )
     end
     sql
