@@ -6,7 +6,7 @@ Then /^I can change the borrower for all the reservations I've selected$/ do
   find('a', text: _('Change Borrower')).click
   find('.modal')
   @line_ids = @linegroup.all('.line').map {|l| l[:'data-id'] }
-  @new_user = @current_inventory_pool.users.detect {|u| u.id != @customer.id and u.visits.where.not(status: :submitted).exists? }
+  @new_user = @current_inventory_pool.users.detect {|u| u.id != @customer.id and u.visits.where(is_approved: true).exists? }
   find('input#user-id').set @new_user.name
   find('.ui-menu-item a', visible: true, text: @new_user.name).click
   find(".modal .button[type='submit']").click

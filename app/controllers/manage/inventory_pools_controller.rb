@@ -88,7 +88,7 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
         .visits
         .includes(:user)
         .where('date <= ?', today_and_next_4_days.last)
-        .group_by { |x| [x.action, x.date] }
+        .group_by { |x| [x.type.to_sym, x.date] }
 
     chart_data = today_and_next_4_days.map do |day|
       day_name = (day == Time.zone.today) ? _('Today') : l(day, format: '%a %d.%m')
@@ -121,8 +121,7 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
     visit = \
       current_inventory_pool
       .visits
-      .having("#{Visit::VISIT_ID_SQL_EXPR} = ?", params[:visit_id])
-      .first
+      .find(params[:visit_id])
 
     @notifications = \
       user.notifications.where('created_at >= ?', visit.date).limit(10)

@@ -25,8 +25,7 @@ class Manage::VisitsController < Manage::ApplicationController
       current_inventory_pool
       .visits
       .hand_over
-      .having("#{Visit::VISIT_ID_SQL_EXPR} = ?", params[:visit_id])
-      .first
+      .find_by_id(params[:visit_id])
 
     unless visit.blank?
       ActiveRecord::Base.transaction do
@@ -41,8 +40,7 @@ class Manage::VisitsController < Manage::ApplicationController
       current_inventory_pool
       .visits
       .take_back
-      .having("#{Visit::VISIT_ID_SQL_EXPR} = ?", params[:visit_id])
-      .first
+      .find(params[:visit_id])
 
     # TODO: dry with User.remind_and_suspend_all
     grouped_reservations = visit.reservations.group_by do |vl|

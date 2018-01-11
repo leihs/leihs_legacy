@@ -303,7 +303,7 @@ Given(/^(orders|contracts|visits) exist$/) do |arg1|
                  when 'contracts'
                    @current_inventory_pool.contracts
                  when 'visits'
-                   @current_inventory_pool.visits.where.not(status: :submitted)
+                   @current_inventory_pool.visits.where(is_approved: true)
                  else
                    raise
                end
@@ -344,7 +344,7 @@ When(/^I search( globally)? for (an order|a contract|a visit)( with its purpose)
   elsif arg1 == 'an order'
     @contract = @current_inventory_pool.orders.joins(:reservations).with_some_line_not_in_any_contract.first
   elsif arg1 == 'a visit'
-    @contract = @current_inventory_pool.visits.where(status: ['approved', 'signed']).first
+    @contract = @current_inventory_pool.visits.where(is_approved: true).first
   end
   @search_term = if arg2
                    @contract.purpose.split.sample.gsub(/^\W*/, '').gsub(/\W*$/, '')

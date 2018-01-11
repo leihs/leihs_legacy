@@ -119,7 +119,7 @@ end
 
 Then(/^the contract line was duplicated$/) do
   expect(
-    (@line.contract || @contract || @order || @hand_over)
+   (@line.contract || @contract || @order || @hand_over.reload)
     .reservations.where(model_id: @line.model_id).to_a.sum(&:quantity)
   ).to eq @total_quantity + 1
 end

@@ -2,7 +2,7 @@
 
 Then(/^I can change who placed this order$/) do
   old_user = @contract.user
-  new_user = @current_inventory_pool.users.detect {|u| u.id != old_user.id and u.visits.where.not(status: :submitted).exists? }
+  new_user = @current_inventory_pool.users.detect {|u| u.id != old_user.id and u.visits.where(is_approved: true).exists? }
   find('#swap-user').click
   within '.modal' do
     find('input#user-id', match: :first).set new_user.name
