@@ -1736,14 +1736,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:110
-- name: features/manage/inventory/model.feature:121
+- name: features/manage/inventory/model.feature:122
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:121
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:122
 - name: features/manage/inventory/model.feature:131
   scripts:
     test:

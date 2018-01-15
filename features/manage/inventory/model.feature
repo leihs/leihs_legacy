@@ -107,11 +107,12 @@ Feature: Model
     Then the information is saved
     And the data has been updated
 
-  Scenario Outline: Create attachments
-    Given I add or edit a <object>
-    Then I add one or more attachments
-    And I can also remove attachments again
-    And I save
+  Scenario Outline: Add Models and Software including attachments
+    Given I add a <object> to the inventory
+    When I enter the product name "Test Thingie With Attachment"
+      And I add one or more attachments
+      And I can also remove attachments again
+      And I save
     Then the attachments are saved
   Examples:
     | object   |
@@ -126,7 +127,6 @@ Feature: Model
     | contract   |
     | order      |
     | item       |
-
 
   Scenario: Create a model with only a name
     When I add a new Model

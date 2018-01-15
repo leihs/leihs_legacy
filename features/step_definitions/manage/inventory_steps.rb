@@ -365,24 +365,26 @@ Then(/^the lines contain the following fields in order:$/) do |table|
 end
 
 When(/^I add a new (.+)/) do |entity|
+  @klass = case _(entity)
+          when 'model' then Model
+          when 'software' then Software
+          end
   find('.dropdown-holder', text: _('Add inventory')).click
   click_link entity
 end
 
-#Given(/^ich add a new (?:.+) or I change an existing (.+)$/) do |entity|
-When(/^I add or edit a (.+)/) do |entity|
-  klass = case _(entity)
+When(/^I add a (model|software) to the inventory/) do |entity|
+  @klass = case _(entity)
           when 'model' then Model
           when 'software' then Software
           end
-  @model = klass.all.first
-  visit manage_edit_model_path(@current_inventory_pool, @model)
+  visit manage_new_model_path(@current_inventory_pool, type: @klass)
 end
 
 
 When /^I (?:enter|edit)? ?the following details$/ do |table|
   # table is a Cucumber::Ast::Table
-  find('.button.green', text: _('Save %s') % _("#{get_rails_model_name_from_url.capitalize}"))
+  find('.button.green', text: _('Save'))
   @table_hashes = table.hashes
   @table_hashes.each do |row|
     find('.field .row', match: :prefer_exact, text: row['Field']).find(:xpath, './/input | .//textarea').set row['Value']
@@ -602,12 +604,21 @@ Then /^I add one or more attachments$/ do
   end
 end
 
+Then /^I enter the product name "([^"]*)"$/ do |name|
+  @product_name = name
+  step 'I enter the following details', table(%{
+    | Field   | Value   |
+    | Product | #{name} |
+  })
+end
+
 Then /^I can also remove attachments again$/ do
   attachment_to_remove = @attachment_filenames.delete(@attachment_filenames.sample)
   find('.row.emboss', match: :prefer_exact, text: _('Attachments')).find("[data-type='inline-entry']", text: attachment_to_remove).find('button[data-remove]', match: :first).click
 end
 
 Then /^the attachments are saved$/ do
+  wait_until { @model = @klass.find_by(product: @product_name) }
   find('#inventory-index-view h1', match: :prefer_exact, text: _('List of Inventory'))
   find('#inventory .row', match: :first)
   expect(@model.attachments.reload.where(filename: @attachment_filenames.sample).empty?).to be false

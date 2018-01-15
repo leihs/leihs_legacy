@@ -6,4 +6,6 @@ class window.App.ModelsNewController extends App.ModelsEditController
       @model.id = data.id
       do @updateUploadURL
 
-  updateUploadURL: => @imagesController.url = @model.url("upload/image")
+  updateUploadURL: =>
+    @imagesController.url = @model.url("upload/image")
+    @attachmentsController.url = @model.url("upload/attachment")
