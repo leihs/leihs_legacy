@@ -2779,10 +2779,10 @@ msgstr "Neues Modell erstellen"
 msgid "The model needs a product name."
 msgstr "Das Modell benötigt einen Produkt Namen."
 
-msgid "There exists already a model with the same product name with empty version."
+msgid "A model with the same product name and empty version already exists."
 msgstr "Es existiert bereits ein Modell mit demselben Produkt Namen und einer leeren Version."
 
-msgid "There exists already a model with the same product name and version."
+msgid "A model with the same product name and version already exists."
 msgstr "Es existiert bereits ein Modell mit demselben Produkt Namen und derselben Version. "
 
 msgid "Removed on save"

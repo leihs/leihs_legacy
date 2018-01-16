@@ -3593,11 +3593,11 @@ window.i18n.locale_data = {
          null,
          "Das Modell benötigt einen Produkt Namen."
       ],
-      "There exists already a model with the same product name with empty version.": [
+      "A model with the same product name and empty version already exists.": [
          null,
          "Es existiert bereits ein Modell mit demselben Produkt Namen und einer leeren Version."
       ],
-      "There exists already a model with the same product name and version.": [
+      "A model with the same product name and version already exists.": [
          null,
          "Es existiert bereits ein Modell mit demselben Produkt Namen und derselben Version. "
       ],

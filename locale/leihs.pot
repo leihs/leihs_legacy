@@ -2714,10 +2714,10 @@ msgstr ""
 msgid "The model needs a product name."
 msgstr ""
 
-msgid "There exists already a model with the same product name with empty version."
+msgid "A model with the same product name and empty version already exists."
 msgstr ""
 
-msgid "There exists already a model with the same product name and version."
+msgid "A model with the same product name and version already exists."
 msgstr ""
 
 msgid "Removed on save"
