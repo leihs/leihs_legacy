@@ -450,6 +450,7 @@ GEM
     rgl (0.4.0)
       rake
       stream (>= 0.5)
+    rinku (2.0.4)
     roodi (3.3.1)
       ruby_parser (~> 3.2, >= 3.2.2)
     rspec (3.6.0)
@@ -630,6 +631,7 @@ DEPENDENCIES
   react-rails
   relish
   rgl (~> 0.4.0)
+  rinku (~> 2.0.4)
   rspec-rails (~> 3.6)
   rubocop (= 0.49.0)
   ruby_parser (~> 3.1)
