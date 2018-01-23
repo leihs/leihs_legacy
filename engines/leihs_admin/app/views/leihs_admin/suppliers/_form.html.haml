@@ -1,3 +1,5 @@
+- return if current_inventory_pool # NOTE: don't know if important, but was in the form before
+
 .row
   .col-sm-6
     %h1= @supplier.name || _("Create %s") % _("Supplier")
@@ -6,31 +8,25 @@
     = link_to _('Cancel'), :back, class: 'btn btn-default'
     %button.btn.btn-success{:type => :submit}= _("Save")
 
-.row
+.row.form-horizontal
 
   .col-sm-6
 
     %h2= _("Basic Information")
 
-    .row
+    .form-group
       .col-sm-4
         %strong= "#{_("Name")} *"
-      .col-sm-8.text-right
-        - if current_inventory_pool
-          %h2= @supplier.name
-        - else
-          %input.form-control{type: "text", name: "supplier[name]", value: @supplier.name}
+      .col-sm-8
+        %input.form-control{type: "text", name: "supplier[name]", value: @supplier.name}
+
+    .form-group
+      .col-sm-4
+        %strong= _("Note")
+      .col-sm-8
+        %textarea.form-control{type: "text", rows: 20, name: "supplier[note]"}
+          = @supplier.note
 
   .col-sm-6
 
-    - if @items
-      %h2= _("Items")
-
-      - @items.each do |i|
-        .row
-          .col-sm-8
-            = i.inventory_code
-            %br
-            = i.model
-          .col-sm-4
-            = i.inventory_pool
+    = render partial: "items_from_pools"

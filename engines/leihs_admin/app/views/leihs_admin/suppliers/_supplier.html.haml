@@ -1,12 +1,19 @@
+- show_link = admin.supplier_path(supplier)
+
 .row
 
   .col-sm-6
-    %strong= supplier.name
+    %a.link-unstyled{href: show_link}
+      %strong= supplier.name
 
   .col-sm-4
-    = _("%s items") % supplier.items.count
+    %a.link-unstyled{href: show_link}
+      = _("%s items") % supplier.items.count
 
   .col-sm-2.text-right.line-actions
+
+    %a.btn.btn-default{href: show_link}
+      = _("Details")
 
     - if supplier.can_destroy?
       .btn-group

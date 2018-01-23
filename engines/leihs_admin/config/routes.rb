@@ -8,7 +8,7 @@ LeihsAdmin::Engine.routes.draw do
   resources :locations,       only: :destroy
   resources :rooms,           except: :show
   resources :statistics,      only: [:index, :show]
-  resources :suppliers,       except: :show
+  resources :suppliers,       except: []
   resources :users,           except: :show
 
   # Audits

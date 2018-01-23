@@ -14,9 +14,14 @@ class Supplier < ApplicationRecord
     name
   end
 
-  def self.filter(params)
-    suppliers = search(params[:search_term]).order(:name)
-    suppliers = suppliers.where(id: params[:ids]) if params[:ids]
+  def self.filter(search_term: nil, pool_id: nil)
+    suppliers = search(search_term).order(:name)
+    if pool_id.present?
+      suppliers = suppliers.joins(:items)
+        .where('items.inventory_pool_id': pool_id).distinct
+    end
+    # FIXME: not used?
+    # suppliers = suppliers.where(id: params[:ids]) if params[:ids]
     suppliers
   end
 

@@ -1,12 +1,16 @@
 module LeihsAdmin
   class SuppliersController < AdminController
 
-    before_action only: [:edit, :update, :destroy] do
+    before_action only: [:show, :edit, :update, :destroy] do
       @supplier = Supplier.find(params[:id])
     end
 
     def index
-      @suppliers = Supplier.filter(params)
+      filters = params.permit(:search_term, :pool_id)
+      @suppliers = Supplier.filter(**filters.to_h.symbolize_keys)
+      @suppliers_total_count = Supplier.all.count
+      @pools_with_suppliers = InventoryPool.joins(:items)
+        .where.not('items.supplier_id': nil).distinct.order(:name)
     end
 
     def new
@@ -24,16 +28,19 @@ module LeihsAdmin
       end
     end
 
-    def edit
+    def show
       @items = \
         @supplier \
           .items
-          .order(:inventory_pool_id)
           .includes(:model, :inventory_pool)
+          .group_by(&:inventory_pool)
     end
 
+    alias edit show
+
     def update
-      if @supplier.update_attributes params[:supplier]
+      attrs = params.require(:supplier).permit(:name, :note)
+      if @supplier.update_attributes(attrs)
         flash[:notice] = _('Supplier successfully updated')
         redirect_to action: :index
       else

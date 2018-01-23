@@ -4,7 +4,13 @@
 .row
 
   .col-sm-6
-    %h1= yield :title
+    %h1
+      = yield :title
+      %small
+        - if (cur_count = @suppliers.count) == @suppliers_total_count
+          = @suppliers_total_count
+        - else
+          = "#{cur_count} / #{@suppliers_total_count}"
 
   .col-sm-6.text-right
     %a.btn.btn-default{href: admin.new_supplier_path}
@@ -14,7 +20,10 @@
 %form.row.well
   .col-sm-4
     %input.form-control{type: 'text', name: 'search_term', value: params[:search_term], placeholder: _("Search..."), autocomplete: :false, autofocus: true, onfocus: "this.value = this.value;"}
-  .col-sm-8
+  .col-sm-4
+    = select_tag "pool_id", options_from_collection_for_select(@pools_with_suppliers, "id", "name", params[:pool_id]),
+      class: 'form-control', prompt: "- #{_('Filter by Pool')} - "
+  .col-sm-2
     %button.btn.btn-default{type: :submit}
       %i.fa.fa-search
       = _('Search')
