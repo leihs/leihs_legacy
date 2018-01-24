@@ -89,27 +89,27 @@
         = format('%s %s', _('Item price'), MoneyRails.default_currency)
         %span.small= _('incl. VAT')
       .col-xs-4
-        %input.form-control{name: "requests[new_#{i}][price]", type: :number, min: 0, placeholder: format('%s %s', _('Item price'), _('incl. VAT')), autocomplete: :off}
+        %input.form-control{name: "requests[new_#{i}][price]", type: :number, min: 0, step: 1, 'data-customValidity': _('Only enter whole numbers'), placeholder: format('%s %s', _('Item price'), _('incl. VAT')), autocomplete: :off}
       .col-xs-4
     .form-group
       %label.col-xs-4.control-label
         = _('Requested quantity')
       .col-xs-4
-        %input.form-control{name: "requests[new_#{i}][requested_quantity]", type: :number, min: 1, placeholder: _('Requested quantity'), autocomplete: :off, data: {to_be_required: true}}
+        %input.form-control{name: "requests[new_#{i}][requested_quantity]", type: :number, min: 0, step: 1, 'data-customValidity': _('Only enter whole numbers'), placeholder: _('Requested quantity'), autocomplete: :off, data: {to_be_required: true}}
       .col-xs-4
     - if @category.inspectable_by? current_user
       .form-group
         %label.col-xs-4.control-label
           = _('Approved quantity')
         .col-xs-4
-          %input.form-control{name: "requests[new_#{i}][approved_quantity]", type: :number, min: 0, placeholder: _('Approved quantity'), autocomplete: :off}
+          %input.form-control{name: "requests[new_#{i}][approved_quantity]", type: :number, min: 0, step: 1, 'data-customValidity': _('Only enter whole numbers'), placeholder: _('Approved quantity'), autocomplete: :off}
         .col-xs-4
     - if @category.inspectable_by? current_user
       .form-group
         %label.col-xs-4.control-label
           = _('Order quantity')
         .col-xs-4
-          %input.form-control{name: "requests[new_#{i}][order_quantity]", type: :number, min: 0, placeholder: _('Order quantity'), autocomplete: :off}
+          %input.form-control{name: "requests[new_#{i}][order_quantity]", type: :number, min: 0, step: 1, 'data-customValidity': _('Only enter whole numbers'), placeholder: _('Order quantity'), autocomplete: :off}
         .col-xs-4
     .form-group
       %label.col-xs-4.control-label

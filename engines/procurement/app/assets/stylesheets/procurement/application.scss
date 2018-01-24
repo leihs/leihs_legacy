@@ -59,9 +59,11 @@ div[data-toggle] {
   cursor: pointer;
 }
 
-*[required]:invalid {
-  background-color: #f2dede !important;
-  border: 1px solid #F37373;
+input, textarea, select {
+  &:invalid {
+    background-color: #f2dede !important;
+    border: 1px solid #F37373;
+  }
 }
 
 input[type='radio']:invalid + .label {

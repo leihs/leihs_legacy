@@ -1,5 +1,6 @@
 RequestEditFormBehaviour =
-  requireInspectionCommentIfQuantityDecreased: ->
+  formValidations: ->
+    # requireInspectionCommentIfQuantityDecreased
     $("input[name*='[approved_quantity]']").on 'change', ->
       parent_el = $(this).closest('.request')
       inspection_comment_el = parent_el.find("textarea[name*='[inspection_comment]']")
@@ -19,6 +20,15 @@ RequestEditFormBehaviour =
         inspection_comment_el.attr('required', 'true')
       else
         inspection_comment_el.removeAttr('required')
+
+    # form constraint validation additions
+    $('input[type="number"][step="1"][data-customValidity]').each(->
+      $elm = $(this)
+      $elm.on('input', ->
+        $elm[0]?.setCustomValidity?("") # reset first or it will seem invalid!
+        if $elm.is(':invalid') then $elm[0]?.setCustomValidity?($elm.data('customvalidity'))
+      )
+    )
 
   autocompleteInputs: ->
 

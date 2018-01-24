@@ -149,7 +149,7 @@
         %span.small= _('incl. VAT')
       .col-xs-4
         - if request_editable and not_from_template_or_category_inspector
-          %input.form-control{name: "requests[#{request.id}][price]", type: :number, min: 0, value: request.price.to_i, placeholder: format('%s %s', _('Item price'), _('incl. VAT')), autocomplete: :off}
+          %input.form-control{name: "requests[#{request.id}][price]", type: :number, min: 0, step: 1, 'data-customValidity': _('Only enter whole numbers'), value: request.price.to_i, placeholder: format('%s %s', _('Item price'), _('incl. VAT')), autocomplete: :off}
         - else
           .label.label-custom
             = money_without_cents_and_with_symbol request.price
@@ -160,7 +160,7 @@
         = _('Requested quantity')
       .col-xs-4
         - if request_editable and is_requester_or_category_inspector
-          %input.form-control{name: "requests[#{request.id}][requested_quantity]", type: :number, min: 1, value: request.requested_quantity, placeholder: _('Requested quantity'), autocomplete: :off, required: true}
+          %input.form-control{name: "requests[#{request.id}][requested_quantity]", type: :number, min: 1, step: 1, 'data-customValidity': _('Only enter whole numbers'), value: request.requested_quantity, placeholder: _('Requested quantity'), autocomplete: :off, required: true}
         - else
           .label.label-primary.requested_quantity
             = request.requested_quantity
@@ -172,7 +172,7 @@
           = _('Approved quantity')
         .col-xs-4
           - if request_is_current and is_category_inspector
-            %input.form-control{name: "requests[#{request.id}][approved_quantity]", type: :number, min: 0, value: request.approved_quantity, placeholder: _('Approved quantity'), autocomplete: :off}
+            %input.form-control{name: "requests[#{request.id}][approved_quantity]", type: :number, min: 0, step: 1, 'data-customValidity': _('Only enter whole numbers'), value: request.approved_quantity, placeholder: _('Approved quantity'), autocomplete: :off}
           - elsif request.approved_quantity
             - if is_admin or is_inspector or (is_requester and request.budget_period.past?)
               :ruby
@@ -187,7 +187,7 @@
           = _('Order quantity')
         .col-xs-4
           - if request_is_current and is_category_inspector
-            %input.form-control{name: "requests[#{request.id}][order_quantity]", type: :number, min: 0, value: request.order_quantity, placeholder: _('Order quantity'), autocomplete: :off}
+            %input.form-control{name: "requests[#{request.id}][order_quantity]", type: :number, min: 0, step: 1, 'data-customValidity': _('Only enter whole numbers'), value: request.order_quantity, placeholder: _('Order quantity'), autocomplete: :off}
           - elsif is_admin or is_inspector
             .label{class: label_class}
               = request.order_quantity
