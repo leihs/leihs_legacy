@@ -1,20 +1,32 @@
-.panel-group
+- has_any_sub_templates = categories.map(&:templates).flatten.any? # if so, needs more spacing
+%div{class: has_any_sub_templates ? '' : 'panel-group'}
+
   - categories.each do |category|
+    - cat_link = category_budget_period_user_requests_path(category, @budget_period, @user, request_id: 'new_request')
     .panel.panel-default
-      .panel-heading
-        = category.name
-        %a{href: category_budget_period_user_requests_path(category, @budget_period, @user, request_id: 'new_request')}
-          %i.fa.fa-plus-circle
-        -#%span.badge.pull-right
-          = category.templates.count
-      .list-group
-        - category.templates.each do |template|
-          :ruby
-            link = category_budget_period_user_requests_path(category,
-                                                             @budget_period,
-                                                             @user,
-                                                             template_id: template.id)
-          %a.list-group-item.show_template{href: link, data: {template_id: template.id}}
-            = template
-            .label.label-custom.pull-right
-              = money_without_cents_and_with_symbol template.price
+
+      -# if there are no templates, show as a single list-group-items
+      - if category.templates.empty?
+        .list-group
+          %a.link-unstyled.list-group-item.hook_category-header{href: cat_link}
+            %i.list-group-item-icon.fa.fa-plus-circle
+            = category.name
+
+        -# if there are templates, show first level as header and rest as list-group-items
+      - else
+        %a.link-unstyled.panel-heading.hook_category-header{href: cat_link, style: 'display: block'}
+          %i.fa.fa-plus-circle{style: 'padding-right: 15px'}
+          = category.name
+
+        .list-group
+          - category.templates.each do |template|
+            :ruby
+              link = category_budget_period_user_requests_path(category,
+                                                               @budget_period,
+                                                               @user,
+                                                               template_id: template.id)
+            %a.list-group-item.show_template{href: link, data: {template_id: template.id}}
+              %i.list-group-item-icon.fa.fa-plus-circle
+              = template
+              .label.label-custom.pull-right
+                = money_without_cents_and_with_symbol template.price

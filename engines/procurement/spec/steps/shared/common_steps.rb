@@ -183,7 +183,7 @@ module CommonSteps
   step 'I press on the plus icon of one of its sub categories' do
     @category = @main_category.categories.first
     within '.panel-info', text: @main_category.name do
-      within '.panel-default .panel-heading', text: @category.name do
+      within '.hook_category-header', text: @category.name do
         find('i.fa-plus-circle').click
       end
     end

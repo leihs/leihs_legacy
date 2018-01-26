@@ -99,7 +99,7 @@ Feature: section Managing Requests
       | Barbara  |
       # | Roger    |
 
-  @managing_requests @flapping
+  @managing_requests
   Scenario Outline: Creating a request through a budget period selecting a template article
     Given I am <username>
     And several categories exist
@@ -116,7 +116,6 @@ Feature: section Managing Requests
     And I don't see main categories not having sub categories
     When I press on a main category having sub categories
     Then I see the sub categories of this main category
-    When I press on a sub category
     Then I see all template articles of this category
     When I choose a template article
     Then I am navigated to the request form highlighting the template
@@ -127,7 +126,7 @@ Feature: section Managing Requests
     Examples:
       | username |
       | Barbara  |
-      | Roger    |
+      # | Roger    |
 
   @managing_requests @flapping
   Scenario Outline: Creating a request through a budget period selecting a sub category

@@ -146,3 +146,17 @@ a.toggler {
   font-size: 40px;
   vertical-align: middle;
 }
+
+.link-unstyled {
+  color: inherit;
+  &:hover,
+  &:focus {
+    text-decoration: inherit;
+  }
+}
+
+.list-group-item-icon {
+  padding-right: 10px;
+  font-size: 1.34em;
+  vertical-align: middle;
+}

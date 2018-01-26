@@ -295,10 +295,10 @@ steps_for :managing_requests do
     visit_request @request
   end
 
-  step 'I press on a sub category' do
-    @category = @main_category.categories.sample
-    find('.panel-heading', text: @category.name).click
-  end
+  # step 'I press on a sub category' do
+  #   @category = @main_category.categories.sample
+  #   find('.panel-heading', text: @category.name).click
+  # end
 
   step 'I see the sub categories of this main category' do
     @main_category.categories.each do |category|
@@ -339,16 +339,14 @@ steps_for :managing_requests do
   end
 
   step 'I see the picture of the main category' do
-    selector, name = if has_selector? '.panel .row.main_category'
-                       ['.panel .row.main_category',
-                        @main_category.name]
-                     elsif has_selector? '.panel-info > .panel-heading.collapsed'
-                       ['.panel-info > .panel-heading.collapsed',
-                        @main_category.name]
-                     else
-                       ['.panel .panel-heading .col-xs-4',
-                        @category.name]
-                     end
+    selector, name = \
+      if has_selector?('.panel .row.main_category', wait: false)
+        ['.panel .row.main_category', @main_category.name]
+      elsif has_selector?('.panel-info > .panel-heading.collapsed', wait: false)
+       ['.panel-info > .panel-heading.collapsed', @main_category.name]
+      else
+       ['.panel .panel-heading .col-xs-4', @category.name]
+      end
     within selector, text: name do
       path = procurement.get_image_path(@main_category.image.thumbnail.id)
       find "img[src*='#{path}']"
