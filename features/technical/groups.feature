@@ -36,7 +36,7 @@ Feature: Implement new Group feature
                 Then 0 items of that model should be available to "Tomáš"
 
 
-        Scenario: Lend from specific groups and return to the general pool
+        Scenario: Quantity entitled to a specific group has always precedence over general group
                 Given a model 'Olympus PEN E-P2' exists
                   And a customer "Mongo Bill"
                   And a group 'CAST'
@@ -52,4 +52,4 @@ Feature: Implement new Group feature
                 Then 0 items of that model should be available to "Mongo Bill"
 
                 When "Tomáš" returns the item
-                Then one item of that model should be available to "Mongo Bill"
+                Then 0 items of that model should be available to "Mongo Bill"

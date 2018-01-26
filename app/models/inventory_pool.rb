@@ -94,34 +94,47 @@ class InventoryPool < ApplicationRecord
 
   #######################################################################
 
-  # we don't recalculate the past
-  # if an item is already assigned, we block the availability
-  # even if the start_date is in the future
-  # if an item is already assigned but not handed over,
-  # it's never considered as late even if end_date is in the past
-  # we ignore the option_lines
-  # we get all reservations which are not rejected or closed
-  # we ignore reservations that are not handed over
-  # which the end_date is already in the past
-  # we consider even unsubmitted reservations,
-  # but not the already timed out ones
-  has_many(:running_reservations,
-           (lambda do
-              select('id, inventory_pool_id, model_id, item_id, quantity, ' \
-                     'start_date, end_date, returned_date, status, ' \
-                     'string_agg( ' \
-                     "entitlement_groups_users.entitlement_group_id::text, ',') " \
-                     'AS concat_group_ids')
-                .joins('LEFT JOIN entitlement_groups_users ' \
-                     'ON entitlement_groups_users.user_id = reservations.user_id')
-                .where.not(status: [:rejected, :closed])
-                .where.not("status = '#{:unsubmitted}' " \
-                           'AND updated_at < ' \
-                           "'#{Time.now.utc - Setting.timeout_minutes.minutes}'")
-                .where.not("end_date < '#{Time.zone.today}' AND item_id IS NULL")
-                .group(:id)
-           end),
-           class_name: 'ItemLine')
+  # - we don't recalculate the past
+  # - if an item is already assigned, we block the availability
+  #   even if the start_date is in the future (NOTE: really ???)
+  # - if an item is already assigned but not handed over,
+  #   it's never considered as late even if end_date is in the past
+  # - we ignore the option_lines
+  # - we get all reservations which are not rejected or closed
+  # - we ignore reservations that are not handed over which the end_date is
+  #   already in the past
+  # - we consider even unsubmitted reservations, but not the already timed out ones
+  has_many :running_reservations, (lambda do
+   select(<<-SQL)
+     id,
+     inventory_pool_id,
+     model_id,
+     item_id,
+     quantity,
+     start_date,
+     end_date,
+     returned_date,
+     status,
+     string_agg(entitlement_groups_users.entitlement_group_id::text,
+                ',') AS concat_group_ids
+    SQL
+     .joins(<<-SQL)
+       LEFT JOIN entitlement_groups_users
+       ON entitlement_groups_users.user_id = reservations.user_id
+     SQL
+     .where(<<-SQL)
+       status NOT IN ('rejected', 'closed')
+       AND NOT (
+         status = 'unsubmitted' AND
+         updated_at < '#{Time.now.utc - Setting.timeout_minutes.minutes}'
+       )
+       AND NOT (
+         end_date < '#{Time.zone.today}' AND
+         item_id IS NULL
+       )
+     SQL
+     .group(:id)
+  end), class_name: 'ItemLine'
 
   #######################################################################
 

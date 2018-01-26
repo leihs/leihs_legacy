@@ -448,14 +448,14 @@ class Model < ApplicationRecord
 
   def total_borrowable_items_for_user(user,
                                       inventory_pool = nil,
-                                      sanitize_negative_general_quantity: false)
+                                      ensure_non_negative_general: false)
     groups = user.entitlement_groups.with_general
     if inventory_pool
       Entitlement.hash_with_generals(inventory_pool,
                                      self,
                                      groups,
-                                     sanitize_negative_general_quantity: \
-                                       sanitize_negative_general_quantity)
+                                     ensure_non_negative_general: \
+                                       ensure_non_negative_general)
         .values
         .sum
     else
@@ -465,8 +465,8 @@ class Model < ApplicationRecord
           Entitlement.hash_with_generals(ip,
                                          self,
                                          groups,
-                                         sanitize_negative_general_quantity: \
-                                           sanitize_negative_general_quantity)
+                                         ensure_non_negative_general: \
+                                           ensure_non_negative_general)
             .values
             .sum
         end

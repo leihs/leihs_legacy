@@ -20,36 +20,47 @@ class Entitlement < ApplicationRecord
   def self.hash_with_generals(inventory_pool,
                               model,
                               entitlement_groups = nil,
-                              sanitize_negative_general_quantity: false)
-    # NOTE: `sanitize_negative_general_quantity` is necessary for the borrow
+                              ensure_non_negative_general: false)
+    # NOTE: `ensure_non_negative_general` is necessary for the borrow
     # booking calendar. Negative quantity makes no sense there and leads to buggy
     # behaviour. How does the negative value come to existence and if it is a
     # desired feature remains questionable.
-    a = with_generals(model_ids: [model.id], inventory_pool_id: inventory_pool.id)
+    entitlements = with_generals(model_ids: [model.id],
+                                 inventory_pool_id: inventory_pool.id)
+
     if entitlement_groups
-      entitlement_group_ids = entitlement_groups.map { |x| x.try(:id) }
-      a = a.select { |p| entitlement_group_ids.include? p.entitlement_group_id }
+      entitlement_group_ids = entitlement_groups.map { |eg| eg.try(:id) }
+      entitlements = entitlements.select do |entitlement|
+        entitlement_group_ids.include? entitlement.entitlement_group_id
+      end
     end
-    h = Hash[a.map { |p| [p.entitlement_group_id, p.quantity] }]
-    if h.empty? or
-        not h.key?(EntitlementGroup::GENERAL_GROUP_ID) or
-        (h[EntitlementGroup::GENERAL_GROUP_ID].negative? and
-         sanitize_negative_general_quantity)
-      h[EntitlementGroup::GENERAL_GROUP_ID] = 0
+
+    result = Hash[entitlements.map { |e| [e.entitlement_group_id, e.quantity] }]
+    if missing_general_group_id?(result) or
+        (negative_general_quantity?(result) and ensure_non_negative_general)
+      result[EntitlementGroup::GENERAL_GROUP_ID] = 0
     end
-    h
+    result
+  end
+
+  def self.missing_general_group_id?(h)
+    h.empty? or not h.key?(EntitlementGroup::GENERAL_GROUP_ID)
+  end
+
+  def self.negative_general_quantity?(h)
+    h[EntitlementGroup::GENERAL_GROUP_ID].negative?
   end
 
   def self.query(model_ids: nil, inventory_pool_id: nil)
     <<-SQL
       SELECT model_id,
-            inventory_pool_id,
-            entitlement_group_id,
-            quantity
+             inventory_pool_id,
+             entitlement_group_id,
+             quantity
       FROM entitlements
-      WHERE 1=1
-        #{"AND model_id IN ('#{model_ids.join('\', \'')}') " if model_ids}
-        #{"AND inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id}
+      WHERE TRUE
+     #{"AND model_id IN ('#{model_ids.join('\', \'')}') " if model_ids}
+     #{"AND inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id}
 
       UNION
 
@@ -66,8 +77,8 @@ class Entitlement < ApplicationRecord
       FROM items AS i
       WHERE i.retired IS NULL AND i.is_borrowable = true
         AND i.parent_id IS NULL
-        #{"AND i.model_id IN ('#{model_ids.join('\', \'')}') " if model_ids}
-        #{"AND i.inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id}
+     #{"AND i.model_id IN ('#{model_ids.join('\', \'')}') " if model_ids}
+     #{"AND i.inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id}
       GROUP BY i.inventory_pool_id, i.model_id
     SQL
   end
