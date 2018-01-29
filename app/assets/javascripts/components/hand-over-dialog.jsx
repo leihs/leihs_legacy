@@ -118,7 +118,7 @@
       var ms = moment(start)
       var me = moment(end)
       var days = moment.duration(me.diff(ms)).days() + 1
-      return days + ' ' + _jed('Days', 'Day', days)
+      return days + ' ' + _jed(days, 'Day', 'Days')
     },
 
     _reservationName(reservation) {
