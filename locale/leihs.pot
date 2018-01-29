@@ -714,6 +714,9 @@ msgstr ""
 msgid "Item saved."
 msgstr ""
 
+msgid "License saved."
+msgstr ""
+
 msgid "Item taken back"
 msgstr ""
 

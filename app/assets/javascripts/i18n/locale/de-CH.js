@@ -999,6 +999,10 @@ window.i18n.locale_data = {
          null,
          "Gegenstand gespeichert."
       ],
+      "License saved.": [
+         null,
+         "Lizenz gespeichert."
+      ],
       "Item taken back": [
          null,
          "Gegenstand zurückgenommen"

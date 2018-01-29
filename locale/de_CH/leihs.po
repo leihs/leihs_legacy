@@ -720,6 +720,9 @@ msgstr "Paket gelöscht"
 msgid "Item saved."
 msgstr "Gegenstand gespeichert."
 
+msgid "License saved."
+msgstr "Lizenz gespeichert."
+
 msgid "Item taken back"
 msgstr "Gegenstand zurückgenommen"
 

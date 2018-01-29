@@ -278,15 +278,10 @@
 
     _readyContent() {
       return (
-// <<<<<<< HEAD
         <CreateItemContent fields={this.state.fields}
           fieldModels={this.state.fieldModels}
           onChange={this.onChange}
           createItemProps={this.props} showInvalids={this.state.showInvalids} onClose={this._onClose} />
-// =======
-//         <CreateItemContent ref={(component) => this.createItemContent = component} fields={this.state.fields}
-//           createItemProps={this.props} showInvalids={this.state.showInvalids} item={this.props.item} />
-// >>>>>>> 11cb65524... feat: reactify edit item
       )
     },
 
@@ -598,7 +593,8 @@
     },
 
     _forward(redirectUrl) {
-      var flash = '?flash[success]=' + _jed('Item saved.')
+      var message = _.string.capitalize(this.props.item_type) + ' saved.'
+      var flash = '?flash[success]=' + _jed(message)
       if(redirectUrl) {
         window.location = redirectUrl + flash
       } else {
