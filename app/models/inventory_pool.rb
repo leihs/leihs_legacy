@@ -278,10 +278,6 @@ class InventoryPool < ApplicationRecord
                                                    order: 'ASC'),
                                 self)
       end
-    # otherwise if there is some param related to items
-    else
-      # don't include options and consider only used models
-      model_filter_params = model_filter_params.merge(used: 'true')
     end
 
     # exlude models if asked only for options

@@ -4541,6 +4541,18 @@ window.i18n.locale_data = {
       "is not a HTTP(S) URL": [
          null,
          "ist keine HTTP(S) URL"
+      ],
+      "all models": [
+         null,
+         "Alle Modelle"
+      ],
+      "only models with items": [
+         null,
+         "nur Modelle mit Gegenständen"
+      ],
+      "only models without items": [
+         null,
+         "nur Modelle ohne Gegenstände"
       ]
    }
 }

@@ -9,3 +9,6 @@ class window.App.ModelsNewController extends App.ModelsEditController
   updateUploadURL: =>
     @imagesController.url = @model.url("upload/image")
     @attachmentsController.url = @model.url("upload/attachment")
+
+  finishForwardUrl: =>
+    super + '&filters=all_models'

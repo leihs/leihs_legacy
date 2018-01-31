@@ -212,6 +212,7 @@
       }
 
       var filterReset = URI.parseQuery(window.location.search).filters == 'reset'
+      var filterAllModels = URI.parseQuery(window.location.search).filters == 'all_models'
 
       var result = {
         inventory: [],
@@ -239,7 +240,7 @@
           {
             selectedTab: inventoryFilter.selectedTab,
             retired: inventoryFilter.retired,
-            used: inventoryFilter.used,
+            used: (filterAllModels ? '' : inventoryFilter.used),
             is_borrowable: inventoryFilter.is_borrowable,
             responsible_inventory_pool_id: inventoryFilter.responsible_inventory_pool_id,
             search_term: inventoryFilter.search_term,
@@ -259,7 +260,7 @@
           {
             selectedTab: null,
             retired: 'false',
-            used: '',
+            used: (filterAllModels ? '' : 'true'),
             is_borrowable: '',
             responsible_inventory_pool_id: '',
             search_term: '',
@@ -302,22 +303,16 @@
 
       if(params.type != 'option') {
 
-        if(this._showSelectsOtherThanUsed()) {
-          params.retired = this._selectionFromState('retired')
-          params.is_borrowable =  this._selectionFromState('is_borrowable')
-          params.responsible_inventory_pool_id =  this._selectionFromState('responsible_inventory_pool_id')
-        }
+        params.retired = this._selectionFromState('retired')
+        params.is_borrowable =  this._selectionFromState('is_borrowable')
+        params.responsible_inventory_pool_id =  this._selectionFromState('responsible_inventory_pool_id')
 
-        if(!this._hideUsedSelect()) {
-          params.used = this._selectionFromState('used')
-        }
+        params.used = this._selectionFromState('used')
 
-        if(!this._hideCheckboxes()) {
-          params.owned =  this._checkboxFromState('owned')
-          params.in_stock =  this._checkboxFromState('in_stock')
-          params.incomplete =  this._checkboxFromState('incomplete')
-          params.broken =  this._checkboxFromState('broken')
-        }
+        params.owned =  this._checkboxFromState('owned')
+        params.in_stock =  this._checkboxFromState('in_stock')
+        params.incomplete =  this._checkboxFromState('incomplete')
+        params.broken =  this._checkboxFromState('broken')
 
         params.packages =  this.state.tabConfig.packages
         params.before_last_check = (this.state.before_last_check != '' ? this.state.before_last_check : null)
@@ -941,20 +936,6 @@
     },
 
 
-    _showSelectsOtherThanUsed() {
-      return this.state.used != 'false'
-
-    },
-
-    _hideUsedSelect() {
-      return this.state.retired != '' || this.state.is_borrowable != '' || this.state.responsible_inventory_pool_id != ''
-        || this.state.owned || this.state.in_stock || this.state.incomplete || this.state.broken
-    },
-
-    _hideCheckboxes() {
-      return this.state.used == 'false'
-    },
-
     _renderFilters() {
 
       var formClass = 'row margin-bottom-xs'
@@ -965,16 +946,13 @@
       }
 
       var checkboxesStyle = {}
-      if(this._hideCheckboxes()) {
-        checkboxesStyle.display = 'none'
-      }
 
       return (
         <div className='row margin-vertical-xs padding-horizontal-s'>
           <form className={formClass} data-filter='true'>
             <div className='col1of4 padding-right-xs'>
               <InventoryFilterSelect
-                hide={!this._showSelectsOtherThanUsed()}
+                hide={false}
                 name={'retired'}
                 onChange={(value) => this.setState({retired: value}, this._writeFilterAndReloadList)}
                 value={this.state.retired}
@@ -989,22 +967,22 @@
             </div>
             <div className='col1of4 padding-right-xs'>
               <InventoryFilterSelect
-                hide={this._hideUsedSelect()}
+                hide={false}
                 name={'used'}
                 onChange={(value) => this.setState({used: value}, this._writeFilterAndReloadList)}
                 value={this.state.used}
                 values= {
                   [
-                    {value: '', label: _jed('used') + ' & ' + _jed('not used')},
-                    {value: 'true', label: _jed('used')},
-                    {value: 'false', label: _jed('not used')},
+                    {value: '', label: _jed('all models')},
+                    {value: 'true', label: _jed('only models with items')},
+                    {value: 'false', label: _jed('only models without items')},
                   ]
                 }
               />
             </div>
             <div className='col1of4 padding-right-xs'>
               <InventoryFilterSelect
-                hide={!this._showSelectsOtherThanUsed()}
+                hide={false}
                 name={'is_borrowable'}
                 onChange={(value) => this.setState({is_borrowable: value}, this._writeFilterAndReloadList)}
                 value={this.state.is_borrowable}
@@ -1019,7 +997,7 @@
             </div>
             <div className='col1of4 padding-right-xs'>
               <InventoryFilterSelect
-                hide={!this._showSelectsOtherThanUsed()}
+                hide={false}
                 name={'responsible_inventory_pool_id'}
                 onChange={(value) => this.setState({responsible_inventory_pool_id: value}, this._writeFilterAndReloadList)}
                 value={this.state.responsible_inventory_pool_id}

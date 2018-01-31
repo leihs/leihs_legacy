@@ -17,6 +17,7 @@ When(/^I edit software$/) do
   @page_to_return = current_path
   all('a', text: _('Software')).first.click
   find(:select, 'retired').first('option').select_option
+  select _('all models'), from: 'used'
   @model_id = @software.id
   find(".line[data-type='software'][data-id='#{@software.id}']").find('a', text: _('Edit Software')).click
 end

@@ -150,7 +150,7 @@ end
 
 Then /^the new model is created and can be found in the list of unused models$/ do
   find(:select, 'retired').first('option').select_option
-  select _('not used'), from: 'used'
+  select _('only models without items'), from: 'used'
   step 'the information is saved'
 end
 
@@ -163,6 +163,7 @@ end
 When(/^I delete this (.+) from the list$/) do |entity|
   step 'I open the inventory'
   step 'I see retired and not retired inventory'
+  select _('all models'), from: 'used'
 
   fill_in 'list-search', with: @model.name
 
@@ -188,4 +189,3 @@ Then(/^the (.+) is deleted$/) do |entity|
           end
   expect(klass.find_by_id(@model.id)).to eq nil
 end
-

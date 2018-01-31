@@ -115,8 +115,8 @@ Feature: Inventory
     Then only the "<property>" inventory is shown
   Examples:
     | dropdown        | property |
-    | used & not used | used     |
-    | used & not used | not used |
+    | used & not used | only models with items |
+    | used & not used | only models without items |
 
   Scenario Outline: Filtering borrowable and not borrowable inventory
     Given I see retired and not retired inventory

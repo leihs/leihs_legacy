@@ -3509,3 +3509,12 @@ msgstr "ist keine gültige URL"
 
 msgid "is not a HTTP(S) URL"
 msgstr "ist keine HTTP(S) URL"
+
+msgid "all models"
+msgstr "Alle Modelle"
+
+msgid "only models with items"
+msgstr "nur Modelle mit Gegenständen"
+
+msgid "only models without items"
+msgstr "nur Modelle ohne Gegenstände"

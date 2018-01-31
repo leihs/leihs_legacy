@@ -5,7 +5,6 @@ def check_existing_inventory_codes(items)
   # clicking on all togglers via javascript is significantly faster than doing it with capybara in this case
   # page.execute_script %Q( $(".button[data-type='inventory-expander']").click() )
   all(".button[data-type='inventory-expander']").each { |b| b.click }
-  # binding.pry
   inventory_text = find('#inventory').text
   items.each do |i|
     expect(inventory_text).to match /#{i.inventory_code}/
@@ -17,7 +16,6 @@ def check_amount_of_lines(amount)
     while(all('.loading-bg').length > 0) do
       page.execute_script 'window.scrollBy(0,10000)'
     end
-    # binding.pry
     expect(all('.line').count).to eq amount
   end
 end
@@ -28,6 +26,7 @@ Then(/^I can click one of the following tabs to filter inventory by:$/) do |tabl
   section_tabs = find('#list-tabs')
   section_tabs.find('.active')
   retired_unretired_option = find(:select, 'retired').first('option')
+  used_unused_option = find(:select, 'used').first('option')
 
   table.hashes.each do |row|
     tab = nil
@@ -38,6 +37,7 @@ Then(/^I can click one of the following tabs to filter inventory by:$/) do |tabl
         inventory = items + options
         amount = Model.owned_or_responsible_by_inventory_pool(@current_inventory_pool).count + Model.unused_for_inventory_pool(@current_inventory_pool).count + options.count
         retired_unretired_option.select_option
+        used_unused_option.select_option
       when 'Models'
         tab = section_tabs.find("a[data-type='item']", match: :first)
         expect(tab.text).to eq _('Models')
@@ -45,6 +45,7 @@ Then(/^I can click one of the following tabs to filter inventory by:$/) do |tabl
         models = Model.where(type: :Model, is_package: false)
         amount = models.owned_or_responsible_by_inventory_pool(@current_inventory_pool).count + models.unused_for_inventory_pool(@current_inventory_pool).count
         retired_unretired_option.select_option
+        used_unused_option.select_option
       when 'Packages'
         tab = section_tabs.find("a[data-type='item']", text: _('Packages'))
         expect(tab.text).to eq _('Packages')
@@ -52,6 +53,7 @@ Then(/^I can click one of the following tabs to filter inventory by:$/) do |tabl
         models = Model.where(type: :Model, is_package: true)
         amount = models.owned_or_responsible_by_inventory_pool(@current_inventory_pool).count + models.unused_for_inventory_pool(@current_inventory_pool).count
         retired_unretired_option.select_option
+        used_unused_option.select_option
       when 'Options'
         tab = section_tabs.find("a[data-type='option']", match: :first)
         expect(tab.text).to eq _('Options')
@@ -64,6 +66,7 @@ Then(/^I can click one of the following tabs to filter inventory by:$/) do |tabl
         models = Model.where(type: :Software)
         amount = models.owned_or_responsible_by_inventory_pool(@current_inventory_pool).count + models.unused_for_inventory_pool(@current_inventory_pool).count
         retired_unretired_option.select_option
+        used_unused_option.select_option
     end
 
     tab.click
@@ -395,6 +398,7 @@ Then /^the information is saved$/ do
   search_string = @table_hashes.detect {|h| h['Field'] == 'Product'}['Value']
   if has_selector?(:select, 'retired')
     find(:select, 'retired').first('option').select_option
+    select _('all models'), from: 'used'
   elsif has_selector?(:select, 'used')
     find(:select, 'used').first('option').select_option
   end
@@ -476,6 +480,7 @@ When /^I edit an existing (Model|Option|Package|)$/ do |entity|
                       @option.name
                   end
     step 'I search for "%s"' % object_name
+    select _('all models'), from: 'used'
     find('.line', match: :prefer_exact, text: object_name).find('.button', text: "Edit #{entity}").click
   end
 end
@@ -713,7 +718,7 @@ When(/^I choose inside all inventory as "(.*?)" the option "(.*?)"$/) do |arg1, 
 end
 
 Then(/^only the "(.*?)" inventory is shown$/) do |arg1|
-  if arg1 == 'not used'
+  if arg1 == 'only models without items'
     models = Model.unused_for_inventory_pool(@current_inventory_pool)
   elsif arg1 == 'In stock'
     items = Item.by_owner_or_responsible(@current_inventory_pool).in_stock

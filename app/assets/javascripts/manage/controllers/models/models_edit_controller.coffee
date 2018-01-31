@@ -63,7 +63,11 @@ class window.App.ModelsEditController extends App.FormWithUploadController
     else if@attachmentsController.uploadErrors.length
       @setupErrorModal(@model)
     else
-      window.location = App.Inventory.url()+"?flash[success]=#{_jed('Model saved')}"
+      window.location = @finishForwardUrl()
+
+  finishForwardUrl: =>
+    App.Inventory.url() + "?flash[success]=#{_jed('Model saved')}"
+
 
   save: => $.ajax
     url: @model.url()
