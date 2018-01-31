@@ -128,11 +128,11 @@ class Model < ApplicationRecord
 
       if exists
         if version.blank?
-          errors.add(:base, _('There exists already a model with ' \
-                              'the same product name with empty version.'))
+          errors.add(:base, _('A model with the same product name ' \
+                              'and empty version already exists.'))
         else
-          errors.add(:base, _('There exists already a model with ' \
-                              'the same product name and version.'))
+          errors.add(:base, _('A model with the same product name ' \
+                              'and version already exists.'))
         end
       end
     end
