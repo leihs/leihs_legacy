@@ -34,7 +34,7 @@
 
       return (
         <div className='col1of3'>
-          <label className='row margin-bottom-xxs'>Feld auswählen</label>
+          <label className='row margin-bottom-xxs'>{_jed('Select Field')}</label>
           <BasicAutocomplete
             inputClassName='has-addon width-full ui-autocomplete-input'
             element='div'

@@ -19,9 +19,9 @@
     _itemEditLabel(type) {
       switch(type) {
         case 'software':
-          return 'Lizenz editieren'
+          return _jed('Edit License')
         case 'model':
-          return 'Gegenstand editieren'
+          return _jed('Edit Item')
         default:
           throw 'Not supported type: ' + type
       }
@@ -101,7 +101,7 @@
 
       var text3 = null
       if(isChild) {
-        text3 = 'is part of a package'
+        text3 = _jed('is part of a package')
       } else {
         text3 = item.current_location
       }
@@ -121,10 +121,10 @@
     _itemColumn4(item) {
 
       var stati = _.compact([
-        (!item.is_borrowable ? 'Nicht ausleihbar' : null),
-        (item.is_broken ? 'Defekt' : null),
-        (item.is_incomplete ? 'Unvollständig' : null),
-        (item.retired ? 'Ausgemustert' : null)
+        (!item.is_borrowable ? _jed('Not Borrowable') : null),
+        (item.is_broken ? _jed('Broken') : null),
+        (item.is_incomplete ? _jed('Incomplete') : null),
+        (item.retired ? _jed('Retired') : null)
       ])
 
       var status = stati.join(', ')
@@ -265,9 +265,9 @@
     _modelEditLabel(type) {
       switch(type) {
         case 'software':
-          return 'Software editieren'
+          return _jed('Edit Software')
         case 'model':
-          return 'Modell editieren'
+          return _jed('Edit Model')
         default:
           throw 'Not supported type: ' + type
       }

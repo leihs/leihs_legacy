@@ -105,7 +105,7 @@
     _noFieldsChosen () {
       if(this.props.selectedValues.length == 0) {
         return (
-          <h3 className='headline-s light padding-inset-m text-align-center' id='no-fields-message'>Keine Felder ausgewählt</h3>
+          <h3 className='headline-s light padding-inset-m text-align-center' id='no-fields-message'>{_jed('no fields selected')}</h3>
         )
       } else {
         return null
