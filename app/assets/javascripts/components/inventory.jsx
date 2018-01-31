@@ -697,7 +697,7 @@
     _renderToggleAndSearch() {
 
       var showCategories = true
-      if(showCategories) {
+      if(showCategories && this.state.tabConfig.type != 'option') {
         return (
           <div className='row'>
             <div className='col1of6 padding-right-xs'>
@@ -899,6 +899,10 @@
 
     _renderCategories() {
 
+      if(this.state.tabConfig.type == 'option') {
+        return null
+      }
+
       var classes = 'table-cell separated-top separated-right'
       if(this.state.showCategories) {
         classes += ' col1of5'
@@ -924,7 +928,7 @@
     _renderLinesTable() {
 
       var classes = 'table-cell list-of-lines even separated-top padding-bottom-s min-height-l'
-      if(this.state.showCategories) {
+      if(this.state.showCategories && this.state.tabConfig.type != 'option') {
         classes += ' col4of5'
       }
 
