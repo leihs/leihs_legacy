@@ -244,7 +244,7 @@ Then(/^their address is shown without the "(.*?)"$/) do |arg1|
 end
 
 When(/^the instance's address is configured in the global settings$/) do
-  @address = Setting.contract_lending_party_string
+  @address = Setting.first.contract_lending_party_string
   expect(@address).not_to be_nil
 end
 

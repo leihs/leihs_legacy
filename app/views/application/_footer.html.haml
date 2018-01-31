@@ -1,6 +1,6 @@
 :ruby
   product_name = 'leihs'
-  documentation_link = Setting.documentation_link.try(:strip).presence
+  documentation_link = app_settings.try(:documentation_link).try(:strip).presence
   active_language = Language.find_by_locale_name(I18n.locale)
   version_name = RELEASE_INFO.try(:[], :version_name)
   is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :is_release) || false

@@ -17,7 +17,7 @@
         %i.fa.fa-sort
     %b.col-sm-1
       %a{href: '#', data: {sort_by: :price}}
-        = format('%s %s', _('Price'), Setting.local_currency_string)
+        = format('%s %s', _('Price'), app_settings.local_currency_string)
         %i.fa.fa-sort
     %b.col-sm-2
       %a{href: '#', data: {sort_by: :requested_quantity}}
@@ -25,7 +25,7 @@
         %i.fa.fa-sort
     %b.col-sm-1
       %a{href: '#', data: {sort_by: :total_price}}
-        = format('%s %s', _('Total'), Setting.local_currency_string)
+        = format('%s %s', _('Total'), app_settings.local_currency_string)
         %i.fa.fa-sort
     %b.col-sm-1
       %a{href: '#', data: {sort_by: :priority}}

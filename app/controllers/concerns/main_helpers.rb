@@ -9,6 +9,16 @@ module MainHelpers
 
     before_action :set_gettext_locale, :load_settings, :permit_params
 
+    before_action do
+      # NOTE: Time zone as other settings can be changed at runtime.
+      # To ensure that all workers processing a request see the changed
+      # time_zone we do this. What would be a better solution than this?
+      if time_zone = app_settings.try(:time_zone)
+        Rails.configuration.time_zone = time_zone
+        Time.zone_default = ActiveSupport::TimeZone.new(time_zone)
+      end
+    end
+
     # CSRF protection
     protect_from_forgery with: :exception
 
@@ -16,6 +26,7 @@ module MainHelpers
 
     helper_method(:current_inventory_pool,
                   :current_managed_inventory_pools,
+                  :app_settings,
                   :admin?)
 
     # TODO: **20 optimize lib/role_requirement and refactor to backend
@@ -54,7 +65,7 @@ module MainHelpers
     end
 
     def load_settings
-      if not Setting.smtp_address \
+      if not app_settings.try(:smtp_address) \
         and logged_in? \
         and not [admin.settings_path, main_app.logout_path].include? request.path
         if current_user.has_role?(:admin)
@@ -111,6 +122,10 @@ module MainHelpers
       else
         paginated_active_record.total_entries
       end
+    end
+
+    def app_settings
+      @app_settings ||= Setting.first
     end
 
   end

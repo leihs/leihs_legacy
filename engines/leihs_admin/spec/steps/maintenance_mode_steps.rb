@@ -94,12 +94,12 @@ module LeihsAdmin
       step 'the settings for the ":section_name" were saved' do |section_name|
         case section_name
         when 'manage section'
-          expect(Setting.disable_manage_section).to eq @disable
-          expect(Setting.disable_manage_section_message.to_s)
+          expect(Setting.first.disable_manage_section).to eq @disable
+          expect(Setting.first.disable_manage_section_message.to_s)
             .to eq @disable_message
         when 'borrow section'
-          expect(Setting.disable_borrow_section).to eq @disable
-          expect(Setting.disable_borrow_section_message.to_s)
+          expect(Setting.first.disable_borrow_section).to eq @disable
+          expect(Setting.first.disable_borrow_section_message.to_s)
             .to eq @disable_message
         else
           raise
@@ -107,16 +107,15 @@ module LeihsAdmin
       end
 
       step 'the ":section_name" is disabled' do |section_name|
-        @setting = Setting.first
         @disable_message = Faker::Lorem.sentence
 
         case section_name
         when 'manage section'
-          @setting.update_attributes \
+          Setting.first.update_attributes \
             disable_manage_section: true,
             disable_manage_section_message: @disable_message
         when 'borrow section'
-          @setting.update_attributes \
+          Setting.first.update_attributes \
             disable_borrow_section: true,
             disable_borrow_section_message: @disable_message
         else
@@ -165,10 +164,10 @@ module LeihsAdmin
            'is still saved' do |section_name|
         case section_name
         when 'manage section'
-          expect(@setting.reload.disable_manage_section_message)
+          expect(Setting.first.reload.disable_manage_section_message)
             .to eq @disable_message
         when 'borrow section'
-          expect(@setting.reload.disable_borrow_section_message)
+          expect(Setting.first.reload.disable_borrow_section_message)
             .to eq @disable_message
         else
           raise

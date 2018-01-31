@@ -1,4 +1,4 @@
-- if Setting.logo_url
+- if app_settings.try(:logo_url)
   .table
     .table-row
       .table-cell.vertical-align-middle

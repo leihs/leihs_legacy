@@ -1,7 +1,7 @@
 - content_for :title, _("Settings")
 - content_for :manage_section, "active"
 
-= form_for @setting, :as => :setting, :url => admin.settings_path, :method => :put, :html => { class: "form-horizontal", name: "form" } do |f|
+= form_for @settings, :as => :setting, :url => admin.settings_path, :method => :put, :html => { class: "form-horizontal", name: "form" } do |f|
 
   .row
     .col-sm-4
@@ -10,7 +10,7 @@
     .col-sm-8.text-right
       %button.btn.btn-success{:type => :submit}= _("Save %s") % _("Settings")
 
-  - Hash[@setting.attributes.sort].each_pair do |k,v|
+  - Hash[@settings.attributes.sort].each_pair do |k,v|
     - next if k == "id"
     .row.form-group
       .col-sm-4

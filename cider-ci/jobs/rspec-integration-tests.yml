@@ -30,4 +30,4 @@ jobs:
 
       include:
         - cider-ci/shared/main-context.yml
-
+        - cider-ci/tasks/integration-rspec-scenarios.yml

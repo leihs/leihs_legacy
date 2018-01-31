@@ -238,14 +238,14 @@ class User < ApplicationRecord
   end
 
   def image_url
-    if Setting.user_image_url
-      if Setting.user_image_url.match(/\{:id\}/) and unique_id
-        Setting.user_image_url.gsub(/\{:id\}/, unique_id)
-      elsif Setting.user_image_url.match(/\{:extended_info:id\}/) \
+    if user_image_url = Setting.first.try(:user_image_url)
+      if user_image_url.match(/\{:id\}/) and unique_id
+        user_image_url.gsub(/\{:id\}/, unique_id)
+      elsif user_image_url.match(/\{:extended_info:id\}/) \
         and extended_info \
         and extended_info['id']
-        Setting.user_image_url.gsub(/\{:extended_info:id\}/,
-                                    extended_info['id'].to_s)
+        user_image_url.gsub(/\{:extended_info:id\}/,
+                            extended_info['id'].to_s)
       end
     end
   end
@@ -383,7 +383,7 @@ class User < ApplicationRecord
     reservations
       .unsubmitted
       .where('updated_at < ?',
-             Time.zone.now - Setting.timeout_minutes.minutes)
+             Time.zone.now - Setting.first.timeout_minutes.minutes)
       .exists?
   end
 

@@ -303,7 +303,7 @@ module CommonSteps
   def currency(amount)
     ActionController::Base.helpers.number_to_currency(
       amount,
-      unit: Setting.local_currency_string,
+      unit: Setting.first.local_currency_string,
       precision: 0)
   end
 

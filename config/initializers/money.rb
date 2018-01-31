@@ -6,7 +6,7 @@ MoneyRails.configure do |config|
   #
   # config.default_currency = :usd
   config.default_currency = begin
-                              Setting.local_currency_string.downcase.to_sym
+                              Setting.first.local_currency_string.downcase.to_sym
                             rescue
                               :chf
                             end
@@ -63,7 +63,7 @@ MoneyRails.configure do |config|
                              present: true,
                              null: false,
                              default: begin
-                               Setting.local_currency_string
+                               Setting.first.local_currency_string
                              rescue
                                'CHF'
                              end

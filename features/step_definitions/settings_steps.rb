@@ -11,9 +11,7 @@ end
 
 When(/^the settings are not existing$/) do
   Setting.delete_all
-  Setting.class_variable_set :@@singleton, nil
   expect(Setting.count.zero?).to be true
-  expect(Setting.smtp_address).to be_nil
 end
 
 Then(/^there is an error for the missing settings$/) do

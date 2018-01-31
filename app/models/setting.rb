@@ -27,35 +27,8 @@ class Setting < ApplicationRecord
     end
   end
 
-  def self.method_missing(name, *_args, &_block)
-    # TODO: replace class var with class instance var
-    # rubocop:disable Style/ClassVars
-    @@singleton ||= first # fetch the singleton from the database
-    @@singleton.try :send, name
-    # rubocop:enable Style/ClassVars
-  end
-
   before_create do
     raise 'Setting is a singleton' if Setting.count > 0
-  end
-
-  after_save do
-    # TODO: replace class var with class instance var
-    # rubocop:disable Style/ClassVars
-    @@singleton = nil
-    # rubocop:enable Style/ClassVars
-    begin
-      # Only reading from the initializers is not enough, they are only read during
-      # server start, making changes of the time zone during runtime impossible.
-      # Check for existence of time_zone first,
-      # in case the migration for time_zone has not run yet
-      if self.time_zone_changed?
-        Rails.configuration.time_zone = self.time_zone
-        Time.zone_default = ActiveSupport::TimeZone.new(self.time_zone)
-      end
-    rescue
-      logger.info 'Timezone setting could not be loaded. Did the migrations run?'
-    end
   end
 
   def label_for_audits

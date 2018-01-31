@@ -18,7 +18,7 @@ module LeihsAdmin
       step 'the settings are persisted' do
         check_flash_message(:notice, _('Successfully set.'))
         @new_settings.each_pair do |k, v|
-          expect(Setting.send(k).presence).to eq v.presence
+          expect(Setting.first.send(k).presence).to eq v.presence
         end
       end
 
@@ -89,16 +89,16 @@ module LeihsAdmin
                 'smtp_username',
                 'user_image_url'
                 field = find("input[name='setting[#{k}]']")
-                expect(Setting.send(k).to_s).to eq field.value
+                expect(Setting.first.send(k).to_s).to eq field.value
                 @new_settings[k] = new_value = Faker::Lorem.word
                 field.set new_value
               when 'logo_url'
                 field = find("input[name='setting[#{k}]']")
-                expect(Setting.send(k).to_s).to eq field.value
+                expect(Setting.first.send(k).to_s).to eq field.value
                 @new_settings[k] = field.value
               when 'default_email'
                 field = find("input[name='setting[#{k}]']")
-                expect(Setting.send(k).to_s).to eq field.value
+                expect(Setting.first.send(k).to_s).to eq field.value
                 @new_settings[k] = new_value = Faker::Internet.email
                 field.set new_value
               when \
@@ -106,22 +106,22 @@ module LeihsAdmin
                 'contract_terms',
                 'custom_head_tag'
                 field = find("textarea[name='setting[#{k}]']")
-                expect(Setting.send(k).to_s).to eq field.value
+                expect(Setting.first.send(k).to_s).to eq field.value
                 @new_settings[k] = new_value = Faker::Lorem.paragraph
                 field.set new_value
               when 'deliver_order_notifications', 'smtp_enable_starttls_auto'
                 field = find("input[name='setting[#{k}]']")
-                expect(Setting.send(k)).to eq field.checked?
+                expect(Setting.first.send(k)).to eq field.checked?
                 # TODO: @new_settings[k]
                 field.click
               when 'smtp_port'
                 field = find("input[name='setting[#{k}]']")
-                expect(Setting.send(k).to_s).to eq field.value
+                expect(Setting.first.send(k).to_s).to eq field.value
                 @new_settings[k] = new_value = rand(0..10000)
                 field.set new_value
               when 'time_zone', 'local_currency_string'
                 field = find("select[name='setting[#{k}]']")
-                expect(Setting.send(k).to_s).to eq field.value
+                expect(Setting.first.send(k).to_s).to eq field.value
                 @new_settings[k] = new_value = field.all('option').sample[:value]
                 field.select new_value
               else

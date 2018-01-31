@@ -1,6 +1,6 @@
 :ruby
   product_name = 'leihs'
-  documentation_link = Setting.documentation_link.try(:strip).presence
+  documentation_link = app_settings.try(:documentation_link).try(:strip).presence
 
 !!! 5
 %html{:lang => I18n.locale}

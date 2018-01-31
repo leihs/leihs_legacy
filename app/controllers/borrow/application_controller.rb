@@ -31,7 +31,7 @@ class Borrow::ApplicationController < ApplicationController
   private
 
   def check_maintenance_mode
-    redirect_to borrow_maintenance_path if Setting.disable_borrow_section
+    redirect_to borrow_maintenance_path if app_settings.disable_borrow_section
   end
 
   def require_customer

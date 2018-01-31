@@ -126,7 +126,7 @@ class InventoryPool < ApplicationRecord
        status NOT IN ('rejected', 'closed')
        AND NOT (
          status = 'unsubmitted' AND
-         updated_at < '#{Time.now.utc - Setting.timeout_minutes.minutes}'
+         updated_at < '#{Time.now.utc - Setting.first.timeout_minutes.minutes}'
        )
        AND NOT (
          end_date < '#{Time.zone.today}' AND

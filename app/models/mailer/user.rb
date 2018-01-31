@@ -10,7 +10,7 @@ class Mailer::User < ActionMailer::Base
   def remind(user, inventory_pool, reservations, sent_at = Time.zone.now)
     choose_language_for(user)
     mail(to: user.emails,
-         from: (inventory_pool.email || Setting.default_email),
+         from: (inventory_pool.email || Setting.first.default_email),
          subject: _('[leihs] Reminder'),
          date: sent_at) do |format|
       format.text do
@@ -34,7 +34,7 @@ class Mailer::User < ActionMailer::Base
                              sent_at = Time.zone.now)
     choose_language_for(user)
     mail(to: user.emails,
-         from: (inventory_pool.email || Setting.default_email),
+         from: (inventory_pool.email || Setting.first.default_email),
          subject: _('[leihs] Some items should be returned tomorrow'),
          date: sent_at) do |format|
       format.text do

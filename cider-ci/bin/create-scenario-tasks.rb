@@ -140,6 +140,14 @@ create_scenario_tasks(filepath,
                       additional_options: "-r ./spec/steps/borrow/load.rb",
                       tags: ['@flapping'])
 
+############################## INTEGRATION ##############################
+
+filepath = "cider-ci/tasks/integration-rspec-scenarios.yml"
+create_scenario_tasks(filepath,
+                      ['spec/features/integration'],
+                      framework: :rspec,
+                      additional_options: "-r ./spec/steps/integration/load.rb")
+
 ############################## ENGINES ##################################
 
 ENGINES.each do |engine|

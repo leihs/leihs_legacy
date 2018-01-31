@@ -50,9 +50,9 @@ module Concerns
         expires: 10.years.from_now,
         value: value,
         httponly: true,
-        secure: Setting.first.try(:sessions_force_secure)
+        secure: app_settings.try(:sessions_force_secure)
       }
-      if Setting.first.try(:sessions_force_uniqueness) && !user.delegation?
+      if app_settings.try(:sessions_force_uniqueness) && !user.delegation?
         UserSession.destroy_all(user_id: user.id)
       end
       @user_session = UserSession.create user_id: user.id, token_hash: token_hash
@@ -74,7 +74,7 @@ module Concerns
     def validate_lifetime!(user_session)
       lifetime = Time.zone.now - user_session.created_at
       if lifetime >
-        (Setting.first.try(:sessions_max_lifetime_secs) || (5 * 24 * 60 * 60))
+        (app_settings.try(:sessions_max_lifetime_secs) || (5 * 24 * 60 * 60))
         raise 'The session has expired!'
       end
     end
