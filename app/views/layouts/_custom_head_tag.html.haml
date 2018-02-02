@@ -1,2 +1,4 @@
-- if app_settings.try(:custom_head_tag).presence
+-# app_settings is not defined if the request does not reach the controller
+-# in case of a routing error for example.
+- if defined?(app_settings) and app_settings.try(:custom_head_tag).presence
   = render html: app_settings.custom_head_tag.html_safe
