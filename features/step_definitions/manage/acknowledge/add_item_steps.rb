@@ -99,7 +99,10 @@ And /^I change the end date$/ do
 end
 
 And /^I search again for the same model$/ do
-  find('#add-input input').set @model.name
+  input = find('#add-input input')
+  input.set ''
+  input.native.send_keys :backspace
+  input.set @model.name
 end
 
 Then (/^the model's availability has changed$/) do

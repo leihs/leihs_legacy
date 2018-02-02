@@ -9,16 +9,26 @@ class Visit < ApplicationRecord
   include LineModules::GroupedAndMergedLines
   include DefaultPagination
 
+  def readonly?
+    true
+  end
+
   self.table_name = 'visits'
   self.primary_key = 'id'
   self.inheritance_column = nil
 
   default_scope do
-    order(:date)
+    order(:date, :id)
   end
 
   belongs_to :user
   belongs_to :inventory_pool
+
+  #################################################################################
+  def reservations
+    Reservation.where(id: reservation_ids)
+  end
+  #################################################################################
 
   scope :potential_hand_over, (lambda do
     where(type: :hand_over).where(is_approved: false)
@@ -60,6 +70,20 @@ class Visit < ApplicationRecord
       )
     end
 
+    if params[:verification].presence
+      visits = case params[:verification]
+               when 'with_user_to_verify'
+                 visits.where(with_user_to_verify: true)
+               when 'with_user_and_model_to_verify'
+                 visits.where(with_user_and_model_to_verify: true)
+               when 'no_verification'
+                 visits.where(with_user_to_verify: false,
+                              with_user_and_model_to_verify: false)
+               else
+                 visits
+               end
+    end
+
     unless params[:search_term].blank?
       visits = visits.search(params[:search_term])
     end
@@ -73,10 +97,10 @@ class Visit < ApplicationRecord
     end
 
     if r = params[:range]
-      if r[:start_date]
+      if r[:start_date].presence
         visits = visits.where(arel_table[:date].gteq(r[:start_date]))
       end
-      if r[:end_date]
+      if r[:end_date].presence
         visits = visits.where(arel_table[:date].lteq(r[:end_date]))
       end
     end
@@ -87,14 +111,6 @@ class Visit < ApplicationRecord
   def self.total_count_for_paginate
     scope_sql = Visit.all.reorder(nil).to_sql
     ApplicationRecord.connection.execute(scope_sql).count
-  end
-
-  def reservations
-    Reservation.where(id: reservation_ids)
-  end
-
-  def readonly?
-    true
   end
 
   #################################################################################

@@ -79,7 +79,7 @@ end
 
 When(/^I delete the supplier$/) do
   input = find('.row.emboss', match: :prefer_exact, text: _('Supplier')).find('input')
-  input.set ' '
+  input.set ''
   input.send_keys :backspace
 end
 

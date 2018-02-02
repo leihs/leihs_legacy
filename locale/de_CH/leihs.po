@@ -2905,10 +2905,16 @@ msgid "Verify + approve order"
 msgstr "Bestellung prüfen + genehmigen"
 
 msgid "No verification required"
-msgstr "nicht visierungspflichtig"
+msgstr "Nicht visierungspflichtig"
 
 msgid "Verification required"
 msgstr "Visierungspflichtig"
+
+msgid "User to verify"
+msgstr "Visierungspflichtige Benutzer"
+
+msgid "User and model to verify"
+msgstr "Visierungspflichtige Benutzer und Modelle"
 
 msgid "Statistics"
 msgstr "Statistik"

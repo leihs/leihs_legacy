@@ -173,6 +173,13 @@ Given(/^I open a hand over with at least one assigned item$/) do
   step 'I open the hand over'
 end
 
+Given(/^I open a hand over with at least one assigned item for a normal user$/) do
+  @hand_over = @current_inventory_pool.visits.hand_over.find do |ho|
+    ho.reservations.any?(&:item_id) and not ho.user.delegation?
+  end
+  step 'I open the hand over'
+end
+
 Then(/^the line remains selected$/) do
   expect(has_selector?("#{@line_css} input[type='checkbox']:checked")).to be true
 end

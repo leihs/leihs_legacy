@@ -55,7 +55,7 @@ Feature: Edit a hand over
     And the contract note field in this dialog is already filled in with the default note
 
   Scenario: Contract note
-    When I open a hand over with at least one assigned item
+    When I open a hand over with at least one assigned item for a normal user
     And I hand over the items
     Then a dialog appears
     And I can enter some text in the contract note field

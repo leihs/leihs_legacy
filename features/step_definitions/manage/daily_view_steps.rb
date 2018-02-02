@@ -46,8 +46,8 @@ When(/^the current inventory pool has at least suspended (\d+) users?$/) do |n|
 end
 
 Then(/^each line of this user contains the text 'Suspended'$/) do
-  find("[data-type='user-cell'] span.darkred-text", match: :first)
-  all("[data-type='user-cell']").each do |line|
+  find('.list-of-lines .line', match: :first)
+  all('.list-of-lines .line').each do |line|
     line.find('span.darkred-text', text: '%s!' % _('Suspended'))
   end
 end

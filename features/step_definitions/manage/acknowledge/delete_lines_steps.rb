@@ -61,7 +61,7 @@ When(/^I delete a hand over$/) do
   @visit_line_ids = @visit.reservations.map(&:id)
   within(".line[data-id='#{@visit.id}']") do
     find('.line-actions .multibutton .dropdown-holder').click
-    find('.dropdown-item[data-hand-over-delete]', text: _('Delete')).click
+    find('a', text: _('Delete')).click
   end
 end
 

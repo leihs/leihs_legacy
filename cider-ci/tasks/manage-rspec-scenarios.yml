@@ -248,3 +248,99 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:19
+- name: spec/features/manage/visits_verification_filter.feature:105
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:105
+- name: spec/features/manage/visits_verification_filter.feature:17
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:17
+- name: spec/features/manage/visits_verification_filter.feature:27
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:27
+- name: spec/features/manage/visits_verification_filter.feature:34
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:34
+- name: spec/features/manage/visits_verification_filter.feature:43
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:43
+- name: spec/features/manage/visits_verification_filter.feature:50
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:50
+- name: spec/features/manage/visits_verification_filter.feature:59
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:59
+- name: spec/features/manage/visits_verification_filter.feature:66
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:66
+- name: spec/features/manage/visits_verification_filter.feature:74
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:74
+- name: spec/features/manage/visits_verification_filter.feature:81
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:81
+- name: spec/features/manage/visits_verification_filter.feature:90
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:90
+- name: spec/features/manage/visits_verification_filter.feature:97
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:97

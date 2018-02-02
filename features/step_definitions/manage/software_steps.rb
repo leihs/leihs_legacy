@@ -554,8 +554,8 @@ end
 When(/^I delete the data for the following fields:$/) do |table|
   table.raw.flatten.each do |field|
     input = find('.field', text: _(field)).find('input')
-    input.set ' '
-    input.send_keys :backspace
+    input.set ''
+    input.native.send_key :enter
   end
 end
 

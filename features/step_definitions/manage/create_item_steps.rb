@@ -238,7 +238,10 @@ When(/^I enter a supplier( that does not exist)?$/) do |supplier_string|
   else
     @new_supplier = Supplier.first.name
   end
-  find('.row.emboss', match: :prefer_exact, text: _('Supplier')).find('input').set @new_supplier
+  input = find('.row.emboss', match: :prefer_exact, text: _('Supplier')).find('input')
+  input.set ''
+  input.native.send_keys :backspace
+  input.set @new_supplier
   find('.ui-autocomplete li', count: 1).click
 end
 

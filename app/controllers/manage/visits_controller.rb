@@ -2,10 +2,44 @@ class Manage::VisitsController < Manage::ApplicationController
 
   def index
     respond_to do |format|
-      format.html
+      format.html do
+        @props = { inventory_pool_id: current_inventory_pool.id }
+      end
       format.json do
         visits = Visit.filter(params, current_inventory_pool)
-        unless params[:paginate] == 'false'
+        if params[:paginate] == 'false'
+          visits = \
+            current_inventory_pool
+            .visits
+            .includes(user: :notifications)
+            .where(type: type_param)
+            .where(is_approved: true)
+            .filter(params)
+            .offset(offset_param)
+            .limit(limit_param)
+
+          visits_json = visits.as_json(
+            include: [{ user: { methods: :image_url } }, :reservations]
+          )
+
+          visits_json.each do |v|
+            user = User.find(v['user_id'])
+
+            v['user']['is_suspended'] = user.suspended?(current_inventory_pool)
+
+            v['reservations'].each do |r|
+              object = \
+                Model.find_by_id(r['model_id']) ||
+                Option.find_by_id(r['option_id'])
+              r['model_name'] = object.name
+            end
+
+            v['notifications'] = \
+              user.notifications.where('created_at >= ?', v['date']).limit(10)
+          end
+
+          render json: visits_json and return
+        else
           @visits = visits.default_paginate(params)
           # NOTE: `total_entries` from will_paginate gem does not
           # work with our custom `Visit.default_scope`, thus we
@@ -25,13 +59,12 @@ class Manage::VisitsController < Manage::ApplicationController
       current_inventory_pool
       .visits
       .hand_over
-      .find_by_id(params[:visit_id])
+      .find(params[:visit_id])
 
-    unless visit.blank?
-      ActiveRecord::Base.transaction do
-        visit.reservations.each(&:destroy!)
-      end
+    ActiveRecord::Base.transaction do
+      visit.reservations.each(&:destroy!)
     end
+
     head :ok
   end
 
@@ -53,6 +86,22 @@ class Manage::VisitsController < Manage::ApplicationController
     end
 
     head :ok
+  end
+
+  private
+
+  def type_param
+    params.require(:type)
+  end
+
+  def offset_param
+    p = params.require(:offset)
+    p.match(/\d*/) ? p : raise(ActionController::UnpermittedParameters)
+  end
+
+  def limit_param
+    p = params.require(:limit)
+    p.match(/\d*/) ? p : raise(ActionController::UnpermittedParameters)
   end
 
 end

@@ -3759,11 +3759,19 @@ window.i18n.locale_data = {
       ],
       "No verification required": [
          null,
-         "nicht visierungspflichtig"
+         "Nicht visierungspflichtig"
       ],
       "Verification required": [
          null,
          "Visierungspflichtig"
+      ],
+      "User to verify": [
+         null,
+         "Visierungspflichtige Benutzer"
+      ],
+      "User and model to verify": [
+         null,
+         "Visierungspflichtige Benutzer und Modelle"
       ],
       "Statistics": [
          null,

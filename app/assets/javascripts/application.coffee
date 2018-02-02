@@ -57,7 +57,11 @@
 #####
 
 window.App ?= {}
-window.Tools ?= {}
+window.Tools ?=
+  inspect: (val) =>
+    console.log(val)
+    val
+
 window.App.Modules ?= {}
 
 # use exports from webpack packs as globals for existing code:
@@ -65,6 +69,8 @@ appPack = window.Packs.application
 window.React = appPack.React
 window.ReactDOM = appPack.ReactDOM
 window.createReactClass = appPack.createReactClass
+
+window.lodash = appPack.lodash
 
 # React components that used *directly* from non-webpack code
 # (meaning using `React.render` directly, not the `react_rails` helpers)

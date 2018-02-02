@@ -206,3 +206,6 @@ Rails/Validation:
 
 Style/WordArray:
   Enabled: false
+
+Performance/RedundantMatch:
+  Enabled: false

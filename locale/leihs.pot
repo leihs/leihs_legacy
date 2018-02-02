@@ -2843,6 +2843,12 @@ msgstr ""
 msgid "Verification required"
 msgstr ""
 
+msgid "User to verify"
+msgstr ""
+
+msgid "User and model to verify"
+msgstr ""
+
 msgid "Statistics"
 msgstr ""
 

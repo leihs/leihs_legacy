@@ -27,3 +27,4 @@
   :javascript
     Timecop.install();
     Timecop.travel(new Date("#{Time.now.iso8601}"));
+    if (typeof Date.now !== 'function') { Date.now = function(){ return new Date().getTime() } }

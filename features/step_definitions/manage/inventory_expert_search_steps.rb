@@ -437,7 +437,10 @@ def fill_type_date(fromTo, field, text_date)
     else
       throw 'Unexpected from/to: ' + fromTo.to_s
     end
-  find_field_box(field).find('div.col1of2[data-type=value]').find('div', text: label).find('input').set(text_date)
+  input = find_field_box(field).find('div.col1of2[data-type=value]').find('div', text: label).find('input')
+  input.set('')
+  input.native.send_key :enter
+  input.set(text_date)
 end
 
 def fill_type_currency(minMax, field, text_value)
