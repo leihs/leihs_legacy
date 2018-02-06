@@ -2733,3 +2733,6 @@ msgstr ""
 
 msgid "is not a HTTP(S) URL"
 msgstr ""
+
+msgid "Only enter whole numbers"
+msgstr ""

@@ -177,12 +177,6 @@
       el.html data
       false
 
-    # BATCH: nothing can't be saved if any form has any invalid field:
-    $form.find("button[type='submit']").on 'click', ->
-      if $('form :invalid').length
-        scroll_to $('form :invalid').first().closest('.request')
-        false
-
     # BATCH: handle form submitting
     $form
     .on('ajax:success', (e, data, status, xhr) ->

@@ -2934,3 +2934,6 @@ msgstr "isch nöd eini gültige URL"
 
 msgid "is not a HTTP(S) URL"
 msgstr "isch nöd eini HTTP(S) URL"
+
+msgid "Only enter whole numbers"
+msgstr "Geben Sie nur ganze Zahlen ein"

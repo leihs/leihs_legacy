@@ -21,6 +21,8 @@ RequestEditFormBehaviour =
       else
         inspection_comment_el.removeAttr('required')
 
+  autocompleteInputs: ->
+
     # form constraint validation additions
     $('input[type="number"][step="1"][data-customValidity]').each(->
       $elm = $(this)
@@ -29,8 +31,6 @@ RequestEditFormBehaviour =
         if $elm.is(':invalid') then $elm[0]?.setCustomValidity?($elm.data('customvalidity'))
       )
     )
-
-  autocompleteInputs: ->
 
     $("#request_edit_select_inspection_comment_templates").on('change', ->
       $select = $(this)

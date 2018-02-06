@@ -4553,6 +4553,10 @@ window.i18n.locale_data = {
       "only models without items": [
          null,
          "nur Modelle ohne Gegenstände"
+      ],
+      "Only enter whole numbers": [
+         null,
+         "Geben Sie nur ganze Zahlen ein"
       ]
    }
 }

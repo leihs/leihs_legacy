@@ -882,6 +882,10 @@ window.i18n.locale_data = {
       "is not a HTTP(S) URL": [
          null,
          "no es una URL HTTP(S)"
+      ],
+      "Only enter whole numbers": [
+         null,
+         "Solo ingrese números enteros"
       ]
    }
 }

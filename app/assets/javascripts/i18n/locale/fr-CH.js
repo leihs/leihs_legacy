@@ -4463,6 +4463,10 @@ window.i18n.locale_data = {
       "is not a HTTP(S) URL": [
          null,
          "n’est pas une URL HTTP(S)"
+      ],
+      "Only enter whole numbers": [
+         null,
+         "Entrez uniquement des nombres entiers"
       ]
    }
 }

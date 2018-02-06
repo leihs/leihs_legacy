@@ -3518,3 +3518,6 @@ msgstr "nur Modelle mit Gegenständen"
 
 msgid "only models without items"
 msgstr "nur Modelle ohne Gegenstände"
+
+msgid "Only enter whole numbers"
+msgstr "Geben Sie nur ganze Zahlen ein"
