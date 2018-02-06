@@ -617,3 +617,6 @@ msgstr "no es una URL valida"
 
 msgid "is not a HTTP(S) URL"
 msgstr "no es una URL HTTP(S)"
+
+msgid "Only enter whole numbers"
+msgstr "Solo ingrese números enteros"

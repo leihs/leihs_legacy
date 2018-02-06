@@ -8,7 +8,7 @@ $.views.tags
 
   diffDatesInDays: (firstDate, secondDate) -> 
     days = moment(secondDate).endOf("day").diff(moment(firstDate).startOf("day"), "days") + 1
-    "#{days} #{_jed('Days', 'Day', days)}"
+    "#{days} #{_jed(days, 'Day', 'Days')}"
 
   diffToday: (date) ->
     if moment().startOf("day").diff(moment(date).startOf("day"), "days") == 0

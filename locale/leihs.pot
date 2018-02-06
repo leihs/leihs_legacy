@@ -3437,3 +3437,6 @@ msgstr ""
 
 msgid "only models without items"
 msgstr ""
+
+msgid "Only enter whole numbers"
+msgstr ""

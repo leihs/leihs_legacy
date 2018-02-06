@@ -2956,3 +2956,6 @@ msgstr "All"
 
 msgid "Refresh Page"
 msgstr ""
+
+msgid "Only enter whole numbers"
+msgstr ""

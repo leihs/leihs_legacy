@@ -3908,6 +3908,10 @@ window.i18n.locale_data = {
       "Refresh Page": [
          null,
          ""
+      ],
+      "Only enter whole numbers": [
+         null,
+         ""
       ]
    }
 }
