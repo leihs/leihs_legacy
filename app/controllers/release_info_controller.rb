@@ -1,4 +1,5 @@
 class ReleaseInfoController < ActionController::Base
+  include AppSettings
 
   layout 'splash'
 

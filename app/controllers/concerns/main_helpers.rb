@@ -6,6 +6,7 @@ module MainHelpers
     include Concerns::UserSessionController
     require File.join(Rails.root, 'lib', 'authenticated_system.rb')
     include AuthenticatedSystem
+    include AppSettings
 
     before_action :set_gettext_locale, :load_settings, :permit_params
 
@@ -26,7 +27,6 @@ module MainHelpers
 
     helper_method(:current_inventory_pool,
                   :current_managed_inventory_pools,
-                  :app_settings,
                   :admin?)
 
     # TODO: **20 optimize lib/role_requirement and refactor to backend
@@ -122,10 +122,6 @@ module MainHelpers
       else
         paginated_active_record.total_entries
       end
-    end
-
-    def app_settings
-      @app_settings ||= Setting.first
     end
 
   end
