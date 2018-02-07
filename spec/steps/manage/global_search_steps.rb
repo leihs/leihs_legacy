@@ -161,6 +161,7 @@ module Manage
       private
 
       def check_contracts_within_container(css_path, table)
+        expect(find(css_path)).not_to have_selector('[data-loading]')
         within css_path do
           expect(all('.row[data-id]').map { |r| r['data-id'] }).to be ==
             table.raw.flatten.map \

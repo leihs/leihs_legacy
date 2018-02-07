@@ -43,10 +43,14 @@ class window.App.User extends Spine.Model
     delegations = _.filter users, (r)-> r.isDelegation()
     delegator_user_ids = _.uniq _.map delegations, (r)-> r.delegator_user_id
     if delegator_user_ids.length
-      App.User.ajaxFetch
-        data: $.param
+      $.ajax
+        url: App.User.url()
+        type: "GET",
+        dataType: "json",
+        data:
           ids: delegator_user_ids
-      .done ->
+      .done (data) ->
+        App.User.addRecord new App.User(datum) for datum in data
         callback?()
     else
       callback?()

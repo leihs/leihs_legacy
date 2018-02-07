@@ -10,7 +10,6 @@ class window.App.SearchOverviewController extends Spine.Controller
     "#contracts": "contracts"
     "#orders": "orders"
     "#options": "options"
-    "#loading": "loading"
 
   constructor: ->
     super
@@ -33,33 +32,40 @@ class window.App.SearchOverviewController extends Spine.Controller
     new App.OrdersRejectController {el: @el, async: true, callback: @orderRejected}
     new App.TimeLineController {el: @el}
 
-  removeLoading: _.after 5, -> @loading.remove()
+  removeLoading: (el) ->
+    el.find("[data-loading]").remove()
 
   searchModels: =>
-    App.Model.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Model.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         type: "model"
         per_page: @previewAmount
         search_term: @searchTerm
     .done (data, status, xhr)=> 
-      models = (App.Model.find datum.id for datum in data)
+      models = (App.Model.addRecord new App.Model(datum) for datum in data)
       @fetchAvailability(models).done =>
         @render @models, "manage/views/models/line", models, xhr
 
   searchSoftware: =>
-    App.Software.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Software.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         type: "software"
         per_page: @previewAmount
         search_term: @searchTerm
     .done (data, status, xhr)=>
-      software = (App.Software.find datum.id for datum in data)
+      software = (App.Software.addRecord App.Software(datum) for datum in data)
       @fetchAvailability(software).done =>
         @render @software, "manage/views/software/line", software, xhr
 
   render: (el, templatePath, records, xhr)=>
     totalCount = JSON.parse(xhr.getResponseHeader("X-Pagination")).total_count
-    do @removeLoading
+    @removeLoading(el)
     if records.length
       el.find(".list-of-lines").html(
         App.Render(
@@ -71,80 +77,108 @@ class window.App.SearchOverviewController extends Spine.Controller
         )
       )
       el.removeClass("hidden")
+    else
+      el.addClass("hidden")
     if totalCount > @previewAmount
       el.find("[data-type='show-all']").removeClass("hidden").append $("<span class='badge margin-left-s'>#{totalCount}</span>")
 
   fetchAvailability: (models)=>
     ids = _.map models, (m)-> m.id
     return {done: (c)->c()} unless ids.length
-    App.Availability.ajaxFetch
-      url: App.Availability.url()+"/in_stock"
-      data: $.param
+    $.ajax
+      url: App.Availability.url()+"/in_stock",
+      type: "GET",
+      dataType: "json",
+      data:
         model_ids: ids
+    .done (data) =>
+      App.Availability.addRecord new App.Availability(datum) for datum in data
+
 
   searchItems: =>
-    App.Item.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Item.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         type: "item"
         per_page: @previewAmount
         search_term: @searchTerm
         current_inventory_pool: false
     .done (data, status, xhr)=> 
-      items = (App.Item.find datum.id for datum in data)
+      items = (App.Item.addRecord new App.Item(datum) for datum in data)
       @fetchModels(items).done =>
         @render @items, "manage/views/items/line", items, xhr
 
   searchLicenses: =>
-    App.License.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.License.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         type: "license"
         per_page: @previewAmount
         search_term: @searchTerm
         current_inventory_pool: false
     .done (data, status, xhr)=>
-      licenses = (App.License.find datum.id for datum in data)
-      @fetchModels(licenses).done =>
+      licenses = (App.License.addRecord new App.License(datum) for datum in data)
+      @fetchModels(licenses).done (data) =>
         @render @licenses, "manage/views/licenses/line", licenses, xhr
 
   fetchModels:(items) =>
     ids = _.uniq _.map items, (m)-> m.model_id
     return {done: (c)->c()} unless ids.length
-    App.Model.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Model.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         ids: ids
         paginate: false
         include_package_models: true
+    .done (data) =>
+      App.Model.addRecord new App.Model(datum) for datum in data
 
   searchDelegations: =>
-    App.User.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.User.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         per_page: @previewAmount
         search_term: @searchTerm
         type: 'delegation'
     .done (data, status, xhr)=>
-      delegations = (App.User.find datum.id for datum in data)
+      delegations = (App.User.addRecord new App.User(datum) for datum in data)
       App.User.fetchDelegators delegations, =>
         @render @delegations, "manage/views/users/search_result_line", delegations, xhr
 
   searchUsers: =>
-    App.User.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.User.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         per_page: @previewAmount
         search_term: @searchTerm
         type: 'user'
+        content_type: "application/json"
     .done (data, status, xhr)=>
-      users = (App.User.find datum.id for datum in data)
+      users = (App.User.addRecord new App.User(datum) for datum in data)
       @render @users, "manage/views/users/search_result_line", users, xhr
 
   searchContracts: =>
-    App.Contract.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Contract.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         per_page: @previewAmount
         global_contracts_search: true
         search_term: @searchTerm
         status: ["open", "closed"]
     .done (data, status, xhr)=>
-      contracts = (App.Contract.find datum.id for datum in data)
+      contracts = (App.Contract.addRecord new App.Contract(datum) for datum in data)
       @fetchUsers(contracts, "all").done =>
         @fetchReservationsForContracts(contracts).done =>
           @render @contracts, "manage/views/contracts/line", contracts, xhr
@@ -156,45 +190,64 @@ class window.App.SearchOverviewController extends Spine.Controller
       ids: ids
       paginate: false
     $.extend data, {all: true} if all == "all"
-    App.User.ajaxFetch
-      data: $.param(data)
+    $.ajax
+      url: App.User.url(),
+      type: "GET",
+      dataType: "json",
+      data: data
     .done (data)=>
-      users = (App.User.find datum.id for datum in data)
+      users = (App.User.addRecord new App.User(datum) for datum in data)
       App.User.fetchDelegators users
 
   fetchReservationsForContracts: (records)=>
     ids = _.flatten _.map records, (r)-> r.id
     return {done: (c)->c()} unless ids.length
-    App.Reservation.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Reservation.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         contract_ids: ids
         paginate: false
+    .done (data) =>
+      App.Reservation.addRecord new App.Reservation(datum) for datum in data
 
   fetchReservationsForOrders: (records)=>
     ids = _.flatten _.map records, (r)-> r.id
     return {done: (c)->c()} unless ids.length
-    App.Reservation.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Reservation.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         order_ids: ids
         paginate: false
+    .done (data) =>
+      App.Reservation.addRecord new App.Reservation(datum) for datum in data
 
   searchOrders: =>
-    App.Order.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Order.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         per_page: @previewAmount
         search_term: @searchTerm
         status: ["approved", "submitted", "rejected"]
     .done (data, status, xhr)=>
-      orders = (App.Order.find datum.id for datum in data)
-      @fetchUsers(orders).done =>
-        @fetchReservationsForOrders(orders).done =>
+      orders = (App.Order.addRecord new App.Order(datum) for datum in data)
+      @fetchUsers(orders).done (data) =>
+        @fetchReservationsForOrders(orders).done (data) =>
           @render @orders, "manage/views/orders/line", orders, xhr
 
   searchOptions: =>
-    App.Option.ajaxFetch
-      data: $.param
+    $.ajax
+      url: App.Option.url(),
+      type: "GET",
+      dataType: "json",
+      data:
         per_page: @previewAmount
         search_term: @searchTerm
     .done (data, status, xhr)=>
-        options = (App.Option.find datum.id for datum in data)
+        options = (App.Option.addRecord new App.Option(datum) for datum in data)
         @render @options, "manage/views/options/line", options, xhr
