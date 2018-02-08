@@ -109,10 +109,10 @@ msgid "Couldn't update "
 msgstr ""
 
 msgid "Day"
-msgstr ""
+msgstr "Día"
 
 msgid "Days"
-msgstr ""
+msgstr "Días"
 
 msgid "Deadline soon"
 msgstr "El plazo está por vencerse"

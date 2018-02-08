@@ -1,14 +1,15 @@
 $.views.tags
-  
+
   diffDates: (firstDate, secondDate) ->
     if moment(secondDate).startOf("day").diff(moment(firstDate).startOf("day"), "days") < 1
       _jed("Today")
     else
       moment(firstDate).startOf("day").from(moment(secondDate).startOf("day"))
 
-  diffDatesInDays: (firstDate, secondDate) -> 
+  diffDatesInDays: (firstDate, secondDate) ->
     days = moment(secondDate).endOf("day").diff(moment(firstDate).startOf("day"), "days") + 1
-    "#{days} #{_jed(days, 'Day', 'Days')}"
+    "#{days} #{_jed(days, 'Day', _jed('Days'))}"
+
 
   diffToday: (date) ->
     if moment().startOf("day").diff(moment(date).startOf("day"), "days") == 0
