@@ -33,6 +33,7 @@ class Manage::ModelsController < Manage::ApplicationController
 
   def create
     not_authorized! unless privileged_user?
+    created = false
     ApplicationRecord.transaction do
       @model = case params[:model][:type]
                when 'software'
@@ -41,12 +42,19 @@ class Manage::ModelsController < Manage::ApplicationController
                    Model
                end.create(product: params[:model][:product],
                           version: params[:model][:version])
-      if save_model @model
-        render status: :ok, json: { id: @model.id }
+      save_model(@model)
+      if !@model.persisted? or @model.errors.any?
+        raise ActiveRecord::Rollback
       else
-        render status: :bad_request,
-               plain: @model.errors.full_messages.uniq.join(', ')
+        created = true
       end
+    end
+
+    unless created
+      render status: :bad_request,
+             plain: @model.errors.full_messages.uniq.join(', ')
+    else
+      render status: :ok, json: { id: @model.id }
     end
   end
 
