@@ -1,9 +1,13 @@
 .inline-tab-navigation
-  .inline-tab-item.active= names[0]
+  .inline-tab-item.active{style: "background-color: #cccccc !important"}
+    = names[0]
 
 .list-of-lines
+  %img.margin-horziontal-auto.margin-top-s.margin-bottom-s{:src => asset_path("loading.gif"), 'data-loading': true}
+  %div.margin-top-s.margin-bottom-s.headline-s.grey-text.hidden{align: :center, 'data-no_results': true}
+    = _("No results")
 
-.margin-bottom-m
-  .row.text-align-center.padding-top-xs
+.margin-bottom-m.margin-top-xs
+  .row.text-align-center
     %a.button.inset.focus-hover-thin.hidden{:"data-type" => "show-all", :href => link}
       = _("Show all found %s") % names[0]

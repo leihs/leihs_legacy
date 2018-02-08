@@ -205,11 +205,11 @@ window.i18n.locale_data = {
       ],
       "Day": [
          null,
-         ""
+         "Día"
       ],
       "Days": [
          null,
-         ""
+         "Días"
       ],
       "Deadline soon": [
          null,
