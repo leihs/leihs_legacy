@@ -3527,3 +3527,6 @@ msgstr "nur Modelle ohne Gegenstände"
 
 msgid "Only enter whole numbers"
 msgstr "Geben Sie nur ganze Zahlen ein"
+
+msgid "No orders are possible on this end date"
+msgstr "Bestellungen sind für dieses Rückgabetag nicht möglich"

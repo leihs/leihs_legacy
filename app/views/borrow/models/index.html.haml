@@ -17,16 +17,17 @@
   .col1of5= render :partial => "borrow/basket"
 
 :coffeescript
-    
+
   for model in #{@models.to_json}
     App.Model.addRecord new App.Model model
 
   for inventory_pool in #{@inventory_pools.to_json}
     App.InventoryPool.addRecord new App.InventoryPool inventory_pool
-  
+
   jQuery ->
 
     new App.ModelsIndexController
       el: $("#models-index")
       params: #{params.delete_if{|k,v| k == "_bc"}.to_json}
       models: #{@models.to_json}
+      inventoryPoolsForCalendar: #{@inventory_pools_for_calendar.to_json}

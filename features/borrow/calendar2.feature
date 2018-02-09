@@ -31,7 +31,8 @@ Feature: Calendar
     And I add a model to the order that is available across all the still remaining inventory pools
     Then the calendar opens
     And that inventory pool which comes alphabetically first is selected
-    Then any closed days of the selected inventory pool are shown
+    And I select an inventory pool with holidays
+    Then any holidays of the selected inventory pool are shown
 
   Scenario: Jumping back and forth between months in the calendar
     Given I have opened the booking calendar
@@ -55,7 +56,9 @@ Feature: Calendar
   Scenario: Maximal quantity available in the calendar
     Given I have opened the booking calendar
     Then the maximum available quantity of the chosen model is displayed
-    And I can enter at most this maximum quantity
+    When I enter a higher quantity than the total borrowable for the selected pool
+    Then the booking calendar shows an error message
+    And the add button is disabled
 
   Scenario: Inventory pools that are available in the calendar
     Given I have opened the booking calendar

@@ -41,6 +41,15 @@ class Borrow::ModelsController < Borrow::ApplicationController
             end
         end
         @inventory_pools = current_user.inventory_pools.order(:name)
+
+        # used for React booking calendar #########################################
+        @inventory_pools_for_calendar = @inventory_pools.map do |ip|
+          { inventory_pool: ip,
+            workday: ip.workday,
+            holidays: \
+              ip.holidays.where('CURRENT_DATE <= end_date').order(:end_date) }
+        end
+        ###########################################################################
       end
     end
   end

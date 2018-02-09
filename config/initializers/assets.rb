@@ -12,6 +12,7 @@ Rails.application.config.assets.precompile += %w( application.js
                                                   borrow.js
                                                   manage.js
                                                   application.css
+                                                  borrow.css
                                                   print.css
                                                   i18n/locale/*
                                                   simile_timeline/*

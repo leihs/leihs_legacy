@@ -27,6 +27,7 @@ gem 'liquid', '~> 3.0'
 gem 'mini_magick', '~> 3.4'
 gem 'net-ldap', require: 'net/ldap'
 gem 'nilify_blanks', '~> 1.1'
+gem 'presentoir', git: 'https://github.com/leihs/presentoir', ref: '1f65b6a673be93f9babb17f26f3bacaf64a7fbc2'
 gem 'rails_autolink', '~> 1.0'
 gem 'rake' # So that cronjobs work -- otherwise they can't find rake
 gem 'rinku', '~> 2.0.4', require: false
@@ -53,6 +54,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-jquery-ui', '~> 1.1'
   gem 'rails-assets-jquery-ujs', '~> 1.0'
   gem 'rails-assets-moment', '~> 2.10'
+  gem 'rails-assets-moment-range', '2.2'
   gem 'rails-assets-timecop', '~> 0.1'
   gem 'rails-assets-underscore', '~> 1.8'
   # gem 'rails-assets-spine', '~> 1.3.0'

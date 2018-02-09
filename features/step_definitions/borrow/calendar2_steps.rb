@@ -201,7 +201,7 @@ When(/^I add this model from the model list$/) do
 end
 
 def get_selected_inventory_pool
-  InventoryPool.find_by_name find('#booking-calendar-inventory-pool option').value.split(' ').first
+  InventoryPool.find find('#booking-calendar-inventory-pool option').value
 end
 
 Then(/^that model's availability is shown in the calendar$/) do
@@ -210,11 +210,11 @@ Then(/^that model's availability is shown in the calendar$/) do
   changes = av.available_total_quantities
 
   changes.each_with_index do |change, i|
-    current_calendar_date = Date.parse page.evaluate_script %Q{ $("#booking-calendar").fullCalendar("getDate").toDateString() }
+    current_calendar_date = Date.parse(find('.fc-day:not(.fc-other-month)', match: :first)['data-date'])
     current_change_date = change[0]
     while current_calendar_date.month != current_change_date.month do
       find('.fc-button-next').click
-      current_calendar_date = Date.parse page.evaluate_script %Q{ $("#booking-calendar").fullCalendar("getDate").toDateString() }
+      current_calendar_date = Date.parse(find('.fc-day:not(.fc-other-month)', match: :first)['data-date'])
     end
 
     # iterate days between this change and the next one
@@ -228,11 +228,19 @@ Then(/^that model's availability is shown in the calendar$/) do
           find('.fc-button-next').click
         end
         last_month = next_date.month
-        change_date_el = find('.fc-widget-content:not(.fc-other-month) .fc-day-number', match: :prefer_exact, text: /#{next_date.day}/).first(:xpath, '../..')
+        change_date_el = find('.fc-widget-content:not(.fc-other-month) .fc-day-number',
+                              match: :prefer_exact,
+                              text: /#{next_date.day}/).first(:xpath, '../..')
         next unless @current_inventory_pool.open_on? change_date_el[:"data-date"].to_date
         # check borrower availability
-        quantity_for_borrower = av.maximum_available_in_period_summed_for_groups next_date, next_date, @current_user.entitlement_group_ids
-        change_date_el.find('.fc-day-content div', text: quantity_for_borrower)
+        quantity_for_borrower = av.maximum_available_in_period_summed_for_groups(next_date,
+                                                                                 next_date,
+                                                                                 @current_user.entitlement_group_ids)
+        begin
+          change_date_el.find('.fc-day-content', text: quantity_for_borrower)
+        rescue
+          binding.pry
+        end
         next_date += 1.day
       end
     end
@@ -255,7 +263,7 @@ end
 
 Then(/^the start date is shown in the calendar$/) do
   start_date = Date.parse(find('#booking-calendar-start-date').value).to_s(:db)
-  find(".fc-widget-content.start-date[data-date='#{start_date}']")
+  find(".fc-widget-content[data-date='#{start_date}']")
 end
 
 When(/^I use the jump button to jump to the current end date$/) do
@@ -265,7 +273,7 @@ end
 
 Then(/^the end date is shown in the calendar$/) do
   end_date = Date.parse(find('#booking-calendar-end-date').value).to_s(:db)
-  find(".fc-widget-content.end-date[data-date='#{end_date}']")
+  find(".fc-widget-content[data-date='#{end_date}']")
 end
 
 When(/^I jump back and forth between months$/) do
@@ -276,15 +284,18 @@ Then(/^the calendar shows the currently selected month$/) do
   find('.fc-header-title', text: I18n.l(Date.today.next_month, format: '%B %Y'))
 end
 
-Then(/^any closed days of the selected inventory pool are shown$/) do
-  within '#booking-calendar-inventory-pool' do
-    expect(has_selector?('option')).to be true
-    @inventory_pool = InventoryPool.find all('option').detect{|o| o.selected?}['data-id']
-  end
+Then(/^I select an inventory pool with holidays$/) do
+  @inventory_pool = @inventory_pools.find { |ip| ip.holidays.exists? }
+  select @inventory_pool.name, from: 'booking-calendar-inventory-pool'
+end
+
+Then(/^any holidays of the selected inventory pool are shown$/) do
   @holiday = @inventory_pool.holidays.first
+  find('.fc-day-content', match: :first)
   holiday_not_found = all('.fc-day-content', text: @holiday.name).empty?
   while holiday_not_found do
     find('.fc-button-next').click
+    find('.fc-day-content', match: :first)
     holiday_not_found = all('.fc-day-content', text: @holiday.name).empty?
   end
 end
@@ -331,17 +342,25 @@ Then(/^the maximum available quantity of the chosen model is displayed$/) do
   end
 end
 
-Then(/^I can enter at most this maximum quantity$/) do
-  max_quantity = 0
+Then(/^I enter a higher quantity than the total borrowable for the selected pool$/) do
+  max_quantity = nil
   within '.modal #booking-calendar-inventory-pool' do
     expect(has_selector?('option')).to be true
     inventory_pool = InventoryPool.find(all('option').detect{|o| o.selected?}['data-id'])
     max_quantity = @model.total_borrowable_items_for_user(@current_user, inventory_pool)
   end
-  find('#booking-calendar-quantity').set (max_quantity+1).to_s
-  expect(find('#booking-calendar-quantity').value).to eq (max_quantity).to_s
+  find('#booking-calendar-quantity').set (max_quantity + 1).to_s
+  expect(find('#booking-calendar-quantity').value).to eq (max_quantity + 1).to_s
 end
 
+Then(/^the booking calendar shows an error message$/) do
+  find('.modal #booking-calendar-errors',
+       text: _('Item is not available in that time range.'))
+end
+
+Then(/^the add button is disabled$/) do
+  expect(find('.modal #submit-booking-calendar')).to be_disabled
+end
 
 When(/^I choose the second inventory pool from the inventory pool list$/) do
   @current_inventory_pool = @current_user.inventory_pools.sort[1]
@@ -377,7 +396,7 @@ end
 
 Then(/^that inventory pool which comes alphabetically first is selected$/) do
   within '.modal' do
-    expect(find('#booking-calendar-inventory-pool').value.split(' ')[0]).to eq @inventory_pools.first.name
+    expect(find('#booking-calendar-inventory-pool').value).to eq @inventory_pools.first.id
   end
 end
 

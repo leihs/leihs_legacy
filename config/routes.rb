@@ -76,6 +76,9 @@ Rails.application.routes.draw do
     get "maintenance", to: "application#maintenance"
 
     get "availability", to: "availability#show", as: "availability"
+    get 'booking_calendar_availability', to: 'availability#booking_calendar_availability'
+    get 'total_borrowable_quantities', to: 'availability#total_borrowable_quantities'
+
     get "holidays", to: "holidays#index", as: "holidays"
     get "inventory_pools", to: "inventory_pools#index", as: "inventory_pools"
 

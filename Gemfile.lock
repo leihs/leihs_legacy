@@ -33,6 +33,13 @@ GIT
     jsrender-rails (2.0)
       rails (~> 5.0.0)
 
+GIT
+  remote: https://github.com/leihs/presentoir
+  revision: 1f65b6a673be93f9babb17f26f3bacaf64a7fbc2
+  ref: 1f65b6a673be93f9babb17f26f3bacaf64a7fbc2
+  specs:
+    presentoir (1.0.0)
+
 PATH
   remote: engines/leihs_admin
   specs:
@@ -386,6 +393,8 @@ GEM
       rails-assets-jquery (> 1.8)
     rails-assets-jquery.inview (1.0.0)
     rails-assets-moment (2.18.1)
+    rails-assets-moment-range (2.2.0)
+      rails-assets-moment (>= 1)
     rails-assets-select2 (4.0.3)
     rails-assets-timecop (0.1.1)
     rails-assets-underscore (1.8.3)
@@ -600,6 +609,7 @@ DEPENDENCIES
   open4
   pg
   pg_tasks!
+  presentoir!
   procurement!
   pry
   pry-rails
@@ -614,6 +624,7 @@ DEPENDENCIES
   rails-assets-jquery-ujs (~> 1.0)!
   rails-assets-jquery.inview (= 1.0.0)!
   rails-assets-moment (~> 2.10)!
+  rails-assets-moment-range (= 2.2)!
   rails-assets-timecop (~> 0.1)!
   rails-assets-underscore (~> 1.8)!
   rails_autolink (~> 1.0)

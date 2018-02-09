@@ -4,6 +4,7 @@
   %head
     %title= "#{yield(:title)}#{(yield :title).blank? ? "":" | "}leihs"
     = render :partial => "layouts/head"
+    = stylesheet_link_tag "borrow", :media => "all"
     = javascript_include_tag "borrow"
     = render :partial => "borrow/global_javascript_injection"
     = render partial: "layouts/custom_head_tag"

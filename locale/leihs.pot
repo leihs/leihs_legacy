@@ -3440,3 +3440,6 @@ msgstr ""
 
 msgid "Only enter whole numbers"
 msgstr ""
+
+msgid "No orders are possible on this end date"
+msgstr ""

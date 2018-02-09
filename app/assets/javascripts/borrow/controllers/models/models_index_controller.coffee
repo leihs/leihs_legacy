@@ -4,7 +4,7 @@ class window.App.ModelsIndexController extends Spine.Controller
     "#model-list": "list"
 
   events:
-    "click [data-create-order-line]": "createReservation"
+    "click [data-create-order-line]": "openBookingCalendar"
 
   constructor: ->
     super
@@ -37,13 +37,52 @@ class window.App.ModelsIndexController extends Spine.Controller
         @pagination.setData JSON.parse(xhr.getResponseHeader("X-Pagination"))
     )
 
-  createReservation: (e)=>
+  openBookingCalendar: (e)=>
     do e.preventDefault
-    new App.ReservationsCreateController
-      modelId: $(e.currentTarget).data("model-id")
-      titel: _jed("Add to order")
-      buttonText: _jed("Add")
-    return false
+    modelId = $(e.target.closest("[data-id]")).data("id")
+    @fetchTotalBorrowableQuantities modelId, (data) =>
+      inventoryPools = _.select(@inventoryPoolsForCalendar, (ipContext) =>
+        _.contains(@ipSelector.activeInventoryPoolIds(), ipContext.inventory_pool.id)
+      )
+      inventoryPools = _.map(inventoryPools, (ipContext) =>
+        tbq = _.find(data, (d) => ipContext.inventory_pool.id == d.inventory_pool_id)
+        _.extend(ipContext, { total_borrowable: tbq.total_borrowable })
+      )
+      inventoryPools = _.select(inventoryPools, (ipContext) => ipContext.total_borrowable > 0)
+      @renderBookingCalendar(modelId, inventoryPools)
+
+  renderBookingCalendar: (modelId, inventoryPools)=>
+    jModal = $("<div class='modal ui-modal medium' role='dialog' tabIndex='-1' />")
+    @modal = new App.Modal(
+      jModal,
+      () => ReactDOM.unmountComponentAtNode(jModal.get()[0])
+    )
+    period = @period.getPeriod()
+    ReactDOM.render(
+      React.createElement(CalendarDialog,
+        model: App.Model.find(modelId)
+        inventoryPools: inventoryPools
+        startDate: moment(period?.start_date or moment()),
+        endDate: moment(period?.end_date or moment().add(1, 'day')),
+        addButtonSuccessCallback: =>
+          App.Reservation.trigger "refresh"
+          @modal.destroyable()
+          App.Modal.destroyAll true
+      ),
+      @modal.el.get()[0]
+    )
+
+  fetchTotalBorrowableQuantities: (modelId, callback) =>
+    $.ajax({
+      url: '/borrow/total_borrowable_quantities',
+      method: 'GET',
+      dataType: 'json',
+      data: {
+        model_id: modelId,
+        inventory_pool_ids: @ipSelector.activeInventoryPoolIds()
+      },
+      success: (data) => callback(data)
+    })
 
   periodChange: =>
     do @reset.validate

@@ -82,4 +82,16 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def respond_with_presenter(presenter)
+    fail 'Not a Presenter' unless presenter.is_a?(ApplicationPresenter)
+    respond_to do |format|
+      format.html { render(locals: { get: presenter }) }
+      format.json { render_json(presenter) }
+    end
+  end
+
+  def render_json(presenter)
+    render(json: JSON.pretty_generate(presenter.dump))
+  end
+
 end

@@ -12,6 +12,7 @@
 #= require jquery-ujs
 #= require jquery.inview
 #= require moment
+#= require moment-range
 #= require fullcalendar
 #= require underscore
 #= require accounting.js/accounting.js
@@ -74,7 +75,7 @@ window.lodash = appPack.lodash
 
 # React components that used *directly* from non-webpack code
 # (meaning using `React.render` directly, not the `react_rails` helpers)
-['HandoverAutocomplete'].forEach((name) ->
+['HandoverAutocomplete', 'CalendarDialog'].forEach((name) ->
   m = appPack.requireComponent('./' + name)
   # support default or named exports (if same name)
   if typeof m == 'object' && typeof m.default == 'function'

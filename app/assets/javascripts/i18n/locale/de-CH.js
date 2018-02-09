@@ -4565,6 +4565,10 @@ window.i18n.locale_data = {
       "Only enter whole numbers": [
          null,
          "Geben Sie nur ganze Zahlen ein"
+      ],
+      "No orders are possible on this end date": [
+         null,
+         "Bestellungen sind für dieses Rückgabetag nicht möglich"
       ]
    }
 }
