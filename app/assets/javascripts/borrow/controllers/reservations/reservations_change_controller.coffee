@@ -7,7 +7,7 @@ class window.App.ReservationsChangeController extends window.App.BorrowBookingCa
       end_date: @getEndDate().format("YYYY-MM-DD")
       inventory_pool_id: @getSelectedInventoryPool().id
       quantity: 1
-    App.Reservation.ajaxChange(reservation, "create", {})
+    App.Reservation.ajaxChange(reservation, "create", {url: "/borrow/reservations/create_legacy"})
 
   # overwrite
   done: (data)=>

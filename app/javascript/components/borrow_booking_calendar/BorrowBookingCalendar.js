@@ -102,24 +102,24 @@ const BorrowBookingCalendar = createReactClass({
   },
 
   createReservations() {
-    // one by one, at the end callback
-    const finish = _.after(this.state.quantity, this.props.addButtonSuccessCallback)
-    _.times(this.state.quantity, () => {
-      $.ajax({
-        url: '/borrow/reservations',
-        method: 'POST',
-        dataType: 'json',
-        data: {
-          start_date: this.state.startDate.format(this._f),
-          end_date: this.state.endDate.format(this._f),
-          model_id: this.props.model.id,
-          inventory_pool_id: this.state.poolContext.inventory_pool.id
-        },
-        success: (data) => {
-          App.Reservation.addRecord(new App.Reservation(data))
-          finish()
-        }
-      })
+    $.ajax({
+      url: '/borrow/reservations',
+      method: 'POST',
+      dataType: 'json',
+      data: {
+        start_date: this.state.startDate.format(this._f),
+        end_date: this.state.endDate.format(this._f),
+        model_id: this.props.model.id,
+        inventory_pool_id: this.state.poolContext.inventory_pool.id,
+        quantity: this.state.quantity
+      },
+      success: (data) => {
+        _.each(data, (reservation) => App.Reservation.addRecord(new App.Reservation(reservation)))
+        this.props.addButtonSuccessCallback()
+      },
+      error: (xhr) => {
+        this.setState({serverError: xhr.statusText})
+      }
     })
   },
 
@@ -287,7 +287,9 @@ const BorrowBookingCalendar = createReactClass({
   getErrors() {
     let errors = []
 
-    if (!this.state.startDate.isValid() || !this.state.endDate.isValid()) {
+    if (this.state.serverError) {
+      errors.push(_jed(this.state.serverError))
+    } else if (!this.state.startDate.isValid() || !this.state.endDate.isValid()) {
       errors.push('Invalid date')
     } else if (
       this.state.startDate.isBefore(this.state.todayDate, 'day') ||
@@ -323,6 +325,14 @@ const BorrowBookingCalendar = createReactClass({
     return errors
   },
 
+  reloadCalendarContent() {
+    this.setState({
+      serverError: null,
+      isLoading: true,
+      calendarData: []
+    }, this._fetchAndUpdateCalendarData)
+  },
+
   _renderErrors(errors) {
     if (errors.length) {
       return (
@@ -352,6 +362,53 @@ const BorrowBookingCalendar = createReactClass({
         {_jed('Add')}
       </button>
     )
+  },
+
+  renderContent() {
+    let content
+    if (this.state.isLoading) {
+      content =
+        <div>
+          <div className="height-s" />
+          <div className="loading-bg" />
+          <div className="height-s" />
+        </div>
+    } else if (this.state.serverError) {
+      const buttonStyle = {
+        transform: 'scale(5)',
+        color: '#30c91f',
+        backgroundImage: 'none',
+        backgroundColor: 'blueviolet',
+        borderColor: '#ffda00',
+        transform: 'skew(-0.06turn, 18deg) scale(5)'
+      }
+      content =
+        <div>
+          <div className="height-s" />
+          <div style={{textAlign: 'center'}}>
+            <button style={buttonStyle} className="button white large" onClick={this.reloadCalendarContent}>Reload</button>
+          </div>
+          <div className="height-s" />
+        </div>
+    } else {
+      content =
+        <CalendarContent
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          quantity={this.state.quantity}
+          dates={this._getDatesForCurrentMonthView()}
+          currentMonth={this.state.firstDateOfCurrentMonth.month()}
+          todayDate={this.state.todayDate}
+          poolContext={this.state.poolContext}
+          isPoolOpenOn={this._isPoolOpenOn}
+          onClickPopoverStartDateCallback={this.onClickPopoverStartDateCallback}
+          onClickPopoverEndDateCallback={this.onClickPopoverEndDateCallback}
+          changeSelectedDate={this.changeSelectedDate}
+          selectedDate={this.state.selectedDate}
+          isWithinAdvanceDaysPeriod={this._isWithinAdvanceDaysPeriod}
+        />
+    }
+    return content
   },
 
   render() {
@@ -469,30 +526,7 @@ const BorrowBookingCalendar = createReactClass({
                   this.state.firstDateOfCurrentMonth.month() != this.state.todayDate.month()
                 }
               />
-              {!this.state.isLoading && (
-                <CalendarContent
-                  startDate={this.state.startDate}
-                  endDate={this.state.endDate}
-                  quantity={this.state.quantity}
-                  dates={this._getDatesForCurrentMonthView()}
-                  currentMonth={this.state.firstDateOfCurrentMonth.month()}
-                  todayDate={this.state.todayDate}
-                  poolContext={this.state.poolContext}
-                  isPoolOpenOn={this._isPoolOpenOn}
-                  onClickPopoverStartDateCallback={this.onClickPopoverStartDateCallback}
-                  onClickPopoverEndDateCallback={this.onClickPopoverEndDateCallback}
-                  changeSelectedDate={this.changeSelectedDate}
-                  selectedDate={this.state.selectedDate}
-                  isWithinAdvanceDaysPeriod={this._isWithinAdvanceDaysPeriod}
-                />
-              )}
-              {this.state.isLoading && (
-                <div>
-                  <div className="height-s" />
-                  <div className="loading-bg" />
-                  <div className="height-s" />
-                </div>
-              )}
+              {this.renderContent()}
             </div>
           </form>
         </div>

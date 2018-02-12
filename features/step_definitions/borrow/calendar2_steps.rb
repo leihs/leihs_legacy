@@ -419,8 +419,8 @@ Then(/^I cannot order that model unless I am part of that group$/) do
   select_available_not_closed_date(:end, start_date)
 
   find('.fc-widget-content', match: :first)
-  step 'I save the booking calendar'
-  expect(find('#current-order-lines').has_content?(@model.name)).to be true
+  find('.modal #submit-booking-calendar').click
+  find('#current-order-lines', text: @model.name)
   expect(@current_user.reservations.unsubmitted.map(&:model).include?(@model)).to be true
 end
 
