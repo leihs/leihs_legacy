@@ -297,7 +297,7 @@
       params.search_term = this.state.search_term
       params.type =  this.state.tabConfig.type
 
-      if(this._currentCategory()) {
+      if(this._currentCategory() && params.type != 'option') {
         params.category_id = this._currentCategory().id
       }
 
@@ -1076,7 +1076,7 @@
     _renderLoadingOrNothing(child) {
 
       var classes = 'table-cell list-of-lines even separated-top padding-bottom-s min-height-l'
-      if(this.state.showCategories) {
+      if(this.state.showCategories && this.state.tabConfig.type != 'option') {
         classes += ' col4of5'
       }
 
