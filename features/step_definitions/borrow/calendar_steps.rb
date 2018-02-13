@@ -63,7 +63,7 @@ Then(/^(the|no) availability number is shown (.*)$/) do |arg1, arg2|
         find('.fc-button-next').click
       end
       within ".fc-widget-content[data-date='#{date}']" do
-        text = find('.fc-day-content > div').text
+        text = find('.fc-day-content').text
         case arg1
           when 'the'
             expect(text).not_to be_empty
@@ -100,4 +100,23 @@ end
 Then /^the start or end date of that line is changed$/ do
   @line.reload
   expect([@line.start_date, @line.end_date]).to include @date
+end
+
+Then /^the (start|end) date in the booking calendar becomes red and I see a (closed|not possible|too early) day warning?$/ do |arg1, arg2|
+  date = Date.parse find(".modal #booking-calendar-#{arg1}-date").value
+  within '.modal' do
+    el = find(".fc-widget-content[data-date='#{date}']").native.style('background-color')
+    # NOTE our red definition is #FF4C4D == rgba(255, 76, 77, 1)
+    expect(el).to eq 'rgba(255, 76, 77, 1)'
+
+    s = case arg2
+          when 'closed'
+            _("Inventory pool is closed on #{arg1} date")
+          when 'not possible'
+            _("Booking is no longer possible on this #{arg1} date")
+          when 'too early'
+            _('No orders are possible on this start date')
+        end
+    find('.red', text: s)
+  end
 end

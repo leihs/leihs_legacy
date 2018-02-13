@@ -308,17 +308,14 @@ const BorrowBookingCalendar = createReactClass({
       if (!this._isPoolOpenOn(this.state.endDate)) {
         errors.push('Inventory pool is closed on end date')
       }
-      if (
-        this._isWithinAdvanceDaysPeriod(this.state.startDate) ||
-        !this._poolHasStillCapacityFor(this.state.startDate)
-      ) {
+      if (this._isWithinAdvanceDaysPeriod(this.state.startDate)) {
         errors.push('No orders are possible on this start date')
       }
-      if (
-        this._isWithinAdvanceDaysPeriod(this.state.endDate) ||
-        !this._poolHasStillCapacityFor(this.state.endDate)
-      ) {
-        errors.push('No orders are possible on this end date')
+      if (!this._poolHasStillCapacityFor(this.state.startDate)) {
+        errors.push('Booking is no longer possible on this start date')
+      }
+      if (!this._poolHasStillCapacityFor(this.state.endDate)) {
+        errors.push('Booking is no longer possible on this end date')
       }
     }
 

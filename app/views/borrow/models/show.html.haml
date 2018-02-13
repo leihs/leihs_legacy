@@ -41,3 +41,5 @@
 
     new App.ModelsShowController
       el: $("#model-show")
+      model: #{@model.to_json}
+      inventoryPools: #{@inventory_pools.to_json}

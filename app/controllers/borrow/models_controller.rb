@@ -56,6 +56,22 @@ class Borrow::ModelsController < Borrow::ApplicationController
 
   def show
     @model = current_user.models.borrowable.find(params[:id])
+    @inventory_pools = current_user.inventory_pools.order(:name).map do |ip|
+      {
+        inventory_pool: ip,
+        workday: ip.workday,
+        holidays: \
+        ip.holidays.where('CURRENT_DATE <= end_date').order(:end_date),
+        total_borrowable: \
+          @model.total_borrowable_items_for_user(
+            current_user,
+            ip,
+            ensure_non_negative_general: true
+          )
+      }
+    end
+      .select { |ip_context| ip_context[:total_borrowable].positive? }
+
     respond_to do |format|
       format.json
       format.html

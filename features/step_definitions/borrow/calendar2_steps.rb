@@ -51,7 +51,6 @@ When(/^I try to add a model to the order that is not available$/) do
   step "I set the start date in the calendar to '%s'" % I18n.l(inventory_pool.next_open_date(start_date))
   step "I set the end date in the calendar to '%s'" % I18n.l(inventory_pool.next_open_date(end_date))
   step "I set the quantity in the calendar to #{@quantity}"
-  step 'I save the booking calendar'
 end
 
 When(/^I set the quantity in the calendar to (\d+)$/) do |quantity|
