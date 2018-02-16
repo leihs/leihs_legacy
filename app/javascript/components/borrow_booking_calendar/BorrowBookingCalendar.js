@@ -16,10 +16,10 @@ const BorrowBookingCalendar = createReactClass({
     return {
       todayDate: todayDate,
       firstDateOfCurrentMonth: firstDateOfCurrentMonth,
-      startDate: this.props.startDate,
-      endDate: this.props.endDate,
+      startDate: this.props.initialStartDate,
+      endDate: this.props.initialEndDate,
       selectedDate: null,
-      quantity: 1,
+      quantity: (this.props.initialQuantity || 1),
       isLoading: true,
       calendarData: [],
       poolContext: this.props.inventoryPools[0]
@@ -101,6 +101,82 @@ const BorrowBookingCalendar = createReactClass({
     return _.take(arr1, 42)
   },
 
+  existingReservations() {
+    // component used for editing existing reservations
+    return (this.props.reservations.length != 0)
+  },
+
+  // TODO: a single callback should be given to this component.
+  // right now the component is used in different contextes, where
+  // different callback chains apply:
+  // 1. CREATE NEW RESERVATIONS (from models index; involves ajax post)
+  // 1.1 `createReservations` -> `finishCallback`
+  // 2. UPDATE EXISTING RESERVATIONS (from customer order; involves ajax post)
+  // 2.1 `createReservations` -> `finishCallback`
+  // 2.2 `deleteReservations` -> `finishCallback`
+  // 2.3 `changeTimeRange` -> `finishCallback`
+  // 2.3 `changeTimeRange` -> `createReservations` -> `finishCallback`
+  // 2.3 `changeTimeRange` -> `deleteReservations` -> `finishCallback`
+  // 3. PREPARE RESERVATIONS FOR CUSTOMER ORDER (from template wizard; does not involve ajax post)
+  // 3.3 `exclusiveCallback`
+  getOnClickCallback() {
+    if (this.props.exclusiveCallback) {
+      return () => {
+        this.props.exclusiveCallback({
+          start_date: this.state.startDate.format(this._f),
+          end_date: this.state.endDate.format(this._f),
+          quantity: Number(this.state.quantity),
+          inventory_pool_id: this.state.poolContext.inventory_pool.id
+        })
+      }
+    } else {
+      let callback
+      if (this.hasQuantityIncreased()) {
+        callback = this.createReservations
+      } else if (this.hasQuantityDecreased()) {
+        callback = this.deleteReservations
+      } else {
+        callback = this.props.finishCallback
+      }
+
+      if (this.existingReservations() && this.hasTimeRangeChanged()) {
+        return () => this.changeTimeRange(callback)
+      } else {
+        return callback
+      }
+    }
+  },
+
+  changeTimeRange(successCallback) {
+    $.ajax({
+      url: '/borrow/reservations/change_time_range',
+      method: 'POST',
+      dataType: 'json',
+      data: {
+        line_ids: _.map(this.props.reservations, (r) => r.id),
+        start_date: this.state.startDate.format(this._f),
+        end_date: this.state.endDate.format(this._f),
+        inventory_pool_id: this.state.poolContext.inventory_pool.id
+      },
+      success: successCallback,
+      error: (xhr) => this.setState({serverError: xhr.statusText})
+    })
+  },
+
+  deleteReservations() {
+    const reservation_ids = _.map(this.props.reservations, (r) => r.id)
+    $.ajax({
+      url: '/borrow/reservations',
+      method: 'DELETE',
+      dataType: 'json',
+      data: {
+        line_ids: _.take(reservation_ids, (this.props.initialQuantity - this.state.quantity))
+      },
+      success: (data) => this.props.finishCallback(data),
+      error: (xhr) => this.setState({serverError: xhr.statusText})
+    })
+  },
+
   createReservations() {
     $.ajax({
       url: '/borrow/reservations',
@@ -111,12 +187,9 @@ const BorrowBookingCalendar = createReactClass({
         end_date: this.state.endDate.format(this._f),
         model_id: this.props.model.id,
         inventory_pool_id: this.state.poolContext.inventory_pool.id,
-        quantity: this.state.quantity
+        quantity: (this.state.quantity - this.props.initialQuantity)
       },
-      success: (data) => {
-        _.each(data, (reservation) => App.Reservation.addRecord(new App.Reservation(reservation)))
-        this.props.addButtonSuccessCallback()
-      },
+      success: (data) => this.props.finishCallback(data),
       error: (xhr) => {
         this.setState({serverError: xhr.statusText})
       }
@@ -132,7 +205,8 @@ const BorrowBookingCalendar = createReactClass({
         start_date: startDate,
         end_date: endDate,
         model_id: this.props.model.id,
-        inventory_pool_id: this.state.poolContext.inventory_pool.id
+        inventory_pool_id: this.state.poolContext.inventory_pool.id,
+        reservation_ids: _.map(this.props.reservations, (r) => r.id)
       }
     })
   },
@@ -348,14 +422,33 @@ const BorrowBookingCalendar = createReactClass({
     }
   },
 
+  hasTimeRangeChanged() {
+    return !(
+      this.state.startDate.format(this._f) == this.props.initialStartDate.format(this._f) &&
+      this.state.endDate.format(this._f) == this.props.initialEndDate.format(this._f)
+    )
+  },
+
+  hasQuantityDecreased() {
+    return this.state.quantity < this.props.initialQuantity
+  },
+
+  hasQuantityIncreased() {
+    return this.state.quantity > this.props.initialQuantity
+  },
+
+  hasQuantityChanged() {
+    return (this.hasQuantityDecreased() || this.hasQuantityIncreased())
+  },
+
   renderAddButton(errors) {
-    const isDisabled = errors.length != 0
+    const isEnabled = errors.length == 0
     return (
       <button
         className="button green"
         id="submit-booking-calendar"
-        onClick={this.createReservations}
-        disabled={isDisabled}>
+        onClick={this.getOnClickCallback()}
+        disabled={!isEnabled}>
         {_jed('Add')}
       </button>
     )

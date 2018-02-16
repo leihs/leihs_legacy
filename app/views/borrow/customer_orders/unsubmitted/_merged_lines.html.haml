@@ -1,4 +1,12 @@
-.row.line{:"data-ids" => line[:line_ids]}
+:ruby
+  total_borrowable = \
+    line[:model].total_borrowable_items_for_user(
+      current_user,
+      line[:inventory_pool],
+      ensure_non_negative_general: true
+  )
+
+.row.line{data: { ids: line[:line_ids]}}
 
   - if line.has_key?(:available?) and not line[:available?]
     .line-info.red{title: _("Not available")}
@@ -31,7 +39,9 @@
                            :"data-ids" => line[:line_ids],
                            :"data-quantity" => line[:quantity],
                            :"data-start-date" => line[:start_date],
-                           :"data-end-date" => line[:end_date]}
+                           :"data-end-date" => line[:end_date],
+                           :"data-total-borrowable" => total_borrowable,
+                           :"data-inventory-pool-id" => line[:inventory_pool].id}
         %i.fa.fa-calendar
         = _("Change entry")
 

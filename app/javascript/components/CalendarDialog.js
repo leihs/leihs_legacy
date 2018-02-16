@@ -19,9 +19,12 @@ const CalendarDialog = createReactClass({
         <BorrowBookingCalendar
           model={this.props.model}
           inventoryPools={this.props.inventoryPools}
-          startDate={this.props.startDate}
-          endDate={this.props.endDate}
-          addButtonSuccessCallback={this.props.addButtonSuccessCallback}
+          initialStartDate={this.props.initialStartDate}
+          initialEndDate={this.props.initialEndDate}
+          initialQuantity={this.props.initialQuantity || 0}
+          reservations={this.props.reservations || []}
+          finishCallback={this.props.finishCallback}
+          exclusiveCallback={this.props.exclusiveCallback}
         />
       </div>
     )

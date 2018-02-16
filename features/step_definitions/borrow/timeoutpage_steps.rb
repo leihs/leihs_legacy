@@ -84,40 +84,24 @@ end
 
 #########################################################################
 
-# Given(/^I modify one entry$/) do
-#   #step "ich den Eintrag ändere"
-#   step 'I change the entry'
-#   #step "öffnet der Kalender"
-#   step 'the calendar opens'
-#   #step "ich ändere die aktuellen Einstellung"
-#   step 'I change the date'
-#   step "I save the booking calendar"
-# end
-
 When(/^I (increase|decrease) the quantity of one entry$/) do |arg1|
-  #step "ich den Eintrag ändere"
   step 'I change the entry'
-  #step "öffnet der Kalender"
   step 'the calendar opens'
   @new_quantity = case arg1
-                    when 'increase'
-                      find('#booking-calendar-quantity')[:max].to_i
-                    when 'decrease'
-                      1
-                    else
-                      raise
+                  when 'increase'
+                    line = @changed_lines.first
+                    line.model.total_borrowable_items_for_user(line.user,
+                                                               line.inventory_pool,
+                                                               ensure_non_negative_general: true)
+                  when 'decrease'
+                    1
+                  else
+                    raise
                   end
   find('#booking-calendar-quantity').set(@new_quantity)
   step 'I save the booking calendar'
   step 'the booking calendar is closed'
 end
-
-# Then(/^the changes I made are saved$/) do
-#   #step "wird der Eintrag gemäss aktuellen Einstellungen geändert"
-#   step "the entry's date is changed accordingly"
-#   #step "der Eintrag wird in der Liste anhand der des aktuellen Startdatums und des Geräteparks gruppiert"
-#   step 'the entry is grouped based on its current start date and inventory pool'
-# end
 
 When(/^I have performed no activity for more than (\d+) minutes$/) do |minutes|
   Timecop.travel(Time.now + (minutes.to_i + 1).minutes)
@@ -150,7 +134,7 @@ def resolve_conflict_for_reservation(line_id)
   find('#booking-calendar-quantity').set 1
 
   start_date = select_available_not_closed_date
-  select_available_not_closed_date(:end, start_date)
+  select_available_not_closed_date(:end, start_date + 1)
   find('.modal .button.green').click
 
   step 'the booking calendar is closed'

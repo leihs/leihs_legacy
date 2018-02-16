@@ -52,13 +52,17 @@ module Availability
                 :changes,
                 :inventory_pool_and_model_group_ids)
 
-    def initialize(attr)
-      @model          = attr[:model]
-      @inventory_pool = attr[:inventory_pool]
+    # exclude_reservations are used in borrow for dealing with the self-blocking
+    # aspect of the reservations (context: change quantity for a model
+    # in current order)
+    def initialize(model:, inventory_pool:, exclude_reservations: [])
+      @model          = model
+      @inventory_pool = inventory_pool
       @running_reservations = \
         @inventory_pool
         .running_reservations
         .where(model_id: @model.id)
+        .where.not(id: exclude_reservations)
         .order(:start_date, :end_date)
 
       @entitlements = Entitlement.hash_with_generals(@inventory_pool, @model)

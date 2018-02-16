@@ -114,6 +114,13 @@ class Borrow::TemplatesController < Borrow::ApplicationController
           InventoryPool.find_by_id(l[:inventory_pool_id]).try(&:name),
         inventory_pool_id: l[:inventory_pool_id] }
     end
+    @inventory_pools_for_calendar = \
+      @template.inventory_pools.map do |ip|
+        { inventory_pool: ip,
+          workday: ip.workday,
+          holidays: \
+            ip.holidays.where('CURRENT_DATE <= end_date').order(:end_date) }
+      end
   end
 
   def index

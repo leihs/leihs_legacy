@@ -24,7 +24,7 @@ class window.App.ModelsShowController extends Spine.Controller
     do e.preventDefault
     @renderBookingCalendar()
 
-  renderBookingCalendar: (inventoryPools) =>
+  renderBookingCalendar: () =>
     jModal = $("<div class='modal ui-modal medium' role='dialog' tabIndex='-1' />")
     @modal = new App.Modal(
       jModal,
@@ -34,9 +34,10 @@ class window.App.ModelsShowController extends Spine.Controller
       React.createElement(CalendarDialog,
         model: @model
         inventoryPools: @inventoryPools
-        startDate: @getStartDate()
-        endDate: @getEndDate()
-        addButtonSuccessCallback: =>
+        initialStartDate: @getStartDate()
+        initialEndDate: @getEndDate()
+        finishCallback: (data) =>
+          _.each(data, (reservation) => App.Reservation.addRecord(new App.Reservation(reservation)))
           App.Reservation.trigger "refresh"
           @modal.destroyable()
           App.Modal.destroyAll true

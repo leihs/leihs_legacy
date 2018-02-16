@@ -18,6 +18,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
   end
 
   def current
+    @inventory_pools_for_calendar = inventory_pools_for_calendar(@inventory_pools)
   end
 
   def submit
@@ -75,6 +76,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
       _('%d minutes passed. The items are not reserved for you any more!') \
       % app_settings.timeout_minutes
     @timed_out = true
+    @inventory_pools_for_calendar = inventory_pools_for_calendar(@inventory_pools)
     render :current
   end
 
@@ -87,6 +89,15 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
   end
 
   private
+
+  def inventory_pools_for_calendar(inventory_pools)
+    inventory_pools.map do |ip|
+      { inventory_pool: ip,
+        workday: ip.workday,
+        holidays: \
+          ip.holidays.where('CURRENT_DATE <= end_date').order(:end_date) }
+    end
+  end
 
   def purpose_param
     params.require(:purpose)
