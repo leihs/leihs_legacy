@@ -1,6 +1,13 @@
 :ruby
 
   model = @models.detect{|m| m.id == line[:model_id]}
+  total_borrowable = \
+    model.total_borrowable_items_for_user(
+      current_user,
+      line[:inventory_pool],
+      ensure_non_negative_general: true
+  )
+
 
 .row.line{:"data-model_link_id" => line[:model_link_id]}
 

@@ -1,14 +1,18 @@
 class Borrow::BookingCalendar < ApplicationPresenter
-  def initialize(inventory_pool, model, user, start_date_string, end_date_string)
+  def initialize(
+    inventory_pool, model, user, start_date_string, end_date_string, reservations
+  )
     @inventory_pool = inventory_pool
     @model = model
     @user = user
+    @reservations = reservations
     @start_date_string = start_date_string
     @start_date = Date.parse(@start_date_string)
     @end_date_string = end_date_string
     @end_date = Date.parse(@end_date_string)
     @group_ids = user.entitlement_groups.map(&:id)
-    @availability = @model.availability_in(@inventory_pool)
+    @availability = \
+      @model.availability_in(@inventory_pool, exclude_reservations: @reservations)
     @changes = @availability.changes.to_a.sort_by(&:first)
     @init_date = @start_date - 1.day
     @total_borrowable_quantity = \

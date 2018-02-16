@@ -23,11 +23,13 @@ class Borrow::AvailabilityController < Borrow::ApplicationController
     model = Model.find(model_id_param)
     ip = InventoryPool.find(inventory_pool_id_param)
     user = User.find(user_id_param)
+    reservations = Reservation.find(reservation_ids_param)
     presenter = Borrow::BookingCalendar.new(ip,
                                             model,
                                             user,
                                             start_date_param,
-                                            end_date_param)
+                                            end_date_param,
+                                            reservations)
 
     respond_with_presenter(presenter)
   end
@@ -74,5 +76,9 @@ class Borrow::AvailabilityController < Borrow::ApplicationController
 
   def end_date_param
     params.require(:end_date)
+  end
+
+  def reservation_ids_param
+    params.fetch(:reservation_ids, [])
   end
 end

@@ -152,12 +152,13 @@ end
 
 def select_available_not_closed_date(as = :start, from = Date.today)
   current_date = from
-  while all(".available:not(.closed)[data-date='#{current_date}']").empty? do
+  step "I set the %s in the calendar to '#{I18n::l(current_date)}'" % (as == :start ? 'start date' : 'end date')
+  while page.has_selector?("#booking-calendar-errors") do
     before_date = current_date
     current_date += 1.day
     find('.fc-button-next').click if before_date.month < current_date.month
+    step "I set the %s in the calendar to '#{I18n::l(current_date)}'" % (as == :start ? 'start date' : 'end date')
   end
-  step "I set the %s in the calendar to '#{I18n::l(current_date)}'" % (as == :start ? 'start date' : 'end date')
   current_date
 end
 

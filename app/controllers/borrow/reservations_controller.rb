@@ -88,9 +88,16 @@ class Borrow::ReservationsController < Borrow::ApplicationController
 
   def destroy
     begin
-      current_user.reservations.unsubmitted.find(params[:line_id]).destroy
-    ensure
-      render status: :ok, json: { id: params[:line_id] }
+      ApplicationRecord.transaction do
+        current_user
+          .reservations
+          .unsubmitted
+          .find(params[:line_ids])
+          .map(&:destroy!)
+      end
+      render status: :ok, json: {}
+    rescue => e
+      render status: :bad_request, json: e.message
     end
   end
 

@@ -175,8 +175,34 @@ end
 #end
 
 Then(/^I change the date$/) do
-  @new_date = select_available_not_closed_date(:start, Date.today)
-  select_available_not_closed_date(:end, @new_date)
+  within('.modal') do
+    start_date = Date.today + 1.day
+
+    within('#booking-calendar-start-date') do
+      current_scope.set(I18n.l(start_date))
+      current_scope.native.send_keys(:return)
+    end
+    while current_scope.has_selector?('#booking-calendar-errors') do
+      start_date += 1.day
+      within('#booking-calendar-start-date') do
+        current_scope.set(I18n.l(start_date))
+        current_scope.native.send_keys(:return)
+      end
+    end
+
+    end_date = start_date + 1.day
+    within('#booking-calendar-end-date') do
+      current_scope.set(I18n.l(end_date))
+      current_scope.native.send_keys(:return)
+    end
+    while current_scope.has_selector?('#booking-calendar-errors') do
+      end_date += 1.day
+      within('#booking-calendar-end-date') do
+        current_scope.set(I18n.l(end_date))
+        current_scope.native.send_keys(:return)
+      end
+    end
+  end
 end
 
 Then(/^the entry's date is changed accordingly$/) do
@@ -193,10 +219,10 @@ Then(/^the entry's date is changed accordingly$/) do
   if @new_quantity
     line = @changed_lines.first
     t = line.user.reservations.where(inventory_pool_id: line.inventory_pool_id,
-                                       status: line.status,
-                                       model_id: line.model_id,
-                                       start_date: line.start_date,
-                                       end_date: line.end_date).sum(:quantity)
+                                     status: line.status,
+                                     model_id: line.model_id,
+                                     start_date: line.start_date,
+                                     end_date: line.end_date).sum(:quantity)
     expect(t).to eq @new_quantity
 
     @just_changed_line = find("[data-model-id='#{line.model_id}'][data-start-date='#{line.start_date}'][data-end-date='#{line.end_date}']")

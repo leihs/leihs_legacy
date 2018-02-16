@@ -66,9 +66,10 @@ class window.App.ModelsIndexController extends Spine.Controller
       React.createElement(CalendarDialog,
         model: App.Model.find(modelId)
         inventoryPools: inventoryPools
-        startDate: moment(period?.start_date or moment()),
-        endDate: moment(period?.end_date or moment().add(1, 'day')),
-        addButtonSuccessCallback: =>
+        initialStartDate: moment(period?.start_date or moment()),
+        initialEndDate: moment(period?.end_date or moment().add(1, 'day')),
+        finishCallback: (data) =>
+          _.each(data, (reservation) => App.Reservation.addRecord(new App.Reservation(reservation)))
           App.Reservation.trigger "refresh"
           @modal.destroyable()
           App.Modal.destroyAll true

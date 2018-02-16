@@ -5,6 +5,11 @@ module Availability
 
     #################################
 
+    def timeout?
+      status == :unsubmitted and
+        (updated_at < (Time.zone.now - Setting.first.timeout_minutes.minutes))
+    end
+
     def available?
       b =
         if [:rejected, :closed].include?(status) \
@@ -13,8 +18,8 @@ module Availability
         elsif is_a?(OptionLine)
           true
         elsif status == :unsubmitted
-          if user.timeout?
-            same_contract_summed_quantity = \
+          if timeout?
+            customer_order_same_line_quantity = \
               user \
                 .reservations
                 .where(inventory_pool_id: inventory_pool_id,
@@ -22,7 +27,7 @@ module Availability
                        model_id: model_id)
                 .where('start_date <= ? AND end_date >= ?', end_date, start_date)
                 .sum(:quantity)
-            (maximum_available_quantity >= same_contract_summed_quantity)
+            (maximum_available_quantity >= customer_order_same_line_quantity)
           else
             # the unsubmitted reservations are also considered as
             # running_reservations for the availability, then we sum up again

@@ -5,7 +5,7 @@ class window.App.UnsubmittedCustomerOrderShowController extends Spine.Controller
     ".emboss.red": "conflictsWarning"
 
   events:
-    "click [data-change-order-lines]": "changeReservations"
+    "click [data-change-order-lines]": "openBookingCalendar"
 
   constructor: ->
     super
@@ -13,29 +13,37 @@ class window.App.UnsubmittedCustomerOrderShowController extends Spine.Controller
       @timeoutCountdown = new App.TimeoutCountdownController
         el: @el.find("#timeout-countdown")
         refreshTarget: @el.find("#timeout-countdown")
-    
-  delegateEvents: =>
-    super
-    App.Reservation.bind "refresh", (data)=>
-      do @render
 
-  changeReservations: (e)=>
+  openBookingCalendar: (e) =>
     do e.preventDefault
-    target = $(e.currentTarget)
-    reservations = _.map target.data("ids"), (id) -> App.Reservation.find id
-    quantity = _.reduce reservations, ((mem, l)-> mem + l.quantity), 0
-    new App.ReservationsChangeController
-      modelId: target.data("model-id")
-      reservations: reservations
-      quantity: quantity
-      startDate: target.data("start-date")
-      endDate: target.data("end-date")
-      titel: _jed("Change %s", _jed("Order"))
-      buttonText: _jed("Save change")
-      withoutLines: true
-    return false
+    data = $(e.target).data()
+    props =
+      reservations: _.map(data["ids"], (id) -> App.Reservation.find(id))
+      inventoryPools: [@getInventoryPoolContext(data["inventoryPoolId"], data["totalBorrowable"])]
+      model: App.Model.find(data["modelId"])
+      initialStartDate: moment(data["startDate"])
+      initialEndDate: moment(data["endDate"])
+      initialQuantity: data["quantity"]
+      finishCallback: (_data) => window.location.href = "/borrow/order"
+    @renderBookingCalendar(props)
 
-  render: =>
-    reservations = App.Reservation.all()
-    @reservationsContainer.html App.Render "borrow/views/order/grouped_and_merged_lines", App.Modules.HasLines.groupByDateAndPool(reservations, true)
-    @conflictsWarning.addClass("hidden") if _.all reservations, (l) -> l.available()
+  getInventoryPoolContext: (id, totalBorrowable) =>
+    ipContext = _.find(@inventoryPools, (ipContext) -> ipContext.inventory_pool.id == id)
+    _.extend(ipContext, {total_borrowable: totalBorrowable})
+
+  getStartDate: (reservationIds, inventoryPools) =>
+    moment(App.Reservation.find(reservationIds[0]).start_date)
+
+  getEndDate: (reservationIds) =>
+    moment(App.Reservation.find(reservationIds[0]).end_date)
+
+  renderBookingCalendar: (props) =>
+    jModal = $("<div class='modal ui-modal medium' role='dialog' tabIndex='-1' />")
+    @modal = new App.Modal(
+      jModal,
+      () => ReactDOM.unmountComponentAtNode(jModal.get()[0])
+    )
+    ReactDOM.render(
+      React.createElement(CalendarDialog, props),
+      @modal.el.get()[0]
+    )

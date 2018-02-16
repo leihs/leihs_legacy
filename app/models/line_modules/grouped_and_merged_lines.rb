@@ -30,11 +30,12 @@ module LineModules
                   { start_date: l.start_date, model: l.model }
               end
             end
-            hash.values.map do|array|
+            hash.values.map do |array|
               h = {
                 line_ids: array.map(&:id),
                 quantity: array.sum(&:quantity),
                 model: array.first.model,
+                inventory_pool: array.first.inventory_pool,
                 start_date: array.first.start_date,
                 end_date: array.first.end_date
               }
