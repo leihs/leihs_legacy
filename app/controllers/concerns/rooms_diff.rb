@@ -20,20 +20,6 @@ module RoomsDiff
 
     values = values.compact
 
-    items_with_rooms_query = <<-SQL
-      select
-        items.id as item_id,
-        buildings.name as building_name,
-        rooms.name as room_name
-      from
-        items,
-        buildings,
-        rooms
-      where
-        items.room_id = rooms.id
-        and rooms.building_id = buildings.id
-    SQL
-
     items_with_rooms = Item.connection.exec_query(items_with_rooms_query).to_a
 
     invalid_items_with_rooms = items_with_rooms.select do |i|
@@ -63,37 +49,84 @@ module RoomsDiff
     #   disposition: \
     #     'filename=room_diff.xlsx'
 
-    problematic_rooms_csv = invalid_items_with_rooms.uniq do |i|
+    problematic_rooms = invalid_items_with_rooms.group_by do |i|
       [i['building_name'], i['room_name']]
-    end.map do |i|
+    end.map do |k, v|
       {
-        _('Building') => i['building_name'],
-        _('Room') => i['room_name']
+        building_name: k[0],
+        room_name: k[1],
+        item_count: v.count,
+        inventory_codes: v.map { |v| v['item_inventory_code'] }
       }
     end
 
-    header = header_for_export(problematic_rooms_csv)
+    header = ["building_name", "room_name", "item_count", "inventory_codes"]
+                .join(',')
 
-    export = Export.excel_string(
-      header, problematic_rooms_csv, worksheet_name: 'Problematic Rooms')
+    data = problematic_rooms.map do |v|
+      inventory_codes = if v[:inventory_codes].count > 100
+                          'more than 100'
+                        else
+                          v[:inventory_codes].join(',')
+                        end
+      [
+        v[:building_name],
+        v[:room_name],
+        v[:item_count],
+        inventory_codes
+      ].map { |w| "\"#{w}\"" }.join(',')
+    end
+
+    csv_lines = [header].concat(data)
+
+    # problematic_rooms_csv = invalid_items_with_rooms.uniq do |i|
+    #   [i['building_name'], i['room_name']]
+    # end.map do |i|
+    #   {
+    #     _('Building') => i['building_name'],
+    #     _('Room') => i['room_name']
+    #   }
+    # end
+
+    # header = header_for_export(problematic_rooms_csv)
+    #
+    # export = Export.excel_string(
+    #   header, problematic_rooms_csv, worksheet_name: 'Problematic Rooms')
 
     send_data \
-      export,
-      type: 'application/xlsx',
+      csv_lines.join("\n"),
+      type: 'application/csv',
       disposition: \
-        'filename=problematic_rooms.xlsx'
+        'filename=problematic_rooms.csv'
 
     # post_rooms_diff.html.haml
   end
 
   private
 
-  def header_for_export(objects_for_export)
-    if objects_for_export.empty?
-      [_('No entries found')]
-    else
-      objects_for_export.flat_map(&:keys).uniq
-    end
+  # def header_for_export(objects_for_export)
+  #   if objects_for_export.empty?
+  #     [_('No entries found')]
+  #   else
+  #     objects_for_export.flat_map(&:keys).uniq
+  #   end
+  # end
+
+  def items_with_rooms_query
+    <<-SQL
+      select
+        items.id as item_id,
+        items.inventory_code as item_inventory_code,
+        buildings.name as building_name,
+        rooms.name as room_name
+      from
+        items,
+        buildings,
+        rooms
+      where
+        items.room_id = rooms.id
+        and rooms.building_id = buildings.id
+    SQL
   end
 
   def handle_row(row)
