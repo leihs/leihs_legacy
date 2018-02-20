@@ -19,7 +19,7 @@ const BorrowBookingCalendar = createReactClass({
       startDate: this.props.initialStartDate,
       endDate: this.props.initialEndDate,
       selectedDate: null,
-      quantity: (this.props.initialQuantity || 1),
+      quantity: this.props.initialQuantity || 1,
       isLoading: true,
       calendarData: [],
       poolContext: this.props.inventoryPools[0]
@@ -103,7 +103,7 @@ const BorrowBookingCalendar = createReactClass({
 
   existingReservations() {
     // component used for editing existing reservations
-    return (this.props.reservations.length != 0)
+    return this.props.reservations.length != 0
   },
 
   // TODO: a single callback should be given to this component.
@@ -153,27 +153,27 @@ const BorrowBookingCalendar = createReactClass({
       method: 'POST',
       dataType: 'json',
       data: {
-        line_ids: _.map(this.props.reservations, (r) => r.id),
+        line_ids: _.map(this.props.reservations, r => r.id),
         start_date: this.state.startDate.format(this._f),
         end_date: this.state.endDate.format(this._f),
         inventory_pool_id: this.state.poolContext.inventory_pool.id
       },
       success: successCallback,
-      error: (xhr) => this.setState({serverError: xhr.statusText})
+      error: xhr => this.setState({ serverError: xhr.statusText })
     })
   },
 
   deleteReservations() {
-    const reservation_ids = _.map(this.props.reservations, (r) => r.id)
+    const reservation_ids = _.map(this.props.reservations, r => r.id)
     $.ajax({
       url: '/borrow/reservations',
       method: 'DELETE',
       dataType: 'json',
       data: {
-        line_ids: _.take(reservation_ids, (this.props.initialQuantity - this.state.quantity))
+        line_ids: _.take(reservation_ids, this.props.initialQuantity - this.state.quantity)
       },
-      success: (data) => this.props.finishCallback(data),
-      error: (xhr) => this.setState({serverError: xhr.statusText})
+      success: data => this.props.finishCallback(data),
+      error: xhr => this.setState({ serverError: xhr.statusText })
     })
   },
 
@@ -187,11 +187,11 @@ const BorrowBookingCalendar = createReactClass({
         end_date: this.state.endDate.format(this._f),
         model_id: this.props.model.id,
         inventory_pool_id: this.state.poolContext.inventory_pool.id,
-        quantity: (this.state.quantity - this.props.initialQuantity)
+        quantity: this.state.quantity - this.props.initialQuantity
       },
-      success: (data) => this.props.finishCallback(data),
-      error: (xhr) => {
-        this.setState({serverError: xhr.statusText})
+      success: data => this.props.finishCallback(data),
+      error: xhr => {
+        this.setState({ serverError: xhr.statusText })
       }
     })
   },
@@ -206,7 +206,7 @@ const BorrowBookingCalendar = createReactClass({
         end_date: endDate,
         model_id: this.props.model.id,
         inventory_pool_id: this.state.poolContext.inventory_pool.id,
-        reservation_ids: _.map(this.props.reservations, (r) => r.id)
+        reservation_ids: _.map(this.props.reservations, r => r.id)
       }
     })
   },
@@ -251,13 +251,17 @@ const BorrowBookingCalendar = createReactClass({
   },
 
   jumpToStartDate() {
-    const firstDateOfJumpMonth = moment([this.state.startDate.year(), this.state.startDate.month(), 1])
-    this.setState({firstDateOfCurrentMonth: firstDateOfJumpMonth})
+    const firstDateOfJumpMonth = moment([
+      this.state.startDate.year(),
+      this.state.startDate.month(),
+      1
+    ])
+    this.setState({ firstDateOfCurrentMonth: firstDateOfJumpMonth })
   },
 
   jumpToEndDate() {
     const firstDateOfJumpMonth = moment([this.state.endDate.year(), this.state.endDate.month(), 1])
-    this.setState({firstDateOfCurrentMonth: firstDateOfJumpMonth})
+    this.setState({ firstDateOfCurrentMonth: firstDateOfJumpMonth })
   },
 
   onClickPopoverStartDateCallback(sd) {
@@ -406,11 +410,14 @@ const BorrowBookingCalendar = createReactClass({
   },
 
   reloadCalendarContent() {
-    this.setState({
-      serverError: null,
-      isLoading: true,
-      calendarData: []
-    }, this._fetchAndUpdateCalendarData)
+    this.setState(
+      {
+        serverError: null,
+        isLoading: true,
+        calendarData: []
+      },
+      this._fetchAndUpdateCalendarData
+    )
   },
 
   _renderErrors(errors) {
@@ -419,9 +426,7 @@ const BorrowBookingCalendar = createReactClass({
         <div id="booking-calendar-errors">
           <div className="padding-horizontal-m padding-bottom-m">
             <div className="row emboss red text-align-center font-size-m padding-inset-s">
-              <strong>
-                {errors.push('') && errors.map(el => _jed(el)).join('. ')}
-              </strong>
+              <strong>{errors.push('') && errors.map(el => _jed(el)).join('. ')}</strong>
             </div>
           </div>
         </div>
@@ -447,7 +452,7 @@ const BorrowBookingCalendar = createReactClass({
   },
 
   hasQuantityChanged() {
-    return (this.hasQuantityDecreased() || this.hasQuantityIncreased())
+    return this.hasQuantityDecreased() || this.hasQuantityIncreased()
   },
 
   renderAddButton(errors) {
@@ -466,12 +471,13 @@ const BorrowBookingCalendar = createReactClass({
   renderContent() {
     let content
     if (this.state.isLoading) {
-      content =
+      content = (
         <div>
           <div className="height-s" />
           <div className="loading-bg" />
           <div className="height-s" />
         </div>
+      )
     } else if (this.state.serverError) {
       const buttonStyle = {
         transform: 'scale(5)',
@@ -481,16 +487,22 @@ const BorrowBookingCalendar = createReactClass({
         borderColor: '#ffda00',
         transform: 'skew(-0.06turn, 18deg) scale(5)'
       }
-      content =
+      content = (
         <div>
           <div className="height-s" />
-          <div style={{textAlign: 'center'}}>
-            <button style={buttonStyle} className="button white large" onClick={this.reloadCalendarContent}>Reload</button>
+          <div style={{ textAlign: 'center' }}>
+            <button
+              style={buttonStyle}
+              className="button white large"
+              onClick={this.reloadCalendarContent}>
+              Reload
+            </button>
           </div>
           <div className="height-s" />
         </div>
+      )
     } else {
-      content =
+      content = (
         <CalendarContent
           startDate={this.state.startDate}
           endDate={this.state.endDate}
@@ -507,6 +519,7 @@ const BorrowBookingCalendar = createReactClass({
           isWithinAdvanceDaysPeriod={this._isWithinAdvanceDaysPeriod}
           getHoliday={this.getHoliday}
         />
+      )
     }
     return content
   },
