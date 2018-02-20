@@ -284,6 +284,15 @@ const BorrowBookingCalendar = createReactClass({
     )
   },
 
+  getHoliday(date) {
+    return _.find(this.state.poolContext.holidays, holiday => {
+      return (
+        date.isSameOrAfter(moment(holiday.start_date), 'day') &&
+        date.isSameOrBefore(moment(holiday.end_date), 'day')
+      )
+    })
+  },
+
   getErrors() {
     let errors = []
 
@@ -302,10 +311,10 @@ const BorrowBookingCalendar = createReactClass({
       if (!this._isAvailableForDateRange()) {
         errors.push('Item is not available in that time range')
       }
-      if (!this._isPoolOpenOn(this.state.startDate)) {
+      if (!this._isPoolOpenOn(this.state.startDate) || this.getHoliday(this.state.startDate)) {
         errors.push('Inventory pool is closed on start date')
       }
-      if (!this._isPoolOpenOn(this.state.endDate)) {
+      if (!this._isPoolOpenOn(this.state.endDate) || this.getHoliday(this.state.endDate)) {
         errors.push('Inventory pool is closed on end date')
       }
       if (this._isWithinAdvanceDaysPeriod(this.state.startDate)) {
@@ -403,6 +412,7 @@ const BorrowBookingCalendar = createReactClass({
           changeSelectedDate={this.changeSelectedDate}
           selectedDate={this.state.selectedDate}
           isWithinAdvanceDaysPeriod={this._isWithinAdvanceDaysPeriod}
+          getHoliday={this.getHoliday}
         />
     }
     return content

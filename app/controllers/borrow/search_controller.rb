@@ -16,7 +16,17 @@ class Borrow::SearchController < Borrow::ApplicationController
     set_pagination_header(@models)
     respond_to do |format|
       format.json
-      format.html { @inventory_pools = current_user.inventory_pools.order(:name) }
+      format.html do
+        # used for React booking calendar #########################################
+        @inventory_pools_for_calendar = current_user.inventory_pools.map do |ip|
+          { inventory_pool: ip,
+            workday: ip.workday,
+            holidays: \
+            ip.holidays.where('CURRENT_DATE <= end_date').order(:end_date) }
+        end
+        ###########################################################################
+        @inventory_pools = current_user.inventory_pools.order(:name)
+      end
     end
   end
 

@@ -18,15 +18,6 @@ const CalendarRow = createReactClass({
 
   componentDidMount() {},
 
-  _getHoliday(date) {
-    return _.find(this.props.poolContext.holidays, holiday => {
-      return (
-        date.isSameOrAfter(moment(holiday.start_date), 'day') &&
-        date.isSameOrBefore(moment(holiday.end_date), 'day')
-      )
-    })
-  },
-
   _isVisit(date) {
     return date.isSame(this.props.startDate, 'day') || date.isSame(this.props.endDate, 'day')
   },
@@ -56,7 +47,7 @@ const CalendarRow = createReactClass({
       <tr className={klass}>
         {_.map(this.props.dates, (dateContext, key) => {
           const date = dateContext.date
-          const holiday = this._getHoliday(date)
+          const holiday = this.props.getHoliday(date)
 
           const isAvailable =
             date.isSameOrAfter(this.props.todayDate, 'day') &&
