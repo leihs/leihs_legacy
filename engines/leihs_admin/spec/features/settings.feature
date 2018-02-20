@@ -4,7 +4,7 @@ Feature: Defining application settings through web interface
     Given personas dump is loaded
 
   @leihs_admin_settings
-  Scenario: Editing all the settings
+  Scenario: Editing the editable settings
     Given I am Ramon
     When I go to the settings page
     Then I am on the settings page
@@ -14,19 +14,28 @@ Feature: Defining application settings through web interface
       | default_email                 |
       | deliver_order_notifications   |
       | email_signature               |
-      | local_currency_string         |
       | logo_url                      |
-      | mail_delivery_method          |
-      | smtp_address                  |
-      | smtp_domain                   |
-      | smtp_enable_starttls_auto     |
-      | smtp_openssl_verify_mode      |
-      | smtp_password                 |
-      | smtp_port                     |
-      | smtp_username                 |
-      | time_zone                     |
       | user_image_url                |
     And the settings are persisted
+
+  @leihs_admin_settings
+  Scenario: Readonly settings
+    Given I am Ramon
+    When I go to the settings page
+    And I am on the settings page
+    Then the following settings are disabled:
+      | external_base_url         |
+      | ldap_config               |
+      | local_currency_string     |
+      | mail_delivery_method      |
+      | time_zone                 |
+      | smtp_address              |
+      | smtp_domain               |
+      | smtp_enable_starttls_auto |
+      | smtp_openssl_verify_mode  |
+      | smtp_password             |
+      | smtp_port                 |
+      | smtp_username             |
 
   @leihs_admin_settings
   Scenario: Configure a Link for Logo in Footer

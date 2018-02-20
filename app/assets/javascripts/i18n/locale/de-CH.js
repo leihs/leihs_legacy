@@ -4569,6 +4569,10 @@ window.i18n.locale_data = {
       "No orders are possible on this end date": [
          null,
          "Bestellungen sind für dieses Rückgabetag nicht möglich"
+      ],
+      "The readonly attributes can only be changed via deployment.": [
+         null,
+         "Die schreibgeschützten Attribute können nur durchs Deployment geändert werden."
       ]
    }
 }

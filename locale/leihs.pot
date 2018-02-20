@@ -3443,3 +3443,6 @@ msgstr ""
 
 msgid "No orders are possible on this end date"
 msgstr ""
+
+msgid "The readonly attributes can only be changed via deployment."
+msgstr ""

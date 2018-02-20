@@ -10,16 +10,6 @@ module MainHelpers
 
     before_action :set_gettext_locale, :load_settings, :permit_params
 
-    before_action do
-      # NOTE: Time zone as other settings can be changed at runtime.
-      # To ensure that all workers processing a request see the changed
-      # time_zone we do this. What would be a better solution than this?
-      if time_zone = app_settings.try(:time_zone)
-        Rails.configuration.time_zone = time_zone
-        Time.zone_default = ActiveSupport::TimeZone.new(time_zone)
-      end
-    end
-
     # CSRF protection
     protect_from_forgery with: :exception
 

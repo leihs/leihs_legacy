@@ -8,21 +8,10 @@ module Spec
     include ::Spec::LoginSteps
     include ::Spec::PersonasDumpSteps
 
-    step 'I open the settings page' do
-      visit admin.settings_path
-    end
-
-    step 'I set time zone to :time_zone' do |time_zone|
-      find('#setting_time_zone').select(time_zone)
-    end
-
-    step 'the time zone is now set to :time_zone' do |time_zone|
-      expect(find('#setting_time_zone').value).to be == time_zone
-    end
-
-    step 'I click on "Save Settings"' do
-      page.execute_script 'window.scrollBy(0,-10000)'
-      click_on _('Save Settings')
+    step 'the time zone is set to :time_zone' do |time_zone|
+      ApplicationRecord.connection.execute <<-SQL
+        UPDATE settings SET time_zone = '#{time_zone}'
+      SQL
     end
 
     step 'I open the create model page' do

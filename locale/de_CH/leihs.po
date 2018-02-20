@@ -3530,3 +3530,6 @@ msgstr "Geben Sie nur ganze Zahlen ein"
 
 msgid "No orders are possible on this end date"
 msgstr "Bestellungen sind für dieses Rückgabetag nicht möglich"
+
+msgid "The readonly attributes can only be changed via deployment."
+msgstr "Die schreibgeschützten Attribute können nur durchs Deployment geändert werden."
