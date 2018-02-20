@@ -44,22 +44,44 @@ module RoomsDiff
         v[:liegenschaft] == building && v[:raumnummer] == room
       end
 
-      !matches.empty?
+      matches.empty?
     end
 
-    invalid_items = Item.find(invalid_items_with_rooms.map { |i| i['item_id'] })
+    # invalid_items = Item.find(
+    #   invalid_items_with_rooms.map { |i| i['item_id'] }
+    # )
+    #
+    # objects = invalid_items.map(&:to_csv_array)
+    # header = header_for_export(objects)
+    #
+    # export = Export.excel_string(
+    #   header, objects, worksheet_name: _('Rooms Diff'))
+    #
+    # send_data \
+    #   export,
+    #   type: 'application/xlsx',
+    #   disposition: \
+    #     'filename=room_diff.xlsx'
 
-    objects = invalid_items.map(&:to_csv_array)
-    header = header_for_export(objects)
+    problematic_rooms_csv = invalid_items_with_rooms.uniq do |i|
+      [i['building_name'], i['room_name']]
+    end.map do |i|
+      {
+        _('Building') => i['building_name'],
+        _('Room') => i['room_name']
+      }
+    end
+
+    header = header_for_export(problematic_rooms_csv)
 
     export = Export.excel_string(
-      header, objects, worksheet_name: _('Rooms Diff'))
+      header, problematic_rooms_csv, worksheet_name: 'Problematic Rooms')
 
     send_data \
       export,
       type: 'application/xlsx',
       disposition: \
-        'filename=room_diff.xlsx'
+        'filename=problematic_rooms.xlsx'
 
     # post_rooms_diff.html.haml
   end
