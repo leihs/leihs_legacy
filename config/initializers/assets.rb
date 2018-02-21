@@ -11,8 +11,8 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w( application.js
                                                   borrow.js
                                                   manage.js
-                                                  application.css
                                                   borrow.css
+                                                  manage.css
                                                   print.css
                                                   i18n/locale/*
                                                   simile_timeline/*
