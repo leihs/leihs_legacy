@@ -46,7 +46,7 @@ class ReservationsCell extends React.Component {
           <div className="row margin-bottom-s">
             <div className="col1of2">
               <span>
-                {startDate} - {endDate}
+                {moment(startDate).format(i18n.date.L)} - {moment(endDate).format(i18n.date.L)}
               </span>
             </div>
             <div className="col1of2 text-align-right">
