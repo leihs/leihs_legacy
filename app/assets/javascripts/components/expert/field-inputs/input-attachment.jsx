@@ -16,13 +16,16 @@
       event.preventDefault()
 
       var file = event.target.files[0];
-      this.props.selectedValue.value.fileModels.push({
+
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.fileModels = value.fileModels.concat({
         type: 'new',
         file: file,
         result: 'pending'
       })
 
-      this.props.onChange()
+      this.props.onChange(value)
     },
 
     _renderFileRows() {
@@ -37,23 +40,23 @@
 
     _undoRemove(index) {
 
-      var fileModels = this.props.selectedValue.value.fileModels
-      fileModels[index].delete = false
-
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.fileModels[index].delete = false
+      this.props.onChange(value)
     },
 
     _removeNewFile(index) {
 
-      var fileModels = this.props.selectedValue.value.fileModels
-      if(fileModels[index].type == 'new') {
-        this.props.selectedValue.value.fileModels.splice(index, 1)
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      if(value.fileModels[index].type == 'new') {
+        value.fileModels.splice(index, 1)
       } else {
-        fileModels[index].delete = true
+        value.fileModels[index].delete = true
       }
 
-
-      this.props.onChange()
+      this.props.onChange(value)
     },
 
     _renderFilename(fileModel) {

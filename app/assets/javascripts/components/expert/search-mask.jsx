@@ -67,7 +67,13 @@
                 </strong>
               </div>
 
-              {FieldSwitch._inputByType(selectedValue, this.props._onChangeSelectedValue, dependencyValue)}
+              {
+                FieldSwitch._inputByType(
+                  selectedValue,
+                  (value) => this.props._onChangeSelectedValue(selectedValue.field.id, value),
+                  dependencyValue
+                )
+              }
 
             </div>
           </div>

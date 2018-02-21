@@ -17,7 +17,7 @@ window.RenderCreateItem = {
         fieldModel,
         dependencyValue,
         dataDependency,
-        onChange,
+        (value) => onChange(fieldModel.field.id, value),
         createItemProps,
         showInvalids,
         onClose

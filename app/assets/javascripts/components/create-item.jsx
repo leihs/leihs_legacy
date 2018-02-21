@@ -209,9 +209,32 @@
     },
 
 
-    onChange() {
-      this._ensureDependents(this.state.fieldModels, this.state.fields)
-      this.setState({fieldModels: this.state.fieldModels})
+    findFieldModelRec(fieldModel, fieldId) {
+
+      if(fieldModel.field.id == fieldId) {
+        return fieldModel
+      } else {
+        return this.findFieldModel(fieldModel.dependents, fieldId)
+      }
+    },
+
+    findFieldModel(fieldModels, fieldId) {
+      for(var i = 0; i < fieldModels.length; i++) {
+        var d = fieldModels[i]
+        var fm = this.findFieldModelRec(d, fieldId)
+        if(fm) {
+          return fm
+        }
+      }
+      return null
+    },
+
+    onChange(fieldId, value) {
+      var l = window.lodash
+      var fieldModels = l.cloneDeep(this.state.fieldModels)
+      this.findFieldModel(fieldModels, fieldId).value = value
+      this._ensureDependents(fieldModels, this.state.fields)
+      this.setState({fieldModels: fieldModels})
     },
 
 
@@ -243,14 +266,16 @@
         }
       }).done((data) => {
 
+        var l = window.lodash
+        var fieldModels = l.cloneDeep(this.state.fieldModels)
         _.each(
-          this.state.fieldModels,
+          fieldModels,
           (fm) => {
             fm.hidden = false
           }
         )
 
-        this.setState({fieldModels: this.state.fieldModels})
+        this.setState({fieldModels: fieldModels})
       })
 
     },
@@ -262,8 +287,10 @@
         type: 'post',
       }).done((data) => {
 
+        var l = window.lodash
+        var fieldModels = l.cloneDeep(this.state.fieldModels)
         _.each(
-          this.state.fieldModels,
+          fieldModels,
           (fm) => {
             if(fm.field.id == fieldModel.field.id) {
               fieldModel.hidden = true
@@ -271,7 +298,7 @@
           }
         )
 
-        this.setState({fieldModels: this.state.fieldModels})
+        this.setState({fieldModels: fieldModels})
       })
     },
 

@@ -11,8 +11,30 @@
     },
 
 
-    _onChangeSelectedValue() {
-      this._fireSelectedValuesChanged(this.props.selectedValues)
+    findSelectedValueRec(selectedValue, fieldId) {
+      if(selectedValue.field.id == fieldId) {
+        return selectedValue
+      } else {
+        return this.findSelectedValue(selectedValue.dependents, fieldId)
+      }
+    },
+
+    findSelectedValue(selectedValues, fieldId) {
+      for(var i = 0; i < selectedValues.length; i++) {
+        var d = selectedValues[i]
+        var fm = this.findSelectedValueRec(d, fieldId)
+        if(fm) {
+          return fm
+        }
+      }
+      return null
+    },
+
+    _onChangeSelectedValue(fieldId, value) {
+      var l = window.lodash
+      var selectedValues = l.cloneDeep(this.props.selectedValues)
+      this.findSelectedValue(selectedValues, fieldId).value = value
+      this._fireSelectedValuesChanged(selectedValues)
     },
 
     _preventSubmit(event) {
@@ -24,7 +46,8 @@
 
       event.preventDefault()
 
-      var selectedValues = this.props.selectedValues
+      var l = window.lodash
+      var selectedValues = l.cloneDeep(this.props.selectedValues)
       selectedValues = selectedValues.filter((selectedValue) => {
         return selectedValue.field.id != field.id
       })
@@ -49,7 +72,8 @@
 
 
     _onSelect (field) {
-      var selectedValues = this.props.selectedValues;
+      var l = window.lodash
+      var selectedValues = l.cloneDeep(this.props.selectedValues);
       selectedValues.push({
         field: field,
         value: FieldSwitch._createEmptyValue(field),

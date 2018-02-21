@@ -20,22 +20,28 @@
     _plusOne() {
       event.preventDefault()
       this.setState({selected: 'plusOne'})
-      this.props.selectedValue.value.text = this.props.createItemProps.next_code
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.text = this.props.createItemProps.next_code
+      this.props.onChange(value)
     },
 
     _fillGap() {
       event.preventDefault()
       this.setState({selected: 'fillGap'})
-      this.props.selectedValue.value.text = this.props.createItemProps.lowest_code
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.text = this.props.createItemProps.lowest_code
+      this.props.onChange(value)
     },
 
     _maximum() {
       event.preventDefault()
       this.setState({selected: 'maximum'})
-      this.props.selectedValue.value.text = this.props.createItemProps.highest_code
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.text = this.props.createItemProps.highest_code
+      this.props.onChange(value)
     },
 
     _renderPlusOne() {

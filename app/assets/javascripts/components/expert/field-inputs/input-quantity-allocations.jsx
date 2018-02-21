@@ -14,25 +14,28 @@
     _undoRemoveAllocation(event, index) {
       event.preventDefault()
 
-
-      var allocation = this.props.selectedValue.value.allocations[index];
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      var allocation = value.allocations[index];
       allocation.deleted = false
-      this.props.onChange()
+      this.props.onChange(value)
     },
 
 
     _removeAllocation(event, index) {
       event.preventDefault()
 
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
 
-      var allocation = this.props.selectedValue.value.allocations[index];
+      var allocation = value.allocations[index];
       if(allocation.type == 'new') {
-        var allocations = this.props.selectedValue.value.allocations
-        this.props.selectedValue.value.allocations.splice(index, 1)
-        this.props.onChange()
+        var allocations = value.allocations
+        value.allocations.splice(index, 1)
+        this.props.onChange(value)
       } else {
         allocation.deleted = true
-        this.props.onChange()
+        this.props.onChange(value)
       }
 
 
@@ -42,28 +45,37 @@
     _addAllocation(event) {
       event.preventDefault()
 
-      this.props.selectedValue.value.allocations = [
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+
+      value.allocations = [
         {
           quantity: '',
           location: '',
           type: 'new'
         }
-      ].concat(this.props.selectedValue.value.allocations)
+      ].concat(value.allocations)
 
-      this.props.onChange()
+      this.props.onChange(value)
     },
 
     _onChangeQuantity(event, index) {
       event.preventDefault()
-      this.props.selectedValue.value.allocations[index].quantity = event.target.value
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      var allocation = value.allocations[index];
+      allocation.quantity = event.target.value
+      this.props.onChange(value)
 
     },
 
     _onChangeLocation(event, index) {
       event.preventDefault()
-      this.props.selectedValue.value.allocations[index].location = event.target.value
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      var allocation = value.allocations[index];
+      allocation.location = event.target.value
+      this.props.onChange(value)
     },
 
 

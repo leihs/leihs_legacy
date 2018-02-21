@@ -14,9 +14,10 @@
 
     _onChange(event) {
       event.preventDefault()
-      var newValue = this._parseValue(event.target.value)
-      this.props.selectedValue.value.selection = event.target.value
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.selection = event.target.value
+      this.props.onChange(value)
     },
 
 

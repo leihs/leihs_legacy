@@ -11,10 +11,12 @@
     propTypes: {
     },
 
-    _onChange(event, value) {
+    _onChange(event, sel) {
       console.log('radio on change')
-      this.props.selectedValue.value.selection = value
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.selection = sel
+      this.props.onChange(value)
     },
 
     _renderRadioValues(selectedValue) {

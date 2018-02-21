@@ -14,14 +14,18 @@
 
     _onChangeFrom(event) {
       event.preventDefault()
-      this.props.selectedValue.value.from = event.target.value
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.from = event.target.value
+      this.props.onChange(value)
     },
 
     _onChangeTo(event) {
       event.preventDefault()
-      this.props.selectedValue.value.to = event.target.value
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.to = event.target.value
+      this.props.onChange(value)
     },
 
 

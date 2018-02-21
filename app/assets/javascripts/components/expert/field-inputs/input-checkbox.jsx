@@ -11,18 +11,19 @@
     propTypes: {
     },
 
-    _onChange(event, value) {
+    _onChange(event, sel) {
       // var value = this.props.selectedValue.field.values[index].value
 
-      var selections = this.props.selectedValue.value.selections
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+
       if(event.target.checked) {
-        selections = _.uniq(selections.concat(value))
+        value.selections = _.uniq(value.selections.concat(sel))
       } else {
-        selections = _.reject(selections, (s) => s === value)
+        value.selections = _.reject(value.selections, (s) => s === sel)
       }
 
-      this.props.selectedValue.value.selections = selections
-      this.props.onChange()
+      this.props.onChange(value)
     },
 
     _renderCheckboxValues(selectedValue) {

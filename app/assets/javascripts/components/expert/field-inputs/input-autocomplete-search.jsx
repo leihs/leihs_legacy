@@ -15,11 +15,11 @@
     _onChange(result) {
 
       this.abortAjaxCall()
-      this.props.selectedValue.value = {
-        text: result.term,
-        id: result.id
-      }
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.text = result.term
+      value.id = result.id
+      this.props.onChange(value)
     },
 
     ajaxCall: null,

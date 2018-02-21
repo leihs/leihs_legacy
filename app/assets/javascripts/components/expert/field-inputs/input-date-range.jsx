@@ -13,13 +13,17 @@
 
 
     _onChangeFrom(date) {
-      this.props.selectedValue.value.from = date
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.from = date
+      this.props.onChange(value)
     },
 
     _onChangeTo(date) {
-      this.props.selectedValue.value.to = date
-      this.props.onChange()
+      var l = window.lodash
+      var value = l.cloneDeep(this.props.selectedValue.value)
+      value.to = date
+      this.props.onChange(value)
     },
 
 
