@@ -6,4 +6,4 @@ bundle exec rake db:environment:set
 bundle exec rake db:drop db:create
 bundle exec rake db:pg:structure_and_data:restore FILE=$file
 bundle exec rake db:migrate
-bundle exec rails runner "Setting.first.update_attributes(external_base_url: 'http://localhost:3000')"
+bundle exec rails runner "ApplicationRecord.connection.execute \"UPDATE settings SET external_base_url = 'http://localhost:3000'\""
