@@ -34,7 +34,16 @@
             %button.button.green{:type => :submit}= _("Save %s") % _("Mail Templates")
 
         - @mail_templates.each do |mail_template|
-          .row.margin-vertical-s{style: mail_template.errors.empty? ? nil : "background-color: #FFB0B0;" }
+          :ruby
+            style = if not mail_template.errors.empty?
+                      "background-color: #FFB0B0;"
+                    elsif not mail_template.language.active?
+                      "background-color: #fff3d6;"
+                    else
+                      nil
+                    end
+
+          .row.margin-vertical-s{style: style}
             .padding-bottom-xxs
               .row.emboss.padding-inset-s
                 .col1of5
@@ -47,7 +56,9 @@
                   %strong.font-size-m= _("Language")
                 .col4of5
                   %input.width-full{type: :hidden, name: "mail_templates[][language]", value: mail_template.language.locale_name}
-                  .font-size-m= "%s (%s)" % [mail_template.language.name, mail_template.language.locale_name]
+                  %span.font-size-m= "%s (%s)" % [mail_template.language.name, mail_template.language.locale_name]
+                  - unless mail_template.language.active?
+                    %span.medium.badge.red= _("inactive")
               .row.emboss.padding-inset-s
                 .col1of5
                   %strong.font-size-m= _("Format")

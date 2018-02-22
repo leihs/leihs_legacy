@@ -36,11 +36,6 @@ LeihsAdmin::Engine.routes.draw do
   get 'settings', to: 'settings#edit'
   put 'settings', to: 'settings#update'
 
-  # Mail templates
-  get 'mail_templates', to: 'mail_templates#index'
-  get 'mail_templates/:dir/:name', to: 'mail_templates#edit'
-  put 'mail_templates/:dir/:name', to: 'mail_templates#update'
-
   # Languages
   get 'languages',           to: 'languages#index'
 end

@@ -18,22 +18,6 @@ Feature: Mail templates
     | deadline soon reminder | user      | deadline_soon_reminder.text.liquid |
     | reminder               | user      | reminder.text.liquid               |
 
-
-  @rack
-  Scenario Outline: Specifying system-wide default templates
-    Given I am Gino
-    When I specify a mail template for the <template name> action for the whole system for each active language
-    And I save
-    Then the template <template name> is saved for the whole system for each active language
-  Examples:
-    | template name          |
-    | approved               |
-    | received               |
-    | rejected               |
-    | submitted              |
-    | deadline soon reminder |
-    | reminder               |
-
   @rack
   Scenario Outline: Specifying mail templates specific to an inventory pool
     Given I am Mike
@@ -50,34 +34,16 @@ Feature: Mail templates
     | reminder               |
 
   @rack
-  Scenario Outline: Multilingual mail templates
-    Given I am Normin
-    And there is a system-wide approved mail template defined for the language "<language>"
-    When my language is set to "<language>"
-    And one of my submitted orders to an inventory pool without custom approved mail templates get approved
-    Then I receive an approved mail based on the system-wide template for the language "<language>"
-  Examples:
-    | language |
-    | de-CH    |
-    | en-GB    |
-
-  @rack
   Scenario Outline: Receiving reminders using the correct mail template
     Given I am Normin
     And I have a contract with deadline <deadline>
     And there <custom> a custom <template name> mail template for this contract's inventory pool
-    And there <system> a system-wide <template name> mail template
-    And there <default> a default <template name> mail template
     When the reminders are sent
     Then I receive an email formatted according to the <received template> <template name> mail template
   Examples:
-    | template name          | deadline  | custom | system | default | received template |
-    | reminder               | yesterday | is     | is     | is      | custom            |
-    | reminder               | yesterday | is not | is     | is      | system-wide       |
-    | reminder               | yesterday | is not | is not | is      | default           |
-    | deadline soon reminder | tomorrow  | is     | is     | is      | custom            |
-    | deadline soon reminder | tomorrow  | is not | is     | is      | system-wide       |
-    | deadline soon reminder | tomorrow  | is not | is not | is      | default           |
+    | template name          | deadline  | custom | received template |
+    | reminder               | yesterday | is     | custom            |
+    | deadline soon reminder | tomorrow  | is     | custom            |
 
   @rack
   Scenario Outline: Mail template language precendence
@@ -85,16 +51,12 @@ Feature: Mail templates
     And my language is set to "<language>"
     And I have a contract with deadline yesterday
     And there is a custom reminder mail template for this contract's inventory pool in "<custom languages>"
-    And there is a system-wide reminder mail template in "<system languages>"
     When the reminders are sent
     Then I receive a <received template> reminder in "<received language>"
   Examples:
-    | language | custom languages  | system languages  | received template | received language |
-    | de-CH    | de-CH,en-GB,en-US | de-CH,en-GB,en-US | custom            | de-CH             |
-    | de-CH    | en-GB,en-US       | de-CH,en-GB,en-US | custom            | en-GB,en-US       |
-    | de-CH    | none              | de-CH,en-GB,en-US | system-wide       | de-CH             |
-    | de-CH    | none              | en-GB,en-US       | system-wide       | en-GB,en-US       |
-    | de-CH    | none              | none              | default           | default           |
+    | language | custom languages  | received template | received language |
+    | de-CH    | de-CH,en-GB,en-US | custom            | de-CH             |
+    | en-GB    | de-CH,en-GB,en-US | custom            | en-GB             |
 
   @rack
   Scenario: How an email template is parsed
@@ -129,7 +91,6 @@ A-Ausleihe
     And the failing <template name> mail template in "en-GB" is not persisted with the "<body>" template
   Examples:
     | persona | scope                         | template name | body                |
-    | Gino    | for the whole system          | reminder      | Hi {{{ user.name }} |
     | Mike    | in the current inventory pool | reminder      | Hi {{{ user.name }} |
 
   @rack

@@ -30,7 +30,9 @@ Then(/^I see a link to the hand over process of that order$/) do
 end
 
 Given /^I try to approve a contract that has problems$/ do
-  @contract =  @current_inventory_pool.orders.submitted.detect{|o| not o.approvable?}
+  @contract =  @current_inventory_pool.orders.submitted.detect do |o|
+    not o.approvable? and not o.to_be_verified?
+  end
   step 'I quick approve a submitted order'
   find('.modal')
 end
