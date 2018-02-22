@@ -27,8 +27,8 @@
     %a{:href => admin.authentication_systems_path}
       = _('Authentication Systems')
 
-  %li{role: 'presentation', class: params[:controller] == 'leihs_admin/fields' ? 'active' : nil}
-    %a{:href => admin.fields_path}
+  %li{role: 'presentation', class: params[:controller] == 'leihs_admin/fields_editor' ? 'active' : nil}
+    %a{:href => admin.fields_editor_path}
       = _('Fields')
 
   %li{role: 'presentation', class: params[:controller] == 'leihs_admin/mail_templates' ? 'active' : nil}

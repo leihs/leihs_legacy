@@ -31,7 +31,10 @@ Rails.application.configure do
 
   # Compress JavaScripts and CSS.
   # NOTE: 'mangle: true' option makes the build non-reproducible!
-  config.assets.js_compressor = Uglifier.new(mangle: false)
+  # NOTE: We have to set the compressor to false for the admin, otherwise
+  # the field editor in admin with react does not work.
+  config.assets.js_compressor = false
+  # config.assets.js_compressor = Uglifier.new(mangle: false)
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.

@@ -9,11 +9,11 @@ describe Field do
   it 'raises on INSERT' do
     expect { Field.create! }
       .to raise_error \
-        /The fields table does not allow INSERT or DELETE or TRUNCATE!/
+        /New fields must always be dynamic./
   end
   it 'raises on DELETE' do
     expect { Field.first.destroy! }
       .to raise_error \
-        /The fields table does not allow INSERT or DELETE or TRUNCATE!/
+        /Cannot delete field which is not dynamic./
   end
 end
