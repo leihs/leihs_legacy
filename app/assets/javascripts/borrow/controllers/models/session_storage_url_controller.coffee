@@ -1,3 +1,5 @@
+setUrlParams = window.Packs.application.setUrlParams
+
 class window.App.SessionStorageUrlController extends Spine.Controller
 
   events:
@@ -9,7 +11,7 @@ class window.App.SessionStorageUrlController extends Spine.Controller
       e.preventDefault()
       href = @getHref($ e.target)
       return unless href and href.length
-      window.location = href + "&session_storage=true"
+      window.location = setUrlParams(href, { session_storage: true })
 
   getHref: (el) =>
     if el.tagName != "A"
@@ -19,10 +21,9 @@ class window.App.SessionStorageUrlController extends Spine.Controller
 
 
   @addSessionStorageToUrl: =>
-    unless _.string.contains window.location.href, "&session_storage=true"
-      href = String(window.location.href) + "&session_storage=true"
-      history.replaceState(null, document.title, href)
+    href = setUrlParams(window.location.href, { session_storage: true })
+    history.replaceState(null, document.title, href)
 
   @removeSessionStorageFromUrl: =>
-    href = String(window.location.href).replace("&session_storage=true","")
+    href = setUrlParams(window.location.href, { session_storage: null })
     history.replaceState(null, document.title, href)
