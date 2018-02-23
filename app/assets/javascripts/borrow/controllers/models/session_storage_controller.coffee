@@ -45,16 +45,14 @@ class window.App.SessionStorageController extends Spine.Controller
       "searchTerm",
       @search.inputField.val()
     )
-    unless _.isEmpty @period.startDate.val()
-      sessionStorage.setItem(
-        "startDate",
-        @formatDate @period.startDate.val()
-      )
-    unless _.isEmpty @period.endDate.val()
-      sessionStorage.setItem(
-        "endDate",
-        @formatDate @period.endDate.val()
-      )
+    sessionStorage.setItem(
+      "startDate",
+      @formatDate @period.startDate.val()
+    )
+    sessionStorage.setItem(
+      "endDate",
+      @formatDate @period.endDate.val()
+    )
     unless @isEmpty()
       App.SessionStorageUrlController.addSessionStorageToUrl()
 

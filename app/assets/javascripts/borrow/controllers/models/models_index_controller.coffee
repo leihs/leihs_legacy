@@ -88,8 +88,8 @@ class window.App.ModelsIndexController extends Spine.Controller
   periodChange: =>
     do @reset.validate
     @tooltips.tooltips = {}
+    @sessionStorage.update()
     if @period.getPeriod()?
-      @sessionStorage.update()
       do @loading
       do @fetchAvailability
     else
