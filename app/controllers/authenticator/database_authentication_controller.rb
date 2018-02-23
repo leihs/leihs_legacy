@@ -14,7 +14,7 @@ class Authenticator::DatabaseAuthenticationController \
       if (l = DatabaseAuthentication.authenticate(params[:login][:username],
                                                   params[:login][:password]))
         self.current_user = l.user
-        if current_user.access_rights.active.size == 0
+        if current_user.access_rights.active.size == 0 && !current_user.is_admin
           render plain: _("You don't have any rights to access this application.")
           return
         end

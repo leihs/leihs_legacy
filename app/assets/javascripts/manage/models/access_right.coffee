@@ -9,7 +9,6 @@ class window.App.AccessRight extends Spine.Model
 
   name: ->
     switch @.role
-      when "admin" then _jed "Administrator"
       when "customer" then _jed "Customer"
       when "group_manager" then _jed "Group manager"
       when "lending_manager" then _jed "Lending manager"

@@ -20,6 +20,7 @@ module LeihsAdmin
       include ::Spec::FactorySteps
 
       step 'I navigate to the admin area' do
+        visit '/admin'
         within 'nav.topbar' do
           find('.navbar-right .dropdown-toggle', match: :first).click
           find('.navbar-right .dropdown-menu a', text: _('Admin')).click

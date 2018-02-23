@@ -22,7 +22,7 @@
     = user.phone
 
   .col-sm-2
-    = _('Administrator') if user.has_role?(:admin)
+    = _('Administrator') if user.is_admin
 
   .col-sm-2.text-right.line-actions
 

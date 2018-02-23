@@ -16,7 +16,7 @@
       %a{href: "https://github.com/leihs/leihs/wiki/Deployment"}= _("here")
       = "."
 
-  - Hash[@settings.attributes.sort].each_pair do |k,v|
+  - Hash[@settings.attributes.select{ |k, v| not ["updated_at", "created_at"].include? k}.sort].each_pair do |k,v|
     - next if k == "id"
     - disabled = Setting.attr_readonly?(k)
     .row.form-group

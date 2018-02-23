@@ -577,7 +577,7 @@ Then(/^he does not have access to any inventory pools and is not an administrato
 end
 
 Given(/^I am editing a user that has no access rights and is not an admin$/) do
-  @user = User.find { |u| not u.has_role? :admin and u.has_role? :customer }
+  @user = User.find { |u| not u.is_admin and u.has_role? :customer }
   @previous_access_rights = @user.access_rights.freeze
   visit admin.edit_user_path(@user)
 end
@@ -591,7 +591,7 @@ When(/^I assign the admin role to this user$/) do
 end
 
 Then(/^this user has the admin role$/) do
-  expect(@user.reload.has_role?(:admin)).to be true
+  expect(@user.reload.is_admin).to be true
 end
 
 
@@ -600,9 +600,9 @@ Then(/^all their previous access rights remain intact$/) do
 end
 
 Given(/^I am editing a user who has the admin role and access to inventory pools$/) do
-  @user = User.find { |u| u.has_role? :admin and u.has_role? :customer }
+  @user = User.find { |u| u.is_admin and u.has_role? :customer }
   raise 'user not found' unless @user
-  @previous_access_rights = @user.access_rights.select { |ar| ar.role != :admin }.freeze
+  @previous_access_rights = @user.access_rights.freeze
   visit admin.edit_user_path(@user)
 end
 
@@ -611,7 +611,7 @@ When(/^I remove the admin role from this user$/) do
 end
 
 Then(/^this user no longer has the admin role$/) do
-  expect(@user.reload.has_role?(:admin)).to be false
+  expect(@user.reload.is_admin).to be false
 end
 
 When(/^I try to access the admin area's user editing page$/) do

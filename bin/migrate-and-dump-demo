@@ -1,7 +1,7 @@
 set -eux
 
 if [ -z ${RAILS_ENV-} ]; then
-  export RAILS_ENV=production
+  export RAILS_ENV=test
 fi
 
 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1

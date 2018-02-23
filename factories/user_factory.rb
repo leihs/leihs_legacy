@@ -19,7 +19,7 @@ FactoryGirl.define do
         AuthenticationSystem.first
       end
     end
-    unique_id { Faker::Lorem.characters(18) }
+    org_id { Faker::Lorem.characters(32) }
 
     email do
       existing_emails = User.pluck :email
@@ -71,9 +71,7 @@ FactoryGirl.define do
 
     factory :admin do
       after(:create) do |user, evaluator|
-        create(:access_right,
-               user: user,
-               role: :admin)
+        user.update_attributes! is_admin: true
       end
     end
   end

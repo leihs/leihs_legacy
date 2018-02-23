@@ -31,7 +31,7 @@ module Procurement
 
     def procurement_or_leihs_admin?
       Access.admin?(current_user) or
-        (Access.admins.empty? and current_user.has_role?(:admin))
+        (Access.admins.empty? and current_user.is_admin)
     end
 
     def procurement_requester?

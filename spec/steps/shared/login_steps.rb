@@ -46,10 +46,14 @@ module Spec
       fail unless user.present? && ip.present?
       table.headers.each do |role|
         next if AccessRight.find_by(user: user, inventory_pool: ip, role: role)
-        FactoryGirl.create(
-          :access_right,
-          user: user, inventory_pool: ip, role: role
-        )
+        if role == 'admin'
+          user.update_attributes! is_admin: true
+        else
+          FactoryGirl.create(
+            :access_right,
+            user: user, inventory_pool: ip, role: role
+          )
+        end
       end
     end
 

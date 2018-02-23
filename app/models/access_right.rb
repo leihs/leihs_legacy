@@ -11,7 +11,7 @@ class AccessRight < ApplicationRecord
                      :group_manager,
                      :lending_manager,
                      :inventory_manager]
-  AVAILABLE_ROLES = ROLES_HIERARCHY + [:admin]
+  AVAILABLE_ROLES = ROLES_HIERARCHY
 
   AUTOMATIC_SUSPENSION_DATE = Date.new(2099, 1, 1)
 
@@ -23,7 +23,7 @@ class AccessRight < ApplicationRecord
     v = v.to_sym
     self.deleted_at = nil unless v == :no_access
     case v
-    when :admin, :customer, :group_manager, :lending_manager, :inventory_manager
+    when :customer, :group_manager, :lending_manager, :inventory_manager
       write_attribute(:role, v)
     when :no_access
       # keep the existing role, just flag as deleted
@@ -33,7 +33,7 @@ class AccessRight < ApplicationRecord
     # assigning a new role, reactivate (ensure is not deleted)
     if role_changed?
       case v
-      when :admin, :customer, :group_manager, :lending_manager, :inventory_manager
+      when :customer, :group_manager, :lending_manager, :inventory_manager
         self.deleted_at = nil
       end
     end
@@ -45,22 +45,13 @@ class AccessRight < ApplicationRecord
   validates_presence_of :suspended_reason, if: :suspended_until?
   validates_uniqueness_of :inventory_pool_id, scope: :user_id
   validate do
-    if role.to_sym == :admin
-      unless inventory_pool.nil?
-        errors.add(:base,
-                   _('The admin role cannot be scoped to an inventory pool'))
-      end
-    else
-      errors.add(:base, _('Inventory Pool is missing')) if inventory_pool.nil?
-
-      if deleted_at
-        check_for_existing_reservations
-      end
+    errors.add(:base, _('Inventory Pool is missing')) if inventory_pool.nil?
+    if deleted_at
+      check_for_existing_reservations
     end
   end
 
   before_validation(on: :create) do
-    self.inventory_pool = nil if role.to_sym == :admin
     if user
       unless user.access_rights.active.empty?
         if inventory_pool
@@ -86,7 +77,7 @@ class AccessRight < ApplicationRecord
     SQL
     .where(<<-SQL)
       access_rights.deleted_at IS NULL
-      AND (inventory_pools.is_active = 't' OR access_rights.role = 'admin')
+      AND inventory_pools.is_active = 't'
     SQL
   end)
 

@@ -1,5 +1,5 @@
 class LdapHelper
-  attr_reader :unique_id_field
+  attr_reader :org_id_field
   attr_reader :base_dn
   attr_reader :ldap_config
   attr_reader :host
@@ -29,14 +29,14 @@ class LdapHelper
     @method = :simple
     @master_bind_dn = @ldap_config[Rails.env]['master_bind_dn']
     @master_bind_pw = @ldap_config[Rails.env]['master_bind_pw']
-    @unique_id_field = @ldap_config[Rails.env]['unique_id_field']
+    @org_id_field = @ldap_config[Rails.env]['org_id_field']
     @video_displayname = @ldap_config[Rails.env]['video_displayname']
     if (@master_bind_dn.blank? or @master_bind_pw.blank?)
       raise "'master_bind_dn' and 'master_bind_pw' must be set in " \
             'LDAP configuration file'
     end
-    if @unique_id_field.blank?
-      raise "'unique_id_field' in LDAP configuration file must point to " \
+    if @org_id_field.blank?
+      raise "'org_id_field' in LDAP configuration file must point to " \
             'an LDAP field that allows unique identification of a user'
     end
   end
@@ -113,8 +113,8 @@ class Authenticator::LdapAuthenticationController \
     # Make sure to set "user_image_url" in "/admin/settings" in leihs 3.0
     # for user images to appear, based on the unique ID. Example for the format:
     # http://www.hslu.ch/portrait/{:id}.jpg
-    # {:id} will be interpolated with user.unique_id there.
-    user.unique_id = user_data[ldaphelper.unique_id_field.to_s].first.to_s
+    # {:id} will be interpolated with user.org_id there.
+    user.org_id = user_data[ldaphelper.org_id_field.to_s].first.to_s
     user.firstname = user_data['givenname'].first.to_s
     user.lastname = user_data['sn'].first.to_s
     unless user_data['telephonenumber'].blank?
@@ -142,15 +142,12 @@ class Authenticator::LdapAuthenticationController \
           in_admin_group = true
         end
       rescue Exception => e
-        logger.error "ERROR: Could not upgrade user #{user.unique_id} " \
+        logger.error "ERROR: Could not upgrade user #{user.org_id} " \
                      "to an admin due to exception: #{e}"
       end
 
-      if in_admin_group == true
-        if user.access_rights.active.empty? \
-          or !user.access_rights.active.collect(&:role).include?(:admin)
-          user.access_rights.create(role: :admin)
-        end
+      if in_admin_group == true && !user.is_admin
+        user.update_attributes! is_admin: true
       end
     end
   end
@@ -163,7 +160,7 @@ class Authenticator::LdapAuthenticationController \
     lastname = ldap_user.sn
     ldaphelper = LdapHelper.new
     if ldaphelper.bind(bind_dn, password)
-      u = User.find_by_unique_id(ldap_user[ldaphelper.unique_id_field.to_s])
+      u = User.find_by_org_id(ldap_user[ldaphelper.org_id_field.to_s])
       unless u
         u = create_user(username, email, firstname, lastname)
       end

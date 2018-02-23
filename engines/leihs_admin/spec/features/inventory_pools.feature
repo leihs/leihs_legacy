@@ -28,6 +28,7 @@ Feature: Administer inventory pools
   @leihs_admin_inventory_pools
   Scenario: Creating an initial inventory pool
     Given I am Gino
+    And I navigate to the admin area
     When I create a new inventory pool in the admin area's inventory pool tab
     And I enter name, shortname and email address
     And I save
@@ -118,6 +119,7 @@ Feature: Administer inventory pools
   @leihs_admin_inventory_pools
   Scenario: Exclusion of inactive inventory pools in the topbar dropdown list
     Given I am Gino
+    And I navigate to the admin area
     And there exists an inactive inventory pool I have access to as "inventory_manager"
     When I click on the sections dropdown toggle
     Then I don't see the inactive inventory pool in the list

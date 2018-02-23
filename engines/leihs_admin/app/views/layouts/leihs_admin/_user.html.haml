@@ -30,7 +30,7 @@
     - elsif current_user.delegation?
       %li
         %a{href: main_app.borrow_user_switch_back_path}
-          %img.max-height-xxxs.max-width-xxs{:src => user_session.user.image_url}
+          %img.max-height-xxxs.max-width-xxs{:src => user_session.user.image_url, style: 'max-width: 100px; max-height: 100px'}
           = _("Back to %s") % user_session.user
 
     %li

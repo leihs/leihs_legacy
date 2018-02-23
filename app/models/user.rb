@@ -145,12 +145,12 @@ class User < ApplicationRecord
                       .or(arel_table[:firstname].matches(q))
                       .or(arel_table[:lastname].matches(q))
                       .or(arel_table[:badge_id].matches(q))
-                      .or(arel_table[:unique_id].matches(q))
+                      .or(arel_table[:org_id].matches(q))
                       .or(u2_table[:login].matches(q))
                       .or(u2_table[:firstname].matches(q))
                       .or(u2_table[:lastname].matches(q))
                       .or(u2_table[:badge_id].matches(q))
-                      .or(u2_table[:unique_id].matches(q))
+                      .or(u2_table[:org_id].matches(q))
                      )
     end
     sql
@@ -183,11 +183,7 @@ class User < ApplicationRecord
 
   ################################################
 
-  scope(:admins,
-        (lambda do
-          joins(:access_rights)
-            .where(access_rights: { role: :admin, deleted_at: nil })
-        end))
+  scope :admins, -> { where(is_admin: true) }
 
   AccessRight::ROLES_HIERARCHY.each do |role|
     scope(
@@ -237,16 +233,7 @@ class User < ApplicationRecord
   end
 
   def image_url
-    if user_image_url = Setting.first.try(:user_image_url)
-      if user_image_url.match(/\{:id\}/) and unique_id
-        user_image_url.gsub(/\{:id\}/, unique_id)
-      elsif user_image_url.match(/\{:extended_info:id\}/) \
-        and extended_info \
-        and extended_info['id']
-        user_image_url.gsub(/\{:extended_info:id\}/,
-                            extended_info['id'].to_s)
-      end
-    end
+    img256_url
   end
 
   def address
@@ -341,23 +328,19 @@ class User < ApplicationRecord
   # rubocop:disable Style/PredicateName
   def has_role?(role, inventory_pool = nil)
     role = role.to_sym
-    if role == :admin
-      access_rights.active.where(role: role).exists?
-    else
-      roles = if inventory_pool
-                access_rights.where(inventory_pool_id: inventory_pool)
-              else
-                access_rights
-              end.active.collect(&:role)
+    roles = if inventory_pool
+              access_rights.where(inventory_pool_id: inventory_pool)
+            else
+              access_rights
+            end.active.collect(&:role)
 
-      if AccessRight::ROLES_HIERARCHY.include? role
-        i = AccessRight::ROLES_HIERARCHY.index role
-        (roles & AccessRight::ROLES_HIERARCHY).any? do |r|
-          AccessRight::ROLES_HIERARCHY.index(r) >= i
-        end
-      else
-        roles.include? role
+    if AccessRight::ROLES_HIERARCHY.include? role
+      i = AccessRight::ROLES_HIERARCHY.index role
+      (roles & AccessRight::ROLES_HIERARCHY).any? do |r|
+        AccessRight::ROLES_HIERARCHY.index(r) >= i
       end
+    else
+      roles.include? role
     end
   end
   # rubocop:enable Style/PredicateName

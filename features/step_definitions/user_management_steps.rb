@@ -1,7 +1,7 @@
 Given /^the admin$/ do
   # ensure that the super user exists - the DB should
   # be preseeded with one (see db/seeds.rb)
-  @user = AccessRight.find_by_role(:admin).user
+  @user = User.where(is_admin: true).first
 end
 
 Given /^a customer "([^"]*)"( exists)?$/ do |name,foo|

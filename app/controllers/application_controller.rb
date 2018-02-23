@@ -8,12 +8,19 @@ class ApplicationController < ActionController::Base
   #       <https://github.com/charliesome/better_errors/issues/341>
   before_action :better_errors_hack, if: -> { Rails.env.development? }
 
+  def status
+    render json: {
+      db_schema_migrations_max_version: ActiveRecord::Base.connection \
+        .select_values('select max(version::int) from schema_migrations').first
+    }, status: 200
+  end
+
   def root
     if not User.exists?
       redirect_to new_first_admin_user_path
     elsif logged_in?
       flash.keep
-      if current_user.has_role?(:admin)
+      if current_user.is_admin
         redirect_to admin.root_path
       elsif current_user.has_role?(:group_manager)
         redirect_to manage_root_path
@@ -40,9 +47,11 @@ class ApplicationController < ActionController::Base
         db_auth_system = \
           AuthenticationSystem.find_by_class_name!('DatabaseAuthentication')
         user = \
-          User.create! user_params.merge(authentication_system: db_auth_system)
+          User.create! user_params.merge(
+            authentication_system: db_auth_system,
+            is_admin: true
+          )
         DatabaseAuthentication.create! db_auth_params.merge(user: user)
-        AccessRight.create! user: user, role: :admin
       end
       flash[:notice] = _(
         'First admin user has been created. ' \

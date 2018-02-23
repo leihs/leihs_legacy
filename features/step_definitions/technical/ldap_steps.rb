@@ -31,6 +31,6 @@ Then(/^the user "(.*?)" should (not have any|have) admin privileges$/) do |usern
         when 'have'
           true
       end
-  expect(user.access_rights.active.collect(&:role).include?(:admin)).to be b
+  expect(user.is_admin).to be b
 end
 

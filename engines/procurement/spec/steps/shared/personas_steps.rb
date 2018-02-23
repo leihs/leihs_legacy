@@ -35,7 +35,7 @@ module PersonasSteps
   # leihs admin
   step 'I am Gino' do
     persona = create_persona('Gino')
-    FactoryGirl.create(:access_right, role: :admin, user: persona)
+    persona.update_attributes! is_admin: true
     login_as persona
   end
 

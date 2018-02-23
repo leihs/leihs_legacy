@@ -1,6 +1,6 @@
 :ruby
   what_to_display = [:borrow]
-  if current_user.has_role?(:admin)
+  if current_user.is_admin
     what_to_display.push :admin
   end
   if ("Procurement".constantize rescue false) and Procurement::Access.some_access?(current_user)

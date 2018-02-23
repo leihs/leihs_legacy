@@ -54,7 +54,7 @@ Given(/^I am editing the user "(.*?)"$/) do |persona|
   # This isn't really necessary since they exist anyhow when using the @personas tag
   #step 'personas existing'
   @user = User.find_by_firstname persona
-  if @current_user.access_rights.active.map(&:role).include? :admin
+  if @current_user.is_admin
     visit admin.edit_user_path @user
   else
     ip = @current_user.inventory_pools.managed.where('inventory_pools.id' => @user.inventory_pools.select('inventory_pools.id')).first

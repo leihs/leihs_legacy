@@ -58,7 +58,7 @@ module MainHelpers
       if not app_settings.try(:smtp_address) \
         and logged_in? \
         and not [admin.settings_path, main_app.logout_path].include? request.path
-        if current_user.has_role?(:admin)
+        if current_user.is_admin
           redirect_to admin.settings_path
         else
           raise 'Application settings are missing!'
@@ -97,7 +97,7 @@ module MainHelpers
     ####### Helper Methods #######
 
     def admin?
-      current_user && current_user.has_role?(:admin)
+      current_user && current_user.is_admin
     end
 
     def permit_params

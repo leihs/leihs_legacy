@@ -55,7 +55,7 @@ module LeihsAdmin
     end
 
     def edit
-      @is_admin = @user.has_role? :admin
+      @is_admin = @user.is_admin
       @db_auth = DatabaseAuthentication.find_by_user_id(@user.id)
     end
 
@@ -101,7 +101,7 @@ module LeihsAdmin
       accessible_roles = [[_('No access'), :no_access], [_('Customer'), :customer]]
       unless @delegation_type
         accessible_roles +=
-            if @current_user.has_role? :admin \
+            if @current_user.is_admin \
               or @current_user.has_role?(:inventory_manager,
                                          @current_inventory_pool)
               [[_('Group manager'), :group_manager],
@@ -131,8 +131,7 @@ module LeihsAdmin
             .update_attributes! params[:db_auth].merge(user: user)
           update_user_auth_system! user
         end
-        user.access_rights.where(role: :admin).each(&:destroy)
-        user.access_rights.create!(role: :admin) if should_be_admin == 'true'
+        user.update_attributes!(is_admin: true) if should_be_admin == 'true'
 
         respond_to do |format|
           format.html do
@@ -153,7 +152,7 @@ module LeihsAdmin
             DatabaseAuthentication.create!(params[:db_auth].merge(user: user))
         end
 
-        user.access_rights.create!(role: :admin) if should_be_admin == 'true'
+        user.update_attributes!(is_admin: true) if should_be_admin == 'true'
         update_user_auth_system! user
 
         respond_to do |format|

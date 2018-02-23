@@ -12,7 +12,7 @@ module LeihsAdmin
       include ::Spec::LoginSteps
 
       step 'I am editing a user that has no access rights and is not an admin' do
-        @user = User.find { |u| not u.has_role? :admin and u.has_role? :customer }
+        @user = User.find { |u| not u.is_admin and u.has_role? :customer }
         @previous_access_rights = @user.access_rights.freeze
         visit admin.edit_user_path(@user)
       end
@@ -22,7 +22,7 @@ module LeihsAdmin
       end
 
       step 'this user has the admin role' do
-        expect(@user.reload.has_role?(:admin)).to be true
+        expect(@user.reload.is_admin).to be true
       end
 
       step 'all their previous access rights remain intact' do
@@ -32,10 +32,9 @@ module LeihsAdmin
 
       step 'I am editing a user who has the admin role ' \
            'and access to inventory pools' do
-        @user = User.find { |u| u.has_role? :admin and u.has_role? :customer }
+        @user = User.find { |u| u.is_admin and u.has_role? :customer }
         raise 'user not found' unless @user
-        @previous_access_rights = \
-          @user.access_rights.select { |ar| ar.role != :admin }.freeze
+        @previous_access_rights = @user.access_rights.freeze
         visit admin.edit_user_path(@user)
       end
 
@@ -44,7 +43,7 @@ module LeihsAdmin
       end
 
       step 'this user no longer has the admin role' do
-        expect(@user.reload.has_role?(:admin)).to be false
+        expect(@user.reload.is_admin).to be false
       end
 
       step 'I navigate from here to the user creation page' do

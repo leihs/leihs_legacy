@@ -6,6 +6,7 @@ Feature: Audits
 
   @leihs_admin_audits
   Scenario: Listing audits
+    When I navigate to the audits page
     When I click on the "Audits" navigation tab
     Then I see the list of audits
 

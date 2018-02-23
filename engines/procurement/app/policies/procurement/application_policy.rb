@@ -50,7 +50,7 @@ module Procurement
     end
 
     def leihs_admin?
-      user.has_role? :admin
+      user.is_admin
     end
   end
 end

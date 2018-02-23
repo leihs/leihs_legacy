@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root to: "application#root"
 
+  get :status, controller: :application, action: :status
+
   # New first admin user
   get 'first_admin_user', to: 'application#new_first_admin_user', as: 'new_first_admin_user'
   post 'first_admin_user', to: 'application#create_first_admin_user', as: 'create_first_admin_user'

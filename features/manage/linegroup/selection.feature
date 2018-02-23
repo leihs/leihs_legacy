@@ -7,6 +7,7 @@ Feature: Select reservations or linegroups
   Background:
     Given I am Pius
 
+  @broken
   Scenario: Select multiple reservations
      When I open a take back, hand over or I edit a contract
       And I select all reservations of an linegroup
