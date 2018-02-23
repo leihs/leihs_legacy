@@ -4,6 +4,8 @@ jobs:
 
     name: 'Manage: Scenarios'
 
+    priority: 0
+
     description: |
       Run Manage scenarios under MRI
 
@@ -17,7 +19,7 @@ jobs:
 
       task_defaults:
         load: 1.5
-        max_trials: 3
+        max_trials: 5
         include:
           - cider-ci/task-components/database.yml
 
