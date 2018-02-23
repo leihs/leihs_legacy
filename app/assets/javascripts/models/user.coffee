@@ -1,12 +1,12 @@
 ###
-  
+
   User
 
 ###
 
 class window.App.User extends Spine.Model
 
-  @configure "User", "id", "firstname", "lastname", "settings", "groupIds", "unique_id", "delegator_user_id"
+  @configure "User", "id", "firstname", "lastname", "settings", "groupIds", "org_id", "delegator_user_id"
 
   @hasMany "contracts", "App.Contract", "user_id"
   @hasMany "accessRights", "App.AccessRight", "user_id"
@@ -15,7 +15,7 @@ class window.App.User extends Spine.Model
   @extend Spine.Model.Ajax
   @extend App.Modules.FindOrBuild
 
-  setStartScreen: (path)-> $.post "/manage/users/#{App.User.current.id}/set_start_screen", {path: path}        
+  setStartScreen: (path)-> $.post "/manage/users/#{App.User.current.id}/set_start_screen", {path: path}
 
   name: -> [@firstname, @lastname].join(" ")
 

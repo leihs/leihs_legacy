@@ -27,6 +27,7 @@ jobs:
             - cider-ci/task-components/database.yml
 
           environment_variables:
+            LEIHS_SECRET: secret
             RAILS_ENV: production
 
           name: "Check if demo dump needs to be and has been migrated"
@@ -71,7 +72,9 @@ jobs:
         assets compiled if changed:
           name: "Assets have been precompiled and checked in"
           include: [ cider-ci/task-components/database.yml ]
-          environment_variables: { RAILS_ENV: production }
+          environment_variables:
+            RAILS_ENV: production
+            LEIHS_SECRET: secret
           traits: [ g2016 ] # fast machines only
           scripts:
             test:

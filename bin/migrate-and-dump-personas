@@ -6,7 +6,9 @@ fi
 
 bundle exec rake db:environment:set
 bundle exec rake db:drop db:create
-bundle exec rake db:pg:structure_and_data:restore FILE=features/personas/personas_VERSION_100.pgbin
+# bundle exec rake db:pg:structure_and_data:restore FILE=features/personas/personas_VERSION_100.pgbin
+git checkout HEAD~ -- features/personas/personas.pgbin
+bundle exec rake db:pg:structure_and_data:restore FILE=features/personas/personas.pgbin
 bundle exec rake db:migrate
 bundle exec rake db:environment:set
 bundle exec rake db:pg:structure_and_data:dump FILE=features/personas/personas.pgbin

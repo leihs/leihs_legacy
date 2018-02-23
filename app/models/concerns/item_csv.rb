@@ -88,7 +88,7 @@ module Concerns
         "#{_('Borrower')} #{_('Last name')}" => current_borrower.try(:lastname),
         "#{_('Borrower')} #{_('Personal ID')}" => \
           current_borrower.try(:extended_info).try(:fetch, 'id', nil) \
-            || current_borrower.try(:unique_id),
+            || current_borrower.try(:org_id),
         "#{_('Borrowed until')}" => "#{current_reservation.try(:end_date)}"
       )
       h1

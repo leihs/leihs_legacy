@@ -8,6 +8,13 @@ class ApplicationController < ActionController::Base
   #       <https://github.com/charliesome/better_errors/issues/341>
   before_action :better_errors_hack, if: -> { Rails.env.development? }
 
+  def status
+    render json: {
+      db_schema_migrations_max_version: ActiveRecord::Base.connection \
+        .select_values('select max(version::int) from schema_migrations').first
+    }, status: 200
+  end
+
   def root
     if not User.exists?
       redirect_to new_first_admin_user_path

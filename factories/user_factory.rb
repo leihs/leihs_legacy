@@ -19,7 +19,7 @@ FactoryGirl.define do
         AuthenticationSystem.first
       end
     end
-    unique_id { Faker::Lorem.characters(18) }
+    org_id { Faker::Lorem.characters(18) }
 
     email do
       existing_emails = User.pluck :email

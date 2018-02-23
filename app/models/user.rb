@@ -146,12 +146,12 @@ class User < ApplicationRecord
                       .or(arel_table[:firstname].matches(q))
                       .or(arel_table[:lastname].matches(q))
                       .or(arel_table[:badge_id].matches(q))
-                      .or(arel_table[:unique_id].matches(q))
+                      .or(arel_table[:org_id].matches(q))
                       .or(u2_table[:login].matches(q))
                       .or(u2_table[:firstname].matches(q))
                       .or(u2_table[:lastname].matches(q))
                       .or(u2_table[:badge_id].matches(q))
-                      .or(u2_table[:unique_id].matches(q))
+                      .or(u2_table[:org_id].matches(q))
                      )
     end
     sql
@@ -239,8 +239,8 @@ class User < ApplicationRecord
 
   def image_url
     if user_image_url = Setting.first.try(:user_image_url)
-      if user_image_url.match(/\{:id\}/) and unique_id
-        user_image_url.gsub(/\{:id\}/, unique_id)
+      if user_image_url.match(/\{:id\}/) and org_id
+        user_image_url.gsub(/\{:id\}/, org_id)
       elsif user_image_url.match(/\{:extended_info:id\}/) \
         and extended_info \
         and extended_info['id']

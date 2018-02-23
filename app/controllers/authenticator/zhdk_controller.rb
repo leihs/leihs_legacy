@@ -73,10 +73,10 @@ class Authenticator::ZhdkController < Authenticator::AuthenticatorController
     phone = "#{xml['authresponse']['person']['phone_business']}" if phone.blank?
     phone = "#{xml['authresponse']['person']['phone_private']}" if phone.blank?
     user = \
-      User.where(unique_id: uid).first \
+      User.where(org_id: uid).first \
       || User.where(email: email).first \
       || User.new
-    user.unique_id = uid
+    user.org_id = uid
     user.email = email
     user.phone = phone
     user.firstname = "#{xml['authresponse']['person']['firstname']}"
@@ -95,7 +95,7 @@ class Authenticator::ZhdkController < Authenticator::AuthenticatorController
     user.extended_info = xml['authresponse']['person']
     user.save
 
-    if SUPER_USERS.include?(user.unique_id)
+    if SUPER_USERS.include?(user.org_id)
       user.access_rights.create(role: :admin, inventory_pool: nil)
     end
     user

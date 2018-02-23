@@ -43,7 +43,7 @@ class Authenticator::ShibbolethAuthenticationController \
   end
 
   def validate_config
-    required_fields = %w(unique_id_field firstname_field lastname_field mail_field)
+    required_fields = %w(org_id_field firstname_field lastname_field mail_field)
     required_fields.map do |field|
       if !@config[field] or @config[field].blank?
         raise('The Shibboleth configuration file ' \
@@ -61,7 +61,7 @@ class Authenticator::ShibbolethAuthenticationController \
     # This point should only be reached after a successful login from Shibboleth.
     # Shibboleth handles all error management, so we don't need to worry about any
     # of that.
-    if request.env[@config['unique_id_field']].blank?
+    if request.env[@config['org_id_field']].blank?
       redirect_to root_path
     else
       self.current_user = create_or_update_user
@@ -93,13 +93,13 @@ class Authenticator::ShibbolethAuthenticationController \
     #    "surname"=>"Cahenzli", "homeOrganization"=>"zhdk.ch",
     #    "affiliation"=>"faculty;staff;member"
 
-    uid = request.env[@config['unique_id_field']]
+    uid = request.env[@config['org_id_field']]
     email = request.env[@config['mail_field']]
     user = \
-      User.where(unique_id: uid).first \
+      User.where(org_id: uid).first \
       || User.where(email: email).first \
       || User.new
-    user.unique_id = uid
+    user.org_id = uid
     user.login = uid
     user.email = email
     user.firstname = "#{request.env[@config['firstname_field']]}"
@@ -112,7 +112,7 @@ class Authenticator::ShibbolethAuthenticationController \
       logger.error user.errors.full_messages
     end
 
-    if @super_users.include?(user.unique_id)
+    if @super_users.include?(user.org_id)
       user.access_rights.create(role: :admin, inventory_pool: nil)
     end
     user
