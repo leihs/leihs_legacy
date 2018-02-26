@@ -1,5 +1,5 @@
 .row.line
-  - if entitlement_group.entitlements.select {|partition| partition.quantity > partition.model.items.where(inventory_pool_id: partition.inventory_pool_id).size}.length > 0
+  - if entitlement_group.entitlements.select {|partition| partition.quantity > partition.model.items.where(inventory_pool_id: entitlement_group.inventory_pool_id).size}.length > 0
     .line-info.red
 
   .col1of5.line-col

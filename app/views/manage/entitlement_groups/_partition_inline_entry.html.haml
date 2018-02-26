@@ -1,10 +1,9 @@
 .row.line.font-size-xs
   %input{:type => :hidden, :name => "group[partitions_attributes][][id]", :value => partition.id}
   %input{:type => :hidden, :name => "group[partitions_attributes][][model_id]", :value => partition.model_id}
-  %input{:type => :hidden, :name => "group[partitions_attributes][][inventory_pool_id]", :value => partition.inventory_pool_id}
   %input{:type => :hidden, :name => "group[partitions_attributes][][_destroy]", :value => nil}
 
-  - items_size = partition.model.items.where(inventory_pool_id: partition.inventory_pool_id).size
+  - items_size = partition.model.items.where(inventory_pool_id: partition.inventory_pool.id).size
   - if partition.quantity > items_size
     .line-info.red
 

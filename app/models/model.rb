@@ -49,7 +49,9 @@ class Model < ApplicationRecord
 
   has_many :entitlements, dependent: :delete_all do
     def set_in(inventory_pool, new_entitlements)
-      where(inventory_pool_id: inventory_pool).scoping do
+      joins(:entitlement_group)
+        .where(entitlement_groups: { inventory_pool_id: inventory_pool })
+        .scoping do
         delete_all
         new_entitlements.delete(EntitlementGroup::GENERAL_GROUP_ID)
         unless new_entitlements.blank?

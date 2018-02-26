@@ -97,7 +97,6 @@ module Manage
         @entitlement_group.entitlements << \
           FactoryGirl.create(:entitlement,
                              model: model,
-                             inventory_pool: @inventory_pool,
                              quantity: 1)
         date = Date.today + n.to_i.day
 
@@ -205,7 +204,6 @@ module Manage
         @entitlement_group.entitlements << \
           FactoryGirl.create(:entitlement,
                              model: model,
-                             inventory_pool: @inventory_pool,
                              quantity: 1)
         date = Date.today + n.to_i.day
 

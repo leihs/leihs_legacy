@@ -39,8 +39,7 @@ module Manage
         FactoryGirl.create(:entitlement,
                            model: @model,
                            quantity: @items.length,
-                           entitlement_group: @group,
-                           inventory_pool: @inventory_pool)
+                           entitlement_group: @group)
       end
 
       step ':num of those Items are already lent' do |num|

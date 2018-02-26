@@ -124,18 +124,17 @@ class Contract < ApplicationRecord
   scope :with_verifiable_user_and_model, (lambda do
     joins(<<-SQL)
       INNER JOIN entitlements
-      ON entitlements.model_id = reservations.model_id
-      AND entitlements.inventory_pool_id = reservations.inventory_pool_id
+        ON entitlements.model_id = reservations.model_id
+      INNER JOIN entitlement_groups
+        ON entitlements.entitlement_group_id = entitlement_groups.id
+      INNER JOIN entitlement_groups_users
+        ON entitlement_groups.id = entitlement_groups_users.entitlement_group_id
     SQL
-      .joins('INNER JOIN entitlement_groups
-          ON entitlements.entitlement_group_id = entitlement_groups.id')
-      .joins('INNER JOIN entitlement_groups_users
-          ON entitlement_groups.id
-            = entitlement_groups_users.entitlement_group_id')
-      .where('entitlement_groups.inventory_pool_id
-          = reservations.inventory_pool_id')
-      .where(entitlement_groups: { is_verification_required: true })
-      .where('entitlement_groups_users.user_id = reservations.user_id')
+      .where(<<-SQL)
+        entitlement_groups.is_verification_required IS TRUE
+        AND entitlement_groups_users.user_id = reservations.user_id
+        AND entitlement_groups.inventory_pool_id = reservations.inventory_pool_id
+      SQL
       .distinct
   end)
 

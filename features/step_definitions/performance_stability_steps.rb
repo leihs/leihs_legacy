@@ -16,11 +16,16 @@ end
 Given(/^it has at least (\d+) group partitions in the current inventory pool$/) do |arg1|
   (@current_inventory_pool.entitlement_groups - @model.entitlements.map(&:entitlement_group)).take(arg1.to_i).each do |group|
     @model.entitlements << Entitlement.create(model: @model,
-                                          inventory_pool: @current_inventory_pool,
-                                          entitlement_group: group,
-                                          quantity: rand(10..20))
+                                              entitlement_group: group,
+                                              quantity: rand(10..20))
   end
-  expect(@model.entitlements.where(inventory_pool_id: @current_inventory_pool).count).to be >= arg1.to_i
+  expect(
+    @model
+    .entitlements
+    .joins(:entitlement_group)
+    .where(entitlement_groups: { inventory_pool_id: @current_inventory_pool })
+    .count
+  ).to be >= arg1.to_i
 end
 
 Given(/^it has at least (\d+) (unsubmitted|submitted|approved|signed) reservations in the current inventory pool$/) do |arg1, status|

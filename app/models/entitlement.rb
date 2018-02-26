@@ -2,13 +2,12 @@ class Entitlement < ApplicationRecord
   audited
 
   belongs_to :model, inverse_of: :entitlements
-  belongs_to :inventory_pool
   belongs_to :entitlement_group, inverse_of: :entitlements
+  delegate :inventory_pool, to: :entitlement_group
 
-  validates_presence_of :model, :inventory_pool, :entitlement_group, :quantity
+  validates_presence_of :model, :entitlement_group, :quantity
   validates_numericality_of :quantity, only_integer: true, greater_than: 0
-  validates_uniqueness_of :entitlement_group_id,
-                          scope: [:model_id, :inventory_pool_id]
+  validates_uniqueness_of :entitlement_group_id, scope: :model_id
 
   scope :with_generals, lambda {|model_ids: nil, inventory_pool_id: nil|
     find_by_sql query(model_ids: model_ids,
@@ -54,25 +53,30 @@ class Entitlement < ApplicationRecord
   def self.query(model_ids: nil, inventory_pool_id: nil)
     <<-SQL
       SELECT model_id,
-             inventory_pool_id,
+             entitlement_groups.inventory_pool_id,
              entitlement_group_id,
              quantity
       FROM entitlements
+      INNER JOIN entitlement_groups
+        ON entitlements.entitlement_group_id = entitlement_groups.id
       WHERE TRUE
      #{"AND model_id IN ('#{model_ids.join('\', \'')}') " if model_ids}
-     #{"AND inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id}
+     #{"AND entitlement_groups.inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id}
 
       UNION
 
       SELECT model_id,
              inventory_pool_id,
              NULL as entitlement_group_id,
-             (COUNT(i.id) - COALESCE((SELECT SUM(quantity)
-                                      FROM entitlements AS p
-                                      WHERE p.model_id = i.model_id
-                                      AND p.inventory_pool_id = i.inventory_pool_id
-                                      GROUP BY p.inventory_pool_id, p.model_id),
-                                      0)
+             (COUNT(i.id) - COALESCE(
+               (SELECT SUM(quantity)
+                FROM entitlements AS es
+                INNER JOIN entitlement_groups
+                  ON entitlement_groups.id = es.entitlement_group_id
+                WHERE es.model_id = i.model_id
+                AND entitlement_groups.inventory_pool_id = i.inventory_pool_id
+                GROUP BY entitlement_groups.inventory_pool_id, es.model_id),
+                0)
              ) as quantity
       FROM items AS i
       WHERE i.retired IS NULL AND i.is_borrowable = true
