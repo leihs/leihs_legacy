@@ -4570,9 +4570,9 @@ window.i18n.locale_data = {
          null,
          "Bestellungen sind für dieses Rückgabetag nicht möglich"
       ],
-      "The readonly attributes can only be changed via deployment.": [
+      "The readonly attributes are managed through settings.yml file. More information is ": [
          null,
-         "Die schreibgeschützten Attribute können nur durchs Deployment geändert werden."
+         "Die schreibgeschützten Attribute werden durch die settings.yml Datei verwaltet. Mehr Informationen findet man "
       ]
    }
 }

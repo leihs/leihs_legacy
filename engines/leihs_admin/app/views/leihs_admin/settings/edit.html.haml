@@ -11,7 +11,10 @@
       %button.btn.btn-success{:type => :submit}= _("Save %s") % _("Settings")
 
   .alert.alert-warning{role: "alert"}
-    = _("The readonly attributes can only be changed via deployment.")
+    = _("The readonly attributes are managed through settings.yml file. More information is ")
+    %span
+      %a{href: "https://github.com/leihs/leihs/wiki/Deployment"}= _("here")
+      = "."
 
   - Hash[@settings.attributes.sort].each_pair do |k,v|
     - next if k == "id"

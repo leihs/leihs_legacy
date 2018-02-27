@@ -1,5 +1,6 @@
 Feature: Model availability Timeline
 
+  @flapping
   Scenario: Where is visible the timeline
     Given I am Mike
     When I open a contract for acknowledgement

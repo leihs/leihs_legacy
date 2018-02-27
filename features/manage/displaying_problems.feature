@@ -42,6 +42,7 @@ Feature: Displaying problems
      Then the affected item's line shows the item's problems
      And the problem is displayed as: "Gegenstand nicht ausleihbar"
 
+  @flapping
   Scenario: Showing problems when taking back an item that is not borrowable
     Given I take back an item
     And one item is not borrowable

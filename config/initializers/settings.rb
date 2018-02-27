@@ -1,10 +1,5 @@
 if ApplicationRecord.connection.tables.include?("settings") and not Rails.env.test?
 
-  if time_zone = Setting.first.try(:time_zone)
-    Rails.configuration.time_zone = time_zone
-    Time.zone_default = ActiveSupport::TimeZone.new(time_zone)
-  end
-
   unless Setting.exists?
 
     h = {}
@@ -41,6 +36,16 @@ if ApplicationRecord.connection.tables.include?("settings") and not Rails.env.te
       raise "Settings could not be created: #{setting.errors.full_messages}"
     end
 
+  end
+
+  settings_file_path = File.join(Rails.root, 'config', 'settings.yml')
+  if File.exist?(settings_file_path)
+    settings_from_file = YAML::load_file(settings_file_path)
+    # bypassing Setting's before_update callback
+    ApplicationRecord.connection.execute <<-SQL
+      UPDATE settings
+      SET #{settings_from_file.map { |k, v| "#{k} = '#{v}'" }.join(', ')}
+    SQL
   end
 
 end
