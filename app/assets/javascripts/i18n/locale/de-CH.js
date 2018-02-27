@@ -4569,6 +4569,10 @@ window.i18n.locale_data = {
       "No orders are possible on this end date": [
          null,
          "Bestellungen sind für dieses Rückgabetag nicht möglich"
+      ],
+      "Start and end date cannot be in the past": [
+         null,
+         "Start- und Enddatum können nicht in der Vergangenheit liegen"
       ]
    }
 }

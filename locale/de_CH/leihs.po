@@ -3530,3 +3530,6 @@ msgstr "Geben Sie nur ganze Zahlen ein"
 
 msgid "No orders are possible on this end date"
 msgstr "Bestellungen sind für dieses Rückgabetag nicht möglich"
+
+msgid "Start and end date cannot be in the past"
+msgstr "Start- und Enddatum können nicht in der Vergangenheit liegen"

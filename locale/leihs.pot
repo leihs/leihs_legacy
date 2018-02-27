@@ -3443,3 +3443,6 @@ msgstr ""
 
 msgid "No orders are possible on this end date"
 msgstr ""
+
+msgid "Start and end date cannot be in the past"
+msgstr ""
