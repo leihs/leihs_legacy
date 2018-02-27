@@ -40,26 +40,31 @@ Then(/^I can not add models, items, options, software or licenses$/) do
 end
 
 When(/^I enter the timeline of a model with hand overs, take backs or pending orders$/) do
+  @new_window = nil
   within '#inventory' do
     all(".line[data-type='model']", minimum: 1).each do |line|
       if @current_inventory_pool.running_reservations.detect { |rl| rl.model_id == line['data-id'] }
-        line.find('.line-actions > a', text: _('Timeline')).click
+        @new_window = window_opened_by do
+          line.find('.line-actions > a', text: _('Timeline')).click
+        end
         break
       end
     end
   end
-  find('.modal iframe')
+  within_window @new_window do
+    find('div.row > div > div > div', text: 'Total')
+  end
 end
 
 When(/^I click on a user's name$/) do
-  within_frame 'timeline' do
-    find('.timeline-band-events .timeline-event-label').click
+  within_window @new_window do
+    find('div > span', text: 'Destany Smith').click
   end
 end
 
 Then(/^there is no link to:$/) do |table|
-  within_frame 'timeline' do
-    within '.simileAjax-bubble-container .simileAjax-bubble-contentContainer' do
+  within_window @new_window do
+    within '.timeline-event-bubble-body' do
       table.raw.flatten.each do |s1|
         s2 = case s1
                when 'acknowledge'
