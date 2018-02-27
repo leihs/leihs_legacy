@@ -16,5 +16,5 @@ Scenario: Availabilty of items assigned to a group
   When I go to edit this Order
 
   Then the number on the left hand side shows "2 / 5"
-    And the timeline shows an availabilty of "3"
+    And the timeline shows "7 5 0 0" assigned of "10" available for the group
     And the calendar shows an availabilty of "5"

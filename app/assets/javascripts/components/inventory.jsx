@@ -1202,6 +1202,7 @@
         editLabel = _jed('Edit Software')
       }
 
+      var timelineUrl = App.Model.url() + '/' + model.id + '/timeline'
 
       if(this._hasEditRights(model)) {
         return (
@@ -1215,7 +1216,7 @@
               </div>
               <ul className='dropdown right'>
                 <li>
-                  <a className='dropdown-item' data-model-id={model.id} data-open-time-line=''>
+                  <a className='dropdown-item' href={timelineUrl} target='_blank'>
                     <i className='fa fa-align-left'></i>
                     {' '}
                     {_jed('Timeline')}
@@ -1228,7 +1229,7 @@
         )
       } else {
         return (
-          <a className='button white text-ellipsis' data-model-id={model.id} data-open-time-line>
+          <a className='button white text-ellipsis' href={timelineUrl} target='_blank'>
             <i className='fa fa-align-left'></i>
             {' '}
             {_jed('Timeline')}

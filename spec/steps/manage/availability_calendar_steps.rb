@@ -80,7 +80,8 @@ module Manage
         expect(numbers_col_txt).to eq label
       end
 
-      step 'the timeline shows an availabilty of :num' do |num|
+      step 'the timeline shows :as assigned of :av available for the group' \
+        do |as, av|
         @order_line ||= find('#lines .order-line', text: @model.product)
         within(@order_line.find('.multibutton')) do
            find('.dropdown-holder').click
@@ -88,8 +89,15 @@ module Manage
         end
         within('.modal.in') do
           within_frame 'timeline' do
-            group_row = find('.timeline-band', text: "in group '#{@group.name}'")
-            expect(group_row.text).to include "in group '#{@group.name}' : #{num}"
+            find(
+              "div[title='Entitlement Info #{@group.id}']",
+              text: "#{av} reserviert für Gruppe #{@group.name}"\
+                    ', davon zugewiesen'
+            )
+            expect(
+              find("div[title='Entitlement #{@group.id}']")
+                .text.start_with?(as)
+            ).to eq(true)
           end
           click_on _('Close')
         end

@@ -6,7 +6,7 @@ class Manage::ModelsController < Manage::ApplicationController
 
   # NOTE overriding super controller
   def required_manager_role
-    open_actions = [:timeline]
+    open_actions = [:timeline, :old_timeline]
     if not open_actions.include?(action_name.to_sym) \
       and (request.post? or not request.format.json?)
       super
@@ -113,8 +113,20 @@ class Manage::ModelsController < Manage::ApplicationController
     end
   end
 
-  def timeline
+  def old_timeline
     @model = fetch_model
+    respond_to do |format|
+      format.html { render layout: false }
+    end
+  end
+
+  include TimelineAvailability
+  def timeline
+    @props = {
+      timeline_availability: timeline_availability(
+        fetch_model.id, current_inventory_pool.id, lending_manager?
+      )
+    }
     respond_to do |format|
       format.html { render layout: false }
     end

@@ -227,6 +227,7 @@ Rails.application.routes.draw do
       post    'models',                       to: "models#create",    as: "create_model"
       get     'models/new',                   to: "models#new",       as: "new_model"
       get     'models/:id/timeline',          to: "models#timeline"
+      get     'models/:id/old_timeline',          to: "models#old_timeline"
       put     'models/:id',                   to: "models#update"
       get     'models/:id',                   to: "models#show"
       delete  'models/:id',                   to: "models#destroy"

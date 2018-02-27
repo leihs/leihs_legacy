@@ -6,7 +6,7 @@ Feature: Verification
 
   Scenario: Show inventory to group-manager
     When I open the inventory
-    Then for each visible model I can see the Timeline
+    Then for each visible model I can see the Timeline in new window
     And I can export to a CSV file
     And I can search and filter
     But I can not edit models, items, options, software or licenses
