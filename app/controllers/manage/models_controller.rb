@@ -100,7 +100,12 @@ class Manage::ModelsController < Manage::ApplicationController
         end
       end
     rescue => e
-      @model.errors.add(:base, e)
+      @model.errors.add(:base,
+                        if e.class == ActiveRecord::DeleteRestrictionError
+                          :restrict_with_exception_dependent_delete
+                        else
+                          e
+                        end)
       text = @model.errors.full_messages.uniq.join(', ')
       respond_to do |format|
         format.json { render plain: text, status: :forbidden }

@@ -1,4 +1,11 @@
 en-GB:
+  activerecord:
+    errors:
+      models:
+        model:
+          attributes:
+            base:
+              restrict_with_exception_dependent_delete: 'Model is used by some other inventory pool and so cannot be deleted.'
   date:
     abbr_day_names:
     - Sun

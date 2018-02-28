@@ -1,4 +1,11 @@
 de-CH:
+  activerecord:
+    errors:
+      models:
+        model:
+          attributes:
+            base:
+              restrict_with_exception_dependent_delete: 'Modell wird von einem anderen Gerätepark genutzt und kann nicht gelöscht werden.'
   date:
     abbr_day_names:
     - So
