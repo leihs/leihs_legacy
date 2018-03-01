@@ -613,7 +613,8 @@ const BorrowBookingCalendar = createReactClass({
                 nextMonthCallback={this._goToNextMonth}
                 previousMonthCallback={this._goToPreviousMonth}
                 previousMonthExists={
-                  this.state.firstDateOfCurrentMonth.month() != this.state.todayDate.month()
+                  (this.state.firstDateOfCurrentMonth.year() > this.state.todayDate.year()) ||
+                  (this.state.firstDateOfCurrentMonth.month() != this.state.todayDate.month())
                 }
               />
               {this.renderContent()}
