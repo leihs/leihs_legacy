@@ -64,7 +64,7 @@ class ReservationsCell extends React.Component {
   render() {
     return [
       <div ref={ref => (this.popup = ref)} className="col1of5 line-col text-align-center" key={`reservations-${this.props.visit_id}`}>
-        {this.props.quantity} {_jed(this.props.quantity, 'Item')}
+        {this.props.quantity} {_jed(this.props.quantity, 'Item', 'Items')}
       </div>
       ,
       <Popup popupRef={this.popup} key={`reservations-popup-${this.props.visit_id}`}>

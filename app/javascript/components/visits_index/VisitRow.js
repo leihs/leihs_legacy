@@ -56,6 +56,18 @@ class VisitRow extends React.Component {
     return label
   }
 
+  typeIconClass() {
+    let c
+    if (this.props.v.type == 'hand_over') {
+      c = 'fa-mail-forward'
+    } else if (this.props.v.type == 'take_back') {
+      c = 'fa-mail-reply'
+    } else {
+      throw 'Invalid visit type'
+    }
+    return c
+  }
+
   sendTakeBackReminder() {
     $.ajax({
       url: `/manage/${this.props.v.inventory_pool_id}/visits/${this.props.v.id}/remind`,
@@ -111,7 +123,7 @@ class VisitRow extends React.Component {
               href={`/manage/${this.props.v.inventory_pool_id}/users/${this.props.v.user_id}/${
                 this.props.v.type
               }`}>
-              <i className="fa fa-mail-forward" />
+              <i className={`fa ${this.typeIconClass()}`} />
               {` ${this.typeLabel()}`}
             </a>
             <div className="dropdown-holder inline-block">

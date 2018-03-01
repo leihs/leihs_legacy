@@ -3765,11 +3765,11 @@ window.i18n.locale_data = {
          null,
          "Visierungspflichtig"
       ],
-      "User to verify": [
+      "User to be verified": [
          null,
          "Visierungspflichtige Benutzer"
       ],
-      "User and model to verify": [
+      "User and model to be verified": [
          null,
          "Visierungspflichtige Benutzer und Modelle"
       ],

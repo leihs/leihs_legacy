@@ -31,8 +31,8 @@ Feature: Visits verification filter
     And I see take back 1
 
   @manage_visits_verification_filter
-  Scenario: Showing visits with user to verify
-    Given I choose "User to verify" from the select field
+  Scenario: Showing visits with user to be verified
+    Given I choose "User to be verified" from the select field
     Then I see 4 visits
     And I see hand over 2
     And I see hand over 3
@@ -41,7 +41,7 @@ Feature: Visits verification filter
 
   @manage_visits_verification_filter
   Scenario: Showing visits with user and model to verify
-    Given I choose "User and model to verify" from the select field
+    Given I choose "User and model to be verified" from the select field
     Then I see 2 visits
     And I see hand over 3
     And I see take back 3
@@ -63,9 +63,9 @@ Feature: Visits verification filter
     And I see hand over 1
 
   @manage_visits_verification_filter
-  Scenario: Showing hand overs with user to verify
+  Scenario: Showing hand overs with user to be verified
     Given I click on hand over tab
-    And I choose "User to verify" from the select field
+    And I choose "User to be verified" from the select field
     Then I see 2 visits
     And I see hand over 2
     And I see hand over 3
@@ -73,7 +73,7 @@ Feature: Visits verification filter
   @manage_visits_verification_filter
   Scenario: Showing hand overs with user and model to verify
     Given I click on hand over tab
-    And I choose "User and model to verify" from the select field
+    And I choose "User and model to be verified" from the select field
     Then I see 1 visits
     And I see hand over 3
 
@@ -94,9 +94,9 @@ Feature: Visits verification filter
     And I see take back 1
 
   @manage_visits_verification_filter
-  Scenario: Showing take back with user to verify
+  Scenario: Showing take back with user to be verified
     Given I click on take back tab
-    And I choose "User to verify" from the select field
+    And I choose "User to be verified" from the select field
     Then I see 2 visits
     And I see take back 2
     And I see take back 3
@@ -104,6 +104,6 @@ Feature: Visits verification filter
   @manage_visits_verification_filter
   Scenario: Showing take backs with user and model to verify
     Given I click on take back tab
-    And I choose "User and model to verify" from the select field
+    And I choose "User and model to be verified" from the select field
     Then I see 1 visits
     And I see take back 3

@@ -2910,10 +2910,10 @@ msgstr "Nicht visierungspflichtig"
 msgid "Verification required"
 msgstr "Visierungspflichtig"
 
-msgid "User to verify"
+msgid "User to be verified"
 msgstr "Visierungspflichtige Benutzer"
 
-msgid "User and model to verify"
+msgid "User and model to be verified"
 msgstr "Visierungspflichtige Benutzer und Modelle"
 
 msgid "Statistics"

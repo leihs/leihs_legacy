@@ -307,7 +307,7 @@ class VisitsIndex extends React.Component {
                 className="width-full"
                 id="list-search"
                 name="input"
-                placeholder="Search..."
+                placeholder={_jed("Search...")}
                 type="text"
                 onChange={this.searchTermCallback.bind(this)}
               />
@@ -335,9 +335,9 @@ class VisitsIndex extends React.Component {
                 className="width-full">
                 <option value="irrelevant">{_jed('All')}</option>
                 <option value="no_verification">{_jed('No verification required')}</option>
-                <option value="with_user_to_verify">{_jed('User to verify')}</option>
+                <option value="with_user_to_verify">{_jed('User to be verified')}</option>
                 <option value="with_user_and_model_to_verify">
-                  {_jed('User and model to verify')}
+                  {_jed('User and model to be verified')}
                 </option>
               </select>
             </div>

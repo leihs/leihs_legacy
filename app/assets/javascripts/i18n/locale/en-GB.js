@@ -45,7 +45,7 @@ if (window.i18n == undefined) window.i18n = {};
   };
 
   i18n.relative = {
-    future: "at %s",
+    future: "in %s",
     past: "%s ago",
     s: "a few seconds",
     m: "one minute",
