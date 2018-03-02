@@ -9,13 +9,13 @@ class window.App.ModelsShowController extends Spine.Controller
     new App.ModelsShowImagesController {el: "#images"}
 
   getStartDate: =>
-    if sessionStorage.startDate?
+    if sessionStorage.startDate?.length
       moment(sessionStorage.startDate, "DD.MM.YYYY")
     else
       moment()
 
   getEndDate: =>
-    if sessionStorage.endDate?
+    if sessionStorage.endDate?.length
       moment(sessionStorage.endDate, "DD.MM.YYYY")
     else
       moment().add(1, "days")

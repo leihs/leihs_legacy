@@ -24,6 +24,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/booking_calendar/closed_day_alert.feature:11
+- name: features/manage/hand_over/assign.feature:26
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/assign.feature:26
 - name: features/manage/hand_over/edit_reservation.feature:11
   scripts:
     test:

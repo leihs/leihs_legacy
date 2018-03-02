@@ -28,3 +28,4 @@
       el: $("#models-index")
       params: #{params.delete_if{|k,v| k == "_bc"}.to_json}
       models: #{@models.to_json}
+      inventoryPoolsForCalendar: #{@inventory_pools_for_calendar.to_json}

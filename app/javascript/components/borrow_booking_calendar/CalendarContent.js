@@ -77,6 +77,7 @@ const CalendarContent = createReactClass({
                     onClickPopoverEndDateCallback={this.props.onClickPopoverEndDateCallback}
                     changeSelectedDate={this.props.changeSelectedDate}
                     selectedDate={this.props.selectedDate}
+                    getHoliday={this.props.getHoliday}
                   />
                 )
               })}

@@ -44,11 +44,15 @@ class window.App.ModelsIndexController extends Spine.Controller
       inventoryPools = _.select(@inventoryPoolsForCalendar, (ipContext) =>
         _.contains(@ipSelector.activeInventoryPoolIds(), ipContext.inventory_pool.id)
       )
+      console.log(@ipSelector.activeInventoryPoolIds())
+      console.log(inventoryPools)
       inventoryPools = _.map(inventoryPools, (ipContext) =>
         tbq = _.find(data, (d) => ipContext.inventory_pool.id == d.inventory_pool_id)
         _.extend(ipContext, { total_borrowable: tbq.total_borrowable })
       )
+      console.log(inventoryPools)
       inventoryPools = _.select(inventoryPools, (ipContext) => ipContext.total_borrowable > 0)
+      console.log(inventoryPools)
       @renderBookingCalendar(modelId, inventoryPools)
 
   renderBookingCalendar: (modelId, inventoryPools)=>
