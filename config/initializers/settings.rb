@@ -40,12 +40,13 @@ if ApplicationRecord.connection.tables.include?("settings") and not Rails.env.te
 
   settings_file_path = File.join(Rails.root, 'config', 'settings.yml')
   if File.exist?(settings_file_path)
-    settings_from_file = YAML::load_file(settings_file_path)
-    # bypassing Setting's before_update callback
-    ApplicationRecord.connection.execute <<-SQL
-      UPDATE settings
-      SET #{settings_from_file.map { |k, v| "#{k} = '#{v}'" }.join(', ')}
-    SQL
+    if settings_from_file = YAML::load_file(settings_file_path)
+      # bypassing Setting's before_update callback
+      ApplicationRecord.connection.execute <<-SQL
+        UPDATE settings
+        SET #{settings_from_file.map { |k, v| "#{k} = '#{v}'" }.join(', ')}
+      SQL
+    end
   end
 
 end
