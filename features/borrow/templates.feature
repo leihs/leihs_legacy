@@ -49,10 +49,9 @@ Feature: Templates
     When I have solved all availability problems
     Then I can continue in the process and add all models to the order at once
 
-  @rack
   Scenario: Only ordering those models from a template that are available
     Given I see the availability of a template that has items that are not available
     Then I can follow the process to the availability display of the template
-    And some models are not available
-    Then I can add those models which are available to an order all at once
-    And the other models are ignored
+      And I can follow the process to the availability display of the template
+      And I can follow the process to the availability display of the template
+      And the template was added to my order

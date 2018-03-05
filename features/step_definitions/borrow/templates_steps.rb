@@ -96,29 +96,7 @@ When(/^this template contains models that don't have enough items to satisfy the
 end
 
 When(/^I see the availability of a template that has items that are not available$/) do
-  #step "in dieser Vorlage hat es Modelle, die nicht genügeng Gegenstände haben, um die in der Vorlage gewünschte Anzahl zu erfüllen"
   step "this template contains models that don't have enough items to satisfy the quantity required by the template"
-  #step "ich kann im Prozess weiterfahren zur Verfügbarkeitsanzeige der Vorlage"
-  step 'I can follow the process to the availability display of the template'
-  find("[type='submit']", match: :first).click
-end
-
-Given(/^some models are not available$/) do
-  find('.emboss.red', match: :first, text: _('Please solve the conflicts for all highlighted reservations in order to continue.'))
-  find('.separated-top .row.line .line-info.red', match: :first)
-end
-
-Then(/^I can add those models which are available to an order all at once$/) do
-  expect(has_selector?('.separated-top .row.line .line-info.red')).to be true
-  @unavailable_model_ids = all('.separated-top .row.line .line-info.red').map {|x| x.first(:xpath, './..').find("input[name='reservations[][model_id]']", match: :first, visible: false).value.to_i}
-  @unavailable_model_ids -= @current_user.reservations.unsubmitted.map(&:model_id).uniq
-  find('.button.green.dropdown-toggle', match: :first).click
-  expect(has_content?(_('Continue with available models only'))).to be true
-  find("[name='force_continue']", match: :first, text: _('Continue with available models only')).click
-end
-
-Then(/^the other models are ignored$/) do
-  expect(@unavailable_model_ids - @current_user.reservations.unsubmitted.reload.map(&:model_id).uniq).to eq @unavailable_model_ids
 end
 
 Then(/^the models are sorted alphabetically within a group$/) do
@@ -183,7 +161,7 @@ Given(/^I am looking at the availability of a template that contains unavailable
   find("[type='submit']", match: :first).click
   date = Date.today
   while @template.inventory_pools.first.open_on?(date) do
-   date += 1.day 
+   date += 1.day
   end
   find('#start_date').set I18n::localize(date)
   find('#end_date').set I18n::localize(date)
@@ -219,4 +197,8 @@ end
 Then(/^I have to follow the process to the availability display of the template$/) do
   find("[type='submit']", match: :first).click
   expect(current_path).to eq borrow_template_availability_path(@template)
+end
+
+Then(/^the template was added to my order$/) do
+  find('#flash', text: 'The template has been added to your order.')
 end

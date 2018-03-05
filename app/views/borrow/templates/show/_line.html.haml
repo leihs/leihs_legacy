@@ -1,19 +1,26 @@
-.row.line.height-xs
+:ruby
+  unaccomplishable = @unaccomplishable_models.include?(line.model)
+  max_in_pools = @template.inventory_pools.map {|ip| line.model.total_borrowable_items_for_user(current_user, ip) }.concat([0]).max
+  max_quantity = [max_in_pools, line.model.total_borrowable_items_for_user(current_user), 0].max
+  initial_quantity = unaccomplishable ? max_quantity : line.quantity
+
+.row.line
 
   %input{:type => :hidden, :name => "reservations[][model_id]", :value => line.model.id}
 
-  - if @unaccomplishable_models.include?(line.model)
+  - if unaccomplishable
     .line-info.red{title: _("Not available")}
 
   .line-col.col1of6.padding-left-l.font-size-s
 
     .row
       .col3of5
-        %input.width-full.text-align-center{:type => :number, :max => line.model.total_borrowable_items_for_user(current_user), :min => 0, :value => line.quantity, :name => "reservations[][quantity]"}
+        %input.width-full.text-align-center{:type => :number, :max => max_quantity, :min => 0, :value => initial_quantity, :name => "reservations[][quantity]"}
 
       .col2of5.font-size-m.padding-top-s.text-align-left.padding-left-xs
         = "/"
-        = @template.inventory_pools.map {|ip| line.model.total_borrowable_items_for_user(current_user, ip) }.max
+        %b{class: unaccomplishable ? 'darkred-text' : ''}
+          = max_in_pools
 
   .line-col.col1of6.text-align-left.text-align-center
 
@@ -24,4 +31,3 @@
     %strong.col6of10.text-ellipsis{:title => "#{line.model.name}"}= line.model.name
 
     %strong.col4of10.text-ellipsis.padding-left-m{:title => "#{line.model.manufacturer}"}= line.model.manufacturer
-
