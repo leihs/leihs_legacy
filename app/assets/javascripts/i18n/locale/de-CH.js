@@ -4573,6 +4573,14 @@ window.i18n.locale_data = {
       "The readonly attributes are managed through settings.yml file. More information is ": [
          null,
          "Die schreibgeschützten Attribute werden durch die settings.yml Datei verwaltet. Mehr Informationen findet man "
+      ],
+      "You are suspended for this inventory pool": [
+         null,
+         "Sie sind für dieses Gerätepark gesperrt"
+      ],
+      "Does not have any borrowable items": [
+         null,
+         "Hat keine ausleihbaren Gegenstände"
       ]
    }
 }

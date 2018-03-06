@@ -9,21 +9,18 @@
         %strong.font-size-m= n_("You have permission to access the following inventory pool", "You have permission to access the following inventory pools", @inventory_pools.length)
 
     - @inventory_pools.each do |inventory_pool|
-      .row.separated-bottom
+      .row.separated-bottom{data: { id: inventory_pool.id }}
         .padding-inset-l
 
-          .row
-            %h2.padding-bottom-s= inventory_pool.name
+          .row.margin-bottom-s
+            %span.headline-l.padding-bottom-m= inventory_pool.name
+            - if current_user.access_right_for(inventory_pool).suspended?
+              %span.medium.badge.red.margin-left-s{style: "vertical-align: super"}= _("You are suspended for this inventory pool")
+            - elsif not inventory_pool.borrowable_items?
+              %span.medium.badge.margin-left-s{style: "vertical-align: super"}= _("Does not have any borrowable items")
 
           .row
             - if inventory_pool.description and inventory_pool.description.length > 0
               %p.pre= auto_link(inventory_pool.description, html: {target: '_blank'})
             - else
               %p.grey-text= _("No description")
-
-          - if current_user.access_right_for(inventory_pool).nil?
-            .emboss.red.padding-inset-xxs.padding-horizontal-s.paragraph-s.text-align-center.margin-top-m
-              %strong= _("You don't have access to this inventory pool anymore")
-          - elsif current_user.access_right_for(inventory_pool).suspended?
-            .emboss.red.padding-inset-xxs.padding-horizontal-s.paragraph-s.text-align-center.margin-top-m
-              %strong= _("You are suspended for this inventory pool")

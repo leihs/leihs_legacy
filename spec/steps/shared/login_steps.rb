@@ -33,6 +33,13 @@ module Spec
       login_as_current_user
     end
 
+    step 'I am logged in as the user' do
+      @current_user = @user
+      step 'I log out'
+      set_locale
+      login_as_current_user
+    end
+
     step 'I have the roles' do |table|
       user = @current_user
       ip = @current_inventory_pool || @inventory_pool

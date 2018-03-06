@@ -3446,3 +3446,9 @@ msgstr ""
 
 msgid "The readonly attributes are managed through settings.yml file. More information is "
 msgstr ""
+
+msgid "You are suspended for this inventory pool"
+msgstr ""
+
+msgid "Does not have any borrowable items"
+msgstr ""

@@ -234,6 +234,16 @@ class InventoryPool < ApplicationRecord
 
   ################################################################################
 
+  def borrowable_items?
+    items
+      .where(items: { retired: nil,
+                      is_borrowable: true,
+                      parent_id: nil })
+      .exists?
+  end
+
+  ################################################################################
+
   def update_address(attr)
     if (a = Address.find_by(attr))
       update_attributes(address_id: a.id)

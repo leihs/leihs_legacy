@@ -3531,6 +3531,12 @@ msgstr "Geben Sie nur ganze Zahlen ein"
 msgid "No orders are possible on this end date"
 msgstr "Bestellungen sind für dieses Rückgabetag nicht möglich"
 
-
 msgid "The readonly attributes are managed through settings.yml file. More information is "
 msgstr "Die schreibgeschützten Attribute werden durch die settings.yml Datei verwaltet. Mehr Informationen findet man "
+
+msgid "You are suspended for this inventory pool"
+msgstr "Sie sind für dieses Gerätepark gesperrt"
+
+msgid "Does not have any borrowable items"
+msgstr "Hat keine ausleihbaren Gegenstände"
+
