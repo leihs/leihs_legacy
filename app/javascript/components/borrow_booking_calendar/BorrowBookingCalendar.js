@@ -456,7 +456,7 @@ const BorrowBookingCalendar = createReactClass({
   },
 
   renderAddButton(errors) {
-    const isEnabled = errors.length == 0
+    const isEnabled = (errors.length == 0 && this.state.quantity > 0)
     return (
       <button
         className="button green"

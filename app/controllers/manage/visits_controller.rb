@@ -27,6 +27,10 @@ class Manage::VisitsController < Manage::ApplicationController
 
             v['user']['is_suspended'] = user.suspended?(current_inventory_pool)
 
+            # NOTE: `extended_info` not needed and some records even contain
+            # invalid UTF8 chars!
+            v['user']['extended_info'] = nil
+
             v['reservations'].each do |r|
               object = \
                 Model.find_by_id(r['model_id']) ||
