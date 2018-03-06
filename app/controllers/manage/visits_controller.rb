@@ -3,7 +3,10 @@ class Manage::VisitsController < Manage::ApplicationController
   def index
     respond_to do |format|
       format.html do
-        @props = { inventory_pool_id: current_inventory_pool.id }
+        @props = { inventory_pool_id: current_inventory_pool.id,
+                   start_date: params[:start_date],
+                   end_date: params[:end_date],
+                   tab: params[:tab] }
       end
       format.json do
         visits = Visit.filter(params, current_inventory_pool)

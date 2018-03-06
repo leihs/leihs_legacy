@@ -36,7 +36,7 @@
             total_take_backs_count += @overdue_take_backs_count if @overdue_take_backs_count
 
           - if total_hand_overs_count > 0
-            %a.button.white{href: manage_inventory_pool_visits_path(current_inventory_pool, status: "approved", start_date: (@date.today? ? nil : @date), end_date: @date)}
+            %a.button.white{href: manage_inventory_pool_visits_path(current_inventory_pool, tab: "hand_over", status: "approved", start_date: (@date.today? ? nil : @date), end_date: @date)}
               %i.fa.fa-mail-forward
               = _("Hand Overs")
               - if @overdue_hand_overs_count and @overdue_hand_overs_count > 0
@@ -44,7 +44,7 @@
               %span.badge= @hand_overs_count
 
           - if total_take_backs_count > 0
-            %a.button.white{href: manage_inventory_pool_visits_path(current_inventory_pool, status: "signed", start_date: (@date.today? ? nil : @date), end_date: @date)}
+            %a.button.white{href: manage_inventory_pool_visits_path(current_inventory_pool, tab: "take_back", status: "signed", start_date: (@date.today? ? nil : @date), end_date: @date)}
               %i.fa.fa-mail-reply
               = _("Take Backs")
               - if @overdue_take_backs_count and @overdue_take_backs_count > 0

@@ -11,14 +11,14 @@ const Scrolling = window.Scrolling
 const i18n = window.i18n
 
 class VisitsIndex extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
 
     this.state = {
       search_term: null,
-      tab: 'all',
-      startDate: '',
-      endDate: '',
+      tab: props.tab || 'all',
+      startDate: (props.start_date ? moment(props.start_date).format(i18n.date.L) : ''),
+      endDate: (props.end_date ? moment(props.end_date).format(i18n.date.L) : ''),
       verification: 'irrelevant',
       offset: 0,
       visits: [],
