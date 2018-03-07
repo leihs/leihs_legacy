@@ -40,7 +40,8 @@ class Borrow::ModelsController < Borrow::ApplicationController
               @models.from_category_and_all_its_descendants(c).exists?
             end
         end
-        @inventory_pools = current_user.inventory_pools.order(:name)
+        @inventory_pools = \
+          current_user.inventory_pools.with_borrowable_items.order(:name)
 
         # used for React booking calendar #########################################
         @inventory_pools_for_calendar = @inventory_pools.map do |ip|
