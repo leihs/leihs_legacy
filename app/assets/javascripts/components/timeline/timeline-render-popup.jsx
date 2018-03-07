@@ -33,7 +33,7 @@ window.TimelineRenderPopup = {
   },
 
   renderPopupHandOverLink(rr) {
-    return '/manage/' + rr.inventory_pool_id + '/users/' + rr.user_id + '/take_back'
+    return '/manage/' + rr.inventory_pool_id + '/users/' + rr.user_id + '/hand_over'
   },
 
   renderPopupAcknowledgeLink(rr) {
@@ -52,11 +52,11 @@ window.TimelineRenderPopup = {
       )
     } else if(rr.status == 'approved') {
       return (
-        <a target='_top' href={TimelineRenderPopup.renderPopupTakeBackLink(rr)}>{_jed('Hand Over')}</a>
+        <a target='_top' href={TimelineRenderPopup.renderPopupHandOverLink(rr)}>{_jed('Hand Over')}</a>
       )
     } else if(rr.status == 'signed') {
       return (
-        <a target='_top' href={TimelineRenderPopup.renderPopupHandOverLink(rr)}>{_jed('Take Back')}</a>
+        <a target='_top' href={TimelineRenderPopup.renderPopupTakeBackLink(rr)}>{_jed('Take Back')}</a>
       )
     } else {
       return null
