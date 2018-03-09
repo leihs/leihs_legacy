@@ -358,7 +358,10 @@ const BorrowBookingCalendar = createReactClass({
     const dateContext = _.find(this.state.calendarData, el => el.date.isSame(date, 'day'))
     return (
       dateContext &&
-      dateContext.visitsCount < this.state.poolContext.workday.max_visits[dateContext.date.day()]
+      (
+        this.state.poolContext.workday.max_visits[dateContext.date.day()] == null ||
+        dateContext.visitsCount < this.state.poolContext.workday.max_visits[dateContext.date.day()]
+      )
     )
   },
 
