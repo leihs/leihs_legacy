@@ -47,10 +47,10 @@ module LeihsAdmin
       end
 
       step 'the inventory pool is saved' do
-        @inventory_pool = \
+        expect(
           InventoryPool
           .find_by_name_and_shortname_and_email('test', 'test', 'test@test.ch')
-        expect(@inventory_pool).to be
+        ).not_to be_nil
       end
 
       step 'I see the list of all active inventory pools sorted alphabetically' do
@@ -376,23 +376,6 @@ module LeihsAdmin
         ar = @user.access_right_for(@active_inventory_pool)
         expect(ar).to be
         expect(ar.role).to be == :inventory_manager
-      end
-
-      step 'the mail templates have been created for the inventory pool' do
-        Dir['app/views/mailer/**/*.liquid'].each do |file_path|
-          name, format, = File.basename(file_path).split('.')
-          body = File.read(File.join(file_path))
-
-          Language.all.each do |language|
-            expect(
-              MailTemplate.find_by(inventory_pool_id: @inventory_pool.id,
-                                   language_id: language.id,
-                                   name: name,
-                                   format: format,
-                                   body: body)
-            ).to be
-          end
-        end
       end
 
       private
