@@ -479,20 +479,11 @@ const BorrowBookingCalendar = createReactClass({
         </div>
       )
     } else if (this.state.serverError) {
-      const buttonStyle = {
-        transform: 'scale(5)',
-        color: '#30c91f',
-        backgroundImage: 'none',
-        backgroundColor: 'blueviolet',
-        borderColor: '#ffda00',
-        transform: 'skew(-0.06turn, 18deg) scale(5)'
-      }
       content = (
         <div>
           <div className="height-s" />
           <div style={{ textAlign: 'center' }}>
             <button
-              style={buttonStyle}
               className="button white large"
               onClick={this.reloadCalendarContent}>
               Reload

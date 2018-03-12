@@ -1,7 +1,7 @@
 class Borrow::ReservationsController < Borrow::ApplicationController
   include Borrow::Concerns::CreateLines
 
-  before_action only: [:create, :create_legacy, :change_time_range] do
+  before_action only: [:create, :change_time_range] do
     @start_date = params[:start_date].try { |x| Date.parse(x) } || Time.zone.today
     @end_date = params[:end_date].try { |x| Date.parse(x) } || Date.tomorrow
     @inventory_pool = current_user.inventory_pools.find(params[:inventory_pool_id])
@@ -55,36 +55,6 @@ class Borrow::ReservationsController < Borrow::ApplicationController
       render status: :bad_request, json: @errors.uniq.join(', ')
     end
   end
-
-  #################################################################################
-  # still used in:
-  # reservations_create_controller.coffee
-  # reservations_change_controller.coffee
-  #################################################################################
-  def create_legacy
-    model = current_user.models.borrowable.find(params[:model_id])
-    quantity = 1
-
-    unless quantity_available?(model, quantity)
-      @errors << _('Item is not available in that time range')
-    end
-
-    if @errors.empty?
-      reservations = create_lines(model: model,
-                                  quantity: quantity,
-                                  status: :unsubmitted,
-                                  inventory_pool: @inventory_pool,
-                                  start_date: @start_date,
-                                  end_date: @end_date,
-                                  delegated_user_id: session[:delegated_user_id])
-      if reservations and reservations.all?(&:valid?)
-        render status: :ok, json: reservations.first
-      end
-    else
-      render status: :bad_request, json: @errors.uniq.join(', ')
-    end
-  end
-  #################################################################################
 
   def destroy
     begin
