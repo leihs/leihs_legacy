@@ -292,21 +292,20 @@ class Model < ApplicationRecord
         end))
 
   def self.filter(params, subject = nil, category = nil, borrowable = false)
-    models = Model.all
+    models = if subject.is_a? User
+               filter_for_user params, subject, category, borrowable
+             elsif subject.is_a? InventoryPool
+               filter_for_inventory_pool params, subject, category
+             else
+               Model.all
+             end
+
     if ['model', 'software'].include? params[:type]
       models = models.where(type: params[:type].capitalize)
     end
     if params[:packages]
       models = models.where(is_package: params[:packages] == 'true')
     end
-
-    models = if subject.is_a? User
-               filter_for_user models, params, subject, category, borrowable
-             elsif subject.is_a? InventoryPool
-               filter_for_inventory_pool models, params, subject, category
-             else
-               models
-             end
 
     models = models.where(id: params[:id]) if params[:id]
     models = models.where(id: params[:ids]) if params[:ids]
@@ -325,14 +324,14 @@ class Model < ApplicationRecord
     models
   end
 
-  def self.filter_for_user(models, params, user, category, borrowable = false)
-    models = user.models # FIXME: intersect with the models argument
-    models = if category
-               models.from_category_and_all_its_descendants(category)
-             else
-               models
-             end
-    models = models.send(:borrowable) if borrowable
+  def self.filter_for_user(params, user, category, borrowable = false)
+    models = user.models
+    if category
+      models = models.from_category_and_all_its_descendants(category)
+    end
+    if borrowable
+      models = models.borrowable
+    end
     unless params[:inventory_pool_ids].blank?
       models = \
         models.all_from_inventory_pools \
@@ -341,18 +340,18 @@ class Model < ApplicationRecord
     models
   end
 
-  def self.filter_for_inventory_pool(models, params, inventory_pool, _category)
+  def self.filter_for_inventory_pool(params, inventory_pool, _category)
     case params[:used]
     when 'false'
-        models = models.unused_for_inventory_pool inventory_pool
+        models = Model.unused_for_inventory_pool inventory_pool
     when 'true'
         models = if params[:as_responsible_only]
-                   models
+                   Model
                      .joins(:items)
                      .where(items: { inventory_pool_id: inventory_pool })
                      .distinct
                  else
-                   models
+                   Model
                      .joins(:items)
                      .where(':id IN (items.owner_id, ' \
                                     'items.inventory_pool_id)',
@@ -376,6 +375,8 @@ class Model < ApplicationRecord
                        { inventory_pool_id: \
                          params[:responsible_inventory_pool_id] })
         end
+    else
+      models = Model.all
     end
 
     unless params[:category_id].blank?

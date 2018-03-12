@@ -32,9 +32,7 @@ class User < ApplicationRecord
   has_many :items, -> { distinct }, through: :inventory_pools
   has_many(:models, -> { distinct }, through: :inventory_pools) do
     def borrowable
-      # TODO: dry with_borrowable_items
       joins(:items)
-        .where(items: { retired: nil, is_borrowable: true, parent_id: nil })
         .joins("INNER JOIN (#{Entitlement.query}) AS pwg " \
                'ON models.id = pwg.model_id ' \
                'AND inventory_pools.id = pwg.inventory_pool_id ' \
