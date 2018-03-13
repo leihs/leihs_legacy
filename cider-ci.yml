@@ -35,6 +35,7 @@ include:
   ## PROCUREMENT - on branches foo/procurement-bar
   - cider-ci/jobs/procurement-scenarios.yml
   - cider-ci/jobs/procurement-flapping-scenarios.yml
+  - cider-ci/jobs/procurement-broken-scenarios.yml
   - cider-ci/jobs/procurement-code-checks.yml
 
   - cider-ci/jobs/all-tests.yml

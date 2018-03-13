@@ -1,0 +1,27 @@
+jobs:
+
+  procurement-broken-scenarios:
+
+    name: 'Procurement: Broken Scenarios'
+
+    description: |
+      Run Procurement broken scenarios
+
+    run_when:
+      branch name matches master or borrow:
+        type: branch
+        include_match: '^.*(next|master|borrow).*$'
+        exclude_match: '^.*(no-ci|hotspot).*$'
+
+    context:
+
+      task_defaults:
+        load: 1.5
+        max_trials: 2
+        eager_trials: 1
+        include:
+          - cider-ci/task-components/database.yml
+
+      include:
+        - cider-ci/shared/main-context.yml
+        - cider-ci/tasks/procurement-broken-scenarios.yml

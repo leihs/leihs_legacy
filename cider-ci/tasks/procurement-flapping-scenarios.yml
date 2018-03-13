@@ -16,14 +16,6 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/inspection.feature:308
-- name: engines/procurement/spec/features/managing_requests.feature:103
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/procurement/spec/load.rb engines/procurement/spec/features/managing_requests.feature:103
 - name: engines/procurement/spec/features/managing_requests.feature:132
   scripts:
     test:

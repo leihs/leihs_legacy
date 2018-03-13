@@ -165,6 +165,13 @@ ENGINES.each do |engine|
                         framework: :rspec,
                         additional_options: "-r ./engines/#{engine}/spec/load.rb",
                         tags: ['@flapping'])
+
+  filepath = "cider-ci/tasks/#{engine}-broken-scenarios.yml"
+  create_scenario_tasks(filepath,
+                        engine_feature_dir_paths,
+                        framework: :rspec,
+                        additional_options: "-r ./engines/#{engine}/spec/load.rb",
+                        tags: ['@broken'])
 end
 
 ############################## HOTSPOTS #################################

@@ -99,7 +99,7 @@ Feature: section Managing Requests
       | Barbara  |
       # | Roger    |
 
-  @managing_requests @flapping
+  @managing_requests @broken
   Scenario Outline: Creating a request through a budget period selecting a template article
     Given I am <username>
     And several categories exist
