@@ -11,5 +11,5 @@ Feature: Inventory pools
     And I visit the page of my inventory pools
     Then I see 3 pools
     And I see pool A
-    And I see pool B with a label "Does not have any borrowable items"
+    And I see pool B with a label "Does not have any reservable items"
     And I see pool C with a label "You are suspended for this inventory pool"

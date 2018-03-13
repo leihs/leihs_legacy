@@ -4613,6 +4613,10 @@ window.i18n.locale_data = {
       "click here to reload": [
          null,
          "klicke hier um neu zu laden"
+      ],
+      "Does not have any reservable items": [
+         null,
+         "Hat keine reservierbaren Gegenstände"
       ]
    }
 }

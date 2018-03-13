@@ -3563,3 +3563,6 @@ msgstr "Eine Bestellungen kann nicht mehrere Delegationen haben"
 
 msgid "click here to reload"
 msgstr "klicke hier um neu zu laden"
+
+msgid "Does not have any reservable items"
+msgstr "Hat keine reservierbaren Gegenstände"

@@ -17,7 +17,7 @@
             - if current_user.access_right_for(inventory_pool).suspended?
               %span.medium.badge.red.margin-left-s{style: "vertical-align: super"}= _("You are suspended for this inventory pool")
             - elsif not inventory_pool.borrowable_items?
-              %span.medium.badge.margin-left-s{style: "vertical-align: super"}= _("Does not have any borrowable items")
+              %span.medium.badge.margin-left-s{style: "vertical-align: super"}= _("Does not have any reservable items")
 
           .row
             - if inventory_pool.description and inventory_pool.description.length > 0

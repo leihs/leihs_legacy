@@ -3400,7 +3400,7 @@ msgstr ""
 msgid "You are suspended for this inventory pool"
 msgstr ""
 
-msgid "Does not have any borrowable items"
+msgid "Does not have any reservable items"
 msgstr ""
 
 msgid "These mail templates are copied for a new inventory pool when it is created."
