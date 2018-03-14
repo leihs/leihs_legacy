@@ -34,7 +34,6 @@ Feature: Administer inventory pools
     Then I see the list of all inventory pools
     And I see a notification message
     And the inventory pool is saved
-    And the mail templates have been created for the inventory pool
 
   @leihs_admin_inventory_pools
   Scenario Outline: Required fields when creating an inventory pool

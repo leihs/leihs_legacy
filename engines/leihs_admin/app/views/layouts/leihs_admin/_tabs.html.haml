@@ -31,6 +31,10 @@
     %a{:href => admin.fields_editor_path}
       = _('Fields')
 
+  %li{role: 'presentation', class: params[:controller] == 'leihs_admin/mail_templates' ? 'active' : nil}
+    %a{:href => '/admin/mail_templates'}
+      = _('Mail Templates')
+
   %li{role: 'presentation', class: params[:controller] == 'leihs_admin/statistics' ? 'active' : nil}
     %a{href: admin.statistics_path}
       = _('Statistics')
