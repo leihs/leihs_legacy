@@ -649,6 +649,20 @@
 
 
     renderEditStatic() {
+
+      var isMandatory = () => {
+        return this.state.ajaxLoadResult.field.data.required
+      }
+
+      var renderActiveInput = () => {
+        if(isMandatory()) {
+          return <input defaultChecked={true} disabled type='checkbox' />
+        } else {
+          return <input onChange={(e) => this.mergeCheckbox(e, 'active')} checked={this.state.fieldInput.active} autoComplete='off' type='checkbox' />
+        }
+      }
+
+
       return (
         <div className='row'>
           <div className='col-sm-12'>
@@ -670,10 +684,18 @@
             </div>
             <div className='row form-group'>
               <div className='col-sm-3'>
+                <strong>Mandatory</strong>
+              </div>
+              <div className='col-sm-9'>
+                {(isMandatory() ? 'Yes' : 'No')}
+              </div>
+            </div>
+            <div className='row form-group'>
+              <div className='col-sm-3'>
                 <strong>Active</strong>
               </div>
               <div className='col-sm-9'>
-                <input onChange={(e) => this.mergeCheckbox(e, 'active')} checked={this.state.fieldInput.active} autoComplete='off' type='checkbox' />
+                {renderActiveInput()}
               </div>
             </div>
           </div>

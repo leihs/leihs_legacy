@@ -80,7 +80,7 @@
     renderEditButton(fieldId) {
       return (
         <div className='col-sm-4 text-right line-actions'>
-          <a onClick={(e) => this.onEditClick(event, fieldId)} className='btn btn-default'>
+          <a onClick={(event) => this.onEditClick(event, fieldId)} className='btn btn-default'>
             Editieren
           </a>
         </div>
