@@ -293,7 +293,7 @@
           fieldModels,
           (fm) => {
             if(fm.field.id == fieldModel.field.id) {
-              fieldModel.hidden = true
+              fm.hidden = true
             }
           }
         )
