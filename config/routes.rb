@@ -316,8 +316,8 @@ Rails.application.routes.draw do
 
       # Mail templates
       get 'mail_templates', to: 'mail_templates#index'
-      get 'mail_templates/:dir/:name', to: 'mail_templates#edit'
-      put 'mail_templates/:dir/:name', to: 'mail_templates#update'
+      get 'mail_templates/:type/:name', to: 'mail_templates#edit'
+      put 'mail_templates/:type/:name', to: 'mail_templates#update'
 
       # Buildings
       get     'buildings',          to: 'buildings#index'

@@ -1,20 +1,27 @@
-Then(/^the default (.*) exists in the file system in (.*) as (.*)$/) do |template_name, directory, file_name|
-  template = File.join(Rails.root, 'app/views/mailer/', directory, file_name)
-  expect(File.exists? template).to be true
+Then(/^the default (.*) exists in the database for a given (.*) and all languages$/) do |template_name, type|
+  Language.all.each do |language|
+    mt = MailTemplate.find_by(is_template_template: true,
+                              type: type,
+                              name: template_name,
+                              language_id: language.id)
+    expect(mt).to be
+  end
+  name_count = MailTemplate.select('DISTINCT(name)').count
+  language_count = Language.count
+  expect(MailTemplate.where(is_template_template: true).count).to be == (name_count * language_count)
 end
 
 When(/^I specify a mail template for the (.*) action (for the whole system|in the current inventory pool) for each active language$/) do |template_name, scope|
   case scope
     when 'for the whole system'
       visit '/admin/mail_templates'
-      selector1 = '.list-of-lines .row .col-sm-8'
-      selector2 = '.btn'
+      find('table tr', text: /^#{template_name}/).find('.btn', text: _('Edit')).click
     when 'in the current inventory pool'
       visit "/manage/#{@current_inventory_pool.id}/mail_templates"
-      selector1 = '.list-of-lines .line-col.col3of5'
+      selector1 = '.list-of-lines .line-col.col2of5'
       selector2 = '.button'
+      find(selector1, text: /^#{template_name}$/).find(:xpath, './..').find(selector2, text: _('Edit')).click
   end
-  find(selector1, text: /^#{template_name}$/).find(:xpath, './..').find(selector2, text: _('Edit')).click
   step 'I land on the mail templates edit page'
 end
 
@@ -54,84 +61,6 @@ Given(/^I have a contract with deadline (yesterday|tomorrow)( for the inventory 
   Dataset.back_to_date(@visit.date.send(sign, 1.day))
 end
 
-Given(/^there (is|is not) a (custom|system\-wide|default) (.*) mail template( for this contract's inventory pool)?( defined for the language "(.*)")?$/) do |arg1, scope, template_name, arg2, arg3, locale_name|
-  if scope == 'default'
-    file = File.join(Rails.root, 'app/views/mailer/user/', "#{template_name.gsub(' ', '_')}.text.liquid")
-    b = case arg1
-          when 'is'
-            true
-          when 'is not'
-            false
-        end
-    expect(File.exists? file).to be b
-  else
-    language = Language.find_by(locale_name: (locale_name || @current_user.language.locale_name))
-    inventory_pool_id = case scope
-                          when 'system-wide'
-                            nil
-                          when 'custom'
-                            @visit.inventory_pool_id
-                        end
-    case arg1
-      when 'is'
-        MailTemplate.find_or_create_by(inventory_pool_id: inventory_pool_id,
-                                       name: template_name.gsub(' ', '_'),
-                                       language: language,
-                                       format: 'text') do |x|
-          x.body = %Q(Dear {{ user.name }},
-                    {{ email_signature }}
-                    --
-                    #{language.locale_name}
-                    --
-                    #{Faker::Lorem.sentence}
-                    --
-                    {{ inventory_pool.name }}
-                    {{ inventory_pool.description }}
-                    )
-        end
-      when 'is not'
-        mt = MailTemplate.find_by(inventory_pool_id: inventory_pool_id,
-                                  name: template_name.gsub(' ', '_'),
-                                  language: language,
-                                  format: 'text')
-        mt.destroy if mt
-    end
-  end
-end
-
-Given(/^there is a (custom|system\-wide) (.*) mail template( for this contract's inventory pool)? in "(.*?)"$/) do |scope, template_name, arg2, locale_names|
-  inventory_pool_id = case scope
-                        when 'system-wide'
-                          nil
-                        when 'custom'
-                          @visit.inventory_pool_id
-                      end
-  if locale_names == 'none'
-    expect(MailTemplate.find_by(inventory_pool_id: inventory_pool_id,
-                                name: template_name.gsub(' ', '_'),
-                                format: 'text')).to be_nil
-  else
-    locale_names.split(',').each do |locale_name|
-      language = Language.find_by(locale_name: locale_name)
-      MailTemplate.find_or_create_by(inventory_pool_id: inventory_pool_id,
-                                     name: template_name.gsub(' ', '_'),
-                                     language: language,
-                                     format: 'text') do |x|
-        x.body = %Q(Dear {{ user.name }},
-                    {{ email_signature }}
-                    --
-                    #{language.locale_name}
-                    --
-                    #{Faker::Lorem.sentence}
-                    --
-                    {{ inventory_pool.name }}
-                    {{ inventory_pool.description }}
-                    )
-      end
-    end
-  end
-end
-
 When(/^the reminders are sent$/) do
   expect(ActionMailer::Base.deliveries.count).to eq 0
   User.send_deadline_soon_reminder_to_everybody
@@ -139,7 +68,7 @@ When(/^the reminders are sent$/) do
   expect(ActionMailer::Base.deliveries.count).to be > 0
 end
 
-Then(/^I receive an email formatted according to the (custom|system\-wide|default) (reminder|deadline soon reminder) mail template$/) do |scope, template_name|
+Then(/^I receive an email formatted according to the (reminder|deadline_soon_reminder) mail template$/) do |template_name|
   language = Language.find_by(locale_name: @current_user.language.locale_name)
 
   sent_mails = ActionMailer::Base.deliveries.select { |m| m.to.include?(@current_user.email) and m.from.include?(@visit.inventory_pool.email) }
@@ -147,34 +76,21 @@ Then(/^I receive an email formatted according to the (custom|system\-wide|defaul
     m.subject == case template_name
                    when 'reminder'
                      _('[leihs] Reminder')
-                   when 'deadline soon reminder'
+                   when 'deadline_soon_reminder'
                      _('[leihs] Some items should be returned tomorrow')
                  end
   end
   expect(sent_mails.size).to eq 1
   sent_mail = sent_mails.first
-
-  template_name = template_name.gsub(' ', '_')
-  template = case scope
-               when 'custom'
-                 MailTemplate.find_or_create_by(inventory_pool_id: @visit.inventory_pool_id,
-                                                name: template_name,
-                                                language: language,
-                                                format: 'text').body
-               when 'system-wide'
-                 MailTemplate.find_or_create_by(inventory_pool_id: nil,
-                                                name: template_name,
-                                                language: language,
-                                                format: 'text').body
-               when 'default'
-                 File.read(File.join(Rails.root, 'app/views/mailer/user/', "#{template_name}.text.liquid"))
-             end
-
+  template = MailTemplate.find_by!(inventory_pool_id: @visit.inventory_pool_id,
+                                   name: template_name,
+                                   language: language,
+                                   format: 'text')
   variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.reservations)
-  expect(sent_mail.body.to_s).to eq Liquid::Template.parse(template).render(variables)
+  expect(sent_mail.body.to_s).to eq Liquid::Template.parse(template.body).render(variables)
 end
 
-Given(/^the custom (reminder) mail template looks like$/) do |template_name, string|
+Given(/^the (reminder) mail template looks like$/) do |template_name, string|
   language = Language.find_by(locale_name: @current_user.language.locale_name)
 
   mt = MailTemplate.find_or_initialize_by(inventory_pool_id: @visit.inventory_pool_id,
@@ -210,7 +126,7 @@ end
 
 When(/^one of my submitted orders to an inventory pool without custom approved mail templates get approved$/) do
   expect(ActionMailer::Base.deliveries.count).to eq 0
-  @contract = @current_user.orders.submitted.detect { |c| c.approvable? and c.inventory_pool.mail_templates.where(name: 'approved').empty? }
+  @contract = @current_user.orders.submitted.detect { |c| c.approvable? }
   @contract.approve(Faker::Lorem.sentence)
   expect(ActionMailer::Base.deliveries.count).to be > 0
 end
@@ -232,30 +148,14 @@ Then(/^I receive an approved mail based on the system\-wide template for the lan
   expect(sent_mail.body.to_s).to eq Liquid::Template.parse(template).render(variables)
 end
 
-Then(/^I receive a (custom|system\-wide|default) (.*) in "(.*?)"$/) do |scope, template_name, locale_names|
+Then(/^I receive a reminder in "(.*?)"$/) do |locale_name|
   variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.reservations)
-  string = if scope == 'default'
-             template = File.read(File.join(Rails.root, 'app/views/mailer/user/', "#{template_name}.text.liquid"))
-             Liquid::Template.parse(template).render(variables)
-           else
-             inventory_pool_id = case scope
-                                   when 'system-wide'
-                                     nil
-                                   when 'custom'
-                                     @visit.inventory_pool_id
-                                 end
-
-             strings = locale_names.split(',').map do |locale_name|
-               language = Language.find_by(locale_name: locale_name)
-               template = MailTemplate.find_by(inventory_pool_id: inventory_pool_id,
-                                               name: template_name.gsub(' ', '_'),
-                                               language: language,
-                                               format: 'text').body
-               Liquid::Template.parse(template).render(variables)
-             end
-             strings.join('\n\n- - - - - - - - - -\n\n')
-           end
-
+  language = Language.find_by!(locale_name: locale_name)
+  template = MailTemplate.find_by!(inventory_pool_id: @visit.inventory_pool_id,
+                                   name: :reminder,
+                                   language: language,
+                                   format: 'text')
+  string = Liquid::Template.parse(template.body).render(variables)
   sent_mail = get_reminder_for_visit(@visit)
   expect(sent_mail.body.to_s).to eq string
 end

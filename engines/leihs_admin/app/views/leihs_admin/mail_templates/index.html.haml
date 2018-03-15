@@ -3,16 +3,19 @@
 
 %h1= yield :title
 
-.list-of-lines
+.alert.alert-warning{role: "alert"}
+  = _("These mail templates are copied for a new inventory pool when it is created.")
 
-  - @existing_mail_templates.each do |existing_mail_template|
-    .row
-      .col-sm-2
-        = existing_mail_template.first
-      .col-sm-8
-        = existing_mail_template.last.gsub('_', ' ')
-      .col-sm-2
+%table.table.table-striped.container
+
+  - @template_templates.each do |name, type|
+    %tr
+      %td
+        = name
+      %td
+        = type
+      %td.text-right
         :ruby
-          path = "/admin/mail_templates/#{existing_mail_template.first}/#{existing_mail_template.last}"
+          path = "/admin/mail_templates/#{type}/#{name}"
         %a.btn.btn-default{href: path}
           = _("Edit")

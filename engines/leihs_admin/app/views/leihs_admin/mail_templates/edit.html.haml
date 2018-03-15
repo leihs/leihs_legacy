@@ -59,7 +59,7 @@
             .toggle_title
               %i.fa.fa-info-sign
               %strong= _("List of available variables")
-            .toggle_body= capture_haml {list_variables MailTemplate.send("available_liquid_variables_for_#{params[:dir]}")}
+            .toggle_body= capture_haml {list_variables MailTemplate.send("available_liquid_variables_for_#{mail_template.type}")}
 
 :scss
   .toggle_container {
@@ -76,8 +76,6 @@
     $("textarea").on('focus', ->
       $("textarea").trigger('autosize.destroy')
       $(this).autosize()
-    #).on('blur', ->
-    #  $(this).trigger('autosize.destroy')
     )
 
     $(".toggle_title").click ->

@@ -1,6 +1,17 @@
 class MailTemplate < ApplicationRecord
   audited
 
+  TEMPLATE_TYPES = {
+    reminder: :user,
+    deadline_soon_reminder: :user,
+    received: :order,
+    submitted: :order,
+    approved: :order,
+    rejected: :order
+  }.freeze
+
+  self.inheritance_column = nil
+
   belongs_to :inventory_pool # NOTE when null, then is system-wide
   belongs_to :language
 

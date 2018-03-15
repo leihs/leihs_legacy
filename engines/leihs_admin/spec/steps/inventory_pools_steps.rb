@@ -47,10 +47,10 @@ module LeihsAdmin
       end
 
       step 'the inventory pool is saved' do
-        expect(
+        @inventory_pool = \
           InventoryPool
           .find_by_name_and_shortname_and_email('test', 'test', 'test@test.ch')
-        ).not_to be_nil
+        expect(@inventory_pool).to be
       end
 
       step 'I see the list of all active inventory pools sorted alphabetically' do
@@ -376,6 +376,33 @@ module LeihsAdmin
         ar = @user.access_right_for(@active_inventory_pool)
         expect(ar).to be
         expect(ar.role).to be == :inventory_manager
+      end
+
+      step 'the mail templates have been created for the inventory pool' do
+        template_types = {
+          reminder: :user,
+          deadline_soon_reminder: :user,
+          received: :order,
+          submitted: :order,
+          approved: :order,
+          rejected: :order
+        }
+        template_types.each do |name, type|
+          mt = MailTemplate.find_by!(name: name,
+                                     type: type,
+                                     is_template_template: true)
+          Language.all.each do |language|
+            expect(
+              MailTemplate.find_by(inventory_pool_id: @inventory_pool.id,
+                                   is_template_template: false,
+                                   language_id: language.id,
+                                   name: name,
+                                   type: type,
+                                   format: 'text',
+                                   body: mt.body)
+            ).to be
+          end
+        end
       end
 
       private

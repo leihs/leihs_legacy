@@ -3452,3 +3452,6 @@ msgstr ""
 
 msgid "Does not have any borrowable items"
 msgstr ""
+
+msgid "These mail templates are copied for a new inventory pool when it is created."
+msgstr ""

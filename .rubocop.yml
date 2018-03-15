@@ -209,3 +209,6 @@ Style/WordArray:
 
 Performance/RedundantMatch:
   Enabled: false
+
+Style/YodaCondition:
+  Enabled: false

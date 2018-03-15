@@ -9,14 +9,14 @@
 
     .list-of-lines
 
-      - @existing_mail_templates.each do |existing_mail_template|
+      - @template_types.each do |name, type|
         .row.line
-          .line-col.col1of5
-            = existing_mail_template.first
-          .line-col.col3of5.text-align-left
-            = existing_mail_template.last.gsub('_', ' ')
-          .line-col.col1of5
+          .line-col.col2of5
+            = name
+          .line-col.col1of5.text-align-left
+            = type
+          .line-col.col2of5
             :ruby
-              path = "/manage/#{current_inventory_pool.id}/mail_templates/#{existing_mail_template.first}/#{existing_mail_template.last}"
-            %a.button.white{href: path}
+              path = "/manage/#{current_inventory_pool.id}/mail_templates/#{type}/#{name}"
+            %a.button.small.white{href: path}
               = _("Edit")

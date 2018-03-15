@@ -3540,3 +3540,5 @@ msgstr "Sie sind für dieses Gerätepark gesperrt"
 msgid "Does not have any borrowable items"
 msgstr "Hat keine ausleihbaren Gegenstände"
 
+msgid "These mail templates are copied for a new inventory pool when it is created."
+msgstr "Diese Mail-Templates werden für ein neues Gerätepark kopiert, wenn es erstellt wird."

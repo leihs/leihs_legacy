@@ -22,12 +22,16 @@ module LeihsAdmin
       @inventory_pool = InventoryPool.new
       process_params params[:inventory_pool]
 
-      if @inventory_pool.update_attributes(params[:inventory_pool])
-        inventory_managers_access_rights
+      begin
+        ApplicationRecord.transaction do
+          @inventory_pool.update_attributes!(params[:inventory_pool])
+          inventory_managers_access_rights
+          create_mail_templates!(@inventory_pool)
+        end
         flash[:notice] = _('Inventory pool successfully created')
         redirect_to admin.inventory_pools_path
-      else
-        flash.now[:error] = @inventory_pool.errors.full_messages.uniq.join(', ')
+      rescue => e
+        flash.now[:error] = e.message
         render :new
       end
     end
@@ -72,6 +76,16 @@ module LeihsAdmin
     end
 
     private
+
+    def create_mail_templates!(inventory_pool)
+      MailTemplate.where(is_template_template: true).each do |mt|
+        MailTemplate.create! \
+          mt.attributes
+          .reject { |k, _| k == 'id' }
+          .merge(is_template_template: false,
+                 inventory_pool_id: inventory_pool.id)
+      end
+    end
 
     def process_params(ip)
       ip[:email] = nil if params[:inventory_pool][:email].blank?

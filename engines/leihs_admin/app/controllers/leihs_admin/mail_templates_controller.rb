@@ -2,42 +2,15 @@ module LeihsAdmin
   class MailTemplatesController < AdminController
 
     def index
-      files = Dir.glob(File.join(Rails.root, 'app/views/mailer/',
-                                 '**',
-                                 '*.text.liquid'))
-      @existing_mail_templates = \
-        files.map do |file|
-          [file.split('/')[-2],
-           File.basename(file, '.liquid').split('.').first]
-        end
-      # @existing_mail_templates = [
-      #   {name: "remind"}
-      # ]
+      @template_templates = \
+        MailTemplate::TEMPLATE_TYPES
+        .to_a
+        .sort { |x, y| "#{x.second}#{x.first}" <=> "#{y.second}#{y.first}" }
     end
 
     def edit
-      @mail_templates = []
-
-      Language.active_languages.each do |language|
-        ['text'].each do |format|
-          mt = nil
-
-          mt ||= MailTemplate.find_or_initialize_by(inventory_pool_id: nil,
-                                                    name: params[:name],
-                                                    language: language,
-                                                    format: format)
-          if mt.body.blank?
-            file = \
-              File.read \
-                File.join(Rails.root,
-                          'app/views/mailer/',
-                          params[:dir],
-                          "#{params[:name]}.#{format}.liquid")
-            mt.body = file
-          end
-          @mail_templates << mt
-        end
-      end
+      @mail_templates = MailTemplate.where(name: params[:name],
+                                           is_template_template: true)
     end
 
     def update

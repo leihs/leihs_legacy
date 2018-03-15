@@ -4581,6 +4581,10 @@ window.i18n.locale_data = {
       "Does not have any borrowable items": [
          null,
          "Hat keine ausleihbaren Gegenstände"
+      ],
+      "These mail templates are copied for a new inventory pool when it is created.": [
+         null,
+         "Diese Mail-Templates werden für ein neues Gerätepark kopiert, wenn es erstellt wird."
       ]
    }
 }
