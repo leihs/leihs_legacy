@@ -73,7 +73,7 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2013-01-14 13:11+0100",
-         "PO-Revision-Date": " 2017-12-14 08:56+0100",
+         "PO-Revision-Date": " 2018-03-16 11:29+0100",
          "Last-Translator": " Ramón Cahenzli <ramon.cahenzli@zhdk.ch>",
          "Language-Team": " Spanish <es@li.org>",
          "Language": " es",
@@ -81,7 +81,7 @@ window.i18n.locale_data = {
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
          "X-Launchpad-Export-Date": " 2010-01-27 15:44+0000",
-         "X-Generator": " Poedit 2.0.5"
+         "X-Generator": " Poedit 2.0.6"
       },
       " at the inventory pool ": [
          null,
@@ -886,6 +886,18 @@ window.i18n.locale_data = {
       "Only enter whole numbers": [
          null,
          "Solo ingrese números enteros"
+      ],
+      "User does not have access to inventory pool: %s": [
+         null,
+         "El usuario no tiene acceso al grupo de inventarios: %s"
+      ],
+      "User is suspended for inventory pool: %s": [
+         null,
+         "El usuario está suspendido para el grupo de inventarios: %s"
+      ],
+      "An order can not have multiple delegated users.": [
+         null,
+         "Un pedido no puede tener múltiples usuarios delegados."
       ]
    }
 }

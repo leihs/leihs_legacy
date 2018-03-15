@@ -3666,6 +3666,18 @@ window.i18n.locale_data = {
       "Only enter whole numbers": [
          null,
          ""
+      ],
+      "User does not have access to inventory pool: %s": [
+         null,
+         ""
+      ],
+      "User is suspended for inventory pool: %s": [
+         null,
+         ""
+      ],
+      "An order can not have multiple delegated users.": [
+         null,
+         ""
       ]
    }
 }

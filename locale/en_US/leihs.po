@@ -2959,3 +2959,12 @@ msgstr ""
 
 msgid "Only enter whole numbers"
 msgstr ""
+
+msgid "User does not have access to inventory pool: %s"
+msgstr ""
+
+msgid "User is suspended for inventory pool: %s"
+msgstr ""
+
+msgid "An order can not have multiple delegated users."
+msgstr ""

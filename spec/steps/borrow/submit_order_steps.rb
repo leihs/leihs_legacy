@@ -41,7 +41,7 @@ module Borrow
       end
 
       step 'I see an error message in respect of my suspension' do
-        expect(find('#flash .error').text).to match /This user is suspended/
+        expect(find('#flash .error').text).to match /User is suspended/
       end
 
       step 'the order was not submitted' do

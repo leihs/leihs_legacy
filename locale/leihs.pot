@@ -3455,3 +3455,12 @@ msgstr ""
 
 msgid "These mail templates are copied for a new inventory pool when it is created."
 msgstr ""
+
+msgid "User does not have access to inventory pool: %s"
+msgstr ""
+
+msgid "User is suspended for inventory pool: %s"
+msgstr ""
+
+msgid "An order can not have multiple delegated users."
+msgstr ""

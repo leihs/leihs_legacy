@@ -75,7 +75,7 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2012-10-22 12:39+0200",
-         "PO-Revision-Date": " 2017-12-14 08:59+0100",
+         "PO-Revision-Date": " 2018-03-16 11:27+0100",
          "Last-Translator": " Loïc Fürhoff <loic.furhoff@heig-vd.ch>",
          "Language-Team": " French (Switzerland)",
          "Language": " fr",
@@ -85,7 +85,7 @@ window.i18n.locale_data = {
          "Content-Transfer-Encoding": " 8bit",
          "X-Loco-Source-Locale": " fr_CH",
          "X-Launchpad-Export-Date": " 2008-12-18 06:16+0000",
-         "X-Generator": " Poedit 2.0.5",
+         "X-Generator": " Poedit 2.0.6",
          "X-Loco-Parser": " loco_parse_po"
       },
       "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\"": [
@@ -4467,6 +4467,18 @@ window.i18n.locale_data = {
       "Only enter whole numbers": [
          null,
          "Entrez uniquement des nombres entiers"
+      ],
+      "User does not have access to inventory pool: %s": [
+         null,
+         "L'utilisateur n'a pas accès à l'inventaire: %s"
+      ],
+      "User is suspended for inventory pool: %s": [
+         null,
+         "L'utilisateur a été suspendu pour cette inventaires: %s"
+      ],
+      "An order can not have multiple delegated users.": [
+         null,
+         "Un ordre ne peut pas avoir plusieurs utilisateurs délégués."
       ]
    }
 }

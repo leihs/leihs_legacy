@@ -73,7 +73,7 @@ window.i18n.locale_data = {
          "Project-Id-Version": " version 0.0.1",
          "Report-Msgid-Bugs-To": " ",
          "POT-Creation-Date": " 2012-10-22 12:39+0200",
-         "PO-Revision-Date": " 2017-12-14 08:58+0100",
+         "PO-Revision-Date": " 2018-03-16 11:38+0100",
          "Last-Translator": " Ramón Cahenzli <rca@psy-q.ch>",
          "Language-Team": " Swiss-German (Zürich area) <ramon.cahenzli@zhdk.ch>",
          "Language": " gsw_CH",
@@ -81,7 +81,7 @@ window.i18n.locale_data = {
          "Content-Type": " text/plain; charset=UTF-8",
          "Content-Transfer-Encoding": " 8bit",
          "Plural-Forms": " nplurals=2; plural=(n != 1);",
-         "X-Generator": " Poedit 2.0.5"
+         "X-Generator": " Poedit 2.0.6"
       },
       "Additional label in inventory codes": [
          null,
@@ -3895,6 +3895,18 @@ window.i18n.locale_data = {
       "Only enter whole numbers": [
          null,
          "Geben Sie nur ganze Zahlen ein"
+      ],
+      "User does not have access to inventory pool: %s": [
+         null,
+         "Benutzer hät kei Zuegriff uf de Gerätepark: %s"
+      ],
+      "User is suspended for inventory pool: %s": [
+         null,
+         "De Benutzer isch gschperrt für de Gerätepark: %s"
+      ],
+      "An order can not have multiple delegated users.": [
+         null,
+         "Eini Bschtellig ka nöd mehreri Delegantinä ha."
       ]
    }
 }

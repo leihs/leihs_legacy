@@ -35,7 +35,7 @@ class Order < ApplicationRecord
     unless user.access_right_for(inventory_pool)
       errors.add \
         :base,
-        _('This user does not have access to inventory pool: %s') \
+        _('User does not have access to inventory pool: %s') \
           % inventory_pool.name
     end
 
@@ -43,7 +43,7 @@ class Order < ApplicationRecord
         and state != 'rejected'
       errors.add \
         :base,
-        _('This user is suspended for inventory pool: %s') \
+        _('User is suspended for inventory pool: %s') \
           % inventory_pool.name
     end
 
