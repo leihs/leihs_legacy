@@ -629,3 +629,9 @@ msgstr "El usuario está suspendido para el grupo de inventarios: %s"
 
 msgid "An order can not have multiple delegated users."
 msgstr "Un pedido no puede tener múltiples usuarios delegados."
+
+msgid "Invalid date"
+msgstr "fecha no válida"
+
+msgid "Start and end date cannot be in the past"
+msgstr "Fecha de inicio y fin no puede ser en el pasado"

@@ -2013,6 +2013,14 @@ window.i18n.locale_data = {
          null,
          "An diesem Enddatum ist keine Ausleihe mehr möglich"
       ],
+      "Invalid date": [
+         null,
+         "Ungültiges Datum"
+      ],
+      "Start and end date cannot be in the past": [
+         null,
+         "Anfangs- und Enddatum können nicht in der Vergangenheit liegen"
+      ],
       "Inventory pool successfully updated.": [
          null,
          "Gerätepark aktualisiert"

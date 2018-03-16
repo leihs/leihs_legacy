@@ -2946,3 +2946,9 @@ msgstr "De Benutzer isch gschperrt für de Gerätepark: %s"
 
 msgid "An order can not have multiple delegated users."
 msgstr "Eini Bschtellig ka nöd mehreri Delegantinä ha."
+
+msgid "Invalid date"
+msgstr "Ungültiges Datum"
+
+msgid "Start and end date cannot be in the past"
+msgstr "Start- und Änddatum chan nöd i d Vergangeheit sii"

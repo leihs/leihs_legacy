@@ -378,7 +378,7 @@ const BorrowBookingCalendar = createReactClass({
     let errors = []
 
     if (this.state.serverError) {
-      errors.push(_jed(this.state.serverError))
+      errors.push(this.state.serverError)
     } else if (!this.state.startDate.isValid() || !this.state.endDate.isValid()) {
       errors.push('Invalid date')
     } else if (

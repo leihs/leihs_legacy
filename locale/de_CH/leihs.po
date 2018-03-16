@@ -1524,6 +1524,12 @@ msgstr "An diesem Startdatum ist keine Ausleihe mehr möglich"
 msgid "Booking is no longer possible on this end date"
 msgstr "An diesem Enddatum ist keine Ausleihe mehr möglich"
 
+msgid "Invalid date"
+msgstr "Ungültiges Datum"
+
+msgid "Start and end date cannot be in the past"
+msgstr "Anfangs- und Enddatum können nicht in der Vergangenheit liegen"
+
 msgid "Inventory pool successfully updated."
 msgstr "Gerätepark aktualisiert"
 

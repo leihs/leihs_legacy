@@ -3371,3 +3371,9 @@ msgstr "L'utilisateur a été suspendu pour cette inventaires: %s"
 
 msgid "An order can not have multiple delegated users."
 msgstr "Un ordre ne peut pas avoir plusieurs utilisateurs délégués."
+
+msgid "Invalid date"
+msgstr "Date non valide"
+
+msgid "Start and end date cannot be in the past"
+msgstr "Date de début et de fin ne peut pas être dans le passé"

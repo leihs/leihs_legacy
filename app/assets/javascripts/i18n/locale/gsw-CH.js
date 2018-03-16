@@ -3907,6 +3907,14 @@ window.i18n.locale_data = {
       "An order can not have multiple delegated users.": [
          null,
          "Eini Bschtellig ka nöd mehreri Delegantinä ha."
+      ],
+      "Invalid date": [
+         null,
+         "Ungültiges Datum"
+      ],
+      "Start and end date cannot be in the past": [
+         null,
+         "Start- und Änddatum chan nöd i d Vergangeheit sii"
       ]
    }
 }
