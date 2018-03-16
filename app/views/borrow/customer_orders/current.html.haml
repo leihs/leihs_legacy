@@ -1,7 +1,7 @@
 - content_for :title, _("Order Overview")
 
 #current-order-show.wrapper.margin-top-m
-  
+
   = render :partial => 'borrow/tabs', :locals => {:tabs => [[request.fullpath ,_("Order overview")]]}
 
   .row.content-wrapper.straight-top-left
@@ -61,7 +61,7 @@
               %h3.headline-s.padding-bottom-m
                 = _("Purpose of the order")
                 *
-              %textarea.padding-inset-s.width-full{name: "purpose", placeholder: _("Specification of the purpose is required")}
+              %textarea.padding-inset-s.width-full{name: "purpose", required: true, placeholder: _("Specification of the purpose is required")}
             .row.padding-top-l
               .col1of2
                 = link_to borrow_order_remove_path, method: :delete, data: { confirm: _("The order will be discarded.") }, class: "button red" do
