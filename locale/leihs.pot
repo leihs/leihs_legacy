@@ -3420,3 +3420,6 @@ msgstr ""
 
 msgid "Start and end date cannot be in the past"
 msgstr ""
+
+msgid "click here to reload"
+msgstr ""

@@ -191,7 +191,7 @@ const BorrowBookingCalendar = createReactClass({
       },
       success: (data) => this.props.finishCallback(data),
       error: (xhr) => {
-        this.setState({serverError: xhr.statusText})
+        this.setState({serverError: xhr.responseText})
       }
     })
   },
@@ -489,7 +489,7 @@ const BorrowBookingCalendar = createReactClass({
             <button
               className="button white large"
               onClick={this.reloadCalendarContent}>
-              Reload
+              {_jed('click here to reload')}
             </button>
           </div>
           <div className="height-s" />

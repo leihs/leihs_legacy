@@ -3548,6 +3548,7 @@ msgstr "Hat keine ausleihbaren Gegenstände"
 
 msgid "These mail templates are copied for a new inventory pool when it is created."
 msgstr "Diese Mail-Templates werden für ein neues Gerätepark kopiert, wenn es erstellt wird."
+
 msgid "User does not have access to inventory pool: %s"
 msgstr "Benutzer hat keinen Zugriff auf den Gerätepark: %s"
 
@@ -3556,3 +3557,6 @@ msgstr "Benutzer ist gesperrt für den Gerätepark: %s"
 
 msgid "An order can not have multiple delegated users."
 msgstr "Eine Bestellungen kann nicht mehrere Delegationen haben"
+
+msgid "click here to reload"
+msgstr "klicke hier um neu zu laden"

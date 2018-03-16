@@ -4590,6 +4590,10 @@ window.i18n.locale_data = {
          null,
          "Hat keine ausleihbaren Gegenstände"
       ],
+      "These mail templates are copied for a new inventory pool when it is created.": [
+         null,
+         "Diese Mail-Templates werden für ein neues Gerätepark kopiert, wenn es erstellt wird."
+      ],
       "User does not have access to inventory pool: %s": [
          null,
          "Benutzer hat keinen Zugriff auf den Gerätepark: %s"
@@ -4601,6 +4605,10 @@ window.i18n.locale_data = {
       "An order can not have multiple delegated users.": [
          null,
          "Eine Bestellungen kann nicht mehrere Delegationen haben"
+      ],
+      "click here to reload": [
+         null,
+         "klicke hier um neu zu laden"
       ]
    }
 }

@@ -46,13 +46,16 @@ class Borrow::ReservationsController < Borrow::ApplicationController
           )
           if reservations and reservations.all?(&:valid?)
             render status: :ok, json: reservations
+            return
           end
         end
       rescue => e
         render status: :bad_request, json: e.message
+        return
       end
     else
       render status: :bad_request, json: @errors.uniq.join(', ')
+      return
     end
   end
 
