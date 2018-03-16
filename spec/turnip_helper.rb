@@ -27,6 +27,7 @@ RSpec.configure do |config|
   config.before(type: :feature) do
     PgTasks.truncate_tables()
     FactoryGirl.create(:setting) unless Setting.first
+    FactoryGirl.create(:system_setting) unless SystemSetting.first
     Capybara.current_driver = :firefox
     page.driver.browser.manage.window.maximize
   end

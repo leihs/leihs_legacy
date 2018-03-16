@@ -18,7 +18,7 @@
 
   - Hash[@settings.attributes.sort].each_pair do |k,v|
     - next if k == "id"
-    - disabled = Setting.attr_readonly?(k)
+    - disabled = false
     .row.form-group
       .col-sm-4
         = f.label k, k.to_s, style: "margin-bottom: 0px", class: (disabled and "text-muted")

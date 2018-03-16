@@ -6,4 +6,7 @@ Given(/^settings exist$/) do
   unless Setting.first
     FactoryGirl.create(:setting)
   end
+  unless SystemSetting.first
+     FactoryGirl.create(:system_setting)
+  end
 end

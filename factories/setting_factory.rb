@@ -3,10 +3,6 @@
 FactoryGirl.define do
 
   factory :setting do
-    smtp_address { 'smtp.zhdk.ch' }
-    smtp_port { 25 }
-    smtp_domain { 'beta.ausleihe.zhdk.ch' }
-    mail_delivery_method { 'test' }
     local_currency_string { 'CHF' }
     contract_terms do
       'Die Benutzerin/der Benutzer ist bei unsachgemässer Handhabung oder ' \
@@ -24,14 +20,21 @@ FactoryGirl.define do
     email_signature { 'Das PZ-leihs Team' }
     default_email { 'sender@example.com' }
     deliver_order_notifications { false }
-    user_image_url do
-      'http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}'
-    end
     logo_url { '/assets/image-logo-zhdk.png' }
     disable_manage_section { false }
     disable_manage_section_message { '' }
     disable_borrow_section { false }
     disable_borrow_section_message { '' }
+    user_image_url do
+      'http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}'
+    end
+  end
+
+  factory :system_setting do
+    smtp_address { 'smtp.zhdk.ch' }
+    smtp_port { 25 }
+    smtp_domain { 'beta.ausleihe.zhdk.ch' }
+    mail_delivery_method { 'test' }
   end
 
 end

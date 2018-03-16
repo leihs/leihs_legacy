@@ -3,7 +3,8 @@ module AppSettings
 
   included do
     def app_settings
-      @app_settings ||= Setting.first
+      @app_settings ||= OpenStruct.new(
+        Setting.first.attributes.merge(SystemSetting.first.attributes))
     end
     helper_method :app_settings
   end

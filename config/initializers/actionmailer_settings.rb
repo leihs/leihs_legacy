@@ -18,15 +18,15 @@ class ActionMailer::Base
     # Additionally, we have to check for existance of each setting because the settings
     # table will be changed by migrations along the way, so the setting we expect to be
     # there might not actually exist while we are running the migration.
-    if ApplicationRecord.connection.tables.include?("settings")
-      app_settings = Setting.first
+    if ApplicationRecord.connection.tables.include?("system_settings")
+      system_settings = SystemSetting.first
       begin
         result = {
-          :address => app_settings.smtp_address,
-          :port => app_settings.smtp_port,
-          :domain => app_settings.smtp_domain,
-          :enable_starttls_auto => app_settings.smtp_enable_starttls_auto,
-          :openssl_verify_mode => app_settings.smtp_openssl_verify_mode
+          :address => system_settings.smtp_address,
+          :port => system_settings.smtp_port,
+          :domain => system_settings.smtp_domain,
+          :enable_starttls_auto => system_settings.smtp_enable_starttls_auto,
+          :openssl_verify_mode => system_settings.smtp_openssl_verify_mode
         }
       rescue
         logger.info("Could not configure ActionMailer because the database doesn't seem to be in the right shape for it. Check the settings table.")
@@ -35,10 +35,10 @@ class ActionMailer::Base
 
       # Catch NameError and uninitialized constant if these settings aren't defined
       begin
-        if (app_settings.smtp_username and app_settings.smtp_password) and (!app_settings.smtp_username.empty? and !app_settings.smtp_password.empty?)
+        if (system_settings.smtp_username and system_settings.smtp_password) and (!system_settings.smtp_username.empty? and !system_settings.smtp_password.empty?)
           auth_settings = {
-            :user_name => app_settings.smtp_username,
-            :password => app_settings.smtp_password
+            :user_name => system_settings.smtp_username,
+            :password => system_settings.smtp_password
           }
           result.merge!(auth_settings)
         end
@@ -52,7 +52,7 @@ class ActionMailer::Base
 
   def self.delivery_method
     begin
-      delivery_method = Setting.first.mail_delivery_method.to_sym
+      delivery_method = SystemSetting.first.mail_delivery_method.to_sym
       if delivery_method.empty?
         delivery_method = :test
       end

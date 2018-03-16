@@ -2,11 +2,11 @@ module LeihsAdmin
   class SettingsController < AdminController
 
     def edit
-      @settings = app_settings || Setting.new
+      @settings = Setting.first || Setting.new
     end
 
     def update
-      @settings = app_settings || Setting.new
+      @settings = Setting.first || Setting.new
 
       if @settings.update_attributes(params[:setting])
         flash[:notice] = _('Successfully set.')
