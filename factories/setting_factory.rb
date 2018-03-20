@@ -23,7 +23,7 @@ FactoryGirl.define do
     contract_lending_party_string { "Your\nAddress\nHere" }
     email_signature { 'Das PZ-leihs Team' }
     default_email { 'sender@example.com' }
-    deliver_order_notifications { false }
+    deliver_received_order_notifications { false }
     user_image_url do
       'http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}'
     end

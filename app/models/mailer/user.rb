@@ -15,12 +15,11 @@ class Mailer::User < ActionMailer::Base
          date: sent_at) do |format|
       format.text do
         name = 'reminder'
-        template = MailTemplate.get_template(:user,
-                                             inventory_pool,
+        template = MailTemplate.get_template(inventory_pool,
                                              name,
                                              user.language)
         Liquid::Template
-          .parse(template)
+          .parse(template.body)
           .render(MailTemplate.liquid_variables_for_user(user,
                                                          inventory_pool,
                                                          reservations))
@@ -39,12 +38,11 @@ class Mailer::User < ActionMailer::Base
          date: sent_at) do |format|
       format.text do
         name = 'deadline_soon_reminder'
-        template = MailTemplate.get_template(:user,
-                                             inventory_pool,
+        template = MailTemplate.get_template(inventory_pool,
                                              name,
                                              user.language)
         Liquid::Template
-          .parse(template)
+          .parse(template.body)
           .render(MailTemplate.liquid_variables_for_user(user,
                                                          inventory_pool,
                                                          reservations))

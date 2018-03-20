@@ -12,12 +12,11 @@ class Mailer::Order < ActionMailer::Base
          date: sent_at) do |format|
       format.text do
         name = 'approved'
-        template = MailTemplate.get_template(:order,
-                                             order.inventory_pool,
+        template = MailTemplate.get_template(order.inventory_pool,
                                              name,
                                              order.target_user.language)
         Liquid::Template
-          .parse(template)
+          .parse(template.body)
           .render(MailTemplate.liquid_variables_for_order(order, comment))
       end
     end
@@ -31,12 +30,11 @@ class Mailer::Order < ActionMailer::Base
          date: sent_at) do |format|
       format.text do
         name = 'submitted'
-        template = MailTemplate.get_template(:order,
-                                             order.inventory_pool,
+        template = MailTemplate.get_template(order.inventory_pool,
                                              name,
                                              order.target_user.language)
         Liquid::Template
-          .parse(template)
+          .parse(template.body)
           .render(MailTemplate.liquid_variables_for_order(order, nil))
       end
     end
@@ -51,12 +49,11 @@ class Mailer::Order < ActionMailer::Base
          date: sent_at) do |format|
       format.text do
         name = 'received'
-        template = MailTemplate.get_template(:order,
-                                             order.inventory_pool,
+        template = MailTemplate.get_template(order.inventory_pool,
                                              name,
                                              order.target_user.language)
         Liquid::Template
-          .parse(template)
+          .parse(template.body)
           .render(MailTemplate.liquid_variables_for_order(order, nil))
       end
     end
@@ -70,12 +67,11 @@ class Mailer::Order < ActionMailer::Base
          date: sent_at) do |format|
       format.text do
         name = 'rejected'
-        template = MailTemplate.get_template(:order,
-                                             order.inventory_pool,
+        template = MailTemplate.get_template(order.inventory_pool,
                                              name,
                                              order.target_user.language)
         Liquid::Template
-          .parse(template)
+          .parse(template.body)
           .render(MailTemplate.liquid_variables_for_order(order, comment))
       end
     end

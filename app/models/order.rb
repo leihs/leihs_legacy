@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   include Concerns::ScopeIfPresence
   include DefaultPagination
+  include LogSendMailFailure
 
   belongs_to :inventory_pool
   belongs_to :user
@@ -10,6 +11,11 @@ class Order < ApplicationRecord
   has_many :models, -> { reorder(nil).distinct }, through: :item_lines
   has_many :items, -> { reorder(nil).distinct }, through: :item_lines
   has_many :options, -> { reorder(nil).distinct }, through: :option_lines
+
+  after_create do
+    send_submitted_notification
+    send_received_notification
+  end
 
   class << self
     def submitted
@@ -202,21 +208,20 @@ class Order < ApplicationRecord
   #################################################################################
 
   def send_approved_notification(comment, send_mail, current_user)
-    begin
+    with_logging_send_mail_failure do
       Notification.order_approved(self, comment, send_mail, current_user)
-    rescue Exception => exception
-      # archive problem in the log, so the admin/developper
-      # can look up what happened
-      logger.error "#{exception}\n    #{exception.backtrace.join("\n    ")}"
-      message = \
-        _('The following error happened while sending ' \
-          "a notification email to %{email}:\n") \
-        % { email: target_user.email } \
-        + "#{exception}.\n" \
-        + _('That means that the user probably did not get the approval mail ' \
-            'and you need to contact him/her in a different way.')
+    end
+  end
 
-      self.errors.add(:base, message)
+  def send_submitted_notification
+    with_logging_send_mail_failure do
+      Notification.order_submitted(self, true)
+    end
+  end
+
+  def send_received_notification
+    with_logging_send_mail_failure do
+      Notification.order_received(self, true)
     end
   end
 

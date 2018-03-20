@@ -9,13 +9,13 @@ Feature: Defining application settings through web interface
     When I go to the settings page
     Then I am on the settings page
     And I edit the following settings
-      | contract_lending_party_string |
-      | contract_terms                |
-      | default_email                 |
-      | deliver_order_notifications   |
-      | email_signature               |
-      | logo_url                      |
-      | user_image_url                |
+      | contract_lending_party_string          |
+      | contract_terms                         |
+      | default_email                          |
+      | deliver_received_order_notifications   |
+      | email_signature                        |
+      | logo_url                               |
+      | user_image_url                         |
     And the settings are persisted
 
   @leihs_admin_settings

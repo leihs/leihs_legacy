@@ -22,7 +22,7 @@ class Notification < ApplicationRecord
   # Notify the person responsible for the inventory pool that an order
   # was received. Can be enabled in config/environment.rb
   def self.order_received(order, send_mail = false)
-    if (send_mail and Setting.first.deliver_order_notifications)
+    if (send_mail and Setting.first.deliver_received_order_notifications)
       Mailer::Order.received(order).deliver_now
     end
   end

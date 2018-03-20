@@ -3,6 +3,11 @@ require 'turnip/capybara'
 require 'rails_helper'
 require 'factory_girl'
 
+class Object
+  alias_method :ivar_get, :instance_variable_get
+  alias_method :ivar_set, :instance_variable_set
+end
+
 if ENV['FIREFOX_ESR_45_PATH'].present?
   Selenium::WebDriver::Firefox.path = ENV['FIREFOX_ESR_45_PATH']
 end
