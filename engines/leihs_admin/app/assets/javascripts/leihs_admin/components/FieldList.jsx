@@ -12,7 +12,8 @@
         showEdit: false,
         editFieldId: null,
         openFields: {},
-        search: ''
+        search: '',
+        selectedTarget: 'items_and_licenses'
       }
     },
 
@@ -58,14 +59,14 @@
     editableFields() {
       return _.filter(
         this.allFields(),
-        (f) => this.isEditableField(f) && this.searchResult(f)
+        (f) => this.isEditableField(f) && this.searchResult(f) && this.isFieldSelectedTarget(f)
       )
     },
 
     staticFields() {
       return _.filter(
         this.allFields(),
-        (f) => !this.isEditableField(f) && this.searchResult(f)
+        (f) => !this.isEditableField(f) && this.searchResult(f) && this.isFieldSelectedTarget(f)
       )
     },
 
@@ -174,6 +175,21 @@
       })
     },
 
+    isFieldSelectedTarget(field) {
+      if(this.state.selectedTarget == 'items_and_licenses') {
+        return true
+      }
+      else if(this.state.selectedTarget == 'items') {
+        return field.data.target_type == 'item' || !field.data.target_type
+      }
+      else if(this.state.selectedTarget == 'licenses') {
+        return field.data.target_type == 'license' || !field.data.target_type
+      }
+      else {
+        return false
+      }
+    },
+
 
     renderEditableFields() {
       var fields = _.sortBy(this.editableFields(), (field) => field.data.label)
@@ -189,7 +205,7 @@
       return (
         <div className='panel panel-default'>
           <div className='panel-heading'>
-            <h4>Dynamische Felder</h4>
+            <h4>Konfigurierbare Felder</h4>
           </div>
           <div className='panel-body' style={{paddingTop: '0px', paddingBottom: '0px'}}>
             <div className='list-of-lines'>
@@ -204,7 +220,7 @@
       return (
         <div className='panel panel-default'>
           <div className='panel-heading'>
-            <h4>Statische Felder</h4>
+            <h4>Gegebene Felder</h4>
           </div>
           <div className='panel-body' style={{paddingTop: '0px', paddingBottom: '0px'}}>
             <div className='list-of-lines'>
@@ -222,6 +238,12 @@
       })
     },
 
+    selectTarget(event) {
+      this.setState({
+        selectedTarget: event.target.value
+      })
+    },
+
     renderOverview() {
 
       if(this.state.loading) {
@@ -234,7 +256,16 @@
         <div>
           {this.renderTitle()}
           <div className='col-sm-12' style={{marginBottom: '20px', paddingLeft: '0px', paddingRight: '0px'}}>
-            <input value={this.state.search} onChange={(e) => this.search(e)} autoComplete='false' type='text' className='form-control' placeholder='Search for field id, label or group...' />
+            <div style={{width: '70%', display: 'inline-block'}}>
+              <input value={this.state.search} onChange={(e) => this.search(e)} autoComplete='false' type='text' className='form-control' placeholder='Search for field id, label or group...' />
+            </div>
+            <div style={{width: '30%', paddingLeft: '10px', display: 'inline-block'}}>
+              <select value={this.state.selectedTarget} onChange={(e) => this.selectTarget(e)} className='form-control' style={{width: '100%'}}>
+                <option value='items_and_licenses'>für Items und Lizenzen</option>
+                <option value='items'>für Items</option>
+                <option value='licenses'>für Lizenzen</option>
+              </select>
+            </div>
           </div>
           <div className='col-sm-6' style={{paddingLeft: '0px'}}>
             {this.renderEditableFieldsBox()}
@@ -289,6 +320,7 @@
         return (
           <FieldEditor
             parentProps={this.props}
+            fields={this.state.fields}
             editFieldId={this.state.editFieldId}
             close={this.closeEdit}
           />

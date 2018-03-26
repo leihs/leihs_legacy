@@ -345,21 +345,43 @@
       )
     },
 
+    idExistsAlready() {
+      return !_.isEmpty(_.filter(
+        this.props.fields,
+        (field) => {
+          return field.id == 'properties_' + this.state.fieldInput.id
+        }
+      ))
+    },
+
     renderIdInput() {
+
 
       if(this.editMode()) {
 
         return (
           <div className='col-sm-9'>
-            <input disabled className='form-control' type='text' defaultValue={this.props.editFieldId.replace('properties_', '')} />
+            {this.props.editFieldId}
           </div>
         )
 
 
       } else {
+
+        var idHint = null
+        if(this.idExistsAlready()) {
+          idHint = <div style={{color: 'red'}}>{'Feld mit der Id properties_' + this.state.fieldInput.id + ' existiert schon.'}</div>
+        }
+
+
         return (
           <div className='col-sm-9'>
-            <input onChange={(e) => this.mergeInput(e, 'id')} className='form-control' type='text' value={this.state.fieldInput.id} />
+            <div style={{display: 'inline-block', position: 'absolute', paddingTop: '9px'}}>properties_</div>
+            <div style={{display: 'inline-block', width: '100%', paddingLeft: '75px'}}>
+              <input onChange={(e) => this.mergeInput(e, 'id')} className='form-control' type='text' value={this.state.fieldInput.id} />
+            </div>
+
+            {idHint}
           </div>
         )
 
@@ -384,7 +406,7 @@
 
       var renderMinus = (i, last) => {
 
-        if(v.existing) {
+        if(v.existing && this.state.ajaxLoadResult.items_count > 0) {
           return null
         }
 
@@ -481,10 +503,10 @@
         <div key={'header'} className='row form-group' style={{marginTop: '20px'}}>
           {renderDefault()}
           <div className='col-sm-5'>
-            <strong>Label</strong>
+            <strong>Im GUI Angezeigter Wert</strong>
           </div>
           <div className={valueColSpan}>
-            <strong>Value</strong>
+            <strong>In Datenbank gespeicherter Wert</strong>
           </div>
           <div className='col-sm-2 line-actions'>
           </div>
@@ -671,7 +693,7 @@
                 <strong>Attribute *</strong>
               </div>
               <div className='col-sm-9'>
-                <input disabled className='form-control' type='text' defaultValue={this.props.editFieldId} />
+                {this.props.editFieldId}
               </div>
             </div>
             <div className='row form-group'>
@@ -740,7 +762,7 @@
             </div>
             <div className='row form-group'>
               <div className='col-sm-3'>
-                <strong>Owner</strong>
+                <strong>Owner (edit)</strong>
               </div>
               <div className='col-sm-9'>
                 <input onChange={(e) => this.mergeOwner(e)} checked={this.state.fieldInput.owner} type='checkbox' />
@@ -748,7 +770,7 @@
             </div>
             <div className='row form-group'>
               <div className='col-sm-3'>
-                <strong>Role</strong>
+                <strong>Role (view)</strong>
               </div>
               <div className='col-sm-9'>
                 <select value={this.state.fieldInput.role} onChange={(e) => this.mergeRole(e)}>
