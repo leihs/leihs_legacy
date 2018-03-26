@@ -28,7 +28,7 @@
 
     _onFocus() {
       if(!this.state.result) {
-        this._makeCall()
+        this.debouncedMakeCall()
       }
     },
 
@@ -54,13 +54,17 @@
     _onTerm(term) {
       this.setState(
         {term: term},
-        this._makeCall
+        this.debouncedMakeCall
       )
 
       this._callback({
         term: term,
         id: null
       })
+    },
+
+    componentDidMount() {
+      this.debouncedMakeCall = _.debounce(this._makeCall, 100)
     },
 
     _makeCall() {
@@ -74,7 +78,16 @@
       )
     },
 
+
     render () {
+      var result = null
+      var hasMore = null
+      if(this.state.result) {
+        result = _.first(this.state.result, 100)
+        if(this.state.result.length > result.length) {
+          hasMore = this.state.result.length - result.length
+        }
+      }
       return (
         <BasicAutocompleteInternals
           inputClassName={this.props.inputClassName}
@@ -83,7 +96,8 @@
           dropdownWidth={this.props.dropdownWidth}
           label={this.props.label}
           term={this.state.term}
-          result={this.state.result}
+          result={result}
+          hasMore={hasMore}
           _onFocus={this._onFocus}
           _onTerm={this._onTerm}
           _onSelect={this._onSelect}

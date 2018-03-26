@@ -576,6 +576,9 @@ msgstr "Aushändigen an %s"
 msgid "Hand Overs"
 msgstr "Aushändigungen"
 
+msgid "has %s more..."
+msgstr "%s weitere..."
+
 msgid "Help"
 msgstr "Hilfe"
 

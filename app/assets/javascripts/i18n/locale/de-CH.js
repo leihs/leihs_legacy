@@ -813,6 +813,10 @@ window.i18n.locale_data = {
          null,
          "Aushändigungen"
       ],
+      "has %s more...": [
+         null,
+         "%s weitere..."
+      ],
       "Help": [
          null,
          "Hilfe"

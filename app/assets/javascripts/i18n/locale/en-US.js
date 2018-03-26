@@ -801,6 +801,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "has %s more...": [
+         null,
+         ""
+      ],
       "Help": [
          null,
          ""

@@ -709,6 +709,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "has %s more...": [
+         null,
+         ""
+      ],
       "Finish this hand over": [
          null,
          ""

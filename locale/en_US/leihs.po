@@ -568,6 +568,9 @@ msgstr ""
 msgid "Hand Overs"
 msgstr ""
 
+msgid "has %s more..."
+msgstr ""
+
 msgid "Help"
 msgstr ""
 

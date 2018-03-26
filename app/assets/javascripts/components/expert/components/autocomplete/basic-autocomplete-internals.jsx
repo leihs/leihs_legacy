@@ -121,24 +121,51 @@
       })
     },
 
-    _lis() {
-      return this.props.result.map((row, index) => {
+    _li(row, index) {
 
+      var className = 'separated-bottom exclude-last-child ui-menu-item'
+      if(index == this.state.keyIndex) {
+        className += ' ui-state-focus'
+      }
+      return (
+
+        <li key={row.id} className={className} tabIndex='-1' onMouseDown={(event) => this._onSelect(event, row)}>
+          <a>
+            <div className='row text-ellipsis' style={{width: '500px'}}>
+              {row.label}
+            </div>
+          </a>
+        </li>
+      )
+
+
+    },
+
+    renderHasMore() {
+
+      if(!this.props.hasMore) {
+        return null
+      } else {
         var className = 'separated-bottom exclude-last-child ui-menu-item'
-        if(index == this.state.keyIndex) {
-          className += ' ui-state-focus'
-        }
         return (
-
-          <li key={row.id} className={className} id='ui-id-227' tabIndex='-1' onMouseDown={(event) => this._onSelect(event, row)}>
-            <a>
-              <div className='row text-ellipsis' style={{width: '500px'}}>
-                {_jed(row.label)}
-              </div>
-            </a>
+          <li key={'has_more'} className={className} tabIndex='-1'>
+            <div className='row text-ellipsis' style={{textAlign: 'center', fontStyle: 'italic', padding: '10px', color: '#aaa', cursor: 'default'}}>
+              {_jed('has ' + this.props.hasMore + ' more...')}
+            </div>
           </li>
         )
-      }.bind(this))
+      }
+    },
+
+
+    _lis() {
+      return _.compact(
+        this.props.result.map((row, index) => {
+          return this._li(row, index)
+        }.bind(this)).concat(
+          this.renderHasMore()
+        )
+      )
     },
 
 

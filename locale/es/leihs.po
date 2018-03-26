@@ -153,6 +153,9 @@ msgstr "Se espera su devolución."
 msgid "Format"
 msgstr ""
 
+msgid "has %s more..."
+msgstr ""
+
 msgid "In the interest of all our clients we ask you to observe the return dates."
 msgstr "Por el interés de todos nuestros clientes, le pedimos respete las fechas de devolución."
 

@@ -492,6 +492,9 @@ msgstr ""
 msgid "Expected to be returned."
 msgstr ""
 
+msgid "has %s more..."
+msgstr ""
+
 msgid "Finish this hand over"
 msgstr ""
 

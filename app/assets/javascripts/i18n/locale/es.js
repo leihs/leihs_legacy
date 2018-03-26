@@ -263,6 +263,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "has %s more...": [
+         null,
+         ""
+      ],
       "In the interest of all our clients we ask you to observe the return dates.": [
          null,
          "Por el interés de todos nuestros clientes, le pedimos respete las fechas de devolución."
