@@ -328,6 +328,9 @@
       this.setState(
         (previous) => {
           next = _.clone(previous)
+          if(next.fieldInput.defaultValue == index) {
+            next.fieldInput.defaultValue = 0
+          }
           next.fieldInput.values = _.reject(next.fieldInput.values, (v, i) => i == index)
           return next
         }
