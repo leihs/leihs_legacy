@@ -2,7 +2,7 @@
 %html{:lang => I18n.locale}
 
   %head
-    %title= "#{current_inventory_pool ? "#{current_inventory_pool.shortname || current_inventory_pool.name} | " : ""}#{yield(:title)}#{(yield :title).blank? ? "":" | "}leihs"
+    %title= strip_tags("#{current_inventory_pool ? "#{current_inventory_pool.shortname || current_inventory_pool.name} | " : ""}#{yield(:title)}#{(yield :title).blank? ? "":" | "}leihs")
     = render :partial => "layouts/head"
     = stylesheet_link_tag "manage", :media => "all"
     = javascript_include_tag "manage"
