@@ -32,7 +32,7 @@ When(/^I am looking at a template$/) do
     # choose a template, whose all models provide some borrowable quantity (> 0) considering all customer's groups from all his inventory pools
     t.models.all? do |m|
       t.inventory_pools.map do |ip|
-        m.total_borrowable_items_for_user(@current_user, ip)
+        m.total_borrowable_items_for_user_and_pool(@current_user, ip)
       end.max > 0
     end
   end

@@ -90,9 +90,9 @@ When(/^I (increase|decrease) the quantity of one entry$/) do |arg1|
   @new_quantity = case arg1
                   when 'increase'
                     line = @changed_lines.first
-                    line.model.total_borrowable_items_for_user(line.user,
-                                                               line.inventory_pool,
-                                                               ensure_non_negative_general: true)
+                    line.model.total_borrowable_items_for_user_and_pool(line.user,
+                                                                        line.inventory_pool,
+                                                                        ensure_non_negative_general: true)
                   when 'decrease'
                     1
                   else

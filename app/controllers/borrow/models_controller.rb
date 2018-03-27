@@ -64,7 +64,7 @@ class Borrow::ModelsController < Borrow::ApplicationController
         holidays: \
         ip.holidays.where('CURRENT_DATE <= end_date').order(:end_date),
         total_borrowable: \
-          @model.total_borrowable_items_for_user(
+          @model.total_borrowable_items_for_user_and_pool(
             current_user,
             ip,
             ensure_non_negative_general: true

@@ -53,7 +53,7 @@ class Template < ModelGroup
       q = quantity || model_links.detect { |l| l.model_id == model.id }.quantity
       not inventory_pools.any? do |ip|
         if user
-          model.total_borrowable_items_for_user(user, ip) >= q
+          model.total_borrowable_items_for_user_and_pool(user, ip) >= q
         else
           model.borrowable_items.where(inventory_pool_id: ip).count >= q
         end

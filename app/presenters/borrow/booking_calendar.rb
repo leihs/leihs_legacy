@@ -16,9 +16,11 @@ class Borrow::BookingCalendar < ApplicationPresenter
     @changes = @availability.changes.to_a.sort_by(&:first)
     @init_date = @start_date - 1.day
     @total_borrowable_quantity = \
-      @model.total_borrowable_items_for_user(@user,
-                                             @inventory_pool,
-                                             ensure_non_negative_general: true)
+      @model.total_borrowable_items_for_user_and_pool(
+        @user,
+        @inventory_pool,
+        ensure_non_negative_general: true
+      )
     @availabilities_per_day = availabilities_per_day
     @total_borrowable_quantities_per_day = total_borrowable_quantities_per_day
     @visits_per_day = visits_per_day

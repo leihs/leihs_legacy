@@ -1,6 +1,6 @@
 :ruby
   unaccomplishable = @unaccomplishable_models.include?(line.model)
-  max_in_pools = @template.inventory_pools.map {|ip| line.model.total_borrowable_items_for_user(current_user, ip) }.concat([0]).max
+  max_in_pools = @template.inventory_pools.map {|ip| line.model.total_borrowable_items_for_user_and_pool(current_user, ip) }.concat([0]).max
   max_quantity = [max_in_pools, line.model.total_borrowable_items_for_user(current_user), 0].max
   initial_quantity = unaccomplishable ? max_quantity : line.quantity
 

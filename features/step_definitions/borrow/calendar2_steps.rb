@@ -43,7 +43,7 @@ When(/^I try to add a model to the order that is not available$/) do
   inventory_pool = @current_user.inventory_pools.detect do |ip|
     @model = @current_user.models.borrowable.detect do |m|
       m.availability_in(ip).maximum_available_in_period_summed_for_groups(start_date, end_date, @current_user.entitlement_group_ids) < @quantity and
-      m.total_borrowable_items_for_user(@current_user, ip) >= @quantity
+      m.total_borrowable_items_for_user_and_pool(@current_user, ip) >= @quantity
     end
   end
   visit borrow_model_path(@model)
@@ -148,13 +148,13 @@ end
 Then(/^all inventory pools are shown that have items of this model$/) do
   within '.modal #booking-calendar-inventory-pool' do
     ips = @current_user.inventory_pools.select do |ip|
-      @model.total_borrowable_items_for_user(@current_user, ip)
+      @model.total_borrowable_items_for_user_and_pool(@current_user, ip)
     end
 
     ips_in_dropdown = all('option').map(&:text)
 
     ips.each do |ip|
-      ips_in_dropdown.include?(ip.name + " (#{@model.total_borrowable_items_for_user(@current_user, ip)})")
+      ips_in_dropdown.include?(ip.name + " (#{@model.total_borrowable_items_for_user_and_pool(@current_user, ip)})")
     end
   end
 end
@@ -316,7 +316,7 @@ Then(/^the availability for that model is updated$/) do
 end
 
 Then(/^only those inventory pools are selectable that have capacities for the chosen model$/) do
-  @inventory_pools = @model.inventory_pools.reject {|ip| @model.total_borrowable_items_for_user(@current_user, ip) <= 0 }
+  @inventory_pools = @model.inventory_pools.reject {|ip| @model.total_borrowable_items_for_user_and_pool(@current_user, ip) <= 0 }
   within '.modal #booking-calendar-inventory-pool' do
     all('option').each do |option|
       expect(@inventory_pools.include?(InventoryPool.find(option['data-id']))).to be true
@@ -336,7 +336,7 @@ Then(/^the maximum available quantity of the chosen model is displayed$/) do
   within '.modal #booking-calendar-inventory-pool' do
     all('option').each do |option|
       inventory_pool = InventoryPool.find(option['data-id'])
-      expect(option.text[/#{@model.total_borrowable_items_for_user(@current_user, inventory_pool)}/]).to be
+      expect(option.text[/#{@model.total_borrowable_items_for_user_and_pool(@current_user, inventory_pool)}/]).to be
     end
   end
 end
@@ -346,7 +346,7 @@ Then(/^I enter a higher quantity than the total borrowable for the selected pool
   within '.modal #booking-calendar-inventory-pool' do
     expect(has_selector?('option')).to be true
     inventory_pool = InventoryPool.find(all('option').detect{|o| o.selected?}['data-id'])
-    max_quantity = @model.total_borrowable_items_for_user(@current_user, inventory_pool)
+    max_quantity = @model.total_borrowable_items_for_user_and_pool(@current_user, inventory_pool)
   end
   find('#booking-calendar-quantity').set (max_quantity + 1).to_s
   expect(find('#booking-calendar-quantity').value).to eq (max_quantity + 1).to_s
