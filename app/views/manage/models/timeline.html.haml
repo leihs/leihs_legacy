@@ -4,6 +4,7 @@
   %head
     %title= "#{current_inventory_pool ? "#{current_inventory_pool.shortname || current_inventory_pool.name} | " : ""}#{_('Timeline')}#{" | "}leihs"
     = render :partial => "layouts/head"
+    = stylesheet_link_tag "manage", :media => "all"
     = javascript_include_tag "manage"
     = render :partial => "manage/global_javascript_injection"
     = render partial: "layouts/custom_head_tag"
