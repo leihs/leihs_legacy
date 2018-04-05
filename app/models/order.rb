@@ -12,11 +12,6 @@ class Order < ApplicationRecord
   has_many :items, -> { reorder(nil).distinct }, through: :item_lines
   has_many :options, -> { reorder(nil).distinct }, through: :option_lines
 
-  after_create do
-    send_submitted_notification
-    send_received_notification
-  end
-
   class << self
     def submitted
       where(state: :submitted)

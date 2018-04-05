@@ -47,6 +47,10 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
             end
             reservation.save!
           end
+
+          order.reload
+          order.send_submitted_notification
+          order.send_received_notification
         end
         flash[:notice] = _('Your order has been successfully submitted, ' \
                            'but is NOT YET APPROVED.')
