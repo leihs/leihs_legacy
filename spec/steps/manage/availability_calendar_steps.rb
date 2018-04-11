@@ -84,21 +84,21 @@ module Manage
         @order_line ||= find('#lines .order-line', text: @model.product)
         within(@order_line.find('.multibutton')) do
            find('.dropdown-holder').click
-           find('[data-open-time-line]').click
-        end
-        within('.modal.in') do
-          within_frame 'timeline' do
-            find(
-              "div[title='Entitlement Info #{@group.id}']",
-              text: "#{av} reserviert für Gruppe #{@group.name}"\
-                    ', davon zugewiesen'
-            )
-            expect(
-              find("div[title='Entitlement #{@group.id}']")
-                .text.start_with?(as)
-            ).to eq(true)
-          end
-          click_on _('Close')
+
+           new_window =  window_opened_by { find('[data-open-time-line]').click }
+           within_window new_window do
+             find('div.row > div > div > div', text: 'Total')
+             find(
+               "div[title='Entitlement Info #{@group.id}']",
+               text: "#{av} reserviert für Gruppe #{@group.name}"\
+                     ', davon zugewiesen'
+             )
+             expect(
+               find("div[title='Entitlement #{@group.id}']")
+                 .text.start_with?(as)
+             ).to eq(true)
+             new_window.close
+           end
         end
       end
 

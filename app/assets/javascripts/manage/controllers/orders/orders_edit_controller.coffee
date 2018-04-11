@@ -14,6 +14,7 @@ class window.App.OrdersEditController extends Spine.Controller
     "click [data-destroy-line]": "validateLineDeletion"
     "click [data-destroy-lines]": "validateLineDeletion"
     "click [data-destroy-selected-lines]": "validateLineDeletion"
+    "click [data-open-time-line]": "showTimeline"
 
   constructor: ->
     super
@@ -21,7 +22,6 @@ class window.App.OrdersEditController extends Spine.Controller
     do @fetchAvailability
     do @setupAddLine
     new App.SwapModelController {el: @el, user: @order.user()}
-    new App.TimeLineController {el: @el}
     new App.OrdersApproveController {el: @el, done: @orderApproved}
     new App.OrdersRejectController {el: @el, async: false}
     new App.ReservationsDestroyController {el: @el, callback: => @render(true) }
@@ -32,6 +32,15 @@ class window.App.OrdersEditController extends Spine.Controller
     super
     App.Reservation.on "change destroy", @fetchAvailability
     App.Order.on "refresh", @fetchAvailability
+
+  showTimeline: (e)->
+    trigger = $ e.currentTarget
+    id = trigger.data "model-id"
+    model = ( App.Model.exists(id) or App.Software.find(id) )
+    window.open(
+      model.url() + '/timeline',
+      '_blank'
+    )
 
   setupAddLine: =>
     that = @

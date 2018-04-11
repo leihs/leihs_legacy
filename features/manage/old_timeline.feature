@@ -4,7 +4,7 @@ Feature: Model availability Timeline
   Scenario: Where is visible the timeline
     Given I am Mike
     When I open a contract for acknowledgement
-    Then for each visible model I can see the Timeline
+    Then for each visible model I can see the Timeline in new window
     When I open a hand over
     Then for each visible model I can see the Timeline
     When I open a take back
@@ -17,7 +17,7 @@ Feature: Model availability Timeline
   Scenario: open timeline in pending orders as group-manager
     Given I am Andi
     When I open a contract for acknowledgement
-    Then for each visible model I can see the Timeline
+    Then for each visible model I can see the Timeline in new window
 
   Scenario: open timeline in hand-over as group-manager
     Given I am Andi
