@@ -99,7 +99,7 @@
             label: 'Allocations',
             mandatory: false,
             specific: {
-              placeholder: 'Group',
+              placeholder: _jed('Group'),
               search: (term, callback) => {
                 this.getAjax(
                   '/manage/' + this.props.inventory_pool_id + '/groups?search_term=' + term,
@@ -157,7 +157,7 @@
             label: 'Categories',
             mandatory: false,
             specific: {
-              placeholder: 'Category',
+              placeholder: _jed('Category'),
               search: (term, callback) => {
                 this.getAjax(
                   '/manage/' + this.props.inventory_pool_id + '/categories?search_term=' + term,
@@ -224,7 +224,7 @@
             label: 'Compatibles',
             mandatory: false,
             specific: {
-              placeholder: 'Model',
+              placeholder: _jed('Model'),
               search: (term, callback) => {
                 this.getAjax(
                   '/manage/' + this.props.inventory_pool_id + '/models?search_term=' + term,
@@ -535,13 +535,13 @@
         <div className='margin-top-l padding-horizontal-m'>
           <div className='row'>
             <div className='col1of2'>
-              <h1 className='headline-l'>Create new model</h1>
-              <h2 className='headline-s light'>Insert all required information</h2>
+              <h1 className='headline-l'>{_jed('Create new model')}</h1>
+              <h2 className='headline-s light'>{_jed('Insert all required information')}</h2>
             </div>
             <div className='col1of2 text-align-right'>
-              <a className='button grey' href='javascript:history.back()'>Cancel</a>
+              <a className='button grey' href='javascript:history.back()'>{_jed('Cancel')}</a>
               <button onClick={(e) => this.onClickSaveModel(e)} className='button green' id='save'>
-                Save Model
+                {_jed('Save %s', _jed('Model'))}
               </button>
             </div>
           </div>
@@ -757,7 +757,7 @@
         <div className='row'>
           <div className='col1of3'></div>
           <div className='col2of3'>
-            <button onClick={(e) => onClick(e)} className='button inset width-full' data-type='select'>Select Image</button>
+            <button onClick={(e) => onClick(e)} className='button inset width-full' data-type='select'>{_jed('Select Image')}</button>
             <input ref={(ref) => this.fileChooser[field.key] = ref} onChange={(e) => onFileChange(e)} autoComplete='false' className='invisible height-full width-full position-absolute-topleft' type='file' />
           </div>
         </div>
@@ -817,7 +817,7 @@
         <div className='row'>
           <div className='col1of3'></div>
           <div className='col2of3'>
-            <button onClick={(e) => onClick(e)} className='button inset width-full' data-type='select'>Select File</button>
+            <button onClick={(e) => onClick(e)} className='button inset width-full' data-type='select'>{_jed('Select File')}</button>
             <input ref={(ref) => this.fileChooser[field.key] = ref} onChange={(e) => onFileChange(e)} autoComplete='false' className='invisible height-full width-full position-absolute-topleft' type='file' />
           </div>
         </div>
@@ -849,7 +849,7 @@
 
       return (
         <div className='text-align-right'>
-          <button onClick={(e) => onClick(e)} className='button inset' id='add-property' type='button'>Add Property</button>
+          <button onClick={(e) => onClick(e)} className='button inset' id='add-property' type='button'>{_jed('Add %s', _jed('Property'))}</button>
         </div>
       )
 
@@ -905,7 +905,7 @@
       return (
         <div className='row text-align-right'>
           <div className='col4of5'>
-            <input value={field.state.text} onChange={(e) => onChange(e)} autoComplete='off' className='width-full' id='accessory-name' placeholder='Name' type='text' />
+            <input value={field.state.text} onChange={(e) => onChange(e)} autoComplete='off' className='width-full' id='accessory-name' placeholder={_jed('Name')} type='text' />
           </div>
           <div className='col1of5'>
             <button onClick={(e) => onClick(e)} className='button inset' id='add-accessory'>
@@ -1059,11 +1059,11 @@
             var renderButton = () => {
               if(property.delete) {
                 return (
-                  <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' title='Undo'>Undo</button>
+                  <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' title={_jed('Undo')}>{_jed('Undo')}</button>
                 )
               } else {
                 return (
-                  <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' title='Entfernen'>Remove</button>
+                  <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' title={_jed('Remove')}>{_jed('Remove')}</button>
                 )
               }
             }
@@ -1131,7 +1131,7 @@
                   {image.filename}
                 </div>
                 <div className='line-col col3of10 text-align-right'>
-                  <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' type='button'>Entfernen</button>
+                  <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' type='button'>{_jed('Remove')}</button>
                 </div>
               </div>
 
@@ -1181,7 +1181,7 @@
                   {attachment.filename}
                 </div>
                 <div className='line-col col3of10 text-align-right'>
-                  <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' type='button'>Entfernen</button>
+                  <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' type='button'>{_jed('Remove')}</button>
                 </div>
               </div>
 
@@ -1244,7 +1244,7 @@
                   {a.label}
                 </div>
                 <div className='line-col col3of10 text-align-right'>
-                  <button onClick={(e) => onClick(e)} className='button small inset' data-remove=''>Entfernen</button>
+                  <button onClick={(e) => onClick(e)} className='button small inset' data-remove=''>{_jed('Remove')}</button>
                 </div>
               </div>
             )
@@ -1303,7 +1303,7 @@
                   </div>
                   <div className='line-col col1of5 text-align-right'>
                     <button onClick={(e) => onRemove(e)} className='button small inset'>
-                      Entfernen
+                      {_jed('Remove')}
                     </button>
                   </div>
                 </div>
@@ -1317,7 +1317,7 @@
                   </div>
                   <div className='line-col col1of3 text-align-right'>
                     <button onClick={(e) => onRemove(e)} className='button small inset' data-remove=''>
-                      Entfernen
+                      {_jed('Remove')}
                     </button>
                   </div>
                 </div>
@@ -1337,7 +1337,7 @@
 
     renderField(f) {
 
-      var renderLabel = () => f.label
+      var renderLabel = () => _jed(f.label)
       var renderMandatory = () => (f.mandatory ? ' *' : null)
 
       return (
