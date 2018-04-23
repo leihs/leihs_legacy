@@ -55,7 +55,7 @@
       return (
 
         <div key={selectedValue.field.id} id={selectedValue.field.id}>
-          <div className='white field row emboss padding-inset-xs margin-vertical-xxs margin-right-xs' data-editable='true' data-id='properties_ankunftsdatum' data-required='' data-type='field'>
+          <div className='white field row emboss padding-inset-xs margin-vertical-xxs margin-right-xs' data-editable='true' data-id={selectedValue.field.id} data-required={(selectedValue.field.required ? 'true' : null)} data-type={selectedValue.field.type}>
             <div className='row'>
               <div className='col1of2 padding-vertical-xs' data-type='key'>
 
@@ -68,7 +68,7 @@
               </div>
 
               {
-                FieldSwitch._inputByType(
+                this.props.fieldSwitch._inputByType(
                   selectedValue,
                   (value) => this.props._onChangeSelectedValue(selectedValue.field.id, value),
                   dependencyValue
@@ -134,7 +134,7 @@
 
 
       return (
-        <div className='row margin-top-l padding-inset-m separated-bottom' style={{borderBottom: '0px'}}>
+        <div id={this.props.divId} className='row margin-top-l padding-inset-m separated-bottom' style={{borderBottom: '0px'}}>
           <div className='row'>
             <ExpertFieldSelection
               _onSelect={this.props.onSelect}

@@ -1,0 +1,8 @@
+-content_for :title, _("Inventory Helper")
+-content_for :inventory_section, "active"
+
+#inventory-helper-view.wrapper.margin-top-m
+
+  = render :partial => 'manage/tabs/inventory', :locals => {:active_tab => :helper}
+
+  = react_component('InventoryHelper', @props)

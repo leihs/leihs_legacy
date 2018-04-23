@@ -127,14 +127,27 @@
       if(index == this.state.keyIndex) {
         className += ' ui-state-focus'
       }
+
+      var liARenderer = null
+      if(this.props.liARenderer) {
+        liARenderer = this.props.liARenderer
+      } else {
+        liARenderer = (row) => {
+          return (
+            <a>
+              <div className='row text-ellipsis' style={{width: '500px'}}>
+                {row.label}
+              </div>
+            </a>
+          )
+        }
+      }
+
+
       return (
 
         <li key={row.id} className={className} tabIndex='-1' onMouseDown={(event) => this._onSelect(event, row)}>
-          <a>
-            <div className='row text-ellipsis' style={{width: '500px'}}>
-              {row.label}
-            </div>
-          </a>
+          {liARenderer(row)}
         </li>
       )
 
@@ -205,7 +218,7 @@
       var Element = this.props.element
 
       return (
-        <Element className='row'>
+        <Element className='row' style={this.props.wrapperStyle}>
           <input
             autoComplete='off'
             className={this.props.inputClassName}

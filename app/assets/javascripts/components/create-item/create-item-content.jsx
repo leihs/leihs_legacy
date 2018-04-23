@@ -249,13 +249,43 @@
 
     render () {
 
+      var createItemProps = this.props.createItemProps
+
+      var fieldRenderer = (fieldModel, fieldModels, onChange, showInvalids, onClose, dependencyValue, dataDependency) => {
+
+        var item = createItemProps.item
+        var inventoryCodeProps = {
+          next_code: createItemProps.next_code,
+          lowest_code: createItemProps.lowest_code,
+          highest_code: createItemProps.highest_code,
+        }
+
+        return (
+          CreateItemFieldSwitch.renderField(
+            fieldModel,
+            dependencyValue,
+            dataDependency,
+            (value) => onChange(fieldModel.field.id, value),
+            item,
+            inventoryCodeProps,
+            showInvalids,
+            onClose,
+            true
+          )
+        )
+
+
+
+      }
+
+
       return (
         <div className='padding-horizontal-m'>
           {this._renderNotifications()}
           <form id='form'>
             <input disabled='disabled' name='copy' type='hidden' />
-            {RenderCreateItem._renderColumns(this.props.fields, this.props.fieldModels, this.props.createItemProps,
-              this.props.onChange, this.props.showInvalids, this.props.onClose)}
+            {RenderCreateItem._renderColumns(this.props.fields, this.props.fieldModels,
+              this.props.onChange, this.props.showInvalids, this.props.onClose, fieldRenderer)}
           </form>
           {this._renderSoftwareDetail()}
         </div>

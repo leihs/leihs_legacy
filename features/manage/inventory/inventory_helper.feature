@@ -4,7 +4,6 @@ Feature: Inventory helper
   Background:
     Given I am Matti
 
-  @rack
   Scenario: Wie man den Helferschirm erreicht
     When I open the inventory
     Then I see a tab where I can change to the inventory helper

@@ -11,7 +11,7 @@
 
       - if lending_manager?
         %li
-          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_inventory_helper_path(current_inventory_pool),
+          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_inventory_helper_react_path(current_inventory_pool),
           :class => (defined? active_tab and active_tab == :helper) ? "active" : ""}
             = _("Helper")
 

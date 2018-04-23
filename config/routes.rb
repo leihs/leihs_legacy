@@ -217,6 +217,7 @@ Rails.application.routes.draw do
       get 'inventory/csv_import',       :to => "inventory#csv_import"
       post 'inventory/csv_import',      :to => "inventory#csv_import"
       get 'inventory/helper',           :to => "inventory#helper",      :as => "inventory_helper"
+      get 'inventory/helper_react',           :to => "inventory#helper_react",      :as => "inventory_helper_react"
       get 'inventory/expert',         :to => "inventory#expert",      :as => "inventory_expert"
       get 'inventory/:inventory_code',  :to => "inventory#show"
 

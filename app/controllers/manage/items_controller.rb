@@ -307,7 +307,13 @@ class Manage::ItemsController < Manage::ApplicationController
   def check_fields_for_write_permissions
     Field.all.each do |field|
       next unless field.data['permissions']
-      next unless field.get_value_from_params item_params
+      # TODO: Should be fixed by checking if item_params contains the keys
+      # We got problems because retired for example could be false as a valid
+      # value. So without being the owner you could set the value for retired
+      # to false. Thats why we fixed with nil comparision, which is however
+      # just a quick fix.
+      # next unless field.get_value_from_params item_params
+      next if field.get_value_from_params(item_params).nil?
       next if field.editable(current_user, current_inventory_pool, @item)
       @item
         .errors

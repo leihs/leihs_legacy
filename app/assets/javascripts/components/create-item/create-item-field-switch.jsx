@@ -400,13 +400,14 @@ window.CreateItemFieldSwitch = {
 
     } else if(type == 'autocomplete') {
 
-      var value = _.find(selectedValue.field.values, (value) => {
-        return value.value == selectedValue.value.id
-      })
+      var value = selectedValue.value
+      // _.find(selectedValue.field.values, (value) => {
+      //   return value.value == selectedValue.value.id
+      // })
 
       var label = ''
       if(value) {
-        label = _jed(value.label)
+        label = value.text
       } else {
         // debugger
       }
@@ -418,6 +419,24 @@ window.CreateItemFieldSwitch = {
           </div>
         </div>
       )
+
+    } else if(type == 'autocomplete-search') {
+
+      var value = selectedValue.value
+
+      var label = ''
+      if(value) {
+        label = value.text
+      }
+
+      return (
+        <div className='col1of2' data-type='value'>
+          <div className='padding-vertical-xs font-size-m' data-value='invoice'>
+            <span>{label}</span>
+          </div>
+        </div>
+      )
+
 
     } else {
       throw 'Not implemented for: ' + type
@@ -530,7 +549,7 @@ window.CreateItemFieldSwitch = {
     }
   },
 
-  _renderOutputField(selectedValue, dependencyValue, dataDependency, onChange, createItemProps, showInvalids, onClose) {
+  _renderOutputField(selectedValue, dependencyValue, dataDependency, onChange, showInvalids, onClose, config) {
 
     if(selectedValue.field.type == 'attachment') {
 
@@ -542,7 +561,7 @@ window.CreateItemFieldSwitch = {
       return (
         <div className={fieldClass} data-editable='true' data-id='attachments' data-required={this._requiredString(selectedValue)} data-type='field'>
           <div className='row'>
-            {RenderFieldLabel._renderFieldLabel(selectedValue.field, onClose)}
+            {RenderFieldLabel._renderFieldLabel(selectedValue.field, onClose, config.showClose)}
             <div className='col1of2' data-type='value'>
               <div className='padding-vertical-xs font-size-m'></div>
             </div>
@@ -561,12 +580,15 @@ window.CreateItemFieldSwitch = {
       if(selectedValue.hidden) {
         fieldClass += ' hidden'
       }
+      if(config && config.additionalRowClass) {
+        fieldClass += ' ' + config.additionalRowClass
+      }
 
       return (
 
         <div className={fieldClass} data-editable='false' data-id={selectedValue.field.id} data-required={this._requiredString(selectedValue)} data-type='field'>
           <div className='row'>
-            {RenderFieldLabel._renderFieldLabel(selectedValue.field, onClose)}
+            {RenderFieldLabel._renderFieldLabel(selectedValue.field, onClose, config.showClose)}
             {this._outputByType(selectedValue)}
           </div>
         </div>
@@ -578,28 +600,28 @@ window.CreateItemFieldSwitch = {
   },
 
 
-  _renderInputField(selectedValue, dependencyValue, dataDependency, onChange, createItemProps, showInvalids, onClose) {
+  _renderInputField(selectedValue, dependencyValue, dataDependency, onChange, showInvalids, onClose, config) {
 
     var error = showInvalids && this._isFieldInvalid(selectedValue)
 
     if(selectedValue.field.id == 'properties_quantity_allocations') {
 
       return (
-        <InputQuantityAllocations onClose={onClose} selectedValue={selectedValue} dataDependency={dataDependency} onChange={onChange} createItemProps={createItemProps} error={error} />
+        <InputQuantityAllocations onClose={onClose} selectedValue={selectedValue} dataDependency={dataDependency} onChange={onChange} error={error} />
       )
 
 
     } else if(selectedValue.field.id == 'inventory_code') {
 
       return (
-        <InputInventoryCode onClose={onClose} selectedValue={selectedValue} onChange={onChange} createItemProps={createItemProps} error={error} editMode={createItemProps.edit} />
+        <InputInventoryCode onClose={onClose} selectedValue={selectedValue} onChange={onChange} inventoryCodeProps={null} error={error} editMode={true} />
       )
 
 
     } else if(selectedValue.field.type == 'attachment') {
 
       return (
-        <InputAttachment onClose={onClose} selectedValue={selectedValue} onChange={onChange} error={error} createItemProps={createItemProps} />
+        <InputAttachment onClose={onClose} selectedValue={selectedValue} onChange={onChange} error={error} />
       )
 
     } else {
@@ -611,12 +633,15 @@ window.CreateItemFieldSwitch = {
       if(selectedValue.hidden) {
         fieldClass += ' hidden'
       }
+      if(config && config.additionalRowClass) {
+        fieldClass += ' ' + config.additionalRowClass
+      }
 
       return (
 
         <div className={fieldClass} data-editable='true' data-id={selectedValue.field.id} data-required={this._requiredString(selectedValue)} data-type='field'>
           <div className='row'>
-            {RenderFieldLabel._renderFieldLabel(selectedValue.field, onClose)}
+            {RenderFieldLabel._renderFieldLabel(selectedValue.field, onClose, config.showClose)}
             {this._inputByType(selectedValue, onChange, dependencyValue)}
           </div>
         </div>
@@ -629,18 +654,37 @@ window.CreateItemFieldSwitch = {
 
   },
 
-  renderField (selectedValue, dependencyValue, dataDependency, onChange, createItemProps, showInvalids, onClose) {
+  renderField (selectedValue, dependencyValue, dataDependency, onChange, item, inventoryCodeProps, showInvalids, onClose, showClose) {
 
-    var isEditable = !createItemProps.item || createItemProps.item && this._isFieldEditable(selectedValue.field, createItemProps.item)
+    var isEditable = !item || item && this._isFieldEditable(selectedValue.field, item)
 
 
     if(isEditable) {
 
-      return this._renderInputField(selectedValue, dependencyValue, dataDependency, onChange, createItemProps, showInvalids, onClose)
+
+      if(selectedValue.field.id == 'inventory_code' && !item) {
+
+        var error = showInvalids && this._isFieldInvalid(selectedValue)
+        return (
+          <InputInventoryCode onClose={onClose} selectedValue={selectedValue}
+            onChange={onChange} inventoryCodeProps={inventoryCodeProps}
+            error={error} editMode={false}
+          />
+        )
+
+      }
+
+
+      else {
+
+        return this._renderInputField(selectedValue, dependencyValue, dataDependency, onChange, showInvalids, onClose, {showClose: showClose})
+
+      }
+
 
     } else {
 
-      return this._renderOutputField(selectedValue, dependencyValue, dataDependency, onChange, createItemProps, showInvalids, onClose)
+      return this._renderOutputField(selectedValue, dependencyValue, dataDependency, onChange, showInvalids, onClose, {showClose: showClose})
     }
 
 

@@ -1052,6 +1052,9 @@ msgstr ""
 msgid "Please provide an inventory code"
 msgstr ""
 
+msgid "Please select some fields."
+msgstr ""
+
 msgid "Please specify the purpose of your order here..."
 msgstr ""
 
@@ -3422,4 +3425,25 @@ msgid "Start and end date cannot be in the past"
 msgstr ""
 
 msgid "click here to reload"
+msgstr ""
+
+msgid "Item was not saved"
+msgstr ""
+
+msgid "Item was saved."
+msgstr ""
+
+msgid "Please select an item."
+msgstr ""
+
+msgid "Unexpected error."
+msgstr ""
+
+msgid "use barcode scanner to assign fields to item immediately"
+msgstr ""
+
+msgid "or search for item"
+msgstr ""
+
+msgid "and assign fields"
 msgstr ""

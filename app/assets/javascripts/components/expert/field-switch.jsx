@@ -2,10 +2,10 @@ window.FieldSwitch = {
 
 
 
-  _hasValue(selectedValue) {
+  _hasValue(selectedValue, queryMode) {
     switch(selectedValue.field.type) {
       case 'text':
-        if(selectedValue.field.currency) {
+        if(selectedValue.field.currency && queryMode) {
           return (selectedValue.value.from.trim().length > 0 && selectedValue.value.to.trim().length > 0)
         } else {
           return selectedValue.value.text.trim().length > 0
@@ -27,17 +27,21 @@ window.FieldSwitch = {
         return true
         break
       case 'date':
-        return selectedValue.value.from.trim().length > 0 && selectedValue.value.to.trim().length > 0
+        if(queryMode) {
+          return selectedValue.value.from.trim().length > 0 && selectedValue.value.to.trim().length > 0
+        } else {
+          return selectedValue.value.at.trim().length > 0
+        }
         break
       default:
         throw 'Unexpected type: ' + field.type
     }
   },
 
-  _createEmptyValue (field) {
+  _createEmptyValue (field, queryMode) {
     switch(field.type) {
       case 'text':
-        if(field.currency) {
+        if(field.currency && queryMode) {
           return {from: '', to: ''}
         } else {
           return {text: ''}
@@ -67,17 +71,21 @@ window.FieldSwitch = {
         return {selection: field.default}
         break
       case 'date':
-        return {from: '', to: ''}
+        if(queryMode) {
+          return {from: '', to: ''}
+        } else {
+          return {at: ''}
+        }
         break
       default:
         throw 'Unexpected type: ' + field.type
     }
   },
 
-  _isDependencyValue(selectedValue, fieldDependencyValue) {
+  _isDependencyValue(selectedValue, fieldDependencyValue, queryMode) {
     switch(selectedValue.field.type) {
       case 'text':
-        if(selectedValue.field.currency) {
+        if(selectedValue.field.currency && queryMode) {
           throw 'Not implemented yet.'
         } else {
           return selectedValue.value.text == fieldDependencyValue
@@ -106,10 +114,10 @@ window.FieldSwitch = {
     }
   },
 
-  _inputByType (selectedValue, onChangeSelectedValue, dependencyValue) {
+  _inputByType (selectedValue, onChangeSelectedValue, dependencyValue, queryMode) {
     switch(selectedValue.field.type) {
       case 'text':
-        if(selectedValue.field.currency) {
+        if(selectedValue.field.currency && queryMode) {
           return <InputCurrency selectedValue={selectedValue} onChange={onChangeSelectedValue} />
         } else {
           return <InputText selectedValue={selectedValue} onChange={onChangeSelectedValue} />
@@ -131,7 +139,11 @@ window.FieldSwitch = {
         return <InputRadio selectedValue={selectedValue} onChange={onChangeSelectedValue} />
         break
       case 'date':
-        return <InputDateRange selectedValue={selectedValue} onChange={onChangeSelectedValue} />
+        if(queryMode) {
+          return <InputDateRange selectedValue={selectedValue} onChange={onChangeSelectedValue} />
+        } else {
+          return <InputDate selectedValue={selectedValue} onChange={onChangeSelectedValue} />
+        }
         break
       default:
         throw 'Unexpected type: ' + selectedValue.field.type

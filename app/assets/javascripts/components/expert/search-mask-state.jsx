@@ -76,7 +76,7 @@
       var selectedValues = l.cloneDeep(this.props.selectedValues);
       selectedValues.push({
         field: field,
-        value: FieldSwitch._createEmptyValue(field),
+        value: this.props.fieldSwitch._createEmptyValue(field),
         col: this._determineLeftOrRight(),
         dependents: []
       })
@@ -88,9 +88,9 @@
     _fireSelectedValuesChanged(selectedValues) {
 
       EnsureDependents._ensureDependents(selectedValues, this.props.fields, {
-        _hasValidValue: FieldSwitch._hasValue,
-        _createEmptyValue: FieldSwitch._createEmptyValue,
-        _isDependencyValue: FieldSwitch._isDependencyValue
+        _hasValidValue: this.props.fieldSwitch._hasValue,
+        _createEmptyValue: this.props.fieldSwitch._createEmptyValue,
+        _isDependencyValue: this.props.fieldSwitch._isDependencyValue
       })
       this.props.selectedValuesChanged(selectedValues)
 
@@ -104,6 +104,8 @@
           selectedValues={this.props.selectedValues} preventSubmit={this._preventSubmit}
           _onDeselect={this._onDeselect}
           _onChangeSelectedValue={this._onChangeSelectedValue}
+          fieldSwitch={this.props.fieldSwitch}
+          divId={this.props.divId}
         />
       )
 

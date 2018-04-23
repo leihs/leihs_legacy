@@ -1074,6 +1074,9 @@ msgstr "Bitte füllen Sie alle Pflichtfelder aus"
 msgid "Please provide an inventory code"
 msgstr "Bitte Inventarcode angeben"
 
+msgid "Please select some fields."
+msgstr "Bitte Felder selektieren."
+
 msgid "Please specify the purpose of your order here..."
 msgstr "Bitte geben Sie den Zweck Ihrer Bestellung hier an..."
 
@@ -3566,3 +3569,24 @@ msgstr "klicke hier um neu zu laden"
 
 msgid "Does not have any reservable items"
 msgstr "Hat keine reservierbaren Gegenstände"
+
+msgid "Item was not saved"
+msgstr "Gegenstand wurde nicht gespeichert"
+
+msgid "Item was saved."
+msgstr "Gegenstand wurde gespeichert."
+
+msgid "Please select an item."
+msgstr "Bitte Gegenstand selektieren."
+
+msgid "Unexpected error."
+msgstr "Unerwarteter Fehler."
+
+msgid "use barcode scanner to assign fields to item immediately"
+msgstr "benütze Barcode Scanner um die Felder sofort zuzuweisen"
+
+msgid "or search for item"
+msgstr "oder suche nach Gegenstand"
+
+msgid "and assign fields"
+msgstr "und weise Felder zu"

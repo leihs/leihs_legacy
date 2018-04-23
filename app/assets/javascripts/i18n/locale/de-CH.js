@@ -1457,6 +1457,10 @@ window.i18n.locale_data = {
          null,
          "Bitte Inventarcode angeben"
       ],
+      "Please select some fields.": [
+         null,
+         "Bitte Felder selektieren."
+      ],
       "Please specify the purpose of your order here...": [
          null,
          "Bitte geben Sie den Zweck Ihrer Bestellung hier an..."
@@ -4617,6 +4621,34 @@ window.i18n.locale_data = {
       "Does not have any reservable items": [
          null,
          "Hat keine reservierbaren Gegenstände"
+      ],
+      "Item was not saved": [
+         null,
+         "Gegenstand wurde nicht gespeichert"
+      ],
+      "Item was saved.": [
+         null,
+         "Gegenstand wurde gespeichert."
+      ],
+      "Please select an item.": [
+         null,
+         "Bitte Gegenstand selektieren."
+      ],
+      "Unexpected error.": [
+         null,
+         "Unerwarteter Fehler."
+      ],
+      "use barcode scanner to assign fields to item immediately": [
+         null,
+         "benütze Barcode Scanner um die Felder sofort zuzuweisen"
+      ],
+      "or search for item": [
+         null,
+         "oder suche nach Gegenstand"
+      ],
+      "and assign fields": [
+         null,
+         "und weise Felder zu"
       ]
    }
 }

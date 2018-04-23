@@ -102,6 +102,8 @@
           _onTerm={this._onTerm}
           _onSelect={this._onSelect}
           name={this.props.name}
+          wrapperStyle={this.props.wrapperStyle}
+          liARenderer={this.props.liARenderer}
         />
       )
     }

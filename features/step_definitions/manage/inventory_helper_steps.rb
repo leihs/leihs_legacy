@@ -6,7 +6,8 @@ Then(/^I see a tab where I can change to the inventory helper$/) do
 end
 
 Then /^I choose all fields through a list or by name$/ do
-  i = find('#inventory-helper-view #field-input')
+  i = find('#inventory-helper-view').find('#search-mask').find('#field-input')
+  # i = find('#inventory-helper-view #field-input')
   while(i.click and page.has_selector?('.ui-menu-item a', visible: true)) do
     find('.ui-menu-item a', match: :first, visible: true).click
   end
@@ -43,19 +44,18 @@ Then /^I set all their initial values$/ do
           @data[field.id] = i.value
         end
       when 'date'
-        dp = field_el.find("[data-type='datepicker']")
+        dp = find(".field[data-id='#{field.id}'][data-type='date']").find('input')
         ori_value = dp.value
         dp.set ''
         dp.set ori_value
         within '.ui-datepicker-calendar' do
-          find('.ui-state-highlight, .ui-state-active', visible: true, match: :first).click
+          find('td a', text: Date.today.day.to_s).click
         end
         @data[field.id] = dp.value
       when 'autocomplete'
-        target_name = find(".field[data-id='#{field.id}'] [data-type='autocomplete']")['data-autocomplete_value_target']
-        find(".field[data-id='#{field.id}'] [data-type='autocomplete'][data-autocomplete_value_target='#{target_name}']").click
+        find(".field[data-id='#{field.id}']").find('input').click
               find('.ui-menu-item a', match: :first).click
-        @data[field.id] = find(".field[data-id='#{field.id}'] [data-type='autocomplete']")
+        @data[field.id] = find(".field[data-id='#{field.id}'][data-type='autocomplete']")
       when 'autocomplete-search'
         model = if @item and @item.children.exists? # item is a package
                   Model.all.find &:is_package?
@@ -84,7 +84,7 @@ Then /^I set all their initial values$/ do
 end
 
 Then /^I set the field "(.*?)" to "(.*?)"$/ do |field_name, value|
-  field = Field.find(find(".row.emboss[data-type='field']", match: :prefer_exact, text: field_name)['data-id'].to_sym)
+  field = Field.find(find(".field.row.emboss", match: :prefer_exact, text: field_name)['data-id'].to_sym)
   within(".field[data-id='#{field.id}']") do
     case field.data['type']
       when 'radio'
@@ -103,7 +103,7 @@ Then /^I scan or enter the inventory code of an item that is in stock and not in
   @item = @current_inventory_pool.items.in_stock.first
   within('#item-selection') do
     find('[data-barcode-scanner-target]').set @item.inventory_code
-    find('button[type=submit]').click
+    find('button[type=submit]', visible: false).click
   end
 end
 
@@ -116,7 +116,7 @@ Then /^I scan or enter the inventory code( of an item belonging to the current i
             end.in_stock.first
   within('#item-selection') do
     find('[data-barcode-scanner-target]').set @item.inventory_code
-    find('button[type=submit]').click
+    find('button[type=submit]', visible: false).click
   end
 end
 
@@ -124,7 +124,7 @@ Then /^I see all the values of the item in an overview with model name and the m
   FastGettext.locale = @current_user.language.locale_name.gsub(/-/, '_')
   Field.all.each do |field|
     next if all(".field[data-id='#{field.id}']").empty?
-    within('form#flexible-fields') do
+    within('#flexible-fields') do
       field_el = find(".field[data-id='#{field.id}']")
       value = field.get_value_from_params @item.reload
       field_type = field.data['type']
@@ -168,7 +168,7 @@ Then /^I see all the values of the item in an overview with model name and the m
     end
   end
 
-  find("form#flexible-fields .field[data-id='#{Field.all.detect{|f| f.data['label'] == "Model" }.id}']", text: @item.reload.model.name)
+  find("#flexible-fields .field[data-id='#{Field.all.detect{|f| f.data['label'] == "Model" }.id}']", text: @item.reload.model.name)
 end
 
 Then /^the changed values are highlighted$/ do
@@ -180,11 +180,13 @@ end
 
 Then /^I choose the fields from a list or by name$/ do
   field = Field.all.select{|f| f.data['readonly'] == nil and f.data['type'] != 'autocomplete-search' and f.data['target_type'] != 'license' and not f.data['visibility_dependency_field_id']}.last
-  find('#field-input').click
-  find('#field-input').set _(field.data['label'])
-  find('.ui-menu-item a', match: :first, text: _(field.data['label'])).click
-  within '#field-selection' do
-    @all_editable_fields = all('.field', visible: true)
+  within '#search-mask' do
+    find('#field-input').click
+    find('#field-input').set _(field.data['label'])
+    find('.ui-menu-item a', match: :first, text: _(field.data['label'])).click
+    within '#field-selection' do
+      @all_editable_fields = all('.field', visible: true)
+    end
   end
 end
 
@@ -202,20 +204,20 @@ Then /^I scan or enter the inventory code of an item that can't be found$/ do
   @not_existing_inventory_code = 'THIS FOR SURE NO INVENTORY CODE'
   within('#item-selection') do
     find('[data-barcode-scanner-target]').set @not_existing_inventory_code
-    find('button[type=submit]').click
+    find('button[type=submit]', visible: false).click
   end
 end
 
 Then /^I start entering an item's inventory code$/ do
   @item= @current_inventory_pool.items.first
-  find('#item-selection [data-barcode-scanner-target]').set @item.inventory_code[0..1]
+  find('#item-search-input').set @item.inventory_code[0..1]
 end
 
 
 Then /^I choose the item from the list of results$/ do
   expect(has_selector?('.ui-menu-item')).to be true
-  find('.ui-menu-item a', text: @item.inventory_code)
-  page.execute_script %[ $(".ui-menu-item a:contains('#{@item.inventory_code}')").click() ]
+  find('.ui-menu-item a', text: @item.inventory_code).click
+  find('button', text: 'and assign fields').click
 end
 
 Given /^I edit an item through the inventory helper using an inventory code$/ do
@@ -249,11 +251,13 @@ Then /^the changes are reverted$/ do
 end
 
 Then(/^I select the field "(.*?)"$/) do |field|
-  find('#field-input').click
-  find('#field-input').set field
-  find('.ui-menu-item a', match: :prefer_exact, text: field).click
-  within '#field-selection' do
-    @all_editable_fields = all('.field', visible: true)
+  within '#search-mask' do
+    find('#field-input').click
+    find('#field-input').set field
+    find('.ui-menu-item a', match: :prefer_exact, text: field).click
+    within '#field-selection' do
+      @all_editable_fields = all('.field', visible: true)
+    end
   end
 end
 
@@ -276,11 +280,13 @@ Then(/^the location of the other item has remained the same$/) do
 end
 
 When(/^"(.*?)" is selected and set to "(.*?)", then "(.*?)" must also be filled in$/) do |field, value, dependent_field|
-  find('#field-input').click
-  find('#field-input').set field
-  find('.ui-menu-item a', match: :prefer_exact, text: field).click
-  step 'I set the field "%s" to "%s"' % [field, value]
-  find('.row.emboss', match: :prefer_exact, text: dependent_field)
+  within '#search-mask' do
+    find('#field-input').click
+    find('#field-input').set field
+    find('.ui-menu-item a', match: :prefer_exact, text: field).click
+    step 'I set the field "%s" to "%s"' % [field, value]
+    find('.row.emboss', match: :prefer_exact, text: dependent_field)
+  end
 end
 
 When(/^a required field is blank, the inventory helper cannot be used$/) do

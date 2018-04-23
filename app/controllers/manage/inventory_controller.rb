@@ -93,6 +93,12 @@ class Manage::InventoryController < Manage::ApplicationController
     end
   end
 
+  def helper_react
+    @props = {
+      inventory_pool_id: current_inventory_pool.id
+    }
+  end
+
   def csv_export
     send_data \
       InventoryPool.csv_export(current_inventory_pool, params),

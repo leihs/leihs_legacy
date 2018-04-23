@@ -192,7 +192,7 @@
 
         <div className={fieldClass} data-editable='true' data-id='properties_quantity_allocations' data-required='' data-type='field'>
           <div className='row'>
-            {RenderFieldLabel._renderFieldLabel(selectedValue.field, this.props.onClose)}
+            {RenderFieldLabel._renderFieldLabel(selectedValue.field, this.props.onClose, true)}
 
 
             <div className='col1of2' data-type='value'>

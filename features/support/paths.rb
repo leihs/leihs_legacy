@@ -24,7 +24,7 @@ module NavigationHelpers
       '/admin/settings'
 
     when /^the inventory helper screen$/
-      manage_inventory_helper_path @current_inventory_pool
+      manage_inventory_helper_react_path @current_inventory_pool
 
     when /^the main category list$/
       borrow_root_path

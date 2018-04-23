@@ -71,7 +71,9 @@ class BarcodeScanner
     else # its React…
       $(ReactDOM.findDOMNode(target))
 
-    if not input.closest("[data-prevent-barcode-scanner-submit]").length
+    if input.closest("form").find("[data-barcode-scanner-submit-button]").length
+      input.closest("form").find("[data-barcode-scanner-submit-button]").click()
+    else if not input.closest("[data-prevent-barcode-scanner-submit]").length
       input.closest("form").submit()
 
 window.BarcodeScanner = new BarcodeScanner()

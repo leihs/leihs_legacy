@@ -22,7 +22,7 @@
       this.setState({selected: 'plusOne'})
       var l = window.lodash
       var value = l.cloneDeep(this.props.selectedValue.value)
-      value.text = this.props.createItemProps.next_code
+      value.text = this.props.inventoryCodeProps.next_code
       this.props.onChange(value)
     },
 
@@ -31,7 +31,7 @@
       this.setState({selected: 'fillGap'})
       var l = window.lodash
       var value = l.cloneDeep(this.props.selectedValue.value)
-      value.text = this.props.createItemProps.lowest_code
+      value.text = this.props.inventoryCodeProps.lowest_code
       this.props.onChange(value)
     },
 
@@ -40,7 +40,7 @@
       this.setState({selected: 'maximum'})
       var l = window.lodash
       var value = l.cloneDeep(this.props.selectedValue.value)
-      value.text = this.props.createItemProps.highest_code
+      value.text = this.props.inventoryCodeProps.highest_code
       this.props.onChange(value)
     },
 
@@ -98,7 +98,7 @@
       return (
         <div className={fieldClass} data-editable='true' data-id='inventory_code' data-required='true' data-type='field'>
           <div className='row'>
-            {RenderFieldLabel._renderFieldLabel(selectedValue.field, this.props.onClose)}
+            {RenderFieldLabel._renderFieldLabel(selectedValue.field, this.props.onClose, true)}
             <InputText selectedValue={selectedValue} onChange={this.props.onChange} />
           </div>
           {this._renderButtons()}

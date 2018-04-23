@@ -183,12 +183,29 @@
       )
     },
 
+    _fieldSwitch() {
+      return {
+        _hasValue: (selectedValue) => {
+          return FieldSwitch._hasValue(selectedValue, true)
+        },
+        _createEmptyValue: (field) => {
+          return FieldSwitch._createEmptyValue(field, true)
+        },
+        _isDependencyValue: (selectedValue, fieldDependencyValue) => {
+          return FieldSwitch._isDependencyValue(selectedValue, fieldDependencyValue, true)
+        },
+        _inputByType: (selectedValue, onChangeSelectedValue, dependencyValue) => {
+          return FieldSwitch._inputByType(selectedValue, onChangeSelectedValue, dependencyValue, true)
+        }
+      }
+    },
+
     _searchMask() {
       return (
         <SearchMaskState key='select' fields={this.state.fields}
           selectedValues={this.state.selectedValues}
-          parent={this}
           selectedValuesChanged={this._selectedValuesChanged}
+          fieldSwitch={this._fieldSwitch()}
         />
       )
     },

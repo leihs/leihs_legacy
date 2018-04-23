@@ -44,7 +44,7 @@ window.FieldsDropdownData = {
       (field) => {
         return {
           id: field.id,
-          label: field.label
+          label: _jed(field.label)
         }
       }
     )

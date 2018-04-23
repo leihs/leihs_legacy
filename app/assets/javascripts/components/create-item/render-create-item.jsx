@@ -2,7 +2,7 @@
 window.RenderCreateItem = {
 
 
-  _renderFieldContent(fieldModel, fieldModels, createItemProps, onChange, showInvalids, onClose) {
+  _renderFieldContent(fieldModel, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
 
     var dependencyValue = _.first(_.filter(fieldModels, (other) => {
       return other.field.id == fieldModel.field.values_dependency_field_id
@@ -12,22 +12,13 @@ window.RenderCreateItem = {
       return other.field.id == fieldModel.field.data_dependency_field_id
     }))
 
-    return (
-      CreateItemFieldSwitch.renderField(
-        fieldModel,
-        dependencyValue,
-        dataDependency,
-        (value) => onChange(fieldModel.field.id, value),
-        createItemProps,
-        showInvalids,
-        onClose
-      )
-    )
+    return fieldRenderer(fieldModel, fieldModels, onChange, showInvalids, onClose, dependencyValue, dataDependency)
+
 
   },
 
 
-  _renderDependents(fieldModel, fieldModels, createItemProps, onChange, showInvalids) {
+  _renderDependents(fieldModel, fieldModels, onChange, showInvalids, fieldRenderer) {
 
     if(!fieldModel.dependents) {
       return []
@@ -38,13 +29,13 @@ window.RenderCreateItem = {
     }
 
     return fieldModel.dependents.map((dependent) => {
-      return this._renderField(dependent, fieldModels, createItemProps, onChange, showInvalids)
+      return this._renderField(dependent, fieldModels, onChange, showInvalids, null, fieldRenderer)
 
     })
 
   },
 
-  _renderField(fieldModel, fieldModels, createItemProps, onChange, showInvalids, onClose) {
+  _renderField(fieldModel, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
 
     var _onClose = () => {
       onClose(fieldModel)
@@ -56,26 +47,26 @@ window.RenderCreateItem = {
         {this._renderFieldContent(
           fieldModel,
           fieldModels,
-          createItemProps,
           onChange,
           showInvalids,
-          _onClose)}
+          _onClose,
+          fieldRenderer)}
 
-        {this._renderDependents(fieldModel, fieldModels, createItemProps, onChange, showInvalids)}
+        {this._renderDependents(fieldModel, fieldModels, onChange, showInvalids, fieldRenderer)}
 
       </div>
     )
   },
 
-  _renderFieldsInGroup(groupedFieldModels, fieldModels, createItemProps, onChange, showInvalids, onClose) {
+  _renderFieldsInGroup(groupedFieldModels, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
     return groupedFieldModels.map((fieldModel) => {
       return this._renderField(
         fieldModel,
         fieldModels,
-        createItemProps,
         onChange,
         showInvalids,
-        onClose)
+        onClose,
+        fieldRenderer)
     })
 
   },
@@ -93,7 +84,7 @@ window.RenderCreateItem = {
 
   },
 
-  _renderFieldsGroup(groupFields, fieldModels, createItemProps, onChange, showInvalids, onClose) {
+  _renderFieldsGroup(groupFields, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
 
     return (
 
@@ -106,10 +97,10 @@ window.RenderCreateItem = {
           {this._renderFieldsInGroup(
             groupFields.fieldModels,
             fieldModels,
-            createItemProps,
             onChange,
             showInvalids,
-            onClose)}
+            onClose,
+            fieldRenderer)}
 
         </div>
 
@@ -119,46 +110,48 @@ window.RenderCreateItem = {
 
 
 
-  _renderFieldsGrouped(fields, fieldModels, leftOrRight, createItemProps, onChange, showInvalids, onClose) {
+  _renderFieldsGrouped(fields, fieldModels, leftOrRight, onChange, showInvalids, onClose, fieldRenderer) {
 
     return _.map(
       LeftOrRightColumn._columnGroupFieldModels(fields, fieldModels, leftOrRight),
       (groupFields) => {
         return RenderCreateItem._renderFieldsGroup(groupFields,
           fieldModels,
-          createItemProps,
           onChange,
           showInvalids,
-          onClose)
+          onClose,
+          fieldRenderer)
       }
     )
   },
 
 
 
-  _renderLeftColumn(fields, fieldModels, createItemProps, onChange, showInvalids, onClose) {
+  _renderLeftColumn(fields, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
 
     return (
       <div className='col1of2 padding-right-xs' id='item-form-left-side'>
-        {this._renderFieldsGrouped(fields, fieldModels, 'left', createItemProps, onChange, showInvalids, onClose)}
+        {this._renderFieldsGrouped(fields, fieldModels, 'left', onChange, showInvalids, onClose, fieldRenderer)}
       </div>
     )
   },
 
-  _renderRightColumn(fields, fieldModels, createItemProps, onChange, showInvalids, onClose) {
+  _renderRightColumn(fields, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
     return (
       <div className='col1of2' id='item-form-right-side'>
-        {this._renderFieldsGrouped(fields, fieldModels, 'right', createItemProps, onChange, showInvalids, onClose)}
+        {this._renderFieldsGrouped(fields, fieldModels, 'right', onChange, showInvalids, onClose, fieldRenderer)}
       </div>
     )
   },
 
 
-  _renderColumns(fields, fieldModels, createItemProps, onChange, showInvalids, onClose) {
+  _renderColumns(fields, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
+
+
     return (
       <div id='flexible-fields'>
-        {this._renderLeftColumn(fields, fieldModels, createItemProps, onChange, showInvalids, onClose)}
-        {this._renderRightColumn(fields, fieldModels, createItemProps, onChange, showInvalids, onClose)}
+        {this._renderLeftColumn(fields, fieldModels, onChange, showInvalids, onClose, fieldRenderer)}
+        {this._renderRightColumn(fields, fieldModels, onChange, showInvalids, onClose, fieldRenderer)}
       </div>
     )
   }

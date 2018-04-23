@@ -39,158 +39,16 @@
     },
 
 
-    _onlyMainFields(fields) {
-
-      return fields.filter((f) => {
-        return !f['visibility_dependency_field_id'] && !f['values_dependency_field_id']
-      })
-    },
 
     _createFieldModels(fields, item) {
       if(item) {
-        return this._createEditFieldModels(fields, item)
+        return window.FieldModels._createEditFieldModels(fields, item, this._fieldSwitch, this.props.attachments)
       } else {
-        return this._createNewFieldModels(fields)
+        return window.FieldModels._createNewFieldModels(fields, this.props.next_code, this.props.inventory_pool, this._fieldSwitch)
       }
     },
 
-    // _onlySubmitFields(fields) {
-    //   return fields.filter((field) => {
-    //     return field.type != 'attachment' && !field.exclude_from_submit
-    //   })
-    //
-    // },
 
-
-
-
-        _createEditFieldModelRec(fields, field, item) {
-
-          var value = null
-
-          if(field.type == 'attachment') {
-            value = CreateItemFieldSwitch._createEditValue(field, item, null, this.props.attachments)
-          } else {
-            var itemValue = this._itemValue(field, item)
-            if(itemValue != null && itemValue != undefined) {
-              value = CreateItemFieldSwitch._createEditValue(field, item, itemValue, null)
-            } else {
-              value = CreateItemFieldSwitch._createEmptyValue(field)
-            }
-          }
-
-
-          // EnsureDependents._determineDependents(fields, )
-
-          var selectedValue = {
-            field: field,
-            value: value,
-            dependents: [],
-            hidden: (field.hidden ? true : false)
-
-          }
-
-          var dependents = EnsureDependents._determineDependents(fields, selectedValue, this._fieldSwitch())
-
-
-          selectedValue.dependents = dependents.map((d) => {
-            return this._createEditFieldModelRec(fields, d, item)
-          })
-
-          return selectedValue
-
-        },
-
-        _createEditFieldModels(fields, item) {
-
-          return _.compact(
-            this._onlyMainFields(fields).map((field) => {
-              return this._createEditFieldModelRec(fields, field, item)
-            })
-          )
-
-
-
-          // return this._onlySubmitFields(fields).map((field) => {
-          //   return {
-          //     field: field,
-          //     value: this._itemValue(field, item)
-          //   }
-          // }).filter((f) => {
-          //   return (f.value) ? true : false
-          // }).map((f) => {
-          //
-          //   return {
-          //     field: f.field,
-          //     value: CreateItemFieldSwitch._createEditValue(f.field, f.value),
-          //     dependents: []
-          //   }
-          //
-          // })
-        },
-
-        // _fieldsForEdit(fields) {
-        //
-        //   return fields.filter((f) => {
-        //     return f.type != 'attachment' && !f.exclude_from_submit
-        //     return f
-        //   })
-        //
-        // },
-
-        _itemValue(field, item) {
-
-          var itemValue = null
-
-          if (field.form_name) {
-            itemValue = item[field.form_name]
-          } else {
-            itemValue = CreateItemFieldSwitch._itemValue(field.attribute, item)
-          }
-
-          return itemValue
-        },
-
-        _createNewFieldModels(fields) {
-
-          var fms = this._onlyMainFields(fields).map((field) => {
-              return {
-                  field: field,
-                  value: this._createEmptyValue(field),
-                  dependents: [],
-                  hidden: (field.hidden ? true : false)
-                }
-            })
-
-          this._ensureDependents(fms, fields)
-
-          return fms
-        },
-
-
-
-
-    _getTodayAsString() {
-      return moment().format(i18n.date.L)
-    },
-
-    _createEmptyValue(field) {
-      if(field.id == 'inventory_code') {
-        return {text: this.props.next_code}
-      } else if(field.id == 'owner_id') {
-        return {
-          text: this.props.inventory_pool.name,
-          id: this.props.inventory_pool.id
-        }
-      } else if(field.id == 'last_check') {
-
-        return {
-          at: this._getTodayAsString()
-        }
-      } else {
-        return CreateItemFieldSwitch._createEmptyValue(field)
-      }
-    },
 
     componentDidMount () {
       this._fetchFields()
@@ -204,36 +62,15 @@
       }
     },
 
-    _ensureDependents(fieldModels, fields) {
-      EnsureDependents._ensureDependents(fieldModels, fields, this._fieldSwitch())
-    },
 
 
-    findFieldModelRec(fieldModel, fieldId) {
 
-      if(fieldModel.field.id == fieldId) {
-        return fieldModel
-      } else {
-        return this.findFieldModel(fieldModel.dependents, fieldId)
-      }
-    },
-
-    findFieldModel(fieldModels, fieldId) {
-      for(var i = 0; i < fieldModels.length; i++) {
-        var d = fieldModels[i]
-        var fm = this.findFieldModelRec(d, fieldId)
-        if(fm) {
-          return fm
-        }
-      }
-      return null
-    },
 
     onChange(fieldId, value) {
       var l = window.lodash
       var fieldModels = l.cloneDeep(this.state.fieldModels)
-      this.findFieldModel(fieldModels, fieldId).value = value
-      this._ensureDependents(fieldModels, this.state.fields)
+      window.FieldModels.findFieldModel(fieldModels, fieldId).value = value
+      window.FieldModels._ensureDependents(fieldModels, this.state.fields, this._fieldSwitch)
       this.setState({fieldModels: fieldModels})
     },
 
@@ -359,96 +196,11 @@
       )
     },
 
-    _serializeExtensibleFieldValue(fieldModel) {
 
-      var field = fieldModel.field
-      var value = fieldModel.value
 
-      if(field.type == 'autocomplete') {
-        return value.text
-      } else {
-        throw 'Not supported field type: ' + field.type
-      }
-    },
-
-    _serializeFieldValue(fieldModel) {
-
-      var field = fieldModel.field
-      var value = fieldModel.value
-
-      if(field.id == 'properties_quantity_allocations') {
-        return _.filter(value.allocations, (a) => !a.deleted).map((v) => {
-          return {
-            quantity: v.quantity,
-            room: v.location
-          }
-        })
-      }
-
-      switch(field.type) {
-        case 'text':
-          return value.text
-          break
-        case 'autocomplete-search':
-          return value.id
-          break
-        case 'autocomplete':
-          return value.id
-          break
-        case 'textarea':
-          return value.text
-          break
-        case 'select':
-          return value.selection
-          break
-        case 'radio':
-          return value.selection
-          break
-        case 'checkbox':
-          return value.selections
-          break
-        case 'date':
-          var dmy = CreateItemFieldSwitch._parseDayMonthYear(value.at)
-          return CreateItemFieldSwitch._dmyToString(dmy)
-          break
-        // case 'attachment':
-        //   throw
-        //   return ''
-        //   break
-        default:
-          throw 'Unexpected type: ' + field.type
-      }
-    },
-
-    _recursiveFieldModels(fieldModel, fieldModels) {
-
-      if(fieldModel.dependents && fieldModel.dependents.length > 0) {
-
-        return _.reduce(
-          fieldModel.dependents,
-          (result, dependent) => {
-            return result.concat(
-              this._recursiveFieldModels(dependent, result)
-            )
-          },
-          fieldModels.concat(fieldModel)
-        )
-      } else {
-        return fieldModels.concat(fieldModel)
-      }
-
-    },
 
     _flatFieldModels() {
-      return _.reduce(
-        this.state.fieldModels,
-        (result, fieldModel) => {
-          return result.concat(
-            this._recursiveFieldModels(fieldModel, [])
-          )
-        },
-        []
-      )
+      return window.FieldModels._flatFieldModels(this.state.fieldModels)
     },
 
     _isFieldModelForSubmit(fieldModel) {
@@ -463,64 +215,12 @@
     },
 
 
-    _serializeItem(bypassSerialNumberValidation) {
 
-      var base = {};
-      if(bypassSerialNumberValidation) {
-        base.skip_serial_number_validation = 'true'
-      } else {
-        base.skip_serial_number_validation = 'false'
-      }
 
-      return _.reduce(
-        this._fieldModelsForSubmit(),
-        (result, fieldModel) => {
-
-          var field = fieldModel.field
-
-          var value = this._serializeFieldValue(fieldModel)
-          if (field.form_name) {
-            result[field.form_name] = value
-          } else if (field.attribute instanceof Array) {
-            BackwardTestCompatibility._setValue(result, field.attribute, value)
-          } else {
-            result[field.attribute] = value
-          }
-
-          if(field.extensible) {
-            var extensibleValue = this._serializeExtensibleFieldValue(fieldModel)
-            BackwardTestCompatibility._setValue(result, field.extended_key, extensibleValue)
-          }
-
-          return result
-        },
-        base
-      )
-    },
-
-    _isValid(fieldModel) {
-
-      var isValid = !CreateItemFieldSwitch._isFieldInvalid(fieldModel)
-
-      return _.reduce(
-        fieldModel.dependents,
-        (memo, dep) => {
-          return memo && this._isValid(dep)
-        },
-        isValid
-      )
-
-    },
 
     _clientValidation() {
 
-      return _.reduce(
-        this.state.fieldModels,
-        (memo, fm) => {
-          return memo && this._isValid(fm)
-        },
-        true
-      )
+      return window.CreateItemValidation._clientValidation(this.state.fieldModels)
     },
 
 
@@ -683,7 +383,10 @@
 
       var data = {
         inventory_pool_id: this.props.inventory_pool.id,
-        item: this._serializeItem(bypassSerialNumberValidation),
+        item: window.SerializeItem._serializeItem(
+          bypassSerialNumberValidation,
+          this._fieldModelsForSubmit()
+        )
       }
 
       data.item.attachments_attributes = {}
