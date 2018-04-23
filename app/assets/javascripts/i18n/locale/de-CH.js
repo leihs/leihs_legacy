@@ -4649,6 +4649,30 @@ window.i18n.locale_data = {
       "and assign fields": [
          null,
          "und weise Felder zu"
+      ],
+      "Enable": [
+         null,
+         "Aktivieren"
+      ],
+      "Disable": [
+         null,
+         "Deaktivieren"
+      ],
+      "enabled": [
+         null,
+         "aktiv"
+      ],
+      "disabled": [
+         null,
+         "inaktiv"
+      ],
+      "for licenses": [
+         null,
+         "für Lizenzen"
+      ],
+      "for items": [
+         null,
+         "für Gegenstände"
       ]
    }
 }

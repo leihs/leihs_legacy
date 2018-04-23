@@ -3590,3 +3590,21 @@ msgstr "oder suche nach Gegenstand"
 
 msgid "and assign fields"
 msgstr "und weise Felder zu"
+
+msgid "Enable"
+msgstr "Aktivieren"
+
+msgid "Disable"
+msgstr "Deaktivieren"
+
+msgid "enabled"
+msgstr "aktiv"
+
+msgid "disabled"
+msgstr "inaktiv"
+
+msgid "for licenses"
+msgstr "für Lizenzen"
+
+msgid "for items"
+msgstr "für Gegenstände"

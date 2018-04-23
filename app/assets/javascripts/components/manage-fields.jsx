@@ -64,9 +64,27 @@
 
     renderAction(field) {
       if(this.isDisabled(field)) {
-        return <a onClick={(e) => this.disable(false, field.id)} className='button white'>Enable</a>
+        return <a onClick={(e) => this.disable(false, field.id)} className='button white'>{_jed('Enable')}</a>
       } else {
-        return <a onClick={(e) => this.disable(true, field.id)} className='button white'>Disable</a>
+        return <a onClick={(e) => this.disable(true, field.id)} className='button white'>{_jed('Disable')}</a>
+      }
+    },
+
+    renderStatus(field) {
+      if(this.isDisabled(field)) {
+        return <span style={{color: 'red'}}>{_jed('disabled')}</span>
+      } else {
+        return <span style={{color: 'green'}}>{_jed('enabled')}</span>
+      }
+    },
+
+    renderTarget(field) {
+      if(field.target_type == 'license') {
+        return _jed('for licenses')
+      } else if(field.target_type == 'item'){
+        return _jed('for items')
+      } else {
+        return null
       }
     },
 
@@ -76,13 +94,19 @@
         (field) => {
           return (
             <div className='row line' key={field.id}>
-              <div className='col1of5 line-col'>
-                <strong>{field.label}</strong>
+              <div className='col1of6 line-col'>
+                <strong>{_jed(field.label)}</strong>
               </div>
-              <div className='col3of5 line-col' style={{textAlign: 'left'}}>
+              <div className='col2of6 line-col' style={{textAlign: 'left'}}>
                 {field.id}
               </div>
-              <div className='col1of5 line-col line-actions'>
+              <div className='col1of6 line-col' style={{textAlign: 'left'}}>
+                {this.renderTarget(field)}
+              </div>
+              <div className='col1of6 line-col' style={{textAlign: 'left'}}>
+                {this.renderStatus(field)}
+              </div>
+              <div className='col1of6 line-col line-actions'>
                 {this.renderAction(field)}
               </div>
             </div>

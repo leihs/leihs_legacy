@@ -27,7 +27,8 @@ class Manage::FieldsController < Manage::ApplicationController
       end.map do |f|
         {
           label: f.data['label'],
-          id: f.id
+          id: f.id,
+          target_type: f.data['target_type']
         }
       end,
       disabled_fields: DisabledField.where(

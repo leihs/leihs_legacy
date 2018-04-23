@@ -3447,3 +3447,21 @@ msgstr ""
 
 msgid "and assign fields"
 msgstr ""
+
+msgid "Enable"
+msgstr ""
+
+msgid "Disable"
+msgstr ""
+
+msgid "enabled"
+msgstr ""
+
+msgid "disabled"
+msgstr ""
+
+msgid "for licenses"
+msgstr ""
+
+msgid "for items"
+msgstr ""
