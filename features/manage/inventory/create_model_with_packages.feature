@@ -6,7 +6,7 @@ Feature: Create model with packages
     And I open the inventory
 
   Scenario: Create model with package assignments
-    When I add a new Model
+    When I add a new Package
     And I fill in at least the required fields
     And I add one or more packages
     And I add one or more items to this package
@@ -56,7 +56,7 @@ Feature: Create model with packages
     Then the package has all the entered information
 
   Scenario: Creating a model with package assignment and then editing it
-    When I add a new Model
+    When I add a new Package
     And I fill in at least the required fields
     And I add a package
     And I enter the package properties

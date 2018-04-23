@@ -120,7 +120,7 @@ Then /^I cannot assign packages to that model$/ do
 end
 
 When /^I add a package to a model$/ do
-  step 'I add a new Model'
+  step 'I add a new Package'
   step 'I fill in at least the required fields'
   step 'I add one or more packages'
 end

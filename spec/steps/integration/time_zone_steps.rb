@@ -24,7 +24,7 @@ module Spec
 
     step 'I fill in the model name' do
       @name = Faker::Lorem.words(3).join(' ')
-      find("[name='model[product]']").set @name
+      find('#product').find('input').set @name
     end
 
     step 'the model was created in the database' do

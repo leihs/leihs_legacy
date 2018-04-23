@@ -370,6 +370,7 @@ end
 When(/^I add a new (.+)/) do |entity|
   @klass = case _(entity)
           when 'model' then Model
+          when 'package' then Model
           when 'software' then Software
           end
   find('.dropdown-holder', text: _('Add inventory')).click
@@ -381,7 +382,11 @@ When(/^I add a (model|software) to the inventory/) do |entity|
           when 'model' then Model
           when 'software' then Software
           end
-  visit manage_new_model_path(@current_inventory_pool, type: @klass)
+  if _(entity) == 'model'
+    visit manage_new_model_path(@current_inventory_pool, type: Model)
+  else
+    visit manage_new_model_old_path(@current_inventory_pool, type: @klass)
+  end
 end
 
 

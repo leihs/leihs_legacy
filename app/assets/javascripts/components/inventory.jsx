@@ -32,6 +32,10 @@
       return this.props.create_model_url
     },
 
+    _createPackageUrl() {
+      return this.props.create_package_url
+    },
+
     _createItemUrl() {
       return this.props.create_item_url
     },
@@ -62,9 +66,14 @@
            </div>
            <ul className='dropdown right' style={{display: 'none'}}>
               <li>
-                 <a className='dropdown-item' href={this._createModelUrl()}>
-                   {this._surround(_jed('Model'))}
-                 </a>
+                <a className='dropdown-item' href={this._createModelUrl()}>
+                  {this._surround(_jed('Model'))}
+                </a>
+              </li>
+              <li>
+                <a className='dropdown-item' href={this._createPackageUrl()}>
+                  {this._surround(_jed('Package'))}
+                </a>
               </li>
               <li>
                  <a className='dropdown-item' href={this._createItemUrl()}>

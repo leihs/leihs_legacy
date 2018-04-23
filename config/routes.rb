@@ -224,7 +224,10 @@ Rails.application.routes.draw do
       # Models
       get     'models',                       to: "models#index",     as: "models"
       post    'models',                       to: "models#create",    as: "create_model"
+      get     'models/new_old',                   to: "models#new_old",       as: "new_model_old"
       get     'models/new',                   to: "models#new",       as: "new_model"
+      post    'models/store_attachment_react',                to: "models#store_attachment_react",            as: "model_store_attachment_react"
+      post    'models/store_image_react',                to: "models#store_image_react",            as: "model_store_image_react"
       get     'models/:id/timeline',          to: "models#timeline"
       get     'models/:id/old_timeline',          to: "models#old_timeline"
       put     'models/:id',                   to: "models#update"

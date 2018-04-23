@@ -44,12 +44,14 @@ class Manage::InventoryController < Manage::ApplicationController
             manage_inventory_excel_export_path(current_inventory_pool),
           create_model_url:
             manage_new_model_path(current_inventory_pool),
+          create_package_url:
+            manage_new_model_old_path(current_inventory_pool),
           create_item_url:
             manage_new_item_path(current_inventory_pool),
           create_option_url:
             manage_new_option_path(current_inventory_pool),
           create_software_url:
-            manage_new_model_path(current_inventory_pool, type: 'software'),
+            manage_new_model_old_path(current_inventory_pool, type: 'software'),
           create_license_url:
             manage_new_item_path(current_inventory_pool, type: 'license'),
           responsibles:

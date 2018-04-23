@@ -26,9 +26,50 @@ class Manage::ModelsController < Manage::ApplicationController
     @model = fetch_model
   end
 
-  def new
+  def new_old
     not_authorized! unless privileged_user?
     @model = (params[:type].try(:humanize) || 'Model').constantize.new
+  end
+
+  def new
+    not_authorized! unless privileged_user?
+    @props = {
+      inventory_pool_id: current_inventory_pool.id,
+      create_model_path: manage_create_model_path,
+      # TODO: #{Kernel.const_get(@model.type || 'Model').manufacturers.to_json}
+      manufacturers: Model.manufacturers.map(&:to_s),
+      store_attachment_path: manage_model_store_attachment_react_path,
+      store_image_path: manage_model_store_image_react_path,
+      inventory_path: manage_inventory_path
+    }
+  end
+
+  Mime::Type.register(
+    'application/octet-stream',
+    :plist_binary,
+    [],
+    ['binary.plist']
+  )
+  def store_attachment_react
+    respond_to do |format|
+      format.plist_binary do
+        store_attachment!(
+          params[:data],
+          model_id: params[:model_id]
+        )
+      end
+    end
+  end
+
+  def store_image_react
+    respond_to do |format|
+      format.plist_binary do
+        store_image_with_thumbnail!(
+          params[:data],
+          Model.find(params[:model_id])
+        )
+      end
+    end
   end
 
   def create
