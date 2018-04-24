@@ -28,7 +28,11 @@ class Manage::ModelsController < Manage::ApplicationController
 
   def new_old
     not_authorized! unless privileged_user?
-    @model = (params[:type].try(:humanize) || 'Model').constantize.new
+    @model = if params[:type] == 'package'
+               Model.new
+             else
+               (params[:type].try(:humanize) || 'Model').constantize.new
+             end
   end
 
   def new

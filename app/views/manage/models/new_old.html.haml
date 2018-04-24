@@ -1,4 +1,4 @@
-- content_for :title, @model.is_a?(Software) ? _("Create new software") : _("Create new model")
+- content_for :title, @model.is_a?(Software) ? _("Create new software") : (params[:type] == 'package' ? (_("Create %s") % _("Package")) : _("Create new model"))
 - content_for :inventory_section, "active"
 
 #new-model-view.wrapper.margin-top-m
@@ -17,7 +17,7 @@
           = link_to _('Cancel'), :back, class: 'button grey'
 
           %button#save.button.green
-            = _("Save %s") % ( @model.is_a?(Software) ? _("Software") : _("Model") )
+            = _("Save %s") % ( @model.is_a?(Software) ? _("Software") : (params[:type] == 'package' ? _("Package") : _("Model")))
 
     .padding-inset-m
 
@@ -26,7 +26,7 @@
         = render :partial => "form"
 
 :coffeescript
-  
+
   jQuery -> new App.ModelsNewController
     el: $("#new-model-view")
     model: new App.Model #{@model.to_json}
