@@ -31,6 +31,17 @@ class Manage::AvailabilityController < Manage::ApplicationController
 
   def in_stock
     @models.each do |model|
+      entitled_in_groups = \
+        Entitlement
+        .joins(:entitlement_group)
+        .where(
+          entitlement_groups: { inventory_pool_id: current_inventory_pool.id }
+        )
+        .where(model_id: model.id)
+        .map(&:quantity)
+        .reduce(&:+)
+      entitled_in_groups ||= 0
+
       @availabilities.push \
         id: "#{model.id}-#{current_inventory_pool.id}",
         total_rentable: \
@@ -48,6 +59,7 @@ class Manage::AvailabilityController < Manage::ApplicationController
             .unretired
             .in_stock
             .count,
+        entitled_in_groups: entitled_in_groups,
         inventory_pool_id: current_inventory_pool.id,
         model_id: model.id
     end

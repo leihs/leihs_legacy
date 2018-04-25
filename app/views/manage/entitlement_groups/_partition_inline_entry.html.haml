@@ -3,14 +3,14 @@
   %input{:type => :hidden, :name => "group[partitions_attributes][][model_id]", :value => partition.model_id}
   %input{:type => :hidden, :name => "group[partitions_attributes][][_destroy]", :value => nil}
 
-  - items_size = partition.model.items.where(inventory_pool_id: partition.inventory_pool.id).size
-  - if partition.quantity > items_size
+  - if partition.quantity > partition.max_possible_unentitled_quantity
     .line-info.red
 
-  .line-col.col3of6.text-align-left{:"data-model-name" => true}= partition.model.name
+  %a.blue.line-col.col3of6.text-align-left{href: manage_edit_model_path(partition.inventory_pool, partition.model), :"data-model-name" => true}= partition.model.name
   .line-col.col2of6
-    .line-col.col1of2{:"data-quantities" => true}
+    .line-col.col2of4{:"data-quantities" => true}
       %input.width-full.small.text-align-center{type: "text", value: partition.quantity, min: 1, name: "group[partitions_attributes][][quantity]"}
-    .line-col.col1of2.padding-left-xs.text-align-left{:"data-quantities" => true}= "/ #{items_size}"
+    .line-col.col1of4.padding-left-xs.text-align-left{title: _("Allocations in other groups considered - still available quantity of borrowable and not retired items"), :"data-quantities" => true}= "/ #{partition.max_possible_unentitled_quantity}"
+    .line-col.col1of4.padding-left-xs.text-align-left{title: _("Total quantity of borrowable and not retired items")}= "/ #{partition.max_possible_quantity}"
   .line-col.col1of6.text-align-right
     %button.button.inset.small{:"data-remove-group" => true}= _("Remove")

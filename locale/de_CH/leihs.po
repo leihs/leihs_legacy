@@ -3608,3 +3608,9 @@ msgstr "für Lizenzen"
 
 msgid "for items"
 msgstr "für Gegenstände"
+
+msgid "Allocations in other groups considered - still available quantity of borrowable and not retired items"
+msgstr "Zuteilungen in anderen Gruppen berücksichtigt - noch verfügbare Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"
+
+msgid "Total quantity of borrowable and not retired items"
+msgstr "Totale Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"

@@ -3465,3 +3465,9 @@ msgstr ""
 
 msgid "for items"
 msgstr ""
+
+msgid "Allocations in other groups considered - still available quantity of borrowable and not retired items"
+msgstr ""
+
+msgid "Total quantity of borrowable and not retired items"
+msgstr ""

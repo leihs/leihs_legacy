@@ -87,6 +87,27 @@ class Entitlement < ApplicationRecord
     SQL
   end
 
+  def entitled_quantity_in_other_groups
+    qty = \
+      Entitlement
+      .where(model_id: model.id)
+      .where.not(id: id)
+      .map(&:quantity)
+      .reduce(&:+)
+    qty || 0
+  end
+
+  def max_possible_quantity
+    model
+      .borrowable_items
+      .where(inventory_pool_id: entitlement_group.inventory_pool.id)
+      .size
+  end
+
+  def max_possible_unentitled_quantity
+    max_possible_quantity - entitled_quantity_in_other_groups
+  end
+
   def label_for_audits
     "#{model.try(&:name)} - #{entitlement_group.try(&:name)}"
   end

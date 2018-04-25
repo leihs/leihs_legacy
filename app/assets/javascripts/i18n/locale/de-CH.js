@@ -4673,6 +4673,14 @@ window.i18n.locale_data = {
       "for items": [
          null,
          "für Gegenstände"
+      ],
+      "Allocations in other groups considered - still available quantity of borrowable and not retired items": [
+         null,
+         "Zuteilungen in anderen Gruppen berücksichtigt - noch verfügbare Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"
+      ],
+      "Total quantity of borrowable and not retired items": [
+         null,
+         "Totale Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"
       ]
    }
 }

@@ -4,7 +4,10 @@
   %input{:type => :hidden, :name => "model[partitions_attributes][#{entry.id}][id]", :value => entry.id}
   %input{:type => :hidden, :name => "model[partitions_attributes][#{entry.id}][_destroy]"}
 
-  .line-col.col3of5.text-align-left{:"data-name" => entry.entitlement_group.name}
+  - if entry.quantity > entry.max_possible_unentitled_quantity
+    .line-info.red
+
+  %a.blue.line-col.col3of5.text-align-left{href: manage_edit_inventory_pool_group_path(current_inventory_pool, entry.entitlement_group), :"data-name" => entry.entitlement_group.name}
     = entry.entitlement_group.name
 
   .line-col.col1of5.text-align-center
