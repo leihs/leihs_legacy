@@ -2765,7 +2765,7 @@ window.i18n.locale_data = {
       ],
       "Process multiple fields for multiple items in a row": [
          null,
-         "Mehrere Felder für mehrere Geräte nacheinander bearbeiten"
+         "Mehrere Felder für mehrere Gegenstände nacheinander bearbeiten"
       ],
       "Select Field": [
          null,

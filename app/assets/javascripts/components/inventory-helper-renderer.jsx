@@ -48,7 +48,7 @@ window.InventoryHelperRenderer = {
     return (
       <form className='row' id='flexible-fields'>
         <div className='height-s'></div>
-        <h3 className='headline-s light padding-inset-m text-align-center'>Kein Gegenstand ausgewählt</h3>
+        <h3 className='headline-s light padding-inset-m text-align-center'>{_jed('no item selected')}</h3>
         <div className='height-s'></div>
       </form>
     )

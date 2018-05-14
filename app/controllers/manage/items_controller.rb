@@ -129,7 +129,6 @@ class Manage::ItemsController < Manage::ApplicationController
         end
         saved = @item.update_attributes(item_params)
       end
-
     end
     respond_to do |format|
       format.json do
@@ -304,16 +303,34 @@ class Manage::ItemsController < Manage::ApplicationController
     @item = Item.find params[:id]
   end
 
+  def check_keys_in_hash_recursive(keys, hash)
+    return false if keys.length == 0
+    if hash.key?(keys.first)
+      if keys.length == 1
+        true
+      else
+        check_keys_in_hash_recursive(keys.from(1), hash[keys.first])
+      end
+    else
+      false
+    end
+  end
+
+  def field_data_in_params?(field, params)
+    if field.id == 'attachments'
+      return false
+    end
+    if field.data['attribute'].is_a? Array
+      check_keys_in_hash_recursive(field.data['attribute'], params)
+    else
+      params.key?(field.data['attribute'])
+    end
+  end
+
   def check_fields_for_write_permissions
     Field.all.each do |field|
       next unless field.data['permissions']
-      # TODO: Should be fixed by checking if item_params contains the keys
-      # We got problems because retired for example could be false as a valid
-      # value. So without being the owner you could set the value for retired
-      # to false. Thats why we fixed with nil comparision, which is however
-      # just a quick fix.
-      # next unless field.get_value_from_params item_params
-      next if field.get_value_from_params(item_params).nil?
+      next unless field_data_in_params?(field, item_params)
       next if field.editable(current_user, current_inventory_pool, @item)
       @item
         .errors

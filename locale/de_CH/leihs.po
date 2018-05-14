@@ -2123,7 +2123,7 @@ msgid "Warranty expiration"
 msgstr "Garantieablaufdatum"
 
 msgid "Process multiple fields for multiple items in a row"
-msgstr "Mehrere Felder für mehrere Geräte nacheinander bearbeiten"
+msgstr "Mehrere Felder für mehrere Gegenstände nacheinander bearbeiten"
 
 msgid "Select Field"
 msgstr "Feld auswählen"
