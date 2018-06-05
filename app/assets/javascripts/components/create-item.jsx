@@ -8,6 +8,43 @@
     propTypes: {
     },
 
+    initialPackageChildItems() {
+
+      if(this.props.edit && this.props.for_package && this.props.children) {
+
+        var l = window.lodash
+        return l.map(
+          this.props.children,
+          (c) => {
+            return {
+              item: c.json,
+              model: c.json.model
+            }
+          }
+        )
+
+      } else {
+        return []
+      }
+
+    },
+
+    // https://reactjs.org/docs/legacy-context.html
+    childContextTypes: {
+      hackyForPackage: PropTypes.bool
+    },
+    // NOTE: We need this hack to pass the forPackage value to the mdoel_id input since
+    // the current field config does not let us pass this information if we
+    // only should list package models or not.
+    getChildContext() {
+      return {
+        hackyForPackage: this.props.for_package
+      }
+
+    },
+
+
+
     getInitialState () {
       return {
         loadingFields: 'initial',
@@ -15,7 +52,8 @@
         showInvalids: false,
         fieldModels: [],
         showError: false,
-        errorMessage: ''
+        errorMessage: '',
+        packageChildItems: this.initialPackageChildItems()
       }
     },
 
@@ -30,10 +68,19 @@
       App.Field.ajaxFetch({
         data: $.param({target_type: this._targetType()})
       }).done((data) => {
+
+        var fields = data
+        if(this.props.for_package) {
+          fields = _.filter(
+            data,
+            (f) => f.forPackage || f.id == 'model_id'
+          )
+        }
+
         this.setState({
           loadingFields: 'done',
-          fields: data,
-          fieldModels: this._createFieldModels(data, this.props.item)
+          fields: fields,
+          fieldModels: this._createFieldModels(fields, this.props.item)
         })
       })
     },
@@ -139,13 +186,45 @@
       })
     },
 
+    onSelectChildItem(result) {
+      var term = result.term
+      var id = result.id
+      var value = result.value
+      if(id) {
+        this.setState((old) => {
+          var l = window.lodash
+          return {
+            packageChildItems: l.concat(
+              [value],
+              l.reject(old.packageChildItems, (v) => v.item.id == value.item.id)
+            )
+          }
+        })
+      }
+    },
+
+    onRemoveChildItem(itemId) {
+
+      this.setState((old) => {
+        var l = window.lodash
+        return {
+          packageChildItems: l.reject(old.packageChildItems, (v) => v.item.id == itemId)
+        }
+      })
+
+
+    },
+
 
     _readyContent() {
       return (
         <CreateItemContent fields={this.state.fields}
           fieldModels={this.state.fieldModels}
           onChange={this.onChange}
-          createItemProps={this.props} showInvalids={this.state.showInvalids} onClose={this._onClose} />
+          createItemProps={this.props} showInvalids={this.state.showInvalids} onClose={this._onClose}
+          onSelectChildItem={this.onSelectChildItem}
+          onRemoveChildItem={this.onRemoveChildItem}
+          packageChildItems={this.state.packageChildItems} />
       )
     },
 
@@ -172,13 +251,18 @@
 
     _titleMessage() {
       if(this.props.edit) {
-        if(this._targetType() == 'license') {
+
+        if(this.props.for_package) {
+          return _jed('Edit %s', _jed('Package'))
+        } else if(this._targetType() == 'license') {
           return _jed('Edit License')
         } else {
           return _jed('Edit Item')
         }
       } else {
-        if(this._targetType() == 'license') {
+        if(this.props.for_package) {
+          return _jed('Create %s', _jed('Package'))
+        } else if(this._targetType() == 'license') {
           return _jed('Create new software license')
         } else {
           return _jed('Create new item')
@@ -389,6 +473,15 @@
         )
       }
 
+      if(this.props.for_package) {
+        data.child_items = _.map(
+          this.state.packageChildItems,
+          (i) => {
+            return i.item.id
+          }
+        )
+      }
+
       data.item.attachments_attributes = {}
       _.each(
         this._attachmentsFileModels(),
@@ -405,6 +498,7 @@
       if(copy) {
         data.copy = true
       }
+
       $.ajax({
         url: this.props.save_path,
         data: JSON.stringify(data),
@@ -434,6 +528,12 @@
       this._save(false, false)
     },
 
+    _onSavePackage(event) {
+      event.preventDefault()
+
+      this._save(true, false)
+    },
+
     _onSaveAndCopy(event) {
       event.preventDefault()
 
@@ -461,9 +561,14 @@
     },
 
     _saveButtonText() {
-      if(this._targetType() == 'license') {
+
+      if(this.props.for_package) {
+        return _jed('Save %s', _jed('Package'))
+      }
+      else if(this._targetType() == 'license') {
         return _jed('Save %s', _jed('License'))
-      } else {
+      }
+      else {
         return _jed('Save %s', _jed('Item'))
       }
     },
@@ -475,6 +580,22 @@
       if(!this._hasHiddenFields()) {
         displayAllStyle.display = 'none'
       }
+
+
+      if(this.props.for_package) {
+
+        return (
+          <div className='col1of2 text-align-right'>
+            <button onClick={this._onShowAll} className='button white' data-placement='top' data-toggle='tooltip' id='show-all-fields' style={displayAllStyle} title='Alle versteckten Felder wieder anzeigen'>Alle Felder anzeigen</button>
+            <a className='button grey' href={(this.props.return_url ? this.props.return_url : this.props.inventory_path)}>{_jed('Cancel')}</a>
+            <button autoComplete='off' className='button green' id='save' onClick={this._onSavePackage}>
+              {this._saveButtonText()}
+            </button>
+          </div>
+        )
+
+      }
+
 
       return (
         <div className='col1of2 text-align-right'>

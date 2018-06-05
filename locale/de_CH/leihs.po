@@ -3614,3 +3614,6 @@ msgstr "Zuteilungen in anderen Gruppen berücksichtigt - noch verfügbare Anzahl
 
 msgid "Total quantity of borrowable and not retired items"
 msgstr "Totale Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"
+
+msgid "Content"
+msgstr "Inhalt"

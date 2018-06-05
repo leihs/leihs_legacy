@@ -30,10 +30,6 @@ Feature: Create item
       | - Move -                   |
       | Move                       |
       | Target area                |
-      | - Toni Ankunftskontrolle - |
-      | Check-In Date              |
-      | Check-In State             |
-      | Check-In Note              |
       | - General Information -    |
       | Serial Number              |
       | MAC-Address                |
@@ -53,6 +49,10 @@ Feature: Create item
       | Supplier                   |
       | Warranty expiration        |
       | Contract expiration        |
+      | - Toni Ankunftskontrolle - |
+      | Check-In Date              |
+      | Check-In State             |
+      | Check-In Note              |
 
   Scenario: Forgetting to fill out the required fields when creating an item
     Given I am Matti

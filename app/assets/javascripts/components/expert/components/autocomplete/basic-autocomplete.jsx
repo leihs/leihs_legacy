@@ -44,9 +44,11 @@
         term: term
       })
 
+      var l = window.lodash
       this._callback({
         term: row.label,
-        id: row.id
+        id: row.id,
+        value: l.cloneDeep(row.value)
       })
 
     },

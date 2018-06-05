@@ -26,7 +26,7 @@ class window.App.ModelsPackagesController extends Spine.Controller
     inlineEntry = target.closest "[data-type='inline-entry']"
     if inlineEntry.data("id")?
       @editExistingPackage inlineEntry
-    else 
+    else
       @editNewPackage inlineEntry
 
   editExistingPackage: (entry)=>
@@ -74,7 +74,7 @@ class window.App.ModelsPackagesController extends Spine.Controller
       App.Render "manage/views/models/form/package_inline_entry/updated_package_form_data", {children: children, data: itemData}, {uid: entry.data("id")}
 
   editNewPackage: (entry)=>
-    data = App.ElementFormDataAsObject entry  
+    data = App.ElementFormDataAsObject entry
     new App.ModelsPackageDialogController
       item: data
       done: @saveNotExistingPackage

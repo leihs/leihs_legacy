@@ -132,7 +132,7 @@ end
 
 When /^I assign categories$/ do
   @category = ModelGroup.where(name: 'Standard').first
-  find("#categories input[data-type='autocomplete']").set @category.name
+  find('#categories input.ui-autocomplete-input').set @category.name
   find('.ui-menu-item a', match: :first, text: @category.name).click
   find('#categories .list-of-lines .line', text: @category.name)
 end

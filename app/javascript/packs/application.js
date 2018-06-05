@@ -6,6 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createReactClass from 'create-react-class'
 import lodash from 'lodash'
+import PropTypes from 'prop-types'
 import setUrlParams from '../lib/set-url-params'
 
 // `react-rails` setup
@@ -20,7 +21,7 @@ import { ReactRailsUJS, componentRequireContext } from '../react-rails.js'
 // vendor modules
 
 // some global helpers that we still need in old-style react
-export { React, ReactDOM, createReactClass, lodash, setUrlParams }
+export { React, ReactDOM, PropTypes, createReactClass, lodash, setUrlParams }
 
 // react components bundle, when used *directly* from non-webpack code:
 export { ReactRailsUJS, componentRequireContext as requireComponent }

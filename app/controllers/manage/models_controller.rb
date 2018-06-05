@@ -37,14 +37,23 @@ class Manage::ModelsController < Manage::ApplicationController
 
   def new
     not_authorized! unless privileged_user?
+
+    manufacturers = \
+      if params[:type] == 'software'
+        Software.manufacturers
+      else
+        Model.manufacturers
+      end
+
     @props = {
       inventory_pool_id: current_inventory_pool.id,
       create_model_path: manage_create_model_path,
       # TODO: #{Kernel.const_get(@model.type || 'Model').manufacturers.to_json}
-      manufacturers: Model.manufacturers.map(&:to_s),
+      manufacturers: manufacturers.map(&:to_s),
       store_attachment_path: manage_model_store_attachment_react_path,
       store_image_path: manage_model_store_image_react_path,
-      inventory_path: manage_inventory_path
+      inventory_path: manage_inventory_path,
+      type: (params[:type] == 'software' ? 'software' : 'model')
     }
   end
 
@@ -87,6 +96,10 @@ class Manage::ModelsController < Manage::ApplicationController
                    Model
                end.create(product: params[:model][:product],
                           version: params[:model][:version])
+
+      if params[:model][:is_package]
+        @model.is_package = true
+      end
       save_model(@model)
       if !@model.persisted? or @model.errors.any?
         raise ActiveRecord::Rollback
@@ -103,16 +116,98 @@ class Manage::ModelsController < Manage::ApplicationController
     end
   end
 
-  def edit
+  def edit_old
     @model = fetch_model
   end
+
+  # rubocop:disable Metrics/MethodLength
+  def edit
+    model = fetch_model
+
+    manufacturers = \
+      if model.type == 'Software'
+        Software.manufacturers
+      else
+        Model.manufacturers
+      end
+
+    max_borrowable_quantity = nil
+    if model.persisted?
+      max_borrowable_quantity = \
+        model.borrowable_items.where(
+          inventory_pool_id: current_inventory_pool
+        ).count
+    end
+
+    @props = {
+      inventory_pool_id: current_inventory_pool.id,
+      create_model_path: manage_create_model_path,
+      # TODO: #{Kernel.const_get(@model.type || 'Model').manufacturers.to_json}
+      manufacturers: manufacturers.map(&:to_s),
+      store_attachment_path: manage_model_store_attachment_react_path,
+      store_image_path: manage_model_store_image_react_path,
+      inventory_path: manage_inventory_path,
+      type: (model.type == 'Software' ? 'software' : 'model'),
+      edit_data: {
+        model: model,
+        max_borrowable_quantity: max_borrowable_quantity,
+        allocations: model.entitlements.map do |e|
+          {
+            id: e.id,
+            group_id: e.entitlement_group_id,
+            quantity: e.quantity,
+            label: e.entitlement_group.name
+          }
+        end,
+        categories: model.categories.map do |c|
+          {
+            id: c.id,
+            label: c.name
+          }
+        end,
+        accessories: model.accessories.map do |a|
+          {
+            id: a.id,
+            name: a.name,
+            inventory_pool_ids: a.inventory_pool_ids
+          }
+        end,
+        compatibles: model.compatibles.map do |c|
+          {
+            id: c.id,
+            label: c.product + (c.version ? ' ' + c.version : '')
+          }
+        end,
+        properties: model.properties.map do |p|
+          {
+            id: p.id,
+            key: p.key,
+            value: p.value
+          }
+        end,
+        images: model.images.map do |i|
+          {
+            id: i.id,
+            filename: i.filename
+          }
+        end,
+        attachments: model.attachments.map do |i|
+          {
+            id: i.id,
+            filename: i.filename
+          }
+        end
+      }
+    }
+  end
+  # rubocop:enable Metrics/MethodLength
 
   def update
     not_authorized! unless privileged_user?
     @model = fetch_model
     ApplicationRecord.transaction do
       if save_model @model
-        head :ok
+        render status: :ok, json: { id: @model.id }
       else
         render status: :bad_request,
                plain: @model.errors.full_messages.uniq.join(', ')

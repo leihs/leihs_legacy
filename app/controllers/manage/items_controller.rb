@@ -54,43 +54,52 @@ class Manage::ItemsController < Manage::ApplicationController
   # end
 
   def create
-    @item = Item.new(owner: current_inventory_pool)
-    @item.skip_serial_number_validation = skip_serial_number_validation_param
+    ApplicationRecord.transaction do
+      @item = Item.new(owner: current_inventory_pool)
+      @item.skip_serial_number_validation = skip_serial_number_validation_param
 
-    check_fields_for_write_permissions
+      check_fields_for_write_permissions
 
-    unless @item.errors.any?
-      @item.attributes = item_params
-      if item_params[:room_id].blank? and @item.license?
-        @item.room = Room.general_general
+      unless @item.errors.any?
+        @item.attributes = item_params
+        if item_params[:room_id].blank? and @item.license?
+          @item.room = Room.general_general
+        end
+        saved = @item.save
+
+        params[:child_items]&.each do |child_id|
+          child = Item.find(child_id)
+          child.skip_serial_number_validation = true
+          child.parent = @item
+          child.save!
+        end
       end
-      saved = @item.save
-    end
 
-    respond_to do |format|
-      format.json do
-        if saved
-          if params[:copy]
-            render(status: :ok,
-                   json: { id: @item.id,
-                           redirect_url: \
-                             manage_copy_item_path(current_inventory_pool,
-                                                   @item.id) })
+      respond_to do |format|
+        format.json do
+          if saved
+            if params[:copy]
+              render(status: :ok,
+                     json: { id: @item.id,
+                             redirect_url: \
+                               manage_copy_item_path(current_inventory_pool,
+                                                     @item.id) })
+            else
+              json = @item.as_json(JSON_SPEC).to_json
+              render(status: :ok, json: json)
+            end
           else
-            json = @item.as_json(JSON_SPEC).to_json
-            render(status: :ok, json: json)
-          end
-        else
-          if @item
-            render \
-              json: {
-                message: item_errors_full_messages,
-                can_bypass_unique_serial_number_validation: \
-                  can_bypass_unique_serial_number_validation?(@item)
-              },
-              status: :bad_request
-          else
-            render json: {}, status: :not_found
+            if @item
+              render \
+                json: {
+                  message: item_errors_full_messages,
+                  can_bypass_unique_serial_number_validation: \
+                    can_bypass_unique_serial_number_validation?(@item)
+                },
+                status: :bad_request
+            else
+              render json: {}, status: :not_found
+            end
           end
         end
       end
@@ -98,61 +107,56 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def update
-    puts ''
-    puts ''
-    puts ''
-    puts ''
-    puts ''
-    puts ''
-    puts ''
-    puts '#############################################################'
-    puts params.as_json
-    puts '#############################################################'
-    puts ''
-    puts ''
-    puts ''
-    puts ''
-    puts ''
+    ApplicationRecord.transaction do
 
-    fetch_item_by_id
+      fetch_item_by_id
 
-    if @item
-      @item.skip_serial_number_validation = skip_serial_number_validation_param
+      if @item
+        @item.skip_serial_number_validation = skip_serial_number_validation_param
 
-      check_fields_for_write_permissions
+        check_fields_for_write_permissions
 
-      unless @item.errors.any?
-        # NOTE avoid to lose already stored properties
-        if item_params[:properties]
-          item_params[:properties] = \
-            @item.properties.merge item_params[:properties].to_unsafe_hash
-        end
-        saved = @item.update_attributes(item_params)
-      end
-    end
-    respond_to do |format|
-      format.json do
-        if saved
-          if params[:copy]
-            render(status: :ok,
-                   json: { redirect_url: \
-                             manage_copy_item_path(current_inventory_pool,
-                                                   @item.id) })
-          else
-            json = @item.as_json(JSON_SPEC).to_json
-            render(status: :ok, json: json)
+        unless @item.errors.any?
+          # NOTE avoid to lose already stored properties
+          if item_params[:properties]
+            item_params[:properties] = \
+              @item.properties.merge item_params[:properties].to_unsafe_hash
           end
-        else
-          if @item
-            render \
-              json: {
-                message: item_errors_full_messages,
-                can_bypass_unique_serial_number_validation: \
-                  can_bypass_unique_serial_number_validation?(@item)
-              },
-              status: :bad_request
+          @item.children = []
+          saved = @item.update_attributes(item_params)
+
+          params[:child_items]&.each do |child_id|
+            child = Item.find(child_id)
+            child.parent = @item
+            child.save!
+          end
+        end
+      end
+
+      respond_to do |format|
+        format.json do
+          if saved
+            if params[:copy]
+              render(status: :ok,
+                     json: { redirect_url: \
+                               manage_copy_item_path(current_inventory_pool,
+                                                     @item.id) })
+            else
+              json = @item.as_json(JSON_SPEC).to_json
+              render(status: :ok, json: json)
+            end
           else
-            render json: {}, status: :not_found
+            if @item
+              render \
+                json: {
+                  message: item_errors_full_messages,
+                  can_bypass_unique_serial_number_validation: \
+                    can_bypass_unique_serial_number_validation?(@item)
+                },
+                status: :bad_request
+            else
+              render json: {}, status: :not_found
+            end
           end
         end
       end
@@ -214,16 +218,23 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def new
+    save_path = manage_create_item_path
+
+    next_code = Item.proposed_inventory_code(current_inventory_pool)
+    if params[:forPackage] == 'true'
+      next_code = 'P-' + next_code
+    end
     @props = {
-      next_code: Item.proposed_inventory_code(current_inventory_pool),
+      next_code: next_code,
       lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
       highest_code: Item.proposed_inventory_code(current_inventory_pool, :highest),
       inventory_pool: current_inventory_pool,
       is_inventory_relevant: (super_user? ? true : false),
-      save_path: manage_create_item_path,
+      save_path: save_path,
       store_attachment_path: manage_item_store_attachment_react_path,
       inventory_path: manage_inventory_path,
       item_type: (params[:type] == 'license' ? 'license' : 'item'),
+      for_package: params[:forPackage] == 'true',
       return_url: (params[:return_url] ? params[:return_url] : nil)
     }
   end
@@ -280,7 +291,8 @@ class Manage::ItemsController < Manage::ApplicationController
       children: children,
       attachments: attachments,
       model_attachments: model_attachments,
-      return_url: (params[:return_url] ? params[:return_url] : nil)
+      return_url: (params[:return_url] ? params[:return_url] : nil),
+      for_package: item.model.is_package
     }
   end
 

@@ -395,7 +395,9 @@ When /^I (?:enter|edit)? ?the following details$/ do |table|
   find('.button.green', text: _('Save'))
   @table_hashes = table.hashes
   @table_hashes.each do |row|
-    find('.field .row', match: :prefer_exact, text: row['Field']).find(:xpath, './/input | .//textarea').set row['Value']
+    input = find('.field .row', match: :prefer_exact, text: row['Field']).find(:xpath, './/input | .//textarea')
+    input.set ''
+    input.set row['Value']
   end
 end
 

@@ -229,7 +229,6 @@
     },
 
     _renderSoftwareDetail() {
-      // debugger
       if(this._isLicense() && (this._hasTechnicalDetail() || this._hasAttachments())) {
         return _.compact([
           <div key='separator' className='separated-top margin-bottom-m'></div>
@@ -245,6 +244,179 @@
       } else {
         return null
       }
+    },
+
+    _renderAutocomplete() {
+
+      var makeCall = (term, callback) => {
+
+        window.leihsAjax.getAjax(
+          '/manage/' + this.props.createItemProps.inventory_pool.id + '/items?paginate=true&search_term=' + term + '&not_packaged=true&packages=false&retired=false',
+          {},
+          (status, response) => {
+
+            var l = window.lodash
+
+
+            var ids = l.join(
+              l.map(
+                response,
+                (r) => '&' + encodeURIComponent('ids[]') + '=' + r.model_id
+              ),
+              ''
+            )
+
+            window.leihsAjax.getAjax(
+              '/manage/' + this.props.createItemProps.inventory_pool.id + '/models?paginate=false' + ids,
+              {},
+              (status2, response2) => {
+
+                callback(
+                  _.map(
+                    response,
+                    (r) => {
+
+                      var model = l.find(response2, (m) => m.id == r.model_id)
+
+
+                      return {
+                        id: r.id,
+                        label: r.inventory_code,
+                        currentLocation: r.current_location,
+                        inventoryCode: r.inventory_code,
+                        value: {
+                          item: l.cloneDeep(r),
+                          model: l.cloneDeep(model)
+                        }
+                      }
+                    }
+                  )
+                )
+
+
+
+
+              }
+            )
+
+
+
+          }
+        )
+      }
+
+      var liARenderer = (row) => {
+        return (
+          <a className='ui-menu-item-wrapper'>
+            <div className='row text-ellipsis'>
+              <div className='col1of3'>
+                <strong>{row.inventoryCode}</strong>
+              </div>
+              <div className='col2of3 text-ellipsis' title={this._renderModelName(row.value.model)}>
+                {this._renderModelName(row.value.model)}
+              </div>
+            </div>
+          </a>
+        )
+      }
+
+
+      return (
+        <BasicAutocomplete
+          inputClassName='has-addon width-full'
+          element='div'
+          inputId='search-item'
+          dropdownWidth='424px'
+          label={''}
+          _makeCall={makeCall}
+          onChange={this.props.onSelectChildItem}
+          wrapperStyle={{display: 'inline-block', clear: 'none', marginRight: '10px'}}
+          liARenderer={liARenderer}
+          resetAfterSelection={true}
+        />
+      )
+    },
+
+    _renderModelName(model) {
+      if(model.version) {
+        return model.product + ' ' + model.version
+      } else {
+        return model.product
+      }
+
+    },
+
+
+
+    _renderSelectedItems() {
+
+      return _.map(
+        this.props.packageChildItems,
+        (i) => {
+          return (
+            <div key={i.item.id} className='row emboss padding-bottom-xxs margin-bottom-xxs' data-id='00231cb7-331d-4bf4-94f8-a22c5a1f03b0' data-new='' data-type='inline-entry'>
+              <div className='row padding-inset-xxs'>
+                <div className='col1of4 padding-left-s padding-top-xs'>
+                  <strong className='font-size-m inline-block'>
+                    {i.item.inventory_code}
+                  </strong>
+                </div>
+                <div className='col2of4 padding-top-xs'>
+                  {this._renderModelName(i.model)}
+                </div>
+                <div className='col1of4 text-align-right'>
+                  <button onClick={(e) => this.props.onRemoveChildItem(i.item.id)} className='button small inset' data-remove='' type='button'>{_jed('Remove')}</button>
+                </div>
+              </div>
+            </div>
+          )
+        }
+      )
+
+
+    },
+
+
+    _renderPackageTitle() {
+
+      if(!this.props.createItemProps.for_package) {
+        return null
+      }
+
+      return (
+        <h2 className='headline-m padding-bottom-m'>{_jed('Package')}</h2>
+      )
+
+    },
+
+
+    _renderPackageSelectItem() {
+
+      if(!this.props.createItemProps.for_package) {
+        return null
+      }
+
+      return (
+        <div className='margin-bottom-m'>
+          <h2 className='headline-m padding-bottom-m'>{_jed('Content')}</h2>
+          <div className='row emboss margin-vertical-xxs margin-right-xs'>
+            <div className='row padding-inset-xs'>
+              <div className='col1of2 padding-vertical-xs'>
+                <strong className='font-size-m inline-block'>{_jed('Add %s', _jed('Item'))}</strong>
+              </div>
+              <div className='col1of2'>
+                <div className='row'>
+                  {this._renderAutocomplete()}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='row' id='items'>
+            {this._renderSelectedItems()}
+          </div>
+        </div>
+      )
+
     },
 
     render () {
@@ -279,10 +451,17 @@
       }
 
 
+      var formClass = null
+      if(this.props.createItemProps.for_package) {
+        formClass = 'padding-top-s'
+      }
+
       return (
         <div className='padding-horizontal-m'>
           {this._renderNotifications()}
-          <form id='form'>
+          {this._renderPackageSelectItem()}
+          <form id='form' className={formClass}>
+            {this._renderPackageTitle()}
             <input disabled='disabled' name='copy' type='hidden' />
             {RenderCreateItem._renderColumns(this.props.fields, this.props.fieldModels,
               this.props.onChange, this.props.showInvalids, this.props.onClose, fieldRenderer)}

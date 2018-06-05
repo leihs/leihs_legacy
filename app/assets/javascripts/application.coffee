@@ -69,6 +69,7 @@ window.App.Modules ?= {}
 appPack = window.Packs.application
 window.React = appPack.React
 window.ReactDOM = appPack.ReactDOM
+window.PropTypes = appPack.PropTypes
 window.createReactClass = appPack.createReactClass
 
 window.lodash = appPack.lodash

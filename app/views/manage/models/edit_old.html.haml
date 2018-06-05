@@ -1,0 +1,36 @@
+- content_for :title, @model.is_a?(Software) ? _("Edit Software") : _("Edit Model")
+- content_for :inventory_section, "active"
+- content_for :head
+
+#edit-model-view.wrapper.margin-top-m
+
+  = render :partial => 'manage/tabs/inventory', :locals => {:active_tab => :inventory}
+
+  .row.content-wrapper.min-height-xl.min-width-full.straight-top
+
+    .margin-top-l.padding-horizontal-m
+      .row
+        .col1of2
+          %h1.headline-l= yield :title
+          %h2.headline-s.light= _("Make changes and save")
+        .col1of2.text-align-right
+
+          = link_to _('Cancel'), (params[:return_url] ? params[:return_url] : :back), class: 'button grey'
+
+          %button#save.button.green{:autocomplete => :off}
+            = _("Save %s") % ( @model.is_a?(Software) ? _("Software") : _("Model") )
+
+    .padding-inset-m
+
+      .row.padding-top-s
+
+        = render :partial => "form"
+
+:coffeescript
+
+  App.Model.addRecord new App.Model #{@model.to_json}
+
+  jQuery -> new App.ModelsEditController
+    el: $("#edit-model-view")
+    model: App.Model.find "#{@model.id}"
+    manufacturers: #{Kernel.const_get(@model.type).manufacturers.to_json}

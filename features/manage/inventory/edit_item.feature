@@ -29,10 +29,6 @@ Feature: Editing an item
       | - Move -                   |
       | Move                       |
       | Target area                |
-      | - Toni Ankunftskontrolle - |
-      | Check-In Date              |
-      | Check-In State             |
-      | Check-In Note              |
       | - General Information -    |
       | Serial Number              |
       | MAC-Address                |
@@ -53,6 +49,10 @@ Feature: Editing an item
       | Supplier                   |
       | Warranty expiration        |
       | Contract expiration        |
+      | - Toni Ankunftskontrolle - |
+      | Check-In Date              |
+      | Check-In State             |
+      | Check-In Note              |
 
   Scenario: Delete supplier
     Given I edit an item that belongs to the current inventory pool

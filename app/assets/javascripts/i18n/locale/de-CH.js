@@ -4681,6 +4681,10 @@ window.i18n.locale_data = {
       "Total quantity of borrowable and not retired items": [
          null,
          "Totale Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"
+      ],
+      "Content": [
+         null,
+         "Inhalt"
       ]
    }
 }

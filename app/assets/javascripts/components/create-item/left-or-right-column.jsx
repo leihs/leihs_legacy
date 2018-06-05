@@ -83,7 +83,6 @@ window.LeftOrRightColumn = {
 
 
   _columnedGroups(fields) {
-
     return this._columnedGroupsRecursive(
       {
         groupsToDivide: this._groupRootFields(fields),
@@ -143,7 +142,10 @@ window.LeftOrRightColumn = {
       var right = params.right
 
 
-      if(this._countFieldsForColum(left, allFields) <= this._countFieldsForColum(right, allFields)) {
+      // Just order by group count, not anymore by field count, because package
+      // view should look the same as item view.
+      // Old: if(this._countFieldsForColum(left, allFields) <= this._countFieldsForColum(right, allFields)) {
+      if(left.length <= right.length) {
         return this._columnedGroupsRecursive({
           groupsToDivide: _.rest(groupsToDivide),
           left: left.concat(_.first(groupsToDivide)),

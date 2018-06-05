@@ -74,7 +74,8 @@
 
           this.props._onSelect({
             label: _jed(row.label),
-            id: row.id
+            id: row.id,
+            value: row.value
           })
         }
       }
@@ -117,7 +118,8 @@
 
       this.props._onSelect({
         label: _jed(row.label),
-        id: row.id
+        id: row.id,
+        value: row.value
       })
     },
 

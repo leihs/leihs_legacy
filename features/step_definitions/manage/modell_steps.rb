@@ -131,7 +131,7 @@ Given(/^I edit a model that exists and has group capacities allocated to it$/) d
 end
 
 When(/^I remove existing allocations$/) do
-  find('.field', match: :first, text: _('Allocations')).all('[data-remove]').each {|comp| comp.click}
+  find('.field', match: :first, text: _('Allocations')).all('button', text: _('Remove')).each {|comp| comp.click}
 end
 
 When(/^I add new allocations$/) do

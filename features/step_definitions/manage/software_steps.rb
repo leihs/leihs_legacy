@@ -692,6 +692,7 @@ Given(/^a software product with more than (\d+) text rows in field "(.*?)" exist
                  m.update_attributes(technical_detail: td.join("\r\n"))
                  m
                end
+               r
              else
                raise
            end
@@ -704,7 +705,7 @@ end
 When(/^I click in the field "(.*?)"$/) do |arg1|
   case arg1
     when 'Software Informationen'
-      el = find("textarea[name='model[technical_detail]']")
+      el = find('#technical_details textarea')
       @original_size = el.native.css_value('height')
       el.click
     else
@@ -713,7 +714,7 @@ When(/^I click in the field "(.*?)"$/) do |arg1|
 end
 
 When(/^this field grows up till showing the complete text$/) do
-  expect(find("textarea[name='model[technical_detail]']").native.css_value('height').to_i).to be > @original_size.to_i
+  expect(find("#technical_details textarea").native.css_value('height').to_i).to be > @original_size.to_i
 end
 
 When(/^I release the focus from this field$/) do
@@ -721,7 +722,7 @@ When(/^I release the focus from this field$/) do
 end
 
 Then(/^this field shrinks back to the original size$/) do
-  expect(find("textarea[name='model[technical_detail]']").native.css_value('height').to_i).to eq @original_size.to_i
+  expect(find("#technical_details textarea").native.css_value('height').to_i).to eq @original_size.to_i
 end
 
 When(/^I change the value of the note$/) do

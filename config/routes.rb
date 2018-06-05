@@ -234,6 +234,7 @@ Rails.application.routes.draw do
       get     'models/:id',                   to: "models#show"
       delete  'models/:id',                   to: "models#destroy"
       get     'models/:id/edit',              to: "models#edit",      as: "edit_model"
+      get     'models/:id/edit_old',              to: "models#edit_old",      as: "edit_old_model"
       post    'models/:id/upload/image',      to: "models#upload",    type: "image"
       post    'models/:id/upload/attachment', to: "models#upload",    type: "attachment"
 
@@ -256,6 +257,7 @@ Rails.application.routes.draw do
       # Items
       get   'items',                          to: "items#index"
       post  'items',                          to: "items#create",               as: "create_item"
+      post  'items/create_package',                          to: "items#create_package",               as: "create_package"
       get   'items/new',                      to: "items#new",                  as: "new_item"
       post   'items/store_attachment_react',                to: "items#store_attachment_react",            as: "item_store_attachment_react"
       get   'items/current_locations',        to: "items#current_locations"

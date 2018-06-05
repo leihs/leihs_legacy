@@ -3471,3 +3471,6 @@ msgstr ""
 
 msgid "Total quantity of borrowable and not retired items"
 msgstr ""
+
+msgid "Content"
+msgstr ""
