@@ -229,7 +229,7 @@ window.InventoryHelperRenderer = {
       var term = result.term
       var id = result.id
       if(id) {
-        onChangeItemId(id)
+        onChangeItemId(id, term)
       }
     }
 

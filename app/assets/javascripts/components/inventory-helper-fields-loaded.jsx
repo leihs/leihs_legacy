@@ -295,9 +295,17 @@
 
     },
 
-    onChangeItemId(id) {
+    onChangeItemId(id, term) {
       this.setState({
-        autocompleteItemId: id
+        autocompleteItemId: id,
+        autocompleteItemTerm: term
+      })
+    },
+
+    cancelSelection() {
+      this.setState({
+        autocompleteItemId: null,
+        autocompleteItemTerm: null
       })
     },
 
@@ -530,6 +538,25 @@
 
     },
 
+    renderManualInput() {
+      if(this.state.autocompleteItemId) {
+        return (
+          <div className='row' style={{height: '50px', marginLeft: '5px', border: '1px dashed #bbb', borderRadius: '5px', padding: '5px', marginTop: '10px', marginBottom: '10px', textAlign: 'center'}}>
+            <div style={{width: '100%', display: 'inline-block'}}>
+              <div className='row' style={{fontSize: '16px', color: 'rgb(153, 153, 153)', display: 'inline-block', clear: 'none', width: '50%', marginRight: '10px'}}>
+                {this.state.autocompleteItemTerm}
+                <i className='fa fa-times-circle' style={{margin: '0px 10px'}} onClick={(e) => this.cancelSelection()}></i>
+              </div>
+              <button onClick={(e) => this.onApplyBySearch(e)} className='button green' type='submit' >{_jed('and assign fields')}</button>
+            </div>
+          </div>
+
+        )
+      } else {
+        return window.InventoryHelperRenderer.renderManualInput(this.props.inventory_pool_id, this.onChangeItemId, this.onApplyBySearch)
+      }
+    },
+
     renderItem() {
 
       return (
@@ -539,7 +566,7 @@
               {window.InventoryHelperRenderer.renderBarcodeInput(this.setBarcodeRef, this.onApplyByBarcode)}
             </div>
             <div className='col1of2'>
-              {window.InventoryHelperRenderer.renderManualInput(this.props.inventory_pool_id, this.onChangeItemId, this.onApplyBySearch)}
+              {this.renderManualInput()}
             </div>
           </div>
           <div className='row'>
