@@ -225,7 +225,7 @@ module LeihsAdmin
 
       objects = result.map do |row|
 
-        {
+        object = {
           _('Type') => if row['type'] == 'Model'
                          'Item'
                        elsif row['type'] == 'Software'
@@ -261,17 +261,25 @@ module LeihsAdmin
           _('Invoice Date') => row['invoice_date'],
           _('Supplier') => row['supplier_name'],
           _('Initial Price') => row['price'],
-          _('Additional Data') => \
-            if row['field_properties']
-              JSON.parse(row['field_properties']).map do |e|
-                e['label'].to_s + ': ' + e['value'].to_s
-              end.join('; ')
-            end,
+          # _('Additional Data') => \
+          #   if row['field_properties']
+          #     JSON.parse(row['field_properties']).map do |e|
+          #       e['label'].to_s + ': ' + e['value'].to_s
+          #     end.join('; ')
+          #   end,
           _('Categories') => categories_to_string(row['categories']),
           _('Accessories') => accessories_to_string(row['accessories']),
           _('Compatibles') => compatibles_to_string(row['compatibles']),
           _('Properties') => properties_to_string(row['properties'])
         }
+
+        if row['field_properties']
+          JSON.parse(row['field_properties']).each do |p|
+            object[p['label']] = p['value']
+          end
+        end
+
+        object
       end
       objects
     end
