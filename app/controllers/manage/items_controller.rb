@@ -128,6 +128,7 @@ class Manage::ItemsController < Manage::ApplicationController
           params[:child_items]&.each do |child_id|
             child = Item.find(child_id)
             child.parent = @item
+            child.skip_serial_number_validation = true
             child.save!
           end
         end
