@@ -78,9 +78,7 @@ jobs:
               timeout: 10 Minutes
               body: |
                 set -eu
-                # rails-webpacker wants to use yarn, so put node_modules in PATH and install it
                 export PATH=./node_modules/.bin:~/.rubies/$RUBY/bin:$PATH
-                npm install yarn
 
                 mv public/assets tmp/checked_in_assets
                 bundle exec rake app:i18n:po2json
@@ -93,6 +91,14 @@ jobs:
 
                 # don't keep the attachment if there was no failure!
                 rm tmp/attach/assets.tar.gz
+
+        node_modules are checked in:
+          scripts:
+            test:
+              body: |
+                set -eu
+                export PATH=./node_modules/.bin:~/.rubies/$RUBY/bin:$PATH
+                yarn check --integrity --verify-tree --offline
 
         "rails bug 25198 is open":
           name: "Check if Rails bug 25198 is still open. If it isn't we have to fix our code."

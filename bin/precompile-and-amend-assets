@@ -10,8 +10,7 @@ set -exu
 DO_RESET=$(test "${1:-""}" == "--no-reset" || echo 1)
 
 # submodules to handle
-SUBS="public/assets"
-#SUBS="node_modules public/assets"
+SUBS="node_modules public/assets"
 
 # sanity check: correct repo?
 {
