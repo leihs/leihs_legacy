@@ -497,12 +497,19 @@
     onApplyByBarcode(event) {
       event.preventDefault()
 
-      var inventoryCode = this.barcodeInput.value
-      this.barcodeInput.value = ''
+      this.setState({
+        autocompleteItemId: null,
+        autocompleteItemTerm: null
+      }, () => {
 
-      this.hideFlash()
+        var inventoryCode = this.barcodeInput.value
+        this.barcodeInput.value = ''
 
-      this.checkApplyByBarcode(inventoryCode)
+        this.hideFlash()
+
+        this.checkApplyByBarcode(inventoryCode)
+      })
+
     },
 
     renderNotOwner() {
