@@ -59,7 +59,7 @@ class window.App.SearchOverviewController extends Spine.Controller
         per_page: @previewAmount
         search_term: @searchTerm
     .done (data, status, xhr)=>
-      software = (App.Software.addRecord App.Software(datum) for datum in data)
+      software = (App.Software.addRecord new App.Software(datum) for datum in data)
       @fetchAvailability(software).done =>
         @render @software, "manage/views/software/line", software, xhr
 
