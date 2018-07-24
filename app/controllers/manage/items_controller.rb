@@ -122,14 +122,17 @@ class Manage::ItemsController < Manage::ApplicationController
             item_params[:properties] = \
               @item.properties.merge item_params[:properties].to_unsafe_hash
           end
-          @item.children = []
           saved = @item.update_attributes(item_params)
 
-          params[:child_items]&.each do |child_id|
-            child = Item.find(child_id)
-            child.parent = @item
-            child.skip_serial_number_validation = true
-            child.save!
+          if params[:child_items]
+            @item.children = []
+            @item.save!
+            params[:child_items]&.each do |child_id|
+              child = Item.find(child_id)
+              child.parent = @item
+              child.skip_serial_number_validation = true
+              child.save!
+            end
           end
         end
       end
