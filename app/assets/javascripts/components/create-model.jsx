@@ -245,7 +245,7 @@
 
 
           this.createFieldModel({
-            type: 'text',
+            type: 'textarea',
             key: 'description',
             label: 'Description',
             mandatory: false,
@@ -1195,15 +1195,15 @@
         )
       }
 
-      if(field.key == 'software_information' || field.key == 'technical_details') {
+      // if(field.key == 'software_information' || field.key == 'technical_details' || field.key == 'internal_description' || field.key == 'hand_over_notes' || field.key == 'description') {
         return (
           <AutosizeTextarea refkey={field.key} onChange={(e) => onChange(e)} value={field.state.text} autoComplete='off' className='width-full' name='model[technical_detail]' rows='6' type='text' />
         )
-      } else {
-        return (
-          <textarea onChange={(e) => onChange(e)} value={field.state.text} autoComplete='off' className='width-full' name='model[technical_detail]' rows='6' type='text'></textarea>
-        )
-      }
+      // } else {
+      //   return (
+      //     <textarea onChange={(e) => onChange(e)} value={field.state.text} autoComplete='off' className='width-full' name='model[technical_detail]' rows='6' type='text'></textarea>
+      //   )
+      // }
 
     },
 
