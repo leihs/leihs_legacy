@@ -2,8 +2,7 @@
 require 'yaml'
 
 STRICT_MODE = true
-ENGINES = ['leihs_admin',
-           'procurement']
+ENGINES = ['leihs_admin']
 EXCLUDE_TAGS = %w(@manual
                   @broken
                   @flapping

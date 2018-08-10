@@ -68,7 +68,6 @@ Rails.application.routes.draw do
   get 'release', to: 'release_info#index', as: 'release_info'
 
   mount LeihsAdmin::Engine => '/admin', :as => 'admin'
-  mount Procurement::Engine => '/procurement', :as => 'procurement'
 
   # Borrow Section
   namespace :borrow do

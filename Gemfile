@@ -1,7 +1,6 @@
 eval_gemfile Pathname(File.dirname(File.absolute_path(__FILE__))).join('database', 'Gemfile')
 
 gem 'leihs_admin', path: "engines/leihs_admin"
-gem 'procurement', path: "engines/procurement"
 
 gem 'puma'
 

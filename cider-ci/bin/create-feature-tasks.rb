@@ -3,7 +3,7 @@ require 'yaml'
 require 'pry'
 
 STRICT_MODE = true
-ENGINES = ['leihs_admin', 'procurement']
+ENGINES = ['leihs_admin']
 
 def task_hash(name, exec)
   h = { 'name' => name,

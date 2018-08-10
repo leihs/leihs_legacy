@@ -37,7 +37,6 @@ public/dev-assets
 public/attachments
 public/images/attachments
 public/images/graphs/*
-public/system/procurement/main_categories/images
 tmp/
 /public/packs
 /public/packs-test

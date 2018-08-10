@@ -120,7 +120,6 @@ Feature: Rooms
     And I am logged in as admin
     And there is a general room
     And there are no items for the general room
-    And there are no procurement requests for the general room
     When I visit the list of rooms
     And I search for the name of the general room
     And I scrool down until I see the line for the general room

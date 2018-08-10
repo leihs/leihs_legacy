@@ -42,18 +42,6 @@ leihs-admin-scenarios:
   type: job
   job_key: leihs-admin-scenarios
   states: [passed]
-procurement-code-checks:
-  type: job
-  job_key: procurement-code-checks
-  states: [passed]
-procurement-scenarios:
-  type: job
-  job_key: procurement-scenarios
-  states: [passed]
-procurement-flapping-scenarios:
-  type: job
-  job_key: procurement-flapping-scenarios
-  states: [passed]
 rspec-model-tests:
   type: job
   job_key: rspec-model-tests

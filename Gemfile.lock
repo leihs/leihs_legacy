@@ -50,20 +50,6 @@ PATH
       rails-assets-jquery-ujs (~> 1.0)
       rails-assets-select2 (~> 4.0)
 
-PATH
-  remote: engines/procurement
-  specs:
-    procurement (0.0.1)
-      acts_as_tree (~> 2.2)
-      money-rails (~> 1.4)
-      pundit (~> 1.1)
-      rails (~> 5.0.0)
-      rails-assets-bootstrap (~> 3.3)
-      rails-assets-jquery (~> 1.5)
-      rails-assets-jquery-tokeninput (~> 1.7)
-      rails-assets-jquery-ujs (~> 1.0)
-      remotipart (~> 1.2)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -106,8 +92,6 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    acts_as_tree (2.6.1)
-      activerecord (>= 3.0.0)
     adamantium (0.2.0)
       ice_nine (~> 0.11.0)
       memoizable (~> 0.4.0)
@@ -353,8 +337,6 @@ GEM
     public_suffix (2.0.5)
     puma (3.9.1)
     puma (3.9.1-java)
-    pundit (1.1.0)
-      activesupport (>= 3.0.0)
     rack (2.0.4)
     rack-contrib (2.0.1)
       rack (~> 2.0)
@@ -385,8 +367,6 @@ GEM
     rails-assets-jquery (1.10.2)
     rails-assets-jquery-autosize (1.18.18)
       rails-assets-jquery (>= 1.7)
-    rails-assets-jquery-tokeninput (1.7.0)
-      rails-assets-jquery (>= 1.5)
     rails-assets-jquery-ui (1.12.1)
       rails-assets-jquery (>= 1.6)
     rails-assets-jquery-ujs (1.2.2)
@@ -441,7 +421,6 @@ GEM
       archive-tar-minitar (>= 0.5.2)
       json (>= 1.4.6)
       rest-client (>= 1.7.2)
-    remotipart (1.3.1)
     require_all (1.4.0)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
@@ -610,7 +589,6 @@ DEPENDENCIES
   pg
   pg_tasks!
   presentoir!
-  procurement!
   pry
   pry-rails
   puma

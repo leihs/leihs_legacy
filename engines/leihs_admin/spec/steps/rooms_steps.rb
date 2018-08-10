@@ -192,13 +192,6 @@ module LeihsAdmin
         end
       end
 
-      step 'there are no procurement requests for the general room' do
-        room = FactoryGirl.create(:room)
-        Procurement::Request.where(room_id: @room.id).each do |request|
-          request.update_column(:room_id, room.id)
-        end
-      end
-
       step 'I scrool down until I see the line for the general room' do
         scroll_down 10000 until first(".row[data-id='#{@room.id}']")
       end

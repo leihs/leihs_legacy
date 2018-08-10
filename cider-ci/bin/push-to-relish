@@ -8,5 +8,3 @@ cd spec/
 bundle exec relish push leihs/main-2
 cd ../engines/leihs_admin/spec
 bundle exec relish push leihs/admin
-cd ../../procurement/spec
-bundle exec relish push leihs/procurement
