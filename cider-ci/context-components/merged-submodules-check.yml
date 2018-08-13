@@ -1,5 +1,6 @@
 git-submodules-merged:
-  name: "Git submodules are all merged to origin/master"
+  name: "Git submodules are all merged to origin/v5/master"
+  # name: "Git submodules are all merged to origin/master"
   scripts:
     test:
       body:
