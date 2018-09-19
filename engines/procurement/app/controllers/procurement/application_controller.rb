@@ -8,16 +8,7 @@ module Procurement
     helper_method :procurement_admin?
     helper_method :procurement_or_leihs_admin?
 
-    before_action do
-      unless current_user
-        # raise Errors::UnauthorizedError
-        redirect_to main_app.login_path
-      end
-      unless procurement_access?
-        # raise Errors::ForbiddenError
-        redirect_to main_app.root_path
-      end
-    end
+    before_action :before_action_check_access
 
     def root
       redirect_to overview_requests_path if current_user
@@ -50,6 +41,17 @@ module Procurement
       procurement_requester? or
         procurement_inspector? or
         procurement_or_leihs_admin?
+    end
+
+    def before_action_check_access
+      unless current_user
+        # raise Errors::UnauthorizedError
+        redirect_to main_app.login_path and return
+      end
+      unless procurement_access?
+        # raise Errors::ForbiddenError
+        redirect_to main_app.root_path and return
+      end
     end
 
   end
