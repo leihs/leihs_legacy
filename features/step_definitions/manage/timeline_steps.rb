@@ -34,9 +34,8 @@ end
 def do_login(login, password)
   do_logout
 
-  click_on _('Login')
-  fill_in _('Username'), with: login
-  fill_in _('Password'), with: password
+  user = User.find_by_login(login)
+  fill_in :email, with: user.email
   click_on _('Login')
 end
 

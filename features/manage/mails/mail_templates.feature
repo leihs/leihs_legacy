@@ -111,7 +111,8 @@ A-Ausleihe
   Scenario: Mail templates edit permissions
     Given I am Pius
     When I navigate to the mail templates list in the current inventory pool
-    Then I am redirected to the login page
+    Then I don't see a list of mail templates
+    And I see a notification that I don't have sufficient permissions
     Given I am Mike
     When I navigate to the mail templates list in the current inventory pool
     Then I see a list of mail templates

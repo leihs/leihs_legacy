@@ -21,8 +21,7 @@ module Manage
       step 'I am logged in as the lending manager' do
         I18n.locale = @lending_manager.language.locale_name
         visit login_path
-        fill_in :username, with: @lending_manager.login
-        fill_in :password, with: 'password'
+        fill_in :email, with: @lending_manager.email
         click_on _('Login')
       end
 

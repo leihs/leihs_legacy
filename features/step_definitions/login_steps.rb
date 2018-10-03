@@ -19,10 +19,8 @@ Given "I am logged in as '$username' with password '$password'" do |username, pa
   case Capybara.current_driver
     when /selenium/
       visit '/'
-      find("[href='#{login_path}']", match: :first).click
-      fill_in 'username', with: username
-      fill_in 'password', with: password
-      find("[type='submit']", match: :first).click
+      fill_in 'email', with: @current_user.email
+      click_on _('Login')
     when :rack_test
       step "I log in as '%s' with password '%s'" % [username, password]
   end
@@ -40,7 +38,7 @@ end
 When /^I log in as '([^']*)' with password '([^']*)'$/ do |username, password|
   @current_user = User.where(login: username.downcase).first
   @current_inventory_pool = @current_user.inventory_pools.managed.first
-  post '/authenticator/db/login', {login: {username: username, password: password}}
+  post '/sign_in', { email: @current_user.email }
 end
 
 Given /(his|her) password is '([^']*)'$/ do |foo,password|
@@ -75,9 +73,7 @@ end
 Given(/^I am logged in as "(.*?)"$/) do |persona|
   step 'I make sure I am logged out'
   @current_user = User.where(login: persona.downcase).first
-  click_on "Login"
-  find("input#username").set @current_user.login
-  find("input#password").set "password"
+  fill_in :email, with: @current_user.email
   click_on "Login"
   I18n.locale = if @current_user.language then @current_user.language.locale_name.to_sym else Language.default_language end
   step 'I visit the homepage'

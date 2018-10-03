@@ -15,10 +15,8 @@ When(/^I login as "(.*?)" via web interface$/) do |persona|
                   Language.default_language
                 end
   step 'I visit the homepage'
-  find("a[href='#{login_path}']", match: :first).click
-  fill_in 'username', with: persona.downcase
-  fill_in 'password', with: 'password'
-  find("[type='submit']", match: :first).click
+  fill_in 'email', with: @current_user.email
+  click_on _('Login')
 end
 
 When(/^I login as "(.*?)" via web interface using keyboard$/) do |persona|

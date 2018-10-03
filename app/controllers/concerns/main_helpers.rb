@@ -1,19 +1,10 @@
-# TODO: needs refactoring, in particular wrt. the required authenticated_system.rb
 module MainHelpers
   extend ActiveSupport::Concern
 
   included do
-    include Concerns::UserSessionController
     require File.join(Rails.root, 'lib', 'authenticated_system.rb')
     include AuthenticatedSystem
     include AppSettings
-
-    before_action :set_gettext_locale, :load_settings, :permit_params
-
-    # CSRF protection
-    protect_from_forgery with: :exception
-
-    protected
 
     helper_method(:current_inventory_pool,
                   :current_managed_inventory_pools,
@@ -36,33 +27,21 @@ module MainHelpers
     end
 
     def set_gettext_locale
-      language =
-          if params[:locale]
-            Language.where(locale_name: params[:locale]).first
-          elsif current_user
-            current_user.language
-          elsif session[:locale]
-            Language.where(locale_name: session[:locale]).first
-          end
-      language ||= Language.default_language
+      language = if params[:locale]
+                   Language.where(locale_name: params[:locale]).first
+                 elsif current_user
+                   current_user.language
+                 elsif session[:locale]
+                   Language.where(locale_name: session[:locale]).first
+                 else
+                   Language.default_language
+                 end
       unless language.nil?
         if current_user and (params[:locale] or current_user.language_id.nil?)
           current_user.update_attributes(language_id: language.id)
         end
         session[:locale] = language.locale_name
         I18n.locale = language.locale_name.to_sym
-      end
-    end
-
-    def load_settings
-      if not app_settings.try(:smtp_address) \
-        and logged_in? \
-        and not [admin.settings_path, main_app.logout_path].include? request.path
-        if current_user.is_admin
-          redirect_to admin.settings_path
-        else
-          raise 'Application settings are missing!'
-        end
       end
     end
 

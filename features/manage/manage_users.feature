@@ -11,18 +11,6 @@ Feature: Manage users
       | user      |
       | delegation|
 
-  @rack
-  Scenario Outline: As lending or inventory manager I can't access the admin area
-    Given I am <person>
-    When I try to access the admin area's user editing page
-    Then I can't access that page
-    When I try to access the admin area's user creation page
-    Then I can't access that page
-    Examples:
-      | person |
-      | Pius   |
-      | Mike   |
-
   Scenario: Add new user as inventory manager to an inventory pool
     Given I am Pius
     When I am looking at the user list

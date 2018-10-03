@@ -10,7 +10,6 @@ module Spec
 
     step 'I log out' do
       visit logout_path
-      find('#flash')
     end
 
     [:customer, :group_manager, :lending_manager, :inventory_manager]
@@ -72,9 +71,7 @@ module Spec
     end
 
     def login_as_current_user
-      click_on _('Login')
-      fill_in _('Username'), with: @current_user.login
-      fill_in _('Password'), with: 'password'
+      fill_in 'email', with: @current_user.email
       click_on _('Login')
     end
   end

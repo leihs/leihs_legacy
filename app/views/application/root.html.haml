@@ -11,9 +11,17 @@
           %h1.headline-xxl.text-shadow-white= _("Equipment Booking and Inventory Management System")
           %p.headline-m.padding-top-m.light.text-shadow-white= _("Manage inventory, place reservations on items and pick them up")
 
-      .col2of5
+      %form.col2of5#login-form{action: '/sign_in', method: :post}
 
-        .padding-inset-l.text-align-right
-          %a.button.large.green{:href => login_path}= _("Login")
+        .row
+          .col1of2
+
+            .padding-inset-l.text-align-right
+              %input{type: :text, name: 'email', placeholder: 'E-mail'}
+
+          .col1of2
+
+            .padding-inset-l.text-align-right
+              %button.button.large.green{type: :submit}= _("Login")
           
     %img.splashscreen-image.margin-right-l.margin-bottom-m{:src => image_path("leihs.png"), :style => "height: 397px; position: relative; float: right; width: 814px;"}

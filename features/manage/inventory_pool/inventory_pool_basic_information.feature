@@ -43,18 +43,19 @@ Feature: Basic information for inventory pools
     Then the newly created user has 'customer'-level access to all inventory pools that grant automatic access, but not to mine
     And in my inventory pool the user gets the role 'inventory manager'
 
-  #72676850
-  Scenario: Remove automatic access
-    Given I am Mike
-    And multiple inventory pools are granting automatic access
-    And I edit an inventory pool that is granting automatic access
-    When I disable automatic access
-    And I save
-    Then automatic access is disabled
-    Given I am Gino
-    And I am listing users
-    When I have created a user with login "username" and password "password"
-    Then the newly created user does not have access to that inventory pool
+  # TODO: enable after v5 finished
+  #
+  # Scenario: Remove automatic access
+  #   Given I am Mike
+  #   And multiple inventory pools are granting automatic access
+  #   And I edit an inventory pool that is granting automatic access
+  #   When I disable automatic access
+  #   And I save
+  #   Then automatic access is disabled
+  #   Given I am Gino
+  #   And I am listing users
+  #   When I have created a user with login "username" and password "password"
+  #   Then the newly created user does not have access to that inventory pool
 
   @rack
   Scenario: Enable automatic access to a new inventory pool

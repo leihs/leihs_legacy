@@ -68,9 +68,9 @@ class Manage::UsersController < Manage::ApplicationController
     end
 
     @user = User.new(params[:user])
-    @user.login = params[:db_auth][:login] if params.key?(:db_auth)
-    @user.entitlement_groups =
-      groups.map { |g| EntitlementGroup.find g['id'] } if groups
+    if groups
+      @user.entitlement_groups = groups.map { |g| EntitlementGroup.find g['id'] }
+    end
 
     begin
       User.transaction do
@@ -78,12 +78,12 @@ class Manage::UsersController < Manage::ApplicationController
         @user.save!
 
         unless @user.delegation?
-          DatabaseAuthentication.create!(params[:db_auth].merge(user: @user))
-          @user.update_attributes! \
-            authentication_system_id: \
-              AuthenticationSystem \
-                .find_by_class_name(DatabaseAuthentication.name)
-                .id
+          password = params[:db_auth][:password]
+          password_confirmation = params[:db_auth][:password_confirmation]
+          raise 'password mismatch' if password != password_confirmation
+          AuthenticationSystemUser.create!(user: @user,
+                                           authentication_system_id: 'password',
+                                           data: get_pw_hash(password))
         end
 
         unless params[:access_right][:role].to_sym == :no_access
@@ -102,7 +102,7 @@ class Manage::UsersController < Manage::ApplicationController
           end
         end
       end
-    rescue ActiveRecord::RecordInvalid => e
+    rescue => e
       respond_to do |format|
         format.html do
           flash.now[:error] = e.to_s
@@ -117,7 +117,7 @@ class Manage::UsersController < Manage::ApplicationController
   def edit
     @delegation_type = @user.delegation?
     @accessible_roles = get_accessible_roles_for_current_user
-    @db_auth = DatabaseAuthentication.find_by_user_id(@user.id)
+    @db_auth = AuthenticationSystemUser.find_by_user_id(@user.id)
     @access_right = @user.access_right_for current_inventory_pool
   end
 
@@ -135,15 +135,17 @@ class Manage::UsersController < Manage::ApplicationController
 
     begin
       User.transaction do
-        params[:user].merge!(login: params[:db_auth][:login]) if params[:db_auth]
         @user.delegated_user_ids = delegated_user_ids if delegated_user_ids
         @user.update_attributes! params[:user] if params[:user]
         if params[:db_auth]
-          dbauth = DatabaseAuthentication.find_or_create_by(user_id: @user.id)
-          dbauth.update_attributes! params[:db_auth].merge(user: @user)
-          auth_system = \
-            AuthenticationSystem.find_by_class_name(DatabaseAuthentication.name)
-          @user.update_attributes! authentication_system: auth_system
+          password = params[:db_auth][:password]
+          password_confirmation = params[:db_auth][:password_confirmation]
+          raise 'password mismatch' if password != password_confirmation
+          dbauth = AuthenticationSystemUser.find_or_create_by!(
+            user_id: @user.id,
+            authentication_system_id: 'password'
+          )
+          dbauth.update_attributes!(data: get_pw_hash(password))
         end
         @access_right = \
           AccessRight.find_or_initialize_by(user_id: @user.id,
@@ -288,4 +290,13 @@ class Manage::UsersController < Manage::ApplicationController
     end
   end
 
+  def get_pw_hash(password)
+    ActiveRecord::Base.connection.execute(<<-SQL.strip_heredoc)
+      SELECT crypt(
+        #{ActiveRecord::Base.sanitize(password)},
+        gen_salt('bf',10)
+      ) AS pw_hash
+    SQL
+    .first['pw_hash']
+  end
 end

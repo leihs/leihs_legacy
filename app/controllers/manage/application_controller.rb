@@ -10,7 +10,7 @@ class Manage::ApplicationController < ApplicationController
         head :unauthorized
       end
       respond_to do |format|
-        format.html { redirect_to login_path }
+        format.html { redirect_to root_path }
         format.json &error_response
         format.js &error_response
       end
@@ -93,10 +93,6 @@ class Manage::ApplicationController < ApplicationController
                 :lending_manager?,
                 :group_manager?)
 
-  # TODO: what's happening here? Explain the goal of this method
-  # looks like getter function, but is also a setter.
-  # Should only return the current inventory pool.
-  # Current inventory pool should be set elsewhere.
   def current_inventory_pool
     return @current_inventory_pool if @current_inventory_pool # OPTIMIZE
 
@@ -109,6 +105,9 @@ class Manage::ApplicationController < ApplicationController
     end
     if @current_inventory_pool
       session[:current_inventory_pool_id] = @current_inventory_pool.id
+      current_user.latest_inventory_pool_id_before_logout = \
+        @current_inventory_pool.id
+      current_user.save
     end
     @current_inventory_pool
   end

@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   include MainHelpers
-  include Concerns::UserSessionController
 
   layout 'splash'
 
@@ -8,17 +7,71 @@ class ApplicationController < ActionController::Base
   #       <https://github.com/charliesome/better_errors/issues/341>
   before_action :better_errors_hack, if: -> { Rails.env.development? }
 
+  before_action :authenticate
+  before_action :set_gettext_locale
+  before_action :permit_params
+
+  # CSRF protection
+  protect_from_forgery with: :exception
+
+  # ##############################################
+  # ##############################################
+  # ##############################################
+  # FIXME!!!
+  skip_before_action :verify_authenticity_token
+  # ##############################################
+  # ##############################################
+  # ##############################################
+
   def status
     render json: {
       db_schema_migrations_max_version: ActiveRecord::Base.connection \
-        .select_values('select max(version::int) from schema_migrations').first
+      .select_values('select max(version::int) from schema_migrations').first
     }, status: 200
   end
 
+  attr_reader :user_session, :current_user
+  def authenticate
+    token = cookies['leihs-user-session']
+    @user_session = UserSession.find_by_token(token)
+    @current_user = @user_session.try { |us| us.delegation or us.user }
+  end
+
+  def login
+    if Rails.env.development? or Rails.env.test?
+      redirect_to root_path
+    end
+  end
+
+  if Rails.env.development? or Rails.env.test?
+    def sign_in
+      user = User.find_by!(email: params[:email])
+      token = UUIDTools::UUID.random_create
+      token_hash = Digest::SHA256.hexdigest(token)
+
+      # because of time travel in test, AR sets the fake created at otherwise
+      real_now = ActiveRecord::Base.connection.execute('SELECT now()').first['now']
+
+      UserSession.create!(user: user,
+                          token_hash: token_hash,
+                          created_at: real_now)
+
+      cookies['leihs-user-session'] = { value: token }
+      redirect_to root_path
+    end
+
+    def logout
+      if current_user
+        UserSession.where(user: current_user).destroy_all
+      end
+      cookies.delete 'leihs-user-session'
+      flash[:notice] = _('You have been logged out.')
+      redirect_back_or_default('/')
+    end
+  end
+
   def root
-    if not User.exists?
-      redirect_to new_first_admin_user_path
-    elsif logged_in?
+    if logged_in?
       flash.keep
       if current_user.is_admin
         redirect_to admin.root_path
@@ -30,59 +83,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def new_first_admin_user
-    if User.exists?
-      render :forbidden, body: 'Admin user already exists!'
-    else
-      @user = User.new
-    end
-  end
-
-  def create_first_admin_user
-    if User.exists?
-      head :forbidden
-    else
-      ApplicationRecord.transaction do
-        setup_default_database_authentication_system!
-        db_auth_system = \
-          AuthenticationSystem.find_by_class_name!('DatabaseAuthentication')
-        user = \
-          User.create! user_params.merge(
-            authentication_system: db_auth_system,
-            is_admin: true
-          )
-        DatabaseAuthentication.create! db_auth_params.merge(user: user)
-      end
-      flash[:notice] = _(
-        'First admin user has been created. ' \
-        'Default database authentication system has been configured.'
-      )
-      redirect_to root_path
-    end
-  end
-
   private
-
-  def setup_default_database_authentication_system!
-    AuthenticationSystem.update_all(is_default: false)
-    auth_system = AuthenticationSystem.find_or_initialize_by(
-      class_name: 'DatabaseAuthentication'
-    )
-    auth_system.name ||= 'Database Authentication'
-    auth_system.is_active = true
-    auth_system.is_default = true
-    auth_system.save!
-  end
-
-  def user_params
-    params
-      .require(:user)
-      .merge login: db_auth_params.fetch(:login)
-  end
-
-  def db_auth_params
-    params.require(:db_auth)
-  end
 
   # NOTE: see hook on top of file
   def better_errors_hack

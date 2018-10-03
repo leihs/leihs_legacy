@@ -8,10 +8,8 @@ def with_disabled_triggers
     'SET session_replication_role = DEFAULT;'
 end
 
-def login_as_user(user, password)
-  click_on _('Login')
-  fill_in _('Username'), with: user.login
-  fill_in _('Password'), with: 'password'
+def login_as_user(user, _)
+  fill_in :email, with: user.email
   click_on _('Login')
 end
 

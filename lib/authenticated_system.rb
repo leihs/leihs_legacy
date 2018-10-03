@@ -1,28 +1,9 @@
-# Notes: the naming, location, functionality and also the code inside this
-# module is "odd". It used to control the session cookie of the user. Code for
-# that can now be found in Concerns::UserSessionController
-# TODO: remove / replace all of this
-
 module AuthenticatedSystem
   protected
 
   # Returns true or false if the user is logged in.
   def logged_in?
     current_user != nil
-  end
-
-  # Accesses the current user from the session.
-  # Future calls avoid the database because nil is not equal to false.
-  def current_user
-    @current_user ||=
-      unless @current_user == false
-        user_by_session
-      end
-  end
-
-  def current_user=(user)
-    create_user_session(user) if user
-    @current_user = user || false
   end
 
   # Redirect as appropriate when an access request fails.
@@ -36,6 +17,7 @@ module AuthenticatedSystem
   def access_denied
     if request.get?
       store_location
+      flash[:notice] = _("You don't have permission to perform this action")
       redirect_to login_path
     else
       # NOTE in case of post requests
@@ -63,12 +45,6 @@ module AuthenticatedSystem
   # available as ActionView helper methods.
   def self.included(base)
     base.send :helper_method, :current_user, :user_session, :logged_in?
-  end
-
-  # Called from #current_user.
-  # First attempt to login by the user id stored in the session.
-  def login_from_session
-    self.current_user = User.find_by_id(session[:user_id]) if session[:user_id]
   end
 
   def require_role(role, inventory_pool = nil)

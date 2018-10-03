@@ -522,7 +522,7 @@ end
 
 When(/^I assign multiple groups$/) do
   @current_inventory_pool.entitlement_groups.each do |group|
-    find('#change-groups input').click
+    find('#change-groups input').set group.name
     within '.ui-autocomplete' do
       find('.ui-menu-item a', text: group.name).click
     end
@@ -535,7 +535,7 @@ Then(/^the user and all their information is saved$/) do
   user = User.find_by_lastname 'test'
   expect(user).not_to be_nil
   expect(user.access_right_for(@current_inventory_pool).role).to eq @role_hash[:role].to_sym
-  expect(user.entitlement_groups).to eq @current_inventory_pool.entitlement_groups
+  expect(user.entitlement_groups.map(&:id)).to match_array @current_inventory_pool.entitlement_groups.map(&:id)
 end
 
 When(/^all required fields are filled in$/) do
@@ -772,7 +772,6 @@ end
 
 When(/^I enter the login data$/) do
   selector = @current_inventory_pool ? '.row.emboss' : '.form-group'
-  find(selector, match: :prefer_exact, text: _('Login')).find('input').set 'username'
   find(selector, match: :prefer_exact, text: _('Password')).find('input').set 'password'
   find(selector, match: :prefer_exact, text: _('Password Confirmation')).find('input').set 'password'
 end

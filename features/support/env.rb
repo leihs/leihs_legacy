@@ -8,7 +8,6 @@ require 'fileutils'
 # files.
 
 require 'cucumber/rails'
-require 'rack_session_access/capybara'
 
 require 'database_cleaner'
 DatabaseCleaner.strategy = :truncation

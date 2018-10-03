@@ -229,7 +229,7 @@ end
 
 Then(/^the newly created user has 'customer'-level access to all inventory pools that grant automatic access(, but not to mine)?$/) do |arg1|
   expect(@user.access_rights.count).to eq @inventory_pools_with_automatic_access.count
-  expect(@user.access_rights.pluck(:inventory_pool_id)).to eq @inventory_pools_with_automatic_access.pluck(:id)
+  expect(@user.access_rights.pluck(:inventory_pool_id)).to match_array @inventory_pools_with_automatic_access.pluck(:id)
   if arg1
     expect(@user.access_rights.where('inventory_pool_id != ?', @current_inventory_pool ).all? {|ar| ar.role == :customer}).to be true
   else

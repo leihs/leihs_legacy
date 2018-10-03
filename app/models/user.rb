@@ -9,7 +9,6 @@ class User < ApplicationRecord
   store_accessor :settings, [:latest_inventory_pool_id_before_logout,
                              :start_screen]
 
-  belongs_to :authentication_system
   belongs_to :language
 
   has_many :orders
@@ -96,8 +95,7 @@ class User < ApplicationRecord
   has_many :visits
 
   validates_presence_of :firstname
-  validates_presence_of :lastname, :email, :login, unless: :delegation?
-  validates_length_of :login, within: 2..255, unless: :delegation?
+  validates_presence_of :lastname, :email, unless: :delegation?
   validates_uniqueness_of :email, unless: :delegation?
   validates :email, format: /.+@.+\..+/, allow_blank: true
 
@@ -368,5 +366,4 @@ class User < ApplicationRecord
              Time.zone.now - Setting.first.timeout_minutes.minutes)
       .exists?
   end
-
 end

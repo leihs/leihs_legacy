@@ -5,7 +5,7 @@
   version_name = RELEASE_INFO.try(:[], :version_name)
   is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :is_release) || false
   deploy_time = RELEASE_INFO.try(:[], :deploy_info).try(:[], :time)
-  version_link = release_info_path + (is_release ? ('#' + version_name) : '')
+  version_link = main_app.release_info_path + (is_release ? ('#' + version_name) : '')
   version_hint = "Version #{version_name} Deploy #{deploy_time}"
 
 %footer.separated-top.emboss

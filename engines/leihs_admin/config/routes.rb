@@ -9,7 +9,7 @@ LeihsAdmin::Engine.routes.draw do
   resources :rooms,           except: :show
   resources :statistics,      only: [:index, :show]
   resources :suppliers,       except: []
-  resources :users,           except: :show
+  resources :users,           only: :index
 
   # Audits
   get 'audits',           to: 'audits#index'

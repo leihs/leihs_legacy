@@ -344,9 +344,6 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rack_session_access (0.1.1)
-      builder (>= 2.0.0)
-      rack (>= 1.0.0)
     rails (5.0.5)
       actioncable (= 5.0.5)
       actionmailer (= 5.0.5)
@@ -592,7 +589,6 @@ DEPENDENCIES
   pry
   pry-rails
   puma
-  rack_session_access (~> 0.1.1)
   rails (~> 5.0.0)
   rails-assets-accounting.js (~> 0.4)!
   rails-assets-fullcalendar (~> 1.5)!

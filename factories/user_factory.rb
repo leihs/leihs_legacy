@@ -11,14 +11,6 @@ FactoryGirl.define do
     firstname { Faker::Name.first_name }
     lastname { Faker::Name.last_name }
     phone { Faker::PhoneNumber.phone_number.gsub(/\D/, '') }
-    authentication_system do
-      if AuthenticationSystem.first.blank?
-        FactoryGirl.create(:authentication_system,
-                           name: 'DatabaseAuthentication')
-      else
-        AuthenticationSystem.first
-      end
-    end
     org_id { Faker::Lorem.characters(32) }
 
     email do
@@ -36,14 +28,14 @@ FactoryGirl.define do
     city { Faker::Address.city }
     country { Faker::Address.country }
     zip { "#{country[0]}-#{Faker::Address.zip_code}".squish }
-    language { Language.find_by_default(true) || LanguageFactory.create }
+    language do
+      Language.find_by_default(true) || create(:language, locale_name: 'en-GB')
+    end
     delegator_user { nil }
 
     after(:create) do |user|
       unless user.delegation?
-        FactoryGirl.create(:database_authentication,
-                           user: user,
-                           password: 'password')
+        create :authentication_system_user, user: user
       end
     end
 

@@ -59,13 +59,6 @@ module LeihsFactory
     LeihsFactory.define_role(u, options[:inventory_pool], options[:role])
 
     u.save
-
-    # if a password is provided, then we create the user in a way that she can log in
-    # for real
-    if options[:password]
-      LeihsFactory.create_db_auth(login: u.login, password: options[:password])
-    end
-
     u
   end
 

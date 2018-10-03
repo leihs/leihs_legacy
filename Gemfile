@@ -71,7 +71,6 @@ end
 group :test do
   gem 'ladle'
   gem 'open4'
-  gem 'rack_session_access', '~> 0.1.1'
   gem 'turnip'
 end
 

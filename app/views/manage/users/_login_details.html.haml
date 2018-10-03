@@ -7,12 +7,6 @@
 
   .row.padding-inset-s.emboss.margin-bottom-xxs
     .col1of2
-      %label.font-size-m{for: 'db-auth-login'}= "#{_("Login")} *"
-    .col1of2.text-align-right
-      %input#db-auth-login{type: "text", name: "db_auth[login]", value: @db_auth.try(:login)}
-
-  .row.padding-inset-s.emboss.margin-bottom-xxs
-    .col1of2
       %label.font-size-m{for: 'db-auth-password'}= "#{_("Password")} *"
     .col1of2.text-align-right
       %input#db-auth-password{type: "password", name: "db_auth[password]", value: "#{"_password_" if @db_auth}"}

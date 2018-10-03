@@ -191,11 +191,20 @@ When(/^I navigate to the mail templates list in the current inventory pool$/) do
 end
 
 Then(/^I am redirected to the login page$/) do
-  find('h1', text: _('Login'))
-  find("form[action='/authenticator/login']")
+  find('#login-form')
 end
 
 Then(/^I see a list of mail templates$/) do
   find('nav .active', text: _('Mail Templates'))
   find('.list-of-lines')
+end
+
+Then(/^I don't see a list of mail templates$/) do
+  expect(page).not_to have_content _('Mail Templates')
+  expect(first('.list-of-lines')).not_to be
+end
+
+Then(/^I see a notification that I don't have sufficient permissions$/) do
+  el = find('#flash')
+  expect(el).to have_content _("You don't have permission to perform this action")
 end

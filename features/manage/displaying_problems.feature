@@ -30,6 +30,7 @@ Feature: Displaying problems
      Then the affected item's line shows the item's problems
      And the problem is displayed as: "Gegenstand ist defekt"
 
+  @flapping
   Scenario: Displaying problems with incomplete items during take back
     Given I take back an item
      And one item is incomplete

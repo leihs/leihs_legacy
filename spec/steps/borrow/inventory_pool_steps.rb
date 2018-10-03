@@ -71,7 +71,7 @@ module Borrow
       end
 
       step 'I visit the page of my inventory pools' do
-        click_on _('Inventory pools')
+        click_on _('Inventory Pools')
       end
 
       step 'I see 3 pools' do
