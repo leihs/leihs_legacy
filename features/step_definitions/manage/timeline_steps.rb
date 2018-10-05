@@ -27,8 +27,7 @@ def create_a_user(login)
 end
 
 def do_logout
-  visit logout_path
-  find('#flash')
+  step 'I log out'
 end
 
 def do_login(login, password)

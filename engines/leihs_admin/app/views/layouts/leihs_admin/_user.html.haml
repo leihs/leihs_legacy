@@ -34,6 +34,7 @@
           = _("Back to %s") % user_session.user
 
     %li
-      %a{href: main_app.logout_path}
-        .fa.fa-sign-out
-        = _("Logout")
+      %form{type: :submit, method: :POST, action: '/sign-out'}
+        %button
+          .fa.fa-sign-out
+          = _("Logout")

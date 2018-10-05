@@ -17,9 +17,6 @@ module NavigationHelpers
     when /^the backend$/
       '/backend'
 
-    when /logout/
-      '/logout'
-
     when /^the settings page$/
       '/admin/settings'
 

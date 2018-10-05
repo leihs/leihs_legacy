@@ -71,7 +71,7 @@ Feature: Copy item
     And the last check date is set to today
 
   Scenario: Copying an item from another inventory pool
-    Given I go to logout
+    Given I log out
     And I am Matti
     And I edit an item belonging to a different inventory pool
     And I save and copy

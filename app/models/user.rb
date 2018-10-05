@@ -3,6 +3,18 @@ class User < ApplicationRecord
   include DefaultPagination
   audited
 
+  before_create do
+    # not as general validation because of first admin user
+    # feature (only email and password)
+    if delegation?
+      unless firstname
+        raise "Firstname can't be blank"
+      end
+    elsif !firstname or !lastname or !email
+      raise "Firstname and lastname can't be blank"
+    end
+  end
+
   serialize :extended_info
 
   serialize :settings
@@ -93,11 +105,6 @@ class User < ApplicationRecord
   has_many :item_lines, dependent: :restrict_with_exception
   has_many :option_lines, dependent: :restrict_with_exception
   has_many :visits
-
-  validates_presence_of :firstname
-  validates_presence_of :lastname, :email, unless: :delegation?
-  validates_uniqueness_of :email, unless: :delegation?
-  validates :email, format: /.+@.+\..+/, allow_blank: true
 
   # tmp#2#, :finder_sql => 'SELECT * FROM groups
   # INNER JOIN groups_users ON groups.id = groups_users.entitlement_group_id
@@ -208,7 +215,10 @@ class User < ApplicationRecord
     if delegation?
       name
     else
-      "#{firstname[0]}. #{lastname}"
+      "#{firstname.presence && firstname[0] + '.'} #{lastname}"
+        .strip.presence \
+        || self.login.to_s.strip.presence \
+        || self.email
     end
   end
 

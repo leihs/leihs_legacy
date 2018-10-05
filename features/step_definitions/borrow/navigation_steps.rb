@@ -19,7 +19,7 @@ Then(/^the navigation contains "(.*?)"$/) do |section|
         find(".topbar-item", text: @current_user.short_name)
       when 'Log out'
         find('.topbar-navigation.float-right .topbar-item', text: @current_user.short_name).hover
-        find("a[href='#{logout_path}']")
+        find(".topbar form[action='/sign-out'] button")
       when 'Manage'
         find('.topbar-navigation.float-right .topbar-item', match: :first).hover
         @current_user.inventory_pools.managed.each do |ip|

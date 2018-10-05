@@ -9,7 +9,13 @@ module Spec
     end
 
     step 'I log out' do
-      visit logout_path
+      sign_out_button = first(".topbar form[action='/sign-out'] button",
+                              visible: :all)
+      if sign_out_button
+        sign_out_button.click
+      else
+        visit root_path
+      end
     end
 
     [:customer, :group_manager, :lending_manager, :inventory_manager]

@@ -244,9 +244,9 @@ Feature: Manage users
     Then I see an error message
     Examples:
       | required_information |
-      | last name    |
-      | first name     |
-      | email address      |
+      | last name            |
+      | first name           |
+      | email address        |
 
   @rack
   Scenario: Reactivate a user's access to an inventory pool

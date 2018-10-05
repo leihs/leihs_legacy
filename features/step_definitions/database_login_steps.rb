@@ -1,6 +1,15 @@
 Given(/^I log out$/) do
-  visit logout_path
-  find('#flash') #FIXME#translation problem# text: _("You have been logged out.")
+  toggle = first('.topbar .dropdown-holder', text: @current_user.try(:lastname))
+  toggle ||= first('.topbar .dropdown', text: @current_user.try(:lastname))
+  if toggle
+    toggle.click
+    sign_out_button = first(".topbar form[action='/sign-out'] button",
+                            visible: :all)
+    sign_out_button.click
+    find('#flash')
+  else
+    visit root_path
+  end
 end
 
 When(/^I visit the homepage$/) do

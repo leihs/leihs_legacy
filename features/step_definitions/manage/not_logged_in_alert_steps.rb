@@ -2,7 +2,7 @@
 
 When(/^I try to perform an action in the manage area without being logged in$/) do
   step 'I am doing a hand over'
-  page.execute_script %Q{ $.ajax({url: "/logout"}); }
+  UserSession.where(user: @current_user).destroy_all
   find('#assign-or-add-input input').set 'A B'
   find('#assign-or-add-input input')
 end

@@ -37,12 +37,6 @@ class ApplicationController < ActionController::Base
     @current_user = @user_session.try { |us| us.delegation or us.user }
   end
 
-  def login
-    if Rails.env.development? or Rails.env.test?
-      redirect_to root_path
-    end
-  end
-
   if Rails.env.development? or Rails.env.test?
     def sign_in
       user = User.find_by!(email: params[:email])
@@ -60,7 +54,7 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
 
-    def logout
+    def sign_out
       if current_user
         UserSession.where(user: current_user).destroy_all
       end

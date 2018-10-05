@@ -18,7 +18,7 @@ module AuthenticatedSystem
     if request.get?
       store_location
       flash[:notice] = _("You don't have permission to perform this action")
-      redirect_to login_path
+      redirect_to root_path
     else
       # NOTE in case of post requests
       render status: :method_not_allowed,

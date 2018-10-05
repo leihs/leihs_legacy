@@ -38,7 +38,7 @@ end
 When /^I log in as '([^']*)' with password '([^']*)'$/ do |username, password|
   @current_user = User.where(login: username.downcase).first
   @current_inventory_pool = @current_user.inventory_pools.managed.first
-  post '/sign_in', { email: @current_user.email }
+  post sign_in_path, { email: @current_user.email }
 end
 
 Given /(his|her) password is '([^']*)'$/ do |foo,password|

@@ -18,7 +18,7 @@ def create_user
 end
 
 def open_login
-  visit logout_path
+  visit root_path
 end
 
 def create_inventory_pool

@@ -2,18 +2,10 @@ Rails.application.routes.draw do
 
   root to: 'application#root'
 
-  get '/login', to: 'application#login', as: :login
-
   if Rails.env.development? or Rails.env.test?
-    post '/sign_in', to: 'application#sign_in'
-  else
-    # TODO: post ...
-  end
-
-  if Rails.env.development? or Rails.env.test?
-    get '/logout', to: 'application#logout', as: :logout
-  else
-    # TODO: post ...
+    # NOTE: for prod path helper is added as application helper custom method
+    post '/sign-in', to: 'application#sign_in'
+    post '/sign-out', to: 'application#sign_out'
   end
 
   get :status, controller: :application, action: :status

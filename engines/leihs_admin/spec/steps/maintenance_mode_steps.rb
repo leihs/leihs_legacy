@@ -178,6 +178,19 @@ module LeihsAdmin
         scroll_to_top
         click_on _('Save')
       end
+
+      # override included step
+      step 'I log out' do
+        toggle = first('.topbar .dropdown', text: @current_user.try(:lastname))
+        if toggle
+          toggle.click
+          sign_out_button = first(".topbar form[action='/sign-out'] button",
+                                  visible: :all)
+          sign_out_button.click
+        else
+          visit root_path
+        end
+      end
     end
   end
 end
