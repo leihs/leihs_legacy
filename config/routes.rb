@@ -159,6 +159,10 @@ Rails.application.routes.draw do
 
       ## Contracts
       get   'orders',                  to: "orders#index",      as: "orders"
+      ###############################################################################
+      # NOTE: query string length of GET is not enough for hand over dialog
+      post  'orders',                  to: "orders#index",      as: "orders_via_post"
+      ###############################################################################
       post  "orders/:id/approve",      to: "orders#approve",    as: "approve_order"
       post  "orders/:id/reject",       to: "orders#reject"
       put   "orders/:id",              to: "orders#update"
