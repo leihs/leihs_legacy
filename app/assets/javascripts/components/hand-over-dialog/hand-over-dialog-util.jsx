@@ -75,12 +75,15 @@ window.HandOverDialogUtil = {
     var reservations = parameters.reservations
 
 
-    App.Order.ajaxFetch({
-      data: $.param({
+    $.ajax({
+      url: App.Order.url(),
+      data: JSON.stringify({
         reservation_ids: _.map(reservations, (r) => r.id)
-      })
-    })
-    .done((data) => {
+      }),
+      method: 'POST',
+      contentType: 'application/json',
+      dataType: 'json'
+    }).done((data) => {
 
       var orders = data.map((datum) => {
         return App.Order.find(datum.id)
