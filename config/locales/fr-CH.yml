@@ -123,7 +123,7 @@ fr-CH:
       body: ! 'Des problèmes ont été rencontrés avec les champs suivants:'
       header:
         one: ! "une erreur a empêché %{model} d'être sauvegardé"
-        other: !  "%{count} erreurs ont empêchés %{model} d\'être sauvegardé"
+        other: !  "%{count} erreurs ont empêchés %{model} d'être sauvegardé"
     models:
       model:
         attributes:
