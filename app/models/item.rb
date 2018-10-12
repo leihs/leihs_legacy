@@ -127,6 +127,7 @@ class Item < ApplicationRecord
     .where(Arel::Table.new(:full_text)[:text].matches_all(q))
   }
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def self.filter(params, inventory_pool = nil)
     items = Item.distinct
     items = items.send(params[:type].pluralize) unless params[:type].blank?
@@ -187,9 +188,13 @@ class Item < ApplicationRecord
                               I18n.translate('date.formats.default'))))
     end
     items = items.search(params[:search_term]) unless params[:search_term].blank?
+    if params[:sort_by_inventory_code] == 'true'
+      items = items.order(:inventory_code)
+    end
     items = items.default_paginate params unless params[:paginate] == 'false'
     items
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   ####################################################################
   # preventing delete

@@ -14,6 +14,14 @@ module Spec
                                                     is_active: false)
     end
 
+    step 'there exists a software' do
+      @software = FactoryGirl.create(:software)
+    end
+
+    step 'there exists a model' do
+      @model = FactoryGirl.create(:model)
+    end
+
     step 'there exists a category' do
       @category = FactoryGirl.create(:category)
     end

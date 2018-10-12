@@ -541,7 +541,8 @@
                 model_ids: ids,
                 paginate: false,
                 search_term: this.state.search_term,
-                all: true
+                all: true,
+                sort_by_inventory_code: true
               }
             )
           )
@@ -629,7 +630,8 @@
                 model_ids: ids,
                 paginate: false,
                 search_term: this.state.search_term,
-                all: true
+                all: true,
+                sort_by_inventory_code: true
               }
             )
           )
