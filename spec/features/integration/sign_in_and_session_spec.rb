@@ -8,7 +8,7 @@ describe 'sign in and session' do
         visit root_path
         fill_in :email, with: @signed_in_user.email
         click_on _('Login')
-        click_on _('Settings')
+        visit '/admin/settings'
         page.execute_script %[ $(".navbar").remove() ]
         fill_in _('sessions_max_lifetime_secs'), with: 15
         click_on _('Save Settings')

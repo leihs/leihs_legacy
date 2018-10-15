@@ -1,23 +1,13 @@
 require_relative '../../../../spec/steps/shared/login_steps'
+require_relative 'shared/navigation_steps'
 require_relative 'shared/personas_dump_steps'
 
 module LeihsAdmin
   module Spec
     module StatisticsSteps
+      include ::LeihsAdmin::Spec::NavigationSteps
       include ::LeihsAdmin::Spec::PersonasDumpSteps
       include ::Spec::LoginSteps
-
-      step 'I am in the admin section' do
-        visit admin.root_path
-      end
-
-      step 'I can choose to switch to the statistics section' do
-        find("a[href='#{admin.statistics_path}']", match: :first)
-      end
-
-      step 'I am in the statistics section' do
-        visit('/admin/statistics')
-      end
 
       step "the page title is 'Statistics'" do
         find('h2', text: _('Statistics'))

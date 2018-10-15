@@ -21,7 +21,6 @@ module LeihsAdmin
       include ::Spec::LoginSteps
 
       step 'I see a list of buildings' do
-        find('.nav-tabs .active', text: _('Buildings'))
         within '.list-of-lines' do
           Building.limit(5).each do |building|
             find('.row > .col-sm-3', text: building.name)
@@ -30,7 +29,6 @@ module LeihsAdmin
       end
 
       step 'I see a list of all buildings' do
-        find('.nav-tabs .active', text: _('Buildings'))
         within '.list-of-lines' do
           Building.all.each do |building|
             find(".row[data-id='#{building.id}']")

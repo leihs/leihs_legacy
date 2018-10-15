@@ -15,12 +15,6 @@ module LeihsAdmin
       include ::LeihsAdmin::Spec::PersonasDumpSteps
       include ::Spec::LoginSteps
 
-      step 'I click on the :tab navigation tab' do |tab|
-        within '.container .nav-tabs' do
-          click_on _(tab)
-        end
-      end
-
       step 'I see the list of audits' do
         within '.pages' do
           expect(page).to have_selector '.panel'

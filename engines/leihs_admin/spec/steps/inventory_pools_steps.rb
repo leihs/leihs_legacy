@@ -102,6 +102,8 @@ module LeihsAdmin
           InventoryPool.find(&:can_destroy?) || FactoryGirl.create(:inventory_pool)
         visit admin.inventory_pools_path
         within('.row', text: @current_inventory_pool.name) do
+          # NOTE: on CI the footer gets displaced and covers the element :-(
+          page.execute_script "$('footer').remove()"
           find(:xpath, '.').click # NOTE it scrolls to the target line
           within '.line-actions' do
             find('.dropdown-toggle').click

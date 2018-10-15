@@ -12,7 +12,6 @@ module LeihsAdmin
       include ::Spec::LoginSteps
 
       step 'I see a list of suppliers' do
-        find('.nav-tabs .active', text: _('Suppliers'))
         within '.list-of-lines' do
           Supplier.limit(5).each do |supplier|
             find('.row > .col-sm-6', match: :prefer_exact, text: supplier.name)

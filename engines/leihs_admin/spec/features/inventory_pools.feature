@@ -148,7 +148,7 @@ Feature: Administer inventory pools
     Given I am Ramon
     And there exists an active inventory pool
     And there exists an inactive inventory pool
-    And I navigate to the inventory pools page
+    And I visit "/admin/inventory_pools"
     Then the activity filtering is set to "active"
     And I can see the active inventory pool
     And I can not see the inactive inventory pool

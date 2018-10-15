@@ -1,8 +1,11 @@
 LeihsAdmin::Engine.routes.draw do
 
   root to: redirect('/admin/inventory_pools')
+  
+  unless Rails.env.production?
+    get 'top', to: 'admin#top'
+  end
 
-  resources :authentication_systems, only: :index
   resources :buildings,       except: :show
   resources :inventory_pools, except: :show
   resources :locations,       only: :destroy
