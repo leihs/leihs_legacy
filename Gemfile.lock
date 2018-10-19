@@ -196,6 +196,8 @@ GEM
       json
     exiftool_vendored (10.58.0)
       exiftool (>= 0.7.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.8.0)
@@ -547,6 +549,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   audited!
   axlsx!
   barby (~> 0.5.0)
@@ -560,8 +563,9 @@ DEPENDENCIES
   database_cleaner
   execjs (~> 2.6)
   exiftool_vendored
+  factory_bot
   factory_girl_rails (~> 4.1)
-  faker (= 1.3.0)
+  faker
   flay
   flog
   font-awesome-sass (~> 4.4)
@@ -589,7 +593,7 @@ DEPENDENCIES
   pry
   pry-rails
   puma
-  rails (~> 5.0.0)
+  rails
   rails-assets-accounting.js (~> 0.4)!
   rails-assets-fullcalendar (~> 1.5)!
   rails-assets-jquery (~> 1.5)!
@@ -607,6 +611,7 @@ DEPENDENCIES
   relish
   rgl (~> 0.4.0)
   rinku (~> 2.0.4)
+  rspec
   rspec-rails (~> 3.6)
   rubocop (= 0.49.0)
   ruby_parser (~> 3.1)
@@ -626,4 +631,4 @@ DEPENDENCIES
   will_paginate (~> 3.0)
 
 BUNDLED WITH
-   1.16.0
+   1.16.6

@@ -124,13 +124,6 @@ class User < ApplicationRecord
     self.language ||= Language.default_language
   end
 
-  after_create do
-    ips = InventoryPool.where(automatic_access: true)
-    ips.each do |ip|
-      access_rights.create(role: :customer, inventory_pool: ip)
-    end
-  end
-
   ################################################
 
   SEARCHABLE_FIELDS = %w(login firstname lastname badge_id)

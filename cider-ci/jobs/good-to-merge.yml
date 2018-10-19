@@ -19,6 +19,11 @@ jobs:
         type: job
         job_key: all-tests
         states: [passed]
+      good to merge of the database:
+        job_key: good-to-merge
+        type: job
+        submodule: [database]
+        states: [passed]
 
     context:
       task_defaults:
