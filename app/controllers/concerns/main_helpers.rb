@@ -27,16 +27,24 @@ module MainHelpers
     end
 
     def set_gettext_locale
-      language = if params[:locale]
-                   Language.where(locale_name: params[:locale]).first
-                 elsif current_user
-                   current_user.language
-                 elsif session[:locale]
-                   Language.where(locale_name: session[:locale]).first
-                 else
-                   Language.default_language
-                 end
+      language =
+        # user requested a change of locale
+        if params[:locale]
+          Language.where(locale_name: params[:locale]).first
+        # user is logged in
+        elsif current_user
+          current_user.language
+        # user is not logged in
+        elsif session[:locale]
+          Language.where(locale_name: session[:locale]).first
+        # default case
+        else
+          Language.default_language
+        end
+
       unless language.nil?
+        # If user is logged in and he requested a locale change or he does not have
+        # a language yet, then update his language.
         if current_user and (params[:locale] or current_user.language_id.nil?)
           current_user.update_attributes(language_id: language.id)
         end
