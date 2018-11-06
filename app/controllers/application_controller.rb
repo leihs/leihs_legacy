@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :better_errors_hack, if: -> { Rails.env.development? }
 
   before_action :authenticate
+  before_action :get_and_set_global_csrf_token
   before_action :set_gettext_locale
   before_action :permit_params
 
@@ -78,6 +79,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def get_and_set_global_csrf_token
+    @leihs_anti_csrf_token = cookies['leihs-anti-csrf-token']
+  end
 
   # NOTE: see hook on top of file
   def better_errors_hack

@@ -35,6 +35,7 @@
 
     %li
       %form{type: :submit, method: :POST, action: '/sign-out'}
+        %input{type: :hidden, name: "csrf-token", value: @leihs_anti_csrf_token}
         %button
           .fa.fa-sign-out
           = _("Logout")

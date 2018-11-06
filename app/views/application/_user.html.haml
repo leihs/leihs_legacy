@@ -42,5 +42,6 @@
         .width-xxxs.inline-block.text-align-center
           .fa.fa-signout
           %form{type: :submit, method: :POST, action: '/sign-out'}
+            %input{type: :hidden, name: "csrf-token", value: @leihs_anti_csrf_token}
             %button
               = _("Logout")
