@@ -38,10 +38,9 @@
           = _("Back to %s") % user_session.user
 
     %li.separated-top
-      %span.dropdown-item
-        .width-xxxs.inline-block.text-align-center
-          .fa.fa-signout
-          %form{type: :submit, method: :POST, action: '/sign-out'}
-            %input{type: :hidden, name: "csrf-token", value: @leihs_anti_csrf_token}
-            %button
-              = _("Logout")
+      %form{type: :submit, method: :POST, action: '/sign-out'}
+        %input{type: :hidden, name: "csrf-token", value: @leihs_anti_csrf_token}
+        %button.dropdown-item{style: 'font-size: inherit'}
+          .width-xxxs.inline-block.text-align-center
+            .fa.fa-signout
+          = _("Logout")
