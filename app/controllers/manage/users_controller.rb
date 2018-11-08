@@ -81,9 +81,13 @@ class Manage::UsersController < Manage::ApplicationController
           password = params[:db_auth][:password]
           password_confirmation = params[:db_auth][:password_confirmation]
           raise 'password mismatch' if password != password_confirmation
-          AuthenticationSystemUser.create!(user: @user,
-                                           authentication_system_id: 'password',
-                                           data: get_pw_hash(password))
+          if password.present?
+            AuthenticationSystemUser.create!(
+              user: @user,
+              authentication_system_id: 'password',
+              data: get_pw_hash(password)
+            )
+          end
         end
 
         unless params[:access_right][:role].to_sym == :no_access
