@@ -2,7 +2,7 @@
   section = controller_path.split('/').first.to_sym
   rendered_dropdown_items = render(partial: "navigation_dropdown_items", locals: { section: section })
 
-- if current_user.has_role?(:group_manager) or current_user.is_admin
+- if current_user.has_role?(:group_manager) or current_user.is_admin or current_user.procurement_access?
   %li.topbar-item.max-width-full.with-icon.dropdown-holder
     .topbar-item-inner
       - case section
