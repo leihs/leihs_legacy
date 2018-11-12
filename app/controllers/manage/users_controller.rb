@@ -143,13 +143,15 @@ class Manage::UsersController < Manage::ApplicationController
         @user.update_attributes! params[:user] if params[:user]
         if params[:db_auth]
           password = params[:db_auth][:password]
-          password_confirmation = params[:db_auth][:password_confirmation]
-          raise 'password mismatch' if password != password_confirmation
-          dbauth = AuthenticationSystemUser.find_or_create_by!(
-            user_id: @user.id,
-            authentication_system_id: 'password'
-          )
-          dbauth.update_attributes!(data: get_pw_hash(password))
+          if password.present?
+            password_confirmation = params[:db_auth][:password_confirmation]
+            raise 'password mismatch' if password != password_confirmation
+            dbauth = AuthenticationSystemUser.find_or_create_by!(
+              user_id: @user.id,
+              authentication_system_id: 'password'
+            )
+            dbauth.update_attributes!(data: get_pw_hash(password))
+          end
         end
         @access_right = \
           AccessRight.find_or_initialize_by(user_id: @user.id,
