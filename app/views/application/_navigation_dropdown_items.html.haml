@@ -1,12 +1,11 @@
 :ruby
-  # procurement_access = (not current_user.delegation? and Procurement::Access.some_access?(current_user))
   what_to_display = [:borrow]
   if current_user.is_admin
     what_to_display.push :admin
   end
-  # if procurement_engine_present and procurement_access
-  #   what_to_display.push :procurement
-  # end
+  if current_user.procurement_access?
+    what_to_display.push :procurement
+  end
   if current_user.has_role?(:group_manager)
     what_to_display.push :inventory_pools
   end
@@ -26,7 +25,7 @@
     %li.divider
 
 - if what_to_display.delete :procurement
-  %a.dropdown-item{href: procurement.root_path}
+  %a.dropdown-item{href: '/procure'}
     %i.fa.fa-pie-chart
     %span= _('Procurement')
   - unless what_to_display.empty?
