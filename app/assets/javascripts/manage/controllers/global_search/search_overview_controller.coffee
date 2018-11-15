@@ -236,7 +236,7 @@ class window.App.SearchOverviewController extends Spine.Controller
         status: ["approved", "submitted", "rejected"]
     .done (data, status, xhr)=>
       orders = (App.Order.addRecord new App.Order(datum) for datum in data)
-      @fetchUsers(orders).done (data) =>
+      @fetchUsers(orders, "all").done (data) =>
         @fetchReservationsForOrders(orders).done (data) =>
           @render @orders, "manage/views/orders/line", orders, xhr
 
