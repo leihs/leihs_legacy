@@ -2,7 +2,7 @@ jobs:
 
   good-to-merge:
 
-    name: '[v5] ⚑ Good To Merge'
+    name: '⚑ Good To Merge'
 
     description: |
       This job depends on all other tests and checks

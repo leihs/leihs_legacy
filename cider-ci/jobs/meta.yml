@@ -48,7 +48,7 @@ jobs:
                 fi
 
         git-branch-current:
-          name: "Git tree contains latest commit from origin/v5/master"
+          name: "Git tree contains latest commit from origin/master"
           scripts:
             main:
               body: |
@@ -56,8 +56,8 @@ jobs:
                 set -exu
                 git fetch --all
                 #
-                # check if your tree still contains the current commit from v5/master
-                git rev-list --children HEAD | grep -q "$(git rev-parse origin/v5/master)"
+                # check if your tree still contains the current commit from master
+                git rev-list --children HEAD | grep -q "$(git rev-parse origin/master)"
 
         scenario tasks are up-to-date:
           name: "Scenario tasks are up-to-date"
