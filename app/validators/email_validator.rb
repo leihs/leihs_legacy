@@ -3,7 +3,7 @@ class EmailValidator < ActiveModel::EachValidator
     unless value.to_s.empty? # email can be blank
 
       # validate email syntax
-      valid = if value =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+      valid = if value.match?(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i)
                 true
               else
                 false

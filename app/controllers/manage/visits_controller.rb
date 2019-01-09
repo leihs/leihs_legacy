@@ -103,12 +103,12 @@ class Manage::VisitsController < Manage::ApplicationController
 
   def offset_param
     p = params.require(:offset)
-    p.match(/\d*/) ? p : raise(ActionController::UnpermittedParameters)
+    p.match?(/\d*/) ? p : raise(ActionController::UnpermittedParameters)
   end
 
   def limit_param
     p = params.require(:limit)
-    p.match(/\d*/) ? p : raise(ActionController::UnpermittedParameters)
+    p.match?(/\d*/) ? p : raise(ActionController::UnpermittedParameters)
   end
 
 end

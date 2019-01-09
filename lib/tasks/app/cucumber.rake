@@ -14,7 +14,7 @@ namespace :app do
       results = []
       step_files.each do |step_file|
         File.new(step_file).read.each_line.each_with_index do |line, number|
-          next unless line =~ %r{^\s*(?:Given|When|Then)\s+|\/}
+          next unless line.match?(%r{^\s*(?:Given|When|Then)\s+|\/})
           # rubocop:disable Metrics/LineLength
           res = %r{^\s*(?:Given|When|Then)[\s\(]*\/[\^](.*)[\$]\/([imxo]*)[\s\)]*do\s*(?:$|\|(.*)\|)}.match(line)
           # rubocop:enable Metrics/LineLength

@@ -17,7 +17,7 @@ class Image < ApplicationRecord
     if size >= 8_000_000
       errors.add(:base, _('Uploaded file must be less than 8MB'))
     end
-    unless content_type.match %r{^image\/(png|gif|jpeg)}
+    unless content_type.match? %r{^image\/(png|gif|jpeg)}
       errors.add(:base, _('Unallowed content type'))
     end
   end

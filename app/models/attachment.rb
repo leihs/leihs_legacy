@@ -8,7 +8,7 @@ class Attachment < ApplicationRecord
     if size >= 100_000_000
       errors.add(:base, _('Uploaded file must be less than 100MB'))
     end
-    unless content_type.match %r{^(image\/(png|gif|jpeg)|application\/pdf)}
+    unless content_type.match? %r{^(image\/(png|gif|jpeg)|application\/pdf)}
       errors.add(:base, _('Unallowed content type'))
     end
   end
