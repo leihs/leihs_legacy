@@ -27,10 +27,10 @@ class Manage::ContractsController < Manage::ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        @contracts = Contract.filter(params,
-                                     nil,
-                                     current_inventory_pool,
-                                     paginate: false)
+        @contracts = Contract.filter2(params,
+                                      nil,
+                                      current_inventory_pool,
+                                      paginate: false)
         count = Contract.from(@contracts).count
         @contracts = @contracts.default_paginate(params).order('created_at DESC')
         set_pagination_header(

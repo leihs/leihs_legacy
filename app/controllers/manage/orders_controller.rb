@@ -9,7 +9,7 @@ class Manage::OrdersController < Manage::ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        @orders = Order.filter(params, nil, current_inventory_pool)
+        @orders = Order.filter2(params, nil, current_inventory_pool)
 
         if params[:order_by_created_at_group_by_user]
           @orders = @orders.select('orders.*').select(

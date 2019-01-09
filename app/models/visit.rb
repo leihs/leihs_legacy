@@ -53,7 +53,8 @@ class Visit < ApplicationRecord
     sql.joins(:user)
   }
 
-  def self.filter(params, inventory_pool = nil)
+  scope :filter2, (lambda do |params, inventory_pool = nil|
+
     visits = if inventory_pool.nil?
                all
              else
@@ -106,7 +107,7 @@ class Visit < ApplicationRecord
     end
 
     visits
-  end
+  end)
 
   def self.total_count_for_paginate
     scope_sql = Visit.all.reorder(nil).to_sql

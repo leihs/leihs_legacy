@@ -159,7 +159,8 @@ class Contract < ApplicationRecord
 
   #########################################################################
 
-  def self.filter(params, user = nil, inventory_pool = nil, paginate: true)
+  scope :filter2,
+        (lambda do |params, user = nil, inventory_pool = nil, paginate: true|
     contracts = if user
                   user.contracts
                 elsif inventory_pool
@@ -172,13 +173,13 @@ class Contract < ApplicationRecord
       contracts
       .joins(:reservations)
       .scope_if_presence(params[:status]) do |contracts, states|
-        contracts.where(state: states)
+      contracts.where(state: states)
       end
       .scope_if_presence(params[:search_term]) do |contracts, search_term|
-        contracts.search(params[:search_term])
+      contracts.search(params[:search_term])
       end
       .scope_if_presence(params[:id]) do |contracts, ids|
-        contracts.where(id: ids)
+      contracts.where(id: ids)
       end
       .scope_if_presence(params[:no_verification_required],
                          &:no_verification_required)
@@ -187,13 +188,13 @@ class Contract < ApplicationRecord
       .scope_if_presence(params[:from_verifiable_users],
                          &:with_verifiable_user)
       .scope_if_presence(params[:range].try(:[], :start_date)) \
-        do |contracts, start_date|
-        contracts.where('contracts.created_at >= ?', start_date)
-      end
+    do |contracts, start_date|
+      contracts.where('contracts.created_at >= ?', start_date)
+    end
       .scope_if_presence(params[:range].try(:[], :end_date)) \
-        do |contracts, end_date|
-        contracts.where('contracts.created_at <= ?', end_date)
-      end
+    do |contracts, end_date|
+      contracts.where('contracts.created_at <= ?', end_date)
+    end
       .scope_if_presence(params[:global_contracts_search],
                          &:sort_for_global_search)
       .distinct
@@ -203,7 +204,7 @@ class Contract < ApplicationRecord
     else
       contracts
     end
-  end
+         end)
 
   #########################################################################
 

@@ -145,9 +145,13 @@ end
 
 def open_inspection_for_line(line_id)
   expect(line_id).not_to be_blank
+  sleep 1
   multibutton_css = ".line[data-id='#{line_id}'] .multibutton"
+  sleep 1
   page.execute_script %Q( $("#{multibutton_css} .dropdown-toggle").trigger("mouseover") )
+  sleep 1
   find("#{multibutton_css} .dropdown-holder .dropdown-item", text: _('Inspect')).click
+  sleep 1
   find('.modal')
 end
 

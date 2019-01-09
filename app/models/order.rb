@@ -108,7 +108,7 @@ class Order < ApplicationRecord
 
   #################################################################################
 
-  def self.filter(params, user = nil, inventory_pool = nil)
+  scope :filter2, (lambda do |params, user = nil, inventory_pool = nil|
     orders = if user
                user.orders
              elsif inventory_pool
@@ -153,7 +153,7 @@ class Order < ApplicationRecord
       .distinct
 
     orders.default_paginate(params)
-  end
+  end)
 
   # NOTE: assumes `joins(:reservations)`
   def self.search(query)

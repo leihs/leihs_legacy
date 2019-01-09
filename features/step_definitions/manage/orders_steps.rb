@@ -370,7 +370,7 @@ Then(/^all listed visits match the search term$/) do
     contract_ids = all('.line').map{|x| x['data-id'] }.sort
     matching_contracts_ids = \
       @contracts
-      .filter(search_term: @search_term)
+      .filter2(search_term: @search_term)
       .map(&:id).map(&:to_s).sort
     expect(contract_ids).to eq matching_contracts_ids
   end
@@ -383,7 +383,7 @@ Then(/^all listed (?:orders|contracts) match the search term$/) do
     matching_contracts_ids = \
       @contracts
       .no_verification_required
-      .filter(search_term: @search_term)
+      .filter2(search_term: @search_term)
       .map(&:id).map(&:to_s).sort
     expect(contract_ids).to eq matching_contracts_ids
   end

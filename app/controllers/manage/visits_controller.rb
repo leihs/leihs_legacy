@@ -9,15 +9,15 @@ class Manage::VisitsController < Manage::ApplicationController
                    tab: params[:tab] }
       end
       format.json do
-        visits = Visit.filter(params, current_inventory_pool)
+        visits = Visit.filter2(params, current_inventory_pool)
         if params[:paginate] == 'false'
           visits = \
             current_inventory_pool
             .visits
+            .filter2(params)
             .includes(user: :notifications)
             .where(type: type_param)
             .where(is_approved: true)
-            .filter(params)
             .offset(offset_param)
             .limit(limit_param)
 
