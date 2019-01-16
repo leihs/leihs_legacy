@@ -74,7 +74,7 @@
         this.state.term,
         (result) => {
           this.setState({
-              result: result
+            result: result
           })
         }
       )

@@ -266,41 +266,38 @@
               ''
             )
 
-            window.leihsAjax.getAjax(
-              '/manage/' + this.props.createItemProps.inventory_pool.id + '/models?paginate=false' + ids,
-              {},
-              (status2, response2) => {
+            if (ids.length > 0) {
+              window.leihsAjax.getAjax(
+                '/manage/' + this.props.createItemProps.inventory_pool.id + '/models?paginate=false' + ids,
+                {},
+                (status2, response2) => {
 
-                callback(
-                  _.map(
-                    response,
-                    (r) => {
+                  callback(
+                    _.map(
+                      response,
+                      (r) => {
 
-                      var model = l.find(response2, (m) => m.id == r.model_id)
+                        var model = l.find(response2, (m) => m.id == r.model_id)
 
 
-                      return {
-                        id: r.id,
-                        label: r.inventory_code,
-                        currentLocation: r.current_location,
-                        inventoryCode: r.inventory_code,
-                        value: {
-                          item: l.cloneDeep(r),
-                          model: l.cloneDeep(model)
+                        return {
+                          id: r.id,
+                          label: r.inventory_code,
+                          currentLocation: r.current_location,
+                          inventoryCode: r.inventory_code,
+                          value: {
+                            item: l.cloneDeep(r),
+                            model: l.cloneDeep(model)
+                          }
                         }
                       }
-                    }
+                    )
                   )
-                )
-
-
-
-
-              }
-            )
-
-
-
+                }
+              )
+            } else {
+              callback([])
+            }
           }
         )
       }

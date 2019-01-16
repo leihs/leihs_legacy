@@ -404,6 +404,7 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    rb-readline (0.5.5)
     react-rails (2.4.1)
       babel-transpiler (>= 0.7.0)
       connection_pool
@@ -607,6 +608,7 @@ DEPENDENCIES
   rails-assets-underscore (~> 1.8)!
   rails_autolink (~> 1.0)
   rake
+  rb-readline
   react-rails
   relish
   rgl (~> 0.4.0)
@@ -631,4 +633,4 @@ DEPENDENCIES
   will_paginate (~> 3.0)
 
 BUNDLED WITH
-   1.16.6
+   1.17.2

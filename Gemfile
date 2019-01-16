@@ -82,6 +82,7 @@ group :development, :test do
   gem 'flay'
   gem 'meta_request'
   gem 'pry-rails'
+  gem 'rb-readline'
   gem 'rspec-rails', '~> 3.6', require: false
   gem 'selenium-webdriver', '~> 2.53'
   gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
