@@ -7,6 +7,16 @@
   const Autocomplete = window.ReactAutocomplete
   React.findDOMNode = ReactDOM.findDOMNode // NOTE: autocomplete lib needs this
 
+  const liBaseClassName = 'separated-bottom exclude-last-child ui-menu-item'
+
+  const NoResults = () => (
+    <li key={'no_results'} className={liBaseClassName} tabIndex='-1'>
+      <div className='row text-ellipsis' style={{textAlign: 'center', fontStyle: 'italic', padding: '10px', color: '#aaa', cursor: 'default'}}>
+        {_jed('No results')}
+      </div>
+    </li>
+  )
+
   window.BasicAutocompleteInternals = window.createReactClass({
     propTypes: {
     },
@@ -125,7 +135,7 @@
 
     _li(row, index) {
 
-      var className = 'separated-bottom exclude-last-child ui-menu-item'
+      let className = liBaseClassName
       if(index == this.state.keyIndex) {
         className += ' ui-state-focus'
       }
@@ -183,25 +193,30 @@
       )
     },
 
-
     _ul () {
-
-
-      if(this.props.result.length == 0 || this.state.hideDropdown) {
+      if(this.state.hideDropdown) {
         return null
+      } else {
+        return (
+          <ul ref={(ref) => this.ulReference = ref} className='ui-autocomplete ui-front ui-menu ui-widget ui-widget-content'
+            tabIndex='0' style={{display: 'block', width: this.props.dropdownWidth}}>
+            {
+              (this.props.result.length == 0 && this.props.term) ?
+              <NoResults /> :
+              this._lis()
+            }
+          </ul>
+        )
       }
+    },
 
-      return (
-        <ul ref={(ref) => this.ulReference = ref} className='ui-autocomplete ui-front ui-menu ui-widget ui-widget-content'
-          tabIndex='0' style={{display: 'block', width: this.props.dropdownWidth}}>
-          {this._lis()}
-        </ul>
-      )
+    _inputClearedAfterEmptyResults() {
+      return ( this.props.result.length == 0 && this.props.term == "" )
     },
 
     _dropdown() {
-      if(!this.props.result) {
-        this.ulRefernce = null
+      if(!this.props.result || this._inputClearedAfterEmptyResults()) {
+        this.ulReference = null
         return null
       } else {
         return (
