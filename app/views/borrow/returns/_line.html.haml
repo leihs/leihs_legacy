@@ -11,7 +11,11 @@
 
     .col2of10.text-ellipsis{:title => "#{line.item.inventory_code}"}= line.item.inventory_code
 
-    %strong.col6of10.text-ellipsis{:title => "#{line.model.name}"}= line.model.name
+    .col1of10.text-align-right.padding-right-s
+      = line.quantity
+      x
+
+    %strong.col5of10.text-ellipsis{:title => "#{line.model.name}"}= line.model.name
 
     %strong.col2of10.text-ellipsis.padding-left-m{:title => "#{line.model.manufacturer}"}= line.model.manufacturer
 

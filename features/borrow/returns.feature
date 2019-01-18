@@ -15,8 +15,10 @@ Feature: Returns
   @rack
   Scenario: Return overview
     Given I am Normin
+    And I have to return some options
     When I press the "Returns" link
     Then I see my "Returns"
     And the "Returns" are sorted by date and inventory pool
     And each of the "Returns" shows items to return
     And the items are sorted alphabetically by model name
+    And each line shows the proper quantity

@@ -103,5 +103,30 @@ Then(/^the items are sorted alphabetically by model name$/) do
         map(&:reservations).map{|reservations| reservations.map(&:model)}.
         map{|visit_models| visit_models.map(&:name)}.
         map{|visit_model_names| visit_model_names.sort}.flatten
-  expect(t).to eq all('.row.line .col6of10').map(&:text)
+  expect(t).to eq all('.row.line .col5of10').map(&:text)
+end
+
+Then(/^each line shows the proper quantity$/) do
+  qs = \
+    @current_user
+    .visits
+    .joins(:inventory_pool)
+    .take_back
+    .order('date', 'inventory_pools.name')
+    .map(&:reservations)
+    .map { |rs| rs.sort_by { |r| r.model.name } }
+    .flatten
+    .map(&:quantity)
+    .map { |q| "#{q} x" }
+  expect(qs).to eq all('.row.line .col1of10').map(&:text)
+end
+
+Then(/^I have to return some options$/) do
+  c = @current_user.contracts.open.first
+  FactoryGirl.create(:option_line,
+                     status: :signed,
+                     inventory_pool: c.inventory_pool,
+                     quantity: 5,
+                     user: @current_user,
+                     contract: c)
 end
