@@ -1,7 +1,7 @@
 set -eux
 
-if [[ $(node --version) != v10* ]] ; then
-  echo "Node version is not v10. Execute: nvm use 10."
+if [[ $(node --version) == v11* ]] ; then
+  echo "Node version is v11. Use a lower version by: nvm use X."
   exit 1
 fi
 
