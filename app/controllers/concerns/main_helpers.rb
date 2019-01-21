@@ -49,7 +49,7 @@ module MainHelpers
           current_user.update_attributes(language_id: language.id)
         end
         session[:locale] = language.locale_name
-        I18n.locale = language.locale_name.to_sym
+        I18n.locale = language.locale_name.underscore.to_sym
       end
     end
 
