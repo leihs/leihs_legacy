@@ -3048,7 +3048,10 @@ msgid "Status note"
 msgstr "Statusnotiz"
 
 msgid "Which item is busiest?"
-msgstr "Was sind die meistbenutzten Geräte?"
+msgstr "Was sind die meistbenutzten Gegenstände?"
+
+msgid "Which model is busiest?"
+msgstr "Was sind die meistbenutzten Modelle?"
 
 msgid "Which inventory pool has the most contracts?"
 msgstr "Welcher Gerätepark hat die meisten Verträge?"

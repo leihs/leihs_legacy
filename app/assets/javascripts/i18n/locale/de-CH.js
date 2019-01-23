@@ -3948,7 +3948,11 @@ window.i18n.locale_data = {
       ],
       "Which item is busiest?": [
          null,
-         "Was sind die meistbenutzten Geräte?"
+         "Was sind die meistbenutzten Gegenstände?"
+      ],
+      "Which model is busiest?": [
+         null,
+         "Was sind die meistbenutzten Modelle?"
       ],
       "Which inventory pool has the most contracts?": [
          null,
