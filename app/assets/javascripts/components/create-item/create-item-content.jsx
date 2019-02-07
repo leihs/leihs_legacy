@@ -247,17 +247,16 @@
     },
 
     _renderAutocomplete() {
+      var l = window.lodash
 
       var makeCall = (term, callback) => {
+        // NOTE: only search when there is a search term!
+        if (l.isEmpty(term)) return false
 
         window.leihsAjax.getAjax(
           '/manage/' + this.props.createItemProps.inventory_pool.id + '/items?paginate=true&search_term=' + term + '&not_packaged=true&packages=false&retired=false',
           {},
           (status, response) => {
-
-            var l = window.lodash
-
-
             var ids = l.join(
               l.map(
                 response,
