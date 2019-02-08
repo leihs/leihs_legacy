@@ -68,6 +68,10 @@ module Spec
       find('#flash .success')
     end
 
+    step 'I see an error message' do
+      find('#flash .error')
+    end
+
     step 'I see a notification message' do
       find('#flash .notice')
     end
