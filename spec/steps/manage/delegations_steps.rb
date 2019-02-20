@@ -68,6 +68,7 @@ module Manage
         ActiveRecord::Base.transaction do
           contract = FactoryGirl.create(:closed_contract,
                                         user: @delegation,
+                                        contact_person: @user,
                                         inventory_pool: @current_inventory_pool)
           @closed_reservation = \
             FactoryGirl.create(:reservation,

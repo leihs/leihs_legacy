@@ -68,9 +68,14 @@ class Reservation < ApplicationRecord
   before_validation on: :create do
     self.start_date ||= Time.zone.today
     self.end_date ||= Time.zone.today
-    # simply choose the delegator user in order to pass contract validation.
-    # the delegated user has to be chosen again in the hand over process anyway
-    self.delegated_user ||= user.delegator_user if user.delegation?
+
+    if user.delegation?
+      if order
+        self.delegated_user ||= order.reservations.first.delegated_user
+      else
+        self.delegated_user ||= user.delegator_user
+      end
+    end
   end
 
   validates_numericality_of :quantity, greater_than: 0, only_integer: true
