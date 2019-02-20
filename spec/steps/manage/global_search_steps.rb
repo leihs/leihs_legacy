@@ -51,6 +51,7 @@ module Manage
           "@contract_#{n}",
           FactoryGirl.create(:open_contract,
                              user: delegation,
+                             contact_person: delegation.delegated_users.first,
                              inventory_pool: @current_inventory_pool)
       end
 
