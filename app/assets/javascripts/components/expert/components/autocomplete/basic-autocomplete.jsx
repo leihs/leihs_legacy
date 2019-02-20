@@ -80,6 +80,11 @@
       )
     },
 
+    // public methods
+    // mirror jQueryAutocomplete API (for BarcodeScanner)
+    val(str) {
+      this._onTerm(str)
+    },
 
     render () {
       var result = null

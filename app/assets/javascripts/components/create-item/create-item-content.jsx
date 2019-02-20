@@ -6,6 +6,17 @@
     propTypes: {
     },
 
+    _attachInputForBarcodeScanner(){
+      if (window && this.refs)
+        window.reactBarcodeScannerTarget = this.refs['create-item-autocomplete']
+    },
+    componentDidMount() {
+      this._attachInputForBarcodeScanner()
+    },
+    componentDidUpdate() {
+      this._attachInputForBarcodeScanner()
+    },
+
 
     _isItemOwner() {
 
@@ -319,6 +330,7 @@
 
       return (
         <BasicAutocomplete
+          ref='create-item-autocomplete'
           inputClassName='has-addon width-full'
           element='div'
           inputId='search-item'
