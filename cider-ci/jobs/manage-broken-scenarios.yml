@@ -9,11 +9,11 @@ jobs:
 
     priority: -10
 
-    run_when:
-      branch name matches master or manage:
-        type: branch
-        include_match: '^.*(next|master|manage).*$'
-        exclude_match: '^.*(no-ci|hotspot).*$'
+    # run_when:
+    #   branch name matches master or manage:
+    #     type: branch
+    #     include_match: '^.*(next|master|manage).*$'
+    #     exclude_match: '^.*(no-ci|hotspot).*$'
 
     context:
 

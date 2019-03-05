@@ -7,11 +7,11 @@ jobs:
     description: |
       Run Borrow broken scenarios
 
-    run_when:
-      branch name matches master or borrow:
-        type: branch
-        include_match: '^.*(next|master|borrow).*$'
-        exclude_match: '^.*(no-ci|hotspot).*$'
+    # run_when:
+    #   branch name matches master or borrow:
+    #     type: branch
+    #     include_match: '^.*(next|master|borrow).*$'
+    #     exclude_match: '^.*(no-ci|hotspot).*$'
 
     context:
 

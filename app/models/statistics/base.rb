@@ -160,7 +160,8 @@ module Statistics
                     .select(<<~SQL)
                       CONCAT_WS(' ',
                                 users.firstname,
-                                users.lastname) AS label
+                                users.lastname) AS label,
+                      delegator_user_id
                     SQL
                 when 'InventoryPool'
                   query.joins(reservations: :contract)
@@ -248,7 +249,8 @@ module Statistics
             .group("reservations.#{klass.name.foreign_key}")
             .select("CONCAT_WS(' ', " \
                     'users.firstname, ' \
-                    'users.lastname) AS label')
+                    'users.lastname) AS label, ' \
+                    'delegator_user_id')
         when 'InventoryPool'
           query.joins(:reservations)
             .group('inventory_pools.id')

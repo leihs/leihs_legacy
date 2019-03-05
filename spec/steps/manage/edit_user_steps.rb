@@ -1,4 +1,5 @@
 require_relative '../shared/common_steps'
+require_relative '../shared/factory_steps'
 require_relative '../shared/login_steps'
 require_relative '../shared/personas_dump_steps'
 
@@ -6,13 +7,9 @@ module Manage
   module Spec
     module EditUserSteps
       include ::Spec::CommonSteps
+      include ::Spec::FactorySteps
       include ::Spec::LoginSteps
       include ::Spec::PersonasDumpSteps
-
-      step 'there is a customer for the current pool' do
-        @user = FactoryGirl.create(:customer,
-                                   inventory_pool: @current_inventory_pool)
-      end
 
       step 'there is a group in the current pool' do
         @group = FactoryGirl.create(:group,

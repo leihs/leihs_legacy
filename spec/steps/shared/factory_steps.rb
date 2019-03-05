@@ -14,12 +14,32 @@ module Spec
                                                     is_active: false)
     end
 
+    step 'there is a customer for the current pool' do
+      @user = FactoryGirl.create(:customer,
+                                 inventory_pool: @current_inventory_pool)
+    end
+
+    step 'there is a customer delegation for the current pool' do
+      delegator = FactoryGirl.create(:customer,
+                                     inventory_pool: @current_inventory_pool)
+      @delegation = FactoryGirl.create(:customer,
+                                       delegator_user_id: delegator.id,
+                                       inventory_pool: @current_inventory_pool)
+    end
+
     step 'there exists a software' do
       @software = FactoryGirl.create(:software)
     end
 
     step 'there exists a model' do
       @model = FactoryGirl.create(:model)
+    end
+
+    step 'there exists a model with items' do
+      @model = FactoryGirl.create(:model)
+      3.times do
+        FactoryGirl.create(:item, model: @model)
+      end
     end
 
     step 'there exists a category' do
