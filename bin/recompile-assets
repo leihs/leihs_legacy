@@ -8,4 +8,9 @@ fi
 export RAILS_ENV=production
 export NODE_ENV=production
 export LEIHS_SECRET=secret
+
+# i18n/locales
+bundle exec rake app:i18n:po2json
+git add app/assets/javascripts/i18n/locale/
+
 bundle exec rake webpacker:clobber assets:precompile assets:clean

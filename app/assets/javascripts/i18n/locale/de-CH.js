@@ -4689,6 +4689,10 @@ window.i18n.locale_data = {
       "Content": [
          null,
          "Inhalt"
+      ],
+      "Maximum reservation time is restricted to": [
+         null,
+         "Maximale Reservationsdauer ist beschränkt auf"
       ]
    }
 }

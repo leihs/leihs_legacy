@@ -159,7 +159,7 @@ const BorrowBookingCalendar = createReactClass({
         inventory_pool_id: this.state.poolContext.inventory_pool.id
       },
       success: successCallback,
-      error: (xhr) => this.setState({serverError: xhr.statusText})
+      error: (xhr) => this.setState({serverError: xhr.responseText})
     })
   },
 
@@ -173,7 +173,7 @@ const BorrowBookingCalendar = createReactClass({
         line_ids: _.take(reservation_ids, (this.props.initialQuantity - this.state.quantity))
       },
       success: (data) => this.props.finishCallback(data),
-      error: (xhr) => this.setState({serverError: xhr.statusText})
+      error: (xhr) => this.setState({serverError: xhr.responseText})
     })
   },
 

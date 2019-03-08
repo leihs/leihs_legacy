@@ -36,15 +36,26 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
                                 state: :submitted)
 
           reservations.each do |reservation|
+            if mrt = app_settings.maximum_reservation_time
+              if (reservation.end_date - reservation.start_date) >= mrt
+                raise [_('Maximum reservation time is restricted to'),
+                       mrt,
+                       n_('day', 'days', mrt)].join(' ')
+              end
+            end
+
             if reservation.user.delegation?
               reservation.delegated_user = \
                 reservation.user.delegated_users.find(user_session.user_id)
             end
+
             reservation.order = order
             reservation.status = :submitted
+
             unless reservation.approvable?
               raise reservation.errors.full_messages.uniq.join(', ')
             end
+
             reservation.save!
           end
 

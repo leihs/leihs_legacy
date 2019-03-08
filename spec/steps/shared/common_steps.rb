@@ -76,6 +76,15 @@ module Spec
       find('#flash .notice')
     end
 
+    step 'the maximum reservation time is set to :n days' do |n|
+      s = Setting.first
+      s.update_attributes!(maximum_reservation_time: n.to_i)
+    end
+
+    step 'I click on :text' do |text|
+      click_on text
+    end
+
     def rescue_displaced_flash
       begin
         yield

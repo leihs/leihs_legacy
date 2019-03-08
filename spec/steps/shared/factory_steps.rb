@@ -35,6 +35,16 @@ module Spec
       @model = FactoryGirl.create(:model)
     end
 
+    step 'there is a model' do
+      step 'there exists a model'
+    end
+
+    step 'there is a borrowable item for the model' do
+      FactoryGirl.create(:item,
+                         is_borrowable: true,
+                         model: @model)
+    end
+
     step 'there exists a model with items' do
       @model = FactoryGirl.create(:model)
       3.times do

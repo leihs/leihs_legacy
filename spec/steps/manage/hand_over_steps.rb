@@ -109,18 +109,10 @@ module Manage
         end
       end
 
-      step 'I click on "Hand Over Selection"' do
-        click_on _('Hand Over Selection')
-      end
-
       step 'I enter the purpose' do
         within '.modal' do
           fill_in 'purpose', with: Faker::Lorem.sentence
         end
-      end
-
-      step 'I click on "Hand Over"' do
-        click_on _('Hand Over')
       end
 
       step 'I switch to the contract window' do

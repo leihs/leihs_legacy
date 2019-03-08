@@ -3474,3 +3474,6 @@ msgstr ""
 
 msgid "Content"
 msgstr ""
+
+msgid "Maximum reservation time is restricted to"
+msgstr ""
