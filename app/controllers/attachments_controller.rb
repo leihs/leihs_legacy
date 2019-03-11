@@ -1,9 +1,9 @@
 class AttachmentsController < ApplicationController
   def show
     attachment = Attachment.find(id_param)
-    if attachment and attachment.content
+    if attachment
       send_data \
-        Base64.decode64(attachment.content),
+        Base64.decode64(attachment.content.to_s),
         filename: attachment.filename,
         type: attachment.content_type,
         disposition: 'inline'
