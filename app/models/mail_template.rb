@@ -91,9 +91,10 @@ class MailTemplate < ApplicationRecord
   end
 
   def self.get_template(inventory_pool, name, language)
+    l = language || Language.default_language
     MailTemplate.find_by!(inventory_pool_id: inventory_pool.id,
                           name: name,
-                          language: language,
+                          language: l,
                           format: 'text')
   end
 
