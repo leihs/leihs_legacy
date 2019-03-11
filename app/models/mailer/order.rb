@@ -1,7 +1,8 @@
 class Mailer::Order < ActionMailer::Base
 
   def choose_language_for(contract)
-    I18n.locale = contract.target_user.language.locale_name || I18n.default_locale
+    I18n.locale =
+      contract.target_user.language.try(:locale_name) || I18n.default_locale
   end
 
   def approved(order, comment, sent_at = Time.zone.now)
