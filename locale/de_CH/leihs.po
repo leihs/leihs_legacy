@@ -3623,3 +3623,6 @@ msgstr "Inhalt"
 
 msgid "Maximum reservation time is restricted to"
 msgstr "Maximale Reservationsdauer ist beschränkt auf"
+
+msgid "There are open reservations for delegated users: "
+msgstr "Es gibt offene Reservationen für Delegationsmitglieder: "

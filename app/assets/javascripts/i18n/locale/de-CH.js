@@ -4693,6 +4693,10 @@ window.i18n.locale_data = {
       "Maximum reservation time is restricted to": [
          null,
          "Maximale Reservationsdauer ist beschränkt auf"
+      ],
+      "There are open reservations for delegated users: ": [
+         null,
+         "Es gibt offene Reservationen für Delegationsmitglieder: "
       ]
    }
 }

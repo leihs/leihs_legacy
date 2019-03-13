@@ -59,8 +59,9 @@ module Delegation::User
               users_with_open_reservations = \
                 ::User.find(user_ids_with_open_reservations)
               raise \
-                _('There are open reservations for delegated users: ' \
-                  "#{users_with_open_reservations.map(&:name).join(', ')}.")
+                [_('There are open reservations for delegated users: '),
+                 users_with_open_reservations.map(&:name).join(', '),
+                 '.'].join
             end
             #######################################################################
 
