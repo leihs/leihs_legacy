@@ -3474,3 +3474,6 @@ msgstr ""
 
 msgid "Content"
 msgstr ""
+
+msgid "There are open reservations for delegated users: "
+msgstr ""

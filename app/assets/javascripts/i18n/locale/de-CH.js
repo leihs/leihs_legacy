@@ -4689,6 +4689,10 @@ window.i18n.locale_data = {
       "Content": [
          null,
          "Inhalt"
+      ],
+      "There are open reservations for delegated users: ": [
+         null,
+         "Es gibt offene Reservationen für Delegationsmitglieder: "
       ]
    }
 }

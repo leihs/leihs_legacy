@@ -3620,3 +3620,6 @@ msgstr "Totale Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"
 
 msgid "Content"
 msgstr "Inhalt"
+
+msgid "There are open reservations for delegated users: "
+msgstr "Es gibt offene Reservationen für Delegationsmitglieder: "
