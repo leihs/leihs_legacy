@@ -38,5 +38,3 @@ include:
 
   # run manually
   - cider-ci/jobs/hotspots.yml
-
-  - cider-ci/jobs/push-to-relish.yml
