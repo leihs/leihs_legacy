@@ -6,6 +6,10 @@ module Spec
       # rubocop:enable Lint/Debugger
     end
 
+    step 'I visit :path' do |path|
+      visit path
+    end
+
     def wait_until(wait_time = 60, &block)
       begin
         Timeout.timeout(wait_time) do

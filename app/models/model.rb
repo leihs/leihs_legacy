@@ -47,31 +47,7 @@ class Model < ApplicationRecord
   has_many :rooms, -> { distinct }, through: :items
   has_many :inventory_pools, -> { distinct }, through: :items
 
-  has_many :entitlements, dependent: :delete_all do
-    def set_in(inventory_pool, new_entitlements)
-      joins(:entitlement_group)
-        .where(entitlement_groups: { inventory_pool_id: inventory_pool })
-        .scoping do
-        delete_all
-        new_entitlements.delete(EntitlementGroup::GENERAL_GROUP_ID)
-        unless new_entitlements.blank?
-          valid_entitlement_group_ids = inventory_pool.entitlement_group_ids
-          new_entitlements.each_pair do |entitlement_group_id, quantity|
-            entitlement_group_id = entitlement_group_id
-            quantity = Integer(quantity.presence || 0)
-            next unless (
-              valid_entitlement_group_ids.include?(entitlement_group_id) \
-              and quantity > 0)
-            create(entitlement_group_id: entitlement_group_id,
-                   quantity: quantity)
-          end
-        end
-        # if there's no more items of a model in a group accessible to
-        # the customer, then he shouldn't be able to
-        # see the model in the frontend.
-      end
-    end
-  end
+  has_many :entitlements, dependent: :delete_all
   accepts_nested_attributes_for :entitlements, allow_destroy: true
 
   has_many :reservations, dependent: :restrict_with_exception

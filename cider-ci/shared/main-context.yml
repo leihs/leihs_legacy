@@ -6,9 +6,6 @@ task_defaults:
 
   include: cider-ci/task-components/bundle-rspec-ruby.yml
 
-  traits:
-    'g2016': yes # only fast machines
-
   git_options:
     submodules:
       include_match: ^.*$

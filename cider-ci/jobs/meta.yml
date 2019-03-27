@@ -100,7 +100,7 @@ jobs:
           environment_variables:
             RAILS_ENV: production
             LEIHS_SECRET: secret
-          traits: [ g2016 ] # fast machines only
+          # traits: [ fastest-executors ]
           scripts:
             test:
               timeout: 10 Minutes
