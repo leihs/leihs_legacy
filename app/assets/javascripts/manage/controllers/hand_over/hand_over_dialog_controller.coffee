@@ -8,10 +8,11 @@ class window.App.HandOverDialogController extends Spine.Controller
     "#note": "noteTextArea"
     "#error": "errorContainer"
 
-  constructor: (reservations, user, purpose)->
+  constructor: (reservations, user, purpose, callback)->
     @reservations = reservations
     @user = user
     @purpose = purpose
+    @callback = callback
 
     do @setupModal
     super
@@ -76,6 +77,7 @@ class window.App.HandOverDialogController extends Spine.Controller
       .done (data)=>
         @modal.undestroyable()
         @modal.el.detach()
+        @callback()
         new App.DocumentsAfterHandOverController
           contract: new App.Contract data
           itemsCount: @itemsCount

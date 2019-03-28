@@ -17,7 +17,11 @@ class window.App.TakeBackController extends Spine.Controller
   constructor: ->
     super
     App.TakeBackController.readyForTakeBack = []
-    @lineSelection = new App.LineSelectionController {el: @el, markVisitLinesController: new App.MarkVisitLinesController {el: @el}}
+    @lineSelection = new App.LineSelectionController
+      el: @el
+      markVisitLinesController: new App.MarkVisitLinesController {el: @el}
+      user: @user
+      visitType: "takeBack"
     @returnedQuantitiesController = new App.ReturnedQuantityController {el: @el}
     if @getLines().length
       do @fetchAvailability
@@ -71,7 +75,11 @@ class window.App.TakeBackController extends Spine.Controller
           return false
         else
           returnedQuantity[line.id] = @getQuantity(line)
-    new App.TakeBackDialogController {user: @user, reservations: reservations, returnedQuantity: returnedQuantity}
+    new App.TakeBackDialogController
+      user: @user
+      reservations: reservations
+      returnedQuantity: returnedQuantity
+      callback: => @lineSelection.clearLocalStorage()
 
   assign: (e)=>
     e.preventDefault() if e?

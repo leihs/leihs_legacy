@@ -18,6 +18,7 @@ class window.App.LineSelectionController extends Spine.Controller
     super
     do @delegateEvents
     App.LineSelectionController.Singleton = @
+    @restoreSelectionFromLocalStorage()
 
   delegateEvents: =>
     @el.on "change", "input[data-select-line]", @toggleLine
@@ -27,6 +28,18 @@ class window.App.LineSelectionController extends Spine.Controller
     @el.on "mouseleave", "input[data-select-lines]", @blurLines
     App.Reservation.on "destroy", @update
     App.Contract.on "refresh", @update
+
+  restoreSelectionFromLocalStorage: =>
+    if @localStorageEnabled()
+      if idsStringified = localStorage.getItem(@localStorageKey())
+        localStorageIds = JSON.parse(idsStringified)
+        presentIds = @extractIds(@lines())
+        App.LineSelectionController.selected = _.intersection(presentIds, localStorageIds)
+        @restore()
+
+  clearLocalStorage: => localStorage.removeItem @localStorageKey()
+
+  localStorageKey: => "leihs_#{@visitType}_#{@user.id}"
 
   toggleLine: (e)=>
     line = $(e.currentTarget).closest ".line"
@@ -52,23 +65,40 @@ class window.App.LineSelectionController extends Spine.Controller
 
   blurLines: (e)=> $(e.currentTarget).closest(".emboss").removeClass("focus-thin")
 
+  selectedLines: => $("[data-select-line]:checked").closest ".line"
+
+  lines: => $("[data-id]")
+
+  getDataIds: (line) -> ($(line).data("ids") ? [$(line).data("id")])
+
+  extractIds: (rLines) ->
+    _.flatten _.map rLines, (line) => @getDataIds(line)
+
+  localStorageEnabled: => _.includes ["handOver", "takeBack"], @visitType
+
   update: =>
-    reservations = $("[data-select-line]:checked").closest ".line"
-    @store reservations
+    rLines = @selectedLines()
+    @store rLines
+    if @localStorageEnabled()
+      @storeToLocalStorage rLines
     @markVisitLinesController?.update App.LineSelectionController.selected
-    @lineSelectionCounter.html reservations.length
-    if reservations.length then @enable() else @disable()
+    @lineSelectionCounter.html rLines.length
+    if rLines.length then @enable() else @disable()
     do @storeIds
 
-  store: (reservations)->
-    ids = _.flatten _.map reservations, (line) -> ($(line).data("ids") ? [$(line).data("id")])
+  store: (rLines)->
+    ids = @extractIds(rLines)
     App.LineSelectionController.selected = ids
+
+  storeToLocalStorage: (rLines) ->
+    ids = @extractIds(rLines)
+    localStorage.setItem(@localStorageKey(@user.id), JSON.stringify(ids))
 
   restore: =>
     for input in $("[data-select-line]")
       input = $ input
       line = input.closest(".line")
-      ids = $(line).data("ids") ? [$(line).data("id")]
+      ids = @getDataIds(line)
       if ids.length and _.all(ids , (id)-> _.include(App.LineSelectionController.selected, id))
         input.prop("checked", true)
         @toggleContainerAbove line

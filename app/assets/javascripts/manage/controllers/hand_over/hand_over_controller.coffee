@@ -10,7 +10,11 @@ class window.App.HandOverController extends Spine.Controller
 
   constructor: ->
     super
-    @lineSelection = new App.LineSelectionController {el: @el, markVisitLinesController: new App.MarkVisitLinesController {el: @el}}
+    @lineSelection = new App.LineSelectionController
+      el: @el
+      markVisitLinesController: new App.MarkVisitLinesController {el: @el}
+      user: @user
+      visitType: "handOver"
     @fetchFunctionsSetup
       "Model": "Item"
       "Software": "License"
@@ -92,7 +96,7 @@ class window.App.HandOverController extends Spine.Controller
         user: @user,
         reservations: (App.Reservation.find id for id in App.LineSelectionController.selected),
       }, (reservations, purpose) =>
-        new App.HandOverDialogController(reservations, @user, purpose)
+        new App.HandOverDialogController(reservations, @user, purpose, => @lineSelection.clearLocalStorage())
       )
     else
       App.Flash
