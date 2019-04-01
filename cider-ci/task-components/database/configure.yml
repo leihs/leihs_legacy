@@ -1,8 +1,5 @@
-environment_variables:
-  DATABASE: "leihs_test_{{CIDER_CI_TRIAL_ID}}"
-
 scripts:
-  configure-database:
+  legacy-configure-database:
     body: |
       #!/usr/bin/env ruby
       Dir.chdir ( Dir.exists?("legacy") ? "legacy" : "." ) do
@@ -15,7 +12,12 @@ scripts:
           'timeout' => 20,
           'username' => ENV['PGUSER'],
           'password' =>  ENV['PGPASSWORD'],
-          'database' => ENV['DATABASE']}
+          'database' => ENV['DATABASE_NAME']}
         config = { ENV['RAILS_ENV'] => db_config}
         File.open('config/database.yml','w') { |file| file.write config.to_yaml }
       end
+
+  test:
+    start_when:
+      database has been configured:
+        script_key: legacy-configure-database

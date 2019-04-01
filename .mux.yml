@@ -1,0 +1,21 @@
+name: LEIHS/v5/legacy
+windows:
+  2:
+    name: rails s
+    command: bundle exec rails s -p 3210
+  5:
+    name: psql
+    command: |
+      psql
+    post_command_send_keys: |
+      \c leihs
+      \\n
+  6:
+    name: database
+    post_command_send_keys: |
+      cd database 
+      export RAILS_ENV=test
+  7:
+    name: test
+    post_command_send_keys: |
+      export RAILS_ENV=test

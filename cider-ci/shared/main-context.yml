@@ -15,6 +15,7 @@ task_defaults:
     RUBY_VERSION: 2.6.0
     RUBY: '{{RUBY_ENGINE}}-{{RUBY_VERSION}}'
     RAILS_ENV: test
+    DATABASE_NAME: "leihs_test_{{CIDER_CI_TRIAL_ID}}"
 
   trial_attachments:
     screenshots:

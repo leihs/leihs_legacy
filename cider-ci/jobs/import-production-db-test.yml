@@ -27,7 +27,8 @@ context:
         create-database:
           start_when:
             database configured:
-              script_key: configure-database
+              script_key: leagcy-configure-database
+
           body: |
             #!/usr/bin/env bash
             set -euxo
