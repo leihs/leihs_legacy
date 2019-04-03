@@ -57,7 +57,7 @@ module Borrow
         fill_in 'purpose', with: Faker::Lorem.sentence
       end
 
-      step 'I click on submit' do
+      step 'I click on submit button' do
         click_button _('Submit Order')
       end
 

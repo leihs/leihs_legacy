@@ -133,7 +133,16 @@
   # We color days according to whether the total in a particular group is above zero or no.
   # In addition to each group we also do this for the overall total of available items in stock of a certain model.
   # We use the "special" group id -1 for the total. The to_i comparison is needed to convert nil to 0 :
-  group_ids = (["-1"] + av.entitlements.keys)
+  entitlement_group_ids = \
+    av
+    .entitlements
+    .keys
+    .compact
+    .map { |g_id| EntitlementGroup.find_by_id(g_id) }
+    .sort { |g1, g2| g1.name <=> g2.name }
+    .map(&:id)
+
+  group_ids = (["-1"] + entitlement_group_ids + [nil])
   group_ids.each do |g|
     add_timeband(current_inventory_pool, bandNames_js, bandInfos_js, g)
 

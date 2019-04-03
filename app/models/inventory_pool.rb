@@ -115,13 +115,15 @@ class InventoryPool < ApplicationRecord
      end_date,
      returned_date,
      status,
-     string_agg(entitlement_groups_users.entitlement_group_id::text,
-                ',') AS concat_group_ids
+     ARRAY(
+       SELECT egu.entitlement_group_id
+       FROM entitlement_groups_users egu
+       INNER JOIN entitlement_groups eg
+       ON eg.id = egu.entitlement_group_id
+       WHERE egu.user_id = reservations.user_id
+       ORDER BY eg.name ASC
+     ) AS user_group_ids
     SQL
-     .joins(<<-SQL)
-       LEFT JOIN entitlement_groups_users
-       ON entitlement_groups_users.user_id = reservations.user_id
-     SQL
      .where(<<-SQL)
        status NOT IN ('rejected', 'closed')
        AND NOT (
@@ -133,7 +135,6 @@ class InventoryPool < ApplicationRecord
          item_id IS NULL
        )
      SQL
-     .group(:id)
   end), class_name: 'ItemLine'
 
   #######################################################################

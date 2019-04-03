@@ -43,10 +43,10 @@ end
 When /^I assign (\w+) item(s?) to group "([^"]*)"$/ do |n, plural, to_group_name|
   n = to_number(n)
   to_group = @inventory_pool.entitlement_groups.find_by_name to_group_name
-  partition = Entitlement.hash_with_generals(@inventory_pool, @model)
-  partition[to_group.id] ||= 0
-  partition[to_group.id] += n
-  @model.entitlements.set_in(@inventory_pool, partition)
+  FactoryGirl.create(:entitlement,
+                     model: @model,
+                     entitlement_group: to_group,
+                     quantity: n)
 end
 
 Then 'that model should not be available to anybody' do

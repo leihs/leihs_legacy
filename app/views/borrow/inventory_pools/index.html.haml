@@ -18,6 +18,9 @@
               %span.medium.badge.red.margin-left-s{style: "vertical-align: super"}= _("You are suspended for this inventory pool")
             - elsif not inventory_pool.borrowable_items?
               %span.medium.badge.margin-left-s{style: "vertical-align: super"}= _("Does not have any reservable items")
+            - elsif mrt = app_settings.maximum_reservation_time
+              %span.medium.badge.margin-left-s{style: "vertical-align: super; background-color: #fff3cd; color: #856404"}
+                = "#{_("Maximum reservation time is restricted to")} #{mrt} #{n_("day", "days", mrt)}"
 
           .row
             - if inventory_pool.description and inventory_pool.description.length > 0

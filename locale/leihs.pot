@@ -3477,3 +3477,6 @@ msgstr ""
 
 msgid "There are open reservations for delegated users: "
 msgstr ""
+
+msgid "Maximum reservation time is restricted to"
+msgstr ""

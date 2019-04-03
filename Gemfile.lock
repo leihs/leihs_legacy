@@ -97,9 +97,6 @@ GEM
       memoizable (~> 0.4.0)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
-    archive-tar-minitar (0.6.1)
-      minitar (~> 0.6)
-      minitar-cli (~> 0.6)
     arel (7.1.4)
     arrayfields (4.9.2)
     ast (2.3.0)
@@ -225,7 +222,6 @@ GEM
       activesupport (>= 4.2.0)
     haml (4.0.7)
       tilt
-    hashie (3.5.6)
     hirb (0.7.3)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
@@ -290,10 +286,6 @@ GEM
       subexec (~> 0.2.1)
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
-    minitar (0.6.1)
-    minitar-cli (0.6.1)
-      minitar (~> 0.6.0)
-      powerbar (~> 1.0)
     minitest (5.11.3)
     monetize (1.7.0)
       money (~> 6.9)
@@ -321,8 +313,6 @@ GEM
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.21.0)
-    powerbar (1.0.18)
-      hashie (>= 1.1.0)
     powerpack (0.1.1)
     procto (0.0.3)
     pry (0.10.4)
@@ -417,10 +407,6 @@ GEM
       rainbow (~> 2.0)
       unparser (~> 0.2.2)
     ref (2.0.0)
-    relish (0.7.1)
-      archive-tar-minitar (>= 0.5.2)
-      json (>= 1.4.6)
-      rest-client (>= 1.7.2)
     require_all (1.4.0)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
@@ -610,7 +596,6 @@ DEPENDENCIES
   rake
   rb-readline
   react-rails
-  relish
   rgl (~> 0.4.0)
   rinku (~> 2.0.4)
   rspec

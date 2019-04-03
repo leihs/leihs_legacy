@@ -7,21 +7,34 @@ class Borrow::ReservationsController < Borrow::ApplicationController
     @inventory_pool = current_user.inventory_pools.find(params[:inventory_pool_id])
 
     @errors = []
+
     unless @inventory_pool.open_on?(@start_date)
       @errors << _('Inventory pool is closed on start date')
     end
+
     unless @inventory_pool.open_on?(@end_date)
       @errors << _('Inventory pool is closed on end date')
     end
+
     if @start_date < \
       Time.zone.today + @inventory_pool.workday.reservation_advance_days.days
       @errors << _('No orders are possible on this start date')
     end
+
     if @inventory_pool.workday.reached_max_visits.include? @start_date
       @errors << _('Booking is no longer possible on this start date')
     end
+
     if @inventory_pool.workday.reached_max_visits.include? @end_date
       @errors << _('Booking is no longer possible on this end date')
+    end
+
+    if mrt = app_settings.maximum_reservation_time
+      if (@end_date - @start_date) >= mrt
+        @errors << [_('Maximum reservation time is restricted to'),
+                    mrt,
+                    n_('day', 'days', mrt)].join(' ')
+      end
     end
   end
 

@@ -44,10 +44,6 @@ module Manage
         all('[data-select-lines]').map(&:click)
       end
 
-      step 'I click on :label' do |label|
-        click_on _(label)
-      end
-
       step 'within modal dialog I click on :label' do |label|
         within '.modal' do
           click_on _(label)

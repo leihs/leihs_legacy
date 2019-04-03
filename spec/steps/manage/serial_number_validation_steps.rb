@@ -153,10 +153,6 @@ module Manage
         visit manage_edit_model_path(@current_inventory_pool, @model)
       end
 
-      step 'I click on :label' do |label|
-        click_on _(label)
-      end
-
       step 'I add the first item' do
         type_into_and_select_from_autocomplete('#search-item',
                                                @item_1.inventory_code)

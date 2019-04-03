@@ -19,7 +19,7 @@ Feature: Order mails
     And the customer has an unsubmitted reservation for model B and pool B
     When I open the current order page
     And I fill in the purpose
-    And I click on submit
+    And I click on submit button
     Then I see a notification message
     And 4 mails has been sent
     And one mail with received template was sent to pool A
