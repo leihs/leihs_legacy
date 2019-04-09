@@ -44,7 +44,6 @@ class window.App.ReservationAssignItemController extends Spine.Controller
         in_stock: true
         responsible_inventory_pool_id: App.InventoryPool.current.id
         retired: false
-        sort_by_inventory_code: true
 
   fetchItems: _.partial this::fetchItemsOrLicences, App.Item
   fetchLicenses: _.partial this::fetchItemsOrLicences, App.License
