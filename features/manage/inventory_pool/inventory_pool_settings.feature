@@ -29,4 +29,4 @@ Feature: Inventory Pool Settings
   @rack
   Scenario: Define days between possible order submit and possible hand over
     When I edit my inventory pool settings
-    Then I can change the field "Min. number of days between order and hand over"
+    Then I can change the field "Min. number of days between current date and hand over"

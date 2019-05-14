@@ -314,7 +314,7 @@ end
 
 Then(/^I can change the field "(.*?)"$/) do |arg1|
   case arg1
-    when 'Min. number of days between order and hand over'
+    when 'Min. number of days between current date and hand over'
       n = rand(0..14)
       find("input[type='number'][name='inventory_pool[workday_attributes][reservation_advance_days]']").set n
       step 'I save'

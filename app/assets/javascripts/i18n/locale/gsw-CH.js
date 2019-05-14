@@ -3816,7 +3816,7 @@ window.i18n.locale_data = {
          null,
          "Produkt"
       ],
-      "Min. number of days between order and hand over": [
+      "Min. number of days between current date and hand over": [
          null,
          ""
       ],

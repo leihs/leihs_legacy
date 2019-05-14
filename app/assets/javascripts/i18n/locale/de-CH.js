@@ -3938,9 +3938,9 @@ window.i18n.locale_data = {
          null,
          "Produkt"
       ],
-      "Min. number of days between order and hand over": [
+      "Min. number of days between current date and hand over": [
          null,
-         "Min. Tage zwischen Bestellung und Aushändigung"
+         "Min. Tage zwischen dem aktuellen Datum und der Aushändigung"
       ],
       "Status note": [
          null,
@@ -4697,6 +4697,10 @@ window.i18n.locale_data = {
       "There are open reservations for delegated users: ": [
          null,
          "Es gibt offene Reservationen für Delegationsmitglieder: "
+      ],
+      "This order is not approvable because some reservations violate the minimal reservation advance period of the inventory pool. Please adjust the start date accordingly.": [
+         null,
+         "Diese Bestellung kann nicht genehmigt werden, weil einige Reservationen die minimale Zeitdauer zwischen heute und der Aushändigung verletzen. Bitte passen Sie ensprechend das Startdatum an."
       ]
    }
 }

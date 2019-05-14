@@ -27,6 +27,17 @@ Feature: Submit order
     And the order was not submitted
 
   @borrow_submit_order
+  Scenario: Failure of submiting an order with a reservation's start date not respecting reservation advance days
+    Given I am logged in as customer
+    And the reservation advance days for this pool is set to 1
+    And I have an unsubmitted reservation for this pool starting yesterday
+    When I open the page for this order
+    And I enter the purpose of my order
+    And I submit
+    Then I see an error message in respect to the reservation advance days
+    And the order was not submitted
+
+  @borrow_submit_order
   Scenario: Success of submiting an order with a reservation not exceding the maximum reservation time
     Given I am logged in as customer
     And the maximum reservation time is set to 5 days

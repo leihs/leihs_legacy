@@ -97,7 +97,7 @@
 
               .row.padding-inset-s.emboss.margin-bottom-xxs
                 .col1of2
-                  %strong.font-size-m= _("Min. number of days between order and hand over")
+                  %strong.font-size-m= _("Min. number of days between current date and hand over")
                 .col1of2.text-align-right
                   %input{type: "number", name: "inventory_pool[workday_attributes][reservation_advance_days]", value: @inventory_pool.workday.reservation_advance_days, style: "width: 5em"}
 

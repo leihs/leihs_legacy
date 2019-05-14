@@ -2923,7 +2923,7 @@ msgstr ""
 msgid "Product"
 msgstr ""
 
-msgid "Min. number of days between order and hand over"
+msgid "Min. number of days between current date and hand over"
 msgstr ""
 
 msgid "Status note"
@@ -3479,4 +3479,7 @@ msgid "Maximum reservation time is restricted to"
 msgstr ""
 
 msgid "There are open reservations for delegated users: "
+msgstr ""
+
+msgid "This order is not approvable because some reservations violate the minimal reservation advance period of the inventory pool. Please adjust the start date accordingly."
 msgstr ""

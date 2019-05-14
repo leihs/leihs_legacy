@@ -73,6 +73,31 @@ module Borrow
       step 'the order was submitted successfully' do
         expect(@current_user.orders.submitted.count).to eq 1
       end
+
+      step 'the reservation advance days for this pool is set to :n' do |n|
+        @inventory_pool.workday.update_attributes!(
+          reservation_advance_days: n.to_i
+        )
+      end
+
+      step 'I have an unsubmitted reservation for this pool starting yesterday' do
+        FactoryGirl.create(:reservation,
+                           user: @customer,
+                           inventory_pool: @inventory_pool,
+                           status: :unsubmitted,
+                           start_date: Date.yesterday)
+      end
+
+      step 'I am redirected to the timeout page' do
+        expect(current_path).to eq borrow_refresh_timeout_path
+      end
+
+      step 'I see an error message in respect to the reservation advance days' do
+        within find('#flash .error') do
+          expect(current_scope).to have_content \
+            'minimal reservation advance period'
+        end
+      end
     end
   end
 end

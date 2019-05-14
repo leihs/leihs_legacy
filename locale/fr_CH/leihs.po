@@ -2942,8 +2942,8 @@ msgstr "Un élément paquet doit appartenir à un modèle de paquet"
 msgid "Product"
 msgstr "Produit"
 
-msgid "Min. number of days between order and hand over"
-msgstr "Min. de jours entre une commande et une transmission"
+msgid "Min. number of days between current date and hand over"
+msgstr "Min. de jours entre date actuelle et une transmission"
 
 msgid "Status note"
 msgstr "Note de statut"

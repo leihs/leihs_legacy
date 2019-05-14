@@ -248,6 +248,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/submit_order.feature:30
+- name: spec/features/borrow/submit_order.feature:41
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/submit_order.feature:41
 - name: spec/features/borrow/submit_order.feature:7
   scripts:
     test:

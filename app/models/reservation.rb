@@ -148,6 +148,10 @@ class Reservation < ApplicationRecord
     inventory_pool.open_on?(start_date) and inventory_pool.open_on?(end_date)
   end
 
+  def start_date_within_advance_days_period?
+    start_date < (Date.today + inventory_pool.workday.reservation_advance_days.day)
+  end
+
   # custom valid? method
   def complete?
     self.valid? and self.available?
@@ -197,6 +201,12 @@ class Reservation < ApplicationRecord
       errors.add(:base,
                  _('This order is not approvable because some reserved ' \
                    'models are not available.'))
+    end
+    if start_date_within_advance_days_period?
+      errors.add(:base,
+                 _('This order is not approvable because some reservations ' \
+                   'violate the minimal reservation advance period of the ' \
+                   'inventory pool. Please adjust the start date accordingly.'))
     end
     errors.empty?
   end

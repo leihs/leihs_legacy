@@ -2878,7 +2878,7 @@ msgstr "Diä Sach muss zumene Paket ghöre"
 msgid "Product"
 msgstr "Produkt"
 
-msgid "Min. number of days between order and hand over"
+msgid "Min. number of days between current date and hand over"
 msgstr ""
 
 msgid "Currency"

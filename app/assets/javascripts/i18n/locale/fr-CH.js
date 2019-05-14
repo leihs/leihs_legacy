@@ -3912,9 +3912,9 @@ window.i18n.locale_data = {
          null,
          "Produit"
       ],
-      "Min. number of days between order and hand over": [
+      "Min. number of days between current date and hand over": [
          null,
-         "Min. de jours entre une commande et une transmission"
+         "Min. de jours entre date actuelle et une transmission"
       ],
       "Status note": [
          null,
