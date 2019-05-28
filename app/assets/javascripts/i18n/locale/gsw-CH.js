@@ -115,10 +115,6 @@ window.i18n.locale_data = {
          null,
          " Sachä fällig am "
       ],
-      "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\"": [
-         null,
-         ""
-      ],
       "%d day in the future": [
          "%d days in the future",
          "%d Tag i de Zuekunft",
@@ -2332,10 +2328,6 @@ window.i18n.locale_data = {
       "awaiting approval": [
          null,
          "wartet uf Beschtätigung"
-      ],
-      "but a few changes were made to it": [
-         null,
-         ""
       ],
       "could not be assigned for take back": [
          null,

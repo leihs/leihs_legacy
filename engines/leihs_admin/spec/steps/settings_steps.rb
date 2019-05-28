@@ -140,18 +140,6 @@ module LeihsAdmin
       end
       # rubocop:enable Metrics/BlockLength
 
-      step 'the following settings are disabled:' do |table|
-        within("form#edit_setting[action='/admin/settings']") do
-          table.raw.flatten.each do |k|
-            f = find(
-              %w[input textarea select]
-              .map { |s| "#{s}[name='setting[#{k}]']" }
-              .join(',')
-            )
-            expect(f).to be_disabled
-          end
-        end
-      end
     end
   end
 end

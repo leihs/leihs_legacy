@@ -1,30 +1,13 @@
 class Setting < ApplicationRecord
   audited
 
-  ############################ READONLY ATTRIBUTES ################################
-  class << self
-    def attr_readonly?(attr)
-      readonly_attributes.include?(attr)
-    end
-
-    def smtp_settings
-      attribute_names.select { |attr| attr.start_with?('smtp') }
-    end
-  end
-
-  attr_readonly :external_base_url,
-                :ldap_config,
-                :local_currency_string,
-                :mail_delivery_method,
-                :time_zone,
-                *smtp_settings
-
-  before_update do
-    if changed_attributes.keys.any? { |attr| Setting.attr_readonly?(attr) }
-      raise 'updating readonly attributes is not possible'
-    end
-  end
-  #################################################################################
+  SERVICE_RESTART_ATTRIBUTES =
+    [:external_base_url,
+     :ldap_config,
+     :local_currency_string,
+     :mail_delivery_method,
+     :time_zone,
+     *attribute_names.select { |attr| attr.start_with?('smtp') }].freeze
 
   validates_presence_of :local_currency_string,
                         :email_signature,

@@ -27,9 +27,6 @@ msgstr " elemento(s)"
 msgid " item(s) due on "
 msgstr " elemento(s) vencidos el "
 
-msgid "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\""
-msgstr ""
-
 msgid "%s until %s"
 msgstr "%s hasta %s"
 
@@ -518,9 +515,6 @@ msgstr "[leihs] Algunos elementos deberían de ser devueltos mañana"
 
 msgid "already in Category"
 msgstr "ya se encuentra en la Categoría"
-
-msgid "but a few changes were made to it"
-msgstr "pero se efectuaron algunos cambios"
 
 msgid "could not be assigned for take back"
 msgstr ""

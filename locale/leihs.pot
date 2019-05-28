@@ -42,9 +42,6 @@ msgstr ""
 msgid " item(s) due on "
 msgstr ""
 
-msgid "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\""
-msgstr ""
-
 msgid "%d day in the future"
 msgid_plural "%d days in the future"
 msgstr[0] ""
@@ -1762,9 +1759,6 @@ msgstr ""
 msgid "awaiting approval"
 msgstr ""
 
-msgid "but a few changes were made to it"
-msgstr ""
-
 msgid "could not be assigned for take back"
 msgstr ""
 
@@ -3397,7 +3391,7 @@ msgstr ""
 msgid "No orders are possible on this end date"
 msgstr ""
 
-msgid "The readonly attributes are managed through settings.yml file. More information is "
+msgid "A change of the highlighted attributes requires a restart of the legacy service."
 msgstr ""
 
 msgid "You are suspended for this inventory pool"

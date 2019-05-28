@@ -16,9 +16,6 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 "X-Loco-Parser: loco_parse_po\n"
 
-msgid "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\""
-msgstr ""
-
 msgid "Suspended until"
 msgstr "Suspendu jusqu'au"
 
@@ -1812,9 +1809,6 @@ msgstr "disponible"
 
 msgid "awaiting approval"
 msgstr "en attente d'approbation"
-
-msgid "but a few changes were made to it"
-msgstr "mais quelques changements ont été effectué"
 
 msgid "could not be assigned for take back"
 msgstr "n'a pas pu être attribué pour la restitution"

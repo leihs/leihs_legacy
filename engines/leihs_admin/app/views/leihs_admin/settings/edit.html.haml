@@ -7,34 +7,30 @@
     .col-sm-4
       %h1= yield :title
 
-    .col-sm-8.text-right{style: "margin-top: 20px"}
+    .col-sm-8.text-right
       %button.btn.btn-success{:type => :submit}= _("Save %s") % _("Settings")
 
   .alert.alert-warning{role: "alert"}
-    = _("The readonly attributes are managed through settings.yml file. More information is ")
-    %span
-      %a{href: "https://github.com/leihs/leihs/wiki/Deployment"}= _("here")
-      = "."
+    = _("A change of the highlighted attributes requires a restart of the legacy service.")
 
   - Hash[@settings.attributes.select{ |k, v| not ["updated_at", "created_at"].include? k}.sort].each_pair do |k,v|
     - next if k == "id"
-    - disabled = Setting.attr_readonly?(k)
     .row.form-group
-      .col-sm-4
-        = f.label k, k.to_s, style: "margin-bottom: 0px", class: (disabled and "text-muted")
+      %div{class: "col-sm-4#{' alert alert-warning' if Setting::SERVICE_RESTART_ATTRIBUTES.include? k}"}
+        = f.label k, k.to_s
       .col-sm-8
         - if k == "time_zone"
-          = f.time_zone_select k, nil, {}, disabled: disabled
+          = f.time_zone_select k
         - elsif k == "local_currency_string"
           - all_currencies = Money::Currency.all.map(&:iso_code).uniq.sort
-          = f.select k, all_currencies, {}, disabled: disabled
+          = f.select k, all_currencies
         - else
           - case Setting.columns_hash[k].type
             - when :string
-              = f.text_field k, :class => "form-control", disabled: disabled
+              = f.text_field k, :class => "form-control"
             - when :text
-              = f.text_area k, rows: 8, :class => "form-control", disabled: disabled
+              = f.text_area k, rows: 8, :class => "form-control"
             - when :integer
-              = f.number_field k, :class => "form-control", disabled: disabled
+              = f.number_field k, :class => "form-control"
             - when :boolean
-              = f.check_box k, :class => "form-control", disabled: disabled
+              = f.check_box k, :class => "form-control"

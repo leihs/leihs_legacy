@@ -95,10 +95,6 @@ window.i18n.locale_data = {
          null,
          " elemento(s) vencidos el "
       ],
-      "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\"": [
-         null,
-         ""
-      ],
       "%s until %s": [
          null,
          "%s hasta %s"
@@ -750,10 +746,6 @@ window.i18n.locale_data = {
       "already in Category": [
          null,
          "ya se encuentra en la Categoría"
-      ],
-      "but a few changes were made to it": [
-         null,
-         "pero se efectuaron algunos cambios"
       ],
       "could not be assigned for take back": [
          null,

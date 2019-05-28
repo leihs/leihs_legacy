@@ -115,10 +115,6 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\"": [
-         null,
-         ""
-      ],
       "%d day in the future": [
          "%d days in the future",
          "",
@@ -2314,10 +2310,6 @@ window.i18n.locale_data = {
          ""
       ],
       "awaiting approval": [
-         null,
-         ""
-      ],
-      "but a few changes were made to it": [
          null,
          ""
       ],

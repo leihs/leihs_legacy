@@ -42,9 +42,6 @@ msgstr ""
 msgid " item(s) due on "
 msgstr ""
 
-msgid "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\""
-msgstr ""
-
 msgid "%d day in the future"
 msgid_plural "%d days in the future"
 msgstr[0] ""
@@ -1710,9 +1707,6 @@ msgid "available"
 msgstr ""
 
 msgid "awaiting approval"
-msgstr ""
-
-msgid "but a few changes were made to it"
 msgstr ""
 
 msgid "could not be assigned for take back"

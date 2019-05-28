@@ -118,10 +118,6 @@ window.i18n.locale_data = {
          null,
          "Gegenstände zurückzubringen am "
       ],
-      "\"Couldn't connect to LDAP: #{LDAP_CONFIG[:host]}:#{LDAP_CONFIG[:port]}\"": [
-         null,
-         ""
-      ],
       "%d day in the future": [
          "%d days in the future",
          "%d Tag in der Zukunft",
@@ -2410,10 +2406,6 @@ window.i18n.locale_data = {
          null,
          "wartet auf Genehmigung"
       ],
-      "but a few changes were made to it": [
-         null,
-         ""
-      ],
       "could not be assigned for take back": [
          null,
          "konnte nicht für Rücknahme zugewiesen werden"
@@ -4590,9 +4582,9 @@ window.i18n.locale_data = {
          null,
          "Bestellungen sind für dieses Rückgabetag nicht möglich"
       ],
-      "The readonly attributes are managed through settings.yml file. More information is ": [
+      "A change of the highlighted attributes requires a restart of the legacy service.": [
          null,
-         "Die schreibgeschützten Attribute werden durch die settings.yml Datei verwaltet. Mehr Informationen findet man "
+         "Eine Änderung der hervor gehobenen Attribute erfordert einen Neustart vom Legacy-Service."
       ],
       "You are suspended for this inventory pool": [
          null,
