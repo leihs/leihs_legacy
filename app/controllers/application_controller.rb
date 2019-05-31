@@ -47,7 +47,13 @@ class ApplicationController < ActionController::Base
       # because of time travel in test, AR sets the fake created at otherwise
       real_now = ActiveRecord::Base.connection.execute('SELECT now()').first['now']
 
+      auth_system = AuthenticationSystem.find_by(type: 'password') ||
+        AuthenticationSystem.create(id: 'password',
+                                    name: 'leihs password',
+                                    type: 'password')
+
       UserSession.create!(user: user,
+                          authentication_system: auth_system,
                           token_hash: token_hash,
                           created_at: real_now)
 

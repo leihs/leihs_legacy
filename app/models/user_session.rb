@@ -1,6 +1,7 @@
 class UserSession < ApplicationRecord
   belongs_to :user
   belongs_to :delegation, foreign_key: :delegation_id, class_name: 'User'
+  belongs_to :authentication_system
 
   def self.find_by_token_base(token)
     where(<<-SQL.strip_heredoc, token)

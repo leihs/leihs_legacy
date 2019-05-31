@@ -17,8 +17,14 @@ module Manage
       end
 
       step 'the user has a session for the delegation' do
+        auth_system = AuthenticationSystem.find_by(type: 'password') ||
+          AuthenticationSystem.create(id: 'password',
+                                      name: 'leihs password',
+                                      type: 'password')
+
         FactoryGirl.create(:user_session,
                            user: @user,
+                           authentication_system: auth_system,
                            delegation: @delegation)
       end
 
