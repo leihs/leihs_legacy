@@ -59,6 +59,9 @@ Feature: Inventory (CSV export)
       | Borrower First name             |
       | Borrower Last name              |
       | Borrower Personal ID            |
+      | Delegation Borrower First name  |
+      | Delegation Borrower Last name   |
+      | Delegation Borrower Personal ID |
       | Borrowed until                  |
     When I view the tab "Software"
     Then I can export this items data as a CSV file
@@ -105,6 +108,9 @@ Feature: Inventory (CSV export)
       | Borrower First name             |
       | Borrower Last name              |
       | Borrower Personal ID            |
+      | Delegation Borrower First name  |
+      | Delegation Borrower Last name   |
+      | Delegation Borrower Personal ID |
       | Borrowed until                  |
     When I view the tab "Options"
     Then I can export this options data as a CSV file

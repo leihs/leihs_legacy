@@ -80,18 +80,32 @@ module Concerns
       end
       h1.merge! h2
 
-      h1.merge!(
-        _('Building') => room.building.name,
-        _('Room') => room.name,
-        _('Shelf') => shelf,
-        "#{_('Borrower')} #{_('First name')}" => current_borrower.try(:firstname),
-        "#{_('Borrower')} #{_('Last name')}" => current_borrower.try(:lastname),
-        "#{_('Borrower')} #{_('Personal ID')}" => \
-          current_borrower.try(:extended_info).try(:fetch, 'id', nil) \
-            || current_borrower.try(:org_id),
+      h1.merge!(\
+        {
+          _('Building') => room.building.name,
+          _('Room') => room.name,
+          _('Shelf') => shelf
+        },
+        user_info_rows(current_borrower, "#{_('Borrower')}"),
+        # NOTE: for Delegations, this is the User who picked it up on handover
+        user_info_rows(
+          current_delegated_borrower, "#{_('Delegation')} #{_('Borrower')}"
+        ),
+
         "#{_('Borrowed until')}" => "#{current_reservation.try(:end_date)}"
       )
       h1
+    end
+
+    private
+
+    def user_info_rows(user, prefix)
+      {
+        "#{prefix} #{_('First name')}" => user.try(:firstname),
+        "#{prefix} #{_('Last name')}" => user.try(:lastname),
+        "#{prefix} #{_('Personal ID')}" => \
+          user.try(:extended_info).try(:fetch, 'id', nil) || user.try(:org_id)
+      }
     end
   end
 end

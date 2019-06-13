@@ -315,6 +315,11 @@ class Item < ApplicationRecord
     reservation.user if reservation
   end
 
+  def current_delegated_borrower
+    reservation = current_reservation
+    reservation.delegated_user if reservation
+  end
+
   def current_return_date
     reservation = current_reservation
     reservation.end_date if reservation
