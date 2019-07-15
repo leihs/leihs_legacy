@@ -370,4 +370,8 @@ class User < ApplicationRecord
              Time.zone.now - Setting.first.timeout_minutes.minutes)
       .exists?
   end
+
+  def system_admin?
+    SystemAdminUser.where(user_id: self.id).exists?
+  end
 end

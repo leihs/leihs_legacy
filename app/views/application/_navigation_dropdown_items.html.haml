@@ -1,6 +1,10 @@
 :ruby
-  what_to_display = [:borrow]
-  if current_user.is_admin
+  what_to_display = []
+
+  if controller.class.parent != Borrow
+    what_to_display = [:borrow]
+  end
+  if current_user.is_admin or current_user.system_admin?
     what_to_display.push :admin
   end
   if current_user.procurement_access?
