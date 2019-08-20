@@ -38,6 +38,7 @@ Feature: Picking list
     And in the list, the not assigned items will displayed without inventory code
     And the missing location information for options, are displayed with "Location not defined"
 
+  @broken
   Scenario: Content of a picking list before hand over -- unavailable items
     Given there is a hand over with at least one problematic line
     And I open the hand over

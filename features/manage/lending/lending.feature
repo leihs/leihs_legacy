@@ -56,7 +56,7 @@ Feature: Lending
     And I click on "Hand Over"
     Then there are inventory codes for item and license in the contract
 
-  @flapping
+  @broken
   Scenario: Inspection during take back
     Given I take back an item
     Then I can inspect each item

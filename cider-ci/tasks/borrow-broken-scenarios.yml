@@ -1,6 +1,10 @@
 ---
 tasks:
-- name: No Tasks for this Job!
+- name: features/borrow/calendar.feature:11
   scripts:
     test:
-      body: echo OK
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/borrow/calendar.feature:11

@@ -15,6 +15,7 @@ Feature: Search
     And the name of that user is shown on each contract line
     And that user's personal details are shown in the tooltip
 
+  @broken
   Scenario: No hand over without approval
     Given I am Pius
     And there is a user with an unapproved order

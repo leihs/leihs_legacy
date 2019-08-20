@@ -7,6 +7,7 @@ Feature: Calendar
   Background:
     Given I am Normin
 
+  @broken
   Scenario: reached maximum amount of visits of a week day
     When I open the calendar of a model related to an inventory pool for which has reached maximum amount of visits
     And I select that inventory pool
