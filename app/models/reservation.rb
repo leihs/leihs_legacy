@@ -187,6 +187,16 @@ class Reservation < ApplicationRecord
 
   ############################################
 
+  def submittable?
+    if start_date_within_advance_days_period?
+      errors.add(:base,
+                 _('This order is not approvable because some reservations ' \
+                   'violate the minimal reservation advance period of the ' \
+                   'inventory pool. Please adjust the start date accordingly.'))
+    end
+    errors.empty?
+  end
+
   def approvable?
     if delegated_user.try :suspended?, inventory_pool
       errors.add(:base,
@@ -201,12 +211,6 @@ class Reservation < ApplicationRecord
       errors.add(:base,
                  _('This order is not approvable because some reserved ' \
                    'models are not available.'))
-    end
-    if start_date_within_advance_days_period?
-      errors.add(:base,
-                 _('This order is not approvable because some reservations ' \
-                   'violate the minimal reservation advance period of the ' \
-                   'inventory pool. Please adjust the start date accordingly.'))
     end
     errors.empty?
   end

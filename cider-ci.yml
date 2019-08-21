@@ -16,8 +16,7 @@ include:
   - cider-ci/jobs/borrow-flapping-scenarios.yml
   - cider-ci/jobs/borrow-rspec-scenarios.yml
   - cider-ci/jobs/borrow-rspec-flapping-scenarios.yml
-  # no broken ones right now
-  # - cider-ci/jobs/borrow-broken-scenarios.yml
+  - cider-ci/jobs/borrow-broken-scenarios.yml
 
   ## MANAGE - on branches foo/manage-bar
   - cider-ci/jobs/manage-scenarios.yml
@@ -25,7 +24,6 @@ include:
   - cider-ci/jobs/manage-unstable-scenarios.yml
   - cider-ci/jobs/manage-rspec-scenarios.yml
   - cider-ci/jobs/manage-rspec-flapping-scenarios.yml
-  # no broken ones right now
   - cider-ci/jobs/manage-broken-scenarios.yml
 
   ## ADMIN - on branches foo/admin-bar

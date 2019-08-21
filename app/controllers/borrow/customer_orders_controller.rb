@@ -50,6 +50,11 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
             end
 
             reservation.order = order
+
+            unless reservation.submittable?
+              raise reservation.errors.full_messages.uniq.join(', ')
+            end
+
             reservation.status = :submitted
 
             unless reservation.approvable?
