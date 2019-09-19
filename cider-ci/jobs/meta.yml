@@ -129,13 +129,6 @@ jobs:
                 export PATH=./node_modules/.bin:~/.rubies/$RUBY/bin:$PATH
                 yarn check --integrity --verify-tree --offline
 
-        "rails bug 25198 is open":
-          name: "Check if Rails bug 25198 is still open. If it isn't we have to fix our code."
-          scripts:
-            test:
-              body:
-                read_and_replace_with: cider-ci/bin/check-rails-bug-25198.rb
-
         backend and frontend locales are synchronised:
           name: "Backend and frontend locales are synchronised"
           scripts:
