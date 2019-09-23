@@ -22,7 +22,9 @@ class Manage::VisitsController < Manage::ApplicationController
             .limit(limit_param)
 
           visits_json = visits.as_json(
-            include: [{ user: { methods: :image_url } }, :reservations]
+            include: [{ user: { methods: :image_url,
+                                include: :delegator_user } },
+                      :reservations]
           )
 
           visits_json.each do |v|

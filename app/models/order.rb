@@ -5,6 +5,7 @@ class Order < ApplicationRecord
 
   belongs_to :inventory_pool
   belongs_to :user
+  belongs_to :customer_order
   has_many :reservations
   has_many :item_lines
   has_many :option_lines

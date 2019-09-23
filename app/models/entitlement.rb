@@ -51,6 +51,7 @@ class Entitlement < ApplicationRecord
   end
 
   def self.query(model_ids: nil, inventory_pool_id: nil)
+    # NOTE: this query is duplicated in new leihs-borrow !!
     <<-SQL
       SELECT model_id,
              entitlement_groups.inventory_pool_id,

@@ -22,8 +22,10 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
   end
 
   def submit
-    Order.transaction do
+    ApplicationRecord.transaction do
       begin
+        customer_order = CustomerOrder.create!(user: current_user,
+                                               purpose: purpose_param)
         current_user
           .reservations
           .unsubmitted
@@ -32,6 +34,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
           inventory_pool = InventoryPool.find(inventory_pool_id)
           order = Order.create!(user: current_user,
                                 inventory_pool: inventory_pool,
+                                customer_order: customer_order,
                                 purpose: purpose_param,
                                 state: :submitted)
 

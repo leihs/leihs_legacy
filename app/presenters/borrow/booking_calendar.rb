@@ -1,7 +1,10 @@
 class Borrow::BookingCalendar < ApplicationPresenter
-  def initialize(
-    inventory_pool, model, user, start_date_string, end_date_string, reservations
-  )
+  def initialize(inventory_pool,
+                 model,
+                 user,
+                 start_date_string,
+                 end_date_string,
+                 reservations = [])
     @inventory_pool = inventory_pool
     @model = model
     @user = user

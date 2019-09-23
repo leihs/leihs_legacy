@@ -64,10 +64,10 @@ class window.App.SwapUsersController extends Spine.Controller
     App.Reservation.swapUser(@reservations, @searchSetUserController.selectedUserId)
     .done =>
       window.location = App.User.find(@searchSetUserController.selectedUserId).url("hand_over")
-    .fail =>
+    .fail (e) =>
       @errorsContainer.removeClass "hidden"
       App.Button.enable @submitButton
-      @errorsContainer.find("strong").text _jed("Invalid data")
+      @errorsContainer.find("strong").text e.responseText
 
   renderContactPerson: => @form.append App.Render "manage/views/orders/edit/contact_person", @order
 

@@ -6,8 +6,10 @@
         {{>lastname}}
       </strong>
     </div>
+    {{if address || city}}
     <div class='row text-ellipsis'>
-      {{>address}}{{>city}}
+      {{>address}}, {{>city}}
     </div>
+    {{/if}}
   </a>
 </li>

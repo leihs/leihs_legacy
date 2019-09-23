@@ -7,6 +7,7 @@ class UserCell extends React.Component {
     super()
   }
 
+
   renderUserDetails() {
     return (
       <div className="row width-xl min-height-s padding-right-s padding-left-s">
@@ -20,7 +21,7 @@ class UserCell extends React.Component {
           {this.props.delegator_user_id && (
             <div className="row margin-top-m">
               <p className="paragraph-s line-height-s">
-                {_jed('Responsible')}: {this.props.delegator_user_id}
+                {_jed('Responsible')}: {this.props.delegator_user.firstname} {this.props.delegator_user.lastname}
               </p>
             </div>
           )}
@@ -36,6 +37,12 @@ class UserCell extends React.Component {
             <div className="row margin-top-m">
               <p className="paragraph-xs line-height-s">{_jed('Phone')}</p>
               <p className="paragraph-s line-height-s">{this.props.phone}</p>
+            </div>
+          )}
+          {this.props.delegator_user && this.props.delegator_user.phone && (
+            <div className="row margin-top-m">
+              <p className="paragraph-xs line-height-s">{_jed('Phone')}</p>
+              <p className="paragraph-s line-height-s">{this.props.delegator_user.phone}</p>
             </div>
           )}
           {this.props.badge_id && (

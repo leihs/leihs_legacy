@@ -221,20 +221,33 @@ class Manage::ReservationsController < Manage::ApplicationController
   def swap_user
     user = current_inventory_pool.users.find params[:user_id]
     reservations = current_inventory_pool.reservations.where(id: params[:line_ids])
-    begin
-      ApplicationRecord.transaction do
+
+    ApplicationRecord.transaction do
+      begin
+        ####################################################################
+        # Create new orders with the same purpose and pool, but with the
+        # new user. It's a copy of the older user's orders but with the
+        # new user, so to say. If there is at least one such pool order,
+        # then pack all the orders inside a new customer order for the
+        # new user.
+        ####################################################################
+        orders = reservations.map(&:order).compact.uniq
+
+        if orders.presence
+          customer_order = CustomerOrder.create!(
+            user: user,
+            purpose: orders.map(&:purpose).join('; ')
+          )
+        end
+
         reservations.group_by(&:order).each_pair do |order, lines|
-          ####################################################################
-          # create a new order with the same purpose and pool,
-          # but with a different user in order to maintain the
-          # integrity with the rest of the order's reservations
           if order
             new_order = Order.create!(user: user,
                                       inventory_pool: order.inventory_pool,
+                                      customer_order: customer_order,
                                       state: order.state,
                                       purpose: order.purpose)
           end
-          ####################################################################
 
           lines.each do |line|
             delegated_user = if user.delegation?
@@ -244,15 +257,18 @@ class Manage::ReservationsController < Manage::ApplicationController
                                  user.delegator_user
                                end
                              end
+
             line.update_attributes!(user: user,
                                     delegated_user: delegated_user,
                                     order: new_order || nil)
           end
         end
+
         head :ok
+      rescue => e
+        render(status: :bad_request, plain: e.message)
+        raise ActiveRecord::Rollback
       end
-    rescue
-      head :bad_request
     end
   end
 
