@@ -17,7 +17,7 @@
     "react": "^16.0.0",
     "react-autocomplete": "^1.7.2",
     "react-bootstrap": "^0.32.0",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.2.1",
     "react_ujs": "^2.4.1",
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-server": "^2.9.4",
