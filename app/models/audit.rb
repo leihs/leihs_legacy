@@ -59,6 +59,12 @@ class Audit < Audited::Audit
          FROM models
          WHERE models.id = audits.auditable_id
            AND models.product ILIKE :ilike_term)
+      OR EXISTS
+        (SELECT 1
+         FROM reservations
+         JOIN items ON items.id = reservations.item_id
+         WHERE reservations.id = audits.auditable_id
+           AND items.inventory_code ILIKE :ilike_term)
     SQL
   end
 end
