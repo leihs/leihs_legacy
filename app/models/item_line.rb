@@ -81,9 +81,11 @@ class ItemLine < Reservation
         .where.not(id: id)
         .exists?
         # check if available
-        errors.add(:base,
-                   _('%s is already assigned to a different contract') % \
-                   item.inventory_code)
+        errors.add(
+          :base,
+          _('%s is already assigned to a different contract or hand over') % \
+          item.inventory_code
+        )
       end
 
       # inventory_pool matching

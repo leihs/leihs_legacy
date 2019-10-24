@@ -3477,9 +3477,9 @@ window.i18n.locale_data = {
          null,
          "%s ist bereits diesem Vertrag zugewiesen"
       ],
-      "%s is already assigned to a different contract": [
+      "%s is already assigned to a different contract or hand over": [
          null,
-         "%s ist bereits einem anderen Vertrag zugeteilt"
+         "%s ist bereits einem anderen Vertrag oder einer anderen Aushändigung zugeteilt"
       ],
       "Hand over of %s item": [
          "Hand over of %s items",
