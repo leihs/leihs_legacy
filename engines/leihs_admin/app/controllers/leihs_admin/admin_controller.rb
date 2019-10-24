@@ -20,7 +20,7 @@ module LeihsAdmin
           end
           .map(&:name)
           .reject { |n| ['individual_audits', 'users'].include? n }
-          .push('settings')
+          .push('settings', 'fields_editor')
           .sort
 
         render 'leihs_admin/top'
