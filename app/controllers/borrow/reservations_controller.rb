@@ -17,7 +17,7 @@ class Borrow::ReservationsController < Borrow::ApplicationController
     end
 
     if @start_date < \
-      Time.zone.today + @inventory_pool.workday.reservation_advance_days.days
+      Time.zone.today + @inventory_pool.workday.reservation_advance_days.to_i.days
       @errors << _('No orders are possible on this start date')
     end
 

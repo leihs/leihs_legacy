@@ -149,7 +149,9 @@ class Reservation < ApplicationRecord
   end
 
   def start_date_within_advance_days_period?
-    start_date < (Date.today + inventory_pool.workday.reservation_advance_days.day)
+    start_date < (
+      Date.today + inventory_pool.workday.reservation_advance_days.to_i.day
+    )
   end
 
   # custom valid? method

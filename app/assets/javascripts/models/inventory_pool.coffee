@@ -31,4 +31,4 @@ class window.App.InventoryPool extends Spine.Model
 
   hasEnoughReservationAdvanceDays: (date)=>
     # NOTE check number of days between order submission and hand over
-    date >= moment().startOf('day').add(@workday().reservation_advance_days, 'days')
+    date >= moment().startOf('day').add(@workday().reservation_advance_days || 0, 'days')
