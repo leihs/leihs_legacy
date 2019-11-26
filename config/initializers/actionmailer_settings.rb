@@ -26,7 +26,8 @@ class ActionMailer::Base
           :port => app_settings.smtp_port,
           :domain => app_settings.smtp_domain,
           :enable_starttls_auto => app_settings.smtp_enable_starttls_auto,
-          :openssl_verify_mode => app_settings.smtp_openssl_verify_mode
+          :openssl_verify_mode => app_settings.smtp_openssl_verify_mode,
+          :authentication => app_settings.smtp_authentication_type
         }
       rescue
         logger.info("Could not configure ActionMailer because the database doesn't seem to be in the right shape for it. Check the settings table.")
