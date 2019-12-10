@@ -146,10 +146,10 @@ Then /^I can find the user administration features in the "(Manage|Admin)" area 
 end
 
 Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |suspended, with_or_without|
-  user = User.where(login: 'normin').first
+  @user = User.where(login: 'normin').first
   case suspended
     when 'suspended '
-      user
+      @user
         .access_rights
         .where(inventory_pool: @current_inventory_pool)
         .active
@@ -158,22 +158,23 @@ Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |
   end
   case with_or_without
     when 'with'
-      expect(user.access_rights.active.empty?).to be false
+      expect(@user.access_rights.active.empty?).to be false
     when 'without'
-      user.access_rights.active.delete_all
-      expect(user.access_rights.active.empty?).to be true
+      @user.access_rights.active.delete_all
+      expect(@user.access_rights.active.empty?).to be true
   end
   step %Q(I can find the user administration features in the "Manage" area under "Users")
   within '#user-list' do
     find('.line', match: :first)
     step 'I scroll loading all pages'
-    @el = find('.line', match: :prefer_exact, text: user.name)
+    @el = find('.line', match: :prefer_exact, text: @user.name)
   end
 end
 
 Then /^I see the following information, in order:$/ do |table|
   user = User.find @el.find('[data-id]')['data-id']
   access_right = user.access_right_for(@current_inventory_pool)
+  suspension = Suspension.find_by(user: user, inventory_pool: @current_inventory_pool)
 
   strings = table.hashes.map do |x|
     case x[:attr]
@@ -185,7 +186,7 @@ Then /^I see the following information, in order:$/ do |table|
         role = access_right.try(:role) || 'no access'
         _(role.to_s.humanize)
       when 'Suspended until dd.mm.yyyy'
-        "#{_("Suspended until")} %s" % I18n.l(access_right.suspended_until)
+        "#{_("Suspended until")} %s" % I18n.l(suspension.suspended_until)
     end
   end
   expect(@el.text).to match Regexp.new(strings.join('.*'))
@@ -305,9 +306,9 @@ end
 
 Then(/^I can create and suspend users$/) do
   step 'I can create a new user for the inventory_pool'
-  expect(@user.access_right_for(@inventory_pool).suspended?).to be false
+	expect(@user.suspended?(@inventory_pool)).to be false
   expect(page.driver.browser.process(:put, manage_update_inventory_pool_user_path(@inventory_pool, @user, format: :json), access_right: {suspended_until: Date.today + 1.year, suspended_reason: 'suspended reason'}).successful?).to be true
-  expect(@user.reload.access_right_for(@inventory_pool).suspended?).to be true
+	expect(@user.suspended?(@inventory_pool)).to be true
 end
 
 Then(/^I can assign and remove roles to and from users as specified in the following table, but only in the inventory pool for which I am manager$/) do |table|

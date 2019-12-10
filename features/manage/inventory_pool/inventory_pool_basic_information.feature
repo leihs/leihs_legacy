@@ -131,7 +131,7 @@ Feature: Basic information for inventory pools
     When I save
     Then this configuration is saved
     When a user is suspended automatically due to late contracts
-    Then they are suspended for this inventory pool until '1/1/2099'
+    Then they are suspended for this inventory pool
     And the reason for suspension is the one specified for this inventory pool
     When I disable "Automatic suspension"
     And I save
