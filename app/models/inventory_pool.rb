@@ -29,14 +29,18 @@ class InventoryPool < ApplicationRecord
                                 reject_if: proc { |holiday| holiday[:id] })
 
   has_many :access_rights, dependent: :delete_all
+
   has_many(:users, -> { distinct }, through: :access_rights)
+
+  has_many :suspensions, dependent: :delete_all
+
   has_many(:suspended_users,
            (lambda do
-               where.not(access_rights: { suspended_until: nil })
-               .where('access_rights.suspended_until >= ?', Time.zone.today)
-               .distinct
-           end),
-           through: :access_rights, source: :user)
+            where.not(suspensions: { suspended_until: nil })
+              .where('suspensions.suspended_until >= ?', Time.zone.today)
+              .distinct
+            end),
+            through: :suspensions, source: :user)
 
   has_many :rooms, -> { distinct }, through: :items
   has_many :items, dependent: :restrict_with_exception

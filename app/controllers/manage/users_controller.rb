@@ -122,6 +122,7 @@ class Manage::UsersController < Manage::ApplicationController
     @accessible_roles = get_accessible_roles_for_current_user
     @db_auth = AuthenticationSystemUser.find_by_user_id(@user.id)
     @access_right = @user.access_right_for current_inventory_pool
+    @suspendsion = @user.suspensions.find_by(inventory_pool: current_inventory_pool)
   end
 
   ### update / put ############################################################
@@ -153,6 +154,9 @@ class Manage::UsersController < Manage::ApplicationController
   end
 
   def update_access_rights
+
+    # TODO look at virtual attribute suspended_until and manage suspensions
+
     # rubocop:disable Style/IfInsideElse
     @access_right = AccessRight.find_by(
       user_id: @user.id, inventory_pool_id: @ip_id

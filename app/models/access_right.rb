@@ -1,10 +1,65 @@
 class AccessRight < ApplicationRecord
   audited
 
+  ### virtual attributes #############################################
+
+  attribute :suspended_until, :date
+  attribute :suspended_reason, :text
+
+  after_save do |access_right|
+    if access_right.suspended_until.present?
+      Suspension.find_or_initialize_by(
+        user_id: access_right.user_id,
+        inventory_pool_id: access_right.inventory_pool_id) \
+        .update_attributes(
+          suspended_until: access_right.suspended_until,
+          suspended_reason: access_right.suspended_reason)
+    else
+      Suspension.find_or_initialize_by(
+        user_id: access_right.user_id,
+        inventory_pool_id: access_right.inventory_pool_id).try(&:destroy)
+    end
+  end
+
+  after_initialize do |access_right|
+    access_right.set_suspension_attributes
+  end
+
+  after_find do |access_right|
+    access_right.set_suspension_attributes
+  end
+
+  after_touch do |access_right|
+    access_right.set_suspension_attributes
+  end
+
+  def set_suspension_attributes
+    self.suspended_until= self.suspension.try(:suspended_until)
+    self.suspended_reason= self.suspension.try(:suspended_reason)
+  end
+
+
+#  def suspended_until
+#    @suspended_until || Suspension.find_by(
+#      user: user,
+#      inventory_pool: inventory_pool).try(:suspended_until)
+#  end
+#
+#  def suspended_reason
+#    @suspended_reason || Suspension.find_by(
+#      user: user,
+#      inventory_pool: inventory_pool).try(:suspended_reason)
+#  end
+#
+  ####################################################################
+
+
   belongs_to :user, inverse_of: :access_rights
   belongs_to :inventory_pool, inverse_of: :access_rights
 
-  ####################################################################
+  def suspension
+    Suspension.find_by(user: user, inventory_pool: inventory_pool)
+  end
 
   # NOTE the elements have to be sorted in ascending order
   ROLES_HIERARCHY = [:customer,
@@ -13,7 +68,7 @@ class AccessRight < ApplicationRecord
                      :inventory_manager]
   AVAILABLE_ROLES = ROLES_HIERARCHY
 
-  AUTOMATIC_SUSPENSION_DATE = Date.new(2099, 1, 1)
+  AUTOMATIC_SUSPENSION_DATE = Date.today + 1000.years
 
   def role
     read_attribute(:role).to_sym
@@ -30,8 +85,6 @@ class AccessRight < ApplicationRecord
   end
 
   ####################################################################
-
-  validates_presence_of :suspended_reason, if: :suspended_until?
 
   before_validation(on: :create) do
     if user
@@ -53,10 +106,21 @@ class AccessRight < ApplicationRecord
   ####################################################################
 
   scope :active, (lambda do
-    joins(:inventory_pool).where('inventory_pools.is_active': true)
+    joins(<<-SQL)
+      LEFT JOIN inventory_pools
+      ON inventory_pools.id = access_rights.inventory_pool_id
+    SQL
+    .where(<<-SQL)
+      inventory_pools.is_active = 't'
+    SQL
   end)
 
   scope :suspended, (lambda do
+    joins(<<-SQL)
+      LEFT JOIN suspensions
+      ON (suspensions.user_id = access_rights.user_id
+        AND  suspensions.inventory_pool_id = access_rights.inventory_pool_id)
+    SQL
     where
       .not(suspended_until: nil)
       .where('suspended_until >= ?', Time.zone.today)
@@ -75,7 +139,10 @@ class AccessRight < ApplicationRecord
   end
 
   def suspended?
-    !suspended_until.nil? and suspended_until >= Time.zone.today
+    suspension = Suspension.find_by(
+      user_id: self.user_id,
+      inventory_pool_id: self.inventory_pool_id)
+    (suspension and suspension.suspended_until >= Time.zone.today) or false
   end
 
   ####################################################################

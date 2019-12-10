@@ -7,12 +7,13 @@ When(/^the cronjob executes the rake task for reminding and suspending all late 
   User.remind_and_suspend_all
 end
 
-Then(/^every such user is suspended until '(\d+)\.(\d+)\.(\d+)' in the corresponding inventory pool$/) do |day, month, year|
+Then(/^every such user is suspended in the corresponding inventory pool$/) do
   @reservations.each do |c|
     ip = c.inventory_pool
     u = c.user
-    ar = u.access_right_for(ip)
-    expect(ar.suspended_until).to eq Date.new(year.to_i, month.to_i, day.to_i)
+    suspension = Suspension.find_by(user: u, inventory_pool: ip)
+    expect(suspension).to be
+    expect(suspension.suspended_until).to be>= Date.today
   end
 end
 

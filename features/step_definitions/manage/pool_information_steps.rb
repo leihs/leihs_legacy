@@ -152,13 +152,13 @@ When(/^a user is suspended automatically due to late contracts$/) do
   @user.automatic_suspend(@current_inventory_pool)
 end
 
-Then(/^they are suspended for this inventory pool until '(\d+)\/(\d+)\/(\d+)'$/) do |day, month, year|
-  @access_right = @user.access_right_for(@current_inventory_pool)
-  expect(@access_right.suspended_until).to eq Date.new(year.to_i, month.to_i, day.to_i)
+Then(/^they are suspended for this inventory pool/) do
+  @suspension= Suspension.find_by(user: @user, inventory_pool: @current_inventory_pool)
+  expect(@suspension.suspended_until).to be> Date.today
 end
 
 Then(/^the reason for suspension is the one specified for this inventory pool$/) do
-  expect(@access_right.suspended_reason).to eq @reason
+  expect(@suspension.suspended_reason).to eq @reason
 end
 
 When(/^I (enable|disable) automatic access$/) do |arg1|
@@ -259,10 +259,10 @@ end
 
 Then(/^the existing suspension motivation and the suspended time for this user are not overwritten$/) do
   def checks_suspension
-    ar = @user.access_right_for(@current_inventory_pool)
-    expect(ar.suspended_until).to eq @suspended_until
-    expect(ar.suspended_reason).to eq @suspended_reason
-    expect(ar.suspended_reason).not_to eq @current_inventory_pool.automatic_suspension_reason
+    sus = Suspension.find_by(user: @user, inventory_pool: @current_inventory_pool)
+    expect(sus.suspended_until).to eq @suspended_until
+    expect(sus.suspended_reason).to eq @suspended_reason
+    expect(sus.suspended_reason).not_to eq @current_inventory_pool.automatic_suspension_reason
   end
 
   checks_suspension

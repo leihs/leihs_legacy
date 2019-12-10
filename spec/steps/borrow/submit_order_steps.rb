@@ -10,9 +10,11 @@ module Borrow
       include ::Spec::PersonasDumpSteps
 
       step 'I am suspended for a pool I am a customer of' do
-        ar = AccessRight.find_by(inventory_pool: @inventory_pool, role: :customer)
-        ar.update_attributes(suspended_until: Date.tomorrow,
-                             suspended_reason: Faker::Lorem.sentence)
+        FactoryGirl.create :suspension,
+          user_id: @current_user.id,
+          inventory_pool_id: @inventory_pool.id,
+          suspended_until: Date.tomorrow,
+          suspended_reason: Faker::Lorem.sentence
       end
 
       step 'there is a borrowable item in this pool' do
