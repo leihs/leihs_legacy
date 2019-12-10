@@ -21,10 +21,6 @@ class Reservation < ApplicationRecord
 
   has_many :entitlement_groups, through: :user
 
-  def created_at_date_if_submitted
-    created_at.strftime('%Y-%m-%d') if status == :submitted
-  end
-
   #########################################################################
 
   STATUSES = [:unsubmitted, :submitted, :rejected, :approved, :signed, :closed]
