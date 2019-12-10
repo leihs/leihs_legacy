@@ -39,7 +39,7 @@ class Reservation < ApplicationRecord
 
   #########################################################################
 
-  default_scope { order(:start_date, :end_date, :created_at) }
+  default_scope { order(:created_at) }
 
   scope(:handed_over_or_assigned_but_not_returned,
         (lambda do

@@ -59,7 +59,7 @@ module Availability
       @model          = model
       @inventory_pool = inventory_pool
       # NOTE: reservation's default_scope is:
-      # { order(:start_date, :end_date, :created_at) }
+      # { order(:created_at) }
       @running_reservations = \
         @inventory_pool
         .running_reservations
