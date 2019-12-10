@@ -122,6 +122,9 @@ class Manage::UsersController < Manage::ApplicationController
     @accessible_roles = get_accessible_roles_for_current_user
     @db_auth = AuthenticationSystemUser.find_by_user_id(@user.id)
     @access_right = @user.access_right_for current_inventory_pool
+    @suspendsion = @user.suspensions.find_by(
+      inventory_pool: current_inventory_pool
+    )
   end
 
   ### update / put ############################################################

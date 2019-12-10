@@ -26,7 +26,10 @@ class User < ApplicationRecord
 
   has_many :orders
 
+  has_many :suspensions
+
   has_many :access_rights, dependent: :restrict_with_exception
+
   has_many(:inventory_pools,
            -> { distinct }, through: :access_rights) do
     def with_borrowable_items
@@ -289,9 +292,11 @@ class User < ApplicationRecord
 
   def automatic_suspend(inventory_pool)
     if inventory_pool.automatic_suspension? and not suspended?(inventory_pool)
-      access_right_for(inventory_pool).update_attributes \
-        suspended_until: AccessRight::AUTOMATIC_SUSPENSION_DATE,
-        suspended_reason: inventory_pool.automatic_suspension_reason
+      Suspension.find_or_initialize_by(
+        inventory_pool: inventory_pool,
+        user: self).update_attributes(
+          suspended_until: AccessRight::AUTOMATIC_SUSPENSION_DATE,
+          suspended_reason: inventory_pool.automatic_suspension_reason)
       puts "Suspended: #{self.name} on #{inventory_pool} for overdue take back"
     end
   end
@@ -351,7 +356,8 @@ class User < ApplicationRecord
   end
 
   def suspended?(ip)
-    access_rights.active.suspended.where(inventory_pool_id: ip).exists?
+    suspensions.where(inventory_pool_id: ip)
+      .where('suspended_until >= ?', Date.today).exists?
   end
 
   #################### End role_requirement
