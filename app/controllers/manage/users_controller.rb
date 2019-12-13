@@ -95,8 +95,7 @@ class Manage::UsersController < Manage::ApplicationController
             @user
             .access_rights
             .find_or_initialize_by(inventory_pool: @current_inventory_pool)
-          ar.update_attributes!(role: params[:access_right][:role],
-                                deleted_at: nil)
+          ar.update_attributes!(role: params[:access_right][:role])
         end
 
         respond_to do |format|
@@ -125,7 +124,9 @@ class Manage::UsersController < Manage::ApplicationController
     @access_right = @user.access_right_for current_inventory_pool
   end
 
-  def update
+  ### update / put ############################################################
+
+  def update_entitlement_groups
     if params[:user]
       if params[:user].key?(:groups)
         groups = params[:user].delete(:groups)
@@ -133,52 +134,84 @@ class Manage::UsersController < Manage::ApplicationController
       else
         @user.entitlement_groups = []
       end
-
-      delegated_user_ids = get_delegated_users_ids params
     end
+  end
 
-    begin
-      User.transaction do
-        @user.delegated_user_ids = delegated_user_ids if delegated_user_ids
-        @user.update_attributes! params[:user] if params[:user]
-        if params[:db_auth]
-          password = params[:db_auth][:password]
-          if password.present?
-            password_confirmation = params[:db_auth][:password_confirmation]
-            raise 'password mismatch' if password != password_confirmation
-            dbauth = AuthenticationSystemUser.find_or_create_by!(
-              user_id: @user.id,
-              authentication_system_id: 'password'
-            )
-            dbauth.update_attributes!(data: get_pw_hash(password))
-          end
-        end
-        @access_right = \
-          AccessRight.find_or_initialize_by(user_id: @user.id,
-                                            inventory_pool_id: @ip_id)
-        unless @access_right.new_record? \
-          and params[:access_right][:role].to_sym == :no_access
-          @access_right.update_attributes! params[:access_right]
-        end
+  def update_user_password
+    if params[:db_auth]
+      password = params[:db_auth][:password]
+      if password.present?
+        password_confirmation = params[:db_auth][:password_confirmation]
+        raise 'password mismatch' if password != password_confirmation
+        dbauth = AuthenticationSystemUser.find_or_create_by!(
+          user_id: @user.id,
+          authentication_system_id: 'password'
+        )
+        dbauth.update_attributes!(data: get_pw_hash(password))
+      end
+    end
+  end
 
-        respond_to do |format|
-          format.html do
-            flash[:notice] = _('User details were updated successfully.')
-            redirect_to manage_inventory_pool_users_path
-          end
-          format.json do
-            render plain: _('User details were updated successfully.')
-          end
+  def update_access_rights
+    # rubocop:disable Style/IfInsideElse
+    @access_right = AccessRight.find_by(
+      user_id: @user.id, inventory_pool_id: @ip_id
+    )
+
+    if params[:access_right][:role].try(&:to_sym) == :no_access
+      if @access_right
+        unless @access_right.destroy
+          raise @access_right.errors.messages.values.flatten.first
         end
       end
-    rescue => e
+    else
+      if not @access_right
+        @access_right = AccessRight.create(
+          { user_id: @user.id,
+            inventory_pool_id: @ip_id }.merge(params[:access_right])
+        )
+      else
+        @access_right.update_attributes! params[:access_right]
+      end
+    end
+    # rubocop:enable Style/IfInsideElse
+  end
+
+  def update_respond_success
       respond_to do |format|
         format.html do
-          flash[:error] = e.to_s
-          redirect_back fallback_location: root_path
+          flash[:notice] = _('User details were updated successfully.')
+          redirect_to manage_inventory_pool_users_path
         end
-        format.json { render plain: e.to_s, status: 500 }
+        format.json do
+          render plain: _('User details were updated successfully.')
+        end
       end
+  end
+
+  def update_respond_error(e)
+    respond_to do |format|
+      format.html do
+        flash[:error] = e.to_s
+        redirect_back fallback_location: root_path
+      end
+      format.json { render plain: e.to_s, status: 500 }
+    end
+  end
+
+  def update
+    begin
+      User.transaction do
+        update_entitlement_groups
+        delegated_user_ids = get_delegated_users_ids params
+        @user.delegated_user_ids = delegated_user_ids if delegated_user_ids
+        @user.update_attributes! params[:user] if params[:user]
+        update_user_password
+        update_access_rights
+        update_respond_success
+      end
+    rescue => e
+      update_respond_error(e)
     end
   end
 
@@ -291,7 +324,7 @@ class Manage::UsersController < Manage::ApplicationController
 
   def get_delegated_users_ids(params)
     # for complete users replacement, get only user ids without the _destroy flag
-    if users = params[:user].delete(:users)
+    if users = (params[:user] && params[:user].delete(:users))
       users.select { |h| h['_destroy'] != '1' }.map { |h| h['id'] }
     end
   end

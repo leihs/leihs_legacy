@@ -9,9 +9,14 @@ Then /^I see the contract this item is assigned to in the list of results$/ do
   expect(@current_user.inventory_pools.first.contracts.joins(:reservations).search(@item.inventory_code)).to include @contract
 end
 
-Given(/^there is a user with contracts who no longer has access to the current inventory pool$/) do
-  @user = User.find {|u| u.access_rights.find {|ar| ar.inventory_pool == @current_inventory_pool and ar.deleted_at} and !u.contracts.blank?}
+Given(/^there is a user with contracts who no longer has access to the current inventory pool$/)  do
+  AccessRight.where.not(user: @current_user).map(&:destroy)
+  @user =  User.joins(:contracts) \
+    .where("contracts.inventory_pool_id = ?", @current_inventory_pool.id)
+    .where("NOT EXISTS (SELECT 1 FROM access_rights WHERE access_rights.user_id = users.id AND access_rights.inventory_pool_id = ?)", @current_inventory_pool.id)
+    .first
   expect(@user).not_to be_nil
+  expect(@user.access_rights.find_by(inventory_pool: @current_inventory_pool)).to be_nil
 end
 
 Then(/^I see all that user's contracts$/) do

@@ -801,8 +801,8 @@ Then(/^the user still has access to the current inventory pool$/) do
 end
 
 Given(/^I edit a user who used to have access to the current inventory pool$/) do
-  @current_inventory_pool = @current_user.inventory_pools.managed.where(id: AccessRight.select(:inventory_pool_id).where.not(deleted_at: nil)).first
-  @user = @current_inventory_pool.access_rights.where.not(deleted_at: nil).first.user
+  @user =  User.joins(:access_rights).where("access_rights.inventory_pool_id = ?", @current_inventory_pool.id).where("users.id <> ?", @current_user.id).first
+  @user.access_rights.where("inventory_pool_id = ?", @current_inventory_pool).destroy_all
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 

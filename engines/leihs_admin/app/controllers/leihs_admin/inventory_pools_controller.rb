@@ -105,7 +105,7 @@ module LeihsAdmin
           user
           .access_rights
           .find_or_initialize_by(inventory_pool: @inventory_pool)
-        ar.update_attributes!(role: :inventory_manager, deleted_at: nil)
+        ar.update_attributes!(role: :inventory_manager)
       end
     end
 

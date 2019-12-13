@@ -1,6 +1,6 @@
 digraph models_diagram {
 	graph[overlap=false, splines=true]
-	"AccessRight" [shape=Mrecord, label="{AccessRight|level :integer\lcreated_at :datetime\lupdated_at :datetime\lsuspended_at :date\ldeleted_at :date\laccess_level :integer\l}"]
+	"AccessRight" [shape=Mrecord, label="{AccessRight|level :integer\lcreated_at :datetime\lupdated_at :datetime\lsuspended_at :date\laccess_level :integer\l}"]
 	"Accessory" [shape=Mrecord, label="{Accessory|name :string\lquantity :integer\l}"]
 	"AuthenticationSystem" [shape=Mrecord, label="{AuthenticationSystem|name :string\lclass_name :string\lis_default :boolean\lis_active :boolean\l}"]
 	"Backup::Order" [shape=Mrecord, label="{Backup::Order|status_const :integer\lpurpose :string\lcreated_at :datetime\lupdated_at :datetime\ldelta :boolean\l}"]

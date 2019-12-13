@@ -22,7 +22,7 @@ class window.App.User extends Spine.Model
   isAdmin: -> @.is_admin
 
   accessRight: ->
-    _.find @.accessRights().all(), (ar) -> ar.inventory_pool_id == App.InventoryPool.current?.id and not ar.deleted_at
+    _.find @.accessRights().all(), (ar) -> ar.inventory_pool_id == App.InventoryPool.current?.id
 
   roleName: ->
     if App.InventoryPool.current?

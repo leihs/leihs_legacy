@@ -28,8 +28,7 @@ class User < ApplicationRecord
 
   has_many :access_rights, dependent: :restrict_with_exception
   has_many(:inventory_pools,
-           -> { where(access_rights: { deleted_at: nil }).distinct },
-           through: :access_rights) do
+           -> { distinct }, through: :access_rights) do
     def with_borrowable_items
       joins(:items)
         .where(items: { retired: nil, is_borrowable: true, parent_id: nil })

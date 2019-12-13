@@ -359,13 +359,6 @@ module LeihsAdmin
         click_on 'Search'
       end
 
-      step 'the user had access to the pool as inventory manager' do
-        FactoryGirl.create(:access_right,
-                           inventory_pool: @active_inventory_pool,
-                           deleted_at: Date.yesterday,
-                           role: :inventory_manager)
-      end
-
       step 'I open the edit page for the active inventory pool' do
         visit admin.edit_inventory_pool_path(@active_inventory_pool)
       end
