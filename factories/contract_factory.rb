@@ -8,8 +8,7 @@ FactoryGirl.define do
     user do
       user = FactoryGirl.create(:user)
       unless AccessRight.find_by(user: user,
-                                 inventory_pool: inventory_pool,
-                                 deleted_at: nil)
+                                 inventory_pool: inventory_pool)
         FactoryGirl.create(:access_right,
                            user: user,
                            inventory_pool: inventory_pool,

@@ -61,13 +61,14 @@ module Borrow
       step 'there is a pool :letter the user had access to in the past' do |letter|
         instance_variable_set("@pool_#{letter}",
                               FactoryGirl.create(:inventory_pool))
-        FactoryGirl.create(
+        ar = FactoryGirl.create(
           :access_right,
           user: @user,
           inventory_pool: instance_variable_get("@pool_#{letter}"),
-          role: :customer,
-          deleted_at: Date.yesterday
+          role: :customer
         )
+
+        ar.destroy
       end
 
       step 'I visit the page of my inventory pools' do

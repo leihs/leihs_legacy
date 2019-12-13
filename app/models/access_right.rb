@@ -21,35 +21,17 @@ class AccessRight < ApplicationRecord
 
   def role=(v)
     v = v.to_sym
-    self.deleted_at = nil unless v == :no_access
     case v
     when :customer, :group_manager, :lending_manager, :inventory_manager
       write_attribute(:role, v)
     when :no_access
-      # keep the existing role, just flag as deleted
-      self.deleted_at = Time.zone.today
-    end
-
-    # assigning a new role, reactivate (ensure is not deleted)
-    if role_changed?
-      case v
-      when :customer, :group_manager, :lending_manager, :inventory_manager
-        self.deleted_at = nil
-      end
+      self.destroy
     end
   end
 
   ####################################################################
 
-  validates_presence_of :user, :role
   validates_presence_of :suspended_reason, if: :suspended_until?
-  validates_uniqueness_of :inventory_pool_id, scope: :user_id
-  validate do
-    errors.add(:base, _('Inventory Pool is missing')) if inventory_pool.nil?
-    if deleted_at
-      check_for_existing_reservations
-    end
-  end
 
   before_validation(on: :create) do
     if user
@@ -71,14 +53,7 @@ class AccessRight < ApplicationRecord
   ####################################################################
 
   scope :active, (lambda do
-    joins(<<-SQL)
-      LEFT JOIN inventory_pools
-      ON inventory_pools.id = access_rights.inventory_pool_id
-    SQL
-    .where(<<-SQL)
-      access_rights.deleted_at IS NULL
-      AND inventory_pools.is_active = 't'
-    SQL
+    joins(:inventory_pool).where('inventory_pools.is_active': true)
   end)
 
   scope :suspended, (lambda do
