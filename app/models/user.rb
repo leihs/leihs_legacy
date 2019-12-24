@@ -356,7 +356,8 @@ class User < ApplicationRecord
   end
 
   def suspended?(ip)
-    suspensions.where(inventory_pool_id: ip).where("suspended_until >= ?", Date.today).exists?
+    suspensions.where(inventory_pool_id: ip)
+      .where('suspended_until >= ?', Date.today).exists?
   end
 
   #################### End role_requirement

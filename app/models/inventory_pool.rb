@@ -40,7 +40,7 @@ class InventoryPool < ApplicationRecord
               .where('suspensions.suspended_until >= ?', Time.zone.today)
               .distinct
             end),
-            through: :suspensions, source: :user)
+           through: :suspensions, source: :user)
 
   has_many :rooms, -> { distinct }, through: :items
   has_many :items, dependent: :restrict_with_exception
