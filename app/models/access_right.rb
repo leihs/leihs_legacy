@@ -1,7 +1,9 @@
 class AccessRight < ApplicationRecord
   audited
 
-  ### virtual attributes #############################################
+  ### suspension virtual attributes ##################################
+  # the point of these is to avoid changing all the frontendcode
+  # after moving the suspensions to their own table
 
   attribute :suspended_until, :date
   attribute :suspended_reason, :text
@@ -38,19 +40,6 @@ class AccessRight < ApplicationRecord
     self.suspended_reason= self.suspension.try(:suspended_reason)
   end
 
-
-#  def suspended_until
-#    @suspended_until || Suspension.find_by(
-#      user: user,
-#      inventory_pool: inventory_pool).try(:suspended_until)
-#  end
-#
-#  def suspended_reason
-#    @suspended_reason || Suspension.find_by(
-#      user: user,
-#      inventory_pool: inventory_pool).try(:suspended_reason)
-#  end
-#
   ####################################################################
 
 

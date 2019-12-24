@@ -154,9 +154,6 @@ class Manage::UsersController < Manage::ApplicationController
   end
 
   def update_access_rights
-
-    # TODO look at virtual attribute suspended_until and manage suspensions
-
     # rubocop:disable Style/IfInsideElse
     @access_right = AccessRight.find_by(
       user_id: @user.id, inventory_pool_id: @ip_id
