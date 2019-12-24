@@ -12,36 +12,32 @@ class AccessRight < ApplicationRecord
     if access_right.suspended_until.present?
       Suspension.find_or_initialize_by(
         user_id: access_right.user_id,
-        inventory_pool_id: access_right.inventory_pool_id) \
+        inventory_pool_id: access_right.inventory_pool_id
+      ) \
         .update_attributes(
           suspended_until: access_right.suspended_until,
-          suspended_reason: access_right.suspended_reason)
+          suspended_reason: access_right.suspended_reason
+        )
     else
       Suspension.find_or_initialize_by(
         user_id: access_right.user_id,
-        inventory_pool_id: access_right.inventory_pool_id).try(&:destroy)
+        inventory_pool_id: access_right.inventory_pool_id
+      ).try(&:destroy)
     end
   end
 
-  after_initialize do |access_right|
-    access_right.set_suspension_attributes
-  end
+  after_initialize(&:set_suspension_attributes)
 
-  after_find do |access_right|
-    access_right.set_suspension_attributes
-  end
+  after_find(&:set_suspension_attributes)
 
-  after_touch do |access_right|
-    access_right.set_suspension_attributes
-  end
+  after_touch(&:set_suspension_attributes)
 
   def set_suspension_attributes
-    self.suspended_until= self.suspension.try(:suspended_until)
-    self.suspended_reason= self.suspension.try(:suspended_reason)
+    self.suspended_until = self.suspension.try(:suspended_until)
+    self.suspended_reason = self.suspension.try(:suspended_reason)
   end
 
   ####################################################################
-
 
   belongs_to :user, inverse_of: :access_rights
   belongs_to :inventory_pool, inverse_of: :access_rights
@@ -130,7 +126,8 @@ class AccessRight < ApplicationRecord
   def suspended?
     suspension = Suspension.find_by(
       user_id: self.user_id,
-      inventory_pool_id: self.inventory_pool_id)
+      inventory_pool_id: self.inventory_pool_id
+    )
     (suspension and suspension.suspended_until >= Time.zone.today) or false
   end
 
