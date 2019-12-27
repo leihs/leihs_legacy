@@ -48,7 +48,7 @@ class Borrow::ModelsController < Borrow::ApplicationController
           { inventory_pool: ip,
             workday: ip.workday,
             holidays: \
-              ip.holidays.where('CURRENT_DATE <= end_date').order(:end_date) }
+              ip.holidays.where("'#{Date.today}' <= end_date").order(:end_date) }
         end
         ###########################################################################
       end
