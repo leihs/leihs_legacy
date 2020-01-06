@@ -1,0 +1,29 @@
+#mobile-app-notice{style: 'display: none'}
+  .mobile-app-notice-content
+    %a{href: '/app/borrow/'}
+      = " small screen? 😓"
+      %br
+      = "tap here to try the"
+      %br
+      = "📲"
+      %span{style: "text-decoration: underline"}= "leihs mobile app"
+      = "👌"
+
+:css
+  @media
+    only screen and (max-device-width: 900px), /* like a smartphone (deprecated) */
+    only screen and (max-width: 500px) {       /* just a small screen, any browser */
+    #mobile-app-notice {
+      display: block !important;
+      background: #333;
+    }
+    #mobile-app-notice .mobile-app-notice-content {
+      max-width: 100vw;
+      padding: 5rem 1rem;
+      text-align: center;
+      font-size: 3rem
+    }
+    #mobile-app-notice a {
+      color: white;
+    }
+  }

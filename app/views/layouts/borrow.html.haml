@@ -17,6 +17,9 @@
 
         = render :partial => "flash", :locals => {:flash => flash} if flash
 
+        - if LEIHS_MOBILE_APP_ENABLED
+          = render :partial => "borrow/mobile-app-notice"
+
         %header= render :partial => "borrow/topbar"
 
         .row= yield
