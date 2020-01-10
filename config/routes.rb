@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
   get :status, controller: :application, action: :status
 
+  # NOTE: New Borrow
+  post "mail/received", to: "mails#send_received" 
+
   # Categories
   get "categories/:id/image", to: "categories#image", as: "category_image"
   get "category_links",       to: "category_links#index", as: "category_links"
