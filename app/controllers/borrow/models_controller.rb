@@ -13,7 +13,10 @@ class Borrow::ModelsController < Borrow::ApplicationController
           inventory_pool_id: ip.id,
           quantity: \
             model
-              .availability_in(ip)
+              .availability_in(
+                ip,
+                exclude_reservations: exclude_reservation_ids_param
+              )
               .maximum_available_in_period_summed_for_groups(
                 start_date, end_date, current_user.entitlement_groups.map(&:id)
               )
@@ -79,4 +82,9 @@ class Borrow::ModelsController < Borrow::ApplicationController
     end
   end
 
+  private
+
+  def exclude_reservation_ids_param
+    params.fetch(:exclude_reservation_ids, [])
+  end
 end
