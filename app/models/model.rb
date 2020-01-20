@@ -427,43 +427,55 @@ class Model < ApplicationRecord
 
   def total_borrowable_items_for_user_and_pool(user,
                                                inventory_pool,
-                                               ensure_non_negative_general: false)
+                                               ensure_non_negative: false)
     groups = user.entitlement_groups.with_general
+
     entitled_quantity = \
-      Entitlement.hash_with_generals(inventory_pool,
-                                     self,
-                                     groups,
-                                     ensure_non_negative_general: \
-                                     ensure_non_negative_general)
+      Entitlement.hash_with_generals(inventory_pool, self, groups)
       .values
       .sum
+
     borrowable_quantity = \
       borrowable_items
       .where(inventory_pool_id: inventory_pool.id)
       .count
-    [entitled_quantity, borrowable_quantity].min
+
+    result = [entitled_quantity, borrowable_quantity].min
+
+    if ensure_non_negative and result < 0
+      0
+    else
+      result
+    end
   end
 
   def total_borrowable_items_for_user(user,
-                                      ensure_non_negative_general: false)
+                                      ensure_non_negative: false)
     groups = user.entitlement_groups.with_general
+
     entitled_quantity = \
       inventory_pools
       .to_a
       .sum do |ip|
         Entitlement.hash_with_generals(ip,
                                        self,
-                                       groups,
-                                       ensure_non_negative_general: \
-                                       ensure_non_negative_general)
+                                       groups)
           .values
           .sum
       end
+
     borrowable_quantity = \
       borrowable_items
       .where(inventory_pool_id: user.inventory_pools)
       .count
-    [entitled_quantity, borrowable_quantity].min
+
+    result = [entitled_quantity, borrowable_quantity].min
+
+    if ensure_non_negative and result < 0
+      0
+    else
+      result
+    end
   end
 
   def as_json_with_arguments(accessories_for_ip: nil, **options)

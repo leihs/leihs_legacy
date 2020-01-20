@@ -22,7 +22,7 @@ class Borrow::BookingCalendar < ApplicationPresenter
       @model.total_borrowable_items_for_user_and_pool(
         @user,
         @inventory_pool,
-        ensure_non_negative_general: true
+        ensure_non_negative: true
       )
     @availabilities_per_day = availabilities_per_day
     @total_borrowable_quantities_per_day = total_borrowable_quantities_per_day

@@ -12,7 +12,7 @@ class Borrow::AvailabilityController < Borrow::ApplicationController
         model.total_borrowable_items_for_user_and_pool(
           current_user,
           inventory_pool,
-          ensure_non_negative_general: true
+          ensure_non_negative: true
         ),
         inventory_pool_id: inventory_pool.id,
         model_id: model.id
@@ -44,7 +44,7 @@ class Borrow::AvailabilityController < Borrow::ApplicationController
         model.total_borrowable_items_for_user_and_pool(
           current_user,
           inventory_pool,
-          ensure_non_negative_general: true
+          ensure_non_negative: true
         )
       }
     end

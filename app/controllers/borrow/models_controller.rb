@@ -70,7 +70,7 @@ class Borrow::ModelsController < Borrow::ApplicationController
           @model.total_borrowable_items_for_user_and_pool(
             current_user,
             ip,
-            ensure_non_negative_general: true
+            ensure_non_negative: true
           )
       }
     end

@@ -92,7 +92,7 @@ When(/^I (increase|decrease) the quantity of one entry$/) do |arg1|
                     line = @changed_lines.first
                     line.model.total_borrowable_items_for_user_and_pool(line.user,
                                                                         line.inventory_pool,
-                                                                        ensure_non_negative_general: true)
+                                                                        ensure_non_negative: true)
                   when 'decrease'
                     1
                   else

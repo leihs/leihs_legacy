@@ -18,12 +18,7 @@ class Entitlement < ApplicationRecord
   # like {nil => 10, 41 => 3, 42 => 6, ...}
   def self.hash_with_generals(inventory_pool,
                               model,
-                              entitlement_groups = nil,
-                              ensure_non_negative_general: false)
-    # NOTE: `ensure_non_negative_general` is necessary for the borrow
-    # booking calendar. Negative quantity makes no sense there and leads to buggy
-    # behaviour. How does the negative value come to existence and if it is a
-    # desired feature remains questionable.
+                              entitlement_groups = nil)
     entitlements = with_generals(model_ids: [model.id],
                                  inventory_pool_id: inventory_pool.id)
 
@@ -35,8 +30,7 @@ class Entitlement < ApplicationRecord
     end
 
     result = Hash[entitlements.map { |e| [e.entitlement_group_id, e.quantity] }]
-    if missing_general_group_id?(result) or
-        (negative_general_quantity?(result) and ensure_non_negative_general)
+    if missing_general_group_id?(result)
       result[EntitlementGroup::GENERAL_GROUP_ID] = 0
     end
     result

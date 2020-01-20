@@ -3,7 +3,7 @@
     line[:model].total_borrowable_items_for_user_and_pool(
       current_user,
       line[:inventory_pool],
-      ensure_non_negative_general: true
+      ensure_non_negative: true
   )
 
 .row.line{data: { ids: line[:line_ids]}}
