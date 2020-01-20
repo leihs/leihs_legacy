@@ -34,7 +34,7 @@ class Borrow::BookingCalendar < ApplicationPresenter
       do |total_borrow_qty_per_day, i|
       quantity = \
         (@availabilities_per_day[i] or total_borrow_qty_per_day)[:quantity]
-      @visits_per_day[i].merge(quantity: quantity)
+      @visits_per_day[i].merge(quantity: quantity < 0 ? 0 : quantity)
     end
   end
 
