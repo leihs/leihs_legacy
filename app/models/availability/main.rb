@@ -55,7 +55,9 @@ module Availability
     # exclude_reservations are used in borrow for dealing with the self-blocking
     # aspect of the reservations (context: change quantity for a model
     # in current order)
-    def initialize(model:, inventory_pool:, exclude_reservations: [])
+    def initialize(model:, inventory_pool:, exclude_reservations:)
+      exclude_reservations = (exclude_reservations.presence || [])
+
       @model          = model
       @inventory_pool = inventory_pool
       # NOTE: reservation's default_scope is:

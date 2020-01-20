@@ -85,6 +85,6 @@ class Borrow::ModelsController < Borrow::ApplicationController
   private
 
   def exclude_reservation_ids_param
-    params.fetch(:exclude_reservation_ids, [])
+    params.fetch(:exclude_reservation_ids, []).presence or []
   end
 end
