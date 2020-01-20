@@ -19,7 +19,6 @@ module LeihsAdmin
 
     private
 
-    # rubocop:disable Metrics/MethodLength
     def audits
       Audit
         .filter(start_date: Date.parse(start_date_param),
@@ -43,7 +42,6 @@ module LeihsAdmin
         .offset(PER_PAGE * page_param)
         .limit(PER_PAGE)
     end
-    # rubocop:enable Metrics/MethodLength
 
     def start_date_param
       params[:start_date].presence or I18n.l(30.days.ago.to_date)

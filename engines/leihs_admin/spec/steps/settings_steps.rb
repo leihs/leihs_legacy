@@ -71,7 +71,6 @@ module LeihsAdmin
         find("#flash .#{type}", text: _(text))
       end
 
-      # rubocop:disable Metrics/BlockLength
       step 'I edit the following settings' do |table|
         @new_settings = {}
         within("form#edit_setting[action='/admin/settings']") do
@@ -138,7 +137,6 @@ module LeihsAdmin
         scroll_to_top
         step 'I save the settings'
       end
-      # rubocop:enable Metrics/BlockLength
 
     end
   end

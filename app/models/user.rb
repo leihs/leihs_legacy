@@ -327,7 +327,6 @@ class User < ApplicationRecord
   #################### Start role_requirement
 
   # TODO: refactor has_role? to role?
-  # rubocop:disable Style/PredicateName
   def has_role?(role, inventory_pool = nil)
     role = role.to_sym
     roles = if inventory_pool
@@ -345,7 +344,6 @@ class User < ApplicationRecord
       roles.include? role
     end
   end
-  # rubocop:enable Style/PredicateName
 
   def access_right_for(ip)
     access_rights.active.find_by(inventory_pool_id: ip)

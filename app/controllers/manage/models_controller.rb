@@ -120,7 +120,6 @@ class Manage::ModelsController < Manage::ApplicationController
     @model = fetch_model
   end
 
-  # rubocop:disable Metrics/MethodLength
   def edit
     model = fetch_model
 
@@ -200,7 +199,6 @@ class Manage::ModelsController < Manage::ApplicationController
       }
     }
   end
-  # rubocop:enable Metrics/MethodLength
 
   def update
     not_authorized! unless privileged_user?

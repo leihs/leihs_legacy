@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ModuleLength
 module TimelineAvailability
   extend ActiveSupport::Concern
 
@@ -141,4 +140,3 @@ module TimelineAvailability
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength

@@ -2,7 +2,6 @@ require_relative '../shared/common_steps'
 require_relative '../shared/login_steps'
 require_relative '../shared/personas_dump_steps'
 
-# rubocop:disable Performance/TimesMap
 
 module Manage
   module Spec

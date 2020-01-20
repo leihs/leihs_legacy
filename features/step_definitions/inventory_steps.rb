@@ -98,7 +98,6 @@ Given(/(\d+) item(s?) of model '(.+)' exist(s?)/) do |number, plural1, model, pl
   end
 end
 
-# rubocop:disable Metrics/ParameterLists
 Given(/^(a?n? ?)item(s?) '([^']*)' of model '([^']*)' exist(s?)( only)?$/)\
   do |particle, plural, inventory_codes, model, plural2, only|
   Item.delete_all if only
@@ -110,7 +109,6 @@ Given(/^(a?n? ?)item(s?) '([^']*)' of model '([^']*)' exist(s?)( only)?$/)\
     FactoryGirl.create(:item, owner: @inventory_pool, model: @model, inventory_code: inv_code)
   end
 end
-# rubocop:enable Metrics/ParameterLists
 
 Given "at that location resides an item '$item' of model '$model'" do |item, model|
   step "an item '#{item}' of model '#{model}' exists"

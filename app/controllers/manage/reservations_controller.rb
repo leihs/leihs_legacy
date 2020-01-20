@@ -390,7 +390,6 @@ class Manage::ReservationsController < Manage::ApplicationController
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def create_new_line_or_assign(user, model, item, option)
     error = nil
     line = nil
@@ -491,5 +490,4 @@ class Manage::ReservationsController < Manage::ApplicationController
 
     [line, error]
   end
-  # rubocop:enable Metrics/MethodLength
 end

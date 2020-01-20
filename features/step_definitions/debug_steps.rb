@@ -9,12 +9,10 @@ Then /^dump the response to '([^']*)'$/ do |filename|
 end
 
 
-# rubocop:disable Lint/Debugger
 Then 'start the debugger' do
   debugger
   true
 end
-# rubocop:enable Lint/Debugger
 
 Then 'reindex' do
   puts `rake ts:reindex`

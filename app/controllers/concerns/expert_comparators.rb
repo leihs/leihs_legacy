@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ModuleLength
 module ExpertComparators
   extend ActiveSupport::Concern
 
@@ -272,4 +271,3 @@ module ExpertComparators
     end
   end
 end
-# rubocop:enable Metrics/ModuleLength

@@ -275,18 +275,14 @@ class Order < ApplicationRecord
   def min_date
     unless reservations.blank?
       # min(&:start_date) does not work here
-      # rubocop:disable Style/SymbolProc
       reservations.min { |x| x.start_date }[:start_date]
-      # rubocop:enable Style/SymbolProc
     end
   end
 
   def max_date
     unless reservations.blank?
       # min(&:end_date) does not work here
-      # rubocop:disable Style/SymbolProc
       reservations.max { |x| x.end_date }[:end_date]
-      # rubocop:enable Style/SymbolProc
     end
   end
 

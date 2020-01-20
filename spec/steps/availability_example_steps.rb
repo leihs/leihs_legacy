@@ -24,9 +24,7 @@ module Spec
     end
 
     step 'eval :code' do |code|
-      # rubocop:disable Security/Eval
       eval code
-      # rubocop:enable Security/Eval
     end
 
     step 'I visit the old timeline for the model' do

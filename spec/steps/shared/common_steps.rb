@@ -1,9 +1,7 @@
 module Spec
   module CommonSteps
     step 'I pry' do
-      # rubocop:disable Lint/Debugger
       binding.pry
-      # rubocop:enable Lint/Debugger
     end
 
     step 'I visit :path' do |path|
@@ -19,9 +17,7 @@ module Spec
           value
         end
       rescue Timeout::Error
-        # rubocop:disable Style/RaiseArgs
         fail Timeout::Error.new(block.source)
-        # rubocop:enable Style/RaiseArgs
       end
     end
 
@@ -102,9 +98,7 @@ module Spec
       begin
         yield
       rescue
-        # rubocop:disable Lint/Debugger
         binding.pry
-        # rubocop:enable Lint/Debugger
       end
     end
   end

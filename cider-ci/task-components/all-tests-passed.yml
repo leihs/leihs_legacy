@@ -1,7 +1,3 @@
-borrow-manage-code-checks:
-  type: job
-  job_key: borrow-manage-code-checks
-  states: [passed]
 borrow-scenarios:
   type: job
   job_key: borrow-scenarios
@@ -33,10 +29,6 @@ manage-unstable-scenarios:
 manage-rspec-scenarios:
   type: job
   job_key: manage-rspec-scenarios
-  states: [passed]
-leihs-admin-code-checks:
-  type: job
-  job_key: leihs-admin-code-checks
   states: [passed]
 leihs-admin-scenarios:
   type: job

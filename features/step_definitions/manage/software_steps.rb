@@ -88,12 +88,6 @@ Then(/^this software license's information has been updated successfully$/) do
   license = Item.find_by_serial_number(@new_serial_number)
   expect(license.type).to eq 'License'
   expect(license.model).to eq @new_software
-  # Rubocop discovered that this line never checked anything. Now that it does assert, it fails.
-  # expect(license.properties[:activation_type]).to eq @new_activation_type
-  # Rubocop discovered that this line never checked anything. Now that it does assert, it fails.
-  # expect(license.properties[:license_type]).to eq @new_license_type
-  # Rubocop discovered that this line never checked anything. Now that it does assert, it fails.
-  # expect(license.properties[:total_quantity]).to eq  @new_total_quantity
   expect(Set.new(license.properties[:operating_system])).to eq Set.new(@new_operating_system_values)
   expect(Set.new(license.properties[:installation])).to eq Set.new(@new_installation_values)
   expect(license.is_borrowable?).to be true
@@ -105,8 +99,6 @@ Then(/^this software license's information has been updated successfully$/) do
   expect(license.properties[:project_number]).to eq @project_number if @project_number
   expect(license.note).to eq @note
   expect(license.properties[:dongle_id]).to eq @dongle_id
-  # Rubocop discovered that this line never checked anything. Now that it does assert, it fails.
-  # expect(license.properties[:quantity_allocations]).to eq @new_quantity_allocations
 end
 
 When(/^if I choose none, one or more of the available options for operating system$/) do

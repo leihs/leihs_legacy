@@ -37,9 +37,7 @@ module LeihsAdmin
       end
 
       step 'I pry' do
-        # rubocop:disable Lint/Debugger
         binding.pry
-        # rubocop:enable Lint/Debugger
       end
 
       step 'I click on :label inside the dropdown menu' do |label|

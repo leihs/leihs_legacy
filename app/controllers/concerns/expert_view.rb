@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ModuleLength
 module ExpertView
   extend ActiveSupport::Concern
 
@@ -25,7 +24,6 @@ module ExpertView
       )
     end
 
-    # rubocop:disable Metrics/MethodLength
     def items_for_view(inventory_pool, params)
       reduced = matching_items(inventory_pool, params)
 
@@ -120,8 +118,6 @@ module ExpertView
         start_index: start_index
       }
     end
-    # rubocop:enable Metrics/MethodLength
 
   end
 end
-# rubocop:enable Metrics/ModuleLength

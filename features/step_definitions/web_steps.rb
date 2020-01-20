@@ -121,7 +121,7 @@ Then(/^(?:|I )should be on (.+)$/) do |page_name|
 end
 
 Then(/^show me the page$/) do
-  save_and_open_page # rubocop:disable Lint/Debugger
+  save_and_open_page
 end
 
 Then(/^I accept the flash message$/) do

@@ -76,12 +76,10 @@ module LeihsAdmin
       end
 
       step 'I scroll down until I see all audits' do
-        # rubocop:disable Lint/Loop
         begin
           counter = all('.panel').count
           scroll_down 10000
         end until all('.panel').count == counter
-        # rubocop:enable Lint/Loop
       end
 
       step 'I see :count audits' do |count|

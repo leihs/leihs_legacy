@@ -1,5 +1,4 @@
 module LeihsAdmin
-  # rubocop:disable Metrics/ClassLength
   class InventoryController < AdminController
 
     def csv_export
@@ -81,7 +80,6 @@ module LeihsAdmin
       end.join('; ')
     end
 
-    # rubocop:disable Metrics/MethodLength
     def item_objects_for_quick_export
       query = <<-SQL
 
@@ -283,7 +281,6 @@ module LeihsAdmin
       end
       objects
     end
-    # rubocop:enable Metrics/MethodLength
 
     # def option_objects_for_quick_export
     #   query = <<-SQL
@@ -328,5 +325,4 @@ module LeihsAdmin
     #   objects
     # end
   end
-  # rubocop:enable Metrics/ClassLength
 end

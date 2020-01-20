@@ -8,9 +8,6 @@ include:
   ## INTEGRATION
   - cider-ci/jobs/rspec-integration-tests.yml
 
-  ## BORROW/MANAGE - on branches foo/borrow-bar or foo/manage-bar
-  - cider-ci/jobs/borrow-manage-code-checks.yml
-
   ## BORROW - on branches foo/borrow-bar
   - cider-ci/jobs/borrow-scenarios.yml
   - cider-ci/jobs/borrow-flapping-scenarios.yml
@@ -28,7 +25,6 @@ include:
 
   ## ADMIN - on branches foo/admin-bar
   - cider-ci/jobs/leihs-admin-scenarios.yml
-  - cider-ci/jobs/leihs-admin-code-checks.yml
 
   - cider-ci/jobs/all-tests.yml
   - cider-ci/jobs/meta.yml

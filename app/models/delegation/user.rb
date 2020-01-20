@@ -1,6 +1,5 @@
 module Delegation::User
 
-  # rubocop:disable Metrics/MethodLength
   def self.included(base)
     base.class_eval do
 
@@ -103,7 +102,6 @@ module Delegation::User
 
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def delegation?
     not delegator_user_id.nil?

@@ -6,7 +6,6 @@
 .jhw-cache
 .loadpath
 .project
-.rubocop_todo.yml
 .sass-cache
 .settings
 .tmp_*~
