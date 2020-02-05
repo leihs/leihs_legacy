@@ -139,7 +139,6 @@ Feature: Lending
     And I search for an order which does not need verification using the purpose
     Then all listed orders match the search term
 
-  @broken
   Scenario: Searching purpose globally
     Given orders exist
     When I search globally for an order with its purpose

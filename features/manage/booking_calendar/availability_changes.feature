@@ -7,7 +7,6 @@ Feature: Availability Changes in Booking Calendar
   Background:
     Given I am Pius
 
-  @broken
   Scenario: Seeing all availability changes in the booking calendar
     When I open a booking calendar to edit a singe line
     Then I see all availabilities in that calendar, where the small number is the total quantity of that specific date
