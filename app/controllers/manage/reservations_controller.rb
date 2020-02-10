@@ -416,7 +416,9 @@ class Manage::ReservationsController < Manage::ApplicationController
               .approved
               .where(id: line_ids_param,
                      model_id: item.model.id,
-                     item_id: nil).first
+                     item_id: nil)
+              .reorder(:start_date, :end_date, :created_at)
+              .first
           end
           # try to assign to approved reservations of the customer
           if code_param
@@ -426,6 +428,7 @@ class Manage::ReservationsController < Manage::ApplicationController
                 .approved
                 .where(inventory_pool: current_inventory_pool)
                 .where(model_id: model.id, item_id: nil)
+                .reorder(:start_date, :end_date, :created_at)
                 .order(:id)
                 .first
           end
@@ -453,7 +456,9 @@ class Manage::ReservationsController < Manage::ApplicationController
               .where(inventory_pool: current_inventory_pool)
               .where(option_id: option.id,
                      start_date: start_date_param,
-                     end_date: end_date_param).first
+                     end_date: end_date_param)
+              .reorder(:start_date, :end_date, :created_at)
+              .first
             line.quantity += quantity_param
             line.save
           elsif not line = \
