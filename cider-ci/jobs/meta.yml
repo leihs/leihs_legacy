@@ -24,7 +24,7 @@ jobs:
       tasks:
         migration-of-personas-dump:
           include:
-            - cider-ci/task-components/database.yml
+            - cider-ci/task-components/database-no-schema.yml
 
           environment_variables:
             LEIHS_SECRET: secret
@@ -39,7 +39,7 @@ jobs:
                 set -exu
                 export PATH=~/.rubies/$RUBY/bin:$PATH
                 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-                bundle exec rake db:pg:data:restore FILE=./features/personas/personas.pgbin
+                bundle exec rake db:pg:structure_and_data:restore FILE=./features/personas/personas.pgbin
                 if test $(bundle exec rake db:migrate:status | grep -c -E "\s*down\s*\d*\s*") -gt 0; then
                   echo "run ./bin/migrate-and-dump-personas"
                   exit 1
@@ -49,7 +49,7 @@ jobs:
 
         migration-of-demo-dump:
           include:
-            - cider-ci/task-components/database.yml
+            - cider-ci/task-components/database-no-schema.yml
 
 
           environment_variables:
@@ -65,7 +65,7 @@ jobs:
                 set -exu
                 export PATH=~/.rubies/$RUBY/bin:$PATH
                 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-                bundle exec rake db:pg:data:restore FILE=./features/personas/demo.pgbin
+                bundle exec rake db:pg:structure_and_data:restore FILE=./features/personas/demo.pgbin
                 if test $(bundle exec rake db:migrate:status | grep -c -E "\s*down\s*\d*\s*") -gt 0; then
                   echo "run ./bin/migrate-and-dump-demo"
                   exit 1

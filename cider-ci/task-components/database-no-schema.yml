@@ -1,0 +1,20 @@
+traits:
+  Ruby: true
+
+include:
+  - cider-ci/task-components/database/configure.yml
+  - cider-ci/task-components/database/delete.yml
+
+scripts:
+
+  legacy-create-database:
+    body: |
+      #!/usr/bin/env bash
+      set -eux
+      if [ -d legacy ]; then cd legacy; fi
+      createdb "$DATABASE_NAME"
+
+  test:
+    start_when:
+      database has been created:
+        script_key: legacy-create-database
