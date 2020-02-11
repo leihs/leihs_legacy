@@ -8,10 +8,11 @@ jobs:
       Run Borrow flapping scenarios
 
     run_when:
-      branch name matches master or borrow:
-        type: branch
-        include_match: '^.*(next|master|borrow).*$'
-        exclude_match: '^.*(no-ci|hotspot).*$'
+      meta checks have passed:
+        type: job
+        job_key: meta
+        states: [passed]
+
 
     context:
       include:

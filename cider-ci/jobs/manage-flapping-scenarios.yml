@@ -8,10 +8,11 @@ jobs:
       Run Manage flapping scenarios
 
     run_when:
-      branch name matches master or manage:
-        type: branch
-        include_match: '^.*(next|master|manage).*$'
-        exclude_match: '^.*(no-ci|hotspot).*$'
+      meta checks have passed:
+        type: job
+        job_key: meta
+        states: [passed]
+
 
     context:
       include:

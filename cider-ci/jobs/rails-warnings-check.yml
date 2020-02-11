@@ -8,10 +8,11 @@ jobs:
       Check if rails outputs something to STDERR (warnings, etc.)
 
     run_when:
-      branch name matches master:
-        type: branch
-        include_match: '^.*master.*$'
-        exclude_match: '^.*(no-ci|hotspot).*$'
+      meta checks have passed:
+        type: job
+        job_key: meta
+        states: [passed]
+
 
     context:
 

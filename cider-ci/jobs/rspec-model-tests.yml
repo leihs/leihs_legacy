@@ -8,10 +8,11 @@ jobs:
     priority: 1
 
     run_when:
-      always:
-        type: branch
-        include_match: '^.*$'
-        exclude_match: '^.*(no-ci|hotspot).*$'
+      meta checks have passed:
+        type: job
+        job_key: meta
+        states: [passed]
+
 
     context:
       generate_tasks:
