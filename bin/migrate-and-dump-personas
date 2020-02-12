@@ -1,5 +1,10 @@
 set -eux
 
+if [[ ! $(pg_dump --version) =~ 11\.[0-9]+$ ]]; then
+  echo "Use PG 11 !"
+  exit 1
+fi
+
 if [ -z ${RAILS_ENV-} ]; then
   export RAILS_ENV=test
 fi
