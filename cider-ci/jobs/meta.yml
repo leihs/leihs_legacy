@@ -39,7 +39,8 @@ jobs:
                 set -exu
                 export PATH=~/.rubies/$RUBY/bin:$PATH
                 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-                bundle exec rake db:pg:structure_and_data:restore FILE=./features/personas/personas.pgbin
+                pg_restore --schema-only ./features/personas/demo.pgbin
+                pg_restore --data-only ./features/personas/demo.pgbin
                 if test $(bundle exec rake db:migrate:status | grep -c -E "\s*down\s*\d*\s*") -gt 0; then
                   echo "run ./bin/migrate-and-dump-personas"
                   exit 1
@@ -63,9 +64,11 @@ jobs:
               body: |
                 #!/usr/bin/env bash
                 set -exu
+                env | sort
                 export PATH=~/.rubies/$RUBY/bin:$PATH
                 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-                bundle exec rake db:pg:structure_and_data:restore FILE=./features/personas/demo.pgbin
+                pg_restore --schema-only ./features/personas/demo.pgbin
+                pg_restore --data-only ./features/personas/demo.pgbin
                 if test $(bundle exec rake db:migrate:status | grep -c -E "\s*down\s*\d*\s*") -gt 0; then
                   echo "run ./bin/migrate-and-dump-demo"
                   exit 1
