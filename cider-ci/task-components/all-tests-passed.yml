@@ -6,14 +6,6 @@ borrow-flapping-scenarios:
   type: job
   job_key: borrow-flapping-scenarios
   states: [passed]
-borrow-rspec-scenarios:
-  type: job
-  job_key: borrow-rspec-scenarios
-  states: [passed]
-borrow-rspec-flapping-scenarios:
-  type: job
-  job_key: borrow-rspec-flapping-scenarios
-  states: [passed]
 manage-scenarios:
   type: job
   job_key: manage-scenarios
@@ -22,14 +14,6 @@ manage-flapping-scenarios:
   type: job
   job_key: manage-flapping-scenarios
   states: [passed]
-manage-unstable-scenarios:
-  type: job
-  job_key: manage-unstable-scenarios
-  states: [passed]
-manage-rspec-scenarios:
-  type: job
-  job_key: manage-rspec-scenarios
-  states: [passed]
 leihs-admin-scenarios:
   type: job
   job_key: leihs-admin-scenarios
@@ -37,4 +21,12 @@ leihs-admin-scenarios:
 rspec-model-tests:
   type: job
   job_key: rspec-model-tests
+  states: [passed]
+rspec-integration-tests:
+  type: job
+  job_key: rspec-integration-tests
+  states: [passed]
+meta:
+  type: job
+  job_key: meta
   states: [passed]

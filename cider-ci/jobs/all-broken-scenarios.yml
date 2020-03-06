@@ -1,11 +1,11 @@
 jobs:
 
-  borrow-broken-scenarios:
+  all-broken-scenarios:
 
-    name: 'Borrow: Broken Scenarios'
+    name: 'All Broken Scenarios'
 
     description: |
-      Run Borrow broken scenarios
+      Run all broken scenarios
 
     context:
 
@@ -18,4 +18,4 @@ jobs:
 
       include:
         - cider-ci/shared/main-context.yml
-        - cider-ci/tasks/borrow-broken-scenarios.yml
+        - cider-ci/tasks/all-broken-scenarios.yml

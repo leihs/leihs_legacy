@@ -11,10 +11,17 @@ jobs:
       Status of this job is **used by github's "branch protection"**!
 
     depends_on:
-      meta passed:
+      all tests passed:
         type: job
-        job_key: meta
+        job_key: all-tests
         states: [passed]
+      good to merge of the database:
+        job_key: good-to-merge
+        type: job
+        submodule: [database]
+        states: [passed]
+
+    run_when:
       all tests passed:
         type: job
         job_key: all-tests
@@ -29,5 +36,16 @@ jobs:
       task_defaults:
         max_trials: 1
       tasks:
+        git-branch-current:
+          name: "Git tree contains latest commit from origin/master"
+          scripts:
+            main:
+              body: |
+                #!/usr/bin/env bash
+                set -exu
+                git fetch --all
+                #
+                # check if your tree still contains the current commit from master
+                git rev-list --children HEAD | grep -q "$(git rev-parse origin/master)"
         include:
           - path: cider-ci/context-components/merged-submodules-check.yml

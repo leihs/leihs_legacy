@@ -1,6 +1,10 @@
 ---
 tasks:
-- name: No Tasks for this Job!
+- name: No Tasks for features/login features/manage features/technical
+  scripts:
+    test:
+      body: echo OK
+- name: No Tasks for spec/features/manage
   scripts:
     test:
       body: echo OK

@@ -1,11 +1,11 @@
 jobs:
 
-  borrow-rspec-flapping-scenarios:
+  leihs_admin-flapping-scenarios:
 
-    name: 'Borrow: Rspec Flapping Scenarios'
+    name: 'Admin: Flapping Scenarios'
 
     description: |
-      Run Borrow rspec flapping scenarios under MRI
+      Run Admin flapping scenarios
 
     run_when:
       meta checks have passed:
@@ -13,8 +13,9 @@ jobs:
         job_key: meta
         states: [passed]
 
+
     context:
       include:
         - cider-ci/shared/main-context.yml
         - cider-ci/shared/flapping-context-configuration.yml
-        - cider-ci/tasks/borrow-rspec-flapping-scenarios.yml
+        - cider-ci/tasks/leihs_admin-flapping-scenarios.yml

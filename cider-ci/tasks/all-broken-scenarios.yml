@@ -56,3 +56,19 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:19
+- name: No Tasks for spec/features/manage
+  scripts:
+    test:
+      body: echo OK
+- name: spec/features/borrow/model_list.feature:158
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:158
+- name: No Tasks for engines/leihs_admin/spec/features
+  scripts:
+    test:
+      body: echo OK

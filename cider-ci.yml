@@ -11,24 +11,26 @@ include:
   ## BORROW - on branches foo/borrow-bar
   - cider-ci/jobs/borrow-scenarios.yml
   - cider-ci/jobs/borrow-flapping-scenarios.yml
-  - cider-ci/jobs/borrow-rspec-scenarios.yml
-  - cider-ci/jobs/borrow-rspec-flapping-scenarios.yml
-  - cider-ci/jobs/borrow-broken-scenarios.yml
+  # none at the moment
+  # - cider-ci/jobs/borrow-unstable-scenarios.yml
 
   ## MANAGE - on branches foo/manage-bar
   - cider-ci/jobs/manage-scenarios.yml
   - cider-ci/jobs/manage-flapping-scenarios.yml
-  - cider-ci/jobs/manage-unstable-scenarios.yml
-  - cider-ci/jobs/manage-rspec-scenarios.yml
-  - cider-ci/jobs/manage-rspec-flapping-scenarios.yml
-  - cider-ci/jobs/manage-broken-scenarios.yml
+  # none at the moment
+  # - cider-ci/jobs/manage-unstable-scenarios.yml
 
   ## ADMIN - on branches foo/admin-bar
   - cider-ci/jobs/leihs-admin-scenarios.yml
+  # none at the moment
+  # - cider-ci/jobs/leihs-admin-flapping-scenarios.yml
 
   - cider-ci/jobs/all-tests.yml
   - cider-ci/jobs/meta.yml
   - cider-ci/jobs/good-to-merge.yml
+
+  ## ALL BROKEN
+  - cider-ci/jobs/all-broken-scenarios.yml
 
   # run manually
   - cider-ci/jobs/hotspots.yml

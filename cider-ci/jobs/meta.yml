@@ -76,18 +76,6 @@ jobs:
                   exit 0
                 fi
 
-        git-branch-current:
-          name: "Git tree contains latest commit from origin/master"
-          scripts:
-            main:
-              body: |
-                #!/usr/bin/env bash
-                set -exu
-                git fetch --all
-                #
-                # check if your tree still contains the current commit from master
-                git rev-list --children HEAD | grep -q "$(git rev-parse origin/master)"
-
         scenario tasks are up-to-date:
           name: "Scenario tasks are up-to-date"
           scripts:

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'yaml'
+# require 'pry'
 
 STRICT_MODE = true
 ENGINES = ['leihs_admin']
@@ -10,16 +11,16 @@ EXCLUDE_TAGS = %w(@manual
 
 def task_hash(name, exec)
   { 'name' => name,
-        'scripts' => {
-          'test' => {
-            'body' => "set -eux\nexport PATH=~/.rubies/$RUBY/bin:$PATH\nmkdir -p log\n#{exec}"
+    'scripts' => {
+      'test' => {
+        'body' => "set -eux\nexport PATH=~/.rubies/$RUBY/bin:$PATH\nmkdir -p log\n#{exec}"
       }
     }
   }
 end
 
-def empty_task_hash
-  { 'name' => 'No Tasks for this Job!',
+def empty_task_hash(dirs)
+  { 'name' => "No Tasks for #{dirs}",
     'scripts' => { 'test' => { 'body' => 'echo OK' } }
   }
 end
@@ -28,8 +29,11 @@ def create_scenario_tasks(filepath,
                           feature_dir_paths,
                           framework: nil,
                           additional_options: nil,
-                          tags: nil)
-  File.open(filepath,'w') do |f|
+                          tags: nil,
+                          append: false)
+
+  File.truncate(filepath, 0) unless append
+  File.open(filepath, append ? 'a' : 'w') do |f|
     tasks = []
 
     egrep_cmd = \
@@ -55,8 +59,14 @@ def create_scenario_tasks(filepath,
       tasks << task_hash(path, exec).merge(task_extensions)
     end
 
-    result = {'tasks' => tasks.any? ? tasks : [empty_task_hash]}
-    f.write result.to_yaml
+    result_tasks = tasks.any? ? tasks : [empty_task_hash(feature_dir_paths.join(' '))]
+    result = if append
+               result_tasks
+             else
+               {'tasks' => result_tasks }
+             end
+    yaml = result.to_yaml
+    f.write(append ? yaml.sub("---\n", "") : yaml)
   end
 end
 
@@ -94,25 +104,22 @@ manage_feature_dir_paths = ['features/login', 'features/manage', 'features/techn
 
 filepath = 'cider-ci/tasks/manage-scenarios.yml'
 create_scenario_tasks(filepath, manage_feature_dir_paths, framework: :cucumber)
-
-%w(flapping broken unstable).each do |kind|
-  filepath = "cider-ci/tasks/manage-#{kind}-scenarios.yml"
-  create_scenario_tasks(filepath, manage_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
-end
-
-
-filepath = "cider-ci/tasks/manage-rspec-scenarios.yml"
-create_scenario_tasks(filepath,
-                      ['spec/features/manage'],
-                      framework: :rspec,
-                      additional_options: "-r ./spec/steps/manage/load.rb")
-
-filepath = "cider-ci/tasks/manage-rspec-flapping-scenarios.yml"
 create_scenario_tasks(filepath,
                       ['spec/features/manage'],
                       framework: :rspec,
                       additional_options: "-r ./spec/steps/manage/load.rb",
-                      tags: ['@flapping'])
+                      append: true)
+
+%w(flapping unstable).each do |kind|
+  filepath = "cider-ci/tasks/manage-#{kind}-scenarios.yml"
+  create_scenario_tasks(filepath, manage_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
+  create_scenario_tasks(filepath,
+                        ['spec/features/manage'],
+                        framework: :rspec,
+                        additional_options: "-r ./spec/steps/manage/load.rb",
+                        tags: ["@#{kind}"],
+                        append: true)
+end
 
 ############################## BORROW ###################################
 
@@ -120,24 +127,22 @@ borrow_feature_dir_paths = ['features/borrow']
 
 filepath = 'cider-ci/tasks/borrow-scenarios.yml'
 create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber)
-
-%w(flapping broken unstable).each do |kind|
-  filepath = "cider-ci/tasks/borrow-#{kind}-scenarios.yml"
-  create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
-end
-
-filepath = "cider-ci/tasks/borrow-rspec-scenarios.yml"
-create_scenario_tasks(filepath,
-                      ['spec/features/borrow'],
-                      framework: :rspec,
-                      additional_options: "-r ./spec/steps/borrow/load.rb")
-
-filepath = "cider-ci/tasks/borrow-rspec-flapping-scenarios.yml"
 create_scenario_tasks(filepath,
                       ['spec/features/borrow'],
                       framework: :rspec,
                       additional_options: "-r ./spec/steps/borrow/load.rb",
-                      tags: ['@flapping'])
+                      append: true)
+
+%w(flapping unstable).each do |kind|
+  filepath = "cider-ci/tasks/borrow-#{kind}-scenarios.yml"
+  create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
+  create_scenario_tasks(filepath,
+                        ['spec/features/borrow'],
+                        framework: :rspec,
+                        additional_options: "-r ./spec/steps/borrow/load.rb",
+                        tags: ["@#{kind}"],
+                        append: true)
+end
 
 ############################## INTEGRATION ##############################
 
@@ -164,13 +169,32 @@ ENGINES.each do |engine|
                         framework: :rspec,
                         additional_options: "-r ./engines/#{engine}/spec/load.rb",
                         tags: ['@flapping'])
+end
 
-  filepath = "cider-ci/tasks/#{engine}-broken-scenarios.yml"
+############################## BROKEN #################################
+
+filepath = 'cider-ci/tasks/all-broken-scenarios.yml'
+
+%w(broken).each do |kind|
+  create_scenario_tasks(filepath, manage_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
   create_scenario_tasks(filepath,
-                        engine_feature_dir_paths,
+                        ['spec/features/manage'],
                         framework: :rspec,
-                        additional_options: "-r ./engines/#{engine}/spec/load.rb",
-                        tags: ['@broken'])
+                        additional_options: "-r ./spec/steps/manage/load.rb",
+                        tags: ["@#{kind}"],
+                        append: true)
+  create_scenario_tasks(filepath,
+                        ['spec/features/borrow'],
+                        framework: :rspec,
+                        additional_options: "-r ./spec/steps/borrow/load.rb",
+                        tags: ["@#{kind}"],
+                        append: true)
+  create_scenario_tasks(filepath,
+                        ["engines/leihs_admin/spec/features"],
+                        framework: :rspec,
+                        additional_options: "-r ./engines/leihs_admin/spec/load.rb",
+                        tags: ["@#{kind}"],
+                        append: true)
 end
 
 ############################## HOTSPOTS #################################

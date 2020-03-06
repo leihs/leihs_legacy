@@ -1,11 +1,13 @@
 jobs:
 
-  borrow-rspec-scenarios:
+  borrow-unstable-scenarios:
 
-    name: 'Borrow: Rspec Scenarios'
+    name: 'Borrow: Unstable Scenarios'
 
     description: |
-      Run Borrow rspec scenarios under MRI
+      Run Borrow unstable scenarios
+
+    priority: -5
 
     run_when:
       meta checks have passed:
@@ -18,10 +20,11 @@ jobs:
 
       task_defaults:
         load: 1.5
-        max_trials: 3
+        max_trials: 1024
+        eager_trials: 1
         include:
           - cider-ci/task-components/database.yml
 
       include:
         - cider-ci/shared/main-context.yml
-        - cider-ci/tasks/borrow-rspec-scenarios.yml
+        - cider-ci/tasks/borrow-unstable-scenarios.yml
