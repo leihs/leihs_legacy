@@ -9,7 +9,7 @@
     = _("Lending Contract No.")
     = @contract.compact_id
     = _("from %s") % l(@contract.created_at.to_date)
-    %span.weeknumber W#{@contract.created_at.strftime("%U")}
+    %span.weeknumber W#{@contract.created_at.strftime("%W")}
   .date
     = l Time.now.to_date
 
