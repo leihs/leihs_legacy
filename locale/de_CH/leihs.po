@@ -3622,3 +3622,6 @@ msgstr "Es gibt offene Reservationen für Delegationsmitglieder: "
 
 msgid "This order is not approvable because some reservations violate the minimal reservation advance period of the inventory pool. Please adjust the start date accordingly."
 msgstr "Diese Bestellung kann nicht genehmigt werden, weil einige Reservationen die minimale Zeitdauer zwischen heute und der Aushändigung verletzen. Bitte passen Sie ensprechend das Startdatum an."
+
+msgid "The item is already retired"
+msgstr "Der Gegenstand ist bereits ausgemustert"

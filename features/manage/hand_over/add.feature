@@ -65,3 +65,9 @@ Feature: Add reservations during hand over
     Given I open a hand over
     When I enter a model name which is not related to my current pool
     Then only models related to my current pool are suggested
+
+  Scenario: Adding a retired item should not be possible
+    Given I open a hand over
+    When I add a retired item to the hand over by providing an inventory code
+    Then I see the error message "The item is already retired"
+    And I don't see the inventory code on the page

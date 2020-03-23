@@ -3477,3 +3477,6 @@ msgstr ""
 
 msgid "This order is not approvable because some reservations violate the minimal reservation advance period of the inventory pool. Please adjust the start date accordingly."
 msgstr ""
+
+msgid "The item is already retired"
+msgstr ""

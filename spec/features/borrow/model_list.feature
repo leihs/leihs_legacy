@@ -164,7 +164,7 @@ Feature: Model list
     And the filter shows the name of the inventory pool that is left
 
   # this one is very strange; fails locally always; passes on CI sometimes
-  @borrow_model_list @flapping
+  @borrow_model_list @broken
   Scenario: Resetting everything
     Given I am Normin
     And I am listing models

@@ -206,3 +206,21 @@ Then(/^the quantity on the option line is (\d+)$/) do |quantity|
   end
   expect(@option_line.reload.quantity).to be == quantity.to_i
 end
+
+When /^I add a retired item to the hand over by providing an inventory code$/ do
+  item = FactoryGirl.create(:item, inventory_pool: @current_inventory_pool)
+  item.update_attributes(retired: Date.yesterday,
+                         retired_reason: Faker::Lorem.sentence)
+  @inventory_code = item.inventory_code
+  @inventory_codes ||= []
+  @inventory_codes << @inventory_code
+  line_amount_before = all('.line', minimum: 1).size
+  step 'I close the flash message'
+  find('#assign-or-add-input input').set @inventory_code
+  find('#assign-or-add button').click
+end
+
+When /^I don't see the inventory code on the page$/ do
+  expect(page).not_to have_content(@inventory_code)
+end
+

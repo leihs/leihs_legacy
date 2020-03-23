@@ -4693,6 +4693,10 @@ window.i18n.locale_data = {
       "This order is not approvable because some reservations violate the minimal reservation advance period of the inventory pool. Please adjust the start date accordingly.": [
          null,
          "Diese Bestellung kann nicht genehmigt werden, weil einige Reservationen die minimale Zeitdauer zwischen heute und der Aushändigung verletzen. Bitte passen Sie ensprechend das Startdatum an."
+      ],
+      "The item is already retired": [
+         null,
+         "Der Gegenstand ist bereits ausgemustert"
       ]
    }
 }

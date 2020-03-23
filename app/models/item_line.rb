@@ -95,6 +95,10 @@ class ItemLine < Reservation
                      'related to this contract'))
       end
 
+      if item.retired? and status == :approved
+        errors.add(:base, _('The item is already retired'))
+      end
+
       # package check
       errors.add(:base, _('The item belongs to a package')) if item.parent_id
     end
