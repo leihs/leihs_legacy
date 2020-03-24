@@ -309,9 +309,9 @@ class Model < ApplicationRecord
       models = models.borrowable
     end
     unless params[:inventory_pool_ids].blank?
-      models = \
-        models.all_from_inventory_pools \
-          user.inventory_pools.where(id: params[:inventory_pool_ids]).map(&:id)
+      models = models.all_from_inventory_pools(
+        user.inventory_pools.where(id: params[:inventory_pool_ids]).map(&:id)
+      )
     end
     models
   end
@@ -476,6 +476,16 @@ class Model < ApplicationRecord
     else
       result
     end
+  end
+
+  def reservable_compatibles_for_user(user)
+    user
+      .models
+      .borrowable
+      .joins(<<-SQL)
+        INNER JOIN models_compatibles mc
+        ON mc.compatible_id = models.id AND mc.model_id = '#{id}'
+    SQL
   end
 
   def as_json_with_arguments(accessories_for_ip: nil, **options)

@@ -29,7 +29,7 @@
 
       = render "borrow/models/show/properties" unless @model.properties.blank?
 
-      = render "borrow/models/show/compatibles" unless @model.compatibles.blank?
+      = render "borrow/models/show/compatibles" unless @model.reservable_compatibles_for_user(current_user).blank?
 
   .col1of5= render :partial => "borrow/basket"
 

@@ -2,7 +2,7 @@
   
   %h3.headline-s.light.padding-bottom-m= _("Compatibles")
 
-  - @model.compatibles.each_slice(4) do |models|
+  - @model.reservable_compatibles_for_user(current_user).each_slice(4) do |models|
 
     .row
 
