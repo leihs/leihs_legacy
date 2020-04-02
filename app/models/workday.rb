@@ -3,14 +3,12 @@ class Workday < ApplicationRecord
 
   belongs_to :inventory_pool, inverse_of: :workday
 
-  serialize :max_visits, Hash
-
   # deprecated
   DAYS = %w(monday tuesday wednesday thursday friday saturday sunday)
 
   # better
   WORKDAYS = %w(sunday monday tuesday wednesday thursday friday saturday)
-
+  
   def open_on?(date)
     return false if date.nil?
 
@@ -48,19 +46,13 @@ class Workday < ApplicationRecord
 
   def workdays=(wdays)
     wdays.each_pair do |k, v|
-      write_attribute(WORKDAYS[Integer(k.presence || 0)],
-                      Integer(v['open'].presence || 0))
-      max_visits[Integer(k.presence || 0)] = \
-        if v['max_visits'].blank?
-          nil
-        else
-          Integer(v['max_visits'].presence || 0)
-        end
+      write_attribute(WORKDAYS[k.to_i], v['open'].to_i)
+      max_visits[k] = v['max_visits'].presence
     end
   end
 
   def max_visits_on(weekday_number)
-    max_visits[weekday_number]
+    max_visits[weekday_number.to_s]
   end
 
   def total_visits_by_date
@@ -72,7 +64,7 @@ class Workday < ApplicationRecord
     total_visits_by_date.each_pair do |date, visits|
       next if date.past? \
         or max_visits_on(date.wday).nil? \
-        or visits.size < max_visits_on(date.wday)
+        or visits.size < max_visits_on(date.wday).to_i
       dates << date
     end
     dates.sort

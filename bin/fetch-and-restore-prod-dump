@@ -6,6 +6,6 @@ set -eux
 # scp -oProxyJump=root@ci-gw.zhdk.ch zhdk-leihs-prod-v5.ruby.zhdk.ch:/leihs/var/db-backups/latest.pgbin tmp/db_production.pgbin
 
 # raw fetch with rsync via proxy:
-rsync -LP -e 'ssh -AJ root@ci-gw.zhdk.ch' zhdk-leihs-prod-v5.ruby.zhdk.ch:/leihs/var/db-backups/latest.pgbin tmp/db_production.pgbin
+rsync -LP -e 'ssh -AJ root@ci-gw.zhdk.ch' root@zhdk-leihs-prod-v5.ruby.zhdk.ch:/leihs/var/db-backups/latest.pgbin tmp/db_production.pgbin
 
 ./bin/restore-prod-dump
