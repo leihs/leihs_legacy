@@ -15,7 +15,7 @@ Feature: Manage users
     And I save
     Then the user has no access to the inventory pool
 
-  @rack
+
   Scenario: Change access as inventory manager
     And I edit a user who is customer in any inventory pool
     Then I can only choose the following roles

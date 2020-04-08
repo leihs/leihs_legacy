@@ -1,6 +1,8 @@
 class AccessRight < ApplicationRecord
   audited
 
+  self.primary_key = 'id'
+
   ### suspension virtual attributes ##################################
   # the point of these is to avoid changing all the frontendcode
   # after moving the suspensions to their own table

@@ -65,7 +65,7 @@ module Spec
     private
 
     def set_current_inventory_pool
-      @current_inventory_pool = @current_user.inventory_pools.managed.first
+      @current_inventory_pool = @current_user.inventory_pools.order(:name).managed.first
     end
 
     def set_locale

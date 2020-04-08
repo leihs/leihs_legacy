@@ -155,8 +155,8 @@ class InventoryPool < ApplicationRecord
       AccessRight
         .connection
         .execute('INSERT INTO access_rights ' \
-                   '(role, inventory_pool_id, user_id, created_at, updated_at) ' \
-                 "SELECT 'customer', '#{id}', users.id, NOW(), NOW() " \
+                   '(role, inventory_pool_id, user_id) ' \
+                 "SELECT 'customer', '#{id}', users.id " \
                  'FROM users ' \
                  'LEFT JOIN access_rights ' \
                  'ON access_rights.user_id = users.id ' \

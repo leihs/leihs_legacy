@@ -192,7 +192,7 @@ Feature: Manage users
     And I save
     Then the user has the role "lending manager"
 
-  @rack
+
   Scenario: Switching a user to "customer"
     Given I am Pius
     And I edit a user who has access as lending manager

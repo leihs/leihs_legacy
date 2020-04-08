@@ -3,6 +3,12 @@ FactoryGirl.define do
   factory :suspension do
   end
 
+  factory :direct_access_right do
+    user
+    inventory_pool
+    role {[:customer, :group_manager, :lending_manager, :inventory_manager].sample}
+  end
+
   factory :access_right do
     role { :customer }
     user

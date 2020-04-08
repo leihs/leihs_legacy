@@ -637,22 +637,25 @@ Then(/^I can only choose the following roles$/) do |table|
 end
 
 Given(/^I edit a user who has access as customer$/) do
-  access_right = AccessRight.find { |ar| ar.role == :customer and ar.inventory_pool == @current_inventory_pool }
+  access_right = AccessRight.where(role: :customer)\
+    .where(inventory_pool: @current_inventory_pool).sample
   @user = access_right.user
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 
 Given(/^I edit a user who has access as lending manager$/) do
-  access_right = AccessRight.find { |ar| ar.role == :lending_manager and ar.inventory_pool == @current_inventory_pool and ar.user != @current_user }
-  @user = access_right.user
+  @user = User.joins(:inventory_pools).where("access_rights.role = 'lending_manager'") \
+    .where("inventory_pools.id = ?", @current_inventory_pool.id).where("users.delegator_user_id IS NULL").sample()
   visit manage_edit_inventory_pool_user_path(@current_inventory_pool, @user)
 end
 
 Given(/^I edit a user who is customer in any inventory pool$/) do
-  access_right = AccessRight.find { |ar| ar.role == :customer }
-  @user = access_right.user
-  @current_inventory_pool = access_right.inventory_pool
-  visit manage_edit_inventory_pool_user_path(access_right.inventory_pool, @user)
+  inventory_pool = @current_user.inventory_pools.where("access_rights.role = 'inventory_manager'").first
+  raise "inventory_pool may not be nil" unless inventory_pool
+  @user = User.joins(:inventory_pools).where("access_rights.role = 'customer'") \
+    .where("inventory_pools.id = ?", inventory_pool.id).where("users.delegator_user_id IS NULL").sample()
+  raise "user may not be nil" unless @user
+  visit manage_edit_inventory_pool_user_path(inventory_pool, @user)
 end
 
 When(/^I change the access level to "(.*)"$/) do |arg1|
@@ -668,12 +671,19 @@ When(/^I change the access level to "(.*)"$/) do |arg1|
 end
 
 Then(/^the user has the role "customer"$/) do
-  expect(has_content?(_('List of Users'))).to be true
-  expect(@user.reload.access_right_for(@current_inventory_pool).role).to eq :customer
+	wait_until {
+			page.has_content? 'User details were updated successfully.'
+	}
+	wait_until {
+		@user.reload.access_right_for(@current_inventory_pool).role == :customer
+	}
 end
 
 Then(/^the user has the role "lending manager"$/) do
   find_link _('New User')
+	wait_until {
+		@user.reload.access_right_for(@current_inventory_pool).role == :lending_manager
+	}
   expect(@user.reload.access_right_for(@current_inventory_pool).role).to eq :lending_manager
 end
 
