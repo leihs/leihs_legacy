@@ -12,6 +12,8 @@
   = label ||= user
   - if user.suspended?(current_inventory_pool)
     %span.darkred-text= "%s!" % _("Suspended")
+  - elsif not user.access_right_for(current_inventory_pool)
+    %span.darkred-text= "%s!" % _("No access")
 
 :coffeescript
   jQuery ->

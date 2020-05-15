@@ -130,24 +130,6 @@ Feature: Manage users
     And I save
     Then the user has no access to the inventory pool
 
-  @rack
-  Scenario Outline: Remove access for a user with open contracts
-    Given I am <persona>
-    And there exists a contract with status "<contract_status>" for a user without any other contracts
-    When I edit the user of this contract
-    Then this user has access to the current inventory pool
-    When I remove their access
-    And I save
-    Then I see the error message "<error_message>"
-    Examples:
-      | persona | contract_status | error_message                  |
-      | Mike    | submitted       | Currently has open orders      |
-      | Pius    | submitted       | Currently has open orders      |
-      | Mike    | approved        | Currently has open orders      |
-      | Pius    | approved        | Currently has open orders      |
-      | Mike    | signed          | Currently has items to return |
-      | Pius    | signed          | Currently has items to return |
-
   Scenario: As an inventory manager, add a new user to the inventory pool
     Given I am Mike
     When I am looking at the user list

@@ -40,6 +40,7 @@ module Manage
       end
 
       step 'I select all lines' do
+        sleep 1
         find('[data-select-lines]')
         all('[data-select-lines]').map(&:click)
       end
@@ -75,6 +76,18 @@ module Manage
       step 'I see the contract\'s purpose in the shown tooltip' do
         within '.tooltipster-base' do
           expect(current_scope).to have_content @contract.purpose
+        end
+      end
+
+      step 'the user of the contract has no access to current inventory pool' do
+        pool = @contract.inventory_pool
+        @user = @contract.user
+        @user.access_right_for(pool).try(:destroy!)
+      end
+
+      step 'I see :label next to user\'s name' do |label|
+        within find("[data-id='#{@user.id}']") do
+          expect(current_scope).to have_content _("No access")
         end
       end
     end

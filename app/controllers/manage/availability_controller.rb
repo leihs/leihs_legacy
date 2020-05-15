@@ -9,7 +9,7 @@ class Manage::AvailabilityController < Manage::ApplicationController
   end
 
   def index
-    user = current_inventory_pool.users.find params[:user_id]
+    user = User.find params[:user_id]
     @models.each do |model|
       @availabilities.push \
         id: "#{model.id}-#{user.id}-#{current_inventory_pool.id}",

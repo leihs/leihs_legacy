@@ -22,7 +22,7 @@ class Manage::UsersController < Manage::ApplicationController
     @user = User.find(params[:id])
   end
 
-  before_action only: [:hand_over, :take_back] do
+  before_action only: [:hand_over] do
     unless @user.access_right_for(current_inventory_pool)
       redirect_to manage_inventory_pool_users_path,
                   flash: { error: _('No access') }

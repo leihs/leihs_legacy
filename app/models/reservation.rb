@@ -80,7 +80,10 @@ class Reservation < ApplicationRecord
                         if: proc { |r| [:signed, :closed].include?(r.status) })
   validate :date_sequence
   validate do
-    errors.add(:base, _('No access')) unless user.access_right_for(inventory_pool)
+    # exception: allow take back for a user without access
+    if not user.access_right_for(inventory_pool) and not status == :signed
+      errors.add(:base, _('No access')) 
+    end
     if changed_attributes.keys.count == 1 and end_date_changed?
       # we skip delegation validation on end_date extension
     elsif returned_date

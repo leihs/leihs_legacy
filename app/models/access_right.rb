@@ -82,11 +82,6 @@ class AccessRight < ApplicationRecord
     end
   end
 
-  before_destroy do
-    check_for_existing_reservations
-    throw :abort unless errors.empty?
-  end
-
   ####################################################################
 
   scope :active, (lambda do
@@ -129,21 +124,4 @@ class AccessRight < ApplicationRecord
     )
     (suspension and suspension.suspended_until >= Time.zone.today) or false
   end
-
-  ####################################################################
-
-  private
-
-  def check_for_existing_reservations
-    if inventory_pool
-      reservations = inventory_pool.reservations.where(user_id: user)
-      if reservations.submitted.exists? or reservations.approved.exists?
-        errors.add(:base, _('Currently has open orders'))
-      end
-      if reservations.signed.exists?
-        errors.add(:base, _('Currently has items to return'))
-      end
-    end
-  end
-
 end

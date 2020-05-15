@@ -26,3 +26,17 @@ Feature: Take back
     Then I see the contract's purpose in the shown tooltip
     When I hover over the purpose icon of the option line
     Then I see the contract's purpose in the shown tooltip
+
+  @manage_take_back
+  Scenario: Make a take back for a user without access
+    Given I am Pius
+    And there exists an open contract
+    And the user of the contract has no access to current inventory pool
+    When I open the take back page for the user of this contract
+    Then I see "No access" next to user's name
+    When I select all lines
+    And I click on "Take Back Selection"
+    And within modal dialog I click on "Take Back"
+    Then I see "Take back completed"
+    And the contract is in state "closed"
+    And all the reservations of the contract are "closed"
