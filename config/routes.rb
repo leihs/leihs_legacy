@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get :status, controller: :application, action: :status
 
   # NOTE: New Borrow
-  post "mail/received", to: "mails#send_received" 
+  post "mail/received", to: "mails#send_received"
 
   # Categories
   get "categories/:id/image", to: "categories#image", as: "category_image"
@@ -253,6 +253,9 @@ Rails.application.routes.draw do
       post    'groups',           to: "entitlement_groups#create"
       put     'groups/:id',       to: "entitlement_groups#update",     as: "update_inventory_pool_group"
       delete  'groups/:id',       to: "entitlement_groups#destroy",    as: "delete_inventory_pool_group"
+
+
+      get     'user_groups',      to: "user_groups#index",             as: "inventory_pool_user_groups"
 
       # ModelLinks
       get 'model_links', to: "model_links#index"

@@ -1,0 +1,43 @@
+- content_for :title, _("Groups")
+- content_for :manage_section, "active"
+
+.wrapper.margin-top-m
+
+  = render :partial => 'manage/tabs/manage', :locals => {:active_tab => :user_groups}
+
+  .row.content-wrapper.min-height-xl.min-width-full.straight-top
+
+    .margin-top-l.padding-horizontal-m
+
+      .row
+
+        %h1.headline-l.float-left= yield :title
+
+      .row
+
+        - inventory_pool_id = params[:inventory_pool_id]
+        - link = "/admin/inventory-pools/#{inventory_pool_id}/groups/"
+
+
+        %p
+          Visit
+          %strong
+            %a{href: link}
+              = link
+          in the new admin section to assign roles to users via groups
+          for this inventory-pool.
+
+        %p
+          The
+          %strong
+            concept of groups has changed
+          with version 5 of leihs.
+          A group is now generally a subset of users which can be used in many contexts.
+          What
+          %strong
+            used to refer to groups in older versions
+          of leihs has now been more precicely renamed to
+          %strong
+            entitlement-groups.
+
+
