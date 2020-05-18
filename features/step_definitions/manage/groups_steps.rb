@@ -33,7 +33,7 @@ Then(/^the list is sorted alphabetically$/) do
 end
 
 When(/^I create a group$/) do
-  find('.button', text: _('New Group')).click
+  find('.button', text: _('New Entitlement-Group')).click
 end
 
 When(/^I fill in the group's name$/) do

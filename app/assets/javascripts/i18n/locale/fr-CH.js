@@ -357,7 +357,7 @@ window.i18n.locale_data = {
          null,
          "Disponible"
       ],
-      "Available in group '": [
+      "Available in entitlement-group '": [
          null,
          "Disponible dans le groupe '"
       ],
@@ -827,7 +827,7 @@ window.i18n.locale_data = {
          null,
          "Aller en arrière"
       ],
-      "Group %s": [
+      "Entitlement-Group %s": [
          null,
          "Groupe %s"
       ],
@@ -1391,7 +1391,7 @@ window.i18n.locale_data = {
          null,
          "Commandes"
       ],
-      "Other groups": [
+      "Other entitlement-groups": [
          null,
          "Autres groupes"
       ],
@@ -1919,7 +1919,7 @@ window.i18n.locale_data = {
          null,
          "L'erreur suivante s'est produite lors de l'envoi d'email de notification à %{email}:\\\\n"
       ],
-      "The group quantities were successfully saved.": [
+      "The entitlement-group quantities were successfully saved.": [
          null,
          "Les quantités de groupe ont été sauvées."
       ],
@@ -2027,7 +2027,7 @@ window.i18n.locale_data = {
          null,
          "L'utilisateur délégué doit être vide pour un contrat normal"
       ],
-      "Groups of this customer": [
+      "Entitlement-Groups of this customer": [
          null,
          "Groupes de ce client"
       ],
@@ -2757,7 +2757,7 @@ window.i18n.locale_data = {
          null,
          "Nouvelle catégorie"
       ],
-      "New Group": [
+      "New Entitlement-Group": [
          null,
          "Nouveau groupe"
       ],
@@ -3007,11 +3007,11 @@ window.i18n.locale_data = {
          null,
          "Droits d'accès"
       ],
-      "Group": [
+      "Entitlement-Group": [
          null,
          "Groupe"
       ],
-      "Groups": [
+      "Entitlement-Groups": [
          null,
          "Groupes"
       ],
@@ -3019,7 +3019,7 @@ window.i18n.locale_data = {
          null,
          "Supprimer"
       ],
-      "List of Groups": [
+      "List of Entitlement-Groups": [
          null,
          "Liste des groupes"
       ],
@@ -3039,7 +3039,7 @@ window.i18n.locale_data = {
          null,
          "Nom du modèle"
       ],
-      "Name of the group": [
+      "Name of the entitlement-group": [
          null,
          "Nom du groupe"
       ],
@@ -4028,7 +4028,7 @@ window.i18n.locale_data = {
          null,
          "N'est pas un demandeur"
       ],
-      "My groups": [
+      "My entitlement-groups": [
          null,
          "Mes groupes"
       ],
@@ -4116,7 +4116,7 @@ window.i18n.locale_data = {
          null,
          "Etat de la requête"
       ],
-      "Move to another group": [
+      "Move to another entitlement-group": [
          null,
          "Déplacer dans un autre groupe"
       ],
@@ -4212,7 +4212,7 @@ window.i18n.locale_data = {
          null,
          "Nom du demandeur"
       ],
-      "Add article for specific group": [
+      "Add article for specific entitlement-group": [
          null,
          "Ajouter un article pour le groupe spécifique"
       ],

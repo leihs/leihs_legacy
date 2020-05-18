@@ -20,7 +20,7 @@
                                    theme:         theme } )
         BAND2B
       group_name = _("general")
-      bandNames_js << (_("Available in group '") + group_name + "' :")
+      bandNames_js << (_("Available in entitlement-group '") + group_name + "' :")
     else
       bandInfos_js << <<-BAND2B
         Timeline.createBandInfo( { timeZone:       2,
@@ -31,7 +31,7 @@
                                    theme:         theme } )
         BAND2B
       group_name = inventory_pool.entitlement_groups.find(group_id).to_s
-      bandNames_js << (_("Available in group '") + group_name + "' :")
+      bandNames_js << (_("Available in entitlement-group '") + group_name + "' :")
     end
   end
 

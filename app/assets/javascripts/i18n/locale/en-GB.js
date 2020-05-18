@@ -332,7 +332,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Available in group '": [
+      "Available in entitlement-group '": [
          null,
          ""
       ],
@@ -749,7 +749,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Group %s": [
+      "Entitlement-Group %s": [
          null,
          ""
       ],
@@ -1301,7 +1301,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Other groups": [
+      "Other entitlement-groups": [
          null,
          ""
       ],
@@ -1813,7 +1813,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "The group quantities were successfully saved.": [
+      "The entitlement-group quantities were successfully saved.": [
          null,
          ""
       ],
@@ -1921,7 +1921,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Groups of this customer": [
+      "Entitlement-Groups of this customer": [
          null,
          ""
       ],
@@ -2626,7 +2626,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "New Group": [
+      "New Entitlement-Group": [
          null,
          ""
       ],
@@ -2860,11 +2860,11 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Group": [
+      "Entitlement-Group": [
          null,
          ""
       ],
-      "Groups": [
+      "Entitlement-Groups": [
          null,
          ""
       ],
@@ -2872,7 +2872,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "List of Groups": [
+      "List of Entitlement-Groups": [
          null,
          ""
       ],
@@ -2892,7 +2892,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Name of the group": [
+      "Name of the entitlement-group": [
          null,
          ""
       ],

@@ -224,7 +224,7 @@ msgstr "Calendrier des disponibilités"
 msgid "Available"
 msgstr "Disponible"
 
-msgid "Available in group '"
+msgid "Available in entitlement-group '"
 msgstr "Disponible dans le groupe '"
 
 msgid "Available in total: "
@@ -579,7 +579,7 @@ msgstr "Information générale"
 msgid "Go Back"
 msgstr "Aller en arrière"
 
-msgid "Group %s"
+msgid "Entitlement-Group %s"
 msgstr "Groupe %s"
 
 msgid "Hand Over"
@@ -1007,7 +1007,7 @@ msgstr "Commande envoyée"
 msgid "Orders"
 msgstr "Commandes"
 
-msgid "Other groups"
+msgid "Other entitlement-groups"
 msgstr "Autres groupes"
 
 msgid "Overbooked Quantity"
@@ -1413,7 +1413,7 @@ msgstr "La tâche pour %s a été supprimée"
 msgid "The following error happened while sending a notification email to %{email}:\\n"
 msgstr "L'erreur suivante s'est produite lors de l'envoi d'email de notification à %{email}:\\n"
 
-msgid "The group quantities were successfully saved."
+msgid "The entitlement-group quantities were successfully saved."
 msgstr "Les quantités de groupe ont été sauvées."
 
 msgid "The inventory code %s is not valid for this model"
@@ -1502,7 +1502,7 @@ msgstr "L'utilisateur délégué n'est pas un membre du contrat de la délégrat
 msgid "Delegated user must be empty for contract's normal user"
 msgstr "L'utilisateur délégué doit être vide pour un contrat normal"
 
-msgid "Groups of this customer"
+msgid "Entitlement-Groups of this customer"
 msgstr "Groupes de ce client"
 
 msgid "This inventory pool is closed on that day."
@@ -2058,7 +2058,7 @@ msgstr "Nouveau gabarit"
 msgid "New Category"
 msgstr "Nouvelle catégorie"
 
-msgid "New Group"
+msgid "New Entitlement-Group"
 msgstr "Nouveau groupe"
 
 msgid "List of %d Users"
@@ -2248,16 +2248,16 @@ msgstr "Accès"
 msgid "Access rights"
 msgstr "Droits d'accès"
 
-msgid "Group"
+msgid "Entitlement-Group"
 msgstr "Groupe"
 
-msgid "Groups"
+msgid "Entitlement-Groups"
 msgstr "Groupes"
 
 msgid "Remove"
 msgstr "Supprimer"
 
-msgid "List of Groups"
+msgid "List of Entitlement-Groups"
 msgstr "Liste des groupes"
 
 msgid "Allocations"
@@ -2272,7 +2272,7 @@ msgstr "Nom de l'utilisateur"
 msgid "Name of the model"
 msgstr "Nom du modèle"
 
-msgid "Name of the group"
+msgid "Name of the entitlement-group"
 msgstr "Nom du groupe"
 
 msgid "Name of the template"
@@ -3029,7 +3029,7 @@ msgstr "Demandeurs"
 msgid "Not a requester"
 msgstr "N'est pas un demandeur"
 
-msgid "My groups"
+msgid "My entitlement-groups"
 msgstr "Mes groupes"
 
 msgid "My requests"
@@ -3095,7 +3095,7 @@ msgstr "Etat"
 msgid "State of Request"
 msgstr "Etat de la requête"
 
-msgid "Move to another group"
+msgid "Move to another entitlement-group"
 msgstr "Déplacer dans un autre groupe"
 
 msgid "Move to another budget period"
@@ -3167,7 +3167,7 @@ msgstr "Il existe des champs invalides"
 msgid "Name of the requester"
 msgstr "Nom du demandeur"
 
-msgid "Add article for specific group"
+msgid "Add article for specific entitlement-group"
 msgstr "Ajouter un article pour le groupe spécifique"
 
 msgid "You have unsaved data. Would you like to delete the data?"

@@ -155,7 +155,7 @@ Then /^I see which groups the customer is a member of$/ do
     unless partition.entitlement_group_id.nil?
       if @customer_group_ids.include? partition.entitlement_group_id
         expect(
-          find("#booking-calendar-partitions optgroup[label='#{_("Groups of this customer")}']")
+          find("#booking-calendar-partitions optgroup[label='#{_("Entitlement-Groups of this customer")}']")
         ).to have_content partition.entitlement_group.name
       end
     end
@@ -167,7 +167,7 @@ Then /^I see which groups the customer is not a member of$/ do
     unless entitlement.entitlement_group_id.nil? &&
         @customer_group_ids.include?(entitlement.entitlement_group_id)
       expect(
-        find( "#booking-calendar-partitions optgroup[label='#{_("Other groups")}']")
+        find( "#booking-calendar-partitions optgroup[label='#{_("Other entitlement-groups")}']")
       ).to have_content entitlement.entitlement_group.name
     end
   end

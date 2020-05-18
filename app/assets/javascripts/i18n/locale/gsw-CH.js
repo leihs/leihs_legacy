@@ -328,7 +328,7 @@ window.i18n.locale_data = {
          null,
          "Verfüegbar."
       ],
-      "Available in group '": [
+      "Available in entitlement-group '": [
          null,
          "Verfüegbar i de Gruppe '"
       ],
@@ -753,7 +753,7 @@ window.i18n.locale_data = {
          null,
          "Zrugg"
       ],
-      "Group %s": [
+      "Entitlement-Group %s": [
          null,
          "Gruppe %s"
       ],
@@ -1300,7 +1300,7 @@ window.i18n.locale_data = {
          null,
          "Bschtelige"
       ],
-      "Other groups": [
+      "Other entitlement-groups": [
          null,
          "Anderi Gruppe"
       ],
@@ -1824,7 +1824,7 @@ window.i18n.locale_data = {
          null,
          "Di folgende Fähler sind bim schicke vo de Nachricht a %{email} passiert:\\\\n"
       ],
-      "The group quantities were successfully saved.": [
+      "The entitlement-group quantities were successfully saved.": [
          null,
          "D Gruppe-Verteilig isch gschpeicheret."
       ],
@@ -1928,7 +1928,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Groups of this customer": [
+      "Entitlement-Groups of this customer": [
          null,
          "Gruppene vo dem/dere Chund/in"
       ],
@@ -2654,7 +2654,7 @@ window.i18n.locale_data = {
          null,
          "Noii Kategorii"
       ],
-      "New Group": [
+      "New Entitlement-Group": [
          null,
          "Noii Gruppe"
       ],
@@ -2904,11 +2904,11 @@ window.i18n.locale_data = {
          null,
          "Zuegriffsrächt"
       ],
-      "Group": [
+      "Entitlement-Group": [
          null,
          "Gruppe"
       ],
-      "Groups": [
+      "Entitlement-Groups": [
          null,
          "Gruppene"
       ],
@@ -2916,7 +2916,7 @@ window.i18n.locale_data = {
          null,
          "Entferne"
       ],
-      "List of Groups": [
+      "List of Entitlement-Groups": [
          null,
          "Lischte vo de Gruppene"
       ],
@@ -2936,7 +2936,7 @@ window.i18n.locale_data = {
          null,
          "Name vom Modäll"
       ],
-      "Name of the group": [
+      "Name of the entitlement-group": [
          null,
          "Name vo de Gruppe"
       ],

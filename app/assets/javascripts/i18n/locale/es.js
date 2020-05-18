@@ -583,7 +583,7 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Groups of this customer": [
+      "Entitlement-Groups of this customer": [
          null,
          ""
       ],

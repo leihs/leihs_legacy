@@ -11,7 +11,7 @@
   .line-col.col2of6
     .line-col.col2of4{:"data-quantities" => true}
       %input.width-full.small.text-align-center{type: "text", value: partition.quantity, min: 1, name: "group[partitions_attributes][][quantity]"}
-    .line-col.col1of4.padding-left-xs.text-align-left{title: _("Allocations in other groups considered - still available quantity of borrowable and not retired items"), :"data-quantities" => true}= "/ #{partition.max_possible_unentitled_quantity}"
+    .line-col.col1of4.padding-left-xs.text-align-left{title: _("Allocations in other entitlement-groups considered - still available quantity of borrowable and not retired items"), :"data-quantities" => true}= "/ #{partition.max_possible_unentitled_quantity}"
     .line-col.col1of4.padding-left-xs.text-align-left{:"data-quantities" => true, title: _("Total quantity of borrowable and not retired items")}= "/ #{partition.max_possible_quantity}"
   .line-col.col1of6.text-align-right
     %button.button.inset.small{:"data-remove-group" => true}= _("Remove")

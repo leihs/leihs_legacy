@@ -286,7 +286,7 @@
             label: 'Allocations',
             mandatory: false,
             specific: {
-              placeholder: _jed('Group'),
+              placeholder: _jed('Entitlement-Group'),
               search: (term, callback) => {
                 this.getAjax(
                   '/manage/' + this.props.inventory_pool_id + '/groups?search_term=' + term,

@@ -209,7 +209,7 @@ msgstr ""
 msgid "Available"
 msgstr ""
 
-msgid "Available in group '"
+msgid "Available in entitlement-group '"
 msgstr ""
 
 msgid "Available in total: "
@@ -546,7 +546,7 @@ msgstr ""
 msgid "Go Back"
 msgstr ""
 
-msgid "Group %s"
+msgid "Entitlement-Group %s"
 msgstr ""
 
 msgid "Hand Over"
@@ -974,7 +974,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-msgid "Other groups"
+msgid "Other entitlement-groups"
 msgstr ""
 
 msgid "Overbooked Quantity"
@@ -1376,7 +1376,7 @@ msgstr ""
 msgid "The following error happened while sending a notification email to %{email}:\\n"
 msgstr ""
 
-msgid "The group quantities were successfully saved."
+msgid "The entitlement-group quantities were successfully saved."
 msgstr ""
 
 msgid "The inventory code %s is not valid for this model"
@@ -1457,7 +1457,7 @@ msgstr ""
 msgid "Delegated user must be empty for contract's normal user"
 msgstr ""
 
-msgid "Groups of this customer"
+msgid "Entitlement-Groups of this customer"
 msgstr ""
 
 msgid "This inventory pool is closed on that day."
@@ -2007,7 +2007,7 @@ msgstr ""
 msgid "New Category"
 msgstr ""
 
-msgid "New Group"
+msgid "New Entitlement-Group"
 msgstr ""
 
 msgid "List of %d Users"
@@ -2200,16 +2200,16 @@ msgstr ""
 msgid "Access rights"
 msgstr ""
 
-msgid "Group"
+msgid "Entitlement-Group"
 msgstr ""
 
-msgid "Groups"
+msgid "Entitlement-Groups"
 msgstr ""
 
 msgid "Remove"
 msgstr ""
 
-msgid "List of Groups"
+msgid "List of Entitlement-Groups"
 msgstr ""
 
 msgid "Allocations"
@@ -2224,7 +2224,7 @@ msgstr ""
 msgid "Name of the model"
 msgstr ""
 
-msgid "Name of the group"
+msgid "Name of the entitlement-group"
 msgstr ""
 
 msgid "Name of the template"
@@ -3010,7 +3010,7 @@ msgstr ""
 msgid "Not a requester"
 msgstr ""
 
-msgid "My groups"
+msgid "My entitlement-groups"
 msgstr ""
 
 msgid "My requests"
@@ -3079,7 +3079,7 @@ msgstr ""
 msgid "State of Request"
 msgstr ""
 
-msgid "Move to another group"
+msgid "Move to another entitlement-group"
 msgstr ""
 
 msgid "Move to another budget period"
@@ -3151,7 +3151,7 @@ msgstr ""
 msgid "Name of the requester"
 msgstr ""
 
-msgid "Add article for specific group"
+msgid "Add article for specific entitlement-group"
 msgstr ""
 
 msgid "You have unsaved data. Would you like to delete the data?"
@@ -3460,7 +3460,7 @@ msgstr ""
 msgid "for items"
 msgstr ""
 
-msgid "Allocations in other groups considered - still available quantity of borrowable and not retired items"
+msgid "Allocations in other entitlement-groups considered - still available quantity of borrowable and not retired items"
 msgstr ""
 
 msgid "Total quantity of borrowable and not retired items"

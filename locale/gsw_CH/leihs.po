@@ -206,7 +206,7 @@ msgstr "Verfüegbarkeitsziitlinie"
 msgid "Available"
 msgstr "Verfüegbar."
 
-msgid "Available in group '"
+msgid "Available in entitlement-group '"
 msgstr "Verfüegbar i de Gruppe '"
 
 msgid "Available in total: "
@@ -526,7 +526,7 @@ msgstr "Allgemeini Informatione"
 msgid "Go Back"
 msgstr "Zrugg"
 
-msgid "Group %s"
+msgid "Entitlement-Group %s"
 msgstr "Gruppe %s"
 
 msgid "Hand Over"
@@ -940,7 +940,7 @@ msgstr "Bschtelig abgschickt"
 msgid "Orders"
 msgstr "Bschtelige"
 
-msgid "Other groups"
+msgid "Other entitlement-groups"
 msgstr "Anderi Gruppe"
 
 msgid "Overbooked Quantity"
@@ -1345,7 +1345,7 @@ msgid ""
 "The following error happened while sending a notification email to %{email}:\\n"
 msgstr "Di folgende Fähler sind bim schicke vo de Nachricht a %{email} passiert:\\n"
 
-msgid "The group quantities were successfully saved."
+msgid "The entitlement-group quantities were successfully saved."
 msgstr "D Gruppe-Verteilig isch gschpeicheret."
 
 msgid "The inventory code %s is not valid for this model"
@@ -1427,7 +1427,7 @@ msgstr ""
 msgid "Delegated user must be empty for contract's normal user"
 msgstr ""
 
-msgid "Groups of this customer"
+msgid "Entitlement-Groups of this customer"
 msgstr "Gruppene vo dem/dere Chund/in"
 
 msgid "This inventory pool is closed on that day."
@@ -1988,7 +1988,7 @@ msgstr "Noii Vorlag"
 msgid "New Category"
 msgstr "Noii Kategorii"
 
-msgid "New Group"
+msgid "New Entitlement-Group"
 msgstr "Noii Gruppe"
 
 msgid "List of %d Users"
@@ -2178,16 +2178,16 @@ msgstr "Zuegriff"
 msgid "Access rights"
 msgstr "Zuegriffsrächt"
 
-msgid "Group"
+msgid "Entitlement-Group"
 msgstr "Gruppe"
 
-msgid "Groups"
+msgid "Entitlement-Groups"
 msgstr "Gruppene"
 
 msgid "Remove"
 msgstr "Entferne"
 
-msgid "List of Groups"
+msgid "List of Entitlement-Groups"
 msgstr "Lischte vo de Gruppene"
 
 msgid "Allocations"
@@ -2202,7 +2202,7 @@ msgstr "Name vom Benutzer"
 msgid "Name of the model"
 msgstr "Name vom Modäll"
 
-msgid "Name of the group"
+msgid "Name of the entitlement-group"
 msgstr "Name vo de Gruppe"
 
 msgid "Name of the template"

@@ -339,9 +339,9 @@ window.i18n.locale_data = {
          null,
          "Verfügbar"
       ],
-      "Available in group '": [
+      "Available in entitlement-group '": [
          null,
-         "Verfügbar in Gruppe '"
+         "Verfügbar in Anspruchsgruppe'"
       ],
       "Available in total: ": [
          null,
@@ -785,9 +785,9 @@ window.i18n.locale_data = {
          null,
          "Zurück"
       ],
-      "Group %s": [
+      "Entitlement-Group %s": [
          null,
-         "Gruppe %s"
+         "Anspruchsgruppe %s"
       ],
       "Hand Over": [
          null,
@@ -1353,9 +1353,9 @@ window.i18n.locale_data = {
          null,
          "Bestellungen"
       ],
-      "Other groups": [
+      "Other entitlement-groups": [
          null,
-         "Andere Gruppen"
+         "Andere Anspruchsgruppe"
       ],
       "Overbooked Quantity": [
          null,
@@ -1889,9 +1889,9 @@ window.i18n.locale_data = {
          null,
          "Die folgenden Fehler sind aufgetreten beim Versuchn, eine Nachricht an %{email} zu schicken:\\\\n"
       ],
-      "The group quantities were successfully saved.": [
+      "The entitlement-group quantities were successfully saved.": [
          null,
-         "Die Gruppen-Verteilungen wurden gespeichert."
+         "Die Anspruchsgruppen-Verteilungen wurden gespeichert."
       ],
       "The inventory code %s is not valid for this model": [
          null,
@@ -1997,9 +1997,9 @@ window.i18n.locale_data = {
          null,
          "Die Kontaktperson muss leer sein bei einem normalen User"
       ],
-      "Groups of this customer": [
+      "Entitlement-Groups of this customer": [
          null,
-         "Gruppen dieses/r Kunden/in"
+         "Anspruchsgruppen dieses/r Kunden/in"
       ],
       "This inventory pool is closed on that day.": [
          null,
@@ -2735,9 +2735,9 @@ window.i18n.locale_data = {
          null,
          "Neue Kategorie"
       ],
-      "New Group": [
+      "New Entitlement-Group": [
          null,
-         "Neue Gruppe"
+         "Neue Anspruchsgruppe"
       ],
       "List of %d Users": [
          null,
@@ -2989,19 +2989,19 @@ window.i18n.locale_data = {
          null,
          "Zugriffsrechte"
       ],
-      "Group": [
+      "Entitlement-Group": [
          null,
-         "Gruppe"
+         "Anspruchsgruppe"
       ],
-      "Groups": [
+      "Entitlement-Groups": [
          null,
-         "Gruppen"
+         "Anspruchsgruppen"
       ],
       "Remove": [
          null,
          "Entfernen"
       ],
-      "List of Groups": [
+      "List of Entitlement-Groups": [
          null,
          "Liste der Gruppen"
       ],
@@ -3021,9 +3021,9 @@ window.i18n.locale_data = {
          null,
          "Name des Modells"
       ],
-      "Name of the group": [
+      "Name of the entitlement-group": [
          null,
-         "Name der Gruppe"
+         "Name der Anspruchsgruppe"
       ],
       "Name of the template": [
          null,
@@ -4066,9 +4066,9 @@ window.i18n.locale_data = {
          null,
          "Kein/e Antragsteller/in"
       ],
-      "My groups": [
+      "My entitlement-groups": [
          null,
-         "Meine Gruppen"
+         "Meine Anspruchsgruppen"
       ],
       "My requests": [
          null,
@@ -4162,7 +4162,7 @@ window.i18n.locale_data = {
          null,
          "Status Antrag"
       ],
-      "Move to another group": [
+      "Move to another entitlement-group": [
          null,
          "Gruppe ändern"
       ],
@@ -4258,9 +4258,9 @@ window.i18n.locale_data = {
          null,
          "Name des Antragstellers"
       ],
-      "Add article for specific group": [
+      "Add article for specific entitlement-group": [
          null,
-         "Artikel für spezifische Gruppe hinzufügen"
+         "Artikel für spezifische Anspruchsgruppe hinzufügen"
       ],
       "You have unsaved data. Would you like to delete the data?": [
          null,
@@ -4670,9 +4670,9 @@ window.i18n.locale_data = {
          null,
          "für Gegenstände"
       ],
-      "Allocations in other groups considered - still available quantity of borrowable and not retired items": [
+      "Allocations in other entitlement-groups considered - still available quantity of borrowable and not retired items": [
          null,
-         "Zuteilungen in anderen Gruppen berücksichtigt - noch verfügbare Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"
+         "Zuteilungen in anderen Anspruchsgruppen berücksichtigt - noch verfügbare Anzahl an ausleihbaren, nicht ausgemusterten Gegenständen"
       ],
       "Total quantity of borrowable and not retired items": [
          null,
