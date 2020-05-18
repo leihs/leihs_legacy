@@ -22,6 +22,14 @@
               %li
                 %a.dropdown-item{href: manage_new_inventory_pool_user_path(type: :delegation)}= _("New Delegation")
 
+
+      .row
+        %p
+          %strong
+            %a{href: "/admin/inventory-pools/#{params[:inventory_pool_id]}/users/"}
+              Users and their roles can also be managed in the new admin section.
+
+
     .margin-top-m
 
       #list-tabs.inline-tab-navigation

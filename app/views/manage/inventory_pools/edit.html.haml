@@ -18,11 +18,23 @@
             = link_to _('Cancel'), :back, class: 'button grey'
             %button.button.green{:type => :submit}= _("Save")
 
+
+        .row
+
+          %p
+            %strong
+              Roles for users and groups
+            can be managed in the new
+            %strong
+              %a{href: "/admin/inventory-pools/#{@inventory_pool.id}"}
+                admin section of this inventory-pool.
+
         .row.margin-top-m
 
           .col1of2.padding-right-xs
 
             %h2.headline-m.padding-left-s= _("Basic Information")
+
 
             .row.margin-vertical-s
 
