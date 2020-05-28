@@ -3480,3 +3480,6 @@ msgstr ""
 
 msgid "The item is already retired"
 msgstr ""
+
+msgid "Cover Image"
+msgstr ""

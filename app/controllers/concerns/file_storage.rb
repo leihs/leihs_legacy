@@ -17,6 +17,7 @@ module FileStorage
         content_type: file.content_type
       )
       thumbnail.save!
+      image
     end
   end
 

@@ -13,6 +13,25 @@ module Manage
         @model = FactoryGirl.create(:model)
       end
 
+      step 'there is a model with image' do
+        @model = FactoryGirl.create(:model)
+        @image = FactoryGirl.create(:image, target: @model)
+        @filename = @image.filename
+      end
+     
+      step 'I set the image as cover' do
+        find('#images .row.line', text: @filename)
+          .find("input[type='radio']")
+          .click
+      end
+
+      step 'the image is set as cover' do
+        expect(
+          find('#images .row.line', text: @filename).find("input[type='radio']")
+        ).to be_checked
+        expect(@model.reload.cover_image.filename).to eq @filename
+      end
+
       step 'I open the edit page of the model' do
         visit manage_edit_model_path(@current_inventory_pool, @model)
       end

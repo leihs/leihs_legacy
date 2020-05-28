@@ -4697,6 +4697,10 @@ window.i18n.locale_data = {
       "The item is already retired": [
          null,
          "Der Gegenstand ist bereits ausgemustert"
+      ],
+      "Cover Image": [
+         null,
+         "Cover-Bild"
       ]
    }
 }

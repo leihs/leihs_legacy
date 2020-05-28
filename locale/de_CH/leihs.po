@@ -3625,3 +3625,6 @@ msgstr "Diese Bestellung kann nicht genehmigt werden, weil einige Reservationen 
 
 msgid "The item is already retired"
 msgstr "Der Gegenstand ist bereits ausgemustert"
+
+msgid "Cover Image"
+msgstr "Cover-Bild"

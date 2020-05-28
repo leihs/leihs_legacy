@@ -77,10 +77,13 @@ class Manage::ModelsController < Manage::ApplicationController
   def store_image_react
     respond_to do |format|
       format.plist_binary do
-        store_image_with_thumbnail!(
-          params[:data],
-          Model.find(params[:model_id])
-        )
+        ApplicationRecord.transaction do
+          m = Model.find(params[:model_id])
+          i = store_image_with_thumbnail!(params[:data], m)
+          if params[:is_cover] == 'true'
+            m.update_attributes!(cover_image_id: i.id)
+          end
+        end
       end
     end
   end
@@ -350,10 +353,7 @@ class Manage::ModelsController < Manage::ApplicationController
     model.properties.destroy_all
     # REMAINING DATA
     params[:model].delete(:type)
-    ###############################################################################
-    # TODO: # Rails bug: https://github.com/rails/rails/issues/25198
-    deal_with_destroy_nested_attributes!(params[:model])
-    ###############################################################################
+    handle_images!(model, params[:model])
     p = ActionController::Parameters.new(params[:model].map do |k, v|
       case k
       when 'partitions_attributes'
@@ -375,4 +375,13 @@ class Manage::ModelsController < Manage::ApplicationController
     model.update_attributes(p) and model.save
   end
 
+  def handle_images!(model, model_attrs)
+    deal_with_destroy_nested_attributes!(model_attrs)
+
+    if images_attrs = model_attrs[:images_attributes]
+      image_id, spec = images_attrs.find { |_, spec| spec[:is_cover] }
+      model.cover_image_id = image_id
+      images_attrs.each_pair { |_, spec| spec.delete(:is_cover) }
+    end
+  end
 end

@@ -67,6 +67,8 @@ class Model < ApplicationRecord
            dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
 
+  belongs_to(:cover_image, class_name: Image, foreign_key: :cover_image_id)
+
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
@@ -396,7 +398,13 @@ class Model < ApplicationRecord
   end
 
   def image(offset = 0)
-    images.offset(Integer(offset.presence || 0)).first
+    imgs = images.to_a
+    # move cover image to the front of the array
+    if cover_image
+      imgs.delete(cover_image)
+      imgs.unshift(cover_image)
+    end
+    imgs[Integer(offset.presence || 0)]
   end
 
   def needs_permission

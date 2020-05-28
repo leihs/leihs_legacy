@@ -24,3 +24,20 @@ Feature: Model CRUD
     Then the model has been saved successfully
     When I open the edit page of the model
     Then the model does not have any image
+
+  @manage_model_crud
+  Scenario: Setting an image as cover
+    Given I am Mike
+    And there is a model with image
+    When I open the edit page of the model
+    And I set the image as cover
+    And I save
+    Then the model has been saved successfully
+    When I open the edit page of the model
+    Then the image is set as cover
+    When I add an image
+    And I set the image as cover
+    And I save
+    Then the model has been saved successfully
+    When I open the edit page of the model
+    Then the image is set as cover

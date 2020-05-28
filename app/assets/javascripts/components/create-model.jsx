@@ -528,7 +528,8 @@
                   delete: false,
                   id: i.id,
                   filename: i.filename,
-                  type: 'existing'
+                  type: 'existing',
+                  isCover: this.props.edit_data.model.cover_image_id == i.id
                 }
               }
             ) : [])
@@ -706,7 +707,8 @@
                   i.id,
                   {
                     id: i.id,
-                    _destroy: (i.delete ? '1' : null)
+                    _destroy: (i.delete ? '1' : null),
+                    is_cover: i.isCover
                   }
 
                 ]
@@ -851,11 +853,14 @@
     },
 
 
-    uploadFile(type, modelId, file, callback) {
+    uploadFile(type, modelId, fileSpec, callback) {
 
       var formData = new FormData()
-      formData.append('data', file)
+      formData.append('data', fileSpec.file)
       formData.append('model_id', modelId)
+      if (fileSpec.isCover) {
+        formData.append('is_cover', fileSpec.isCover)
+      }
 
       $.ajax({
         url: this.uploadPath(type),
@@ -886,46 +891,54 @@
       })
     },
 
-    flatImageFiles() {
+    flatImageSpecs() {
       var imageFields = this.fieldsByType('images')
       return _.flatten(_.map(
         imageFields,
         (f) => {
-          return _.map(_.reject(f.state.images, (img) => img.type == 'existing'), (img) => img.file)
+          return _.reject(f.state.images, (img) => img.type == 'existing')
         }
       ))
     },
 
-    uploadImages(modelId, callback) {
-      var files = this.flatImageFiles()
-      this.uploadImagesRec('image', modelId, files, [], callback)
+    flatImageFiles() {
+      return _.map(this.flatImageSpecs(), (spec) => spec.file)
     },
 
-    flatAttachments() {
+    uploadImages(modelId, callback) {
+      var imgSpecs = this.flatImageSpecs()
+      this.uploadFilesRec('image', modelId, imgSpecs, [], callback)
+    },
+
+    flatAttachmentSpecs() {
       var attachmentFields = this.fieldsByType('attachments')
       return _.flatten(_.map(
         attachmentFields,
         (f) => {
-          return _.map(_.reject(f.state.attachments, (a) => a.type == 'existing'), (a) => a.file)
+          return _.reject(f.state.attachments, (a) => a.type == 'existing')
         }
       ))
     },
 
+    flatAttachments() {
+      return _.map(this.flatAttachmentSpecs(), (spec) => spec.file)
+    },
+
     uploadAttachments(modelId, callback) {
-      var files = this.flatAttachments()
-      this.uploadImagesRec('attachment', modelId, files, [], callback)
+      var files = this.flatAttachmentSpecs()
+      this.uploadFilesRec('attachment', modelId, files, [], callback)
     },
 
 
-    uploadImagesRec(type, modelId, files, errors, callback) {
-      if(files.length == 0) {
+    uploadFilesRec(type, modelId, fileSpecs, errors, callback) {
+      if(fileSpecs.length == 0) {
         callback(errors)
       } else {
 
         this.uploadFile(
           type,
           modelId,
-          _.first(files),
+          _.first(fileSpecs),
           (result) => {
 
             var nextErrors = errors
@@ -933,10 +946,10 @@
               nextErrors = errors.concat('error')
             }
 
-            this.uploadImagesRec(
+            this.uploadFilesRec(
               type,
               modelId,
-              _.rest(files),
+              _.rest(fileSpecs),
               nextErrors,
               callback
             )
@@ -1790,9 +1803,27 @@
               )
             }
 
+            var onSetCover = (event) => {
+              imageId = event.target.getAttribute('data-image-id')
+
+              var l = window.lodash
+              var next = l.map(
+                l.cloneDeep(f.state.images),
+                (i) => l.merge(i, {isCover: imageId == i.id})
+              )
+
+              this.updateState(
+                [
+                  'fields',
+                  _.findIndex(this.state.fields, (fi) => f.key == fi.key),
+                  'state',
+                  'images'
+                ],
+                next
+              )
+            }
 
             if(image.type == 'existing') {
-
 
               if(image.delete) {
                 return (
@@ -1805,13 +1836,16 @@
                         <img className='max-height-xxs max-width-xxs' src={'/images/' + image.id + '/thumbnail'} />
                       </a>
                     </div>
-                    <div className='line-col col5of10 text-align-left'>
+                    <div className='line-col col4of10 text-align-left'>
                       <a className='blue' href={'/images/' + image.id} target='_blank'>
                         {image.filename}
                       </a>
                     </div>
+                    <div className='line-col col1of10 text-align-left'>
+                      <input type='radio' title={_jed('Cover Image')} name='is_cover' data-image-id={image.id} disabled/>
+                    </div>
                     <div className='line-col col3of10 text-align-right'>
-                      <button onClick={(e) => undo(e)} className='button small inset' data-remove=''>{_jed('undo')}</button>
+                      <button onClick={(e) => undo(e)} className='button small inset' data-image-id={image.id} data-remove=''>{_jed('undo')}</button>
                     </div>
                   </div>
                 )
@@ -1825,13 +1859,16 @@
                         <img className='max-height-xxs max-width-xxs' src={'/images/' + image.id + '/thumbnail'} />
                       </a>
                     </div>
-                    <div className='line-col col6of10 text-align-left'>
+                    <div className='line-col col5of10 text-align-left'>
                       <a className='blue' href={'/images/' + image.id} target='_blank'>
                         {image.filename}
                       </a>
                     </div>
+                    <div className='line-col col1of10 text-align-left'>
+                      <input type='radio' title={_jed('Cover Image')} name='is_cover' onChange={(e) => onSetCover(e)} data-image-id={image.id} checked={image.isCover} />
+                    </div>
                     <div className='line-col col3of10 text-align-right'>
-                      <button onClick={(e) => onRemoveExisting(e)} className='button small inset' data-remove=''>Entfernen</button>
+                      <button onClick={(e) => onRemoveExisting(e)} className='button small inset' data-image-id={image.id} data-remove=''>Entfernen</button>
                     </div>
                   </div>
                 )
@@ -1853,11 +1890,14 @@
                   <div className='line-col col1of10 text-align-center'>
                     <img id={'field_' + f.key + '_image_' + image.id} className='max-height-xxs max-width-xxs' src={null} />
                   </div>
-                  <div className='line-col col5of10 text-align-left' style={{wordBreak: 'break-all'}}>
+                  <div className='line-col col4of10 text-align-left' style={{wordBreak: 'break-all'}}>
                     {image.filename}
                   </div>
+                    <div className='line-col col1of10 text-align-left'>
+                      <input type='radio' title={_jed('Cover Image')} name='is_cover' onChange={(e) => onSetCover(e)} data-image-id={image.id} checked={image.isCover} />
+                    </div>
                   <div className='line-col col3of10 text-align-right'>
-                    <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' type='button'>{_jed('Remove')}</button>
+                    <button onClick={(e) => onRemove(e)} className='button small inset' data-remove='' data-image-id={image.id} type='button'>{_jed('Remove')}</button>
                   </div>
                 </div>
 
