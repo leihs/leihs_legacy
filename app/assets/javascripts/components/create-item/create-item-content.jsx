@@ -37,7 +37,7 @@
         return (
           <div className='padding-bottom-m'>
             <div className='row emboss notice text-align-center font-size-m padding-inset-s'>
-              <strong>Gegenstand ist Teil eines Pakets: </strong>
+              <strong>{_jed('Item is part of package')}: </strong>
               <a className='white' href={parent.edit_path}>
                 {this._renderModelLabel(parent.json)}
               </a>
@@ -69,7 +69,7 @@
         return (
           <div className='padding-bottom-m'>
             <div className='row emboss notice text-align-center font-size-m padding-inset-s'>
-              <strong>Dies ist ein Paket, bestehend aus den folgenden Gegenständen: </strong>
+              <strong>{_jed('This is a package containing the following items')}: </strong>
               {childLinks}
             </div>
           </div>
@@ -86,8 +86,8 @@
         return (
           <div className='padding-bottom-m'>
             <div className='row emboss notice text-align-center font-size-m padding-inset-s'>
-              <strong>Sie sind nicht Besitzer dieses Gegenstands: </strong>
-              deshalb können Sie einige Felder nicht editieren
+              <strong>{_jed('You are not the owner of this item')}: </strong>
+              {_jed('therefore you may not be able to change some of these fields')}
             </div>
           </div>
         )
