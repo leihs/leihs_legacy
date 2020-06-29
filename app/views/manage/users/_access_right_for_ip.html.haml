@@ -1,7 +1,8 @@
 .row.padding-inset-s.emboss.margin-bottom-xxs
   .col1of2
     %strong.font-size-m= _("Access as")
-    %span= "(#{@access_right.try(:origin_table)})"
+    - if ar = @access_right.try(:origin_table).presence
+      %span= "(#{ar})"
   .col1of2.text-align-right
     - if @access_right.present? and @access_right[:origin_table] and ['mixed', 'group_access_rights'].include? @access_right[:origin_table]
       %span

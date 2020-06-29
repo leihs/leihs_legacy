@@ -2306,7 +2306,7 @@ msgid "Remove"
 msgstr "Entfernen"
 
 msgid "List of Entitlement-Groups"
-msgstr "Liste der Gruppen"
+msgstr "Liste der Anspruchsgruppen"
 
 msgid "Allocations"
 msgstr "Zuteilungen"

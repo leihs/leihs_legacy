@@ -3007,7 +3007,7 @@ window.i18n.locale_data = {
       ],
       "List of Entitlement-Groups": [
          null,
-         "Liste der Gruppen"
+         "Liste der Anspruchsgruppen"
       ],
       "Allocations": [
          null,
