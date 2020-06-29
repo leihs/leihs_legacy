@@ -2946,3 +2946,10 @@ msgstr "Ungültiges Datum"
 
 msgid "Start and end date cannot be in the past"
 msgstr "Start- und Änddatum chan nöd i d Vergangeheit sii"
+
+msgid "Expand All"
+msgstr "Alli Öffne"
+
+msgid "Close All"
+msgstr "Alli Schlüüsse"
+

@@ -3649,3 +3649,9 @@ msgstr "Eine Gruppe enthält mehrere Benutzer. Diese Benutzer können eine Rolle
 
 msgid "To allocate models to users use the %s."
 msgstr "Um Modelle den Benutzern zuzuteilen, verwende die %s."
+
+msgid "Expand All"
+msgstr "Alle Öffnen"
+
+msgid "Close All"
+msgstr "Alle Schliessen"

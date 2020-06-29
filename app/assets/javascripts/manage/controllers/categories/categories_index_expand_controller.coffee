@@ -3,6 +3,17 @@ class window.App.CategoriesIndexExpandController extends Spine.Controller
   events:
     "click [data-type='expander']": "toggle"
 
+  openAll: (e, ctx = @el) =>
+    openFn = @open
+    ctx.find("[data-type='expander']").each -> openFn($(@), true)
+
+  closeAll: (e) =>
+    closeFn = @close
+    @el.find("[data-type='expander']").each ->
+      target = $(@)
+      return if target.data("_expanded") is false
+      closeFn(target)
+
   toggle: (e) =>
     target = $ e.currentTarget
     if target.data("_expanded")? and target.data("_expanded") == true
@@ -10,7 +21,7 @@ class window.App.CategoriesIndexExpandController extends Spine.Controller
     else
       @open target
 
-  open: (target) =>
+  open: (target, recurseChildren) =>
     target.data "_expanded", true
     target.find(".arrow").removeClass("down right").addClass("down")
     line = target.closest("[data-id]")
@@ -24,6 +35,7 @@ class window.App.CategoriesIndexExpandController extends Spine.Controller
       line.data "childrenContainer", childrenContainer
 
     line.after childrenContainer
+    @openAll(null, childrenContainer) if recurseChildren
 
   close: (target) =>
     target.data "_expanded", false

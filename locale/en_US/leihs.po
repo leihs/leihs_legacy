@@ -2965,3 +2965,9 @@ msgstr ""
 
 msgid "An order can not have multiple delegated users."
 msgstr ""
+
+msgid "Expand All"
+msgstr ""
+
+msgid "Close All"
+msgstr ""

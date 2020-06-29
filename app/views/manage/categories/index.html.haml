@@ -24,9 +24,16 @@
 
         .col1of5
           %input#list-search{type: "text", name: "input", placeholder: _("Search..."), autocomplete: :off}
+        .col4of5
+          %button#btn-tree-all-open.button.inset.white.height-xxs
+            %i.arrow.down
+            = _("Expand All")
+          %button#btn-tree-all-close.button.inset.white.height-xxs
+            %i.arrow.up
+            = _("Close All")
+
 
     #list.margin-bottom-s.separated-top.list-of-lines.even
 
 :coffeescript
-
   jQuery -> new App.CategoriesIndexController {el: $("#categories-index-view")}

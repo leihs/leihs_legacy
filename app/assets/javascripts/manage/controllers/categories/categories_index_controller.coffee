@@ -3,14 +3,21 @@ class window.App.CategoriesIndexController extends Spine.Controller
   elements:
     "#list": "list"
 
+  events:
+    "click #btn-tree-all-open": "openAll"
+    "click #btn-tree-all-close": "closeAll"
+
   constructor: ->
     super
     do @showLoading
     @fetchCategories().done =>
       @fetchCategoryLinks().done =>
         @renderList App.Category.roots()
-    new App.CategoriesIndexExpandController {el: @el.find "#list"}
+    @expander = new App.CategoriesIndexExpandController {el: @el.find "#list"}
     @search = new App.ListSearchController {el: @el.find("#list-search"), reset: @resetAndRender}
+
+  openAll: => @expander.openAll()
+  closeAll: => @expander.closeAll()
 
   resetAndRender: =>
     @categories = {}
@@ -43,3 +50,4 @@ class window.App.CategoriesIndexController extends Spine.Controller
 
   renderList: (categories) =>
     @list.html App.Render "manage/views/categories/line", categories
+

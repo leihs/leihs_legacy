@@ -3504,3 +3504,9 @@ msgstr ""
 
 msgid "To allocate models to users use the %s."
 msgstr ""
+
+msgid "Expand All"
+msgstr ""
+
+msgid "Close All"
+msgstr ""

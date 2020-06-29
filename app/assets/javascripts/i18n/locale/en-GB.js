@@ -3674,6 +3674,14 @@ window.i18n.locale_data = {
       "An order can not have multiple delegated users.": [
          null,
          ""
+      ],
+      "Expand All": [
+         null,
+         ""
+      ],
+      "Close All": [
+         null,
+         ""
       ]
    }
 }

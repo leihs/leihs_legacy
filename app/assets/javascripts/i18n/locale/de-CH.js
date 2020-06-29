@@ -4729,6 +4729,14 @@ window.i18n.locale_data = {
       "To allocate models to users use the %s.": [
          null,
          "Um Modelle den Benutzern zuzuteilen, verwende die %s."
+      ],
+      "Expand All": [
+         null,
+         "Alle Öffnen"
+      ],
+      "Close All": [
+         null,
+         "Alle Schliessen"
       ]
    }
 }

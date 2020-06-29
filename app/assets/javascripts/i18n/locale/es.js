@@ -902,6 +902,14 @@ window.i18n.locale_data = {
       "Start and end date cannot be in the past": [
          null,
          "Fecha de inicio y fin no puede ser en el pasado"
+      ],
+      "Expand All": [
+         null,
+         "Expandir Todo"
+      ],
+      "Close All": [
+         null,
+         "Cierra Todo"
       ]
    }
 }

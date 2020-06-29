@@ -3371,3 +3371,9 @@ msgstr "Date non valide"
 
 msgid "Start and end date cannot be in the past"
 msgstr "Date de début et de fin ne peut pas être dans le passé"
+
+msgid "Expand All"
+msgstr "Développer Tout"
+
+msgid "Close All"
+msgstr "Ferme Tout"
