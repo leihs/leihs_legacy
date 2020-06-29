@@ -16,19 +16,15 @@
       .row
 
         - inventory_pool_id = params[:inventory_pool_id]
-        - link = "/admin/inventory-pools/#{inventory_pool_id}/groups/"
 
         %p
 
           %a{href: "/admin/inventory-pools/#{inventory_pool_id}/groups/"}
-            Manage user roles via Groups.
-
-
-        %p
-          A Group contains several users. These users can gain a role by assigning the role to their Group.
+            = _("Manage user roles via Groups.")
 
         %p
-          To allocate models to users use the
-          %a{href: "/manage/#{inventory_pool_id}/groups"}
-            Entitlement-Groups.
+          = _("A Group contains several users. These users can gain a role by assigning the role to their Group.")
 
+        %p
+          - link = "<a href=\"/manage/#{inventory_pool_id}/groups\">%s</a>" % _("Entitlement-Groups")
+          != _("To allocate models to users use the %s.") % link

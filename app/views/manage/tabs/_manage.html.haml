@@ -34,4 +34,4 @@
         %li
           %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => "/manage/#{current_inventory_pool.id}/manage_fields",
                                                                                   :class => (defined? active_tab and active_tab == :manage_fields) ? "active" : ""}
-            = _("Manage Fields")
+            = _("Manage %s") % _("Fields")

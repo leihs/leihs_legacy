@@ -486,10 +486,10 @@ msgid "Edit this Order"
 msgstr "Diese Bestellung editieren"
 
 msgid "Editing mail templates for the inventory pool %s"
-msgstr "Editiere Mail-Templates für den Gerätepark %s"
+msgstr "Editiere Mail-Vorlagen für den Gerätepark %s"
 
 msgid "Editing system-wide mail templates"
-msgstr "Editiere Mail-Templates für das gesamte System"
+msgstr "Editiere Mail-Vorlagen für das gesamte System"
 
 msgid "Empty Username and/or Password"
 msgstr "Benutzername und/oder Passwort sind leer"
@@ -833,7 +833,7 @@ msgid "MAC-Address"
 msgstr "MAC-Adresse"
 
 msgid "Mail Templates"
-msgstr "Mail-Templates"
+msgstr "Mail-Vorlagen"
 
 msgid "Manufacturer"
 msgstr "Hersteller"
@@ -2256,6 +2256,9 @@ msgstr "Übersicht"
 msgid "Manage"
 msgstr "Verwalten"
 
+msgid "Manage %s"
+msgstr "%s verwalten"
+
 msgid "Nothing selected"
 msgstr "Nichts ausgewählt"
 
@@ -3549,7 +3552,7 @@ msgid "Does not have any borrowable items"
 msgstr "Hat keine ausleihbaren Gegenstände"
 
 msgid "These mail templates are copied for a new inventory pool when it is created."
-msgstr "Diese Mail-Templates werden für ein neues Gerätepark kopiert, wenn es erstellt wird."
+msgstr "Diese Mail-Vorlagen werden für ein neues Gerätepark kopiert, wenn es erstellt wird."
 
 msgid "User does not have access to inventory pool: %s"
 msgstr "Benutzer hat keinen Zugriff auf den Gerätepark: %s"
@@ -3628,3 +3631,21 @@ msgstr "Der Gegenstand ist bereits ausgemustert"
 
 msgid "Cover Image"
 msgstr "Cover-Bild"
+
+msgid "Roles for users and groups can be managed in the new %s."
+msgstr "Rollen für die Benutzer und die Gruppen können in der neuen %s verwaltet werden."
+
+msgid "admin section of this inventory-pool"
+msgstr "Admin-Section für dieses Gerätepark"
+
+msgid "Groups"
+msgstr "Gruppen"
+
+msgid "Manage user roles via Groups."
+msgstr "Verwalte Benutzerrollen via Gruppen."
+
+msgid "A Group contains several users. These users can gain a role by assigning the role to their Group."
+msgstr "Eine Gruppe enthält mehrere Benutzer. Diese Benutzer können eine Rolle kriegen, indem man ihrer Gruppe die entsprechende Rolle zuweist."
+
+msgid "To allocate models to users use the %s."
+msgstr "Um Modelle den Benutzern zuzuteilen, verwende die %s."

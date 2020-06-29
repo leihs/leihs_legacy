@@ -22,12 +22,8 @@
         .row
 
           %p
-            %strong
-              Roles for users and groups
-            can be managed in the new
-            %strong
-              %a{href: "/admin/inventory-pools/#{@inventory_pool.id}"}
-                admin section of this inventory-pool.
+            - link = "<a href=\"/admin/inventory-pools/#{@inventory_pool.id}\">%s</a>" % _("admin section of this inventory-pool")
+            %strong!= _("Roles for users and groups can be managed in the new %s.") % link
 
         .row.margin-top-m
 

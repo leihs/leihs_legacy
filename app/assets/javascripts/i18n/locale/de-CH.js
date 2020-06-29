@@ -695,11 +695,11 @@ window.i18n.locale_data = {
       ],
       "Editing mail templates for the inventory pool %s": [
          null,
-         "Editiere Mail-Templates für den Gerätepark %s"
+         "Editiere Mail-Vorlagen für den Gerätepark %s"
       ],
       "Editing system-wide mail templates": [
          null,
-         "Editiere Mail-Templates für das gesamte System"
+         "Editiere Mail-Vorlagen für das gesamte System"
       ],
       "Empty Username and/or Password": [
          null,
@@ -1150,7 +1150,7 @@ window.i18n.locale_data = {
       ],
       "Mail Templates": [
          null,
-         "Mail-Templates"
+         "Mail-Vorlagen"
       ],
       "Manufacturer": [
          null,
@@ -2943,6 +2943,10 @@ window.i18n.locale_data = {
          null,
          "Verwalten"
       ],
+      "Manage %s": [
+         null,
+         "%s verwalten"
+      ],
       "Nothing selected": [
          null,
          "Nichts ausgewählt"
@@ -4596,7 +4600,7 @@ window.i18n.locale_data = {
       ],
       "These mail templates are copied for a new inventory pool when it is created.": [
          null,
-         "Diese Mail-Templates werden für ein neues Gerätepark kopiert, wenn es erstellt wird."
+         "Diese Mail-Vorlagen werden für ein neues Gerätepark kopiert, wenn es erstellt wird."
       ],
       "User does not have access to inventory pool: %s": [
          null,
@@ -4701,6 +4705,30 @@ window.i18n.locale_data = {
       "Cover Image": [
          null,
          "Cover-Bild"
+      ],
+      "Roles for users and groups can be managed in the new %s.": [
+         null,
+         "Rollen für die Benutzer und die Gruppen können in der neuen %s verwaltet werden."
+      ],
+      "admin section of this inventory-pool": [
+         null,
+         "Admin-Section für dieses Gerätepark"
+      ],
+      "Groups": [
+         null,
+         "Gruppen"
+      ],
+      "Manage user roles via Groups.": [
+         null,
+         "Verwalte Benutzerrollen via Gruppen."
+      ],
+      "A Group contains several users. These users can gain a role by assigning the role to their Group.": [
+         null,
+         "Eine Gruppe enthält mehrere Benutzer. Diese Benutzer können eine Rolle kriegen, indem man ihrer Gruppe die entsprechende Rolle zuweist."
+      ],
+      "To allocate models to users use the %s.": [
+         null,
+         "Um Modelle den Benutzern zuzuteilen, verwende die %s."
       ]
    }
 }
