@@ -41,13 +41,30 @@ class Visit < ApplicationRecord
     sql = where(is_approved: true)
     return sql if query.blank?
 
-    # TODO: search on reservations' models and items
     query.split.each do |q|
       q = "%#{q}%"
-      sql = sql.where(User.arel_table[:login].matches(q)
-                      .or(User.arel_table[:firstname].matches(q))
-                      .or(User.arel_table[:lastname].matches(q))
-                      .or(User.arel_table[:badge_id].matches(q)))
+      sql = sql.where(
+        User.arel_table[:login].matches(q)
+        .or(User.arel_table[:firstname].matches(q))
+        .or(User.arel_table[:lastname].matches(q))
+        .or(User.arel_table[:badge_id].matches(q))
+        .or(Arel::Nodes::SqlLiteral.new(<<~SQL)
+          EXISTS (
+            SELECT true
+            FROM reservations
+            LEFT JOIN models ON models.id = reservations.model_id
+            LEFT JOIN options ON options.id = reservations.option_id
+            WHERE reservations.id = ANY (visits.reservation_ids)
+            AND (
+              coalesce(models.product, '') ||
+              coalesce(models.version, '') ||
+              coalesce(options.product, '') ||
+              coalesce(options.version, '')
+            ) ILIKE '#{q}'
+          )
+        SQL
+        )
+      )
     end
 
     sql.joins(:user)
