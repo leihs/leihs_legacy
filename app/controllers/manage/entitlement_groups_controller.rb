@@ -53,7 +53,7 @@ class Manage::EntitlementGroupsController < Manage::ApplicationController
     mapped_params.delete(:users)
     if @group.save and @group.update_attributes(mapped_params)
       redirect_to manage_inventory_pool_groups_path,
-                  flash: { success: _('%s created') % _('Group') }
+                  flash: { success: _('%s created') % _('Entitlement-Group') }
     else
       redirect_back fallback_location: root_path,
                     flash: { error: @group.errors.full_messages.uniq.join(', ') }
@@ -69,7 +69,7 @@ class Manage::EntitlementGroupsController < Manage::ApplicationController
     mapped_params.delete(:users)
     if @group.update_attributes(mapped_params)
       redirect_to manage_inventory_pool_groups_path,
-                  flash: { success: _('%s saved') % _('Group') }
+                  flash: { success: _('%s saved') % _('Entitlement-Group') }
     else
       render plain: @group.errors.full_messages.uniq.join(', '),
              status: :bad_request
@@ -83,7 +83,7 @@ class Manage::EntitlementGroupsController < Manage::ApplicationController
           @group.destroy
           redirect_to \
             manage_inventory_pool_groups_path,
-            flash: { success: _('%s successfully deleted') % _('Group') }
+            flash: { success: _('%s successfully deleted') % _('Entitlement-Group') }
         rescue ActiveRecord::DeleteRestrictionError => e
           @group.errors.add(:base, e)
           redirect_to \
