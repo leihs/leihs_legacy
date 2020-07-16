@@ -98,20 +98,35 @@ module Availability
                            end
 
         ######################### EXTEND END DATE #################################
-        # if overdue, extend end_date to today
-        # given a reservation is running until the 24th
-        # and maintenance period is 1 day:
-        # - if today is the 15th,
-        #   thus the item is available again from the 25th
-        # - if today is the 27th,
-        #   thus the item is available again from the 28th of next month
-        # - if today is the 29th of next month,
-        #   thus the item is available again from the 30th of next month
-        # the replacement_interval is 1 month
+        # If overdue, extend end_date to today.
+        #
+        # Given a reservation is running until the 24th and
+        # the maintenance period is 1 (working!) day and
+        # there are no holidays and the pool is open 7 days a week
+        # (which is not the case normally, but just to make it simpler):
+        #
+        # - If today is the 15th,
+        #   then the item is available again from the 26th of current month.
+        #   (25th is used for maintenance)
+        #
+        # - If today is the 27th,
+        #   then the item is available again from the 29th of next month.
+        #   (28th is used for maintenance)
+        #
+        # - If today is the 28th of next month,
+        #   then the item is available again from the 30th of next month.
+        #   (29th is used for maintenance)
+        #
+        # The replacement_interval is 1 month.
 
         unavailable_until = \
-          [(reservation.late? ? Time.zone.today + 1.month : reservation.end_date),
-           Time.zone.today].max + @model.maintenance_period.day
+          [
+            (reservation.late? ? Time.zone.today + 1.month : reservation.end_date),
+            Time.zone.today
+          ].max
+
+        unavailable_until = @model.being_maintained_until(@inventory_pool,
+                                                          unavailable_until)
 
         ###################### GROUP ALLOCATIONS ##################################
         inner_changes = \
