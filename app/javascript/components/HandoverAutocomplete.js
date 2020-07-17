@@ -144,8 +144,8 @@ export const HandoverAutocomplete = createReactClass({
 
     var inputProps = {
       type: 'text',
-      // TODO: id: 'assign-or-add-input'???
-      className: 'row',
+      className: 'row has-addone',
+      style: { position: 'absolute' },
       placeholder: props.placeholder
     }
 
