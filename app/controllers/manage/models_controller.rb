@@ -376,12 +376,18 @@ class Manage::ModelsController < Manage::ApplicationController
   end
 
   def handle_images!(model, model_attrs)
-    deal_with_destroy_nested_attributes!(model_attrs)
+    model.update_attributes!(cover_image_id: nil) unless model.new_record?
 
     if images_attrs = model_attrs[:images_attributes]
       image_id, spec = images_attrs.find { |_, spec| spec[:is_cover] }
-      model.cover_image_id = image_id
+
+      if image_id and spec[:_destroy] != '1'
+        model.cover_image_id = image_id
+      end
+
       images_attrs.each_pair { |_, spec| spec.delete(:is_cover) }
+
+      deal_with_destroy_nested_attributes!(model_attrs)
     end
   end
 end
