@@ -1,11 +1,16 @@
+#!/usr/bin/env bash
+
 set -eux
+
+FILE=${FILE:-tmp/db_production.pgbin}
+HOST=${HOST:-zhdk-leihs-prod-v5.ruby.zhdk.ch}
 
 # ansible-playbook -v -i ../zhdk-inventory/prod-hosts-v5 ../deploy/fetch-latest-dump_play.yml
 
 # raw fetch with scp via proxy:
-# scp -oProxyJump=root@ci-gw.zhdk.ch zhdk-leihs-prod-v5.ruby.zhdk.ch:/leihs/var/db-backups/latest.pgbin tmp/db_production.pgbin
+# scp -oProxyJump=root@ci-gw.zhdk.ch root@$HOST:/leihs/var/db-backups/latest.pgbin $FILE
 
 # raw fetch with rsync via proxy:
-rsync -LP -e 'ssh -AJ root@ci-gw.zhdk.ch' root@zhdk-leihs-prod-v5.ruby.zhdk.ch:/leihs/var/db-backups/latest.pgbin tmp/db_production.pgbin
+rsync -LP -e 'ssh -AJ root@ci-gw.zhdk.ch' root@$HOST:/leihs/var/db-backups/latest.pgbin $FILE
 
 ./bin/restore-prod-dump
