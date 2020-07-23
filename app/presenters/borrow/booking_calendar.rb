@@ -63,7 +63,7 @@ class Borrow::BookingCalendar < ApplicationPresenter
   end
 
   def visits_per_day
-    BookingCalendarVisitsQuery
+    ::QueryObjects::BookingCalendarVisits
       .new(inventory_pool_id: @inventory_pool.id,
            start_date: @start_date_string,
            end_date: @end_date_string)

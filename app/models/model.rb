@@ -271,9 +271,9 @@ class Model < ApplicationRecord
 
   def self.filter(params, subject = nil, category = nil, borrowable = false)
     models = if subject.is_a? User
-               filter_for_user params, subject, category, borrowable
+               filter_for_user(params, subject, category, borrowable)
              elsif subject.is_a? InventoryPool
-               filter_for_inventory_pool params, subject, category
+               filter_for_inventory_pool(params, subject, category)
              else
                Model.all
              end
@@ -304,17 +304,25 @@ class Model < ApplicationRecord
 
   def self.filter_for_user(params, user, category, borrowable = false)
     models = user.models
+    
     if category
-      models = models.from_category_and_all_its_descendants(category)
+      cat_ids = Category.find(category.id).self_and_descendants.map(&:id)
+      models = 
+        models
+        .joins('INNER JOIN model_links ON models.id = model_links.model_id')
+        .where(model_links: { model_group_id: cat_ids })
     end
+    
     if borrowable
       models = models.borrowable
     end
+    
     unless params[:inventory_pool_ids].blank?
       models = models.all_from_inventory_pools(
         user.inventory_pools.where(id: params[:inventory_pool_ids]).map(&:id)
       )
     end
+    
     models
   end
 

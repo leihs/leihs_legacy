@@ -46,16 +46,15 @@ class User < ApplicationRecord
   has_many :items, -> { distinct }, through: :inventory_pools
   has_many(:models, -> { distinct }, through: :inventory_pools) do
     def borrowable
-      joins(:items)
-        .where(items: { retired: nil, is_borrowable: true, parent_id: nil })
+      where(items: { retired: nil, is_borrowable: true, parent_id: nil })
         .joins("INNER JOIN (#{Entitlement.query}) AS pwg " \
                'ON models.id = pwg.model_id ' \
                'AND inventory_pools.id = pwg.inventory_pool_id ' \
                'AND pwg.quantity > 0 ' \
                'AND (pwg.entitlement_group_id IN ' \
-                 '(SELECT entitlement_group_id FROM entitlement_groups_users ' \
-                 "WHERE user_id = '#{proxy_association.owner.id}') " \
-                   'OR pwg.entitlement_group_id IS NULL)')
+               '(SELECT entitlement_group_id FROM entitlement_groups_users ' \
+               "WHERE user_id = '#{proxy_association.owner.id}') " \
+               'OR pwg.entitlement_group_id IS NULL)')
     end
   end
 

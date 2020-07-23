@@ -23,4 +23,11 @@ class Category < ModelGroup
     categories
   end
 
+  def children_with_reservable_models(user_id, parent_id)
+    qo =
+      ::QueryObjects::CategoryChildrenWithReservableItems
+      .new(user_id: user_id, parent_id: parent_id)
+    self.class.find_by_sql(qo.query)
+  end
+
 end

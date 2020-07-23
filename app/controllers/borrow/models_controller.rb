@@ -28,20 +28,20 @@ class Borrow::ModelsController < Borrow::ApplicationController
 
   def index
     @category = Category.find_by_id params[:category_id]
-    @models = Model.filter params, current_user, @category, true
+    @models = Model.filter(params, current_user, @category, true)
     set_pagination_header(@models)
+
     respond_to do |format|
       format.json
       format.html do
-        @child_categories = @category.children.select do |c|
-          @models.from_category_and_all_its_descendants(c).exists?
-        end
+        @child_categories =
+          @category.children_with_reservable_models(current_user.id,
+                                                    @category.id)
         @grand_children = {}
         @child_categories.each do |category|
-          @grand_children[category.id] = \
-            category.children.select do |c|
-              @models.from_category_and_all_its_descendants(c).exists?
-            end
+          @grand_children[category.id] =
+            category.children_with_reservable_models(current_user.id,
+                                                     category.id)
         end
         @inventory_pools = \
           current_user.inventory_pools.with_borrowable_items.order(:name)

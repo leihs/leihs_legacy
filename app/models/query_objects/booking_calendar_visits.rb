@@ -1,8 +1,7 @@
-class BookingCalendarVisitsQuery
+class QueryObjects::BookingCalendarVisits
   attr_reader :query
 
   def initialize(inventory_pool_id:, start_date:, end_date:)
-    # TODO: UUID check!!!
     @query = \
       <<-SQL
         WITH dates AS
@@ -28,7 +27,7 @@ class BookingCalendarVisitsQuery
                      reservations.user_id,
                      reservations.end_date
               FROM reservations
-              WHERE inventory_pool_id = '#{inventory_pool_id}'
+              WHERE inventory_pool_id = '#{UUIDTools::UUID.parse(inventory_pool_id)}'
                 AND status = 'signed'
                 AND end_date = dates.d
               GROUP BY user_id,
