@@ -24,17 +24,17 @@ Feature: Inactive inventory pools
     And there exists an inactive inventory pool
     When open the edit page for the item
     And I fill in the name of the inactive inventory pool for "Responsible department"
-    Then there is no autocomplete menu visible
+    Then there is the pool in the dropdown with the suffix 'inactive'
 
   @manage_inactive_inventory_pools
-  Scenario: Exclusion of inactive inventory pools in the autocomplete dropdown on inventory helper page
+  Scenario: Suffix of inactive inventory pools in the autocomplete dropdown on inventory helper page
     Given I am logged in as inventory manager
     And there is an item which is owned by the current inventory pool
     And there exists an inactive inventory pool
     When open the inventory helper page
     And choose the responsible department via field select box
     And I fill in the name of the inactive inventory pool for "Responsible department"
-    Then there is no autocomplete menu visible
+    Then there is the pool in the dropdown with the suffix 'inactive'
 
   @manage_inactive_inventory_pools
   Scenario: Exclusion of inactive inventory pools from inventory list

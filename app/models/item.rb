@@ -65,6 +65,17 @@ class Item < ApplicationRecord
   validate :validates_package, :validates_changes
   validates :retired_reason, presence: true, if: :retired?
 
+  validate do
+    if not (inventory_pool.is_active? and owner.is_active?)
+      if not retired?
+        errors.add(
+          :base,
+          _('Inactive pools cannot have items, which are not retired.')
+        )
+      end
+    end
+  end
+
   ####################################################################
 
   before_validation do
@@ -391,11 +402,12 @@ class Item < ApplicationRecord
 
   # overriding association setter
   def owner_with_params=(v)
-    self.owner_without_params = if v.is_a? Hash
-                                  InventoryPool.find(v[:id]) unless v[:id].blank?
-                                else
-                                  v
-                                end
+    self.owner_without_params = \
+      if v.is_a? Hash
+        InventoryPool.unscoped.find(v[:id]) unless v[:id].blank?
+      else
+        v
+      end
   end
 
   alias_method :owner_without_params=, :owner=
@@ -403,13 +415,14 @@ class Item < ApplicationRecord
 
   # overriding association setter
   def inventory_pool_with_params=(v)
-    self.inventory_pool_without_params = if v.is_a? Hash
-                                           unless v[:id].blank?
-                                             InventoryPool.find(v[:id])
-                                           end
-                                         else
-                                           v
-                                         end
+    self.inventory_pool_without_params = \
+      if v.is_a? Hash
+        unless v[:id].blank?
+          InventoryPool.unscoped.find(v[:id])
+        end
+      else
+        v
+      end
   end
 
   alias_method :inventory_pool_without_params=, :inventory_pool=

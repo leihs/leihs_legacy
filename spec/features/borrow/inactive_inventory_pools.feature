@@ -10,7 +10,7 @@ Feature: Inactive inventory pools
     And I have an access as customer to this inventory pool
     And this inventory pool has a borrowable item
     And there exists an inactive inventory pool
-    And the inactive inventory pool has a borrowable item
+    And the inactive inventory pool has a borrowable and retired item
     And I have an access as customer to the inactive inventory pool
     When I open inventory pools page
     Then I don't see the inactive inventory pool
@@ -24,7 +24,7 @@ Feature: Inactive inventory pools
     And the model of the item from the active pool belongs to the category
     And I have an access as customer to the active inventory pool
     And there exists an inactive inventory pool
-    And the inactive inventory pool has a borrowable item
+    And the inactive inventory pool has a borrowable and retired item
     And the model of the item from the inactive pool belongs to the category
     And I have an access as customer to the inactive inventory pool
     When I open the model list for the category
@@ -40,7 +40,7 @@ Feature: Inactive inventory pools
     And the model of the item from the active pool belongs to the category
     And I have an access as customer to the active inventory pool
     And there exists an inactive inventory pool
-    And the inactive inventory pool has a borrowable item
+    And the inactive inventory pool has a borrowable and retired item
     And the model of the item from the inactive pool belongs to the category
     And I have an access as customer to the inactive inventory pool
     When I open the model list for the category
@@ -55,7 +55,7 @@ Feature: Inactive inventory pools
     And the model of the item from the active pool belongs to the category
     And I have an access as customer to the active inventory pool
     And there exists an inactive inventory pool
-    And the inactive inventory pool has a borrowable item
+    And the inactive inventory pool has a borrowable and retired item
     And the model of the item from the inactive pool belongs to the category
     And I have an access as customer to the inactive inventory pool
     When I open the model list for the category

@@ -58,7 +58,14 @@ class Field < ApplicationRecord
   def values
     case data['values']
     when 'all_inventory_pools'
-      (InventoryPool.all.map { |x| { value: x.id, label: x.name } }).as_json
+      InventoryPool
+        .unscoped
+        .order(is_active: :desc, name: :asc)
+        .map do |ip|
+        inactive = " (#{_('inactive')})" unless ip.is_active?
+        { value: ip.id,
+          label: "#{ip.name}#{inactive}" }
+      end.as_json
     when 'all_buildings'
       Building.all.map { |x| { value: x.id, label: x.to_s } }.as_json
     when 'all_suppliers'

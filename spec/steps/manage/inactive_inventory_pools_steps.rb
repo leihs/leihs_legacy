@@ -45,11 +45,21 @@ module Manage
 
       step 'I fill in the name of the inactive inventory pool ' \
            'for "Responsible department"' do
-        find('#inventory_pool_id input').set @inactive_inventory_pool.name
+        within find('#inventory_pool_id input') do
+          current_scope.set ""
+          current_scope.set @inactive_inventory_pool.name
+        end
       end
 
       step 'there is no autocomplete menu visible' do
         expect(page).not_to have_selector '.ui-autocomplete'
+      end
+
+      step "there is the pool in the dropdown with the suffix 'inactive'" do
+        within '.ui-autocomplete' do
+          expect(current_scope).to have_content \
+            "#{@inactive_inventory_pool.name} (#{_('inactive')})"
+        end
       end
 
       step 'there is a retired item which is owned by the the current pool ' \

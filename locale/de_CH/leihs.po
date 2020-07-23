@@ -3655,3 +3655,6 @@ msgstr "Alle Öffnen"
 
 msgid "Close All"
 msgstr "Alle Schliessen"
+
+msgid "Inactive pools cannot have items, which are not retired."
+msgstr "Deaktivierte Geräteparks dürfen keine Gegenstände haben, die nicht ausgemustert sind."

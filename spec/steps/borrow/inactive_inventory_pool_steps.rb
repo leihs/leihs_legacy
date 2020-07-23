@@ -39,10 +39,12 @@ module Borrow
         @category.models << @item_from_inactive.model
       end
 
-      step 'the inactive inventory pool has a borrowable item' do
+      step 'the inactive inventory pool has a borrowable and retired item' do
         @item_from_inactive = \
           FactoryGirl.create(:item,
                              owner: @inactive_inventory_pool,
+                             retired: Date.today,
+                             retired_reason: Faker::Lorem.sentence,
                              is_borrowable: true)
       end
 

@@ -4737,6 +4737,10 @@ window.i18n.locale_data = {
       "Close All": [
          null,
          "Alle Schliessen"
+      ],
+      "Inactive pools cannot have items, which are not retired.": [
+         null,
+         "Deaktivierte Geräteparks dürfen keine Gegenstände haben, die nicht ausgemustert sind."
       ]
    }
 }

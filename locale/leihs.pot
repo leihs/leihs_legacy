@@ -3510,3 +3510,6 @@ msgstr ""
 
 msgid "Close All"
 msgstr ""
+
+msgid "Inactive pools cannot have items, which are not retired."
+msgstr ""
