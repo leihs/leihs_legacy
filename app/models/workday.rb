@@ -32,6 +32,20 @@ class Workday < ApplicationRecord
     end
   end
 
+  def previous_open_date(date = Time.zone.today)
+    unless closed_days.size == 7
+      until open_on?(date -= 1.day); end
+      date
+    end
+  end
+
+  def next_open_date(date = Time.zone.today)
+    unless closed_days.size == 7
+      until open_on?(date += 1.day); end
+      date
+    end
+  end
+
   def closed_days
     days = []
     days << 0 unless sunday
