@@ -77,17 +77,7 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
   end
 
   def workload(date = params[:date].try { |x| Date.parse(x) })
-    today_and_next_4_days = [date]
-
-    workday = current_inventory_pool.workday
-    next_day = date + 1.day
-
-    until today_and_next_4_days.size == 5 do
-      if workday.open_on?(next_day)
-        today_and_next_4_days << next_day
-      end
-      next_day += 1.day
-    end
+    today_and_next_4_days = (0..4).map { |n| date + n.days }
 
     grouped_visits = \
       current_inventory_pool

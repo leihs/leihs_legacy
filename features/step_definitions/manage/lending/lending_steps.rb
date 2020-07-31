@@ -492,8 +492,11 @@ When(/^I open a take back that contains options$/) do
 end
 
 When(/^I manually change the number of options to return$/) do
+  sleep 1
   @option_line = find(".line[data-line-type='option_line']", match: :first)
-  @option_line.find('[data-quantity-returned]').set 1
+  input = @option_line.find('[data-quantity-returned]')
+  input.set(1)
+  expect(input.value).to eq "1"
 end
 
 Then(/^the option is selected and the box is checked$/) do

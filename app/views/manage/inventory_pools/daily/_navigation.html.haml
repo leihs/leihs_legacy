@@ -1,8 +1,6 @@
 :ruby
-
-  wd = current_inventory_pool.workday
-  prev_open_date = wd.previous_open_date(@date)
-  next_open_date = wd.next_open_date(@date)
+  prev_open_date = @date - 1.day
+  next_open_date = @date + 1.day
 
 %a.button.white{:title => _("go to today"),
 :href =>  manage_daily_view_path(current_inventory_pool, :tab => params[:tab])}
