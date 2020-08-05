@@ -1,11 +1,15 @@
 class Borrow::ModelsController < Borrow::ApplicationController
 
   def availability
-    models = current_user.models.borrowable.where(id: params[:model_ids])
+    user = user_from_params || current_user
+
+    models = user.models.borrowable.where(id: params[:model_ids])
     start_date = Date.parse(params[:start_date])
     end_date = Date.parse(params[:end_date])
+
     inventory_pools = \
-      current_user.inventory_pools.where(id: params[:inventory_pool_ids])
+      user.inventory_pools.where(id: params[:inventory_pool_ids])
+
     @availability = models.map do |model|
       inventory_pools.map do |ip|
         {
@@ -18,7 +22,7 @@ class Borrow::ModelsController < Borrow::ApplicationController
                 exclude_reservations: exclude_reservation_ids_param
               )
               .maximum_available_in_period_summed_for_groups(
-                start_date, end_date, current_user.entitlement_groups.map(&:id)
+                start_date, end_date, user.entitlement_groups.map(&:id)
               )
         }
       end

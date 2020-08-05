@@ -57,4 +57,17 @@ class Borrow::ApplicationController < ApplicationController
     @bread_crumbs = BreadCrumbs.new params.delete('_bc')
   end
 
+  def user_from_params
+    if params[:user_id] && params_user = User.find(params[:user_id])
+      if params_user == user_session.user or
+          params_user == user_session.delegation or
+          (params_user.delegation? and
+           params_user.delegated_users.include?(user_session.user))
+        params_user
+      else
+        raise 'User ID not authorized!'
+      end
+    end
+  end
+
 end
