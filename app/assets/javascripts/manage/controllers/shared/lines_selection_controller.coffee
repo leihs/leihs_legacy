@@ -1,9 +1,9 @@
 ###
 
   Selected Lines
- 
+
   This script sets up functionalities for selection based functionalities for multiple reservations.
-  
+
 ###
 
 class window.App.LineSelectionController extends Spine.Controller
@@ -79,10 +79,12 @@ class window.App.LineSelectionController extends Spine.Controller
     do @storeIds
 
   enable: =>
-    for button in $(".button[data-selection-enabled]")
+    $(".multibutton[data-selection-multibutton]").attr("disabled", false)
+    for button in $(".button[data-selection-enabled], .multibutton[data-selection-enabled]")
       App.Button.enable $(button)
 
   disable: =>
+    $(".multibutton[data-selection-multibutton]").attr("disabled", true)
     for button in $(".button[data-selection-enabled]")
       App.Button.disable $(button)
 
