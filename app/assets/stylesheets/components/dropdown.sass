@@ -44,6 +44,10 @@
   @include border-radius($border-radius-m)
   @extend .focus-hover-thin
 
+  &[disabled]
+    pointer-events: none
+    opacity: 0.6
+
   &:not([class*='text-align'])
     text-align: left
 
