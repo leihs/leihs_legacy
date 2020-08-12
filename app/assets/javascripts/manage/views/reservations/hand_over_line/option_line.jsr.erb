@@ -21,8 +21,14 @@
   <div class='col1of10 line-col text-align-center'>
     {{if order()}}
     <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>order().purpose}}'>
+      <i class='fa fa-comment'></i>
+    </div>
+    {{else}}
+    {{if line_purpose}}
+    <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>line_purpose}}'>
       <i class='fa fa-comment grey'></i>
     </div>
+    {{/if}}
     {{/if}}
   </div>
   <div class='col1of10 line-col text-align-center'>

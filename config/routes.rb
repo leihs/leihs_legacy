@@ -172,6 +172,7 @@ Rails.application.routes.draw do
       delete  "reservations",                        to: "reservations#destroy"
       post    "reservations/swap_user",              to: "reservations#swap_user"
       post    "reservations/swap_model",             to: "reservations#swap_model"
+      post    "reservations/edit_purpose",           to: "reservations#edit_purpose"
       post    "reservations/assign_or_create",       to: "reservations#assign_or_create"
       post    "reservations/change_time_range",      to: "reservations#change_time_range"
       post    "reservations/for_template",           to: "reservations#create_for_template"

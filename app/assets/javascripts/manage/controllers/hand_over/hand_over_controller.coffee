@@ -7,14 +7,18 @@ class window.App.HandOverController extends Spine.Controller
   events:
     "click [data-hand-over-selection]": "handOver"
     "click #swap-user": "swapUser"
+    "click #edit-reservation-purpose": "editPurpose"
 
   constructor: ->
     super
     @lineSelection = new App.LineSelectionController {el: @el, markVisitLinesController: new App.MarkVisitLinesController {el: @el}}
+    @lineSelection.el.on "change", => @onSelectionChange(@getSelectedReservations())
+
     @fetchFunctionsSetup
       "Model": "Item"
       "Software": "License"
     do @initalFetch
+
     new App.SwapModelController {el: @el, user: @user}
     new App.ReservationsDestroyController {el: @el}
     new App.ReservationAssignItemController {el: @el}
@@ -36,6 +40,17 @@ class window.App.HandOverController extends Spine.Controller
         $.when(fi, fl).done => @render(@initialAvailabilityFetched?)
       else
         @render(@initialAvailabilityFetched?)
+
+  getSelectedReservations: =>
+    (App.Reservation.find id for id in App.LineSelectionController.selected)
+
+  onSelectionChange: (selected) =>
+    $menuItem = $("#edit-reservation-purpose")
+    allSelectedsHaveNoPurpose = _.all(selected, (r) => not r.order?().purpose)
+    if allSelectedsHaveNoPurpose
+      $menuItem.attr('disabled', false)
+    else
+      $menuItem.attr('disabled', true)
 
   initalFetch: =>
     if @getLines().length
@@ -87,12 +102,15 @@ class window.App.HandOverController extends Spine.Controller
     do @lineSelection.restore
 
   handOver: =>
+    reservations = @getSelectedReservations()
+    linePurposes = _.uniq(_.map(reservations, 'line_purpose').filter(Boolean))
     if @validate()
       HandOverDialogUtil.loadHandOverDialogData({
         user: @user,
-        reservations: (App.Reservation.find id for id in App.LineSelectionController.selected),
+        reservations: reservations,
       }, (reservations, purpose) =>
-        new App.HandOverDialogController(reservations, @user, purpose)
+        combinedPurposes = [purpose].concat(linePurposes).filter(Boolean).join('; ')
+        new App.HandOverDialogController(reservations, @user, combinedPurposes)
       )
     else
       App.Flash
@@ -100,13 +118,16 @@ class window.App.HandOverController extends Spine.Controller
         message: _jed('End Date cannot be in the past')
 
   swapUser: =>
-    reservations = (App.Reservation.find id for id in App.LineSelectionController.selected)
     new App.SwapUsersController
-      reservations: reservations
+      reservations: @getSelectedReservations()
+      user: @user
+
+  editPurpose: =>
+    new App.HandOversEditPurposeController
+      reservations: @getSelectedReservations()
       user: @user
 
   validate: =>
-    reservations = (App.Reservation.find id for id in App.LineSelectionController.selected)
-    _.all reservations, (line)->
+    _.all @getSelectedReservations(), (line)->
       # checking if end_date are in the past
       not moment(line.end_date).isBefore(moment().format("YYYY-MM-DD"))

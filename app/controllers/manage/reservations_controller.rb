@@ -288,6 +288,21 @@ class Manage::ReservationsController < Manage::ApplicationController
     end
   end
 
+  def edit_purpose
+    reservations = current_inventory_pool.reservations.where(id: params.require(:line_ids))
+    new_purpose =  params.require(:purpose).strip
+    ApplicationRecord.transaction do
+      reservations.each do |line|
+        line.update_attributes(line_purpose: new_purpose)
+      end
+    end
+    if reservations.all?(&:valid?)
+      render json: reservations
+    else
+      head :bad_request
+    end
+  end
+
   def print
     @reservations = current_inventory_pool.reservations.where(id: params[:ids])
     @user = @reservations.first.user
