@@ -2,17 +2,14 @@
   display: inline-block
   position: relative
 
-  &>.button:not(.dropdown-toggle)
-    padding-right: 8px
+  &>.button:not(.dropdown-toggle):not([disabled])
     @include border-right-radius(0)
 
-  &[disabled]
-    pointer-events: none
-    .dropdown-toggle
-      opacity: 0.6
+  &[disabled] .dropdown-toggle
+    display: none
 
   .button.dropdown-toggle
-    margin-left: -4px
+    margin-left: -6px
     @include border-left-radius(0)
 
     .arrow
