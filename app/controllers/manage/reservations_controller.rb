@@ -290,7 +290,7 @@ class Manage::ReservationsController < Manage::ApplicationController
 
   def edit_purpose
     reservations = current_inventory_pool.reservations.where(id: params.require(:line_ids))
-    new_purpose =  params.require(:purpose).strip
+    new_purpose =  params.permit(:purpose)[:purpose].strip.presence
     ApplicationRecord.transaction do
       reservations.each do |line|
         line.update_attributes(line_purpose: new_purpose)
