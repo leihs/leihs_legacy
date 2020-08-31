@@ -4,7 +4,7 @@ set -e
 
 FILE=${FILE:-tmp/db_production.pgbin}
 RAILS_ENV=development
-bundle exec rake db:environment:set
+# bundle exec rake db:environment:set
 DBCONFIG=$(bundle exec rails runner "print(Rails.configuration.database_configuration[Rails.env].to_json) & STDOUT.flush")
 PGDATABASE=$(echo $DBCONFIG | jq -r .database)
 PGPORT=$(echo $DBCONFIG | jq -r .port)
@@ -23,7 +23,7 @@ psql -c "DROP DATABASE IF EXISTS $PGDATABASE"
 psql -c "CREATE DATABASE $PGDATABASE"
 # this is required to restore dumps from PG <= 10 into PG >= 11
 # TODO it might cause problems on dups from PG >= 11
-psql -d $PGDATABASE -c "DROP SCHEMA IF EXISTS \"public\";"
+# psql -d $PGDATABASE -c "DROP SCHEMA IF EXISTS \"public\";"
 pg_restore --disable-triggers -j $J -x -O -d $PGDATABASE $FILE
 bundle exec rake db:migrate
 psql -d $PGDATABASE -c "UPDATE settings SET external_base_url = 'http://localhost:3000'"
