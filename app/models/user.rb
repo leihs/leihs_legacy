@@ -221,14 +221,14 @@ class User < ApplicationRecord
 
   def email
     if delegation?
-      delegator_user.email
+      delegator_user.email.presence
     else
-      read_attribute(:email)
+      read_attribute(:email).presence
     end
   end
 
   def alternative_email
-    extended_info['email_alt'] if extended_info
+    secondary_email.presence
   end
 
   def emails
