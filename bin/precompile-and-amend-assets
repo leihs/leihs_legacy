@@ -2,15 +2,6 @@
 set -exu
 
 # precompiles and ammends assets for the last commit (HEAD)
-# without any arguments it does a full reset to always work
-# `--no-reset` arg can be given to no to a reset
-# (usefull when delivering more than 1 commit, only the first needs reset)
-
-# args
-DO_RESET=$(test "${1:-""}" == "--no-reset" || echo 1)
-
-# submodules to handle
-SUBS="node_modules public/assets"
 
 # sanity check: correct repo?
 {
@@ -26,18 +17,12 @@ BRANCH="$(git rev-parse --abbrev-ref HEAD)"
 } && { echo 'ERROR! must be on a working branch!' && exit 1 ;}
 
 # clean state for assets/modules
-test $DO_RESET && {
-  rm -rf public/assets/{bundles,_rails_locales}
-  for SUB in $SUBS ; do
-    git submodule init "$SUB"
-    cd "$SUB"
-    git fetch
-    git reset --hard origin/master
-    git clean -fX -fd
-    git checkout -B "$BRANCH"
-    cd -
-  done
-}
+git submodule update --init --force "public/assets"
+cd "public/assets"
+git fetch -q
+git reset --hard origin/master
+git checkout -B "$BRANCH"
+cd -
 
 # NOTE: this is all handled by just `yarn`
 # make sure node_modules are installed (yarn does it too but is faster when prepared)
@@ -48,13 +33,11 @@ test $DO_RESET && {
 ./bin/recompile-assets
 
 # commit & push assets/modules
-for SUB in $SUBS; do
-  cd "$SUB"
-  git add --all
-  git commit -m "${MSG}" && git push -f -u origin "+HEAD:refs/heads/${BRANCH}" || true
-  cd -
-done
+cd "public/assets"
+git add --all
+git commit -m "${MSG}" && git push -f -u origin "+HEAD:refs/heads/${BRANCH}" || true
+cd -
 
 # ammend assets/modules refs to last commit:
-git add $SUBS
+git add "public/assets"
 git commit --amend --no-edit
