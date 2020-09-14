@@ -26,14 +26,14 @@ class BarcodeScanner
       regexp: regexp
       callback: callback
 
-  execute: =>
+  execute: (givenCode)=>
     # HACK: support react inputs, need ref to element not DOM node
     target = if window.reactBarcodeScannerTarget
       window.reactBarcodeScannerTarget
     else
       $("[data-barcode-scanner-target]:last")
 
-    code = @buffer
+    code = givenCode || @buffer
     action = @getAction code
     if action?
       action.callback.apply target, @getArguments(code, action)
@@ -75,6 +75,12 @@ class BarcodeScanner
       input.closest("form").find("[data-barcode-scanner-submit-button]").click()
     else if not input.closest("[data-prevent-barcode-scanner-submit]").length
       input.closest("form").submit()
+
+  simulateScan: (str)=>
+    unless _.isString(str) and not _.isEmpty(str)
+      throw new Error("`simulateScan` needs to be called with a string!")
+    @buffer = null
+    @execute(str)
 
 window.BarcodeScanner = new BarcodeScanner()
 
