@@ -4,11 +4,15 @@ if [ -z ${RAILS_ENV-} ]; then
   export RAILS_ENV=test
 fi
 
+FILE_PATH=features/personas/demo.pgbin
+
 export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
 
+bundle exec rake db:environment:set
 bundle exec rake db:pg:terminate_connections
 bundle exec rake db:drop db:create
-bundle exec rake db:pg:structure_and_data:restore FILE=features/personas/demo.pgbin
+git checkout origin/master -- $FILE_PATH
+bundle exec rake db:pg:structure_and_data:restore FILE=$FILE_PATH
 bundle exec rake db:migrate
 bundle exec rake db:environment:set
-bundle exec rake db:pg:structure_and_data:dump FILE=features/personas/demo.pgbin
+bundle exec rake db:pg:structure_and_data:dump FILE=$FILE_PATH

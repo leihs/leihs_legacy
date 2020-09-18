@@ -13,7 +13,7 @@ module TimelineAvailability
         	reservations
         where
         	reservations.inventory_pool_id = '#{inventory_pool_id}'
-        	and status not in ('rejected', 'closed')
+        	and status not in ('draft', 'rejected', 'closed')
           and model_id = '#{model_id}'
           and reservations.type = 'ItemLine'
           and not (

@@ -23,7 +23,13 @@ class Reservation < ApplicationRecord
 
   #########################################################################
 
-  STATUSES = [:unsubmitted, :submitted, :rejected, :approved, :signed, :closed]
+  STATUSES = [:draft,
+              :unsubmitted,
+              :submitted,
+              :rejected,
+              :approved,
+              :signed,
+              :closed]
 
   def status
     read_attribute(:status).to_sym

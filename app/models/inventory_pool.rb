@@ -125,7 +125,7 @@ class InventoryPool < ApplicationRecord
      ) AS user_group_ids
     SQL
      .where(<<-SQL)
-       status NOT IN ('rejected', 'closed')
+       status NOT IN ('draft', 'rejected', 'closed')
        AND NOT (
          status = 'unsubmitted' AND
          updated_at < '#{Time.now.utc - Setting.first.timeout_minutes.minutes}'
