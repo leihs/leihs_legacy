@@ -14,3 +14,4 @@ class window.App.HandOversDeleteController extends Spine.Controller
       success: (response) =>
         button = trigger.closest(".line-actions")
         button.html App.Render "manage/views/hand_overs/deleted"
+

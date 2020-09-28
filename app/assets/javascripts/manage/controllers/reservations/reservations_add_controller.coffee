@@ -168,7 +168,7 @@ class window.App.ReservationsAddController extends Spine.Controller
     else if record instanceof App.Template
       @addTemplate record, startDate, endDate
     App.Reservation.trigger "refresh"
-    App.Order.trigger "refresh"
+    # App.Order.trigger "refresh"
 
   addModel: (model, startDate, endDate, inventoryCode)=>
     if @addModelForHandOver and inventoryCode

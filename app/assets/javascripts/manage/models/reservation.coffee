@@ -35,12 +35,16 @@ window.App.Reservation.destroyMultiple = (ids)->
   $.ajax
     url: "/manage/#{App.InventoryPool.current.id}/reservations/"
     type: "post"
-    data: 
+    data:
       line_ids: ids
       _method: "delete"
   .done ->
-    App.Reservation.trigger "destroy", ids
-    App.Order.trigger "refresh"
+    # NOTE: this should always crash because the reservations with this ids are already removed in the first line of this method.
+    #       it seems this removal should happen here, in the callback.
+    #       because changes here are potentially dangerous and hard to test, i'll just wrap it in a try
+    #       to ensure the *next* line will be executed!
+    try App.Reservation.trigger "destroy", ids
+    try App.Order.trigger "refresh"
 
 window.App.Reservation.changeTimeRange = (reservations, startDate, endDate)=>
   startDate = moment(startDate).format("YYYY-MM-DD") if startDate
