@@ -30,8 +30,12 @@ class window.App.HandOverController extends Spine.Controller
 
   delegateEvents: =>
     super
-    App.Reservation.on "change destroy refresh", (data)=>
+    App.Order.on "change refresh", (data)=>
       if data?.option_id? then @render(true) else do @fetchAvailability
+
+    # NOTE: deleting a line is the the only operation where refresh of complete order is needed
+    App.Reservation.on "destroy", (data)=>
+      @render(true)
 
     App.Reservation.on "update", (data)=>
       fi = @fetchItems() if @notFetchedItemIds().length
