@@ -25,7 +25,8 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
     ApplicationRecord.transaction do
       begin
         customer_order = CustomerOrder.create!(user: current_user,
-                                               purpose: purpose_param)
+                                               purpose: purpose_param,
+                                               title: purpose_param)
         current_user
           .reservations
           .unsubmitted

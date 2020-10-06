@@ -235,10 +235,8 @@ class Manage::ReservationsController < Manage::ApplicationController
         orders = reservations.map(&:order).compact.uniq
 
         if orders.presence
-          customer_order = CustomerOrder.create!(
-            user: user,
-            purpose: orders.map(&:purpose).join('; ')
-          )
+          p = orders.map(&:purpose).join('; ')
+          customer_order = CustomerOrder.create!(user: user, purpose: p, title: p)
         end
 
         reservations.group_by(&:order).each_pair do |order, lines|

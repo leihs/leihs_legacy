@@ -68,6 +68,7 @@ Feature: Take back
     When I open a take back for this user
     Then the take backs are ordered by date in ascending order
 
+  @flapping
   Scenario: Treating options with multiple time windows
     Given there is a user with an option to return in two different time windows
     And I open a take back for this user
