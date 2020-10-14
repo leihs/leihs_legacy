@@ -51,19 +51,19 @@
 
           .col1of2.padding-left-xs
 
-            #users.row.emboss.margin-bottom-xxs
-              .row.padding-inset-s
-                .col1of2
-                  %strong.font-size-m= _("Users")
-                .col1of2.text-align-right
-                  .row
-                    %input{type: "text", placeholder: _("Name of the user"), :"data-search-users" => true, autocomplete: :off}
-                    %label.addon.small.transparent.padding-right-s
-                      .arrow.down
+            #users.row.margin-bottom-xxs
 
-              .row.list-of-lines.even{:"data-users-list" => true}
+              %h2
+                Users
 
-                = render :partial => "manage/templates/user_inline_entry", :collection => @group.users.sort{|u1, u2| u1.name <=> u2.name}, :as => :user, locals: { ref_name: "group" }
+              %a{href: "/admin/inventory-pools/#{@group.inventory_pool.id}/entitlement-groups/#{@group.id}/users/"}
+                Manage users
+              and
+              %a{href: "/admin/inventory-pools/#{@group.inventory_pool.id}/entitlement-groups/#{@group.id}/groups/"}
+                manage groups
+              in the new
+              %a{href: "/admin/inventory-pools/#{@group.inventory_pool.id}/entitlement-groups/#{@group.id}"}
+                admin interface of this entitlement-group.
 
 :coffeescript
 

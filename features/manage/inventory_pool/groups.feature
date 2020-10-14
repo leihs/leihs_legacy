@@ -19,19 +19,17 @@ Feature: Groups
     And I save
     Then the group is saved
     And the group requires verification
-
-    And the group has users as well as models and their capacities
+    And the group has models and their capacities
 
   Scenario: Mark a group as requiring verification
     When I edit an existing non verifiable group
     And I select 'Verification required'
     And I change the group's name
-    And I add and remove users from the group
     And I add and remove models and their capacities from the group
     And I save
     Then the group is saved
     And the group requires verification
-    And the group has users as well as models and their capacities
+    And the group has models and their capacities
     Then I am listing groups
     And I receive a notification of success
 
@@ -39,12 +37,11 @@ Feature: Groups
     When I edit an existing verifiable group
     And I deselect 'Verification required'
     And I change the group's name
-    And I add and remove users from the group
     And I add and remove models and their capacities from the group
     And I save
     Then the group is saved
     And the group doesn't require verification
-    And the group has users as well as models and their capacities
+    And the group has models and their capacities
     Then I am listing groups
     And I receive a notification of success
 
@@ -57,11 +54,6 @@ Feature: Groups
   Scenario: Deleting groups
     When I delete a group
     And the group has been deleted from the database
-
-  Scenario: Adding users
-    When I edit an existing group
-    And I add one user to the group
-    Then the user is added to the top of the list
 
   Scenario: Adding models
     When I edit an existing group
@@ -80,12 +72,6 @@ Feature: Groups
     And the already existing model slides to the top of the list
     And the already existing model keeps whatever capacity was set for it
 
-  Scenario: Adding already existing users
-    When I edit an existing group
-    And I add a user that is already present in the group
-    Then the already existing user is not added
-    Then the already existing user slides to the top of the list
-
   @rack
   Scenario: Sorting the group list
     When I am listing groups
@@ -99,5 +85,5 @@ Feature: Groups
     And I save
     Then the group is saved
     And I receive a notification of success
-    And the group has users as well as models and their capacities
+    And the group has models and their capacities
     When I am listing groups

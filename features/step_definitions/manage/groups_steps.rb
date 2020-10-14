@@ -72,8 +72,8 @@ Then(/^the group is saved$/) do
   expect(@group).not_to be_nil
 end
 
-Then(/^the group has users as well as models and their capacities$/) do
-  expect(@group.users.reload.map(&:id).sort).to eq @users.map(&:id).sort
+Then(/^the group has models and their capacities$/) do
+  # expect(@group.users.reload.map(&:id).sort).to eq @users.map(&:id).sort
   expect(Set.new(@group.entitlements.map{|p| {model_id: p.model_id, quantity: p.quantity}})).to eq Set.new(@partitions)
 end
 
