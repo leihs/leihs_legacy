@@ -30,4 +30,20 @@ class Category < ModelGroup
     self.class.find_by_sql(qo.query)
   end
 
+  def self.parents_of_multiple(cats)
+    joins('INNER JOIN model_group_links ' \
+          'ON model_groups.id = model_group_links.parent_id')
+      .where(model_group_links: \
+             { child_id: cats.pluck(:id) })
+      .distinct
+  end
+
+  def self.ancestors_of_multiple(cats, result = [])
+    pars = parents_of_multiple(cats)
+    if pars.empty?
+      result
+    else
+      ancestors_of_multiple(pars, result.concat(pars).uniq)
+    end
+  end
 end

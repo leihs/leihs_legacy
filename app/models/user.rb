@@ -74,15 +74,7 @@ class User < ApplicationRecord
 
   def all_categories
     borrowable_categories = categories.with_borrowable_items
-
-    ancestors = \
-      Category \
-        .joins('INNER JOIN model_group_links ' \
-               'ON model_groups.id = model_group_links.parent_id')
-        .where(model_group_links: \
-                 { child_id: borrowable_categories.pluck(:id) })
-        .distinct
-
+    ancestors = Category.ancestors_of_multiple(borrowable_categories)
     [borrowable_categories, ancestors].flatten.uniq
   end
 
