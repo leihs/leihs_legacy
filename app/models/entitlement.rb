@@ -85,6 +85,10 @@ class Entitlement < ApplicationRecord
   def entitled_quantity_in_other_groups
     qty = \
       Entitlement
+      .joins(:entitlement_group)
+      .where(entitlement_groups: {
+        inventory_pool_id: entitlement_group.inventory_pool.id
+      })
       .where(model_id: model.id)
       .where.not(id: id)
       .map(&:quantity)
