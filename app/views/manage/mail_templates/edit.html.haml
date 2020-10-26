@@ -46,8 +46,8 @@
                 .col1of5
                   %strong.font-size-m= _("Language")
                 .col4of5
-                  %input.width-full{type: :hidden, name: "mail_templates[][language]", value: mail_template.language.locale_name}
-                  .font-size-m= "%s (%s)" % [mail_template.language.name, mail_template.language.locale_name]
+                  %input.width-full{type: :hidden, name: "mail_templates[][language]", value: mail_template.language.locale}
+                  .font-size-m= "%s (%s)" % [mail_template.language.name, mail_template.language.locale]
               .row.emboss.padding-inset-s
                 .col1of5
                   %strong.font-size-m= _("Format")

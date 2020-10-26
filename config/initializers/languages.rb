@@ -7,7 +7,7 @@ if ApplicationRecord.connection.tables.include?("languages") and not Rails.env.t
      ['Deutsch', 'de-CH', false, true],
      ['Züritüütsch','gsw-CH', false, true]].each do |lang|
        Language.create!(name: lang[0],
-                        locale_name: lang[1],
+                        locale: lang[1],
                         default: lang[2],
                         active: lang[3])
      end

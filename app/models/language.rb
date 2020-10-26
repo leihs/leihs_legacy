@@ -23,14 +23,14 @@ class Language < ApplicationRecord
     return default if accepted_languages.blank?
 
     possible_languages = \
-      active_languages.map { |x| x.locale_name.match(/\w{2}/).to_s }
+      active_languages.map { |x| x.locale.match(/\w{2}/).to_s }
     preferred_languages = accepted_languages & possible_languages
 
     return default if preferred_languages.blank?
 
     preferred_language = \
       active_languages
-        .detect { |x| !(x.locale_name =~ /^#{preferred_languages.first}/).nil? }
+        .detect { |x| !(x.locale=~ /^#{preferred_languages.first}/).nil? }
 
     preferred_language
   end

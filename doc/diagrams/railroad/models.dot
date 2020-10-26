@@ -19,7 +19,7 @@ digraph models_diagram {
 	"InventoryPool" [shape=Mrecord, label="{InventoryPool|name :string\ldescription :text\lcontact_details :string\lcontract_description :string\lcontract_url :string\llogo_url :string\ldefault_contract_note :text\lshortname :string\lemail :string\lcolor :text\ldelta :boolean\l}"]
 	"Item" [shape=Mrecord, label="{Item|inventory_code :string\lserial_number :string\lrequired_level :integer\linvoice_number :string\linvoice_date :date\llast_check :date\lretired :date\lretired_reason :string\lprice :decimal\lis_broken :boolean\lis_incomplete :boolean\lis_borrowable :boolean\lcreated_at :datetime\lupdated_at :datetime\lneeds_permission :boolean\lis_inventory_relevant :boolean\lresponsible :string\linsurance_number :string\lnote :text\lname :text\ldelta :boolean\l}"]
 	"ItemLine" [shape=Mrecord, label="{ItemLine|quantity :integer\lstart_date :date\lend_date :date\lreturned_date :date\lcreated_at :datetime\lupdated_at :datetime\l}"]
-	"Language" [shape=Mrecord, label="{Language|name :string\llocale_name :string\ldefault :boolean\lactive :boolean\l}"]
+	"Language" [shape=Mrecord, label="{Language|name :string\llocale :string\ldefault :boolean\lactive :boolean\l}"]
 	"Location" [shape=Mrecord, label="{Location|room :string\lshelf :string\ldelta :boolean\l}"]
 	"Model" [shape=Mrecord, label="{Model|name :string\lmanufacturer :string\ldescription :string\linternal_description :string\linfo_url :string\lrental_price :decimal\lmaintenance_period :integer\lis_package :boolean\lcreated_at :datetime\lupdated_at :datetime\ltechnical_detail :string\ldelta :boolean\l}"]
 	"ModelGroup" [shape=Mrecord, label="{ModelGroup|name :string\lcreated_at :datetime\lupdated_at :datetime\ldelta :boolean\l}"]

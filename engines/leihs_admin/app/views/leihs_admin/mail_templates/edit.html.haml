@@ -39,8 +39,8 @@
         .col-sm-3
           %strong= _("Language")
         .col-sm-9
-          %input.form-control{type: :hidden, name: "mail_templates[][language]", value: mail_template.language.locale_name}
-          = "%s (%s)" % [mail_template.language.name, mail_template.language.locale_name]
+          %input.form-control{type: :hidden, name: "mail_templates[][language]", value: mail_template.language.locale}
+          = "%s (%s)" % [mail_template.language.name, mail_template.language.locale]
       .row
         .col-sm-3
           %strong= _("Format")

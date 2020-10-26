@@ -121,7 +121,7 @@ Then /^I scan or enter the inventory code( of an item belonging to the current i
 end
 
 Then /^I see all the values of the item in an overview with model name and the modified values are already saved$/ do
-  FastGettext.locale = @current_user.language.locale_name.gsub(/-/, '_')
+  FastGettext.locale = @current_user.language.locale.gsub(/-/, '_')
   Field.all.each do |field|
     next if all(".field[data-id='#{field.id}']").empty?
     within('#flexible-fields') do

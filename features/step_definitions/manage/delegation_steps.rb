@@ -429,7 +429,7 @@ Then(/^no orders can be created for this delegation in the current inventory poo
   find('.dropdown-holder', text: @current_user.lastname).click
   find(".dropdown-item[href*='delegations']").click
   find('.row.line', text: @delegation.name).click_link _('Switch to')
-  FastGettext.set_locale @delegation.language.locale_name # switch the locale in order to translate properly in the next step
+  FastGettext.set_locale @delegation.language.locale # switch the locale in order to translate properly in the next step
   find('.topbar-item', text: _('Inventory Pools')).click
   expect(has_no_content?(@ip_name)).to be true
 end

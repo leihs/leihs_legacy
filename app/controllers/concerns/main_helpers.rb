@@ -30,13 +30,13 @@ module MainHelpers
       language =
         # user requested a change of locale
         if params[:locale]
-          Language.where(locale_name: params[:locale]).first
+          Language.where(locale: params[:locale]).first
         # user is logged in
         elsif current_user
           current_user.language
         # user is not logged in
         elsif session[:locale]
-          Language.where(locale_name: session[:locale]).first
+          Language.where(locale: session[:locale]).first
         # default case
         else
           Language.default_language
@@ -45,11 +45,11 @@ module MainHelpers
       unless language.nil?
         # If user is logged in and he requested a locale change or he does not have
         # a language yet, then update his language.
-        if current_user and (params[:locale] or current_user.language_id.nil?)
-          current_user.update_attributes(language_id: language.id)
+        if current_user and (params[:locale] or current_user.language_locale.nil?)
+          current_user.update_attributes(language_locale: language.locale)
         end
-        session[:locale] = language.locale_name
-        I18n.locale = language.locale_name.underscore.to_sym
+        session[:locale] = language.locale
+        I18n.locale = language.locale.underscore.to_sym
       end
     end
 

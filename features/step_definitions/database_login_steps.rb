@@ -19,7 +19,7 @@ end
 When(/^I login as "(.*?)" via web interface$/) do |persona|
   @current_user = User.where(login: persona.downcase).first
   I18n.locale = if @current_user.language then
-                  @current_user.language.locale_name.to_sym
+                  @current_user.language.locale.to_sym
                 else
                   Language.default_language
                 end
@@ -31,7 +31,7 @@ end
 When(/^I login as "(.*?)" via web interface using keyboard$/) do |persona|
   @current_user = User.where(login: persona.downcase).first
   I18n.locale = if @current_user.language then
-                  @current_user.language.locale_name.to_sym
+                  @current_user.language.locale.to_sym
                 else
                   Language.default_language
                 end

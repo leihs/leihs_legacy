@@ -23,7 +23,7 @@ class Manage::MailTemplatesController < Manage::ApplicationController
       ['text'].each do |format|
         mt = MailTemplate.find_by!(inventory_pool_id: current_inventory_pool.id,
                                    name: params[:name],
-                                   language_id: language.id,
+                                   language_locale: language.locale,
                                    format: format)
         @mail_templates << mt
       end
@@ -38,7 +38,7 @@ class Manage::MailTemplatesController < Manage::ApplicationController
       mt = MailTemplate.find_by!(
         inventory_pool_id: current_inventory_pool.id,
         name: p[:name],
-        language: Language.find_by(locale_name: p[:language]),
+        language: Language.find_by(locale: p[:language]),
         format: p[:format])
       @mail_templates << mt
       unless mt.update_attributes(body: p[:body])

@@ -391,7 +391,7 @@ module LeihsAdmin
             expect(
               MailTemplate.find_by(inventory_pool_id: @inventory_pool.id,
                                    is_template_template: false,
-                                   language_id: language.id,
+                                   language_locale: language.locale,
                                    name: name,
                                    type: type,
                                    format: 'text',

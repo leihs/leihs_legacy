@@ -22,7 +22,7 @@ class User < ApplicationRecord
   store_accessor :settings, [:latest_inventory_pool_id_before_logout,
                              :start_screen]
 
-  belongs_to :language
+  belongs_to :language, primary_key: :locale, foreign_key: :language_locale
 
   has_many :orders
 

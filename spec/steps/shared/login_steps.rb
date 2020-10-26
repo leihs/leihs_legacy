@@ -70,7 +70,7 @@ module Spec
 
     def set_locale
       I18n.locale = if @current_user.language
-                      @current_user.language.locale_name.to_sym
+                      @current_user.language.locale.to_sym
                     else
                       Language.default_language
                     end

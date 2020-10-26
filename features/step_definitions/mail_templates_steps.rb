@@ -3,7 +3,7 @@ Then(/^the default (.*) exists in the database for a given (.*) and all language
     mt = MailTemplate.find_by(is_template_template: true,
                               type: type,
                               name: template_name,
-                              language_id: language.id)
+                              language_locale: language.locale)
     expect(mt).to be
   end
   name_count = MailTemplate.select('DISTINCT(name)').count
@@ -69,7 +69,7 @@ When(/^the reminders are sent$/) do
 end
 
 Then(/^I receive an email formatted according to the (reminder|deadline_soon_reminder) mail template$/) do |template_name|
-  language = Language.find_by(locale_name: @current_user.language.locale_name)
+  language = Language.find_by(locale: @current_user.language.locale)
 
   sent_mails = ActionMailer::Base.deliveries.select { |m| m.to.include?(@current_user.email) and m.from.include?(@visit.inventory_pool.email) }
   sent_mails = sent_mails.select do |m|
@@ -91,7 +91,7 @@ Then(/^I receive an email formatted according to the (reminder|deadline_soon_rem
 end
 
 Given(/^the (reminder) mail template looks like$/) do |template_name, string|
-  language = Language.find_by(locale_name: @current_user.language.locale_name)
+  language = Language.find_by(locale: @current_user.language.locale)
 
   mt = MailTemplate.find_or_initialize_by(inventory_pool_id: @visit.inventory_pool_id,
                                           name: template_name.gsub(' ', '_'),
@@ -101,8 +101,8 @@ Given(/^the (reminder) mail template looks like$/) do |template_name, string|
 end
 
 def reset_language_for_current_user
-  I18n.locale = @current_user.language.locale_name.to_sym
-  expect(I18n.locale).to eq @current_user.language.locale_name.to_sym
+  I18n.locale = @current_user.language.locale.to_sym
+  expect(I18n.locale).to eq @current_user.language.locale.to_sym
 end
 
 def get_reminder_for_visit(visit)
@@ -118,10 +118,10 @@ Then(/^the mail body looks like$/) do |string|
   expect(sent_mail.body.to_s).to eq string
 end
 
-When(/^my language is set to "(.*?)"$/) do |locale_name|
-  language = Language.find_by(locale_name: locale_name)
+When(/^my language is set to "(.*?)"$/) do |locale|
+  language = Language.find_by(locale: locale)
   @current_user.update_attributes(language: language)
-  expect(@current_user.reload.language.locale_name).to eq locale_name
+  expect(@current_user.reload.language.locale).to eq locale
 end
 
 When(/^one of my submitted orders to an inventory pool without custom approved mail templates get approved$/) do
@@ -131,8 +131,8 @@ When(/^one of my submitted orders to an inventory pool without custom approved m
   expect(ActionMailer::Base.deliveries.count).to be > 0
 end
 
-Then(/^I receive an approved mail based on the system\-wide template for the language "(.*?)"$/) do |locale_name|
-  language = Language.find_by(locale_name: locale_name)
+Then(/^I receive an approved mail based on the system\-wide template for the language "(.*?)"$/) do |locale|
+  language = Language.find_by(locale: locale)
 
   sent_mails = ActionMailer::Base.deliveries.select { |m| m.to.include?(@current_user.email) and m.from.include?(@contract.inventory_pool.email) }
   sent_mails = sent_mails.select { |m| m.subject == _('[leihs] Reservation Confirmation') }
@@ -148,9 +148,9 @@ Then(/^I receive an approved mail based on the system\-wide template for the lan
   expect(sent_mail.body.to_s).to eq Liquid::Template.parse(template).render(variables)
 end
 
-Then(/^I receive a reminder in "(.*?)"$/) do |locale_name|
+Then(/^I receive a reminder in "(.*?)"$/) do |locale|
   variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.reservations)
-  language = Language.find_by!(locale_name: locale_name)
+  language = Language.find_by!(locale: locale)
   template = MailTemplate.find_by!(inventory_pool_id: @visit.inventory_pool_id,
                                    name: :reminder,
                                    language: language,
@@ -160,25 +160,25 @@ Then(/^I receive a reminder in "(.*?)"$/) do |locale_name|
   expect(sent_mail.body.to_s).to eq string
 end
 
-When(/^I edit the (reminder) with the "(.*?)" template in "(.*?)"$/) do |template_name, body, locale_name|
+When(/^I edit the (reminder) with the "(.*?)" template in "(.*?)"$/) do |template_name, body, locale|
   selector = @current_inventory_pool ? '.row.margin-vertical-s' : '.form-group'
-  find(selector, text: locale_name).find("textarea[name='mail_templates[][body]']").set body
+  find(selector, text: locale).find("textarea[name='mail_templates[][body]']").set body
 end
 
 Then(/^I land on the mail templates edit page$/) do
   find("form button[type='submit']", text: _('Save %s') % _('Mail Templates'))
   Language.active_languages.each do |language|
-    find("input[name='mail_templates[][language]'][type='hidden'][value='#{language.locale_name}']", visible: false)
+    find("input[name='mail_templates[][language]'][type='hidden'][value='#{language.locale}']", visible: false)
   end
 end
 
-Then(/^the failing (reminder) mail template in "(.*?)" is highlighted in red$/) do |template_name, locale_name|
+Then(/^the failing (reminder) mail template in "(.*?)" is highlighted in red$/) do |template_name, locale|
   selector = @current_inventory_pool ? '.row.margin-vertical-s' : '.form-group'
-  expect(find(selector, text: locale_name).native.css_value('background-color')).to eq 'rgba(255, 176, 176, 1)'
+  expect(find(selector, text: locale).native.css_value('background-color')).to eq 'rgba(255, 176, 176, 1)'
 end
 
-Then(/^the failing (reminder) mail template in "(.*?)" is not persisted with the "(.*?)" template$/) do |template_name, locale_name, body|
-  language = Language.find_by(locale_name: locale_name)
+Then(/^the failing (reminder) mail template in "(.*?)" is not persisted with the "(.*?)" template$/) do |template_name, locale, body|
+  language = Language.find_by(locale: locale)
   template = MailTemplate.find_or_initialize_by(inventory_pool_id: @current_inventory_pool.try(:id),
                                                 name: template_name.gsub(' ', '_'),
                                                 language: language,

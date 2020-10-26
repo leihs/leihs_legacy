@@ -685,12 +685,12 @@ module Borrow
       step 'I switch to another language' do
         @original_language = @current_user.language
         @another_language = Language.all.detect { |l| l != @current_user.language }
-        I18n.locale = @another_language.locale_name
+        I18n.locale = @another_language.locale
         find('footer a', text: @another_language.name).click
       end
 
       step 'I switch back to original language' do
-        I18n.locale = @original_language.locale_name
+        I18n.locale = @original_language.locale
         find('footer a', text: @original_language.name).click
       end
 

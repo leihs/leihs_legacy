@@ -14,7 +14,7 @@ module LeihsFactory
 
   #
   # AuthenticationSystem
-  # 
+  #
   def self.create_authentication_system!(attributes) # needs a hash
     default_attributes = {
       is_default: false,
@@ -25,7 +25,7 @@ module LeihsFactory
 
   #
   # Language
-  # 
+  #
   def self.create_language!(attributes) # needs a hash
     default_attributes = {
       default: false,
@@ -33,7 +33,7 @@ module LeihsFactory
     }
 
     if (lang = Language.find_by_name(attributes[:name]))
-      lang.update_attributes(locale_name: attributes[:locale_name])
+      lang.update_attributes(locale: attributes[:locale])
     else
       Language.create! default_attributes.merge(attributes)
     end
@@ -41,12 +41,12 @@ module LeihsFactory
 
   #
   # User
-  # 
+  #
   def self.create_user(attributes = {}, options = {})
     default_attributes = {
       login: 'jerome',
       email: 'jerome@example.com',
-      language_id: (Language.default_language ? Language.default_language : LanguageFactory.create).id
+      language_locale: (Language.default_language ? Language.default_language : LanguageFactory.create).locale
     }
     default_attributes[:email] = "#{attributes[:login].gsub(' ', '_')}@example.com" if attributes[:login]
     attributes = default_attributes.merge(attributes)
@@ -64,14 +64,14 @@ module LeihsFactory
 
   #
   # User
-  # 
+  #
   def self.create_db_auth(attributes = {}, _options = {})
     default_attributes = {
       login: 'jerome',
       password: 'pass'
     }
     merged_attributes = default_attributes.merge(attributes)
-    
+
     password = merged_attributes[:password]
     u = User.find_by_login merged_attributes[:login]
 
@@ -90,7 +90,7 @@ module LeihsFactory
 
   #
   # Role
-  # 
+  #
   def self.define_role(user, inventory_pool, role = :inventory_manager)
     role = role.to_sym
     begin
@@ -103,7 +103,7 @@ module LeihsFactory
 
   #
   # Date
-  # 
+  #
   def self.random_future_date
     # future date is within the next 3 years, at earliest tomorrow
     Date.today + rand(3*365).days + 1.day
@@ -111,7 +111,7 @@ module LeihsFactory
 
   #
   # Model
-  # 
+  #
   def self.create_model(attributes = {})
     default_attributes = {
       product: 'model_1'
@@ -124,7 +124,7 @@ module LeihsFactory
 
   #
   # inventory code
-  # 
+  #
   def self.generate_new_unique_inventory_code
     begin
       chars_len = 1
@@ -137,23 +137,23 @@ module LeihsFactory
     end while Item.exists?(inventory_code: code)
     code
   end
-    
+
   #
   # parsedate
-  # 
+  #
   def self.parsedate(str)
     match = /(\d{1,2})\.(\d{1,2})\.(\d{2,4})\.?/.match(str)
     unless match
       ret = ParseDate.old_parsedate(str)
     else
-      ret = [match[3].to_i, match[2].to_i, match[1].to_i, nil, nil, nil, nil, nil] 
+      ret = [match[3].to_i, match[2].to_i, match[1].to_i, nil, nil, nil, nil, nil]
     end
     DateTime.new(ret[0], ret[1], ret[2]) # TODO Date
   end
 
   #
   # InventoryPool
-  # 
+  #
   def self.create_inventory_pool(attributes = {}, address_attributes = {})
     default_attributes = {
       name: 'ABC',
@@ -174,14 +174,14 @@ module LeihsFactory
       # the workday is create through InventoryPool#before_create,
       # then we cannot use InventoryPool.find_or_create_by_name
       ip.workday.update_attributes(saturday: true, sunday: true)
-      ip.update_address(default_address_attributes.merge(address_attributes))      
+      ip.update_address(default_address_attributes.merge(address_attributes))
     end
     ip
   end
 
   #
   # InventoryPool workdays
-  # 
+  #
   def self.create_inventory_pool_default_workdays(attributes = {})
     default_attributes = {
       name: 'ABC',
@@ -196,7 +196,7 @@ module LeihsFactory
 
   #
   # Category
-  # 
+  #
   def self.create_category(attributes = {})
     default_attributes = {
       name: 'category'
@@ -219,9 +219,9 @@ module LeihsFactory
   def self.create_dataset_simple
 
     FactoryGirl.create :setting unless Setting.first
-    
+
     inventory_pool = LeihsFactory.create_inventory_pool_default_workdays
-        
+
     # Create Manager
     user = LeihsFactory.create_user( {login: 'inv_man'},
                                     {role: :lending_manager,
@@ -233,7 +233,7 @@ module LeihsFactory
     # Create Model and Item
     model = LeihsFactory.create_model(product: 'holey parachute')
     FactoryGirl.create(:item, owner: inventory_pool, model: model)
-    
+
     # Create Authenication System if not already existing
     FactoryGirl.create :authentication_system, name: 'DatabaseAuthentication' unless AuthenticationSystem.default_system.first
 
@@ -248,13 +248,13 @@ module LeihsFactory
      ['English (US)', 'en-US', false],
      ['Deutsch', 'de-CH', false],
      ['Züritüütsch','gsw-CH', false]].each do |lang|
-        next if Language.exists?(locale_name: lang[1])
+        next if Language.exists?(locale: lang[1])
         LeihsFactory.create_language!(name: lang[0],
-                                      locale_name: lang[1],
+                                      locale: lang[1],
                                       default: (lang[2] and not Language.exists?(default: true)))
     end
   end
-    
+
   #
   # Authentication systems supported by default
   #
@@ -355,7 +355,7 @@ module LeihsFactory
      ['IFS', 'Ifangstrasse, 2'],
      ['BU',  'Schützenmattstrsse, 1B'],
      ['KST', 'Kart-Stauffer-Strasse, 26']].each do |building|
-    
+
        FactoryGirl.create :building, code: building[0], name: building[1]
     end
   end

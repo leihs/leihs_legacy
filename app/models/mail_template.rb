@@ -13,9 +13,9 @@ class MailTemplate < ApplicationRecord
   self.inheritance_column = nil
 
   belongs_to :inventory_pool # NOTE when null, then is system-wide
-  belongs_to :language
+  belongs_to :language, primary_key: :locale, foreign_key: :language_locale
 
-  validates_uniqueness_of :name, scope: [:inventory_pool_id, :language_id, :format]
+  validates_uniqueness_of :name, scope: [:inventory_pool_id, :language_locale, :format]
   validate :syntax_validation
 
   after_save do

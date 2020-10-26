@@ -1,7 +1,7 @@
 :ruby
   product_name = 'leihs'
   documentation_link = app_settings.try(:documentation_link).try(:strip).presence
-  active_language = Language.find_by_locale_name(I18n.locale)
+  active_language = Language.find_by_locale(I18n.locale)
   version_name = RELEASE_INFO.try(:[], :version_name)
   is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :is_release) || false
   deploy_time = RELEASE_INFO.try(:[], :deploy_info).try(:[], :time)
@@ -37,4 +37,4 @@
                 %a.dark-grey.padding-inset-s{:href => ""}
                   %strong= language.name
               - else
-                %a.dark-grey.padding-inset-s{:href => @bread_crumbs ? @bread_crumbs.path_for(url_for(params.to_unsafe_hash.merge(:locale => language.locale_name))) : url_for(params.to_unsafe_hash.merge(:locale => language.locale_name))}= language.name
+                %a.dark-grey.padding-inset-s{:href => @bread_crumbs ? @bread_crumbs.path_for(url_for(params.to_unsafe_hash.merge(:locale => language.locale))) : url_for(params.to_unsafe_hash.merge(:locale => language.locale))}= language.name

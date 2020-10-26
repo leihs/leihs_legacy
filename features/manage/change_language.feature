@@ -1,5 +1,5 @@
 
-Feature: Changing interface language 
+Feature: Changing interface language
 
   In order to understand what the software is telling me
   As any user

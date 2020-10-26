@@ -37,7 +37,7 @@ module LeihsAdmin
           .find_or_initialize_by(
             inventory_pool_id: nil,
             name: p[:name],
-            language: Language.find_by(locale_name: p[:language]),
+            language: Language.find_by(locale: p[:language]),
             format: p[:format])
 
       @mail_templates << mt

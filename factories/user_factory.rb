@@ -29,7 +29,7 @@ FactoryGirl.define do
     country { Faker::Address.country }
     zip { "#{country[0]}-#{Faker::Address.zip_code}".squish }
     language do
-      Language.find_by_default(true) || create(:language, locale_name: 'en-GB')
+      Language.find_by_default(true) || create(:language, locale: 'en-GB')
     end
     delegator_user { nil }
 

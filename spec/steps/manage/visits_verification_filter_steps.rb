@@ -19,7 +19,7 @@ module Manage
       end
 
       step 'I am logged in as the lending manager' do
-        I18n.locale = @lending_manager.language.locale_name
+        I18n.locale = @lending_manager.language.locale
         visit root_path
         fill_in :email, with: @lending_manager.email
         click_on _('Login')

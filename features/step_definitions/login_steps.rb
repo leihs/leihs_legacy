@@ -14,7 +14,7 @@ end
 
 Given "I am logged in as '$username' with password '$password'" do |username, password|
   @current_user = User.where(login: username.downcase).first
-  I18n.locale = if @current_user.language then @current_user.language.locale_name.to_sym else Language.default_language end
+  I18n.locale = if @current_user.language then @current_user.language.locale.to_sym else Language.default_language end
   @current_inventory_pool = @current_user.inventory_pools.managed.first
   case Capybara.current_driver
     when /selenium/
@@ -75,7 +75,7 @@ Given(/^I am logged in as "(.*?)"$/) do |persona|
   @current_user = User.where(login: persona.downcase).first
   fill_in :email, with: @current_user.email
   click_on "Login"
-  I18n.locale = if @current_user.language then @current_user.language.locale_name.to_sym else Language.default_language end
+  I18n.locale = if @current_user.language then @current_user.language.locale.to_sym else Language.default_language end
   step 'I visit the homepage'
   expect(page).to have_content  @current_user.lastname
 end
