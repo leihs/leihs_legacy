@@ -86,14 +86,14 @@ module TimelineAvailability
       ActiveRecord::Base.connection.exec_query(query).to_hash
     end
 
-    def entitlements(model_id)
+    def entitlements(model_id, pool_id)
       query = <<-SQL
-        select
-        	entitlements.*
-        from
-        	entitlements
-        where
-          model_id = '#{model_id}'
+        SELECT entitlements.*
+        FROM entitlements
+        JOIN entitlement_groups
+          ON entitlement_groups.id = entitlements.entitlement_group_id
+        WHERE model_id = '#{model_id}'
+          AND entitlement_groups.inventory_pool_id = '#{pool_id}'
       SQL
 
       ActiveRecord::Base.connection.exec_query(query).to_hash
@@ -119,7 +119,7 @@ module TimelineAvailability
       model = Model.find(model_id)
 
       running_reservations = running_reservations(inventory_pool.id, model.id)
-      entitlements = entitlements(model.id)
+      entitlements = entitlements(model.id, inventory_pool.id)
       reservation_users = reservation_users(running_reservations)
       entitlement_groups_users = entitlement_groups_users(reservation_users)
       entitlement_groups = entitlement_groups(
