@@ -7,7 +7,7 @@ Feature: Availability depending on Pools
   In order to prevent a customer from ordering things he cannot borrow
 
   Background:
-    Given the database is empty
+    Given the database has only minimal seeds
     And settings exist
 
   @rack

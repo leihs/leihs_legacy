@@ -3,7 +3,7 @@ Feature: Take back visits
   Model test
 
   Background:
-    Given the database is empty
+    Given the database has only minimal seeds
     And inventory pool model test data setup
     And all contracts and contract reservations are deleted
 

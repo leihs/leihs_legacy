@@ -3,7 +3,7 @@ Feature: Inventory
   Describing Inventory Pools, Items, Models and Categories
 
   Background:
-    Given the database is empty
+    Given the database has only minimal seeds
 
   @rack
   Scenario: Categories structure

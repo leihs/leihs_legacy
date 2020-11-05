@@ -7,15 +7,16 @@ include:
 
 scripts:
 
-  legacy-create-database:
+  create-database:
     body: |
       #!/usr/bin/env bash
       set -eux
       if [ -d legacy ]; then cd legacy; fi
       createdb "$DATABASE_NAME"
-      psql -d "$DATABASE_NAME" -f db/structure.sql
+      psql -d "$DATABASE_NAME" -f ./database/db/structure.sql
+      DATABASE_NAME="$DATABASE_NAME" ./database/scripts/restore-seeds
 
   test:
     start_when:
       database has been created:
-        script_key: legacy-create-database
+        script_key: create-database

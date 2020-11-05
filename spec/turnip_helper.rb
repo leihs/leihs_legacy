@@ -2,6 +2,7 @@ require 'pry'
 require 'turnip/capybara'
 require 'rails_helper'
 require 'factory_girl'
+require 'config/database.rb'
 
 class Object
   alias_method :ivar_get, :instance_variable_get
@@ -31,7 +32,7 @@ RSpec.configure do |config|
 
   config.before(type: :feature) do
     PgTasks.truncate_tables()
-    FactoryGirl.create(:setting) unless Setting.first
+    Config::Database.restore_seeds
     Capybara.current_driver = :firefox
     page.driver.browser.manage.window.maximize
   end

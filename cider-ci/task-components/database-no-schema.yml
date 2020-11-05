@@ -7,7 +7,7 @@ include:
 
 scripts:
 
-  legacy-create-database:
+  create-database:
     body: |
       #!/usr/bin/env bash
       set -eux
@@ -17,4 +17,4 @@ scripts:
   test:
     start_when:
       database has been created:
-        script_key: legacy-create-database
+        script_key: create-database
