@@ -38,11 +38,10 @@ jobs:
                 #!/usr/bin/env bash
                 set -exu
                 export PATH=~/.rubies/$RUBY/bin:$PATH
-                export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-                pg_restore --schema-only ./features/personas/demo.pgbin
-                pg_restore --data-only ./features/personas/demo.pgbin
-                if test $(bundle exec rake db:migrate:status | grep -c -E "\s*down\s*\d*\s*") -gt 0; then
-                  echo "run ./bin/migrate-and-dump-personas"
+                { pg_restore --version | grep -q '11.' ;} && psql -d $DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
+                pg_restore --disable-triggers -x -O -d $DATABASE_NAME ./features/personas/personas.pgbin
+                if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
+                  echo "Run ./scripts/migrate-and-dump-personas"
                   exit 1
                 else
                   exit 0
@@ -51,7 +50,6 @@ jobs:
         migration-of-demo-dump:
           include:
             - cider-ci/task-components/database-no-schema.yml
-
 
           environment_variables:
             LEIHS_SECRET: secret
@@ -64,13 +62,11 @@ jobs:
               body: |
                 #!/usr/bin/env bash
                 set -exu
-                env | sort
                 export PATH=~/.rubies/$RUBY/bin:$PATH
-                export DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-                pg_restore --schema-only ./features/personas/demo.pgbin
-                pg_restore --data-only ./features/personas/demo.pgbin
-                if test $(bundle exec rake db:migrate:status | grep -c -E "\s*down\s*\d*\s*") -gt 0; then
-                  echo "run ./bin/migrate-and-dump-demo"
+                { pg_restore --version | grep -q '11.' ;} && psql -d $DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
+                pg_restore --disable-triggers -x -O -d $DATABASE_NAME ./features/personas/demo.pgbin
+                if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
+                  echo "Run ./scripts/migrate-and-dump-demo"
                   exit 1
                 else
                   exit 0
