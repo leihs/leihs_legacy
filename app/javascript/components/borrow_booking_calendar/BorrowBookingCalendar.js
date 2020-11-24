@@ -554,7 +554,7 @@ const BorrowBookingCalendar = createReactClass({
                     </div>
                     <div className="col1of2 padding-right-xs text-align-left">
                       <div className="row">
-                        <span>{_jed('Start date')}</span>
+                        <span>{_jed('End date')}</span>
                         <a
                           className="grey fa fa-eye position-absolute-right padding-right-xxs"
                           id="jump-to-end-date"
