@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -eux
+
+LEGACY_DIR="$(dirname ${BASH_SOURCE})/.."
+
+source ${LEGACY_DIR}/bin/db-set-env
+
+PGDATABASE_COPY="${PGDATABASE_COPY:-${PGDATABASE}_copy}"
+
+dropdb --if-exists $PGDATABASE_COPY
+
+psql -d template1 <<HERE
+  SELECT pg_terminate_backend(pg_stat_activity.pid)
+  FROM pg_stat_activity
+  WHERE pg_stat_activity.datname = '${PGDATABASE}'
+    AND pid <> pg_backend_pid();
+
+  CREATE DATABASE "${PGDATABASE_COPY}" WITH TEMPLATE "${PGDATABASE}";
+HERE
+
+# vi: ft=sh
+
+
