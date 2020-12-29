@@ -45,6 +45,8 @@ module Leihs
 
     config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths << Rails.root.join('database/lib')
+
+    config.middleware.use "AuditedRequests"
   end
 end
 
