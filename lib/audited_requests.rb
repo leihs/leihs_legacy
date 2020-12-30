@@ -1,4 +1,3 @@
-# make this class in lib/transactional_requests.rb, and load it on start
 require 'active_record'
 
 class AuditedRequests
@@ -6,23 +5,42 @@ class AuditedRequests
     @app = app
   end
 
-  def call(env)
-    request = Rack::Request.new(env)
+  HTTP_UNSAFE_METHODS = ["DELETE", "PATCH", "POST", "PUT"]
 
-    ActiveRecord::Base.transaction do
-      persist_request(request)
+  def call(env)
+    if unsafe_method?(env["REQUEST_METHOD"])
+      ActiveRecord::Base.transaction do
+        txid = get_txid
+        persist_request(txid, env)
+        response = @app.call(env)
+        persist_response(txid, response)
+        response
+      end
+    else
       @app.call(env)
     end
   end
    
   private
 
+  def unsafe_method?(m)
+    HTTP_UNSAFE_METHODS.include?(m)
+  end
+
   def db_conn
     ActiveRecord::Base.connection
   end
 
-  def persist_request(request)
-    user_id = "'#{session_user(request.cookies).try(:id)}'" || "NULL"
+  def get_txid
+    db_conn.execute("SELECT txid() AS txid").entries.first['txid']
+  end
+
+  def persist_request(txid, env)
+    url = env["REQUEST_URI"]
+    request = Rack::Request.new(env)
+    user_id = session_user(request.cookies).try(:id)
+    http_uid = env["HTTP_HTTP_UID"]
+    method = env["REQUEST_METHOD"].downcase
 
     db_conn.execute <<-SQL
       INSERT INTO audited_requests (
@@ -34,11 +52,18 @@ class AuditedRequests
       )
       VALUES (
         '#{txid}',
-        '#{env["HTTP_HTTP_UID"]}',
-        '#{env["REQUEST_URI"]}',
-        #{user_id},
-        '#{env["REQUEST_METHOD"].downcase}'
+        #{http_uid.presence ? "'#{http_uid}'" : "NULL"},
+        #{url.presence ? "'#{url}'" : "NULL"},
+        #{user_id.presence ? "'#{user_id}'" : "NULL"},
+        #{method.presence ? "'#{method}'" : "NULL"}
       )
+    SQL
+  end
+
+  def persist_response(txid, (status))
+    db_conn.execute <<-SQL
+      INSERT INTO audited_responses (txid, status)
+      VALUES ('#{txid}', '#{status}')
     SQL
   end
 
