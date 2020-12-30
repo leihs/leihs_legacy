@@ -38,7 +38,7 @@ module Leihs
 
     def persist_request(txid, env)
       url = env["REQUEST_URI"]
-      user_id = session_user(env["HTTP_COOKIE"]).try(:id)
+      user_id = get_user_id(env["HTTP_COOKIE"])
       http_uid = env["HTTP_HTTP_UID"]
       method = env["REQUEST_METHOD"].downcase
 
@@ -67,18 +67,20 @@ module Leihs
       SQL
     end
 
-    def get_session_token(http_cookie)
+    def get_session_token(http_cookie = "")
       http_cookie
         .split("; ")
         .find { |c| c.match(/leihs-user-session/) }
-        .split("=")
-        .second
+        .try(:split, "=")
+        .try(:second)
     end
 
-    def session_user(http_cookie)
+    def get_user_id(http_cookie)
       token = get_session_token(http_cookie)
       user_session = UserSession.find_by_token(token)
-      user_session.try { |us| us.delegation or us.user }
+      user_session
+        .try { |us| us.delegation or us.user }
+        .try(:id)
     end
   end
 end
