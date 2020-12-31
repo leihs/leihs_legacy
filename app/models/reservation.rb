@@ -223,7 +223,7 @@ class Reservation < ApplicationRecord
   end
 
   def update_time_line(start_date, end_date, user)
-    Reservation.transaction do
+    Reservation.transaction(requires_new: true) do
       start_date ||= self.start_date
       end_date ||= self.end_date
       unless update_attributes(start_date: start_date,

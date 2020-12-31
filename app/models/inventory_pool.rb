@@ -397,7 +397,7 @@ class InventoryPool < ApplicationRecord
 
     items = []
 
-    transaction do
+    transaction(requires_new: true) do
       CSV.foreach(csv_file,
                   col_sep: ',',
                   quote_char: "\"",

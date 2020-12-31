@@ -54,7 +54,7 @@ class Manage::ItemsController < Manage::ApplicationController
   # end
 
   def create
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       @item = Item.new(owner: current_inventory_pool)
       @item.skip_serial_number_validation = skip_serial_number_validation_param
 
@@ -107,7 +107,7 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def update
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
 
       fetch_item_by_id
 

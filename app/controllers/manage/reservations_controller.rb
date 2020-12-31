@@ -35,7 +35,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     inventory_pool = InventoryPool.find(params[:inventory_pool_id])
 
     begin
-      Order.transaction do
+      Order.transaction(requires_new: true) do
         record = if params[:model_id]
                    current_inventory_pool.models.find(params[:model_id])
                  else
@@ -62,7 +62,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     order = Order.find_by(id: params[:order_id])
 
     @reservations = []
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       template = Template.find(params[:template_id])
       template.model_links.each do |link|
         next unless current_inventory_pool.models.exists?(id: link.model_id)
@@ -189,7 +189,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     reservations = current_inventory_pool.reservations.find(params[:ids])
 
     begin
-      ApplicationRecord.transaction do
+      ApplicationRecord.transaction(requires_new: true) do
         if returned_quantity
           returned_quantity.each_pair do |k, v|
             line = reservations.detect { |l| l.id == k }
@@ -223,7 +223,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     user = current_inventory_pool.users.find params[:user_id]
     reservations = current_inventory_pool.reservations.where(id: params[:line_ids])
 
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       begin
         ####################################################################
         # Create new orders with the same purpose and pool, but with the
@@ -274,7 +274,7 @@ class Manage::ReservationsController < Manage::ApplicationController
   def swap_model
     reservations = current_inventory_pool.reservations.where(id: params[:line_ids])
     model = Model.find(params[:model_id])
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       reservations.each do |line|
         line.update_attributes(model: model, item_id: nil)
       end
@@ -289,7 +289,7 @@ class Manage::ReservationsController < Manage::ApplicationController
   def edit_purpose
     reservations = current_inventory_pool.reservations.where(id: params.require(:line_ids))
     new_purpose =  params.permit(:purpose)[:purpose].strip.presence
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       reservations.each do |line|
         line.update_attributes(line_purpose: new_purpose)
       end
@@ -394,7 +394,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     # NOTE we need to store because the availability reads the persisted
     # reservations (as running_reservations)
     # then we rollback on failing conditions
-    Reservation.transaction do
+    Reservation.transaction(requires_new: true) do
       reservation.save!
       if (group_manager? and not lending_manager?) and not reservation.available?
         raise _('Not available')
@@ -408,7 +408,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     error = nil
     line = nil
 
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       begin
         # error if item already assigned to some approved reservation of the user
         if item && line = \

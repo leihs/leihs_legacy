@@ -61,7 +61,7 @@ class Manage::OrdersController < Manage::ApplicationController
 
   def swap_user
     @order = Order.find(id_param)
-    Order.transaction do
+    Order.transaction(requires_new: true) do
       begin
         @order.update_attributes!(user_id: user_id_param)
         @order.reservations.each do |reservation|

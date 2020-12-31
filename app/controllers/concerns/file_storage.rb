@@ -1,6 +1,6 @@
 module FileStorage
   def store_image_with_thumbnail!(file, model)
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       image = store_image!(file, model)
 
       extension = File.extname(file.original_filename)

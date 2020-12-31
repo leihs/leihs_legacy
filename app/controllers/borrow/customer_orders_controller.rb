@@ -22,7 +22,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
   end
 
   def submit
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       begin
         customer_order = CustomerOrder.create!(user: current_user,
                                                purpose: purpose_param,
