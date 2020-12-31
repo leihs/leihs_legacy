@@ -38,7 +38,7 @@ module Leihs
       end
 
       def persist_request(txid, env)
-        url = env["REQUEST_URI"]
+        path = env["REQUEST_PATH"]
         user_id = get_user_id(env["HTTP_COOKIE"])
         http_uid = env["HTTP_HTTP_UID"]
         method = env["REQUEST_METHOD"].downcase
@@ -54,7 +54,7 @@ module Leihs
           VALUES (
             '#{txid}',
             #{http_uid.presence ? "'#{http_uid}'" : "NULL"},
-            #{url.presence ? "'#{url}'" : "NULL"},
+            #{path.presence ? "'#{path}'" : "NULL"},
             #{user_id.presence ? "'#{user_id}'" : "NULL"},
             #{method.presence ? "'#{method}'" : "NULL"}
           )
