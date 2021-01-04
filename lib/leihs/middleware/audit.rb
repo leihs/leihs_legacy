@@ -47,7 +47,7 @@ module Leihs
           INSERT INTO audited_requests (
             txid,
             http_uid,
-            url,
+            path,
             user_id,
             method
           )
