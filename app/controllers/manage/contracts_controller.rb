@@ -73,7 +73,7 @@ class Manage::ContractsController < Manage::ApplicationController
       .where(inventory_pool: current_inventory_pool)
       .find(line_ids_param)
 
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       begin
         @contract = Contract.sign!(current_user,
                                    current_inventory_pool,
@@ -99,7 +99,7 @@ class Manage::ContractsController < Manage::ApplicationController
                          .find(params[:delegated_user_id])
                      end
     reservations = order.reservations
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       reservations.each do |line|
         line.update_attributes(user: user, delegated_user: delegated_user)
       end

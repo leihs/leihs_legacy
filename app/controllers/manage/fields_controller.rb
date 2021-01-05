@@ -39,7 +39,7 @@ class Manage::FieldsController < Manage::ApplicationController
   end
 
   def disable_field
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       inventory_pool = InventoryPool.find(params[:inventory_pool_id])
       field = Field.find(params[:field_id])
 

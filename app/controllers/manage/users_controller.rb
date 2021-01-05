@@ -73,7 +73,7 @@ class Manage::UsersController < Manage::ApplicationController
     end
 
     begin
-      User.transaction do
+      User.transaction(requires_new: true) do
         @user.delegated_user_ids = delegated_user_ids if delegated_user_ids
         @user.save!
 
@@ -204,7 +204,7 @@ class Manage::UsersController < Manage::ApplicationController
 
   def update
     begin
-      User.transaction do
+      User.transaction(requires_new: true) do
         update_entitlement_groups
         delegated_user_ids = get_delegated_users_ids params
         @user.delegated_user_ids = delegated_user_ids if delegated_user_ids

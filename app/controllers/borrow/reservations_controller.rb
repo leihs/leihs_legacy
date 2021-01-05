@@ -47,7 +47,7 @@ class Borrow::ReservationsController < Borrow::ApplicationController
 
     if @errors.empty?
       begin
-        ApplicationRecord.transaction do
+        ApplicationRecord.transaction(requires_new: true) do
           reservations = create_lines(
             model: model,
             quantity: quantity_param,
@@ -74,7 +74,7 @@ class Borrow::ReservationsController < Borrow::ApplicationController
 
   def destroy
     begin
-      ApplicationRecord.transaction do
+      ApplicationRecord.transaction(requires_new: true) do
         current_user
           .reservations
           .unsubmitted

@@ -70,7 +70,7 @@ class Manage::VisitsController < Manage::ApplicationController
       .hand_over
       .find(params[:visit_id])
 
-    ActiveRecord::Base.transaction do
+    ActiveRecord::Base.transaction(requires_new: true) do
       visit.reservations.each(&:destroy!)
     end
 

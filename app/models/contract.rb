@@ -294,7 +294,7 @@ class Contract < ApplicationRecord
                  purpose,
                  note = nil,
                  delegated_user_id = nil)
-    transaction do
+    transaction(requires_new: true) do
       contract = Contract.new(state: :open,
                               purpose: purpose,
                               user: user,

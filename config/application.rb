@@ -1,4 +1,5 @@
 require File.expand_path('../boot', __FILE__)
+require_relative('../lib/leihs/middleware/audit.rb')
 
 require 'rails/all'
 
@@ -45,6 +46,8 @@ module Leihs
 
     config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths << Rails.root.join('database/lib')
+
+    config.middleware.insert_before ActionDispatch::ShowExceptions, Leihs::Middleware::Audit
   end
 end
 

@@ -77,7 +77,7 @@ class Manage::ModelsController < Manage::ApplicationController
   def store_image_react
     respond_to do |format|
       format.plist_binary do
-        ApplicationRecord.transaction do
+        ApplicationRecord.transaction(requires_new: true) do
           m = Model.find(params[:model_id])
           i = store_image_with_thumbnail!(params[:data], m)
           if params[:is_cover] == 'true'
@@ -91,7 +91,7 @@ class Manage::ModelsController < Manage::ApplicationController
   def create
     not_authorized! unless privileged_user?
     created = false
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       @model = case params[:model][:type]
                when 'software'
                    Software
@@ -206,7 +206,7 @@ class Manage::ModelsController < Manage::ApplicationController
   def update
     not_authorized! unless privileged_user?
     @model = fetch_model
-    ApplicationRecord.transaction do
+    ApplicationRecord.transaction(requires_new: true) do
       if save_model @model
         render status: :ok, json: { id: @model.id }
       else
@@ -289,7 +289,7 @@ class Manage::ModelsController < Manage::ApplicationController
       package = packages[package]
       children = package.delete(:children)
       if package['id'].blank?
-        ApplicationRecord.transaction do
+        ApplicationRecord.transaction(requires_new: true) do
           item = Item.new
           data = package.merge owner_id: current_inventory_pool.id,
                                model: @model
