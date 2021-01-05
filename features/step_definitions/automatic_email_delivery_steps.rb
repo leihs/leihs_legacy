@@ -2,6 +2,7 @@
 
 Given(/^the system is configured for the mail delivery as test mode$/) do
   setting = Setting.first
+  smtp_setting = SmtpSetting.first
 
   # Need to have these settings, otherwise we can't save. Ouch, coupling.
   if not setting
@@ -10,8 +11,9 @@ Given(/^the system is configured for the mail delivery as test mode$/) do
     setting[:email_signature] = 'Cheers,'
     setting[:default_email] = 'sender@example.com'
   end
-  setting[:mail_delivery_method] = 'test'
+  smtp_setting[:enabled] = false
   expect(setting.save).to be true
+  expect(smtp_setting.save).to be true
 end
 
 Given(/^I have an overdue take back$/) do

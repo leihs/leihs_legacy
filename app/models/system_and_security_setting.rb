@@ -1,0 +1,3 @@
+class SystemAndSecuritySetting < ApplicationRecord
+
+end

@@ -3,6 +3,7 @@ Given(/^a settings object$/) do
   @setting ||= Setting.create({local_currency_string: 'GBP',
                                email_signature: 'kthxbye',
                                default_email: 'from@example.com'})
+  @smtp_setting = SmtpSetting.first
 end
 
 Given(/^the settings are existing$/) do

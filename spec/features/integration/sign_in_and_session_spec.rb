@@ -8,10 +8,11 @@ describe 'sign in and session' do
         visit root_path
         fill_in :email, with: @signed_in_user.email
         click_on _('Login')
-        visit '/admin/settings'
-        page.execute_script %[ $(".navbar").remove() ]
-        fill_in _('sessions_max_lifetime_secs'), with: 15
-        click_on _('Save Settings')
+        # visit '/admin/settings'
+        # page.execute_script %[ $(".navbar").remove() ]
+        # fill_in _('sessions_max_lifetime_secs'), with: 15
+        # click_on _('Save Settings')
+        SystemAndSecuritySetting.first.update_attributes(sessions_max_lifetime_secs: 15)
 
         # we will get signed out me
         expect(page).to have_content @signed_in_user.lastname

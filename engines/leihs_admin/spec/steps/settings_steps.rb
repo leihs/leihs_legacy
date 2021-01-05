@@ -79,14 +79,7 @@ module LeihsAdmin
               case k
               when \
                 'email_signature',
-                'external_base_url',
                 'ldap_config',
-                'mail_delivery_method',
-                'smtp_address',
-                'smtp_domain',
-                'smtp_openssl_verify_mode',
-                'smtp_password',
-                'smtp_username',
                 'user_image_url'
                 field = find("input[name='setting[#{k}]']")
                 expect(Setting.first.send(k).to_s).to eq field.value

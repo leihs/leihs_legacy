@@ -14,13 +14,12 @@ class UserSession < ApplicationRecord
   def self.find_by_token(token)
     find_by_token_base(token)
       .joins(<<-SQL.strip_heredoc)
-        INNER JOIN settings
-        ON settings.id = 0
+        INNER JOIN system_and_security_settings ON system_and_security_settings.id = 0
       SQL
       .where(<<-SQL.strip_heredoc)
         now() <
           user_sessions.created_at +
-          settings.sessions_max_lifetime_secs * interval '1 second'
+          system_and_security_settings.sessions_max_lifetime_secs * interval '1 second'
       SQL
       .first
   end

@@ -2,10 +2,8 @@ class Setting < ApplicationRecord
   audited
 
   SERVICE_RESTART_ATTRIBUTES =
-    [:external_base_url,
-     :ldap_config,
+    [:ldap_config,
      :local_currency_string,
-     :mail_delivery_method,
      :time_zone,
      *attribute_names.select { |attr| attr.start_with?('smtp') }].freeze
 

@@ -13,11 +13,6 @@ Feature: Configuring ActionMailer from the database
     Then ActionMailer's delivery method is "test"
 
   @rack
-  Scenario: Configuring ActionMailer to use sendmail 
-    When the mail delivery method is set to "sendmail"
-    Then ActionMailer's delivery method is "sendmail"
-
-  @rack
   Scenario: Setting SMTP authentication
     When the mail delivery method is set to "smtp"
     And the SMTP username is set to "user"
