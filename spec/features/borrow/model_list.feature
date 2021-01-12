@@ -154,7 +154,7 @@ Feature: Model list
     And the inventory pool selector is still expanded
     And the filter shows the count of selected inventory pools
 
-  @borrow_model_list @broken
+  @borrow_model_list
   Scenario: Deselecting all but one inventory pool
     Given I am Normin
     And I am listing models
