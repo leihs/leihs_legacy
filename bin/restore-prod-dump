@@ -39,6 +39,6 @@ else
 fi
 
 bundle exec rake db:migrate
-psql -d $PGDATABASE -c "UPDATE settings SET external_base_url = 'http://localhost:3000'"
+psql -d $PGDATABASE -c "UPDATE system_and_security_settings SET external_base_url = 'http://localhost:3000'"
 
 ${LEGACY_DIR}/bin/db-copy-create
