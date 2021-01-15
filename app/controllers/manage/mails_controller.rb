@@ -20,12 +20,12 @@ class Manage::MailsController < Manage::ApplicationController
       @from = if current_inventory_pool
                 to_full_email_address(current_inventory_pool.name,
                                       (if current_inventory_pool.email.blank?
-                                         app_settings.default_email
+                                         smtp_settings.default_from_address
                                        else
                                          current_inventory_pool.email
                                        end))
               else
-                app_settings.default_email
+                smtp_settings.default_from_address
               end
       @source_path = params[:source_path]
     end

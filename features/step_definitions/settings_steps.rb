@@ -1,9 +1,8 @@
 Given(/^a settings object$/) do
   @setting = Setting.first
-  @setting ||= Setting.create({local_currency_string: 'GBP',
-                               email_signature: 'kthxbye',
-                               default_email: 'from@example.com'})
+  @setting ||= Setting.create(local_currency_string: 'GBP', email_signature: 'kthxbye')
   @smtp_setting = SmtpSetting.first
+  @smtp_setting.update_attributes!(default_from_address: 'from@example.com')
 end
 
 Given(/^the settings are existing$/) do

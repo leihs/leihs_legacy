@@ -11,6 +11,11 @@ module AppSettings
       @system_and_security_settings ||= SystemAndSecuritySetting.first
     end
     helper_method :system_and_security_settings
+
+    def smtp_settings
+      @smtp_settings ||= SmtpSetting.first
+    end
+    helper_method :smtp_settings
   end
 
 end

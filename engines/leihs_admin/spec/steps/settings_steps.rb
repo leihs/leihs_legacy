@@ -89,14 +89,8 @@ module LeihsAdmin
                 field = find("input[name='setting[#{k}]']")
                 expect(Setting.first.send(k).to_s).to eq field.value
                 @new_settings[k] = field.value
-              when 'default_email'
-                field = find("input[name='setting[#{k}]']")
-                expect(Setting.first.send(k).to_s).to eq field.value
-                @new_settings[k] = new_value = Faker::Internet.email
-                field.set new_value
               when \
                 'contract_lending_party_string',
-                'contract_terms',
                 'custom_head_tag'
                 field = find("textarea[name='setting[#{k}]']")
                 expect(Setting.first.send(k).to_s).to eq field.value

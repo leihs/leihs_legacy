@@ -9,9 +9,9 @@ Given(/^the system is configured for the mail delivery as test mode$/) do
     setting = Setting.new
     setting[:local_currency_string] = 'GBP'
     setting[:email_signature] = 'Cheers,'
-    setting[:default_email] = 'sender@example.com'
   end
   smtp_setting[:enabled] = false
+  smtp_setting[:default_from_address] = 'sender@example.com'
   expect(setting.save).to be true
   expect(smtp_setting.save).to be true
 end

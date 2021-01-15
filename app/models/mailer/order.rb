@@ -8,7 +8,7 @@ class Mailer::Order < ActionMailer::Base
   def approved(order, comment, sent_at = Time.zone.now)
     choose_language_for(order)
     mail(to: order.target_user.email,
-         from: (order.inventory_pool.email || Setting.first.default_email),
+         from: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
          subject: _('[leihs] Reservation Confirmation'),
          date: sent_at) do |format|
       format.text do
@@ -26,7 +26,7 @@ class Mailer::Order < ActionMailer::Base
   def submitted(order, sent_at = Time.zone.now)
     choose_language_for(order)
     mail(to: order.target_user.email,
-         from: (order.inventory_pool.email || Setting.first.default_email),
+         from: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
          subject: _('[leihs] Reservation Submitted'),
          date: sent_at) do |format|
       format.text do
@@ -42,10 +42,10 @@ class Mailer::Order < ActionMailer::Base
   end
 
   def received(order, sent_at = Time.zone.now)
-    settings = Setting.first
+    smtp_settings = SmtpSetting.first
     choose_language_for(order)
-    mail(to: (order.inventory_pool.email || settings.default_email),
-         from: (order.inventory_pool.email || settings.default_email),
+    mail(to: (order.inventory_pool.email || smtp_settings.default_from_address),
+         from: (order.inventory_pool.email || smtp_settings.default_from_address),
          subject: _('[leihs] Order received'),
          date: sent_at) do |format|
       format.text do
@@ -63,7 +63,7 @@ class Mailer::Order < ActionMailer::Base
   def rejected(order, comment, sent_at = Time.zone.now)
     choose_language_for(order)
     mail(to: order.target_user.email,
-         from: (order.inventory_pool.email || Setting.first.default_email),
+         from: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
          subject: _('[leihs] Reservation Rejected'),
          date: sent_at) do |format|
       format.text do
