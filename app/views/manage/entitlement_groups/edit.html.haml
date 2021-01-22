@@ -53,17 +53,14 @@
 
             #users.row.margin-bottom-xxs
 
-              %h2
-                Users
-
-              %a{href: "/admin/inventory-pools/#{@group.inventory_pool.id}/entitlement-groups/#{@group.id}/users/"}
-                Manage users
-              and
-              %a{href: "/admin/inventory-pools/#{@group.inventory_pool.id}/entitlement-groups/#{@group.id}/groups/"}
-                manage groups
-              in the new
-              %a{href: "/admin/inventory-pools/#{@group.inventory_pool.id}/entitlement-groups/#{@group.id}"}
-                admin interface of this entitlement-group.
+              .new-admin-banner.notice.paragraph-m.row.emboss.text-align-center.padding-inset-xs.margin-top-m
+                .col1of10
+                  %i.fa.fa-wrench.flash-icon
+                .col8of10
+                  %a.white{href: "/admin/inventory-pools/#{@group.inventory_pool.id}/entitlement-groups/#{@group.id}"}<
+                    %strong
+                      = _("legacy_manage_entitlement_group_new_admin_section_notice")
+                .col1of10
 
 :coffeescript
 

@@ -903,6 +903,18 @@ window.i18n.locale_data = {
          null,
          "Fecha de inicio y fin no puede ser en el pasado"
       ],
+      "Manage user roles via Groups.": [
+         null,
+         "Manejo los roles de los usuarios a través de Grupos."
+      ],
+      "A Group contains several users. These users can gain a role by assigning the role to their Group.": [
+         null,
+         "Un grupo contiene varios usuarios. Estos usuarios pueden obtener un rol asignando el rol a su Grupo."
+      ],
+      "To allocate models to users use the %s.": [
+         null,
+         "Para asignar modelos a los usuarios use los %s."
+      ],
       "Expand All": [
          null,
          "Expandir Todo"
@@ -917,19 +929,15 @@ window.i18n.locale_data = {
       ],
       "legacy_show_delegation_in_new_admin_section": [
          null,
-         "Mostrar delegation en la nueva sección de Admin"
+         "Mostrar delegación en la nueva sección de Admin"
       ],
-      "legacy_manage_users_new_admin_section_notice_1": [
+      "legacy_manage_users_new_admin_section_notice": [
          null,
-         "Los usuarios y sus derechos de acceso también se pueden manejar en "
+         "Los usuarios y sus derechos de acceso también se pueden manejar en la nueva sección Admin."
       ],
-      "legacy_manage_users_new_admin_section_notice_2": [
+      "legacy_manage_entitlement_group_new_admin_section_notice": [
          null,
-         "la nueva sección Admin"
-      ],
-      "legacy_manage_users_new_admin_section_notice_3": [
-         null,
-         "."
+         "Los usuarios y grupos de esta entitlement-group se manejan en la nueva sección Admin."
       ]
    }
 }

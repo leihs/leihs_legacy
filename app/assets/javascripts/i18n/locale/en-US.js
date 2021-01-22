@@ -3917,6 +3917,18 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Manage user roles via Groups.": [
+         null,
+         ""
+      ],
+      "A Group contains several users. These users can gain a role by assigning the role to their Group.": [
+         null,
+         ""
+      ],
+      "To allocate models to users use the %s.": [
+         null,
+         ""
+      ],
       "Expand All": [
          null,
          ""
@@ -3933,17 +3945,13 @@ window.i18n.locale_data = {
          null,
          "Show delegation in new Admin section"
       ],
-      "legacy_manage_users_new_admin_section_notice_1": [
+      "legacy_manage_users_new_admin_section_notice": [
          null,
-         "Users and their roles can also be managed in the "
+         "Users and their roles can also be managed in the new Admin section."
       ],
-      "legacy_manage_users_new_admin_section_notice_2": [
+      "legacy_manage_entitlement_group_new_admin_section_notice": [
          null,
-         "new Admin section"
-      ],
-      "legacy_manage_users_new_admin_section_notice_3": [
-         null,
-         "."
+         "The users and groups of this entitlement-group are managed in the new Admin section."
       ]
    }
 }

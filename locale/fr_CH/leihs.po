@@ -3369,6 +3369,9 @@ msgstr "Date non valide"
 msgid "Start and end date cannot be in the past"
 msgstr "Date de début et de fin ne peut pas être dans le passé"
 
+msgid "To allocate models to users use the %s."
+msgstr "Pour attribuer des modèles aux utilisateurs, utilisez les %s."
+
 msgid "Expand All"
 msgstr "Développer Tout"
 
@@ -3381,11 +3384,8 @@ msgstr "Afficher utilisateur dans la nouvelle section d'Admin"
 msgid "legacy_show_delegation_in_new_admin_section"
 msgstr "Afficher délégation dans la nouvelle section d'Admin"
 
-msgid "legacy_manage_users_new_admin_section_notice_1"
-msgstr "Les utilisateurs et leurs droits d'accès peuvent également être gérés dans "
+msgid "legacy_manage_users_new_admin_section_notice"
+msgstr "Les utilisateurs et leurs droits d'accès peuvent également être gérés dans la nouvelle section d'Admin."
 
-msgid "legacy_manage_users_new_admin_section_notice_2"
-msgstr "la nouvelle section d'Admin"
-
-msgid "legacy_manage_users_new_admin_section_notice_3"
-msgstr "."
+msgid "legacy_manage_entitlement_group_new_admin_section_notice"
+msgstr "Les utilisateurs et groupes de cette entitlement-groupe sont gérés dans la nouvelle section d'Admin"

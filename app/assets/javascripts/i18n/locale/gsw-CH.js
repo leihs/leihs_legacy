@@ -330,7 +330,7 @@ window.i18n.locale_data = {
       ],
       "Available in entitlement-group '": [
          null,
-         "Verfüegbar i de Gruppe '"
+         "Verfüegbar i de Gruppe-Verteilig '"
       ],
       "Available in total: ": [
          null,
@@ -755,7 +755,7 @@ window.i18n.locale_data = {
       ],
       "Entitlement-Group %s": [
          null,
-         "Gruppe %s"
+         "Gruppe-Verteilig %s"
       ],
       "Hand Over": [
          null,
@@ -1302,7 +1302,7 @@ window.i18n.locale_data = {
       ],
       "Other entitlement-groups": [
          null,
-         "Anderi Gruppe"
+         "Anderi Gruppe-Verteilig"
       ],
       "Overbooked Quantity": [
          null,
@@ -1930,7 +1930,7 @@ window.i18n.locale_data = {
       ],
       "Entitlement-Groups of this customer": [
          null,
-         "Gruppene vo dem/dere Chund/in"
+         "Gruppe-Verteilig vo dem/dere Chund/in"
       ],
       "This inventory pool is closed on that day.": [
          null,
@@ -2656,7 +2656,7 @@ window.i18n.locale_data = {
       ],
       "New Entitlement-Group": [
          null,
-         "Noii Gruppe"
+         "Noii Gruppe-Verteilig"
       ],
       "List of %d Users": [
          null,
@@ -2906,11 +2906,11 @@ window.i18n.locale_data = {
       ],
       "Entitlement-Group": [
          null,
-         "Gruppe"
+         "Gruppe-Verteilig"
       ],
       "Entitlement-Groups": [
          null,
-         "Gruppene"
+         "Gruppe-Verteilig"
       ],
       "Remove": [
          null,
@@ -2918,7 +2918,7 @@ window.i18n.locale_data = {
       ],
       "List of Entitlement-Groups": [
          null,
-         "Lischte vo de Gruppene"
+         "Lischte vo de Gruppe-Verteilig"
       ],
       "Allocations": [
          null,
@@ -2938,7 +2938,7 @@ window.i18n.locale_data = {
       ],
       "Name of the entitlement-group": [
          null,
-         "Name vo de Gruppe"
+         "Name vo de Gruppe-Verteilig"
       ],
       "Name of the template": [
          null,
@@ -3904,6 +3904,18 @@ window.i18n.locale_data = {
          null,
          "Start- und Änddatum chan nöd i d Vergangeheit sii"
       ],
+      "Manage user roles via Groups.": [
+         null,
+         "Verwalte Benutzerrollen via Gruppen."
+      ],
+      "A Group contains several users. These users can gain a role by assigning the role to their Group.": [
+         null,
+         "Eine Gruppe enthält mehrere Benutzer. Diese Benutzer erhalten eine Rolle, indem eine Rolle der Gruppe zugeteilt wird."
+      ],
+      "To allocate models to users use the %s.": [
+         null,
+         "Um Modelle den Benutzern zuzuteilen, verwende die %s."
+      ],
       "Expand All": [
          null,
          "Alli Öffne"
@@ -3920,17 +3932,13 @@ window.i18n.locale_data = {
          null,
          "Delegation im noie Admin-Bereich aazeige"
       ],
-      "legacy_manage_users_new_admin_section_notice_1": [
+      "legacy_manage_users_new_admin_section_notice": [
          null,
-         "Benutzer und Zuegriff chönd au im "
+         "Benutzer und Zuegriff chönd au im noie Admin-Bereich verwaltet werde."
       ],
-      "legacy_manage_users_new_admin_section_notice_2": [
+      "legacy_manage_entitlement_group_new_admin_section_notice": [
          null,
-         "noie Admin-Bereich"
-      ],
-      "legacy_manage_users_new_admin_section_notice_3": [
-         null,
-         " verwaltet werde."
+         "Die Benutzer und Gruppene vo de Gruppe-Verteilig werde im noie Admin-Bereich verwaltet."
       ]
    }
 }

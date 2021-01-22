@@ -23,12 +23,14 @@
                 %a.dropdown-item{:href => "/admin/inventory-pools/#{current_inventory_pool.id}/delegations/add"}= _("New Delegation")
 
 
-      .notice.paragraph-m.row.emboss.text-align-center.padding-inset-xs.margin-top-m
-        %strong
-          = _("legacy_manage_users_new_admin_section_notice_1")
-          %a.white{href: "/admin/inventory-pools/#{params[:inventory_pool_id]}/users/", style: "text-decoration: underline;"}<
-            = _("legacy_manage_users_new_admin_section_notice_2")
-        %span>= _("legacy_manage_users_new_admin_section_notice_3")
+      .new-admin-banner.notice.paragraph-m.row.emboss.text-align-center.padding-inset-xs.margin-top-m
+        .col1of10
+          %i.fa.fa-wrench.flash-icon
+        .col8of10
+          %strong
+            %a.white.underlined{href: "/admin/inventory-pools/#{params[:inventory_pool_id]}/users/"}<
+              = _("legacy_manage_users_new_admin_section_notice")
+        .col1of10
 
     .margin-top-m
 

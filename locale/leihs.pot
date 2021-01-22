@@ -3517,11 +3517,11 @@ msgstr ""
 msgid "legacy_show_delegation_in_new_admin_section"
 msgstr ""
 
-msgid "legacy_manage_users_new_admin_section_notice_1"
+msgid "legacy_manage_users_new_admin_section_notice"
 msgstr ""
 
-msgid "legacy_manage_users_new_admin_section_notice_2"
+msgid "legacy_manage_users_new_admin_section_notice"
 msgstr ""
 
-msgid "legacy_manage_users_new_admin_section_notice_3"
+msgid "legacy_manage_entitlement_group_new_admin_section_notice"
 msgstr ""

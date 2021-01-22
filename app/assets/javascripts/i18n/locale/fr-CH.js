@@ -4476,6 +4476,10 @@ window.i18n.locale_data = {
          null,
          "Date de début et de fin ne peut pas être dans le passé"
       ],
+      "To allocate models to users use the %s.": [
+         null,
+         "Pour attribuer des modèles aux utilisateurs, utilisez les %s."
+      ],
       "Expand All": [
          null,
          "Développer Tout"
@@ -4492,17 +4496,13 @@ window.i18n.locale_data = {
          null,
          "Afficher délégation dans la nouvelle section d'Admin"
       ],
-      "legacy_manage_users_new_admin_section_notice_1": [
+      "legacy_manage_users_new_admin_section_notice": [
          null,
-         "Les utilisateurs et leurs droits d'accès peuvent également être gérés dans "
+         "Les utilisateurs et leurs droits d'accès peuvent également être gérés dans la nouvelle section d'Admin."
       ],
-      "legacy_manage_users_new_admin_section_notice_2": [
+      "legacy_manage_entitlement_group_new_admin_section_notice": [
          null,
-         "la nouvelle section d'Admin"
-      ],
-      "legacy_manage_users_new_admin_section_notice_3": [
-         null,
-         "."
+         "Les utilisateurs et groupes de cette entitlement-groupe sont gérés dans la nouvelle section d'Admin"
       ]
    }
 }

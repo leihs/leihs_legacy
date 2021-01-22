@@ -207,7 +207,7 @@ msgid "Available"
 msgstr "Verfüegbar."
 
 msgid "Available in entitlement-group '"
-msgstr "Verfüegbar i de Gruppe '"
+msgstr "Verfüegbar i de Gruppe-Verteilig '"
 
 msgid "Available in total: "
 msgstr "Total verfüegbar: "
@@ -527,7 +527,7 @@ msgid "Go Back"
 msgstr "Zrugg"
 
 msgid "Entitlement-Group %s"
-msgstr "Gruppe %s"
+msgstr "Gruppe-Verteilig %s"
 
 msgid "Hand Over"
 msgstr "Usegäh"
@@ -941,7 +941,7 @@ msgid "Orders"
 msgstr "Bschtelige"
 
 msgid "Other entitlement-groups"
-msgstr "Anderi Gruppe"
+msgstr "Anderi Gruppe-Verteilig"
 
 msgid "Overbooked Quantity"
 msgstr "Überbuechti Aazahl"
@@ -1428,7 +1428,7 @@ msgid "Delegated user must be empty for contract's normal user"
 msgstr ""
 
 msgid "Entitlement-Groups of this customer"
-msgstr "Gruppene vo dem/dere Chund/in"
+msgstr "Gruppe-Verteilig vo dem/dere Chund/in"
 
 msgid "This inventory pool is closed on that day."
 msgstr "De Grätepark isch a dem Tag zue."
@@ -1989,7 +1989,7 @@ msgid "New Category"
 msgstr "Noii Kategorii"
 
 msgid "New Entitlement-Group"
-msgstr "Noii Gruppe"
+msgstr "Noii Gruppe-Verteilig"
 
 msgid "List of %d Users"
 msgstr "Lischte vo %d Benutzer"
@@ -2179,16 +2179,16 @@ msgid "Access rights"
 msgstr "Zuegriffsrächt"
 
 msgid "Entitlement-Group"
-msgstr "Gruppe"
+msgstr "Gruppe-Verteilig"
 
 msgid "Entitlement-Groups"
-msgstr "Gruppene"
+msgstr "Gruppe-Verteilig"
 
 msgid "Remove"
 msgstr "Entferne"
 
 msgid "List of Entitlement-Groups"
-msgstr "Lischte vo de Gruppene"
+msgstr "Lischte vo de Gruppe-Verteilig"
 
 msgid "Allocations"
 msgstr "Zueteilige"
@@ -2203,7 +2203,7 @@ msgid "Name of the model"
 msgstr "Name vom Modäll"
 
 msgid "Name of the entitlement-group"
-msgstr "Name vo de Gruppe"
+msgstr "Name vo de Gruppe-Verteilig"
 
 msgid "Name of the template"
 msgstr "Name vo de Vorlag"
@@ -2944,6 +2944,15 @@ msgstr "Ungültiges Datum"
 msgid "Start and end date cannot be in the past"
 msgstr "Start- und Änddatum chan nöd i d Vergangeheit sii"
 
+msgid "Manage user roles via Groups."
+msgstr "Verwalte Benutzerrollen via Gruppen."
+
+msgid "A Group contains several users. These users can gain a role by assigning the role to their Group."
+msgstr "Eine Gruppe enthält mehrere Benutzer. Diese Benutzer erhalten eine Rolle, indem eine Rolle der Gruppe zugeteilt wird."
+
+msgid "To allocate models to users use the %s."
+msgstr "Um Modelle den Benutzern zuzuteilen, verwende die %s."
+
 msgid "Expand All"
 msgstr "Alli Öffne"
 
@@ -2956,11 +2965,8 @@ msgstr "Benutzer im noie Admin-Bereich aazeige"
 msgid "legacy_show_delegation_in_new_admin_section"
 msgstr "Delegation im noie Admin-Bereich aazeige"
 
-msgid "legacy_manage_users_new_admin_section_notice_1"
-msgstr "Benutzer und Zuegriff chönd au im "
+msgid "legacy_manage_users_new_admin_section_notice"
+msgstr "Benutzer und Zuegriff chönd au im noie Admin-Bereich verwaltet werde."
 
-msgid "legacy_manage_users_new_admin_section_notice_2"
-msgstr "noie Admin-Bereich"
-
-msgid "legacy_manage_users_new_admin_section_notice_3"
-msgstr " verwaltet werde."
+msgid "legacy_manage_entitlement_group_new_admin_section_notice"
+msgstr "Die Benutzer und Gruppene vo de Gruppe-Verteilig werde im noie Admin-Bereich verwaltet."
