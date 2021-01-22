@@ -11,30 +11,6 @@ Feature: Manage users
       | user      |
       | delegation|
 
-  Scenario: Add new user as inventory manager to an inventory pool
-    Given I am Pius
-    When I am looking at the user list
-    And I add a user
-    And I enter the following information
-      | First name       |
-      | Last name        |
-      | E-Mail         |
-    And I enter the login data
-    And I enter a badge ID
-    And I can only choose the following roles
-      | No access |
-      | Customer  |
-      | Group manager  |
-      | Lending manager  |
-    When I choose the following roles
-      | tab                | role              |
-      | Customer              | customer          |
-      | Group manager | group_manager   |
-      | Lending manager | lending_manager   |
-    And I assign multiple groups
-    And I save
-    Then the user and all their information is saved
-
   @rack
   Scenario: Remove access as an inventory manager
     Given I am Pius
@@ -42,14 +18,6 @@ Feature: Manage users
     When I remove their access
     And I save
     Then the user has no access to the inventory pool
-
-  # This feature has been removed, no point in translating
-  #
-  #Scenario: Startseite setzen
-  #  Given I am Pius
-  #  And man befindet sich auf der Liste der Benutzer
-  #  When man die Startseite setzt
-  #  Then ist die Liste der Benutzer die Startseite
 
   Scenario: Elements of user administration
     Given I am inventory manager or lending manager
@@ -98,7 +66,6 @@ Feature: Manage users
     Then I can create new items
     And these items cannot be inventory relevant
     And I can create options
-    And I can create and suspend users
     And I can retire items if my inventory pool is their owner and they are not inventory relevant
 
   @rack
@@ -129,37 +96,6 @@ Feature: Manage users
     When I remove their access
     And I save
     Then the user has no access to the inventory pool
-
-  Scenario: As an inventory manager, add a new user to the inventory pool
-    Given I am Mike
-    When I am looking at the user list
-    And I add a user
-    And I enter the following information
-      | Last name    |
-      | First name   |
-      | Address      |
-      | Zip          |
-      | City         |
-      | Country      |
-      | Phone        |
-      | E-Mail       |
-    And I enter the login data
-    And I enter a badge ID
-    And I can only choose the following roles
-      | No access          |
-      | Customer           |
-      | Group manager      |
-      | Lending manager    |
-      | Inventory manager  |
-    And I choose the following roles
-    | tab               | role                |
-    | Customer          | customer            |
-    | Group manager     | group_manager       |
-    | Lending manager   | lending_manager     |
-    | Inventory manager | inventory_manager   |
-    And I assign multiple groups
-    And I save
-    Then the user and all their information is saved
 
   @rack
   Scenario: Access rights available when editing a user as a lending manager
@@ -214,21 +150,6 @@ Feature: Manage users
     Then I see a confirmation of success on the list of users
     And the user's new email address is saved
     And the user still has access to the current inventory pool
-
-  @rack
-  Scenario Outline: Adding a new user without supplying require information
-    Given I am Pius
-    When I am looking at the user list
-    And I add a user
-    And all required fields are filled in
-    When I did not enter <required_information>
-    And I save
-    Then I see an error message
-    Examples:
-      | required_information |
-      | last name            |
-      | first name           |
-      | email address        |
 
   @rack
   Scenario: Reactivate a user's access to an inventory pool

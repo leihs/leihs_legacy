@@ -47,25 +47,6 @@ Feature: Delegation
     Then I can restrict the user list to show only delegations
     And I can restrict the user list to show only users
 
-  Scenario: Creating a delegation
-    Given I am Pius
-    And I can find the user administration features in the "Manage" area under "Users"
-    When I create a new delegation
-    And I give the delegation access to the current inventory pool
-    And I give the delegation a name
-    And I assign none, one or more people to the delegation
-    And I assign none, one or more groups to the delegation
-    And I cannot assign a delegation to the delegation
-    And I enter exactly one responsible person
-    And I save
-    Then the new delegation is saved with the current information
-
-  Scenario: Delegation gets access as a customer
-    Given I am Pius
-    And I can find the user administration features in the "Manage" area under "Users"
-    When I create a new delegation
-    Then I can at most give the delegation access on the customer level
-
   Scenario: Switching delegation to a user in an order
     Given I am Pius
     And there is an order for a delegation
@@ -73,19 +54,6 @@ Feature: Delegation
     When I pick a user instead of a delegation
     Then the order shows the user
     And no contact person is shown
-
-  Scenario: Trying to create a delegation without filling in required fields
-    Given I am Pius
-    And I can find the user administration features in the "Manage" area under "Users"
-    And I create a new delegation
-    When I give the delegation a name
-    And I do not enter any responsible person for the delegation
-    And I save
-    Then I see an error message
-    When I enter exactly one responsible person
-    When I do not enter any name
-    And I save
-    Then I see an error message
 
   Scenario: Editing a delegation
     Given I am Pius

@@ -31,28 +31,3 @@ Feature: Manage users
   Scenario: Alphabetical sorting of users within an inventory pool
     And I am looking at the user list in any inventory pool
     Then users are sorted alphabetically by first name
-
-  Scenario: Add new user to the inventory pool inventory manager
-    When I am looking at the user list in any inventory pool
-    And I add a user
-    And I enter the following information
-      | Last name      |
-      | First name     |
-      | E-Mail         |
-    And I enter the login data
-    And I enter a badge ID
-    Then I can only choose the following roles
-      | No access          |
-      | Customer           |
-      | Group manager      |
-      | Lending manager    |
-      | Inventory manager  |
-    When I choose the following roles
-      | tab                | role                |
-      | Customer              | customer            |
-      | Group manager  | group_manager       |
-      | Lending manager| lending_manager     |
-      | Inventory manager| inventory_manager   |
-    And I assign multiple groups
-    And I save
-    Then the user and all their information is saved

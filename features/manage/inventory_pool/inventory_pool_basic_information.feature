@@ -34,15 +34,6 @@ Feature: Basic information for inventory pools
     And I save
     Then I see an error message
 
-  @rack
-  Scenario: Automatically grant access to new users from within my own inventory pool's settings
-    Given I am Mike
-    And multiple inventory pools are granting automatic access
-    And my inventory pool is granting automatic access
-    When I create a new user with the 'inventory manager' role in my inventory pool
-    Then the newly created user has 'customer'-level access to all inventory pools that grant automatic access, but not to mine
-    And in my inventory pool the user gets the role 'inventory manager'
-
   # TODO: enable after v5 finished
   #
   # Scenario: Remove automatic access
