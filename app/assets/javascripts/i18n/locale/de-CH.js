@@ -4741,6 +4741,26 @@ window.i18n.locale_data = {
       "Inactive pools cannot have items, which are not retired.": [
          null,
          "Deaktivierte Geräteparks dürfen keine Gegenstände haben, die nicht ausgemustert sind."
+      ],
+      "legacy_show_user_in_new_admin_section": [
+         null,
+         "Benutzer im neuem Admin-Bereich anzeigen"
+      ],
+      "legacy_show_delegation_in_new_admin_section": [
+         null,
+         "Delegation im neuem Admin-Bereich anzeigen"
+      ],
+      "legacy_manage_users_new_admin_section_notice_1": [
+         null,
+         "Benutzer und Zugriffsrechte können auch im "
+      ],
+      "legacy_manage_users_new_admin_section_notice_2": [
+         null,
+         "neuen Admin-Bereich"
+      ],
+      "legacy_manage_users_new_admin_section_notice_3": [
+         null,
+         " bearbeitet werden."
       ]
    }
 }

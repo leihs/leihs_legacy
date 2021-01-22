@@ -910,6 +910,26 @@ window.i18n.locale_data = {
       "Close All": [
          null,
          "Cierra Todo"
+      ],
+      "legacy_show_user_in_new_admin_section": [
+         null,
+         "Mostrar usario en la nueva sección de Admin"
+      ],
+      "legacy_show_delegation_in_new_admin_section": [
+         null,
+         "Mostrar delegation en la nueva sección de Admin"
+      ],
+      "legacy_manage_users_new_admin_section_notice_1": [
+         null,
+         "Los usuarios y sus derechos de acceso también se pueden manejar en "
+      ],
+      "legacy_manage_users_new_admin_section_notice_2": [
+         null,
+         "la nueva sección Admin"
+      ],
+      "legacy_manage_users_new_admin_section_notice_3": [
+         null,
+         "."
       ]
    }
 }

@@ -3513,3 +3513,18 @@ msgstr ""
 
 msgid "Inactive pools cannot have items, which are not retired."
 msgstr ""
+
+msgid "legacy_show_user_in_new_admin_section"
+msgstr ""
+
+msgid "legacy_show_delegation_in_new_admin_section"
+msgstr ""
+
+msgid "legacy_manage_users_new_admin_section_notice_1"
+msgstr ""
+
+msgid "legacy_manage_users_new_admin_section_notice_2"
+msgstr ""
+
+msgid "legacy_manage_users_new_admin_section_notice_3"
+msgstr ""

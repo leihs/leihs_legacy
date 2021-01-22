@@ -4487,6 +4487,26 @@ window.i18n.locale_data = {
       "Close All": [
          null,
          "Ferme Tout"
+      ],
+      "legacy_show_user_in_new_admin_section": [
+         null,
+         "Afficher utilisateur dans la nouvelle section d'Admin"
+      ],
+      "legacy_show_delegation_in_new_admin_section": [
+         null,
+         "Afficher délégation dans la nouvelle section d'Admin"
+      ],
+      "legacy_manage_users_new_admin_section_notice_1": [
+         null,
+         "Les utilisateurs et leurs droits d'accès peuvent également être gérés dans "
+      ],
+      "legacy_manage_users_new_admin_section_notice_2": [
+         null,
+         "la nouvelle section d'Admin"
+      ],
+      "legacy_manage_users_new_admin_section_notice_3": [
+         null,
+         "."
       ]
    }
 }

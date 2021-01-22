@@ -2748,3 +2748,18 @@ msgstr ""
 
 msgid "Close All"
 msgstr ""
+
+msgid "legacy_show_user_in_new_admin_section"
+msgstr "Show user in new Admin section"
+
+msgid "legacy_show_delegation_in_new_admin_section"
+msgstr "Show delegation in new Admin section"
+
+msgid "legacy_manage_users_new_admin_section_notice_1"
+msgstr "Users and their access rights can also be managed in the "
+
+msgid "legacy_manage_users_new_admin_section_notice_2"
+msgstr "new Admin section"
+
+msgid "legacy_manage_users_new_admin_section_notice_3"
+msgstr "."
