@@ -2,7 +2,6 @@ Feature: LDAP logins
 
   Background: LDAP is configured
     Given the LDAP authentication system is enabled and configured
-    And there are some inventory pools with automatic access enabled
 
   @ldap @manual
   Scenario: Logging in via LDAP as a normal user

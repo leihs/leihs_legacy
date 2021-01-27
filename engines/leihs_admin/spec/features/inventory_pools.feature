@@ -65,18 +65,6 @@ Feature: Administer inventory pools
     Then the inventory pool is removed from the list
     And the inventory pool is deleted from the database
 
-  ###############################################################################################################
-  # TODO: rewrite when new implementation is done for v5
-  #
-  # @leihs_admin_inventory_pools
-  # Scenario: Automatically grant access to new users
-  #   Given I am Gino
-  #   And multiple inventory pools are granting automatic access
-  #   And I open the list of users
-  #   When I have created a user with login "username" and password "password"
-  #   Then the newly created user has 'customer'-level access to all inventory pools that grant automatic access
-  ###############################################################################################################
-
   @leihs_admin_inventory_pools
   Scenario Outline: Deactivating an inventory pool is not possible if there are orders or signed contracts
     Given I am Ramon

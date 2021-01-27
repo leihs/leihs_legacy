@@ -150,21 +150,6 @@ class InventoryPool < ApplicationRecord
 
   validate :validate_inactive_conditions
 
-  after_save do
-    if automatic_access and automatic_access_changed?
-      AccessRight
-        .connection
-        .execute('INSERT INTO access_rights ' \
-                   '(role, inventory_pool_id, user_id) ' \
-                 "SELECT 'customer', '#{id}', users.id " \
-                 'FROM users ' \
-                 'LEFT JOIN access_rights ' \
-                 'ON access_rights.user_id = users.id ' \
-                 "AND access_rights.inventory_pool_id = '#{id}' " \
-                 'WHERE access_rights.user_id IS NULL;')
-    end
-  end
-
   #######################################################################
 
   scope :search, lambda { |query|

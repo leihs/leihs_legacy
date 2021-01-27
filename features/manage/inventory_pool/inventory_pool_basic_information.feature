@@ -16,7 +16,6 @@ Feature: Basic information for inventory pools
     | Description |
     | Default Contract Note|
     | Print Contracts |
-    | Automatic access |
     And I make a note of which page I'm on
     And I save
     Then I see a confirmation that the information was saved
@@ -33,30 +32,6 @@ Feature: Basic information for inventory pools
       | E-Mail     |
     And I save
     Then I see an error message
-
-  # TODO: enable after v5 finished
-  #
-  # Scenario: Remove automatic access
-  #   Given I am Mike
-  #   And multiple inventory pools are granting automatic access
-  #   And I edit an inventory pool that is granting automatic access
-  #   When I disable automatic access
-  #   And I save
-  #   Then automatic access is disabled
-  #   Given I am Gino
-  #   And I am listing users
-  #   When I have created a user with login "username" and password "password"
-  #   Then the newly created user does not have access to that inventory pool
-
-  @rack
-  Scenario: Enable automatic access to a new inventory pool
-    Given I am Mike
-    And I edit an inventory pool that is not granting automatic access
-    And there are users without access right to this inventory pool
-    When I enable automatic access
-    And I save
-    Then automatic access is enabled
-    And there are no users without access right to this inventory pool
 
   Scenario Outline: Deselect checkboxes
     Given I am Mike
@@ -77,7 +52,6 @@ Feature: Basic information for inventory pools
       | checkbox                |
       | Print contracts        |
       | Automatic suspension   |
-      | Automatic access   |
 
   @rack
   Scenario: Manage workdays

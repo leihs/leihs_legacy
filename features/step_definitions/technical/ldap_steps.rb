@@ -5,14 +5,6 @@ Given(/^the LDAP authentication system is enabled and configured$/) do
   Setting::LDAP_CONFIG = File.join(Rails.root, 'features', 'data', 'LDAP_generic.yml')
 end
 
-When(/^there are some inventory pools with automatic access enabled$/) do
-      3.times do
-        FactoryGirl.create :inventory_pool
-      end
-      ips_with_automatic_access = InventoryPool.limit(2)
-      ips_with_automatic_access.each {|ip| ip.update_attributes automatic_access: true}
-end
-
 When(/^I log in as LDAP user "(.*?)"$/) do |username|
   post 'authenticator/ldap/login', {login: { user: username, password: 'pass' }}, {}
 end

@@ -3683,10 +3683,6 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "Automatic access": [
-         null,
-         "Automatische Zuegriff"
-      ],
       "New users will get customer access automatically.": [
          null,
          ""

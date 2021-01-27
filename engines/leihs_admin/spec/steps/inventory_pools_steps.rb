@@ -150,24 +150,6 @@ module LeihsAdmin
         ).to be_blank
       end
 
-      step 'multiple inventory pools are granting automatic access' do
-        InventoryPool.limit(rand(2..4)).each do |inventory_pool|
-          inventory_pool.update_attributes automatic_access: true
-        end
-        inventory_pool = \
-          @current_user
-          .inventory_pools
-          .managed
-          .where.not(automatic_access: true)
-          .first
-        if inventory_pool
-          inventory_pool.update_attributes automatic_access: true
-        end
-        @inventory_pools_with_automatic_access = \
-          InventoryPool.where(automatic_access: true)
-        expect(@inventory_pools_with_automatic_access.count).to be > 1
-      end
-
       step 'I have created a user with ' \
            'login :login and password :password' do |login, password|
         visit admin.new_user_path
@@ -180,15 +162,6 @@ module LeihsAdmin
         expect(has_content?(_('List of Users'))).to be true
         @user = User.find_by_login(login)
         expect(DatabaseAuthentication.find_by_user_id(@user.id)).not_to be_nil
-      end
-
-      step 'the newly created user has \'customer\'-level access to all ' \
-           'inventory pools that grant automatic access' do
-        expect(@user.access_rights.count)
-          .to eq @inventory_pools_with_automatic_access.count
-        expect(@user.access_rights.pluck(:inventory_pool_id))
-          .to eq @inventory_pools_with_automatic_access.pluck(:id)
-        expect(@user.access_rights.all? { |ar| ar.role == :customer }).to be true
       end
 
       step "each line displays the inventory pool's name" do

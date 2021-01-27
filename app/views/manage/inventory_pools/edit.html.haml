@@ -90,15 +90,6 @@
 
               .row.padding-inset-s.emboss.margin-bottom-xxs
                 .col1of2
-                  %strong.font-size-m= _("Automatic access")
-                  %div.padding-top-xs
-                    = _("New users will get customer access automatically.")
-                .col1of2.text-align-center
-                  %input{type: "hidden",   name: "inventory_pool[automatic_access]", value: "0"}
-                  %input{type: "checkbox", name: "inventory_pool[automatic_access]", value: "1", checked: @inventory_pool.automatic_access}
-
-              .row.padding-inset-s.emboss.margin-bottom-xxs
-                .col1of2
                   %strong.font-size-m= _("Min. number of days between current date and hand over")
                 .col1of2.text-align-right
                   %input{type: "number", name: "inventory_pool[workday_attributes][reservation_advance_days]", value: @inventory_pool.workday.reservation_advance_days, style: "width: 5em"}

@@ -1896,46 +1896,54 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:80
-- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:117
+- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:106
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:117
-- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:132
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:106
+- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:26
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:132
-- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:27
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:26
+- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:36
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:27
-- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:52
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:36
+- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:57
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:52
-- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:61
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:57
+- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:64
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:61
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:64
+- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:73
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$RUBY/bin:$PATH
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:73
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:9
   scripts:
     test:
@@ -1944,30 +1952,14 @@ tasks:
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:9
-- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:83
+- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:91
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:83
-- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:90
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:90
-- name: features/manage/inventory_pool/inventory_pool_basic_information.feature:99
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:99
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:91
 - name: features/manage/inventory_pool/inventory_pool_settings.feature:11
   scripts:
     test:

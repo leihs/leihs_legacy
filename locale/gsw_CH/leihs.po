@@ -2777,9 +2777,6 @@ msgstr "Wer hät di meischta Sachä kauft?"
 msgid "Maintenance"
 msgstr ""
 
-msgid "Automatic access"
-msgstr "Automatische Zuegriff"
-
 msgid "New users will get customer access automatically."
 msgstr ""
 

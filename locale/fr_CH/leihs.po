@@ -2841,9 +2841,6 @@ msgstr "Qui a acheté le plus d'éléments ?"
 msgid "Maintenance"
 msgstr "Maintenance"
 
-msgid "Automatic access"
-msgstr "Accès automatique"
-
 msgid "New users will get customer access automatically."
 msgstr "Les nouveaux utilisateurs auront l'accès client automatiquement."
 

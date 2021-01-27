@@ -14,8 +14,6 @@ Then(/^I enter the inventory pool's basic settings as follows:$/) do |table|
     within('.row.padding-inset-s', match: :prefer_exact, text: field_name) do
       if field_name == 'Print Contracts'
         find('input', match: :first).set false
-      elsif field_name == 'Automatic access'
-        find('input', match: :first).set true
       else
         find('input,textarea', match: :first).set (field_name == 'E-Mail' ? 'test@test.ch' : 'test')
       end
@@ -32,8 +30,6 @@ Then(/^the settings are updated$/) do
     within('.row.padding-inset-s', match: :prefer_exact, text: field_name) do
       if field_name == 'Print Contracts'
         expect(find('input', match: :first).selected?).to be false
-      elsif field_name == 'Automatic access'
-        expect(find('input', match: :first).selected?).to be true
       else
         expect(find('input,textarea', match: :first).value).to eq (field_name == 'E-Mail' ? 'test@test.ch' : 'test')
       end
@@ -161,28 +157,8 @@ Then(/^the reason for suspension is the one specified for this inventory pool$/)
   expect(@suspension.suspended_reason).to eq @reason
 end
 
-When(/^I (enable|disable) automatic access$/) do |arg1|
-  b = arg1 == 'enable'
-  within('.row.padding-inset-s', match: :prefer_exact, text: _('Automatic access')) do
-    find('input', match: :first).set b
-  end
-end
-
-Then(/^automatic access is (enabled|disabled)$/) do |arg1|
-  b = arg1 == 'enabled'
-  expect(@current_inventory_pool.reload.automatic_access).to be b
-end
-
-Given(/^I edit an inventory pool( that is( not)? granting automatic access)?$/) do |arg1, arg2|
-  if arg1
-    b = !arg2
-    @current_inventory_pool = @current_user.inventory_pools.managed.where(automatic_access: b).first
-    @current_inventory_pool ||= begin
-      ip = @current_user.inventory_pools.managed.first
-      ip.update_attributes(automatic_access: b)
-      ip
-    end
-  end
+Given(/^I edit an inventory pool$/) do
+  @current_inventory_pool = @current_user.inventory_pools.managed.first
   visit manage_edit_inventory_pool_path(@current_inventory_pool)
   @last_edited_inventory_pool = @current_inventory_pool
 end
@@ -190,23 +166,6 @@ end
 Given(/^there are( no)? users without access right to this inventory pool$/) do |arg1|
   b = !arg1
   expect(User.all.any?{|user| user.access_rights.find_by(inventory_pool_id: @current_inventory_pool).nil? }).to be b
-end
-
-Given(/^multiple inventory pools are granting automatic access$/) do
-  InventoryPool.limit(rand(2..4)).each do |inventory_pool|
-    inventory_pool.update_attributes automatic_access: true
-  end
-  if inventory_pool = @current_user.inventory_pools.managed.where.not(automatic_access: true).first
-    inventory_pool.update_attributes automatic_access: true
-  end
-  @inventory_pools_with_automatic_access = InventoryPool.where(automatic_access: true)
-  expect(@inventory_pools_with_automatic_access.count).to be > 1
-end
-
-Given(/^my inventory pool is granting automatic access$/) do
-  @current_inventory_pool.update_attributes automatic_access: true
-  @inventory_pools_with_automatic_access = InventoryPool.where(automatic_access: true)
-  expect(@inventory_pools_with_automatic_access.count).to be > 1
 end
 
 When(/^I create a new user with the 'inventory manager' role in my inventory pool$/) do
@@ -225,16 +184,6 @@ When(/^I create a new user with the 'inventory manager' role in my inventory poo
     And I save
   }
   @user = User.find_by_lastname 'test'
-end
-
-Then(/^the newly created user has 'customer'-level access to all inventory pools that grant automatic access(, but not to mine)?$/) do |arg1|
-  expect(@user.access_rights.count).to eq @inventory_pools_with_automatic_access.count
-  expect(@user.access_rights.pluck(:inventory_pool_id)).to match_array @inventory_pools_with_automatic_access.pluck(:id)
-  if arg1
-    expect(@user.access_rights.where('inventory_pool_id != ?', @current_inventory_pool ).all? {|ar| ar.role == :customer}).to be true
-  else
-    expect(@user.access_rights.all? {|ar| ar.role == :customer}).to be true
-  end
 end
 
 Then(/^in my inventory pool the user gets the role 'inventory manager'$/) do
@@ -284,8 +233,6 @@ When(/^I (enable|disable) "(.*)"$/) do |arg1, arg2|
       find("input[type='checkbox'][name='inventory_pool[print_contracts]']").set b
     when 'Automatic suspension'
       find("input[type='checkbox'][name='inventory_pool[automatic_suspension]']").set b
-    when 'Automatic access'
-      find("input[type='checkbox'][name='inventory_pool[automatic_access]']").set b
     else
       raise
   end
@@ -305,8 +252,6 @@ Then(/^"(.*)" is (enabled|disabled)$/) do |arg1, arg2|
       expect(@current_inventory_pool.reload.print_contracts).to eq b
     when 'Automatic suspension'
       expect(@current_inventory_pool.reload.automatic_suspension).to eq b
-    when 'Automatic access'
-      expect(@current_inventory_pool.reload.automatic_access).to eq b
     else
       raise
   end

@@ -2942,9 +2942,6 @@ msgstr "Wer hat die meisten Gegenstände gekauft?"
 msgid "Maintenance"
 msgstr "Maintenance"
 
-msgid "Automatic access"
-msgstr "Automatischer Zugriff"
-
 msgid "New users will get customer access automatically."
 msgstr "Neue Benutzer kriegen automatisch den Zugriff als Kunde."
 
