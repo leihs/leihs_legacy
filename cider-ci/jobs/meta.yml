@@ -103,6 +103,9 @@ jobs:
                 # attach for easy local debugging:
                 mkdir -p tmp/attach && tar czf tmp/attach/assets.tar.gz public/assets
 
+                # ls -la tmp/checked_in_assets
+                # ls -la public/assets
+
                 cider-ci/bin/check-precompiled-assets tmp/checked_in_assets public/assets
 
                 # don't keep the attachment if there was no failure!
