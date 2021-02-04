@@ -33,13 +33,14 @@
               {{jed "Edit"/}}
             </a>
           </li>
+          {{if !isDelegation()}}
           <li>
             <a class='dropdown-item' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/users/{{>id}}'>
               <i class='fa fa-edit'></i>
               {{jed "legacy_show_user_in_new_admin_section"/}}
             </a>
           </li>
-          {{if isDelegation()}}
+          {{else}}
           <li>
             <a class='dropdown-item' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/delegations/{{>id}}'>
               <i class='fa fa-edit'></i>
@@ -64,6 +65,21 @@
           <div class='arrow down'></div>
         </div>
         <ul class='dropdown right'>
+          {{if !isDelegation()}}
+          <li>
+            <a class='dropdown-item' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/users/{{>id}}'>
+              <i class='fa fa-edit'></i>
+              {{jed "legacy_show_user_in_new_admin_section"/}}
+            </a>
+          </li>
+          {{else}}
+          <li>
+            <a class='dropdown-item' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/delegations/{{>id}}'>
+              <i class='fa fa-edit'></i>
+              {{jed "legacy_show_delegation_in_new_admin_section"/}}
+            </a>
+          </li>
+          {{/if}}
           <li>
             <a class='dropdown-item' href='mailto:{{>email}}'>
               <i class='fa fa-envelope'></i>
