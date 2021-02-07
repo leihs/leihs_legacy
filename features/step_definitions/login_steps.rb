@@ -28,10 +28,10 @@ end
 
 Given "I log in as a $role for inventory pool '$ip_name'$with_access_level" do |role, ip_name,with_access_level|
   # use default user name
-  step "a #{role} 'inv_man_0' for inventory pool '#{ip_name}'#{with_access_level}"
+  step "a #{role} 'invman0' for inventory pool '#{ip_name}'#{with_access_level}"
 
-  step "I log in as 'inv_man_0' with password 'pass'" # use default pw
-  @last_manager_login_name = 'inv_man_0'
+  step "I log in as 'invman0' with password 'pass'" # use default pw
+  @last_manager_login_name = 'invman0'
 end
 
 # This one 'really' goes through the auth process

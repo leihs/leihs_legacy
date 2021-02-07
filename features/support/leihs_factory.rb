@@ -223,7 +223,7 @@ module LeihsFactory
     inventory_pool = LeihsFactory.create_inventory_pool_default_workdays
 
     # Create Manager
-    user = LeihsFactory.create_user( {login: 'inv_man'},
+    user = LeihsFactory.create_user( {login: 'invman1'},
                                     {role: :lending_manager,
                                      inventory_pool: inventory_pool})
     # Create Customer

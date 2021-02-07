@@ -1,4 +1,4 @@
-Given '$ip has default workdays' do 
+Given '$ip has default workdays' do
 end
 
 Given 'inventory_pool is open on $days' do |days|
@@ -21,7 +21,7 @@ Given 'holidays are from $startdate - $finished because of $reason' do |startdat
   ip.holidays << Holiday.new(start_date: LeihsFactory.parsedate(startdate),
                               end_date: LeihsFactory.parsedate(finish),
                               name: reason)
-  ip.save                                            
+  ip.save
 end
 
 Given '$date is free because of $reason' do |date, reason|
@@ -45,7 +45,7 @@ end
 When '$who try to order an item for $date' do |who, date|
   inventory_pool, inv_manager, user, model = LeihsFactory.create_dataset_simple
 
-  # Login                            
+  # Login
   post login_path(login: user.login)
   step "I am logged in as '#{user.login}' with password '#{nil}'"
   @current_user.reservations.unsubmitted.delete_all if @reservations
@@ -77,7 +77,7 @@ Then 'that should be possible$reason' do |reason|
   expect(line.save).to be true
 end
 
-When 'trying to set the end date to the same date' do  
+When 'trying to set the end date to the same date' do
   line = @reservations.first
   line.end_date = LeihsFactory.parsedate(@date)
   @save_successful = line.save
@@ -93,9 +93,9 @@ Then 'he sees that his inventory pool is currently open on $days' do |days|
     other_days.delete(day.strip)
     expect(@workday.send(day.strip)).to be true
   end
-  
+
   other_days.each do |day|
-#    if @workday.send(day) == true 
+#    if @workday.send(day) == true
 #      puts "****************"
 #      puts @workday.inspect
 #      puts "****************"

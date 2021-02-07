@@ -72,7 +72,7 @@ def create_overdue_reservation(login, ip_name, product_name, inventory_code)
   r.status = :signed
   r.contract = contract
   r.user = u
-  r.handed_over_by_user_id = user_by_login('User1')
+  r.handed_over_by_user_id = user_by_login('user1')
 
   contract.reservations << r
   contract.save!
@@ -107,21 +107,21 @@ def add_ip_customer(ip_name, login)
 end
 
 def execute_scenario
-  create_a_user('User1')
-  create_a_user('User2')
+  create_a_user('user1')
+  create_a_user('user2')
   create_pool('Ip3', 'Description3')
-  add_ip_manager('Ip3', 'User1')
-  add_ip_customer('Ip3', 'User2')
+  add_ip_manager('Ip3', 'user1')
+  add_ip_customer('Ip3', 'user2')
   create_model('Model1', 3)
   create_an_item('Ip3', 'Model1', 'Any')
   create_an_item('Ip3', 'Model1', 'Inv1')
   create_an_item('Ip3', 'Model1', 'Inv2')
   create_an_item('Ip3', 'Model1', 'Inv3')
-  create_reservation('User2', 'Ip3', 'Model1')
-  create_reservation_with_item('User2', 'Ip3', 'Model1', 'Inv1')
-  create_overdue_reservation('User2', 'Ip3', 'Model1', 'Inv2')
-  create_future_reservation('User2', 'Ip3', 'Model1', 'Inv3')
-  do_login('User1', 'password') # Default password in user_factory.rb
+  create_reservation('user2', 'Ip3', 'Model1')
+  create_reservation_with_item('user2', 'Ip3', 'Model1', 'Inv1')
+  create_overdue_reservation('user2', 'Ip3', 'Model1', 'Inv2')
+  create_future_reservation('user2', 'Ip3', 'Model1', 'Inv3')
+  do_login('user1', 'password') # Default password in user_factory.rb
   open_timeline('Ip3', 'Model1')
 end
 

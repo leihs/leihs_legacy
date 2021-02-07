@@ -9,7 +9,7 @@ Feature: Availability of Models
       # this used the old UI -- we don't need to use any UI at all, so let's do the login more
       # directly as below
         #And a lending_manager for inventory pool 'ABC' logs in as 'lending_manager'
-    And a lending_manager for inventory pool 'ABC' is logged in as 'lending_manager'
+    And a lending_manager for inventory pool 'ABC' is logged in as 'lendingmanager'
 
   @rack
   Scenario: No reservations
@@ -99,7 +99,7 @@ Feature: Availability of Models
     When lending_manager checks availability for 'Lasersword Grendab'
     Then if I check the maximum available quantity for 8.1.2030 it is 1 on 4.1.2030
     Then if I check the maximum available quantity for 8.1.2030 it is 1 on 6.1.2030
-    Given the lending_manager signs the contract
+    Given the lendingmanager signs the contract
     When lending_manager checks availability for 'Lasersword Grendab'
     Then if I check the maximum available quantity for 8.1.2030 it is 1 on 4.1.2030
     Then if I check the maximum available quantity for 8.1.2030 it is 0 on 6.1.2030

@@ -55,7 +55,7 @@ Given /^inventory pool model test data setup$/ do
 
   User.delete_all
 
-  %W(le_mac eichen_berge birke venger siegfried).each do |login_name|
+  %W(lemac eichenberge birke venger siegfried).each do |login_name|
     LeihsFactory.create_user login: login_name
   end
 

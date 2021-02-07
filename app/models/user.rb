@@ -366,6 +366,6 @@ class User < ApplicationRecord
   end
 
   def system_admin?
-    SystemAdminUser.where(user_id: self.id).exists?
+    self.is_system_admin
   end
 end
