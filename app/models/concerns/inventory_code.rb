@@ -84,7 +84,7 @@ module Concerns
       #
       # Attention: params could be negative!
       #
-      def free_inventory_code_ranges(params)
+      def free_inventory_code_ranges(params = {})
         infinity = 1 / 0.0
         default_params = { from: 1, to: infinity, min_gap: 1 }
         params.reverse_merge!(default_params)
@@ -114,6 +114,14 @@ module Concerns
         ranges << [last_n + 1, to] if last_n + 1 <= to and (to - last_n >= min_gap)
 
         ranges
+      end
+
+      def free_consecutive_code_numbers(quantity = 1)
+        r =
+          free_inventory_code_ranges
+          .find { |r| quantity <= r.second - r.first + 1 }
+
+        Range.new(*r).take(quantity)
       end
     end
   end
