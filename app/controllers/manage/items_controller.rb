@@ -52,32 +52,45 @@ class Manage::ItemsController < Manage::ApplicationController
   #   @return_url = params[:return_url] if params[:return_url]
   #   fetch_item_by_id
   # end
+  
+  def initialize_and_save_item(inv_code = nil)
+    item = Item.new(owner: current_inventory_pool)
+    item.skip_serial_number_validation = skip_serial_number_validation_param
+
+    check_fields_for_write_permissions(item)
+
+    unless item.errors.any?
+      item.attributes = item_params
+      item.attributes[:inventory_code] = inv_code if inv_code
+      if item_params[:room_id].blank? and item.license?
+        item.room = Room.general_general
+      end
+      saved = item.save
+
+      params[:child_items]&.each do |child_id|
+        child = Item.find(child_id)
+        child.skip_serial_number_validation = true
+        child.parent = item
+        child.save!
+      end
+    end
+  end
 
   def create
     ApplicationRecord.transaction(requires_new: true) do
-      @item = Item.new(owner: current_inventory_pool)
-      @item.skip_serial_number_validation = skip_serial_number_validation_param
-
-      check_fields_for_write_permissions(@item)
-
-      unless @item.errors.any?
-        @item.attributes = item_params
-        if item_params[:room_id].blank? and @item.license?
-          @item.room = Room.general_general
-        end
-        saved = @item.save
-
-        params[:child_items]&.each do |child_id|
-          child = Item.find(child_id)
-          child.skip_serial_number_validation = true
-          child.parent = @item
-          child.save!
-        end
-      end
+      saved? = if quantity_param and quantity_param > 1
+                 free_consecutive_code_numbers(quantity_param).map do |inv_code|
+                   initialize_and_save_item(inv_code)
+                 end
+                   .uniq
+                   .first
+               else
+                 initialize_and_save_item
+               end
 
       respond_to do |format|
         format.json do
-          if saved
+          if saved?
             if params[:copy]
               render(status: :ok,
                      json: { id: @item.id,
@@ -378,5 +391,9 @@ class Manage::ItemsController < Manage::ApplicationController
 
   def item_params
     params.require(:item)
+  end
+
+  def quantity_param
+    item_params.fetch(:quantity) { |x| x.to_i }
   end
 end
