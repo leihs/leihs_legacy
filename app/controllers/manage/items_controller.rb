@@ -58,7 +58,7 @@ class Manage::ItemsController < Manage::ApplicationController
       @item = Item.new(owner: current_inventory_pool)
       @item.skip_serial_number_validation = skip_serial_number_validation_param
 
-      check_fields_for_write_permissions
+      check_fields_for_write_permissions(@item)
 
       unless @item.errors.any?
         @item.attributes = item_params
@@ -114,7 +114,7 @@ class Manage::ItemsController < Manage::ApplicationController
       if @item
         @item.skip_serial_number_validation = skip_serial_number_validation_param
 
-        check_fields_for_write_permissions
+        check_fields_for_write_permissions(@item)
 
         unless @item.errors.any?
           # NOTE avoid to lose already stored properties
@@ -343,17 +343,17 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  def check_fields_for_write_permissions
+  def check_fields_for_write_permissions(item)
     Field.all.each do |field|
       next unless field.data['permissions']
       next unless field_data_in_params?(field, item_params)
-      next if field.editable(current_user, current_inventory_pool, @item)
-      @item
-        .errors
-        .add(:base,
-             _('You are not the owner of this item') \
-             + ', ' \
-             + _('therefore you may not be able to change some of these fields'))
+      next if field.editable(current_user, current_inventory_pool, item)
+      item
+       .errors
+       .add(:base,
+            _('You are not the owner of this item') \
+            + ', ' \
+            + _('therefore you may not be able to change some of these fields'))
     end
   end
 
