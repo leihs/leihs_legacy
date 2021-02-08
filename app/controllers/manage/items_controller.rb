@@ -78,19 +78,19 @@ class Manage::ItemsController < Manage::ApplicationController
 
   def create
     ApplicationRecord.transaction(requires_new: true) do
-      saved? = if quantity_param and quantity_param > 1
-                 free_consecutive_code_numbers(quantity_param).map do |inv_code|
-                   initialize_and_save_item(inv_code)
-                 end
-                   .uniq
-                   .first
-               else
-                 initialize_and_save_item
-               end
+      saved = if quantity_param and quantity_param > 1
+                free_consecutive_code_numbers(quantity_param).map do |inv_code|
+                  initialize_and_save_item(inv_code)
+                end
+                  .uniq
+                  .first
+              else
+                initialize_and_save_item
+              end
 
       respond_to do |format|
         format.json do
-          if saved?
+          if saved
             if params[:copy]
               render(status: :ok,
                      json: { id: @item.id,
