@@ -38,30 +38,14 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  # def new
-  #   @type = params[:type] ? params[:type] : 'item'
-  #   @item = Item.new(owner: current_inventory_pool)
-  #   @item.inventory_code = Item.proposed_inventory_code(current_inventory_pool)
-  #   unless @current_user.has_role?(:lending_manager, current_inventory_pool)
-  #     @item.inventory_pool = current_inventory_pool
-  #   end
-  #   @item.is_inventory_relevant = (super_user? ? true : false)
-  # end
-  #
-  # def edit
-  #   @return_url = params[:return_url] if params[:return_url]
-  #   fetch_item_by_id
-  # end
-  
   def initialize_and_save_item(inv_code = nil)
     item = Item.new(owner: current_inventory_pool)
-    item.skip_serial_number_validation = skip_serial_number_validation_param
+    # item.skip_serial_number_validation = skip_serial_number_validation_param
 
     check_fields_for_write_permissions(item)
 
     unless item.errors.any?
-      item.attributes = item_params
-      item.attributes[:inventory_code] = inv_code if inv_code
+      item.attributes = item_params(inv_code)
       if item_params[:room_id].blank? and item.license?
         item.room = Room.general_general
       end
@@ -79,27 +63,24 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def create_multiple_result
-    json = 
-      Item
-      .find(params[:ids])
-      .map { |i| i.as_json(JSON_SPEC).to_json }
-
+    json = Item.find(params[:ids]).map { |i| i.as_json(JSON_SPEC) }
     render(json: json, status: :ok)
   end
 
   def create_multiple
-    if quantity_param and quantity_param > 0
+    if quantity_param > 0
       ApplicationRecord.transaction(requires_new: true) do
         items = 
-          free_consecutive_inventory_codes(current_inventory_pool, quantity_param)
+          Item
+          .free_consecutive_inventory_codes(current_inventory_pool, quantity_param)
           .map { |inv_code| initialize_and_save_item(inv_code) }
 
         respond_to do |format|
           format.json do
-            if items.all?(&:saved?)
+            if items.all?(&:persisted?)
               render(status: :ok,
                      json: { redirect_url:
-                             manage_create_multiple_result_path(
+                             manage_create_multiple_items_result_path(
                                current_inventory_pool,
                                ids: items.map(&:id)
                              )})
@@ -108,8 +89,8 @@ class Manage::ItemsController < Manage::ApplicationController
                 items
                 .map { |i| item_errors_full_messages(i) }
                 .flatten
-
               render(json: { message: errors }, status: :bad_request)
+              raise ActiveRecord::Rollback
             end
           end
         end
@@ -270,7 +251,7 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def new
-    save_path = manage_create_item_path
+    save_path = manage_create_multiple_items_path
 
     next_code = Item.proposed_inventory_code(current_inventory_pool)
     if params[:forPackage] == 'true'
@@ -281,6 +262,7 @@ class Manage::ItemsController < Manage::ApplicationController
       lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
       highest_code: Item.proposed_inventory_code(current_inventory_pool, :highest),
       inventory_pool: current_inventory_pool,
+      quantity: 2,
       is_inventory_relevant: (super_user? ? true : false),
       save_path: save_path,
       store_attachment_path: manage_item_store_attachment_react_path,
@@ -406,7 +388,7 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def skip_serial_number_validation_param
-    ssnv = params.require(:item).delete(:skip_serial_number_validation)
+    ssnv = params.require(:item) # .delete(:skip_serial_number_validation)
     if ssnv.try(:==, 'true')
       true
     else
@@ -424,11 +406,13 @@ class Manage::ItemsController < Manage::ApplicationController
     item.errors.full_messages.reverse.uniq.join(' ')
   end
 
-  def item_params
-    params.require(:item)
+  def item_params(inv_code = nil)
+    item_ps = params.require(:item)
+    item_ps[:inventory_code] = inv_code if inv_code
+    item_ps
   end
 
   def quantity_param
-    item_params.fetch(:quantity) { |x| x.to_i }
+    params.require(:quantity).to_i
   end
 end
