@@ -16,8 +16,8 @@ module Concerns
 
     module ClassMethods
 
-      def prefix_number(num)
-        "#{inventory_pool.shortname}#{num}"
+      def prefix_number(pool, num)
+        "#{pool.shortname}#{num}"
       end
 
       # extract *last* number sequence in string
@@ -49,7 +49,7 @@ module Concerns
                        .first
                    end
 
-        prefix_number(next_num)
+        prefix_number(inventory_code, next_num)
       end
 
       # if argument is false returns { 1 => 3, 2 => 1, 77 => 1, 79 => 2, ... }
@@ -128,8 +128,8 @@ module Concerns
         Range.new(*r).take(quantity)
       end
 
-      def free_consecutive_inventory_codes(quantity = 1)
-        free_consecutive_code_numbers(quantity).map { |n| prefix_number(n) }
+      def free_consecutive_inventory_codes(pool, quantity = 1)
+        free_consecutive_code_numbers(quantity).map { |n| prefix_number(pool, n) }
       end
     end
   end

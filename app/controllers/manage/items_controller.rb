@@ -79,7 +79,8 @@ class Manage::ItemsController < Manage::ApplicationController
   def create
     ApplicationRecord.transaction(requires_new: true) do
       saved = if quantity_param and quantity_param > 1
-                free_consecutive_code_numbers(quantity_param).map do |inv_code|
+                free_consecutive_code_numbers(current_inventory_pool, 
+                                              quantity_param).map do |inv_code|
                   initialize_and_save_item(inv_code)
                 end
                   .uniq
