@@ -219,6 +219,7 @@ class Manage::ItemsController < Manage::ApplicationController
       inventory_pool: current_inventory_pool,
       is_inventory_relevant: (super_user? ? true : false),
       save_path: manage_create_item_path,
+      save_multiple_path: manage_create_multiple_items_path,
       store_attachment_path: manage_item_store_attachment_react_path,
       inventory_path: manage_inventory_path,
 
@@ -256,19 +257,19 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def new
-    save_path = manage_create_item_path
-
     next_code = Item.proposed_inventory_code(current_inventory_pool)
     if params[:forPackage] == 'true'
       next_code = 'P-' + next_code
     end
+
     @props = {
       next_code: next_code,
       lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
       highest_code: Item.proposed_inventory_code(current_inventory_pool, :highest),
       inventory_pool: current_inventory_pool,
       is_inventory_relevant: (super_user? ? true : false),
-      save_path: save_path,
+      save_path: manage_create_item_path,
+      save_multiple_path: manage_create_multiple_items_path,
       store_attachment_path: manage_item_store_attachment_react_path,
       inventory_path: manage_inventory_path,
       item_type: (params[:type] == 'license' ? 'license' : 'item'),
