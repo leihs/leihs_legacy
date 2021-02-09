@@ -65,7 +65,7 @@ class Manage::ItemsController < Manage::ApplicationController
       if item_params[:room_id].blank? and item.license?
         item.room = Room.general_general
       end
-      saved = item.save
+      item.save
 
       params[:child_items]&.each do |child_id|
         child = Item.find(child_id)
@@ -74,41 +74,75 @@ class Manage::ItemsController < Manage::ApplicationController
         child.save!
       end
     end
+
+    item
+  end
+
+  def create_multiple_result
+    json = 
+      Item
+      .find(params[:ids])
+      .map { |i| i.as_json(JSON_SPEC).to_json }
+
+    render(json: json, status: :ok)
+  end
+
+  def create_multiple
+    if quantity_param and quantity_param > 0
+      ApplicationRecord.transaction(requires_new: true) do
+        items = 
+          free_consecutive_inventory_codes(current_inventory_pool, quantity_param)
+          .map { |inv_code| initialize_and_save_item(inv_code) }
+
+        respond_to do |format|
+          format.json do
+            if items.all?(&:saved?)
+              render(status: :ok,
+                     json: { redirect_url:
+                             manage_create_multiple_result_path(
+                               current_inventory_pool,
+                               ids: items.map(&:id)
+                             )})
+            else
+              errors = 
+                items
+                .map { |i| item_errors_full_messages(i) }
+                .flatten
+
+              render(json: { message: errors }, status: :bad_request)
+            end
+          end
+        end
+      end
+    else
+      raise 'Quantity param not provided or equal zero.'
+    end
   end
 
   def create
     ApplicationRecord.transaction(requires_new: true) do
-      saved = if quantity_param and quantity_param > 1
-                free_consecutive_code_numbers(current_inventory_pool, 
-                                              quantity_param).map do |inv_code|
-                  initialize_and_save_item(inv_code)
-                end
-                  .uniq
-                  .first
-              else
-                initialize_and_save_item
-              end
+      item = initialize_and_save_item
 
       respond_to do |format|
         format.json do
-          if saved
+          if item.persisted?
             if params[:copy]
               render(status: :ok,
-                     json: { id: @item.id,
+                     json: { id: item.id,
                              redirect_url: \
                                manage_copy_item_path(current_inventory_pool,
-                                                     @item.id) })
+                                                     item.id) })
             else
-              json = @item.as_json(JSON_SPEC).to_json
+              json = item.as_json(JSON_SPEC).to_json
               render(status: :ok, json: json)
             end
           else
-            if @item
+            if item
               render \
                 json: {
-                  message: item_errors_full_messages,
+                  message: item_errors_full_messages(item),
                   can_bypass_unique_serial_number_validation: \
-                    can_bypass_unique_serial_number_validation?(@item)
+                    can_bypass_unique_serial_number_validation?(item)
                 },
                 status: :bad_request
             else
@@ -167,7 +201,7 @@ class Manage::ItemsController < Manage::ApplicationController
             if @item
               render \
                 json: {
-                  message: item_errors_full_messages,
+                  message: item_errors_full_messages(@item),
                   can_bypass_unique_serial_number_validation: \
                     can_bypass_unique_serial_number_validation?(@item)
                 },
@@ -384,10 +418,10 @@ class Manage::ItemsController < Manage::ApplicationController
     not item.unique_serial_number? and item.errors.size == 1
   end
 
-  def item_errors_full_messages
+  def item_errors_full_messages(item)
     # `reverse` because the error message for the serial number
     # should be displayed as last.
-    @item.errors.full_messages.reverse.uniq.join(' ')
+    item.errors.full_messages.reverse.uniq.join(' ')
   end
 
   def item_params

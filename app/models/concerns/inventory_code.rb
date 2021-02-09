@@ -49,7 +49,7 @@ module Concerns
                        .first
                    end
 
-        prefix_number(inventory_code, next_num)
+        prefix_number(inventory_pool, next_num)
       end
 
       # if argument is false returns { 1 => 3, 2 => 1, 77 => 1, 79 => 2, ... }
