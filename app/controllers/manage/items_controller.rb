@@ -38,7 +38,7 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  def initialize_and_save_item(inv_code = nil)
+  def initialize_and_save_item(inv_code = nil, with_copy_defaults = false)
     item = Item.new(owner: current_inventory_pool)
     # item.skip_serial_number_validation = skip_serial_number_validation_param
 
@@ -50,6 +50,7 @@ class Manage::ItemsController < Manage::ApplicationController
       if item.attributes[:room_id].blank? and item.license?
         item.room = Room.general_general
       end
+      set_copy_defaults(item) if with_copy_defaults
       item.save
 
       params[:child_items]&.each do |child_id|
@@ -75,8 +76,7 @@ class Manage::ItemsController < Manage::ApplicationController
           Item
           .free_consecutive_inventory_codes(current_inventory_pool, quantity_param)
           .map do |inv_code|
-            item = initialize_and_save_item(inv_code) 
-            set_copy_defaults(item)
+            initialize_and_save_item(inv_code, :with_copy_defaults) 
           end
 
         respond_to do |format|
@@ -201,13 +201,8 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  def set_copy_defaults(item, inv_code = nil)
+  def set_copy_defaults(item)
     item.owner = current_inventory_pool
-    item.inventory_code = if inv_code
-                            inv_code
-                          else
-                            Item.proposed_inventory_code(current_inventory_pool)
-                          end
     item.serial_number = nil
     item.name = nil
     item.last_check = Date.today
@@ -218,6 +213,7 @@ class Manage::ItemsController < Manage::ApplicationController
     fetch_item_by_id
     @type = @item.type.downcase
     @item = @item.dup
+    @item.inventory_code = Item.proposed_inventory_code(current_inventory_pool)
     set_copy_defaults(@item)
 
     @props = {
