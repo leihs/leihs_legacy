@@ -42,11 +42,12 @@ class Manage::ItemsController < Manage::ApplicationController
     item = Item.new(owner: current_inventory_pool)
     # item.skip_serial_number_validation = skip_serial_number_validation_param
 
-    check_fields_for_write_permissions(item)
+    item_params = get_item_params!(inv_code)
+    check_fields_for_write_permissions(item, item_params)
 
     unless item.errors.any?
-      item.attributes = item_params(inv_code)
-      if item_params[:room_id].blank? and item.license?
+      item.attributes = item_params
+      if item.attributes[:room_id].blank? and item.license?
         item.room = Room.general_general
       end
       item.save
@@ -73,7 +74,10 @@ class Manage::ItemsController < Manage::ApplicationController
         items = 
           Item
           .free_consecutive_inventory_codes(current_inventory_pool, quantity_param)
-          .map { |inv_code| initialize_and_save_item(inv_code) }
+          .map do |inv_code|
+            item = initialize_and_save_item(inv_code) 
+            set_copy_defaults(item)
+          end
 
         respond_to do |format|
           format.json do
@@ -139,11 +143,12 @@ class Manage::ItemsController < Manage::ApplicationController
     ApplicationRecord.transaction(requires_new: true) do
 
       fetch_item_by_id
+      item_params = get_item_params!
 
       if @item
         # @item.skip_serial_number_validation = skip_serial_number_validation_param
 
-        check_fields_for_write_permissions(@item)
+        check_fields_for_write_permissions(@item, item_params)
 
         unless @item.errors.any?
           # NOTE avoid to lose already stored properties
@@ -196,16 +201,24 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
+  def set_copy_defaults(item, inv_code = nil)
+    item.owner = current_inventory_pool
+    item.inventory_code = if inv_code
+                            inv_code
+                          else
+                            Item.proposed_inventory_code(current_inventory_pool)
+                          end
+    item.serial_number = nil
+    item.name = nil
+    item.last_check = Date.today
+    item.attachments = []
+  end
+
   def copy
     fetch_item_by_id
     @type = @item.type.downcase
     @item = @item.dup
-    @item.owner = @current_inventory_pool
-    @item.inventory_code = Item.proposed_inventory_code(current_inventory_pool)
-    @item.serial_number = nil
-    @item.name = nil
-    @item.last_check = Date.today
-    @item.attachments = []
+    set_copy_defaults(@item)
 
     @props = {
       next_code: Item.proposed_inventory_code(current_inventory_pool),
@@ -372,7 +385,7 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  def check_fields_for_write_permissions(item)
+  def check_fields_for_write_permissions(item, item_params)
     Field.all.each do |field|
       next unless field.data['permissions']
       next unless field_data_in_params?(field, item_params)
@@ -405,7 +418,7 @@ class Manage::ItemsController < Manage::ApplicationController
     item.errors.full_messages.reverse.uniq.join(' ')
   end
 
-  def item_params(inv_code = nil)
+  def get_item_params!(inv_code = nil)
     item_ps = params.require(:item)
     item_ps[:inventory_code] = inv_code if inv_code
     ###############################################################################
