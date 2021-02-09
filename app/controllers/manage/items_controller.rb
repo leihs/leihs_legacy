@@ -251,7 +251,7 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def new
-    save_path = manage_create_multiple_items_path
+    save_path = manage_create_item_path
 
     next_code = Item.proposed_inventory_code(current_inventory_pool)
     if params[:forPackage] == 'true'
@@ -262,7 +262,6 @@ class Manage::ItemsController < Manage::ApplicationController
       lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
       highest_code: Item.proposed_inventory_code(current_inventory_pool, :highest),
       inventory_pool: current_inventory_pool,
-      quantity: 2,
       is_inventory_relevant: (super_user? ? true : false),
       save_path: save_path,
       store_attachment_path: manage_item_store_attachment_react_path,
