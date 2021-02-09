@@ -141,7 +141,7 @@ class Manage::ItemsController < Manage::ApplicationController
       fetch_item_by_id
 
       if @item
-        @item.skip_serial_number_validation = skip_serial_number_validation_param
+        # @item.skip_serial_number_validation = skip_serial_number_validation_param
 
         check_fields_for_write_permissions(@item)
 
@@ -386,14 +386,14 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  def skip_serial_number_validation_param
-    ssnv = params.require(:item) # .delete(:skip_serial_number_validation)
-    if ssnv.try(:==, 'true')
-      true
-    else
-      false
-    end
-  end
+  # def skip_serial_number_validation_param
+  #   ssnv = params.require(:item).fetch(:skip_serial_number_validation)
+  #   if ssnv.try(:==, 'true')
+  #     true
+  #   else
+  #     false
+  #   end
+  # end
 
   def can_bypass_unique_serial_number_validation?(item)
     not item.unique_serial_number? and item.errors.size == 1
@@ -408,6 +408,16 @@ class Manage::ItemsController < Manage::ApplicationController
   def item_params(inv_code = nil)
     item_ps = params.require(:item)
     item_ps[:inventory_code] = inv_code if inv_code
+    ###############################################################################
+    # convert `skip_serial_number_validation` to boolean
+    ###############################################################################
+    ssnv = item_ps.fetch(:skip_serial_number_validation, false)
+    item_ps[:skip_serial_number_validation] = if ssnv.try(:==, 'true')
+                                                true
+                                              else
+                                                false
+                                              end
+    ###############################################################################
     item_ps
   end
 
