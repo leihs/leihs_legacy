@@ -70,37 +70,33 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def create_multiple
-    if quantity_param > 0
-      ApplicationRecord.transaction(requires_new: true) do
-        items = 
-          Item
-          .free_consecutive_inventory_codes(current_inventory_pool, quantity_param)
-          .map do |inv_code|
-            initialize_and_save_item(inv_code, :with_copy_defaults) 
-          end
+    ApplicationRecord.transaction(requires_new: true) do
+      items = 
+        Item
+        .free_consecutive_inventory_codes(current_inventory_pool, quantity_param)
+        .map do |inv_code|
+          initialize_and_save_item(inv_code, :with_copy_defaults) 
+        end
 
-        respond_to do |format|
-          format.json do
-            if items.all?(&:persisted?)
-              render(status: :ok,
-                     json: { redirect_url:
-                             manage_create_multiple_items_result_path(
-                               current_inventory_pool,
-                               ids: items.map(&:id)
-                             )})
-            else
-              errors = 
-                items
-                .map { |i| item_errors_full_messages(i) }
-                .flatten
-              render(json: { message: errors }, status: :bad_request)
-              raise ActiveRecord::Rollback
-            end
+      respond_to do |format|
+        format.json do
+          if items.all?(&:persisted?)
+            render(status: :ok,
+                   json: { redirect_url:
+                           manage_create_multiple_items_result_path(
+                             current_inventory_pool,
+                             ids: items.map(&:id)
+                           )})
+          else
+            errors = 
+              items
+              .map { |i| item_errors_full_messages(i) }
+              .flatten
+            render(json: { message: errors }, status: :bad_request)
+            raise ActiveRecord::Rollback
           end
         end
       end
-    else
-      raise 'Quantity param not provided or equal zero.'
     end
   end
 
@@ -431,6 +427,11 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def quantity_param
-    params.require(:quantity).to_i
+    q = params.require(:quantity).to_i
+    if quantity_param <= 0
+      raise 'Quantity param not provided or smaller equal zero.'
+    else
+      q
+    end
   end
 end
