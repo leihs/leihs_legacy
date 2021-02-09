@@ -13,7 +13,6 @@
 
     getInitialState() {
       return {
-        quantity: 1,
         selected: 'plusOne'
       }
     },
@@ -78,18 +77,9 @@
           <button type='button' onClick={this._maximum} className={'button small ' + (this.state.selected == 'maximum' ? 'green' : 'white')}>
             {' ' + _jed('assign highest available') + ' '}
           </button>
-          {this._renderQuantityField()}
         </div>
       )
-    },
 
-    _renderQuantityField() {
-      return (
-        <span className="padding-left-xs">
-          Quantity
-          <input style={{maxWidth: "40px", marginLeft: "5px"}} type="number" min={1} defaultValue={this.state.quantity}/>
-        </span>
-      )
     },
 
     render () {

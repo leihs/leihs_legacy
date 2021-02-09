@@ -405,8 +405,7 @@
 
     _forward(redirectUrl) {
       var message = _.string.capitalize(this.props.item_type) + ' saved.'
-      var queryChar = ( redirectUrl.includes('?') ? '&' : '?' )
-      var flash = queryChar + 'flash[success]=' + _jed(message)
+      var flash = '?flash[success]=' + _jed(message)
       if(redirectUrl) {
         window.location = redirectUrl + flash
       } else {
@@ -468,9 +467,8 @@
 
       var data = {
         inventory_pool_id: this.props.inventory_pool.id,
-        quantity: this.props.quantity,
         item: window.SerializeItem._serializeItem(
-          true, // bypassSerialNumberValidation,
+          bypassSerialNumberValidation,
           this._fieldModelsForSubmit()
         )
       }
