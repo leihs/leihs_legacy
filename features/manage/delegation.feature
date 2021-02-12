@@ -55,25 +55,6 @@ Feature: Delegation
     Then the order shows the user
     And no contact person is shown
 
-  Scenario: Editing a delegation
-    Given I am Pius
-    And I can find the user administration features in the "Manage" area under "Users"
-    When I edit a delegation
-    And I change the responsible person
-    And I delete an existing user from the delegation
-    And I add a user to the delegation
-    And I assign multiple groups
-    And I save
-    Then I see a confirmation of success on the list of users
-    And the edited delegation is saved with its current information
-
-  Scenario: Removing access from a delegation
-    Given I am Pius
-    When I edit a delegation that has access to the current inventory pool
-    And I remove access to the current inventory pool from this delegation
-    And I save
-    Then no orders can be created for this delegation in the current inventory pool
-
   Scenario: Persönliche Bestellung in Delegationsbestellung ändern in Bestellung
     Given I am Pius
     And I open an order

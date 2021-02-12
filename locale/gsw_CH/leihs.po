@@ -1214,6 +1214,12 @@ msgstr "Regal"
 msgid "Show"
 msgstr "Aazeige"
 
+msgid "Show user"
+msgstr "Benutzer aazeige"
+
+msgid "Show delegation"
+msgstr "Delegation aazeige"
+
 msgid "Show Availability"
 msgstr "Verfüegbarkeit zeige"
 
@@ -2958,12 +2964,6 @@ msgstr "Alli Öffne"
 
 msgid "Close All"
 msgstr "Alli Schlüüsse"
-
-msgid "legacy_show_user_in_new_admin_section"
-msgstr "Benutzer im noie Admin-Bereich aazeige"
-
-msgid "legacy_show_delegation_in_new_admin_section"
-msgstr "Delegation im noie Admin-Bereich aazeige"
 
 msgid "legacy_manage_users_new_admin_section_notice"
 msgstr "Benutzer und Zuegriff chönd au im noie Admin-Bereich verwaltet werde."

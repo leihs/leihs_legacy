@@ -1,36 +1,5 @@
 Feature: Manage users
 
-  Scenario Outline: Suspend feature for users and delegations
-    Given I am inventory manager or lending manager
-    And I edit a <user_type>
-    When I use the suspend feature
-    Then I have to specify a reason for suspension
-    And if the <user_type> is suspended, I can remove the suspension
-    Examples:
-      | user_type |
-      | user      |
-      | delegation|
-
-  @rack
-  Scenario: Remove access as an inventory manager
-    Given I am Pius
-    And I am editing a user who has access to and no items from the current inventory pool
-    When I remove their access
-    And I save
-    Then the user has no access to the inventory pool
-
-  Scenario: Elements of user administration
-    Given I am inventory manager or lending manager
-    Then I can find the user administration features in the "Manage" area under "Users"
-    Then I see a list of all users
-    And I can filter to see only suspended users
-    And I can filter by the following roles:
-      | tab                | role               |
-      | Customer              | customers          |
-      | Lending manager | lending_managers   |
-      | Inventory manager | inventory_managers |
-    And I can open the edit view for each user
-
   Scenario: Displaying a user and their roles in lists
     Given I am inventory manager or lending manager
     And a user with assigned role appears in the user list
@@ -78,84 +47,6 @@ Feature: Manage users
     And I can retire these items if my inventory pool is their owner
     And I can unretire items if my inventory pool is their owner
     And I can specify workdays and holidays for my inventory pool
-    And I can assign and remove roles to and from users as specified in the following table, but only in the inventory pool for which I am manager
-    | role                |
-    | No access        |
-    | Customer               |
-    | Group manager   |
-    | Lending manager  |
-    | Inventory manager  |
     And I can do everything a lending manager can do
     When I don't choose a responsible department when creating or editing items
     Then the responsible department is the same as the owner
-
-  @rack
-  Scenario: Remove access as inventory manager
-    Given I am Mike
-    And I am editing a user who has access to and no items from the current inventory pool
-    When I remove their access
-    And I save
-    Then the user has no access to the inventory pool
-
-  @rack
-  Scenario: Access rights available when editing a user as a lending manager
-    Given I am Pius
-    And I edit a user who has access as customer
-    Then I can only choose the following roles
-      | No access          |
-      | Customer           |
-      | Group manager      |
-      | Lending manager    |
-    When I change the access level to "lending manager"
-    And I save
-    Then the user has the role "lending manager"
-
-
-  Scenario: Switching a user to "customer"
-    Given I am Pius
-    And I edit a user who has access as lending manager
-    When I change the access level to "customer"
-    And I save
-    Then the user has the role "customer"
-
-  @rack
-  Scenario: Access rights available when editing a user as an inventory manager
-    Given I am Mike
-    And I edit a user who has access as customer
-    Then I can only choose the following roles
-      | No access          |
-      | Customer           |
-      | Group manager      |
-      | Lending manager    |
-      | Inventory manager  |
-    When I change the access level to "inventory manager"
-    And I save
-    Then the user has the role "inventory manager"
-
-  @rack
-  Scenario: Grant access to an inventory pool as an inventory manager
-    Given I am Mike
-    And I edit a user who doesn't have access to the current inventory pool
-    When I change the access level to "customer"
-    And I save
-    Then I see a confirmation of success on the list of users
-    And the user has the role "customer"
-
-  @rack
-  Scenario: Editing a user who has no access rights without granting them any
-    Given I am Pius
-    And I edit a user who doesn't have access to the current inventory pool
-    When I change the email address
-    And I save
-    Then I see a confirmation of success on the list of users
-    And the user's new email address is saved
-    And the user still has access to the current inventory pool
-
-  @rack
-  Scenario: Reactivate a user's access to an inventory pool
-    Given I am Mike
-    And I edit a user who used to have access to the current inventory pool
-    When I change the access level to "customer"
-    And I save
-    Then I see a confirmation of success on the list of users
-    And the user has the role "customer"

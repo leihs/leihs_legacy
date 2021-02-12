@@ -270,12 +270,7 @@ Rails.application.routes.draw do
       delete  'templates/:id',          to: "templates#destroy",      as: "delete_template"
 
       # Users
-      get      "users",          to: "users#index",                     as: "inventory_pool_users"
-      get      "users/new",      to: "users#new",     as: "new_inventory_pool_user"
-      post     "users",          to: "users#create",  as: "create_inventory_pool_user"
-      get      "users/:id/edit", to: "users#edit",    as: "edit_inventory_pool_user"
-      put      "users/:id",      to: "users#update",  as: "update_inventory_pool_user"
-
+      get      "users",               to: "users#index",     as: "inventory_pool_users"
       get      'users/:id/hand_over', to: "users#hand_over", as: "hand_over"
       get      'users/:id/take_back', to: "users#take_back", as: "take_back"
 

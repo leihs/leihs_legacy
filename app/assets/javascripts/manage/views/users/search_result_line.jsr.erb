@@ -33,25 +33,19 @@
           <div class='arrow down'></div>
         </div>
         <ul class='dropdown right'>
-          <li>
-            <a class='dropdown-item' href='{{>url('edit')}}'>
-              <i class='fa fa-edit'></i>
-              {{jed "Edit"/}}
-            </a>
-          </li>
           {{if ~currentInventoryPool}}
           {{if !isDelegation()}}
           <li>
             <a class='dropdown-item' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/users/{{>id}}'>
-              <i class='fa fa-edit'></i>
-              {{jed "legacy_show_user_in_new_admin_section"/}}
+              <i class='fa fa-eye'></i>
+              {{jed "Show user"/}}
             </a>
           </li>
           {{else}}
           <li>
             <a class='dropdown-item' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/delegations/{{>id}}'>
-              <i class='fa fa-edit'></i>
-              {{jed "legacy_show_delegation_in_new_admin_section"/}}
+              <i class='fa fa-eye'></i>
+              {{jed "Show delegation"/}}
             </a>
           </li>
           {{/if}}
@@ -59,8 +53,8 @@
           {{if !isDelegation()}}
            <li>
             <a class='dropdown-item' href='/admin/users/{{>id}}'>
-              <i class='fa fa-edit'></i>
-              {{jed "legacy_show_user_in_new_admin_section"/}}
+              <i class='fa fa-eye'></i>
+              {{jed "Show user"/}}
             </a>
           </li>
           <%# NOTE: there is no "global" delegations view in new admin %>

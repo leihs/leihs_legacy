@@ -1283,6 +1283,12 @@ msgstr "Rayonnage"
 msgid "Show"
 msgstr "Afficher"
 
+msgid "Show user"
+msgstr "Afficher utilisateur"
+
+msgid "Show delegation"
+msgstr "Afficher délégation"
+
 msgid "Show Availability"
 msgstr "Afficher la disponibilité"
 
@@ -3377,12 +3383,6 @@ msgstr "Développer Tout"
 
 msgid "Close All"
 msgstr "Ferme Tout"
-
-msgid "legacy_show_user_in_new_admin_section"
-msgstr "Afficher utilisateur dans la nouvelle section d'Admin"
-
-msgid "legacy_show_delegation_in_new_admin_section"
-msgstr "Afficher délégation dans la nouvelle section d'Admin"
 
 msgid "legacy_manage_users_new_admin_section_notice"
 msgstr "Les utilisateurs et leurs droits d'accès peuvent également être gérés dans la nouvelle section d'Admin."

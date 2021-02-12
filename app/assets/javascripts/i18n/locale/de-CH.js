@@ -1721,6 +1721,14 @@ window.i18n.locale_data = {
          null,
          "Anzeigen"
       ],
+      "Show user": [
+         null,
+         "Benutzer anzeigen"
+      ],
+      "Show delegation": [
+         null,
+         "Delegation anzeigen"
+      ],
       "Show Availability": [
          null,
          "Verfügbarkeit anzeigen"
@@ -4737,14 +4745,6 @@ window.i18n.locale_data = {
       "Inactive pools cannot have items, which are not retired.": [
          null,
          "Deaktivierte Geräteparks dürfen keine Gegenstände haben, die nicht ausgemustert sind."
-      ],
-      "legacy_show_user_in_new_admin_section": [
-         null,
-         "Benutzer im neuem Admin-Bereich anzeigen"
-      ],
-      "legacy_show_delegation_in_new_admin_section": [
-         null,
-         "Delegation im neuem Admin-Bereich anzeigen"
       ],
       "legacy_manage_users_new_admin_section_notice": [
          null,

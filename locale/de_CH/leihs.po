@@ -1271,6 +1271,12 @@ msgstr "Gestell"
 msgid "Show"
 msgstr "Anzeigen"
 
+msgid "Show user"
+msgstr "Benutzer anzeigen"
+
+msgid "Show delegation"
+msgstr "Delegation anzeigen"
+
 msgid "Show Availability"
 msgstr "Verfügbarkeit anzeigen"
 
@@ -3655,12 +3661,6 @@ msgstr "Alle Schliessen"
 
 msgid "Inactive pools cannot have items, which are not retired."
 msgstr "Deaktivierte Geräteparks dürfen keine Gegenstände haben, die nicht ausgemustert sind."
-
-msgid "legacy_show_user_in_new_admin_section"
-msgstr "Benutzer im neuem Admin-Bereich anzeigen"
-
-msgid "legacy_show_delegation_in_new_admin_section"
-msgstr "Delegation im neuem Admin-Bereich anzeigen"
 
 msgid "legacy_manage_users_new_admin_section_notice"
 msgstr "Benutzer und Zugriffsrechte können auch im neuen Admin-Bereich bearbeitet werden."

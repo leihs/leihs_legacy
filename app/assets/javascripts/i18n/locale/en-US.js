@@ -3937,14 +3937,6 @@ window.i18n.locale_data = {
          null,
          ""
       ],
-      "legacy_show_user_in_new_admin_section": [
-         null,
-         "Show user in new Admin section"
-      ],
-      "legacy_show_delegation_in_new_admin_section": [
-         null,
-         "Show delegation in new Admin section"
-      ],
       "legacy_manage_users_new_admin_section_notice": [
          null,
          "Users and their roles can also be managed in the new Admin section."

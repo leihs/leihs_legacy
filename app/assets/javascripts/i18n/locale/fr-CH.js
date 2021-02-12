@@ -1751,6 +1751,14 @@ window.i18n.locale_data = {
          null,
          "Afficher"
       ],
+      "Show user": [
+         null,
+         "Afficher utilisateur"
+      ],
+      "Show delegation": [
+         null,
+         "Afficher délégation"
+      ],
       "Show Availability": [
          null,
          "Afficher la disponibilité"
@@ -4487,14 +4495,6 @@ window.i18n.locale_data = {
       "Close All": [
          null,
          "Ferme Tout"
-      ],
-      "legacy_show_user_in_new_admin_section": [
-         null,
-         "Afficher utilisateur dans la nouvelle section d'Admin"
-      ],
-      "legacy_show_delegation_in_new_admin_section": [
-         null,
-         "Afficher délégation dans la nouvelle section d'Admin"
       ],
       "legacy_manage_users_new_admin_section_notice": [
          null,

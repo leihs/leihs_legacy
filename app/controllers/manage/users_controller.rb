@@ -12,9 +12,7 @@ class Manage::UsersController < Manage::ApplicationController
     end
   end
 
-  before_action only: [:edit,
-                       :update,
-                       :destroy,
+  before_action only: [:destroy,
                        :set_start_screen,
                        :hand_over,
                        :take_back] do
@@ -51,109 +49,6 @@ class Manage::UsersController < Manage::ApplicationController
     @users = User.filter params, current_inventory_pool
     set_pagination_header @users unless params[:paginate] == 'false'
   end
-
-  def edit
-    @delegation_type = @user.delegation?
-    @accessible_roles = get_accessible_roles_for_current_user
-    @db_auth = AuthenticationSystemUser.find_by_user_id(@user.id)
-    @access_right = @user.access_right_for current_inventory_pool
-    @suspendsion = @user.suspensions.find_by(
-      inventory_pool: current_inventory_pool
-    )
-  end
-
-  ### update / put ############################################################
-
-  def update_entitlement_groups
-    if params[:user]
-      if params[:user].key?(:groups)
-        groups = params[:user].delete(:groups)
-        @user.entitlement_groups = groups.map { |g| EntitlementGroup.find g['id'] }
-      else
-        @user.entitlement_groups = []
-      end
-    end
-  end
-
-  def update_user_password
-    if params[:db_auth]
-      password = params[:db_auth][:password]
-      if password.present?
-        password_confirmation = params[:db_auth][:password_confirmation]
-        raise 'password mismatch' if password != password_confirmation
-        dbauth = AuthenticationSystemUser.find_or_create_by!(
-          user_id: @user.id,
-          authentication_system_id: 'password'
-        )
-        dbauth.update_attributes!(data: get_pw_hash(password))
-      end
-    end
-  end
-
-  def update_access_rights
-    # rubocop:disable Style/IfInsideElse
-    @access_right = AccessRight.find_by(
-      user_id: @user.id, inventory_pool_id: @ip_id
-    )
-
-    if params[:access_right][:role].try(&:to_sym) == :no_access
-      if @access_right
-        unless @access_right.destroy
-          raise @access_right.errors.messages.values.flatten.first
-        end
-      end
-    else
-      if not @access_right
-        @access_right = AccessRight.create(
-          { user_id: @user.id,
-            inventory_pool_id: @ip_id }.merge(params[:access_right])
-        )
-      else
-        @access_right.update_attributes! params[:access_right]
-      end
-    end
-    # rubocop:enable Style/IfInsideElse
-  end
-
-  def update_respond_success
-      respond_to do |format|
-        format.html do
-          flash[:notice] = _('User details were updated successfully.')
-          redirect_to manage_inventory_pool_users_path
-        end
-        format.json do
-          render plain: _('User details were updated successfully.')
-        end
-      end
-  end
-
-  def update_respond_error(e)
-    respond_to do |format|
-      format.html do
-        flash[:error] = e.to_s
-        redirect_back fallback_location: root_path
-      end
-      format.json { render plain: e.to_s, status: 500 }
-    end
-  end
-
-  def update
-    begin
-      User.transaction(requires_new: true) do
-        update_entitlement_groups
-        delegated_user_ids = get_delegated_users_ids params
-        @user.delegated_user_ids = delegated_user_ids if delegated_user_ids
-        @user.update_attributes! params[:user] if params[:user]
-        update_user_password
-        update_access_rights
-        update_respond_success
-      end
-    rescue => e
-      update_respond_error(e)
-    end
-  end
-
-  #################################################################
 
   def set_start_screen(path = params[:path])
     if current_user.start_screen(path)

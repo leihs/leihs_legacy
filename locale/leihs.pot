@@ -1250,6 +1250,12 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
+msgid "Show user"
+msgstr ""
+
+msgid "Show delegation"
+msgstr ""
+
 msgid "Show Availability"
 msgstr ""
 
@@ -3509,15 +3515,6 @@ msgid "Close All"
 msgstr ""
 
 msgid "Inactive pools cannot have items, which are not retired."
-msgstr ""
-
-msgid "legacy_show_user_in_new_admin_section"
-msgstr ""
-
-msgid "legacy_show_delegation_in_new_admin_section"
-msgstr ""
-
-msgid "legacy_manage_users_new_admin_section_notice"
 msgstr ""
 
 msgid "legacy_manage_users_new_admin_section_notice"

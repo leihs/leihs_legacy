@@ -291,6 +291,12 @@ msgstr "Retirar"
 msgid "Show all %s..."
 msgstr ""
 
+msgid "Show user"
+msgstr "Mostrar usario"
+
+msgid "Show delegation"
+msgstr "Mostrar delegación"
+
 msgid "Signed"
 msgstr "Firmado"
 
@@ -647,12 +653,6 @@ msgstr "Expandir Todo"
 
 msgid "Close All"
 msgstr "Cierra Todo"
-
-msgid "legacy_show_user_in_new_admin_section"
-msgstr "Mostrar usario en la nueva sección de Admin"
-
-msgid "legacy_show_delegation_in_new_admin_section"
-msgstr "Mostrar delegación en la nueva sección de Admin"
 
 msgid "legacy_manage_users_new_admin_section_notice"
 msgstr "Los usuarios y sus derechos de acceso también se pueden manejar en la nueva sección Admin."

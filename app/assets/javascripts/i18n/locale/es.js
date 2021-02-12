@@ -447,6 +447,14 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Show user": [
+         null,
+         "Mostrar usario"
+      ],
+      "Show delegation": [
+         null,
+         "Mostrar delegación"
+      ],
       "Signed": [
          null,
          "Firmado"
@@ -922,14 +930,6 @@ window.i18n.locale_data = {
       "Close All": [
          null,
          "Cierra Todo"
-      ],
-      "legacy_show_user_in_new_admin_section": [
-         null,
-         "Mostrar usario en la nueva sección de Admin"
-      ],
-      "legacy_show_delegation_in_new_admin_section": [
-         null,
-         "Mostrar delegación en la nueva sección de Admin"
       ],
       "legacy_manage_users_new_admin_section_notice": [
          null,

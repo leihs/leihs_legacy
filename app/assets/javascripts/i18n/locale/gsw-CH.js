@@ -1656,6 +1656,14 @@ window.i18n.locale_data = {
          null,
          "Aazeige"
       ],
+      "Show user": [
+         null,
+         "Benutzer aazeige"
+      ],
+      "Show delegation": [
+         null,
+         "Delegation aazeige"
+      ],
       "Show Availability": [
          null,
          "Verfüegbarkeit zeige"
@@ -3923,14 +3931,6 @@ window.i18n.locale_data = {
       "Close All": [
          null,
          "Alli Schlüüsse"
-      ],
-      "legacy_show_user_in_new_admin_section": [
-         null,
-         "Benutzer im noie Admin-Bereich aazeige"
-      ],
-      "legacy_show_delegation_in_new_admin_section": [
-         null,
-         "Delegation im noie Admin-Bereich aazeige"
       ],
       "legacy_manage_users_new_admin_section_notice": [
          null,
