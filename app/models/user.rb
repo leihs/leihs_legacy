@@ -16,8 +16,6 @@ class User < ApplicationRecord
     end
   end
 
-  serialize :extended_info
-
   serialize :settings
   store_accessor :settings, [:latest_inventory_pool_id_before_logout,
                              :start_screen]
