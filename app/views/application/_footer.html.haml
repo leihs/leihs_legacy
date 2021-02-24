@@ -3,7 +3,7 @@
   documentation_link = app_settings.try(:documentation_link).try(:strip).presence
   active_language = Language.find_by_locale(I18n.locale)
   version_name = RELEASE_INFO.try(:[], :version_name)
-  is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :is_release) || false
+  is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :build_is_latest_release) || false
   deploy_time = RELEASE_INFO.try(:[], :deploy_info).try(:[], :time)
   version_link = main_app.release_info_path + (is_release ? ('#' + version_name) : '')
   version_hint = "Version #{version_name} Deploy #{deploy_time}"

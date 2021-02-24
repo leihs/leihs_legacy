@@ -5,9 +5,10 @@
   - current_release = releases.first
   - older_releases = releases.drop(1)
 
-- is_latest_release = deploy_info[:is_release]
+- is_a_tagged_release = deploy_info[:is_a_tagged_release]
 - commit_messages = deploy_info[:commit_messages]
 - git_commit = deploy_info[:commit_id] || @get.try(:[], :version_name)
+- git_commit_date = deploy_info[:commit_date]
 - git_link = deploy_info[:commit_link].presence || @get.try(:[], :git_url)
 
 - gh_icon = capture_haml do
@@ -29,22 +30,20 @@
               %time{'data-humanize-date': deploy_info[:time]}= deploy_info[:time]
 
 
-      - if !is_latest_release
-        .emboss.padding-inset-s.margin-bottom-l.margin-top-m
-          .margin-bottom-s
-            %p.straight-dark-grey.headline-l{href: '#'}= _('Development Version!')
+      - if !is_a_tagged_release
+        %pre.emboss.padding-inset-s.margin-bottom-l.margin-top-m.paragraph-m{style: 'background: papayawhip; border: 2px solid coral;line-height: 1.2;font-size: 1.2em;font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;'}
+          %p.straight-dark-grey.headline-l.margin-top-s{href: '#'}= _('Development Version!')
 
-          - if git_commit
-            .paragraph-s.margin-bottom-s
-              %a.blue{href: git_link}
-                = _('Commit')
-                %code= git_commit
+          .git-commit
+            - if git_commit
+              %a.blue{href: git_link}= _('Commit: ') + git_commit
+            - if git_commit_date
+              = "Date: #{git_commit_date.as_json}"
 
-          - if commit_messages
-            .paragraph-m
-              = _('Changes since last release:')
-              = "\n\n"
-            %pre.paragraph-m= commit_messages
+          - if commit_messages.present?
+            = _('Changes since last release:') + "\n\n"
+            .commit-messages
+              = commit_messages
 
 
       - if releases.present?

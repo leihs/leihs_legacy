@@ -39,7 +39,7 @@ end
 
 def git_hash
   @git_hash ||= \
-    if deploy_info then deploy_info['commit_id']
+    if deploy_info then deploy_info['commit_id_short']
     else
       `git log -n1 --format='%h'`.chomp
     end
@@ -55,11 +55,19 @@ end
 
 def version_from_archive
   return unless deploy_info.present?
-  semver = releases_info.try(:first).try(:[], :semver) || '0.0.0'
+  release = releases_info.try(:first)
+  version_name = release.try(:[], :semver) || '0.0.0'
+  is_a_tagged_release = release.try(:[], :is_a_tagged_release) || false
+  git_commit_date = release.try(:[], :commit_date)
+  date = git_commit_date ? DateTime.iso8601(git_commit_date) : Time.now
+  unless is_a_tagged_release
+    # if version is not a tagged release, only show "build metadata"
+    version_name = "git-#{git_hash || 'HEAD'}-#{date.utc.strftime('%Y%m%dT%H%M%SZ')}"
+  end
   {
     type: 'archive',
     deploy_info: deploy_info,
-    version_name: semver
+    version_name: version_name
   }
 end
 
@@ -68,7 +76,7 @@ def version_from_git
     type: 'git',
     git_hash: git_hash,
     git_url: ("#{GIT_LINK}#{git_hash}" if git_hash.present?),
-    version_name: ('git-' + git_hash if git_hash.present?)
+    version_name: ('git-' + (git_hash || 'HEAD'))
   }
 end
 

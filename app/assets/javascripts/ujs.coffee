@@ -3,8 +3,9 @@ humanizeDates = ->
     $el = $(this)
     utcDate = $el.data('humanizeDate')
     return unless utcDate
+    md = moment(new Date(utcDate))
     $el
-      .text(moment(new Date(utcDate)).calendar())
+      .text(md.fromNow() + ' (' + md.toISOString() + ')')
       .attr('title', utcDate)
 
 # run on load:
