@@ -18,7 +18,6 @@ gem 'geocoder', '~> 1.1'
 gem 'gettext_i18n_rails', '~> 1.0'
 gem 'haml', '~> 4.0'
 gem 'jquery-tmpl-rails', '~> 1.1'
-gem 'jruby-openssl', platform: :jruby
 gem 'json', '~> 1.8'
 gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'master'
 gem 'kramdown' # markdown rendering
@@ -34,7 +33,6 @@ gem 'rgl', '~> 0.4.0', require: 'rgl/adjacency' # use ruby-graphviz instead ?? (
 gem 'ruby_parser', '~> 3.1' # gettext dependency that Bundler seems unable to resolve
 gem 'sass-rails', '~> 5.0'
 gem 'therubyracer', platform: :mri
-gem 'therubyrhino', platform: :jruby
 gem 'uglifier', '~> 2.4'
 gem 'will_paginate', '~> 3.0'
 
