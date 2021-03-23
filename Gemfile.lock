@@ -236,7 +236,7 @@ GEM
     launchy (2.4.3)
       addressable (~> 2.3)
       spoon (~> 0.0.1)
-    libv8 (3.16.14.19)
+    libv8 (8.4.255.0)
     liquid (3.0.6)
     loofah (2.2.0)
       crass (~> 1.0.2)
@@ -279,6 +279,8 @@ GEM
       subexec (~> 0.2.1)
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
+    mini_racer (0.3.1)
+      libv8 (~> 8.4.255)
     minitest (5.11.3)
     monetize (1.7.0)
       money (~> 6.9)
@@ -391,7 +393,6 @@ GEM
       parser (~> 2.2)
       rainbow (~> 2.0)
       unparser (~> 0.2.2)
-    ref (2.0.0)
     require_all (1.4.0)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
@@ -455,9 +456,6 @@ GEM
       sprockets (>= 3.0.0)
     stream (0.5)
     subexec (0.2.3)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -529,7 +527,6 @@ DEPENDENCIES
   gettext_i18n_rails (~> 1.0)
   haml (~> 4.0)
   jquery-tmpl-rails (~> 1.1)
-  jruby-openssl
   json (~> 1.8)
   jsrender-rails!
   kramdown
@@ -539,6 +536,7 @@ DEPENDENCIES
   meta_request
   metric_fu
   mini_magick (~> 3.4)
+  mini_racer
   money-rails (~> 1.4)
   net-ldap
   nilify_blanks (~> 1.1)
@@ -574,7 +572,6 @@ DEPENDENCIES
   selenium-webdriver (~> 2.53)
   sequel (~> 4.42, >= 4.42.1)
   spring
-  therubyracer
   timecop (~> 0.7)
   traceroute
   turnip
