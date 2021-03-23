@@ -11,17 +11,20 @@
           %h1.headline-xxl.text-shadow-white= _("Equipment Booking and Inventory Management System")
           %p.headline-m.padding-top-m.light.text-shadow-white= _("Manage inventory, place reservations on items and pick them up")
 
-      %form.col2of5#login-form{action: sign_in_path, method: :post}
+      - unless Rails.env.prod? # FAKE LOGIN FOR DEV
 
-        .row
-          .col1of2
+        %form.col2of5#login-form{action: sign_in_path, method: :post}
+          %input{type: :hidden, name: 'return-to', value: params['return-to']}
 
-            .padding-inset-l.text-align-right
-              %input{type: :text, name: 'email', placeholder: 'E-mail'}
+          .row
+            .col1of2
 
-          .col1of2
+              .padding-inset-l.text-align-right
+                %input{type: :text, name: 'email', placeholder: 'E-mail'}
 
-            .padding-inset-l.text-align-right
-              %button.button.large.green{type: :submit}= _("Login")
+            .col1of2
+
+              .padding-inset-l.text-align-right
+                %button.button.large.green{type: :submit}= _("Login")
 
     %img.splashscreen-image.margin-right-l.margin-bottom-m{:src => image_path("leihs.png"), :style => "height: 397px; position: relative; float: right; width: 814px;"}

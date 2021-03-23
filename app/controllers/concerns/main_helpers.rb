@@ -68,6 +68,8 @@ module MainHelpers
     ##################################################
     # ACL
 
+    # NOTE: (2021-03) this method is only used when user is logged in but has not enough right,
+    # e.g. when customer roles does an manager-level action.
     def not_authorized!(options = { redirect_path: nil })
       options[:redirect_path] ||= admin.inventory_pools_path
       msg = "You don't have appropriate permission to perform this operation."

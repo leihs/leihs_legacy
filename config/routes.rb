@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root to: 'application#root'
 
   if Rails.env.development? or Rails.env.test?
-    # NOTE: for prod path helper is added as application helper custom method
+    # in DEV mode, put the fake login page on the same url where it would be in PROD.
+    # path helpers are added manually so they also work in prod mode.
+    get '/sign-in', to: "application#root"
     post '/sign-in', to: 'application#sign_in'
     post '/sign-out', to: 'application#sign_out'
   end

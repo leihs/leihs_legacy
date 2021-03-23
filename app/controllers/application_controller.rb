@@ -58,7 +58,8 @@ class ApplicationController < ActionController::Base
                           created_at: real_now)
 
       cookies['leihs-user-session'] = { value: token }
-      redirect_to root_path
+      # in DEV, redirect like the real service would
+      redirect_to(params['return-to'] || root_path)
     end
 
     def sign_out
@@ -67,7 +68,7 @@ class ApplicationController < ActionController::Base
       end
       cookies.delete 'leihs-user-session'
       flash[:notice] = _('You have been logged out.')
-      redirect_back_or_default('/')
+      redirect_to '/'
     end
   end
 

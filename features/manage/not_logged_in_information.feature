@@ -7,6 +7,8 @@ Feature: Redirect to login when not logged in
 
   Scenario: Trying to perform an action without being logged in
     Given I am Pius
-    And I try to perform an action in the manage area without being logged in
-    Then I am redirected to the start page
-    And I am notified that I am not logged in
+    When I start a handover in the manage area and remember the browser URL-path
+    And I am logged out
+    And I try to perform an action without being logged in
+    Then I am redirected to the sign-in page
+    And The return-to parameter is filled out with the browser URL-path I remembered

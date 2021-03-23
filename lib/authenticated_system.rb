@@ -6,23 +6,19 @@ module AuthenticatedSystem
     current_user != nil
   end
 
-  # Redirect as appropriate when an access request fails.
-  #
-  # The default action is to redirect to the login screen.
-  #
-  # Override this method in your controllers if you want to have special
-  # behavior in case the user is not authorized
-  # to access the requested action.  For example, a popup window might
-  # simply close itself.
   def access_denied
-    if request.get?
-      store_location
-      flash[:notice] = _("You don't have permission to perform this action")
-      redirect_to root_path
+    if request.xhr? and not logged_in?
+      # for ajax requests when logged out, yield correct error status code to force a sign-in action
+      render status: 401, plain: _("You don't have permission to perform this action")
     else
-      # NOTE in case of post requests
-      render status: :method_not_allowed,
-             plain: _("You don't have permission to perform this action")
+      if request.get?
+        redirect_to(sign_in_path + '?' + ({'return-to' => request.fullpath}).to_query)
+      else
+        # NOTE: the error message should mention the need to sign-in, if thats the problem?
+        # We dont do anything fancy so the user does not lose the POST data. But, that only works if they sign in in another browser tab.
+        render status: :method_not_allowed,
+        plain: _("You don't have permission to perform this action")
+      end
     end
   end
 
