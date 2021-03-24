@@ -59,10 +59,17 @@
         {{jed "Show user"/}}
       </a>
       {{else}}
-      <a class='button white' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/delegations/{{>id}}'>
-        <i class='fa fa-eye'></i>
-        {{jed "Show delegation"/}}
-      </a>
+        {{if accessRight()}}
+        <a class='button white' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/delegations/{{>id}}'>
+          <i class='fa fa-eye'></i>
+          {{jed "Show delegation"/}}
+        </a>
+        {{else}}
+        <a class='button white' href='/admin/inventory-pools/{{> ~currentInventoryPool.id}}/delegations/?membership=any&page=1&term={{encodeURIComponent name() /}}'>
+          <i class='fa fa-eye'></i>
+          {{jed "Show delegation"/}}
+        </a>
+        {{/if}}
       {{/if}}
       <div class='dropdown-holder inline-block'>
         <div class='button white dropdown-toggle'>
