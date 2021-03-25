@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     get '/sign-in', to: "application#root"
     post '/sign-in', to: 'application#sign_in'
     post '/sign-out', to: 'application#sign_out'
+    # fake a my page so redirects dont look like errors to the Devs
+    get '/my/user/me', to: -> (hash) { [200, {}, ["<h1>Hello Dev! In prod, this would show <code>/my/user/me</code>. Maybe try <a href='http://localhost:3240/my/user/me'><code>http://localhost:3240/my/user/me</code></a>?</h1>"]] }
   end
 
   get :status, controller: :application, action: :status
