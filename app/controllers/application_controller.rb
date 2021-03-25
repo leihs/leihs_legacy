@@ -72,14 +72,17 @@ class ApplicationController < ActionController::Base
   end
 
   def root
+    # NOTE: this is only used in DEV/TEST (in PROD, the root page goes to `my` service). We set the "redirect-reason" only to track this…
     if logged_in?
       flash.keep
       if current_user.is_admin
         redirect_to admin.root_path
       elsif current_user.has_role?(:group_manager)
         redirect_to manage_root_path
-      else
+      elsif current_user.access_rights.any?
         redirect_to borrow_root_path
+      else
+        redirect_to '/my/user/me?redirect-reason=no-access-legacy-root'
       end
     end
   end
