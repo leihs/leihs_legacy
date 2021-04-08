@@ -62,6 +62,18 @@
                 = _("Purpose of the order")
                 *
               %textarea.padding-inset-s.width-full{name: "purpose", required: true, placeholder: _("Specification of the purpose is required")}
+            - if @lending_terms[:acceptance_required]
+              .row.padding-top-l
+                %h3.headline-s.padding-bottom-m
+                  = _("Lending Terms")
+                  *
+                %p
+                  %label
+                    %input{type: :checkbox, name: "accept_lending_terms", required: true}
+                    =  _("accept_lending_terms_label")
+                    = ' '
+                  %a{href: @lending_terms[:url], target: "_blank", rel: "noopener noreferrer"}
+                    = @lending_terms[:url]
             .row.padding-top-l
               .col1of2
                 = link_to borrow_order_remove_path, method: :delete, data: { confirm: _("The order will be discarded.") }, class: "button red" do

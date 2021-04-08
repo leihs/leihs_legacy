@@ -3704,3 +3704,5 @@ msgstr "Zeige Barcodes"
 msgid "create_multiple_items_checkbox_show_full_urls"
 msgstr "Zeige ganze URLs"
 
+msgid "accept_lending_terms_label"
+msgstr "Ich akzeptiere die Ausleihbedingungen: "

@@ -3531,3 +3531,6 @@ msgstr ""
 
 msgid "create_multiple_items_label_quantity"
 msgstr ""
+
+msgid "accept_lending_terms_label"
+msgstr ""

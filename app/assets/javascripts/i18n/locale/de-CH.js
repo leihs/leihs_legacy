@@ -4801,6 +4801,10 @@ window.i18n.locale_data = {
       "create_multiple_items_checkbox_show_full_urls": [
          null,
          "Zeige ganze URLs"
+      ],
+      "accept_lending_terms_label": [
+         null,
+         "Ich akzeptiere die Ausleihbedingungen: "
       ]
    }
 }

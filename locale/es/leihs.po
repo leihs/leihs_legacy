@@ -696,3 +696,5 @@ msgstr "Mostrar códigos de barras"
 msgid "create_multiple_items_checkbox_show_full_urls"
 msgstr "Mostrar URLs completas"
 
+msgid "accept_lending_terms_label"
+msgstr "Acepto las condiciones de préstamo: "

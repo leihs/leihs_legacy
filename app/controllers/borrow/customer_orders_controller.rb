@@ -19,13 +19,23 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
 
   def current
     @inventory_pools_for_calendar = inventory_pools_for_calendar(@inventory_pools)
+    @lending_terms = { 
+      url: lending_term_url, acceptance_required: lending_terms_acceptance_required_for_order }
   end
 
   def submit
+    lending_terms_accepted = lending_terms_accepted_param === 'on' ? true : nil
+
+    if not lending_terms_accepted and lending_terms_acceptance_required_for_order
+      # NOTE: this is already enforced client-side. of course we need check here as well, but we dont need a nice error message.
+      raise ActionController::BadRequest, "Lending terms need to be accepted!"
+    end
+
     ApplicationRecord.transaction(requires_new: true) do
       begin
         customer_order = CustomerOrder.create!(user: current_user,
                                                purpose: purpose_param,
+                                               lending_terms_accepted: lending_terms_accepted,
                                                title: purpose_param)
         current_user
           .reservations
@@ -37,6 +47,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
                                 inventory_pool: inventory_pool,
                                 customer_order: customer_order,
                                 purpose: purpose_param,
+                                lending_terms_accepted: lending_terms_accepted,
                                 state: :submitted)
 
           reservations.each do |reservation|
@@ -125,6 +136,18 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
 
   def purpose_param
     params.require(:purpose)
+  end
+
+  def lending_terms_accepted_param
+    params.permit(:accept_lending_terms)[:accept_lending_terms] 
+  end
+
+  def lending_terms_acceptance_required_for_order
+    Setting.first.lending_terms_acceptance_required_for_order
+  end
+
+  def lending_term_url
+    Setting.first.lending_terms_url
   end
 
 end

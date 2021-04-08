@@ -3006,3 +3006,6 @@ msgstr "Zeig d Barcodes"
 
 msgid "create_multiple_items_checkbox_show_full_urls"
 msgstr "Zeig ganzi URLs"
+
+msgid "accept_lending_terms_label"
+msgstr "Ich akzeptier d Uusleihbedingige: "

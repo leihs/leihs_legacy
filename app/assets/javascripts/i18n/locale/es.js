@@ -986,6 +986,10 @@ window.i18n.locale_data = {
       "create_multiple_items_checkbox_show_full_urls": [
          null,
          "Mostrar URLs completas"
+      ],
+      "accept_lending_terms_label": [
+         null,
+         "Acepto las condiciones de préstamo: "
       ]
    }
 }
