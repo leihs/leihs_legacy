@@ -16,6 +16,10 @@ module Concerns
 
     module ClassMethods
 
+      def prefix_number(pool, num)
+        "#{pool.shortname}#{num}"
+      end
+
       # extract *last* number sequence in string
       def last_number(inventory_code)
         inventory_code ||= ''
@@ -45,7 +49,7 @@ module Concerns
                        .first
                    end
 
-        "#{inventory_pool.shortname}#{next_num}"
+        prefix_number(inventory_pool, next_num)
       end
 
       # if argument is false returns { 1 => 3, 2 => 1, 77 => 1, 79 => 2, ... }
@@ -84,7 +88,7 @@ module Concerns
       #
       # Attention: params could be negative!
       #
-      def free_inventory_code_ranges(params)
+      def free_inventory_code_ranges(params = {})
         infinity = 1 / 0.0
         default_params = { from: 1, to: infinity, min_gap: 1 }
         params.reverse_merge!(default_params)
@@ -114,6 +118,18 @@ module Concerns
         ranges << [last_n + 1, to] if last_n + 1 <= to and (to - last_n >= min_gap)
 
         ranges
+      end
+
+      def free_consecutive_code_numbers(quantity = 1)
+        r =
+          free_inventory_code_ranges
+          .find { |r| quantity <= r.second - r.first + 1 }
+
+        Range.new(*r).take(quantity)
+      end
+
+      def free_consecutive_inventory_codes(pool, quantity = 1)
+        free_consecutive_code_numbers(quantity).map { |n| prefix_number(pool, n) }
       end
     end
   end

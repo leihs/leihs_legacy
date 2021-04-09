@@ -38,63 +38,92 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  # def new
-  #   @type = params[:type] ? params[:type] : 'item'
-  #   @item = Item.new(owner: current_inventory_pool)
-  #   @item.inventory_code = Item.proposed_inventory_code(current_inventory_pool)
-  #   unless @current_user.has_role?(:lending_manager, current_inventory_pool)
-  #     @item.inventory_pool = current_inventory_pool
-  #   end
-  #   @item.is_inventory_relevant = (super_user? ? true : false)
-  # end
-  #
-  # def edit
-  #   @return_url = params[:return_url] if params[:return_url]
-  #   fetch_item_by_id
-  # end
+  def initialize_and_save_item(inv_code = nil, with_copy_defaults = false)
+    item = Item.new(owner: current_inventory_pool)
+    # item.skip_serial_number_validation = skip_serial_number_validation_param
 
-  def create
-    ApplicationRecord.transaction(requires_new: true) do
-      @item = Item.new(owner: current_inventory_pool)
-      @item.skip_serial_number_validation = skip_serial_number_validation_param
+    item_params = get_item_params!(inv_code)
+    check_fields_for_write_permissions(item, item_params)
 
-      check_fields_for_write_permissions
-
-      unless @item.errors.any?
-        @item.attributes = item_params
-        if item_params[:room_id].blank? and @item.license?
-          @item.room = Room.general_general
-        end
-        saved = @item.save
-
-        params[:child_items]&.each do |child_id|
-          child = Item.find(child_id)
-          child.skip_serial_number_validation = true
-          child.parent = @item
-          child.save!
-        end
+    unless item.errors.any?
+      item.attributes = item_params
+      if item.attributes[:room_id].blank? and item.license?
+        item.room = Room.general_general
       end
+      set_copy_defaults(item) if with_copy_defaults
+      item.save
+
+      params[:child_items]&.each do |child_id|
+        child = Item.find(child_id)
+        child.skip_serial_number_validation = true
+        child.parent = item
+        child.save!
+      end
+    end
+
+    item
+  end
+
+  def create_multiple_result
+    json = Item.find(params[:ids]).map { |i| i.as_json(JSON_SPEC) }
+    render(json: json, status: :ok)
+  end
+
+  def create_multiple
+    ApplicationRecord.transaction(requires_new: true) do
+      items = 
+        Item
+        .free_consecutive_inventory_codes(current_inventory_pool, quantity_param)
+        .map do |inv_code|
+          initialize_and_save_item(inv_code, :with_copy_defaults) 
+        end
 
       respond_to do |format|
         format.json do
-          if saved
+          if items.all?(&:persisted?)
+            render(status: :ok,
+                   json: { redirect_url:
+                           manage_create_multiple_items_result_path(
+                             current_inventory_pool,
+                             ids: items.map(&:id)
+                           )})
+          else
+            errors = 
+              items
+              .map { |i| item_errors_full_messages(i) }
+              .flatten
+            render(json: { message: errors }, status: :bad_request)
+            raise ActiveRecord::Rollback
+          end
+        end
+      end
+    end
+  end
+
+  def create
+    ApplicationRecord.transaction(requires_new: true) do
+      item = initialize_and_save_item
+
+      respond_to do |format|
+        format.json do
+          if item.persisted?
             if params[:copy]
               render(status: :ok,
-                     json: { id: @item.id,
+                     json: { id: item.id,
                              redirect_url: \
                                manage_copy_item_path(current_inventory_pool,
-                                                     @item.id) })
+                                                     item.id) })
             else
-              json = @item.as_json(JSON_SPEC).to_json
+              json = item.as_json(JSON_SPEC).to_json
               render(status: :ok, json: json)
             end
           else
-            if @item
+            if item
               render \
                 json: {
-                  message: item_errors_full_messages,
+                  message: item_errors_full_messages(item),
                   can_bypass_unique_serial_number_validation: \
-                    can_bypass_unique_serial_number_validation?(@item)
+                    can_bypass_unique_serial_number_validation?(item)
                 },
                 status: :bad_request
             else
@@ -110,11 +139,12 @@ class Manage::ItemsController < Manage::ApplicationController
     ApplicationRecord.transaction(requires_new: true) do
 
       fetch_item_by_id
+      item_params = get_item_params!
 
       if @item
-        @item.skip_serial_number_validation = skip_serial_number_validation_param
+        # @item.skip_serial_number_validation = skip_serial_number_validation_param
 
-        check_fields_for_write_permissions
+        check_fields_for_write_permissions(@item, item_params)
 
         unless @item.errors.any?
           # NOTE avoid to lose already stored properties
@@ -153,7 +183,7 @@ class Manage::ItemsController < Manage::ApplicationController
             if @item
               render \
                 json: {
-                  message: item_errors_full_messages,
+                  message: item_errors_full_messages(@item),
                   can_bypass_unique_serial_number_validation: \
                     can_bypass_unique_serial_number_validation?(@item)
                 },
@@ -167,16 +197,20 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
+  def set_copy_defaults(item)
+    item.owner = current_inventory_pool
+    item.serial_number = nil
+    item.name = nil
+    item.last_check = Date.today
+    item.attachments = []
+  end
+
   def copy
     fetch_item_by_id
     @type = @item.type.downcase
     @item = @item.dup
-    @item.owner = @current_inventory_pool
     @item.inventory_code = Item.proposed_inventory_code(current_inventory_pool)
-    @item.serial_number = nil
-    @item.name = nil
-    @item.last_check = Date.today
-    @item.attachments = []
+    set_copy_defaults(@item)
 
     @props = {
       next_code: Item.proposed_inventory_code(current_inventory_pool),
@@ -185,6 +219,7 @@ class Manage::ItemsController < Manage::ApplicationController
       inventory_pool: current_inventory_pool,
       is_inventory_relevant: (super_user? ? true : false),
       save_path: manage_create_item_path,
+      save_multiple_path: manage_create_multiple_items_path,
       store_attachment_path: manage_item_store_attachment_react_path,
       inventory_path: manage_inventory_path,
 
@@ -222,19 +257,19 @@ class Manage::ItemsController < Manage::ApplicationController
   end
 
   def new
-    save_path = manage_create_item_path
-
     next_code = Item.proposed_inventory_code(current_inventory_pool)
     if params[:forPackage] == 'true'
       next_code = 'P-' + next_code
     end
+
     @props = {
       next_code: next_code,
       lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
       highest_code: Item.proposed_inventory_code(current_inventory_pool, :highest),
       inventory_pool: current_inventory_pool,
       is_inventory_relevant: (super_user? ? true : false),
-      save_path: save_path,
+      save_path: manage_create_item_path,
+      save_multiple_path: manage_create_multiple_items_path,
       store_attachment_path: manage_item_store_attachment_react_path,
       inventory_path: manage_inventory_path,
       item_type: (params[:type] == 'license' ? 'license' : 'item'),
@@ -343,40 +378,61 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
-  def check_fields_for_write_permissions
+  def check_fields_for_write_permissions(item, item_params)
     Field.all.each do |field|
       next unless field.data['permissions']
       next unless field_data_in_params?(field, item_params)
-      next if field.editable(current_user, current_inventory_pool, @item)
-      @item
-        .errors
-        .add(:base,
-             _('You are not the owner of this item') \
-             + ', ' \
-             + _('therefore you may not be able to change some of these fields'))
+      next if field.editable(current_user, current_inventory_pool, item)
+      item
+       .errors
+       .add(:base,
+            _('You are not the owner of this item') \
+            + ', ' \
+            + _('therefore you may not be able to change some of these fields'))
     end
   end
 
-  def skip_serial_number_validation_param
-    ssnv = params.require(:item).delete(:skip_serial_number_validation)
-    if ssnv.try(:==, 'true')
-      true
-    else
-      false
-    end
-  end
+  # def skip_serial_number_validation_param
+  #   ssnv = params.require(:item).fetch(:skip_serial_number_validation)
+  #   if ssnv.try(:==, 'true')
+  #     true
+  #   else
+  #     false
+  #   end
+  # end
 
   def can_bypass_unique_serial_number_validation?(item)
     not item.unique_serial_number? and item.errors.size == 1
   end
 
-  def item_errors_full_messages
+  def item_errors_full_messages(item)
     # `reverse` because the error message for the serial number
     # should be displayed as last.
-    @item.errors.full_messages.reverse.uniq.join(' ')
+    item.errors.full_messages.reverse.uniq.join(' ')
   end
 
-  def item_params
-    params.require(:item)
+  def get_item_params!(inv_code = nil)
+    item_ps = params.require(:item)
+    item_ps[:inventory_code] = inv_code if inv_code
+    ###############################################################################
+    # convert `skip_serial_number_validation` to boolean
+    ###############################################################################
+    ssnv = item_ps.fetch(:skip_serial_number_validation, false)
+    item_ps[:skip_serial_number_validation] = if ssnv.try(:==, 'true')
+                                                true
+                                              else
+                                                false
+                                              end
+    ###############################################################################
+    item_ps
+  end
+
+  def quantity_param
+    q = params.require(:quantity).to_i
+    if quantity_param <= 0
+      raise 'Quantity param not provided or smaller equal zero.'
+    else
+      q
+    end
   end
 end
