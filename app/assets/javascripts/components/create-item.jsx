@@ -1,32 +1,28 @@
-(() => {
+;(() => {
   // NOTE: only for linter and clarity:
   /* global _ */
   /* global _jed */
-  const React = window.React
+  /* global $ */
+  /* global App */
+  /* global React */
+  /* global PropTypes */
+  /* global CreateItemFieldSwitch, CreateItemContent */
 
   window.CreateItem = window.createReactClass({
-    propTypes: {
-    },
+    propTypes: {},
 
     initialPackageChildItems() {
-
-      if(this.props.edit && this.props.for_package && this.props.children) {
-
+      if (this.props.edit && this.props.for_package && this.props.children) {
         var l = window.lodash
-        return l.map(
-          this.props.children,
-          (c) => {
-            return {
-              item: c.json,
-              model: c.json.model
-            }
+        return l.map(this.props.children, (c) => {
+          return {
+            item: c.json,
+            model: c.json.model
           }
-        )
-
+        })
       } else {
         return []
       }
-
     },
 
     // https://reactjs.org/docs/legacy-context.html
@@ -40,12 +36,9 @@
       return {
         hackyForPackage: this.props.for_package
       }
-
     },
 
-
-
-    getInitialState () {
+    getInitialState() {
       return {
         loadingFields: 'initial',
         fields: null,
@@ -57,24 +50,18 @@
       }
     },
 
-
     _targetType() {
-        return this.props.item_type
+      return this.props.item_type
     },
 
-
-    _fetchFields () {
-      this.setState({loadingFields: 'loading'})
+    _fetchFields() {
+      this.setState({ loadingFields: 'loading' })
       App.Field.ajaxFetch({
-        data: $.param({target_type: this._targetType()})
+        data: $.param({ target_type: this._targetType() })
       }).done((data) => {
-
         var fields = data
-        if(this.props.for_package) {
-          fields = _.filter(
-            data,
-            (f) => f.forPackage || f.id == 'model_id'
-          )
+        if (this.props.for_package) {
+          fields = _.filter(data, (f) => f.forPackage || f.id == 'model_id')
         }
 
         this.setState({
@@ -85,19 +72,25 @@
       })
     },
 
-
-
     _createFieldModels(fields, item) {
-      if(item) {
-        return window.FieldModels._createEditFieldModels(fields, item, this._fieldSwitch, this.props.attachments)
+      if (item) {
+        return window.FieldModels._createEditFieldModels(
+          fields,
+          item,
+          this._fieldSwitch,
+          this.props.attachments
+        )
       } else {
-        return window.FieldModels._createNewFieldModels(fields, this.props.next_code, this.props.inventory_pool, this._fieldSwitch)
+        return window.FieldModels._createNewFieldModels(
+          fields,
+          this.props.next_code,
+          this.props.inventory_pool,
+          this._fieldSwitch
+        )
       }
     },
 
-
-
-    componentDidMount () {
+    componentDidMount() {
       this._fetchFields()
     },
 
@@ -109,30 +102,27 @@
       }
     },
 
-
-
-
-
     onChange(fieldId, value) {
       var l = window.lodash
       var fieldModels = l.cloneDeep(this.state.fieldModels)
       window.FieldModels.findFieldModel(fieldModels, fieldId).value = value
       window.FieldModels._ensureDependents(fieldModels, this.state.fields, this._fieldSwitch)
-      this.setState({fieldModels: fieldModels})
+      this.setState({ fieldModels: fieldModels })
     },
 
-
-
     _loadingFields() {
-      var loading = <div className='loading-bg' />
+      var loading = <div className="loading-bg" />
 
       return (
-        <div className='table'>
-          <div className='table-row'>
-            <div className='table-cell list-of-lines even separated-top padding-bottom-s min-height-l' id='inventory' style={{border: '0px'}}>
-              <div className='height-s'></div>
+        <div className="table">
+          <div className="table-row">
+            <div
+              className="table-cell list-of-lines even separated-top padding-bottom-s min-height-l"
+              id="inventory"
+              style={{ border: '0px' }}>
+              <div className="height-s" />
               {loading}
-              <div className='height-s'></div>
+              <div className="height-s" />
             </div>
           </div>
         </div>
@@ -140,7 +130,6 @@
     },
 
     _onShowAll() {
-
       var url = '/manage/' + this.props.inventory_pool.id + '/fields'
       $.ajax({
         url: url,
@@ -148,49 +137,40 @@
         data: {
           _method: 'delete'
         }
-      }).done((data) => {
-
+      }).done(() => {
         var l = window.lodash
         var fieldModels = l.cloneDeep(this.state.fieldModels)
-        _.each(
-          fieldModels,
-          (fm) => {
-            fm.hidden = false
-          }
-        )
+        _.each(fieldModels, (fm) => {
+          fm.hidden = false
+        })
 
-        this.setState({fieldModels: fieldModels})
+        this.setState({ fieldModels: fieldModels })
       })
-
     },
 
     _onClose(fieldModel) {
       var url = '/manage/' + this.props.inventory_pool.id + '/fields/' + fieldModel.field.id
       $.ajax({
         url: url,
-        type: 'post',
-      }).done((data) => {
-
+        type: 'post'
+      }).done(() => {
         var l = window.lodash
         var fieldModels = l.cloneDeep(this.state.fieldModels)
-        _.each(
-          fieldModels,
-          (fm) => {
-            if(fm.field.id == fieldModel.field.id) {
-              fm.hidden = true
-            }
+        _.each(fieldModels, (fm) => {
+          if (fm.field.id == fieldModel.field.id) {
+            fm.hidden = true
           }
-        )
+        })
 
-        this.setState({fieldModels: fieldModels})
+        this.setState({ fieldModels: fieldModels })
       })
     },
 
     onSelectChildItem(result) {
-      var term = result.term
+      // var term = result.term
       var id = result.id
       var value = result.value
-      if(id) {
+      if (id) {
         this.setState((old) => {
           var l = window.lodash
           return {
@@ -204,27 +184,27 @@
     },
 
     onRemoveChildItem(itemId) {
-
       this.setState((old) => {
         var l = window.lodash
         return {
           packageChildItems: l.reject(old.packageChildItems, (v) => v.item.id == itemId)
         }
       })
-
-
     },
-
 
     _readyContent() {
       return (
-        <CreateItemContent fields={this.state.fields}
+        <CreateItemContent
+          fields={this.state.fields}
           fieldModels={this.state.fieldModels}
           onChange={this.onChange}
-          createItemProps={this.props} showInvalids={this.state.showInvalids} onClose={this._onClose}
+          createItemProps={this.props}
+          showInvalids={this.state.showInvalids}
+          onClose={this._onClose}
           onSelectChildItem={this.onSelectChildItem}
           onRemoveChildItem={this.onRemoveChildItem}
-          packageChildItems={this.state.packageChildItems} />
+          packageChildItems={this.state.packageChildItems}
+        />
       )
     },
 
@@ -232,17 +212,16 @@
       return this.state.loadingFields == 'done'
     },
 
-    _content () {
-      if(!this._fieldsReady()) {
+    _content() {
+      if (!this._fieldsReady()) {
         return this._loadingFields()
       } else {
         return this._readyContent()
       }
     },
 
-
     _subtitleMessage() {
-      if(this.props.edit) {
+      if (this.props.edit) {
         _jed('Make changes and save')
       } else {
         _jed('Insert all required information')
@@ -250,19 +229,18 @@
     },
 
     _titleMessage() {
-      if(this.props.edit) {
-
-        if(this.props.for_package) {
+      if (this.props.edit) {
+        if (this.props.for_package) {
           return _jed('Edit %s', _jed('Package'))
-        } else if(this._targetType() == 'license') {
+        } else if (this._targetType() == 'license') {
           return _jed('Edit License')
         } else {
           return _jed('Edit Item')
         }
       } else {
-        if(this.props.for_package) {
+        if (this.props.for_package) {
           return _jed('Create %s', _jed('Package'))
-        } else if(this._targetType() == 'license') {
+        } else if (this._targetType() == 'license') {
           return _jed('Create new software license')
         } else {
           return _jed('Create new item')
@@ -271,68 +249,55 @@
     },
 
     _renderTitle() {
-
       return (
-        <div className='col1of2'>
-          <h1 className='headline-l'>{this._titleMessage()}</h1>
-          <h2 className='headline-s light'>{this._subtitleMessage()}</h2>
+        <div className="col1of2">
+          <h1 className="headline-l">{this._titleMessage()}</h1>
+          <h2 className="headline-s light">{this._subtitleMessage()}</h2>
         </div>
       )
     },
-
-
-
 
     _flatFieldModels() {
       return window.FieldModels._flatFieldModels(this.state.fieldModels)
     },
 
     _isFieldModelForSubmit(fieldModel) {
-      return fieldModel.field.type != 'attachment' && !fieldModel.field.exclude_from_submit && CreateItemFieldSwitch._isFieldEditable(fieldModel.field, this.props.item)
-    },
-
-    _fieldModelsForSubmit() {
-      return _.filter(
-        this._flatFieldModels(),
-        (fieldModel) => this._isFieldModelForSubmit(fieldModel)
+      return (
+        fieldModel.field.type != 'attachment' &&
+        !fieldModel.field.exclude_from_submit &&
+        CreateItemFieldSwitch._isFieldEditable(fieldModel.field, this.props.item)
       )
     },
 
-
-
-
-
-    _clientValidation() {
-
-      return window.CreateItemValidation._clientValidation(this.state.fieldModels)
+    _fieldModelsForSubmit() {
+      return _.filter(this._flatFieldModels(), (fieldModel) =>
+        this._isFieldModelForSubmit(fieldModel)
+      )
     },
 
+    _clientValidation() {
+      return window.CreateItemValidation._clientValidation(this.state.fieldModels)
+    },
 
     _attachmentsFieldModel() {
       return _.find(this.state.fieldModels, (fm) => fm.field.id == 'attachments')
     },
 
     _attachmentsFileModels() {
-      if(this._attachmentsFieldModel()) {
+      if (this._attachmentsFieldModel()) {
         return this._attachmentsFieldModel().value.fileModels
       } else {
         return []
       }
-
     },
 
     _newAttachementFiles() {
-      return _.filter(
-        this._attachmentsFileModels(),
-        (fm) => {
-          return fm.type == 'new'
-        }
-      )
+      return _.filter(this._attachmentsFileModels(), (fm) => {
+        return fm.type == 'new'
+      })
     },
 
-
     _uploadFile(itemId, fileModel, callback) {
-
       var file = fileModel.file
 
       var formData = new FormData()
@@ -345,17 +310,18 @@
         contentType: false,
         method: 'POST',
         processData: false
-      }).done((data) => {
-        callback({result: 'success', fileModel: fileModel})
-      }).error((data) => {
-        callback({result: 'failure', fileModel: fileModel})
       })
+        .done(() => {
+          callback({ result: 'success', fileModel: fileModel })
+        })
+        .error(() => {
+          callback({ result: 'failure', fileModel: fileModel })
+        })
     },
 
     _uploadFileCallback(itemId, fileModels, callback) {
       return (answer) => {
-
-        if(answer.result != 'success') {
+        if (answer.result != 'success') {
           answer.fileModel.result = 'failure'
         } else {
           answer.fileModel.result = 'success'
@@ -366,8 +332,7 @@
     },
 
     _uploadFiles(itemId, fileModels, callback) {
-
-      if(fileModels.length == 0) {
+      if (fileModels.length == 0) {
         callback()
         return
       }
@@ -390,23 +355,18 @@
     },
 
     _showAttachmentsHintIfNeeded() {
-
-      var message = _jed(
-        '%s was saved, but there were problems uploading files',
-        _jed('Item')
-      )
+      var message = _jed('%s was saved, but there were problems uploading files', _jed('Item'))
       alert(message)
     },
 
-
-    _editItemPath(itemId)  {
+    _editItemPath(itemId) {
       return '/manage/' + this.props.inventory_pool.id + '/items/' + itemId + '/edit'
     },
 
     _forward(redirectUrl) {
       var message = _.string.capitalize(this.props.item_type) + ' saved.'
       var flash = '?flash[success]=' + _jed(message)
-      if(redirectUrl) {
+      if (redirectUrl) {
         window.location = redirectUrl + flash
       } else {
         window.location = this.props.inventory_path + flash
@@ -415,7 +375,7 @@
 
     _submitAttachmentsCallback(itemId, redirectUrl) {
       return () => {
-        if(!this._allUploadsSuccessful()) {
+        if (!this._allUploadsSuccessful()) {
           this._showAttachmentsHintIfNeeded()
           window.location = this._editItemPath(itemId)
         } else {
@@ -425,7 +385,6 @@
     },
 
     _submitAttachments(itemId, redirectUrl) {
-
       this._showAttachmentLoadingFlash()
 
       this._uploadFiles(
@@ -436,7 +395,6 @@
     },
 
     _showSuccessFlash() {
-
       App.Flash({
         type: 'error',
         message: _jed('Please provide all required fields')
@@ -444,22 +402,22 @@
     },
 
     _showAttachmentLoadingFlash() {
-
       var modal = new App.Modal($('<div></div>'))
       modal.undestroyable()
-      App.Flash({
-        type: 'notice',
-        message: _jed('Uploading files - please wait'),
-        loading: true
-      }, 9999)
-
+      App.Flash(
+        {
+          type: 'notice',
+          message: _jed('Uploading files - please wait'),
+          loading: true
+        },
+        9999
+      )
     },
 
     _save(bypassSerialNumberValidation, copy) {
-
-      if(!this._clientValidation()) {
+      if (!this._clientValidation()) {
         this._showSuccessFlash()
-        this.setState({showInvalids: true})
+        this.setState({ showInvalids: true })
         return
       } else {
         App.Flash.reset()
@@ -473,29 +431,23 @@
         )
       }
 
-      if(this.props.for_package) {
-        data.child_items = _.map(
-          this.state.packageChildItems,
-          (i) => {
-            return i.item.id
-          }
-        )
+      if (this.props.for_package) {
+        data.child_items = _.map(this.state.packageChildItems, (i) => {
+          return i.item.id
+        })
       }
 
       data.item.attachments_attributes = {}
-      _.each(
-        this._attachmentsFileModels(),
-        (fm) => {
-          if(fm.delete) {
-            data.item.attachments_attributes[fm.id] = {
-              id: fm.id,
-              _destroy: '1'
-            }
+      _.each(this._attachmentsFileModels(), (fm) => {
+        if (fm.delete) {
+          data.item.attachments_attributes[fm.id] = {
+            id: fm.id,
+            _destroy: '1'
           }
         }
-      )
+      })
 
-      if(copy) {
+      if (copy) {
         data.copy = true
       }
 
@@ -504,22 +456,22 @@
         data: JSON.stringify(data),
         contentType: 'application/json',
         dataType: 'json',
-        method: (this.props.edit ? 'PUT' : 'POST')
-      }).done((data) => {
-        if(this._newAttachementFiles().length > 0) {
-          this._submitAttachments(data.id, data.redirect_url)
-        } else {
-          this._forward(data.redirect_url)
-        }
-
-      }).error((data) => {
-        if(data.responseJSON.can_bypass_unique_serial_number_validation) {
-          this._showSerialNumberModal(data.responseJSON.message, copy)
-        }
-        else {
-          this._showErrorMessage(data.responseJSON.message)
-        }
+        method: this.props.edit ? 'PUT' : 'POST'
       })
+        .done((data) => {
+          if (this._newAttachementFiles().length > 0) {
+            this._submitAttachments(data.id, data.redirect_url)
+          } else {
+            this._forward(data.redirect_url)
+          }
+        })
+        .error((data) => {
+          if (data.responseJSON.can_bypass_unique_serial_number_validation) {
+            this._showSerialNumberModal(data.responseJSON.message, copy)
+          } else {
+            this._showErrorMessage(data.responseJSON.message)
+          }
+        })
     },
 
     _onSave(event) {
@@ -550,7 +502,6 @@
     },
 
     _hasHiddenFields() {
-
       return _.reduce(
         this._flatFieldModels(),
         (result, fm) => {
@@ -561,58 +512,82 @@
     },
 
     _saveButtonText() {
-
-      if(this.props.for_package) {
+      if (this.props.for_package) {
         return _jed('Save %s', _jed('Package'))
-      }
-      else if(this._targetType() == 'license') {
+      } else if (this._targetType() == 'license') {
         return _jed('Save %s', _jed('License'))
-      }
-      else {
+      } else {
         return _jed('Save %s', _jed('Item'))
       }
     },
 
-
     _renderTitleButtons() {
-
       var displayAllStyle = {}
-      if(!this._hasHiddenFields()) {
+      if (!this._hasHiddenFields()) {
         displayAllStyle.display = 'none'
       }
 
-
-      if(this.props.for_package) {
-
+      if (this.props.for_package) {
         return (
-          <div className='col1of2 text-align-right'>
-            <button onClick={this._onShowAll} className='button white' data-placement='top' data-toggle='tooltip' id='show-all-fields' style={displayAllStyle} title='Alle versteckten Felder wieder anzeigen'>Alle Felder anzeigen</button>
-            <a className='button grey' href={(this.props.return_url ? this.props.return_url : this.props.inventory_path)}>{_jed('Cancel')}</a>
-            <button autoComplete='off' className='button green' id='save' onClick={this._onSavePackage}>
+          <div className="col1of2 text-align-right">
+            <button
+              onClick={this._onShowAll}
+              className="button white"
+              data-placement="top"
+              data-toggle="tooltip"
+              id="show-all-fields"
+              style={displayAllStyle}
+              title="Alle versteckten Felder wieder anzeigen">
+              Alle Felder anzeigen
+            </button>
+            <a
+              className="button grey"
+              href={this.props.return_url ? this.props.return_url : this.props.inventory_path}>
+              {_jed('Cancel')}
+            </a>
+            <button
+              autoComplete="off"
+              className="button green"
+              id="save"
+              onClick={this._onSavePackage}>
               {this._saveButtonText()}
             </button>
           </div>
         )
-
       }
 
-
       return (
-        <div className='col1of2 text-align-right'>
-          <button onClick={this._onShowAll} className='button white' data-placement='top' data-toggle='tooltip' id='show-all-fields' style={displayAllStyle} title='Alle versteckten Felder wieder anzeigen'>Alle Felder anzeigen</button>
-          <a className='button grey' href={(this.props.return_url ? this.props.return_url : this.props.inventory_path)}>{_jed('Cancel')}</a>
-          <div className='multibutton'>
-            <button autoComplete='off' className='button green' id='save' onClick={this._onSave}>
+        <div className="col1of2 text-align-right">
+          <button
+            onClick={this._onShowAll}
+            className="button white"
+            data-placement="top"
+            data-toggle="tooltip"
+            id="show-all-fields"
+            style={displayAllStyle}
+            title="Alle versteckten Felder wieder anzeigen">
+            Alle Felder anzeigen
+          </button>
+          <a
+            className="button grey"
+            href={this.props.return_url ? this.props.return_url : this.props.inventory_path}>
+            {_jed('Cancel')}
+          </a>
+          <div className="multibutton">
+            <button autoComplete="off" className="button green" id="save" onClick={this._onSave}>
               {this._saveButtonText()}
             </button>
-            <div className='dropdown-holder inline-block'>
-              <div className='button green dropdown-toggle'>
-                <div className='arrow down'></div>
+            <div className="dropdown-holder inline-block">
+              <div className="button green dropdown-toggle">
+                <div className="arrow down" />
               </div>
-              <ul className='dropdown right' style={{display: 'none'}}>
+              <ul className="dropdown right" style={{ display: 'none' }}>
                 <li>
-                  <a className='dropdown-item' id='item-save-and-copy' onClick={this._onSaveAndCopy}>
-                    <i className='fa fa-copy'></i>
+                  <a
+                    className="dropdown-item"
+                    id="item-save-and-copy"
+                    onClick={this._onSaveAndCopy}>
+                    <i className="fa fa-copy" />
                     {' ' + _jed('Save and copy')}
                   </a>
                 </li>
@@ -624,7 +599,7 @@
     },
 
     _renderTitleButtonsIfReady() {
-      if(this._fieldsReady()) {
+      if (this._fieldsReady()) {
         return this._renderTitleButtons()
       } else {
         return null
@@ -632,64 +607,105 @@
     },
 
     _renderTitleAndButtons() {
-
       return (
-        <div className='margin-top-l padding-horizontal-m'>
-          <div className='row'>
+        <div className="margin-top-l padding-horizontal-m">
+          <div className="row">
             {this._renderTitle()}
             {this._renderTitleButtonsIfReady()}
           </div>
         </div>
       )
-
     },
 
     _showErrorMessage(message) {
-
       this.setState({
         showError: true,
         errorMessage: message
       })
-
     },
 
     _renderErrorMessage() {
-
-      if(this.state.showError) {
-
+      if (this.state.showError) {
         var onClick = (event) => {
           event.preventDefault()
-          this.setState({showError: false, errorMessage: ''})
+          this.setState({ showError: false, errorMessage: '' })
         }
 
         return (
-          <div id='error-modal' style={{position: 'absolute', top: '0px', bottom: '0px', left: '0px', right: '0px', zIndex: '100000'}}>
-             <div style={{opacity: '0.8', position: 'fixed', top: '0', right: '0', bottom: '0', left: '0', zIndex: '2000', backgroundColor: '#000000'}}></div>
-             <div style={{position: 'fixed', zIndex: '1000000', overflow: 'scroll', top: '0px', left: '0px', bottom: '0px', right: '0px'}}>
-                <div style={{position: 'static', marginTop: '100px', marginBottom: '100px', overflow: 'visible'}}>
-                   <div style={{position: 'static', zIndex: '1000000', margin: 'auto', top: '10%', left: '50%', width: '560px', backgroundColor: '#ffffff', borderRadius: '6px', boxShadow: '0 3px 7px rgba(0, 0, 0, 0.3)', backgroundClip: 'padding-box', outline: 'none'}}>
-                     <div style={{fontSize: '1.2em', padding: '20px'}}>
-                       {this.state.errorMessage}
-                       <div className='row text-align-right' id='switch'>
-                         <button type='button' className='button small white' onClick={onClick}>Close</button>
-                        </div>
-                     </div>
-                   </div>
+          <div
+            id="error-modal"
+            style={{
+              position: 'absolute',
+              top: '0px',
+              bottom: '0px',
+              left: '0px',
+              right: '0px',
+              zIndex: '100000'
+            }}>
+            <div
+              style={{
+                opacity: '0.8',
+                position: 'fixed',
+                top: '0',
+                right: '0',
+                bottom: '0',
+                left: '0',
+                zIndex: '2000',
+                backgroundColor: '#000000'
+              }}
+            />
+            <div
+              style={{
+                position: 'fixed',
+                zIndex: '1000000',
+                overflow: 'scroll',
+                top: '0px',
+                left: '0px',
+                bottom: '0px',
+                right: '0px'
+              }}>
+              <div
+                style={{
+                  position: 'static',
+                  marginTop: '100px',
+                  marginBottom: '100px',
+                  overflow: 'visible'
+                }}>
+                <div
+                  style={{
+                    position: 'static',
+                    zIndex: '1000000',
+                    margin: 'auto',
+                    top: '10%',
+                    left: '50%',
+                    width: '560px',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '6px',
+                    boxShadow: '0 3px 7px rgba(0, 0, 0, 0.3)',
+                    backgroundClip: 'padding-box',
+                    outline: 'none'
+                  }}>
+                  <div style={{ fontSize: '1.2em', padding: '20px' }}>
+                    {this.state.errorMessage}
+                    <div className="row text-align-right" id="switch">
+                      <button type="button" className="button small white" onClick={onClick}>
+                        Close
+                      </button>
+                    </div>
+                  </div>
                 </div>
-             </div>
+              </div>
+            </div>
           </div>
         )
-
-
       } else {
         return null
       }
     },
 
-    render () {
-
+    render() {
       return (
-        <div className='row content-wrapper min-height-xl min-width-full straight-top'>
+        <div className="row content-wrapper min-height-xl min-width-full straight-top">
           {this._renderErrorMessage()}
           {this._renderTitleAndButtons()}
           {this._content()}
@@ -697,4 +713,6 @@
       )
     }
   })
+
+  window.CreateItem.displayName = 'CreateItem'
 })()
