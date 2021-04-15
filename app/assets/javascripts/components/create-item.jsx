@@ -1,12 +1,25 @@
 ;(() => {
   // NOTE: only for linter and clarity:
-  /* global _ */
-  /* global _jed */
-  /* global $ */
+  /* global _, _jed, $, setUrlParams */
   /* global App */
   /* global React */
   /* global PropTypes */
   /* global CreateItemFieldSwitch, CreateItemContent */
+
+  const f = window.lodash
+
+  // NOTE: This is the server-side limit (needed because the result page holds uuids in params for all created items, also to protect against mistakes)
+  const BATCH_CREATE_MAX_QUANTITY = 100
+  // NOTE: those fields are only relevant for a *single* item instance. the list comes from the "copy item" action, which resets those fields on copy.
+  // <https://github.com/leihs/leihs/issues/1015#issuecomment-775999512>
+  const ITEM_FIELDS_DISABLED_FOR_BATCH = [
+    'owner',
+    // 'inventory_code', // already handled explicitly in the Field component itself, so we cant remove the field!
+    'serial_number',
+    'name',
+    'last_check',
+    'attachments'
+  ]
 
   window.CreateItem = window.createReactClass({
     propTypes: {},
@@ -27,19 +40,24 @@
 
     // https://reactjs.org/docs/legacy-context.html
     childContextTypes: {
-      hackyForPackage: PropTypes.bool
+      hackyForPackage: PropTypes.bool,
+      isBatchCreate: PropTypes.bool,
+      batchCreateInventoryCodePrefix: PropTypes.string
     },
     // NOTE: We need this hack to pass the forPackage value to the mdoel_id input since
     // the current field config does not let us pass this information if we
     // only should list package models or not.
     getChildContext() {
       return {
-        hackyForPackage: this.props.for_package
+        hackyForPackage: this.props.for_package,
+        isBatchCreate: this._isBatchCreate(),
+        batchCreateInventoryCodePrefix: this.props.code_prefix
       }
     },
 
     getInitialState() {
       return {
+        quantity: 1,
         loadingFields: 'initial',
         fields: null,
         showInvalids: false,
@@ -193,10 +211,63 @@
     },
 
     _readyContent() {
+      const isBatch = this._isBatchCreate()
+      const isCreating = !this.props.edit
+      const isAPackage = !!this.props.for_package
+      const isPartOfAPackage = !!this.props.parent
+      const isSoftwareLicense = this.props.item_type === 'license'
+      const isCreatingNewItem = isCreating && !isAPackage && !isPartOfAPackage && !isSoftwareLicense
+      let fields = this.state.fields
+      let fieldModels = this.state.fieldModels
+
+      // NOTE: not implemented for licenses, because they are deprecated
+      const quantitySelector = isCreatingNewItem && (
+        <div className="ui-create-item-quantity-selector">
+          <div
+            className="field row emboss padding-inset-xs margin-vertical-xxs margin-right-xs"
+            data-editable="true"
+            data-id="item_quantity"
+            data-required="true"
+            data-type="field">
+            <div className="row">
+              <div className="col1of2 padding-vertical-xs" data-type="key">
+                <strong className="font-size-m inline-block">
+                  {_jed('create_multiple_items_label_quantity')} *
+                </strong>
+              </div>
+              <div className="col1of2" data-type="value">
+                <input
+                  type="number"
+                  name="item[quantity]"
+                  value={this.state.quantity}
+                  onChange={({ target: { value: num } }) =>
+                    this.setState({ quantity: Math.min(num, BATCH_CREATE_MAX_QUANTITY) })
+                  }
+                  className="width-full"
+                  autoComplete="off"
+                  min={1}
+                  max={BATCH_CREATE_MAX_QUANTITY}
+                  step={1}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+
+      // NOTE: if creating multiple, hide certain fields
+      if (isBatch) {
+        fields = f.reject(fields, (field) => f.includes(ITEM_FIELDS_DISABLED_FOR_BATCH, field.id))
+        fieldModels = f.reject(fieldModels, (fieldModel) =>
+          f.includes(ITEM_FIELDS_DISABLED_FOR_BATCH, f.get(fieldModel, 'field.id'))
+        )
+      }
+
       return (
+        // eslint-disable-next-line react/jsx-no-undef
         <CreateItemContent
-          fields={this.state.fields}
-          fieldModels={this.state.fieldModels}
+          fields={fields}
+          fieldModels={fieldModels}
           onChange={this.onChange}
           createItemProps={this.props}
           showInvalids={this.state.showInvalids}
@@ -204,6 +275,7 @@
           onSelectChildItem={this.onSelectChildItem}
           onRemoveChildItem={this.onRemoveChildItem}
           packageChildItems={this.state.packageChildItems}
+          quantitySelector={quantitySelector}
         />
       )
     },
@@ -363,13 +435,13 @@
       return '/manage/' + this.props.inventory_pool.id + '/items/' + itemId + '/edit'
     },
 
-    _forward(redirectUrl) {
+    _forward(redirectUrl, withMessage = true) {
       var message = _.string.capitalize(this.props.item_type) + ' saved.'
-      var flash = '?flash[success]=' + _jed(message)
+      var flash = withMessage ? { 'flash[success]': _jed(message) } : {}
       if (redirectUrl) {
-        window.location = redirectUrl + flash
+        window.location = setUrlParams(redirectUrl, flash)
       } else {
-        window.location = this.props.inventory_path + flash
+        window.location = setUrlParams(this.props.inventory_path, flash)
       }
     },
 
@@ -423,12 +495,18 @@
         App.Flash.reset()
       }
 
+      const isBatch = this._isBatchCreate()
+
       var data = {
         inventory_pool_id: this.props.inventory_pool.id,
         item: window.SerializeItem._serializeItem(
           bypassSerialNumberValidation,
           this._fieldModelsForSubmit()
         )
+      }
+
+      if (isBatch) {
+        data.quantity = this.state.quantity
       }
 
       if (this.props.for_package) {
@@ -451,8 +529,10 @@
         data.copy = true
       }
 
+      const showMessage = !isBatch
+
       $.ajax({
-        url: this.props.save_path,
+        url: isBatch ? this.props.save_multiple_path : this.props.save_path,
         data: JSON.stringify(data),
         contentType: 'application/json',
         dataType: 'json',
@@ -462,21 +542,26 @@
           if (this._newAttachementFiles().length > 0) {
             this._submitAttachments(data.id, data.redirect_url)
           } else {
-            this._forward(data.redirect_url)
+            this._forward(data.redirect_url, showMessage)
           }
         })
-        .error((data) => {
-          if (data.responseJSON.can_bypass_unique_serial_number_validation) {
-            this._showSerialNumberModal(data.responseJSON.message, copy)
+        .error((res) => {
+          const data = res && res.responseJSON
+          if (data && data.can_bypass_unique_serial_number_validation) {
+            this._showSerialNumberModal(res.responseJSON.message, copy)
+          } else if (data) {
+            this._showErrorMessage(res.responseJSON.message)
           } else {
-            this._showErrorMessage(data.responseJSON.message)
+            this._showErrorMessage(
+              'Unexpected Error!\n' + res.statusText + '\n\n' + res.responseText
+            )
           }
         })
     },
 
     _onSave(event) {
       event.preventDefault()
-
+      this.setState({isSaving: true})
       this._save(false, false)
     },
 
@@ -521,6 +606,14 @@
       }
     },
 
+    _isBatchCreate() {
+      return this.state.quantity > 1
+    },
+
+    _isEditing() {
+      return !!this.props.edit
+    },
+
     _renderTitleButtons() {
       var displayAllStyle = {}
       if (!this._hasHiddenFields()) {
@@ -556,6 +649,34 @@
         )
       }
 
+      const isSaving = !!this.state.isSaving
+      const mainButton = this._isBatchCreate() ? (
+        <button className="button green" id="save" onClick={this._onSave} disabled={isSaving}>
+          {' '}{this.state.quantity}
+          {' × '}
+          {this._saveButtonText()} {isSaving && <i className="fa fa-spinner fa-spin"></i>}
+        </button>
+      ) : (
+        <div className="multibutton">
+          <button autoComplete="off" className="button green" id="save" onClick={this._onSave}>
+            {this._saveButtonText()}
+          </button>
+          <div className="dropdown-holder inline-block">
+            <div className="button green dropdown-toggle">
+              <div className="arrow down" />
+            </div>
+            <ul className="dropdown right" style={{ display: 'none' }}>
+              <li>
+                <a className="dropdown-item" id="item-save-and-copy" onClick={this._onSaveAndCopy}>
+                  <i className="fa fa-copy" />
+                  {' ' + _jed('Save and copy')}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )
+
       return (
         <div className="col1of2 text-align-right">
           <button
@@ -573,27 +694,7 @@
             href={this.props.return_url ? this.props.return_url : this.props.inventory_path}>
             {_jed('Cancel')}
           </a>
-          <div className="multibutton">
-            <button autoComplete="off" className="button green" id="save" onClick={this._onSave}>
-              {this._saveButtonText()}
-            </button>
-            <div className="dropdown-holder inline-block">
-              <div className="button green dropdown-toggle">
-                <div className="arrow down" />
-              </div>
-              <ul className="dropdown right" style={{ display: 'none' }}>
-                <li>
-                  <a
-                    className="dropdown-item"
-                    id="item-save-and-copy"
-                    onClick={this._onSaveAndCopy}>
-                    <i className="fa fa-copy" />
-                    {' ' + _jed('Save and copy')}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          {mainButton}
         </div>
       )
     },
@@ -687,7 +788,7 @@
                   }}>
                   <div style={{ fontSize: '1.2em', padding: '20px' }}>
                     {this.state.errorMessage}
-                    <div className="row text-align-right" id="switch">
+                    <div className="row text-align-right">
                       <button type="button" className="button small white" onClick={onClick}>
                         Close
                       </button>

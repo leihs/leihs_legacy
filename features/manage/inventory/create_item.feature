@@ -11,6 +11,7 @@ Feature: Create item
     And I choose "Investment" as reference
     Then I see form fields in the following order:
       | field                      |
+      | Quantity                   |
       | Inventory Code             |
       | Model                      |
       | - Status -                 |

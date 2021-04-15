@@ -4503,6 +4503,50 @@ window.i18n.locale_data = {
       "legacy_manage_entitlement_group_new_admin_section_notice": [
          null,
          "Les utilisateurs et groupes de cette entitlement-groupe sont gérés dans la nouvelle section d'Admin"
+      ],
+      "create_multiple_items_inv_code_notice": [
+         null,
+         "Lorsque plusieurs articles sont créés en même temps, le code d'inventaire ne peut pas être défini individuellement. Au lieu de cela, la plus petite liste continue possible de codes d'inventaire est générée automatiquement."
+      ],
+      "create_multiple_items_label_quantity": [
+         null,
+         "Quantité"
+      ],
+      "create_multiple_items_label_date": [
+         null,
+         "Date"
+      ],
+      "create_multiple_items_head_title": [
+         null,
+         "Articles créés avec succès !"
+      ],
+      "create_multiple_items_head_summary": [
+         null,
+         "Résumé"
+      ],
+      "create_multiple_items_head_list": [
+         null,
+         "Liste des éléments créés"
+      ],
+      "create_multiple_items_label_export": [
+         null,
+         "Exporter"
+      ],
+      "create_multiple_items_btn_csv_export": [
+         null,
+         "Enregistrer au format CSV"
+      ],
+      "create_multiple_items_hint_csv_export": [
+         null,
+         "(par exemple, pour une utilisation avec une imprimante d'étiquettes)"
+      ],
+      "create_multiple_items_checkbox_show_barcode": [
+         null,
+         "Afficher les codes-barres"
+      ],
+      "create_multiple_items_checkbox_show_full_urls": [
+         null,
+         "Afficher les URL complètes"
       ]
    }
 }

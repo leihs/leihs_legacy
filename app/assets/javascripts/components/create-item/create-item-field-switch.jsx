@@ -1,8 +1,12 @@
 ;(() => {
   // NOTE: only for linter and clarity:
-  /* global _, _jed, moment, accounting, i18n, React, App, CreateItemFieldSwitch, RenderFieldLabel, InputInventoryCode, InputCheckbox, InputInventoryCode, InputQuantityAllocations, InputAttachment, InputText, InputAutocompleteSearch, InputAutocomplete, InputTextarea, InputSelect, InputRadio, InputDate, InputCheckbox */
+  /* global _, _jed, moment, accounting, i18n, React, PropTypes, App, CreateItemFieldSwitch, RenderFieldLabel, InputInventoryCode, InputCheckbox, InputInventoryCode, InputQuantityAllocations, InputAttachment, InputText, InputAutocompleteSearch, InputAutocomplete, InputTextarea, InputSelect, InputRadio, InputDate, InputCheckbox */
 
   window.CreateItemFieldSwitch = {
+    // contextTypes: {
+    //   isBatchCreate: PropTypes.bool
+    // },
+
     _hasValue(selectedValue) {
       if (selectedValue.field.id == 'properties_quantity_allocations') {
         return selectedValue.value.allocations.length > 0
@@ -132,7 +136,6 @@
       }
 
       if (field.id == 'properties_quantity_allocations') {
-        // debugger
         return {
           allocations: itemValue.map((v) => {
             return {

@@ -3389,3 +3389,37 @@ msgstr "Les utilisateurs et leurs droits d'accès peuvent également être gér�
 
 msgid "legacy_manage_entitlement_group_new_admin_section_notice"
 msgstr "Les utilisateurs et groupes de cette entitlement-groupe sont gérés dans la nouvelle section d'Admin"
+
+msgid "create_multiple_items_inv_code_notice"
+msgstr "Lorsque plusieurs articles sont créés en même temps, le code d'inventaire ne peut pas être défini individuellement. Au lieu de cela, la plus petite liste continue possible de codes d'inventaire est générée automatiquement."
+
+msgid "create_multiple_items_label_quantity"
+msgstr "Quantité"
+
+msgid "create_multiple_items_label_date"
+msgstr "Date"
+
+msgid "create_multiple_items_head_title"
+msgstr "Articles créés avec succès !"
+
+msgid "create_multiple_items_head_summary"
+msgstr "Résumé"
+
+msgid "create_multiple_items_head_list"
+msgstr "Liste des éléments créés"
+
+msgid "create_multiple_items_label_export"
+msgstr "Exporter"
+
+msgid "create_multiple_items_btn_csv_export"
+msgstr "Enregistrer au format CSV"
+
+msgid "create_multiple_items_hint_csv_export"
+msgstr "(par exemple, pour une utilisation avec une imprimante d'étiquettes)"
+
+msgid "create_multiple_items_checkbox_show_barcode"
+msgstr "Afficher les codes-barres"
+
+msgid "create_multiple_items_checkbox_show_full_urls"
+msgstr "Afficher les URL complètes"
+

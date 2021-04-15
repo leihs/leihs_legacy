@@ -3702,6 +3702,50 @@ window.i18n.locale_data = {
       "legacy_manage_entitlement_group_new_admin_section_notice": [
          null,
          "The users and groups of this entitlement-group are managed in the new Admin section."
+      ],
+      "create_multiple_items_inv_code_notice": [
+         null,
+         "When multiple items are created at once, the inventory code cannot be set individually. Instead, the smallest possible continuous list of inventory codes is automatically generated."
+      ],
+      "create_multiple_items_label_quantity": [
+         null,
+         "Quantity"
+      ],
+      "create_multiple_items_label_date": [
+         null,
+         "Date"
+      ],
+      "create_multiple_items_head_title": [
+         null,
+         "Items created successfully!"
+      ],
+      "create_multiple_items_head_summary": [
+         null,
+         "Summary"
+      ],
+      "create_multiple_items_head_list": [
+         null,
+         "List of created items"
+      ],
+      "create_multiple_items_label_export": [
+         null,
+         "Export"
+      ],
+      "create_multiple_items_btn_csv_export": [
+         null,
+         "Save as CSV"
+      ],
+      "create_multiple_items_hint_csv_export": [
+         null,
+         "(e.g. for label printers)"
+      ],
+      "create_multiple_items_checkbox_show_barcode": [
+         null,
+         "Show Barcodes"
+      ],
+      "create_multiple_items_checkbox_show_full_urls": [
+         null,
+         "Show full URLs"
       ]
    }
 }

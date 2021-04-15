@@ -3939,6 +3939,50 @@ window.i18n.locale_data = {
       "legacy_manage_entitlement_group_new_admin_section_notice": [
          null,
          "Die Benutzer und Gruppene vo de Gruppe-Verteilig werde im noie Admin-Bereich verwaltet."
+      ],
+      "create_multiple_items_inv_code_notice": [
+         null,
+         "Wenn mehreri Sache ufs mal erschtellt werdet, cha de Inventarcode nöd individuell feschtgleit werde. Drum wird automatisch de chlinschtmöglich und dänn e uufschtiigendi Lischte vo Inventarcodes erzügt."
+      ],
+      "create_multiple_items_label_quantity": [
+         null,
+         "Aazahl"
+      ],
+      "create_multiple_items_label_date": [
+         null,
+         "Datum"
+      ],
+      "create_multiple_items_head_title": [
+         null,
+         "Sache erfolgriich erschtellt!"
+      ],
+      "create_multiple_items_head_summary": [
+         null,
+         "Zämefassig"
+      ],
+      "create_multiple_items_head_list": [
+         null,
+         "Lischte vo de erschtellte Sache"
+      ],
+      "create_multiple_items_label_export": [
+         null,
+         "Export"
+      ],
+      "create_multiple_items_btn_csv_export": [
+         null,
+         "Speichere als CSV"
+      ],
+      "create_multiple_items_hint_csv_export": [
+         null,
+         "(z.B. für en Label-Printer)"
+      ],
+      "create_multiple_items_checkbox_show_barcode": [
+         null,
+         "Zeig d Barcodes"
+      ],
+      "create_multiple_items_checkbox_show_full_urls": [
+         null,
+         "Zeig ganzi URLs"
       ]
    }
 }

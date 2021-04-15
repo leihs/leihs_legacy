@@ -143,9 +143,18 @@
       )
     },
 
-    _renderLeftColumn(fields, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
+    _renderLeftColumn(
+      fields,
+      fieldModels,
+      onChange,
+      showInvalids,
+      onClose,
+      fieldRenderer,
+      quantitySelector
+    ) {
       return (
         <div className="col1of2 padding-right-xs" id="item-form-left-side">
+          {quantitySelector}
           {this._renderFieldsGrouped(
             fields,
             fieldModels,
@@ -175,7 +184,15 @@
       )
     },
 
-    _renderColumns(fields, fieldModels, onChange, showInvalids, onClose, fieldRenderer) {
+    _renderColumns(
+      fields,
+      fieldModels,
+      onChange,
+      showInvalids,
+      onClose,
+      fieldRenderer,
+      quantitySelector
+    ) {
       return (
         <div id="flexible-fields">
           {this._renderLeftColumn(
@@ -184,7 +201,8 @@
             onChange,
             showInvalids,
             onClose,
-            fieldRenderer
+            fieldRenderer,
+            quantitySelector
           )}
           {this._renderRightColumn(
             fields,

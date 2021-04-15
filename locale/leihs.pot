@@ -3522,3 +3522,9 @@ msgstr ""
 
 msgid "legacy_manage_entitlement_group_new_admin_section_notice"
 msgstr ""
+
+msgid "create_multiple_items_inv_code_notice"
+msgstr ""
+
+msgid "create_multiple_items_label_quantity"
+msgstr ""

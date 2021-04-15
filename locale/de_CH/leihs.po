@@ -3667,3 +3667,34 @@ msgstr "Benutzer und Zugriffsrechte können auch im neuen Admin-Bereich bearbeit
 
 msgid "legacy_manage_entitlement_group_new_admin_section_notice"
 msgstr "Die Benutzer und Gruppen dieser Anspruchsgruppe werden im neuen Admin-Bereich verwaltet."
+
+msgid "create_multiple_items_label_quantity"
+msgstr "Anzahl"
+
+msgid "create_multiple_items_label_date"
+msgstr "Datum"
+
+msgid "create_multiple_items_head_title"
+msgstr "Gegenstände erfolgreich erstellt!"
+
+msgid "create_multiple_items_head_summary"
+msgstr "Zusammenfassung"
+
+msgid "create_multiple_items_head_list"
+msgstr "Liste der erstellten Gegenstände"
+
+msgid "create_multiple_items_label_export"
+msgstr "Export"
+
+msgid "create_multiple_items_btn_csv_export"
+msgstr "Speichern als CSV"
+
+msgid "create_multiple_items_hint_csv_export"
+msgstr "(z.B. für Label-Printer)"
+
+msgid "create_multiple_items_checkbox_show_barcode"
+msgstr "Zeige Barcodes"
+
+msgid "create_multiple_items_checkbox_show_full_urls"
+msgstr "Zeige ganze URLs"
+

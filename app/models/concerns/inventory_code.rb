@@ -16,8 +16,12 @@ module Concerns
 
     module ClassMethods
 
+      def prefix_for_inventory_code(pool)
+        pool.shortname.to_s
+      end
+
       def prefix_number(pool, num)
-        "#{pool.shortname}#{num}"
+        "#{prefix_for_inventory_code(pool)}#{num}"
       end
 
       # extract *last* number sequence in string

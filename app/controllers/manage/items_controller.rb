@@ -1,6 +1,13 @@
-class Manage::ItemsController < Manage::ApplicationController
-  include FileStorage
+require 'csv'
 
+class Manage::ItemsController < Manage::ApplicationController
+  
+  include FileStorage
+  include ManageInventoryMenu
+  include BarcodeHelper
+
+  BATCH_CREATE_MAX_QUANTITY = 100
+  
   JSON_SPEC = {
     methods: [:current_location,
               :unique_serial_number?],
@@ -64,11 +71,6 @@ class Manage::ItemsController < Manage::ApplicationController
     item
   end
 
-  def create_multiple_result
-    json = Item.find(params[:ids]).map { |i| i.as_json(JSON_SPEC) }
-    render(json: json, status: :ok)
-  end
-
   def create_multiple
     ApplicationRecord.transaction(requires_new: true) do
       items = 
@@ -97,6 +99,27 @@ class Manage::ItemsController < Manage::ApplicationController
           end
         end
       end
+    end
+  end
+
+  def create_multiple_result
+    created_items = Item.find(params[:ids])
+    created_items_json = created_items.map do |i| 
+      i.as_json(JSON_SPEC).merge(
+        barcode: barcode_for_item(i),
+        url: manage_edit_item_url(current_inventory_pool, i))
+    end
+    date = created_items.first.created_at
+    csv_url = manage_create_multiple_items_result_path(current_inventory_pool, ids: params[:ids], format: :csv)
+    csv_filename = "leihs-items-#{date.strftime('%Y-%m-%d_%H-%M-%S')}.csv"
+    view_data = { items: created_items_json, date: date, csv_url: csv_url, csv_filename: csv_filename}
+    
+    respond_to do |format|
+      format.html do
+        @props = view_data.merge(menu: manage_inventory_menu)
+        render(status: :ok)
+      end
+      format.csv { send_created_items_csv(created_items_json, csv_filename) }
     end
   end
 
@@ -266,6 +289,7 @@ class Manage::ItemsController < Manage::ApplicationController
       next_code: next_code,
       lowest_code: Item.proposed_inventory_code(current_inventory_pool, :lowest),
       highest_code: Item.proposed_inventory_code(current_inventory_pool, :highest),
+      code_prefix: Item.prefix_for_inventory_code(current_inventory_pool),
       inventory_pool: current_inventory_pool,
       is_inventory_relevant: (super_user? ? true : false),
       save_path: manage_create_item_path,
@@ -427,10 +451,24 @@ class Manage::ItemsController < Manage::ApplicationController
     item_ps
   end
 
+  def send_created_items_csv(items_data, filename)
+    code_prefix = current_inventory_pool.shortname
+    header = ['inventory code', 'code prefix', 'code numeric', 'item UUID', 'creation date', 'model name', 'model UUID']
+    rows = items_data.map do|itm|
+      inv_code = itm['inventory_code']
+      name = "#{itm['model']['product']} #{itm['model']['version']}".strip
+      [inv_code, code_prefix, inv_code.split(code_prefix).last, itm['id'], itm['created_at'], name, itm['model']['id']]
+    end
+    data = [header].concat(rows).map {|row| row.to_csv}.join
+    send_data(data, type: 'text/csv', disposition: "attachment; filename=#{filename}")
+  end
+
   def quantity_param
     q = params.require(:quantity).to_i
-    if quantity_param <= 0
-      raise 'Quantity param not provided or smaller equal zero.'
+    if q <= 0
+      raise 'Quantity param not provided or smaller than 1.'
+    elsif q > BATCH_CREATE_MAX_QUANTITY
+      raise "Quantity can not be larger than #{BATCH_CREATE_MAX_QUANTITY}."
     else
       q
     end

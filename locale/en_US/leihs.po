@@ -2983,3 +2983,36 @@ msgstr "Users and their roles can also be managed in the new Admin section."
 
 msgid "legacy_manage_entitlement_group_new_admin_section_notice"
 msgstr "The users and groups of this entitlement-group are managed in the new Admin section."
+
+msgid "create_multiple_items_inv_code_notice"
+msgstr "When multiple items are created at once, the inventory code cannot be set individually. Instead, the smallest possible continuous list of inventory codes is automatically generated."
+
+msgid "create_multiple_items_label_quantity"
+msgstr "Quantity"
+
+msgid "create_multiple_items_label_date"
+msgstr "Date"
+
+msgid "create_multiple_items_head_title"
+msgstr "Items created successfully!"
+
+msgid "create_multiple_items_head_summary"
+msgstr "Summary"
+
+msgid "create_multiple_items_head_list"
+msgstr "List of created items"
+
+msgid "create_multiple_items_label_export"
+msgstr "Export"
+
+msgid "create_multiple_items_btn_csv_export"
+msgstr "Save as CSV"
+
+msgid "create_multiple_items_hint_csv_export"
+msgstr "(e.g. for label printers)"
+
+msgid "create_multiple_items_checkbox_show_barcode"
+msgstr "Show Barcodes"
+
+msgid "create_multiple_items_checkbox_show_full_urls"
+msgstr "Show full URLs"

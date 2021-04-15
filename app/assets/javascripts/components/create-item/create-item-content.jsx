@@ -324,6 +324,7 @@
       }
 
       return (
+        // eslint-disable-next-line react/jsx-no-undef
         <BasicAutocomplete
           // eslint-disable-next-line react/no-string-refs
           ref="create-item-autocomplete"
@@ -413,6 +414,7 @@
 
     render() {
       var createItemProps = this.props.createItemProps
+      const quantitySelector = this.props.quantitySelector || null
 
       var fieldRenderer = (
         fieldModel,
@@ -449,7 +451,7 @@
       }
 
       return (
-        <div className="padding-horizontal-m">
+        <div className="ui-create-item-content padding-horizontal-m">
           {this._renderNotifications()}
           {this._renderPackageSelectItem()}
           <form id="form" className={formClass}>
@@ -461,7 +463,8 @@
               this.props.onChange,
               this.props.showInvalids,
               this.props.onClose,
-              fieldRenderer
+              fieldRenderer,
+              quantitySelector
             )}
           </form>
           {this._renderSoftwareDetail()}

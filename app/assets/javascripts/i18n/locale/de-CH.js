@@ -4753,6 +4753,46 @@ window.i18n.locale_data = {
       "legacy_manage_entitlement_group_new_admin_section_notice": [
          null,
          "Die Benutzer und Gruppen dieser Anspruchsgruppe werden im neuen Admin-Bereich verwaltet."
+      ],
+      "create_multiple_items_label_quantity": [
+         null,
+         "Anzahl"
+      ],
+      "create_multiple_items_label_date": [
+         null,
+         "Datum"
+      ],
+      "create_multiple_items_head_title": [
+         null,
+         "Gegenstände erfolgreich erstellt!"
+      ],
+      "create_multiple_items_head_summary": [
+         null,
+         "Zusammenfassung"
+      ],
+      "create_multiple_items_head_list": [
+         null,
+         "Liste der erstellten Gegenstände"
+      ],
+      "create_multiple_items_label_export": [
+         null,
+         "Export"
+      ],
+      "create_multiple_items_btn_csv_export": [
+         null,
+         "Speichern als CSV"
+      ],
+      "create_multiple_items_hint_csv_export": [
+         null,
+         "(z.B. für Label-Printer)"
+      ],
+      "create_multiple_items_checkbox_show_barcode": [
+         null,
+         "Zeige Barcodes"
+      ],
+      "create_multiple_items_checkbox_show_full_urls": [
+         null,
+         "Zeige ganze URLs"
       ]
    }
 }
