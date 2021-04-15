@@ -8,6 +8,18 @@
   /* global PropTypes */
   /* global CreateItemFieldSwitch, CreateItemContent */
 
+  // NOTE: those fields are only relevant for a *single* item instance. the list comes from the "copy item" action, which resets those fields on copy.
+  // <https://github.com/leihs/leihs/issues/1015#issuecomment-775999512>
+  // eslint-disable-next-line no-unused-vars
+  const ITEM_FIELDS_DISABLED_FOR_BATCH = [
+    'owner',
+    'inventory_code',
+    'serial_number',
+    'name',
+    'last_check',
+    'attachments'
+  ]
+
   window.CreateItem = window.createReactClass({
     propTypes: {},
 
@@ -27,19 +39,22 @@
 
     // https://reactjs.org/docs/legacy-context.html
     childContextTypes: {
-      hackyForPackage: PropTypes.bool
+      hackyForPackage: PropTypes.bool,
+      isBatchCreate: PropTypes.bool
     },
     // NOTE: We need this hack to pass the forPackage value to the mdoel_id input since
     // the current field config does not let us pass this information if we
     // only should list package models or not.
     getChildContext() {
       return {
-        hackyForPackage: this.props.for_package
+        hackyForPackage: this.props.for_package,
+        isBatchCreate: this._isBatchCreate()
       }
     },
 
     getInitialState() {
       return {
+        quantity: 1,
         loadingFields: 'initial',
         fields: null,
         showInvalids: false,
@@ -193,7 +208,43 @@
     },
 
     _readyContent() {
+      const isAPackage = !!this.props.for_package
+      const isPartOfAPackage = !!this.props.parent
+      const isSoftwareLicense = this.props.item_type === 'license'
+
+      // NOTE: not implemented for licenses, because they are deprecated
+      const quantitySelector = !isAPackage && !isPartOfAPackage && !isSoftwareLicense && (
+        <div className="ui-create-item-quantity-selector">
+          <div
+            className="field row emboss padding-inset-xs margin-vertical-xxs margin-right-xs"
+            data-editable="true"
+            data-id="inventory_code"
+            data-required="true"
+            data-type="field">
+            <div className="row">
+              <div className="col1of2 padding-vertical-xs" data-type="key">
+                <strong className="font-size-m inline-block">Anzahl *</strong>
+              </div>
+              <div className="col1of2" data-type="value">
+                <input
+                  type="number"
+                  name="item[quantity]"
+                  value={this.state.quantity}
+                  onChange={({ target: { value: num } }) => this.setState({ quantity: num })}
+                  className="width-full"
+                  autoComplete="off"
+                  min={1}
+                  max={100}
+                  step={1}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+
       return (
+        // eslint-disable-next-line react/jsx-no-undef
         <CreateItemContent
           fields={this.state.fields}
           fieldModels={this.state.fieldModels}
@@ -204,6 +255,7 @@
           onSelectChildItem={this.onSelectChildItem}
           onRemoveChildItem={this.onRemoveChildItem}
           packageChildItems={this.state.packageChildItems}
+          quantitySelector={quantitySelector}
         />
       )
     },
@@ -452,7 +504,7 @@
       }
 
       $.ajax({
-        url: this.props.save_path,
+        url: this._isBatchCreate() ? this.props.save_multiple_path : this.props.save_path,
         data: JSON.stringify(data),
         contentType: 'application/json',
         dataType: 'json',
@@ -521,6 +573,10 @@
       }
     },
 
+    _isBatchCreate() {
+      return this.state.quantity > 1
+    },
+
     _renderTitleButtons() {
       var displayAllStyle = {}
       if (!this._hasHiddenFields()) {
@@ -556,6 +612,33 @@
         )
       }
 
+      const mainButton = this._isBatchCreate() ? (
+        <button className="button green" id="save" onClick={this._onSave}>
+          {this.state.quantity}
+          {' × '}
+          {this._saveButtonText()}
+        </button>
+      ) : (
+        <div className="multibutton">
+          <button autoComplete="off" className="button green" id="save" onClick={this._onSave}>
+            {this._saveButtonText()}
+          </button>
+          <div className="dropdown-holder inline-block">
+            <div className="button green dropdown-toggle">
+              <div className="arrow down" />
+            </div>
+            <ul className="dropdown right" style={{ display: 'none' }}>
+              <li>
+                <a className="dropdown-item" id="item-save-and-copy" onClick={this._onSaveAndCopy}>
+                  <i className="fa fa-copy" />
+                  {' ' + _jed('Save and copy')}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      )
+
       return (
         <div className="col1of2 text-align-right">
           <button
@@ -573,27 +656,7 @@
             href={this.props.return_url ? this.props.return_url : this.props.inventory_path}>
             {_jed('Cancel')}
           </a>
-          <div className="multibutton">
-            <button autoComplete="off" className="button green" id="save" onClick={this._onSave}>
-              {this._saveButtonText()}
-            </button>
-            <div className="dropdown-holder inline-block">
-              <div className="button green dropdown-toggle">
-                <div className="arrow down" />
-              </div>
-              <ul className="dropdown right" style={{ display: 'none' }}>
-                <li>
-                  <a
-                    className="dropdown-item"
-                    id="item-save-and-copy"
-                    onClick={this._onSaveAndCopy}>
-                    <i className="fa fa-copy" />
-                    {' ' + _jed('Save and copy')}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          {mainButton}
         </div>
       )
     },
@@ -687,7 +750,7 @@
                   }}>
                   <div style={{ fontSize: '1.2em', padding: '20px' }}>
                     {this.state.errorMessage}
-                    <div className="row text-align-right" id="switch">
+                    <div className="row text-align-right">
                       <button type="button" className="button small white" onClick={onClick}>
                         Close
                       </button>
