@@ -6,7 +6,7 @@ if [ -z ${RAILS_ENV-} ]; then
   export RAILS_ENV=test
 fi
 
-DBCONFIG=$(bundle exec rails runner "print(Rails.configuration.database_configuration[Rails.env].to_json) & STDOUT.flush")
+DBCONFIG=$(bundle exec rails runner "print(ActiveRecord::Base.configurations[Rails.env].to_json) & STDOUT.flush")
 PGDATABASE=$(echo $DBCONFIG | jq -r .database)
 GITREF=${GITREF:-origin/master}
 
