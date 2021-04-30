@@ -4754,6 +4754,10 @@ window.i18n.locale_data = {
          null,
          "Die Benutzer und Gruppen dieser Anspruchsgruppe werden im neuen Admin-Bereich verwaltet."
       ],
+      "create_multiple_items_inv_code_notice": [
+         null,
+         "Wenn mehrere Gegenstände auf einmal erstellt werden, kann der Inventarcode nicht individuell festgelegt werden. Stattdessen wird automatisch die kleinstmögliche, kontinuierliche Liste von Inventarcodes erzeugt."
+      ],
       "create_multiple_items_label_quantity": [
          null,
          "Anzahl"
