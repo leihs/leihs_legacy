@@ -3940,6 +3940,10 @@ window.i18n.locale_data = {
          null,
          "Die Benutzer und Gruppene vo de Gruppe-Verteilig werde im noie Admin-Bereich verwaltet."
       ],
+      "legacy_manage_group_new_admin_section_notice": [
+         null,
+         "Die Gruppene werde im noie Admin-Bereich verwaltet."
+      ],
       "create_multiple_items_inv_code_notice": [
          null,
          "Wenn mehreri Sache ufs mal erschtellt werdet, cha de Inventarcode nöd individuell feschtgleit werde. Drum wird automatisch de chlinschtmöglich und dänn e uufschtiigendi Lischte vo Inventarcodes erzügt."

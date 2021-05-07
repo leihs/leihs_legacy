@@ -660,6 +660,9 @@ msgstr "Los usuarios y sus derechos de acceso también se pueden manejar en la n
 msgid "legacy_manage_entitlement_group_new_admin_section_notice"
 msgstr "Los usuarios y grupos de esta entitlement-group se manejan en la nueva sección Admin."
 
+msgid "legacy_manage_group_new_admin_section_notice"
+msgstr "Los grupos se manejan en la nueva sección Admin."
+
 msgid "create_multiple_items_inv_code_notice"
 msgstr "Cuando se crean varios artículos a la vez, el código de inventario no se puede establecer individualmente. En su lugar, se genera automáticamente la menor lista continua posible de códigos de inventario."
 

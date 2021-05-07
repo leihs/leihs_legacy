@@ -4504,6 +4504,10 @@ window.i18n.locale_data = {
          null,
          "Les utilisateurs et groupes de cette entitlement-groupe sont gérés dans la nouvelle section d'Admin"
       ],
+      "legacy_manage_group_new_admin_section_notice": [
+         null,
+         "Les groupes sont gérés dans la nouvelle section d'Admin"
+      ],
       "create_multiple_items_inv_code_notice": [
          null,
          "Lorsque plusieurs articles sont créés en même temps, le code d'inventaire ne peut pas être défini individuellement. Au lieu de cela, la plus petite liste continue possible de codes d'inventaire est générée automatiquement."
