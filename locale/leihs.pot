@@ -3520,6 +3520,9 @@ msgstr ""
 msgid "legacy_manage_users_new_admin_section_notice"
 msgstr ""
 
+msgid "legacy_manage_group_new_admin_section_notice"
+msgstr ""
+
 msgid "legacy_manage_entitlement_group_new_admin_section_notice"
 msgstr ""
 

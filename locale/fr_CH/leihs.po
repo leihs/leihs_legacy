@@ -3390,6 +3390,9 @@ msgstr "Les utilisateurs et leurs droits d'accès peuvent également être gér�
 msgid "legacy_manage_entitlement_group_new_admin_section_notice"
 msgstr "Les utilisateurs et groupes de cette entitlement-groupe sont gérés dans la nouvelle section d'Admin"
 
+msgid "legacy_manage_group_new_admin_section_notice"
+msgstr "Les groupes sont gérés dans la nouvelle section d'Admin"
+
 msgid "create_multiple_items_inv_code_notice"
 msgstr "Lorsque plusieurs articles sont créés en même temps, le code d'inventaire ne peut pas être défini individuellement. Au lieu de cela, la plus petite liste continue possible de codes d'inventaire est générée automatiquement."
 

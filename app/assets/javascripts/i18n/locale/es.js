@@ -939,6 +939,10 @@ window.i18n.locale_data = {
          null,
          "Los usuarios y grupos de esta entitlement-group se manejan en la nueva sección Admin."
       ],
+      "legacy_manage_group_new_admin_section_notice": [
+         null,
+         "Los grupos se manejan en la nueva sección Admin."
+      ],
       "create_multiple_items_inv_code_notice": [
          null,
          "Cuando se crean varios artículos a la vez, el código de inventario no se puede establecer individualmente. En su lugar, se genera automáticamente la menor lista continua posible de códigos de inventario."
