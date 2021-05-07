@@ -14,7 +14,7 @@ Feature: Groups
     When I create a group
     And I select 'Verification required'
     And I fill in the group's name
-    And I add users to the group
+    # And I add users to the group
     And I add models and capacities to the group
     And I save
     Then the group is saved
@@ -47,7 +47,7 @@ Feature: Groups
 
   Scenario: Capacities still available for assignment
     When I create a group
-    And I add users to the group
+    # And I add users to the group
     And I add models and capacities to the group
     Then I see any capacities that are still available for assignment
 
@@ -80,7 +80,7 @@ Feature: Groups
   Scenario: Creating a group
     When I create a group
     And I fill in the group's name
-    And I add users to the group
+    # And I add users to the group
     And I add models and capacities to the group
     And I save
     Then the group is saved
