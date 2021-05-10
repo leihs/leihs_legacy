@@ -107,7 +107,7 @@ class Manage::ItemsController < Manage::ApplicationController
     created_items_json = created_items.map do |i| 
       i.as_json(JSON_SPEC).merge(
         barcode: barcode_for_item(i),
-        url: manage_edit_item_url(current_inventory_pool, i))
+        url: manage_edit_item_url(current_inventory_pool, i, url_options_that_work_in_prod))
     end
     date = created_items.first.created_at
     csv_url = manage_create_multiple_items_result_path(current_inventory_pool, ids: params[:ids], format: :csv)
@@ -473,4 +473,15 @@ class Manage::ItemsController < Manage::ApplicationController
       q
     end
   end
+
+  # FIXME: generalize this
+  def url_options_that_work_in_prod
+    external_base_url = ActiveRecord::Base.connection.execute('SELECT external_base_url FROM system_and_security_settings;').first.values.first
+    u = URI.parse(external_base_url)
+    { host: u.host, port: u.port }
+  rescue => err
+    Rails.logger.warn("Could not get external_base_url config! [#{err}]")
+    nil
+  end
+  
 end
