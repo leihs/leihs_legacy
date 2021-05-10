@@ -506,6 +506,7 @@
       }
 
       if (isBatch) {
+        this.setState({ isSaving: true })
         data.quantity = this.state.quantity
       }
 
@@ -561,7 +562,6 @@
 
     _onSave(event) {
       event.preventDefault()
-      this.setState({isSaving: true})
       this._save(false, false)
     },
 
