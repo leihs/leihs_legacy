@@ -1,3 +1,5 @@
+- include_customer_email = Setting.first.include_customer_email_in_contracts
+
 - content_for :title, "#{_("Lending Contract No.")} #{@contract.compact_id}"
 
 .contract
@@ -17,6 +19,16 @@
     = render "documents/customer"
     = render "documents/inventory_pool"
     .clear
+
+  - if include_customer_email
+    %section.customer-contact{style: 'margin-bottom: 0.5cm; margin-top: -0.5cm;'}
+      - contact_person = ( @delegated_user or @user )
+      - emails = [contact_person.email.presence, contact_person.secondary_email.presence].compact
+      - if emails.any?
+        .customer-email
+          %label{style: 'font-weight: bold'}= _("E-Mail")
+          %span.email{style: 'display: block'}= emails.join(' / ')
+      .clear
 
   - not_returned_lines, returned_lines = @contract.reservations.partition {|line| line.returned_date.blank? }
 
