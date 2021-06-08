@@ -1,0 +1,10 @@
+scripts:
+  create-database:
+    body: |
+      #!/usr/bin/env bash
+      set -eux
+      if [ -d legacy ]; then cd legacy; fi
+      createdb "$DATABASE_NAME"
+      psql -d "$DATABASE_NAME" -f ./database/db/structure.sql
+      DATABASE_NAME="$DATABASE_NAME" ./database/scripts/restore-seeds
+

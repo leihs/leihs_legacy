@@ -17,7 +17,3 @@ scripts:
         File.open('config/database.yml','w') { |file| file.write config.to_yaml }
       end
 
-  test:
-    start_when:
-      database has been configured:
-        script_key: legacy-configure-database

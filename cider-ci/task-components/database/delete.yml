@@ -8,6 +8,3 @@ scripts:
       test is in terminal state:
         script_key: test
         states: [aborted, defective, passed, failed, skipped]
-      create-database is terminal:
-        script_key: create-database
-        states: [aborted, defective, passed, failed, skipped]
