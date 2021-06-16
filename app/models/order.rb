@@ -297,4 +297,11 @@ class Order < ApplicationRecord
   def delegated_user
     reservations.map(&:delegated_user).uniq.first
   end
+
+  ############################################
+  
+  def edit_url
+    ebu = SystemAndSecuritySetting.first.external_base_url
+    "#{ebu}/manage/#{inventory_pool_id}/orders/#{id}/edit"
+  end
 end

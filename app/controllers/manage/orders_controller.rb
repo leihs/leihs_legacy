@@ -30,23 +30,30 @@ class Manage::OrdersController < Manage::ApplicationController
 
   def edit
     @order = Order.find(id_param)
-    @user = @order.user
-    @group_ids = @user.entitlement_group_ids
-    add_visitor(@user)
-    @reservations = @order.reservations
-    @models = @reservations.map(&:model).select { |m| m.type == 'Model' }.uniq
-    @software = @reservations.map(&:model).select { |m| m.type == 'Software' }.uniq
-    @items = \
-      @reservations.where.not(item_id: nil)
-      .map(&:item)
-      .select { |i| i.type == 'Item' }
-    @grouped_lines = @reservations.group_by { |g| [g.start_date, g.end_date] }
-    @grouped_lines.each_pair do |k, reservations|
-      @grouped_lines[k] = \
-        reservations.sort_by { |line| line.model.name }.group_by(&:model)
+
+    if @order.state == 'submitted'
+      @user = @order.user
+      @group_ids = @user.entitlement_group_ids
+      add_visitor(@user)
+      @reservations = @order.reservations
+      @models = @reservations.map(&:model).select { |m| m.type == 'Model' }.uniq
+      @software = @reservations.map(&:model).select { |m| m.type == 'Software' }.uniq
+      @items = \
+        @reservations.where.not(item_id: nil)
+        .map(&:item)
+        .select { |i| i.type == 'Item' }
+      @grouped_lines = @reservations.group_by { |g| [g.start_date, g.end_date] }
+      @grouped_lines.each_pair do |k, reservations|
+        @grouped_lines[k] = \
+          reservations.sort_by { |line| line.model.name }.group_by(&:model)
+      end
+      @start_date = @order.min_date
+      @end_date = @order.max_date
+    else
+      flash[:notice] = _('The order has already been dealt with.')
+      path = manage_hand_over_path(@order.inventory_pool_id, @order.user_id)
+      redirect_to(path)
     end
-    @start_date = @order.min_date
-    @end_date = @order.max_date
   end
 
   def update
