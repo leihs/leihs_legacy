@@ -1006,6 +1006,10 @@ window.i18n.locale_data = {
       "customer_order_contact_details_placeholder": [
          null,
          "Se recomienda indicar un número de teléfono"
+      ],
+      "The order has already been dealt with.": [
+         null,
+         "El pedido ya ha sido procesado."
       ]
    }
 }

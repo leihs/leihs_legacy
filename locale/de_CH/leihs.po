@@ -3718,3 +3718,6 @@ msgstr "Kontaktdaten"
 
 msgid "customer_order_contact_details_placeholder"
 msgstr "Die Angabe einer Telefonnummer ist empfohlen"
+
+msgid "The order has already been dealt with."
+msgstr "Die Bestellung wurde bereits bearbeitet."

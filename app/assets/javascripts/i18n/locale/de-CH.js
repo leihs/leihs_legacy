@@ -4821,6 +4821,10 @@ window.i18n.locale_data = {
       "customer_order_contact_details_placeholder": [
          null,
          "Die Angabe einer Telefonnummer ist empfohlen"
+      ],
+      "The order has already been dealt with.": [
+         null,
+         "Die Bestellung wurde bereits bearbeitet."
       ]
    }
 }

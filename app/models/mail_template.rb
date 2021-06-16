@@ -35,7 +35,8 @@ class MailTemplate < ApplicationRecord
         'l.end_date'
       ] },
       'comment',
-      'purpose'
+      'purpose',
+      'order_url'
     ]
   end
 
@@ -51,7 +52,8 @@ class MailTemplate < ApplicationRecord
          end_date: l.end_date }
       end,
       comment: comment,
-      purpose: order.purpose
+      purpose: order.purpose,
+      order_url: order.edit_url
     }.deep_stringify_keys
   end
 

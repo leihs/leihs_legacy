@@ -3537,3 +3537,6 @@ msgstr ""
 
 msgid "accept_lending_terms_label"
 msgstr ""
+
+msgid "The order has already been dealt with."
+msgstr ""

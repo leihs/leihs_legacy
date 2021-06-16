@@ -4007,6 +4007,10 @@ window.i18n.locale_data = {
       "customer_order_contact_details_placeholder": [
          null,
          "D Aagab vonere Natelnummere isch empfohle"
+      ],
+      "The order has already been dealt with.": [
+         null,
+         "De Bschtellig isch scho bearbeitet worde."
       ]
    }
 }

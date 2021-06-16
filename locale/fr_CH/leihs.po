@@ -3440,3 +3440,6 @@ msgstr "Coordonnées de contact"
 
 msgid "customer_order_contact_details_placeholder"
 msgstr "L'indication d'un numéro de téléphone est recommandée"
+
+msgid "The order has already been dealt with."
+msgstr "L'ordre a déjà été traité."

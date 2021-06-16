@@ -4571,6 +4571,10 @@ window.i18n.locale_data = {
       "customer_order_contact_details_placeholder": [
          null,
          "L'indication d'un numéro de téléphone est recommandée"
+      ],
+      "The order has already been dealt with.": [
+         null,
+         "L'ordre a déjà été traité."
       ]
    }
 }

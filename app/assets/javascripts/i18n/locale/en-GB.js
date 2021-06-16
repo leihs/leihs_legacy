@@ -3770,6 +3770,10 @@ window.i18n.locale_data = {
       "customer_order_contact_details_placeholder": [
          null,
          "The indication of a telephone number is recommended"
+      ],
+      "The order has already been dealt with.": [
+         null,
+         "The order has already been dealt with."
       ]
    }
 }

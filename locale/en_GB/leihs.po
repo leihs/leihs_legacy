@@ -2814,3 +2814,6 @@ msgstr "Contact Details"
 
 msgid "customer_order_contact_details_placeholder"
 msgstr "The indication of a telephone number is recommended"
+
+msgid "The order has already been dealt with."
+msgstr "The order has already been dealt with."

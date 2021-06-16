@@ -3021,3 +3021,6 @@ msgstr "Kontaktdate"
 
 msgid "customer_order_contact_details_placeholder"
 msgstr "D Aagab vonere Natelnummere isch empfohle"
+
+msgid "The order has already been dealt with."
+msgstr "De Bschtellig isch scho bearbeitet worde."
