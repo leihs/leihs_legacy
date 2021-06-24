@@ -3706,3 +3706,7 @@ msgstr "Zeige ganze URLs"
 
 msgid "accept_lending_terms_label"
 msgstr "Ich akzeptiere die Ausleihbedingungen: "
+
+
+msgid "The order has already been dealt with."
+msgstr "Die Bestellung wurde bereits behandelt."

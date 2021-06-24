@@ -4805,6 +4805,10 @@ window.i18n.locale_data = {
       "accept_lending_terms_label": [
          null,
          "Ich akzeptiere die Ausleihbedingungen: "
+      ],
+      "The order has already been dealt with.": [
+         null,
+         "Die Bestellung wurde bereits behandelt."
       ]
    }
 }
