@@ -987,6 +987,10 @@ window.i18n.locale_data = {
          null,
          "Mostrar URLs completas"
       ],
+      "Lending Terms": [
+         null,
+         "Condiciones de préstamo"
+      ],
       "accept_lending_terms_label": [
          null,
          "Acepto las condiciones de préstamo: "

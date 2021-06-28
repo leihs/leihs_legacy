@@ -3988,6 +3988,10 @@ window.i18n.locale_data = {
          null,
          "Zeig ganzi URLs"
       ],
+      "Lending Terms": [
+         null,
+         "Uusleihbedingige"
+      ],
       "accept_lending_terms_label": [
          null,
          "Ich akzeptier d Uusleihbedingige: "

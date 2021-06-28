@@ -3426,5 +3426,8 @@ msgstr "Afficher les codes-barres"
 msgid "create_multiple_items_checkbox_show_full_urls"
 msgstr "Afficher les URL complètes"
 
+msgid "Conditions de prêt"
+msgstr "Ausleihbedingungen"
+
 msgid "accept_lending_terms_label"
 msgstr "J'accepte les conditions de prêt: "

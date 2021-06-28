@@ -4552,6 +4552,10 @@ window.i18n.locale_data = {
          null,
          "Afficher les URL complètes"
       ],
+      "Conditions de prêt": [
+         null,
+         "Ausleihbedingungen"
+      ],
       "accept_lending_terms_label": [
          null,
          "J'accepte les conditions de prêt: "

@@ -1368,7 +1368,7 @@ msgid "Templates"
 msgstr "Vorlagen"
 
 msgid "Terms and conditions of the lender apply."
-msgstr "Es gelten die Ausleihbedigungen des Verleihers."
+msgstr "Es gelten die Ausleihbedingungen des Verleihers."
 
 msgid ""
 "That means that the user probably did not get the approval mail and you need "
@@ -3703,6 +3703,9 @@ msgstr "Zeige Barcodes"
 
 msgid "create_multiple_items_checkbox_show_full_urls"
 msgstr "Zeige ganze URLs"
+
+msgid "Lending Terms"
+msgstr "Ausleihbedingungen"
 
 msgid "accept_lending_terms_label"
 msgstr "Ich akzeptiere die Ausleihbedingungen: "

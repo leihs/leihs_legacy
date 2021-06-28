@@ -1851,7 +1851,7 @@ window.i18n.locale_data = {
       ],
       "Terms and conditions of the lender apply.": [
          null,
-         "Es gelten die Ausleihbedigungen des Verleihers."
+         "Es gelten die Ausleihbedingungen des Verleihers."
       ],
       "That means that the user probably did not get the approval mail and you need to contact him/her in a different way.": [
          null,
@@ -4801,6 +4801,10 @@ window.i18n.locale_data = {
       "create_multiple_items_checkbox_show_full_urls": [
          null,
          "Zeige ganze URLs"
+      ],
+      "Lending Terms": [
+         null,
+         "Ausleihbedingungen"
       ],
       "accept_lending_terms_label": [
          null,

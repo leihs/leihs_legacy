@@ -3751,6 +3751,10 @@ window.i18n.locale_data = {
          null,
          "Show full URLs"
       ],
+      "Lending Terms": [
+         null,
+         "Lending Terms"
+      ],
       "accept_lending_terms_label": [
          null,
          "I accept the lending terms: "
