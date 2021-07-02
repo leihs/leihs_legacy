@@ -3431,3 +3431,9 @@ msgstr "Ausleihbedingungen"
 
 msgid "accept_lending_terms_label"
 msgstr "J'accepte les conditions de prêt: "
+
+msgid "customer_order_contact_details_label"
+msgstr "Coordonnées de contact"
+
+msgid "customer_order_contact_details_placeholder"
+msgstr "L'indication d'un numéro de téléphone est recommandée"

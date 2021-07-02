@@ -57,11 +57,19 @@
 
         - else
           = form_tag borrow_order_path do
+
             .row
               %h3.headline-s.padding-bottom-m
                 = _("Purpose of the order")
                 *
               %textarea.padding-inset-s.width-full{name: "purpose", required: true, placeholder: _("Specification of the purpose is required")}
+
+            - if app_settings.show_contact_details_on_customer_order
+              .row.padding-top-l
+                %h3.headline-s.padding-bottom-m
+                  = _("customer_order_contact_details_label")
+                %input.vertical-align-middle.min-width-full{type: :text, name: "contact_details", placeholder: _("customer_order_contact_details_placeholder"), required: false, max: 999}
+
             - if @lending_terms[:acceptance_required]
               .row.padding-top-l
                 %h3.headline-s.padding-bottom-m
@@ -74,6 +82,7 @@
                     = ' '
                   %a{href: @lending_terms[:url], target: "_blank", rel: "noopener noreferrer"}
                     = @lending_terms[:url]
+
             .row.padding-top-l
               .col1of2
                 = link_to borrow_order_remove_path, method: :delete, data: { confirm: _("The order will be discarded.") }, class: "button red" do

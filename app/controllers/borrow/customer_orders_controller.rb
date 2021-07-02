@@ -19,7 +19,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
 
   def current
     @inventory_pools_for_calendar = inventory_pools_for_calendar(@inventory_pools)
-    @lending_terms = { 
+    @lending_terms = {
       url: lending_term_url, acceptance_required: lending_terms_acceptance_required_for_order }
   end
 
@@ -35,6 +35,7 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
       begin
         customer_order = CustomerOrder.create!(user: current_user,
                                                purpose: purpose_param,
+                                               contact_details: contact_details_param,
                                                lending_terms_accepted: lending_terms_accepted,
                                                title: purpose_param)
         current_user
@@ -139,7 +140,11 @@ class Borrow::CustomerOrdersController < Borrow::ApplicationController
   end
 
   def lending_terms_accepted_param
-    params.permit(:accept_lending_terms)[:accept_lending_terms] 
+    params.permit(:accept_lending_terms)[:accept_lending_terms]
+  end
+
+  def contact_details_param
+    params.permit(:contact_details)[:contact_details]
   end
 
   def lending_terms_acceptance_required_for_order

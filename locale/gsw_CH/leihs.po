@@ -3012,3 +3012,9 @@ msgstr "Uusleihbedingige"
 
 msgid "accept_lending_terms_label"
 msgstr "Ich akzeptier d Uusleihbedingige: "
+
+msgid "customer_order_contact_details_label"
+msgstr "Kontaktdate"
+
+msgid "customer_order_contact_details_placeholder"
+msgstr "D Aagab vonere Natelnummere isch empfohle"

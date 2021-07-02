@@ -3025,3 +3025,9 @@ msgstr "Lending Terms"
 
 msgid "accept_lending_terms_label"
 msgstr "I accept the lending terms: "
+
+msgid "customer_order_contact_details_label"
+msgstr "Contact Details"
+
+msgid "customer_order_contact_details_placeholder"
+msgstr "The indication of a telephone number is recommended"
