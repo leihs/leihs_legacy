@@ -3710,6 +3710,9 @@ msgstr "Ausleihbedingungen"
 msgid "accept_lending_terms_label"
 msgstr "Ich akzeptiere die Ausleihbedingungen: "
 
+msgid "contract_contact_details_heading"
+msgstr "Kontaktdaten"
+
 msgid "customer_order_contact_details_label"
 msgstr "Kontaktdaten"
 

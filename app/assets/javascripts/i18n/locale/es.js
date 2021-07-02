@@ -994,6 +994,18 @@ window.i18n.locale_data = {
       "accept_lending_terms_label": [
          null,
          "Acepto las condiciones de préstamo: "
+      ],
+      "contract_contact_details_heading": [
+         null,
+         "Detalles de contacto"
+      ],
+      "customer_order_contact_details_label": [
+         null,
+         "Detalles de contacto"
+      ],
+      "customer_order_contact_details_placeholder": [
+         null,
+         "Se recomienda indicar un número de teléfono"
       ]
    }
 }

@@ -3995,6 +3995,18 @@ window.i18n.locale_data = {
       "accept_lending_terms_label": [
          null,
          "Ich akzeptier d Uusleihbedingige: "
+      ],
+      "contract_contact_details_heading": [
+         null,
+         "Kontaktdate"
+      ],
+      "customer_order_contact_details_label": [
+         null,
+         "Kontaktdate"
+      ],
+      "customer_order_contact_details_placeholder": [
+         null,
+         "D Aagab vonere Natelnummere isch empfohle"
       ]
    }
 }

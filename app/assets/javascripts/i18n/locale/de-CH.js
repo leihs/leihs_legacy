@@ -4809,6 +4809,18 @@ window.i18n.locale_data = {
       "accept_lending_terms_label": [
          null,
          "Ich akzeptiere die Ausleihbedingungen: "
+      ],
+      "contract_contact_details_heading": [
+         null,
+         "Kontaktdaten"
+      ],
+      "customer_order_contact_details_label": [
+         null,
+         "Kontaktdaten"
+      ],
+      "customer_order_contact_details_placeholder": [
+         null,
+         "Die Angabe einer Telefonnummer ist empfohlen"
       ]
    }
 }

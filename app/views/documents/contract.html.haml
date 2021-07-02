@@ -1,4 +1,5 @@
-- include_customer_email = Setting.first.include_customer_email_in_contracts
+-# NOTE: there can be 0-n customer_orders per contract, which we need to find via contract.orders
+- contact_details = begin; @contract.orders.compact.map(&:customer_order_id).uniq.map {|id| CustomerOrder.find(id)}.map(&:contact_details).compact; rescue; []; end
 
 - content_for :title, "#{_("Lending Contract No.")} #{@contract.compact_id}"
 
@@ -20,14 +21,23 @@
     = render "documents/inventory_pool"
     .clear
 
-  - if include_customer_email
+  - if (contact_details.any? or app_settings.include_customer_email_in_contracts)
     %section.customer-contact{style: 'margin-bottom: 0.5cm; margin-top: -0.5cm;'}
-      - contact_person = ( @delegated_user or @user )
-      - emails = [contact_person.email.presence, contact_person.secondary_email.presence].compact
-      - if emails.any?
-        .customer-email
-          %label{style: 'font-weight: bold'}= _("E-Mail")
-          %span.email{style: 'display: block'}= emails.join(' / ')
+      %label{style: 'font-weight: bold'}= _("contract_contact_details_heading")
+
+      - if app_settings.include_customer_email_in_contracts
+        - contact_person = ( @delegated_user or @user )
+        - emails = [contact_person.email.presence, contact_person.secondary_email.presence].compact
+        - if emails.any?
+          .customer-email
+            %span.email{style: 'display: block'}
+              = _("E-Mail") + ': '
+              = emails.join(' / ')
+
+      - if contact_details.any?
+        .contact-details
+          %span.email{style: 'display: block'}= contact_details.join(' / ')
+
       .clear
 
   - not_returned_lines, returned_lines = @contract.reservations.partition {|line| line.returned_date.blank? }

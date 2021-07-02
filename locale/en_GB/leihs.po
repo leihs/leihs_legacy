@@ -2806,6 +2806,9 @@ msgstr "Lending Terms"
 msgid "accept_lending_terms_label"
 msgstr "I accept the lending terms: "
 
+msgid "contract_contact_details_heading"
+msgstr "Contact Details"
+
 msgid "customer_order_contact_details_label"
 msgstr "Contact Details"
 

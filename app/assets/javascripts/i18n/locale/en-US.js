@@ -4000,6 +4000,18 @@ window.i18n.locale_data = {
       "accept_lending_terms_label": [
          null,
          "I accept the lending terms: "
+      ],
+      "contract_contact_details_heading": [
+         null,
+         "Contact Details"
+      ],
+      "customer_order_contact_details_label": [
+         null,
+         "Contact Details"
+      ],
+      "customer_order_contact_details_placeholder": [
+         null,
+         "The indication of a telephone number is recommended"
       ]
    }
 }

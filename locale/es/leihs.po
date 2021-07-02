@@ -702,6 +702,9 @@ msgstr "Condiciones de préstamo"
 msgid "accept_lending_terms_label"
 msgstr "Acepto las condiciones de préstamo: "
 
+msgid "contract_contact_details_heading"
+msgstr "Detalles de contacto"
+
 msgid "customer_order_contact_details_label"
 msgstr "Detalles de contacto"
 

@@ -4559,6 +4559,18 @@ window.i18n.locale_data = {
       "accept_lending_terms_label": [
          null,
          "J'accepte les conditions de prêt: "
+      ],
+      "contract_contact_details_heading": [
+         null,
+         "Coordonnées de contact"
+      ],
+      "customer_order_contact_details_label": [
+         null,
+         "Coordonnées de contact"
+      ],
+      "customer_order_contact_details_placeholder": [
+         null,
+         "L'indication d'un numéro de téléphone est recommandée"
       ]
    }
 }
