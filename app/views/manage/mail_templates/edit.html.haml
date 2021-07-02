@@ -62,11 +62,11 @@
               .row.emboss.padding-inset-s
                 .col1of5
                 .col4of5
-                  .toggle_container
-                    .toggle_title
-                      %i.fa.fa-info-sign
+                  %details
+                    %summary
                       %strong= _("List of available variables")
-                    .toggle_body= capture_haml {list_variables MailTemplate.send("available_liquid_variables_for_#{params[:type]}")}
+                    %p
+                      = capture_haml {list_variables MailTemplate.send("available_liquid_variables_for_#{params[:type]}")}
 
 :scss
   .toggle_container {
