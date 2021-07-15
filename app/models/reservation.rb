@@ -27,6 +27,7 @@ class Reservation < ApplicationRecord
               :unsubmitted,
               :submitted,
               :rejected,
+              :canceled,
               :approved,
               :signed,
               :closed]
