@@ -19,12 +19,36 @@ module Spec
                                  inventory_pool: @current_inventory_pool)
     end
 
+    step 'a customer for my inventory pool exists' do
+      @inventory_pool = @current_user.inventory_pools.managed.first
+      @customer = FactoryGirl.create(:customer, inventory_pool: @inventory_pool)
+    end
+
     step 'there is a customer delegation for the current pool' do
       delegator = FactoryGirl.create(:customer,
                                      inventory_pool: @current_inventory_pool)
       @delegation = FactoryGirl.create(:customer,
                                        delegator_user_id: delegator.id,
                                        inventory_pool: @current_inventory_pool)
+    end
+
+    step 'a submitted order for the customer exists' do
+      @order = FactoryGirl.create(:order,
+                                  inventory_pool: @current_inventory_pool,
+                                  state: :submitted)
+      FactoryGirl.create(:reservation,
+                         inventory_pool: @order.inventory_pool,
+                         user: @order.user,
+                         status: :submitted,
+                         order: @order)
+    end
+
+    step 'an item owned by my inventory pool exists' do
+      @item = FactoryGirl.create(:item, owner: @inventory_pool)
+    end
+
+    step 'a license owned by my inventory pool exists' do
+      @license = FactoryGirl.create(:license, owner: @inventory_pool)
     end
 
     step 'there exists a software' do
@@ -37,6 +61,19 @@ module Spec
 
     step 'there is a model' do
       step 'there exists a model'
+    end
+
+    step 'a model exists' do
+      step 'there exists a model'
+    end
+
+    step 'the item is borrowable' do
+      @item.update_attributes!(is_borrowable: true)
+    end
+
+    step 'the item is retired' do
+      @item.update_attributes!(retired: true,
+                               retired_reason: Faker::Lorem.sentence)
     end
 
     step 'there is a borrowable item for the model' do

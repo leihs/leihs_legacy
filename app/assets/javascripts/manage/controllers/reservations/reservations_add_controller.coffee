@@ -94,6 +94,7 @@ class window.App.ReservationsAddController extends Spine.Controller
       data: $.param
         search_term: value
         used: true
+        unretired: true
         as_responsible_only: true
         per_page: @modelsPerPage or 5
     .done (data)=>

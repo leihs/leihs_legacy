@@ -45,3 +45,23 @@ Feature: Hand over
     And I add item's model line to the hand over
     And I click in the assign item input field on the item's model line
     Then I see item's location in the assign item dropdown
+
+  @manage_hand_over
+  Scenario: Don't find models without any items
+    Given I am Pius
+    And a customer for my inventory pool exists
+    And a model exists
+    When I open hand over for the user
+    And I enter the model's name in the "Add/Assign" input field
+    Then the results of the autocomplete menu are empty
+
+  @manage_hand_over
+  Scenario: Don't find models with retired items
+    Given I am Pius
+    And a customer for my inventory pool exists
+    And an item owned by my inventory pool exists
+    And the item is borrowable
+    And the item is retired
+    When I open hand over for the user
+    And I enter the item's model name in the "Add/Assign" input field
+    Then the results of the autocomplete menu are empty

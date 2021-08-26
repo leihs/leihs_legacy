@@ -350,6 +350,9 @@ class Model < ApplicationRecord
         if params[:borrowable] == 'true'
           models = models.joins(:items).where(items: { is_borrowable: true })
         end
+        if params[:unretired] == 'true'
+          models = models.joins(:items).where(items: { retired: nil })
+        end
         if params[:items]
           models = models.joins(:items).where(items: { id: params[:items] })
         end

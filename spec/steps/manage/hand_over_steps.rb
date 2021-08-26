@@ -6,21 +6,9 @@ module Manage
   module Spec
     module HandOverSteps
       include ::Spec::CommonSteps
+      include ::Spec::FactorySteps
       include ::Spec::LoginSteps
       include ::Spec::PersonasDumpSteps
-
-      step 'a customer for my inventory pool exists' do
-        @inventory_pool = @current_user.inventory_pools.managed.first
-        @customer = FactoryGirl.create(:customer, inventory_pool: @inventory_pool)
-      end
-
-      step 'an item owned by my inventory pool exists' do
-        @item = FactoryGirl.create(:item, owner: @inventory_pool)
-      end
-
-      step 'a license owned by my inventory pool exists' do
-        @license = FactoryGirl.create(:license, owner: @inventory_pool)
-      end
 
       step 'the customer has borrowed the item for today' do
         FactoryGirl.create(:open_contract,
@@ -63,9 +51,21 @@ module Manage
         find('#assign-or-add-input input').set @item.model.name
       end
 
+      step "I enter the model's name in the :add_assign input field" \
+        do |add_assign|
+        raise unless add_assign == 'Add/Assign'
+        find('#assign-or-add-input input').set @model.name
+      end
+
       step "I choose the item's model name from the displayed dropdown" do
         within '.ui-autocomplete' do
           find('a', text: @item.model.name).click
+        end
+      end
+
+      step "the results of the autocomplete menu are empty" do
+        within '.ui-autocomplete' do
+          expect(current_scope).to have_content _("No results")
         end
       end
 
