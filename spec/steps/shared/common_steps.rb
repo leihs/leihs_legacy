@@ -76,6 +76,10 @@ module Spec
       find('#flash .notice')
     end
 
+    step 'I see :txt' do |txt|
+      expect(page).to have_content txt
+    end
+
     step 'the maximum reservation time is set to :n days' do |n|
       s = Setting.first
       s.update_attributes!(maximum_reservation_time: n.to_i)

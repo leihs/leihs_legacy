@@ -51,10 +51,6 @@ module Manage
         end
       end
 
-      step 'I see :text' do |text|
-        expect(page).to have_content _(text)
-      end
-
       step 'the contract is in state :state' do |state|
         expect(@contract.reload.state).to be == state
       end

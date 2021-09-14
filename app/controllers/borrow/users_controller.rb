@@ -25,7 +25,14 @@ class Borrow::UsersController < Borrow::ApplicationController
   ################################################################
 
   before_action only: [:contract, :value_list] do
-    @contract = current_user.contracts.find(params[:id])
+    @contract = Contract.find(params[:id])
+    # NOTE: due to the delegations' handling in new borrow
+    unless current_user.contracts.include?(@contract) or
+        current_user.delegations.map(&:contracts).flatten.include?(@contract)
+      raise(
+        'Contract not found neither for the user nor for his or her delegations.'
+      )
+    end
   end
 
   def contract

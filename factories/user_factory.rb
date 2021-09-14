@@ -26,6 +26,7 @@ FactoryGirl.define do
       Language.find_by_default(true) || create(:language, locale: 'en-GB')
     end
     delegator_user { nil }
+    organization { Faker::Lorem.characters(8) }
 
     after(:create) do |user|
       unless user.delegation?
