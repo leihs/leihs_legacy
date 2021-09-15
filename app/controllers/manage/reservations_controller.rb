@@ -213,7 +213,7 @@ class Manage::ReservationsController < Manage::ApplicationController
         head :ok
       end
     rescue => e
-      Rails.log.warn e.message
+      Rails.logger.warn e.message
       render status: :bad_request, plain: e.message
     end
   end
