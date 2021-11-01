@@ -6,6 +6,12 @@ class Manage::AccessRightsController < Manage::ApplicationController
                          .access_rights
                          .active
                          .where(user_id: params[:user_ids])
+                         .map {|ar| {
+                           role: ar.role,
+                           user_id: ar.user_id,
+                           inventory_pool_id: ar.inventory_pool_id,
+                           suspended_until: ar.suspended_until}
+                         }
                      else
                        raise 'User ids required'
                      end
