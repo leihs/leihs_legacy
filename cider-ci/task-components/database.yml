@@ -2,23 +2,7 @@ traits:
   Ruby: true
 
 include:
-  - cider-ci/task-components/database/create.yml
-  - cider-ci/task-components/database/configure.yml
-  - cider-ci/task-components/database/delete.yml
-
-scripts:
-
-  test:
-    start_when:
-      database has been created:
-        script_key: create-database
-    start_when:
-      database has been configured:
-        script_key: legacy-configure-database
-
-  legacy-delete-database:
-    start_when:
-      test is in terminal state:
-        script_key: test
-        states: [aborted, defective, passed, failed, skipped]
+  - path: cider-ci/task-components/database.yml
+    submodule: [database]
+  - path: cider-ci/task-components/database/configure.yml
 

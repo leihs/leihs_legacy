@@ -1,8 +1,9 @@
-name: LEIHS/v5/legacy
+name: LEIHS/leihs/legacy
 windows:
   2:
     name: rails s
-    command: bundle exec rails s -p 3210
+    command: |
+      # bundle exec rails s -p 3210
   5:
     name: psql
     command: |

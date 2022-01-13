@@ -51,7 +51,7 @@ context:
           body: |
             set -euxo
             if [ -d legacy ]; then cd legacy; fi
-            export PATH=~/.rubies/$RUBY/bin:$PATH
+            export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
             bundle exec rake db:migrate VERSION=100
             bundle exec rake leihs:dbio:import FILE=/tmp/leihs-v3-data/db_data.yml
             bundle exec rake db:migrate

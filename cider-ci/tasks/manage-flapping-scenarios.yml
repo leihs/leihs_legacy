@@ -5,7 +5,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/calendar.feature:12
 - name: features/manage/displaying_problems.feature:34
@@ -13,7 +13,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:34
 - name: features/manage/displaying_problems.feature:47
@@ -21,7 +21,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:47
 - name: features/manage/hand_over/hand_over.feature:67
@@ -29,7 +29,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:67
 - name: features/manage/inventory/categories.feature:25
@@ -37,7 +37,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:25
 - name: features/manage/inventory/categories.feature:55
@@ -45,7 +45,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:55
 - name: features/manage/inventory/inventory.feature:219
@@ -53,7 +53,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:219
 - name: features/manage/lending/lending.feature:108
@@ -61,7 +61,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:108
 - name: features/manage/lending/lending.feature:100
@@ -69,7 +69,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:100
 - name: features/manage/take_back/edit_take_back_end_date.feature:11
@@ -77,7 +77,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:11
 - name: features/manage/value_list.feature:30
@@ -85,7 +85,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/value_list.feature:30
 - name: features/manage/verification.feature:30
@@ -93,7 +93,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/verification.feature:30
 - name: spec/features/manage/take_back.feature:7
@@ -101,6 +101,6 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:7

@@ -4,7 +4,9 @@ script_defaults:
 
 task_defaults:
 
-  include: cider-ci/task-components/bundle-rspec-ruby.yml
+  include:
+    - cider-ci/task-components/bundle-rspec-ruby.yml
+    - cider-ci/shared/legacy-ruby_env.yml
 
   git_options:
     submodules:
@@ -12,10 +14,13 @@ task_defaults:
 
   environment_variables:
     RUBY_ENGINE: ruby
-    RUBY_VERSION: 2.6.0
+    RUBY_VERSION: 2.7.3
     RUBY: '{{RUBY_ENGINE}}-{{RUBY_VERSION}}'
+    RUBY_BUNDLER_VERSION: 2.3.3
     RAILS_ENV: test
-    DATABASE_NAME: "leihs_test_{{CIDER_CI_TRIAL_ID}}"
+    LEIHS_LEGACY_DIR: "{{CIDER_CI_WORKING_DIR}}"
+    LEIHS_DATABASE_DIR: "{{LEIHS_LEGACY_DIR}}/database"
+    LEIHS_DATABASE_NAME: "leihs_test_{{CIDER_CI_TRIAL_ID}}"
 
   trial_attachments:
     screenshots:

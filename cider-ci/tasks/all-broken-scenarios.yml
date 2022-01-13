@@ -5,7 +5,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/delete_lines.feature:21
 - name: features/manage/hand_over/assign.feature:26
@@ -13,7 +13,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/assign.feature:26
 - name: features/manage/hand_over/edit_reservation.feature:11
@@ -21,7 +21,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:11
 - name: features/manage/lending/lending.feature:60
@@ -29,7 +29,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:60
 - name: features/manage/old_timeline.feature:4
@@ -37,7 +37,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/old_timeline.feature:4
 - name: features/manage/picking_list.feature:42
@@ -45,7 +45,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/picking_list.feature:42
 - name: features/manage/search.feature:19
@@ -53,7 +53,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:19
 - name: features/manage/take_back/take_back.feature:72
@@ -61,7 +61,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:72
 - name: No Tasks for spec/features/manage
@@ -73,7 +73,7 @@ tasks:
     test:
       body: |-
         set -eux
-        export PATH=~/.rubies/$RUBY/bin:$PATH
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:168
 - name: No Tasks for engines/leihs_admin/spec/features

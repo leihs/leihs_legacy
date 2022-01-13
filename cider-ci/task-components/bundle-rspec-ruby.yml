@@ -5,23 +5,27 @@ traits:
 scripts:
 
   legacy-bundle-rspec-ruby:
-    exclusive_executor_resource: ruby-install_{{$RUBY}}
+    exclusive_executor_resource: ruby-install_{{$LEGACY_RUBY}}
     timeout: 5 Minutes
     body: |
       #!/usr/bin/env bash
       set -eux
 
+      cd $LEIHS_LEGACY_DIR
+
       if [ -d legacy ]; then cd legacy; fi
 
-      export PATH=~/.rubies/$RUBY/bin:$PATH
+      export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
 
-      if [ ! -d ~/.rubies/$RUBY ]; then
-        ruby-install --no-install-deps $RUBY_ENGINE $RUBY_VERSION
+      if [ ! -d ~/.rubies/$LEGACY_RUBY ]; then
+        ruby-install --no-install-deps $LEGACY_RUBY_ENGINE $LEGACY_RUBY_VERSION
       fi
 
-      if [ ! -f ~/.rubies/$RUBY/bin/bundle ]; then
+      if [ ! -f ~/.rubies/$LEGACY_RUBY/bin/bundle ]; then
         gem install bundler
       fi
+
+      cd $LEIHS_LEGACY_DIR
 
       bundle install
 

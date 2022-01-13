@@ -1,19 +1,16 @@
 scripts:
-  legacy-configure-database:
+  legacy-configure-rails-db:
+    start_when:
+      database has been configured:
+        script_key: database-configure-rails-db
     body: |
-      #!/usr/bin/env ruby
-      Dir.chdir ( Dir.exists?("legacy") ? "legacy" : "." ) do
-        require 'yaml'
-        db_config = {
-          'adapter' => 'postgresql',
-          'encoding' => 'unicode',
-          'host' => 'localhost',
-          'pool' => 20,
-          'timeout' => 20,
-          'username' => ENV['PGUSER'],
-          'password' =>  ENV['PGPASSWORD'],
-          'database' => ENV['DATABASE_NAME']}
-        config = { ENV['RAILS_ENV'] => db_config}
-        File.open('config/database.yml','w') { |file| file.write config.to_yaml }
-      end
+      #!/usr/bin/env bash
+      set -eux
+      cd $LEIHS_LEGACY_DIR
+      cp $LEIHS_DATABASE_DIR/config/database.yml config/database.yml
 
+  test:
+    start_when:
+      rails db is configured:
+        script_key: legacy-configure-rails-db
+        states: [passed]

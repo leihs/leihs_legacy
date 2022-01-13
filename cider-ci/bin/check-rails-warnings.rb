@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eu
 
-export PATH=~/.rubies/$RUBY/bin:$PATH
+export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
 
 RAILS_ENV=test bundle exec rails runner ''
 

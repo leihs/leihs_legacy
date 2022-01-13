@@ -13,7 +13,7 @@ def task_hash(name, exec)
   { 'name' => name,
     'scripts' => {
       'test' => {
-        'body' => "set -eux\nexport PATH=~/.rubies/$RUBY/bin:$PATH\nmkdir -p log\n#{exec}"
+        'body' => "set -eux\nexport PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH\nmkdir -p log\n#{exec}"
       }
     }
   }

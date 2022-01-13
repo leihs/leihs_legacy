@@ -65,7 +65,6 @@ group :development do
 end
 
 group :test do
-  gem 'ladle'
   gem 'open4'
   gem 'turnip'
 end

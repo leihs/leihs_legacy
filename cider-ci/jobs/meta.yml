@@ -24,7 +24,9 @@ jobs:
       tasks:
         migration-of-personas-dump:
           include:
-            - cider-ci/task-components/database-no-schema.yml
+            - path: cider-ci/task-components/database-no-schema.yml
+              submodule: [database]
+            - path: cider-ci/task-components/database/configure.yml
 
           environment_variables:
             LEIHS_SECRET: secret
@@ -37,9 +39,9 @@ jobs:
               body: |
                 #!/usr/bin/env bash
                 set -exu
-                export PATH=~/.rubies/$RUBY/bin:$PATH
-                { pg_restore --version | grep -q '11.' ;} && psql -d $DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
-                pg_restore --disable-triggers -x -O -d $DATABASE_NAME ./features/personas/personas.pgbin
+                export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
+                { pg_restore --version | grep -q '11.' ;} && psql -d $LEIHS_DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
+                pg_restore --disable-triggers -x -O -d $LEIHS_DATABASE_NAME ./features/personas/personas.pgbin
                 if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
                   echo "Run ./scripts/migrate-and-dump-personas"
                   exit 1
@@ -49,7 +51,10 @@ jobs:
 
         migration-of-demo-dump:
           include:
-            - cider-ci/task-components/database-no-schema.yml
+            - path: cider-ci/task-components/database-no-schema.yml
+              submodule: [database]
+            - path: cider-ci/task-components/database/configure.yml
+
 
           environment_variables:
             LEIHS_SECRET: secret
@@ -62,9 +67,9 @@ jobs:
               body: |
                 #!/usr/bin/env bash
                 set -exu
-                export PATH=~/.rubies/$RUBY/bin:$PATH
-                { pg_restore --version | grep -q '11.' ;} && psql -d $DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
-                pg_restore --disable-triggers -x -O -d $DATABASE_NAME ./features/personas/demo.pgbin
+                export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
+                { pg_restore --version | grep -q '11.' ;} && psql -d $LEIHS_DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
+                pg_restore --disable-triggers -x -O -d $LEIHS_DATABASE_NAME ./features/personas/demo.pgbin
                 if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
                   echo "Run ./scripts/migrate-and-dump-demo"
                   exit 1
@@ -84,17 +89,22 @@ jobs:
 
         assets compiled if changed:
           name: "Assets have been precompiled and checked in"
-          include: [ cider-ci/task-components/database.yml ]
+          include:
+            - path: cider-ci/task-components/database.yml
+              submodules: database
           environment_variables:
             RAILS_ENV: production
             LEIHS_SECRET: secret
           # traits: [ fastest-executors ]
           scripts:
             test:
+              start_when:
+                legacy_ruby_ready:
+                  script_key: legacy-bundle-rspec-ruby
               timeout: 10 Minutes
               body: |
                 set -eu
-                export PATH=./node_modules/.bin:~/.rubies/$RUBY/bin:$PATH
+                export PATH=./node_modules/.bin:~/.rubies/$LEGACY_RUBY/bin:$PATH
 
                 mv public/assets tmp/checked_in_assets
                 bundle exec rake app:i18n:po2json
@@ -116,7 +126,7 @@ jobs:
             test:
               body: |
                 set -eu
-                export PATH=./node_modules/.bin:~/.rubies/$RUBY/bin:$PATH
+                export PATH=./node_modules/.bin:~/.rubies/$LEGACY_RUBY/bin:$PATH
                 yarn check --integrity --verify-tree --offline
 
         backend and frontend locales are synchronised:
@@ -128,8 +138,8 @@ jobs:
 
         extract missing and fuzzy translations:
           name: "Extract missing and fuzzy translations"
-          max_trials: 10
-          eager_trials: 10
+          max_trials: 5
+          eager_trials: 3
           tree_attachments:
             translation-todos:
               include_match: tmp\/translation-todos\/.*\.po$
