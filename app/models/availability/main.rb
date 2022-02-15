@@ -153,7 +153,7 @@ module Availability
                                                          inner_changes)
 
         reservation.allocated_group_id = groups_to_check.detect do |group_id|
-          max_possible_quantities_for_groups_and_changes[group_id] >=
+          (max_possible_quantities_for_groups_and_changes[group_id] || 0) >=
             reservation.quantity
         end
 
