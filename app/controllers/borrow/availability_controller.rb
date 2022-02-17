@@ -24,7 +24,7 @@ class Borrow::AvailabilityController < Borrow::ApplicationController
 
     model = Model.find(model_id_param)
     ip = InventoryPool.find(inventory_pool_id_param)
-    reservations = Reservation.find(reservation_ids_param)
+    reservations = Reservation.where(id: reservation_ids_param)
     presenter = Borrow::BookingCalendar.new(ip,
                                             model,
                                             user,
