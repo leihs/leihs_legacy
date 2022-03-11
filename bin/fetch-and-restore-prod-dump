@@ -3,7 +3,7 @@
 set -eux
 
 FILE=${FILE:-tmp/db_production.pgbin}
-HOST=${HOST:-zhdk-leihs-prod-v5.ruby.zhdk.ch}
+HOST=${HOST:-zhdk-leihs-prod-v6.ruby.zhdk.ch}
 
 # ansible-playbook -v -i ../zhdk-inventory/prod-hosts-v5 ../deploy/fetch-latest-dump_play.yml
 
