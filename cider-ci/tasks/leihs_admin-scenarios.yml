@@ -232,38 +232,6 @@ tasks:
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/languages.feature:4
-- name: engines/leihs_admin/spec/features/maintenance_mode.feature:12
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/maintenance_mode.feature:12
-- name: engines/leihs_admin/spec/features/maintenance_mode.feature:23
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/maintenance_mode.feature:23
-- name: engines/leihs_admin/spec/features/maintenance_mode.feature:34
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/maintenance_mode.feature:34
-- name: engines/leihs_admin/spec/features/maintenance_mode.feature:43
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/maintenance_mode.feature:43
 - name: engines/leihs_admin/spec/features/rooms.feature:110
   scripts:
     test:

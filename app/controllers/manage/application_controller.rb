@@ -17,16 +17,9 @@ class Manage::ApplicationController < ApplicationController
     end
   end
 
-  before_action :check_maintenance_mode, except: :maintenance
   before_action :required_role
 
   private
-
-  def check_maintenance_mode
-    if current_inventory_pool and app_settings.disable_manage_section
-      redirect_to manage_maintenance_path(current_inventory_pool)
-    end
-  end
 
   def required_role
     required_manager_role

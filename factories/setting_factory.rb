@@ -11,10 +11,6 @@ FactoryGirl.define do
       'http://www.zhdk.ch/?person/foto&width=100&compressionlevel=0&id={:id}'
     end
     logo_url { '/assets/image-logo-zhdk.png' }
-    disable_manage_section { false }
-    disable_manage_section_message { '' }
-    disable_borrow_section { false }
-    disable_borrow_section_message { '' }
   end
 
 end
