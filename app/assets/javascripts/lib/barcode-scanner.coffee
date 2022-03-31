@@ -26,14 +26,15 @@ class BarcodeScanner
       regexp: regexp
       callback: callback
 
-  execute: (givenCode)=>
+  execute: (givenString)=>
     # HACK: support react inputs, need ref to element not DOM node
     target = if window.reactBarcodeScannerTarget
       window.reactBarcodeScannerTarget
     else
       $("[data-barcode-scanner-target]:last")
 
-    code = givenCode || @buffer
+    string = givenString || @buffer
+    code = _.str.trim(string)
     action = @getAction code
     if action?
       action.callback.apply target, @getArguments(code, action)
