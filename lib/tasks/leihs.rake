@@ -99,6 +99,7 @@ namespace :leihs do
 
   desc 'Remind and suspend users'
   task remind_and_suspend: :environment do
+    puts "Delivery config: Mails will #{'NOT ' unless Rails.application.config.action_mailer.perform_deliveries}be sent!"
     puts 'Reminding and suspending users...'
     User.remind_and_suspend_all
     puts 'Remind and suspend complete -----------------------------'
@@ -106,6 +107,7 @@ namespace :leihs do
 
   desc 'Deadline soon reminder'
   task deadline_soon_reminder: :environment do
+    puts "Delivery config: Mails will #{'NOT ' unless Rails.application.config.action_mailer.perform_deliveries}be sent!"
     puts 'Sending a deadline soon reminder...'
     User.send_deadline_soon_reminder_to_everybody
     puts 'Deadline soon reminded ----------------------'
