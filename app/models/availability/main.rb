@@ -180,12 +180,14 @@ module Availability
 
     def maximum_available_in_period_summed_for_groups(start_date,
                                                       end_date,
-                                                      group_ids = nil)
+                                                      group_ids = nil,
+                                                      sanitize_negative: false)
       group_ids ||= @inventory_pool_and_model_group_ids
       summed_quantities_for_groups_and_changes(
         [EntitlementGroup::GENERAL_GROUP_ID] + \
           (group_ids & @inventory_pool_and_model_group_ids),
-        @changes.between(start_date, end_date)
+        @changes.between(start_date, end_date),
+        sanitize_negative
       ).min
     end
 
@@ -203,12 +205,20 @@ module Availability
     private
 
     # returns a Hash {group_id => quantity}
-    def summed_quantities_for_groups_and_changes(group_ids, inner_changes)
+    def summed_quantities_for_groups_and_changes(group_ids,
+                                                 inner_changes,
+                                                 sanitize_negative)
       inner_changes.map do |date, change|
         change
           .select { |group_id, _| group_ids.include?(group_id) }
           .values
-          .map { |stock_information| stock_information[:in_quantity] }
+          .map do |v|
+            if sanitize_negative and (v[:in_quantity] < 0)
+              0
+            else
+              v[:in_quantity]
+            end
+          end
           .sum
       end
     end

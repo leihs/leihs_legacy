@@ -54,7 +54,8 @@ class Borrow::BookingCalendar < ApplicationPresenter
         @availability
         .maximum_available_in_period_summed_for_groups(s_date,
                                                        e_date,
-                                                       @group_ids)
+                                                       @group_ids,
+                                                       sanitize_negative: true)
       new_dates = (s_date..e_date).map { |d| [d, qty] }
       memo + new_dates
     end

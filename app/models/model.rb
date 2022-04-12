@@ -452,6 +452,7 @@ class Model < ApplicationRecord
     entitled_quantity = \
       Entitlement.hash_with_generals(inventory_pool, self, groups)
       .values
+      .map { |v| (ensure_non_negative and v < 0) ? 0 : v }
       .sum
 
     borrowable_quantity = \
