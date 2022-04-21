@@ -15,10 +15,10 @@
 
       .padding-bottom-l
 
-        = render :partial => "flash", :locals => {:flash => flash} if flash
-
-        - if LEIHS_MOBILE_APP_ENABLED
+        - if LEIHS_MOBILE_APP_ENABLED && LEIHS_MOBILE_APP_SHOW_NOTICE
           = render :partial => "borrow/mobile-app-notice"
+
+        = render :partial => "flash", :locals => {:flash => flash} if flash
 
         %header= render :partial => "borrow/topbar"
 

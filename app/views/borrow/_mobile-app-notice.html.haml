@@ -1,29 +1,35 @@
-#mobile-app-notice{style: 'display: none'}
+-# TODO: translations
+
+- mobile_app_href = '/app/borrow/'
+- active_language = Language.find_by_locale(I18n.locale).try(:locale)
+- default_language = Language.default_language.try(:locale)
+- texts = LEIHS_MOBILE_APP_SHOW_NOTICE_TEXTS.presence || {}
+- notice_text = texts[active_language].presence || texts[default_language].presence || texts.values.first.presence || "try the new borrow app!"
+
+
+#mobile-app-notice
   .mobile-app-notice-content
-    %a{href: '/app/borrow/'}
-      = " small screen? 😓"
-      %br
-      = "tap here to try the"
-      %br
-      = "📲"
-      %span{style: "text-decoration: underline"}= "leihs mobile app"
-      = "👌"
+    %a{href: mobile_app_href}= notice_text.html_safe
 
 :css
+  #mobile-app-notice {
+    background: #333;
+  }
+  #mobile-app-notice a {
+    color: white;
+  }
+  #mobile-app-notice .mobile-app-notice-content {
+    max-width: 100vw;
+    padding: 2.4rem 1rem;
+    text-align: center;
+    font-size: 1.5rem
+  }
+  /* make it bigger on small screens: */
   @media
     only screen and (max-device-width: 900px), /* like a smartphone (deprecated) */
     only screen and (max-width: 500px) {       /* just a small screen, any browser */
-    #mobile-app-notice {
-      display: block !important;
-      background: #333;
-    }
-    #mobile-app-notice .mobile-app-notice-content {
-      max-width: 100vw;
-      padding: 5rem 1rem;
-      text-align: center;
-      font-size: 3rem
-    }
-    #mobile-app-notice a {
-      color: white;
-    }
+      #mobile-app-notice .mobile-app-notice-content {
+        padding: 5rem 1rem;
+        font-size: 3rem
+      }
   }
