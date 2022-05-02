@@ -116,7 +116,8 @@ class Borrow::ReservationsController < Borrow::ApplicationController
       .maximum_available_in_period_summed_for_groups(
         @start_date,
         @end_date,
-        current_user.entitlement_group_ids) \
-   >= quantity
+        current_user.entitlement_group_ids,
+        sanitize_negative: true) \
+    >= quantity
   end
 end
