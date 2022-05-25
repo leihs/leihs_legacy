@@ -70,16 +70,30 @@ class Manage::OrdersController < Manage::ApplicationController
     @order = Order.find(id_param)
     Order.transaction(requires_new: true) do
       begin
-        @order.update_attributes!(user_id: user_id_param)
         @order.reservations.each do |reservation|
           reservation.update_attributes!(
             user_id: user_id_param,
             delegated_user_id: delegated_user_id_param
           )
         end
+
+        customer_order = @order.customer_order
+
+        if customer_order.orders.count == 1
+          @order.update_attributes!(user_id: user_id_param)
+          customer_order.update_attributes!(user_id: user_id_param)
+        else
+          customer_order = CustomerOrder.create!(user_id: user_id_param,
+                                                 purpose: @order.purpose,
+                                                 title: @order.purpose)
+          @order.update_attributes!(user_id: user_id_param, customer_order: customer_order)
+        end
+
         head :ok
       rescue => e
+
         render json: e.message, status: :bad_request
+        raise ActiveRecord::Rollback
       end
     end
   end
