@@ -42,6 +42,7 @@ gem 'webpacker', '~> 3.0'
 gem 'react-rails'
 
 source 'https://rails-assets.org' do
+  gem 'rails-assets-bootstrap'
   gem 'rails-assets-accounting.js', '~> 0.4'
   gem 'rails-assets-fullcalendar', '~> 1.5'
   gem 'rails-assets-jquery', '~> 1.5'

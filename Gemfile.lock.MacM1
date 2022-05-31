@@ -234,6 +234,7 @@ GEM
     launchy (2.4.3)
       addressable (~> 2.3)
       spoon (~> 0.0.1)
+    libv8-node (16.10.0.0)
     liquid (3.0.6)
     loofah (2.2.0)
       crass (~> 1.0.2)
@@ -278,7 +279,6 @@ GEM
       subexec (~> 0.2.1)
     mini_mime (0.1.4)
     mini_portile2 (2.7.1)
-    libv8-node (16.10.0.0)
     mini_racer (0.6.2)
       libv8-node (~> 16.10.0.0)
     minitest (5.11.3)
@@ -551,6 +551,7 @@ DEPENDENCIES
   puma
   rails
   rails-assets-accounting.js (~> 0.4)!
+  rails-assets-bootstrap!
   rails-assets-fullcalendar (~> 1.5)!
   rails-assets-jquery (~> 1.5)!
   rails-assets-jquery-autosize (~> 1.18)!
