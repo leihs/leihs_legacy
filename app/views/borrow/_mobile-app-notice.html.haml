@@ -13,23 +13,37 @@
 
 :css
   #mobile-app-notice {
-    background: #333;
+    background: #660066;
+    padding: 1rem;
   }
   #mobile-app-notice a {
     color: white;
+    display:block;
   }
   #mobile-app-notice .mobile-app-notice-content {
     max-width: 100vw;
-    padding: 2.4rem 1rem;
     text-align: center;
-    font-size: 1.5rem
+    font-size: 1.5rem;
   }
-  /* make it bigger on small screens: */
+  #mobile-app-notice:hover {
+    opacity: 0.90;
+  }
   @media
-    only screen and (max-device-width: 900px), /* like a smartphone (deprecated) */
-    only screen and (max-width: 500px) {       /* just a small screen, any browser */
-      #mobile-app-notice .mobile-app-notice-content {
-        padding: 5rem 1rem;
-        font-size: 3rem
+    only screen and (max-device-width: 500px) { 
+      .mobile-app-notice-desktop {
+        display: none;
       }
+      #mobile-app-notice {
+        background: black;
+      }
+      #mobile-app-notice .mobile-app-notice-content {
+        padding: 5rem 5rem; 
+        font-size: 4rem;
+    }
+  }
+  @media
+    only screen and (min-device-width: 501px) {
+      .mobile-app-notice-mobile {
+        display: none;
+    }
   }
