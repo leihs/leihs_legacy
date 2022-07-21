@@ -8,4 +8,12 @@ class MailsController < ApplicationController
     render(status: 500, plain: e.message)
   end
 
+  def send_submitted
+    Order.find(params[:order_id]).send_submitted_notification
+    head(:accepted)
+  rescue => e
+    Rails.logger.warn(e)
+    render(status: 500, plain: e.message)
+  end
+
 end
