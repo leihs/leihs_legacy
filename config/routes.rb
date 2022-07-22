@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   # NOTE: New Borrow
   post "mail/received", to: "mails#send_received"
+  post "mail/submitted", to: "mails#send_submitted"
 
   # Categories
   get "categories/:id/image", to: "categories#image", as: "category_image"
