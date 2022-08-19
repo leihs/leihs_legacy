@@ -684,7 +684,7 @@ module Borrow
 
       step 'I switch to another language' do
         @original_language = @current_user.language
-        @another_language = Language.all.detect { |l| l != @current_user.language }
+        @another_language = Language.where(active: true).detect { |l| l != @current_user.language }
         I18n.locale = @another_language.locale
         find('footer a', text: @another_language.name).click
       end
