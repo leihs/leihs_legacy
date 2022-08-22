@@ -23,7 +23,6 @@ gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'm
 gem 'kramdown' # markdown rendering
 gem 'liquid', '~> 3.0'
 gem 'mini_magick', '~> 3.4'
-gem 'mini_racer'
 gem 'net-ldap', require: 'net/ldap'
 gem 'nilify_blanks', '~> 1.1'
 gem 'presentoir', git: 'https://github.com/leihs/presentoir', ref: '1f65b6a673be93f9babb17f26f3bacaf64a7fbc2'
