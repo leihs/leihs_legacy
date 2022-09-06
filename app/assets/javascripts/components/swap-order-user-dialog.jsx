@@ -136,7 +136,7 @@
     _renderDropdownLine(user) {
       return (
         <li key={user.id} className='separated-bottom exclude-last-child ui-menu-item'>
-           <a onClick={(event) => this._onUserClick(event, user)} className='row ui-menu-item-wrapper' title='Christophe Besch' id='ui-id-62' tabIndex='-1'>
+           <a onClick={(event) => this._onUserClick(event, user)} className='row ui-menu-item-wrapper' tabIndex='-1'>
               <div className='row text-ellipsis'>
                 <strong>
                   {user.name}
