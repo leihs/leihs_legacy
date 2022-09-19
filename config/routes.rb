@@ -310,11 +310,6 @@ Rails.application.routes.draw do
       get     'buildings',          to: 'buildings#index'
       get     'buildings/:id/edit', to: 'buildings#edit',     as: 'edit_inventory_pool_building'
       delete  'buildings/:id',      to: 'buildings#destroy',  as: 'delete_inventory_pool_building'
-
-      # Suppliers
-      get     'suppliers',          to: 'suppliers#index'
-      get     'suppliers/:id',      to: 'suppliers#show',     as: 'inventory_pool_supplier'
-      delete  'suppliers/:id',      to: 'suppliers#destroy',  as: 'delete_inventory_pool_supplier'
     end
 
   end

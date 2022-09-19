@@ -1,7 +1,3 @@
-jobs:
-  import-production-db-test:
-    include: cider-ci/jobs/import-production-db-test.yml
-
 include:
   - cider-ci/jobs/rspec-model-tests.yml
 
