@@ -1,5 +1,4 @@
 class MailTemplate < ApplicationRecord
-  audited
 
   TEMPLATE_TYPES = {
     reminder: :user,

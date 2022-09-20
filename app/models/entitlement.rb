@@ -1,5 +1,4 @@
 class Entitlement < ApplicationRecord
-  audited
 
   belongs_to :model, inverse_of: :entitlements
   belongs_to :entitlement_group, inverse_of: :entitlements

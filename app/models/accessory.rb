@@ -1,5 +1,4 @@
 class Accessory < ApplicationRecord
-  audited
 
   belongs_to :model, inverse_of: :accessories
   has_and_belongs_to_many :inventory_pools

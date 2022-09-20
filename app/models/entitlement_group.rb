@@ -1,7 +1,6 @@
 class EntitlementGroup < ApplicationRecord
   include Availability::Group
   include Search::Name
-  audited
 
   belongs_to :inventory_pool
 

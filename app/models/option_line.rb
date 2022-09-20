@@ -2,7 +2,6 @@
 # #Option's and NOT #Item's.
 #
 class OptionLine < Reservation
-  audited
 
   belongs_to :option, inverse_of: :option_lines
 

@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 class ModelGroupLink < ApplicationRecord
-  audited
 
   belongs_to :child, class_name: 'ModelGroup'
 

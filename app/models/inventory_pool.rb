@@ -4,7 +4,6 @@ require_dependency 'model' # in tests Model constant seems not to autoload prope
 
 class InventoryPool < ApplicationRecord
   include Availability::InventoryPool
-  audited
 
   #################################################################################
   default_scope do

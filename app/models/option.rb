@@ -9,7 +9,6 @@
 #
 class Option < ApplicationRecord
   include DefaultPagination
-  audited
 
   belongs_to :inventory_pool
 

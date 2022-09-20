@@ -2,7 +2,6 @@ class User < ApplicationRecord
   include Concerns::ProcurementAccess
   include Delegation::User
   include DefaultPagination
-  audited
 
   before_create do
     # not as general validation because of first admin user

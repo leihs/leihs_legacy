@@ -1,5 +1,4 @@
 class Language < ApplicationRecord
-  audited
 
   default_scope { order(:name) }
   scope :active_languages, -> { where(active: true) }

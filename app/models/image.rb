@@ -1,5 +1,4 @@
 class Image < ApplicationRecord
-  audited
 
   belongs_to :target, polymorphic: true
 

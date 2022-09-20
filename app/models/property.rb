@@ -1,5 +1,4 @@
 class Property < ApplicationRecord
-  audited
 
   belongs_to :model, inverse_of: :properties
   # TODO: belongs_to :key

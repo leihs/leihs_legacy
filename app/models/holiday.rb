@@ -1,5 +1,4 @@
 class Holiday < ApplicationRecord
-  audited
   attr_accessor :_destroy
 
   belongs_to :inventory_pool, inverse_of: :holidays

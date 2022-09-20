@@ -1,5 +1,4 @@
 class Building < ApplicationRecord
-  audited
 
   has_many :rooms
   has_many :items, through: :rooms

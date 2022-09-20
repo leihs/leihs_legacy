@@ -13,7 +13,6 @@
 class Model < ApplicationRecord
   include Availability::Model
   include DefaultPagination
-  audited
 
   before_validation do
     # TODO: this should be done by the ActiveRecord STI

@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 class Address < ApplicationRecord
-  audited
 
   geocoded_by :to_s
 

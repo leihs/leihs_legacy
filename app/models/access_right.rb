@@ -1,5 +1,4 @@
 class AccessRight < ApplicationRecord
-  audited
 
   self.primary_key = 'id'
 

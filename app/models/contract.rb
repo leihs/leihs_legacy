@@ -3,7 +3,6 @@ class Contract < ApplicationRecord
   include Concerns::TimeWindows
   include DefaultPagination
   include LineModules::GroupedAndMergedLines
-  audited
 
   before_create do
     id = UUIDTools::UUID.random_create

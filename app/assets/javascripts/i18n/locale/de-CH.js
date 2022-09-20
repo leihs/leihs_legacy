@@ -4825,6 +4825,10 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "Die Bestellung wurde bereits bearbeitet."
+      ],
+      "These audits are deprecated and no new ones are created. See ": [
+         null,
+         "Diese Audits sind veraltet und es kommen keine Neuen mehr hinzu. Siehe "
       ]
    }
 }

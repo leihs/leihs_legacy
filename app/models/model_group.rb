@@ -1,6 +1,5 @@
 class ModelGroup < ApplicationRecord
   include Search::Name
-  audited
 
   attr_accessor :current_parent_id
 

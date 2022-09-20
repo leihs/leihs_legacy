@@ -1,5 +1,4 @@
 class Attachment < ApplicationRecord
-  audited
 
   belongs_to :model, inverse_of: :attachments
   belongs_to :item, inverse_of: :attachments

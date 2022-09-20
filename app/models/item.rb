@@ -16,7 +16,6 @@ class Item < ApplicationRecord
   include Concerns::ItemCsv
   include Concerns::SerialNumberValidation
   include DefaultPagination
-  audited
 
   belongs_to(:parent,
              class_name: 'Item',

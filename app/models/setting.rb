@@ -1,5 +1,4 @@
 class Setting < ApplicationRecord
-  audited
 
   SERVICE_RESTART_ATTRIBUTES =
     [:ldap_config,
