@@ -8,46 +8,6 @@ tasks:
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/audits.feature:8
-- name: engines/leihs_admin/spec/features/buildings.feature:20
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/buildings.feature:20
-- name: engines/leihs_admin/spec/features/buildings.feature:29
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/buildings.feature:29
-- name: engines/leihs_admin/spec/features/buildings.feature:36
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/buildings.feature:36
-- name: engines/leihs_admin/spec/features/buildings.feature:43
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/buildings.feature:43
-- name: engines/leihs_admin/spec/features/buildings.feature:9
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/buildings.feature:9
 - name: engines/leihs_admin/spec/features/fields.feature:16
   scripts:
     test:

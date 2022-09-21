@@ -1,15 +1,13 @@
 LeihsAdmin::Engine.routes.draw do
 
-  root to: redirect('/admin/buildings')
+  root to: redirect('/admin/top')
   
   unless Rails.env.production?
     get 'top', to: 'admin#top'
   end
 
-  resources :buildings,       except: :show
   resources :locations,       only: :destroy
   resources :rooms,           except: :show
-  resources :suppliers,       except: []
   resources :users,           only: :index
 
   # Audits

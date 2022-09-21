@@ -113,7 +113,7 @@ Rails.application.routes.draw do
     # Users
     post 'users/:id/set_start_screen', to: 'users#set_start_screen'
 
-    # Buildings
+    # Rooms
     get     'rooms',              to: 'rooms#index'
 
     get 'rooms_diff', to: 'rooms#get_rooms_diff'
@@ -305,11 +305,6 @@ Rails.application.routes.draw do
       get 'mail_templates', to: 'mail_templates#index'
       get 'mail_templates/:type/:name', to: 'mail_templates#edit'
       put 'mail_templates/:type/:name', to: 'mail_templates#update'
-
-      # Buildings
-      get     'buildings',          to: 'buildings#index'
-      get     'buildings/:id/edit', to: 'buildings#edit',     as: 'edit_inventory_pool_building'
-      delete  'buildings/:id',      to: 'buildings#destroy',  as: 'delete_inventory_pool_building'
     end
 
   end
