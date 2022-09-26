@@ -7,7 +7,6 @@ LeihsAdmin::Engine.routes.draw do
   end
 
   resources :locations,       only: :destroy
-  resources :rooms,           except: :show
   resources :users,           only: :index
 
   # Audits

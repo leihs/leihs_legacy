@@ -9,14 +9,6 @@ class Building < ApplicationRecord
 
   ########################################################
 
-  after_create do
-    Room.create!(name: 'general room',
-                 building_id: id,
-                 general: true)
-  end
-
-  ########################################################
-
   def self.general
     find(Leihs::Constants::GENERAL_BUILDING_UUID)
   end
