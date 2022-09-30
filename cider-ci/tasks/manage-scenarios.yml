@@ -2168,54 +2168,46 @@ tasks:
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/delegation_mail.feature:6
-- name: features/manage/mails/mail_templates.feature:111
+- name: features/manage/mails/mail_templates.feature:22
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:111
-- name: features/manage/mails/mail_templates.feature:23
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:22
+- name: features/manage/mails/mail_templates.feature:37
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:23
-- name: features/manage/mails/mail_templates.feature:38
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:37
+- name: features/manage/mails/mail_templates.feature:48
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:38
-- name: features/manage/mails/mail_templates.feature:53
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:48
+- name: features/manage/mails/mail_templates.feature:60
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:53
-- name: features/manage/mails/mail_templates.feature:64
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:60
+- name: features/manage/mails/mail_templates.feature:80
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:64
-- name: features/manage/mails/mail_templates.feature:76
-  scripts:
-    test:
-      body: |-
-        set -eux
-        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:76
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:80
 - name: features/manage/mails/mail_templates.feature:10
   scripts:
     test:
@@ -2224,14 +2216,14 @@ tasks:
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:10
-- name: features/manage/mails/mail_templates.feature:96
+- name: features/manage/mails/mail_templates.feature:94
   scripts:
     test:
       body: |-
         set -eux
         export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:96
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:94
 - name: features/manage/manage_templates.feature:13
   scripts:
     test:

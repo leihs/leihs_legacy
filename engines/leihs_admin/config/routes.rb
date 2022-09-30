@@ -6,7 +6,6 @@ LeihsAdmin::Engine.routes.draw do
     get 'top', to: 'admin#top'
   end
 
-  resources :locations,       only: :destroy
   resources :users,           only: :index
 
   # Audits
@@ -25,9 +24,4 @@ LeihsAdmin::Engine.routes.draw do
   get 'fields_editor/edit_react', to: 'fields_editor#edit_react'
   put 'fields_editor/new_react', to: 'fields_editor#new_react'
   post 'fields_editor/update_react', to: 'fields_editor#update_react'
-
-  # Mail templates
-  get 'mail_templates', to: 'mail_templates#index'
-  get 'mail_templates/:dir/:name', to: 'mail_templates#edit'
-  put 'mail_templates/:dir/:name', to: 'mail_templates#update'
 end

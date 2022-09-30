@@ -18,22 +18,6 @@ Feature: Mail templates
     | deadline_soon_reminder | user      |
     | reminder               | user      |
 
-
-  @rack
-  Scenario Outline: Specifying system-wide default templates
-    Given I am Gino
-    When I specify a mail template for the <template name> action for the whole system for each active language
-    And I save
-    Then the template <template name> is saved for the whole system for each active language
-  Examples:
-    | template name          |
-    | approved               |
-    | received               |
-    | rejected               |
-    | submitted              |
-    | deadline_soon_reminder |
-    | reminder               |
-
   @rack
   Scenario Outline: Specifying mail templates specific to an inventory pool
     Given I am Mike
@@ -104,7 +88,6 @@ A-Ausleihe
     And the failing <template name> mail template in "en-GB" is not persisted with the "<body>" template
   Examples:
     | persona | scope                         | template name | body                |
-    | Gino    | for the whole system          | reminder      | Hi {{{ user.name }} |
     | Mike    | in the current inventory pool | reminder      | Hi {{{ user.name }} |
 
   @rack
