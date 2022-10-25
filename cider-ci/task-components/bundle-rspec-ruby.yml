@@ -5,8 +5,8 @@ traits:
 scripts:
 
   legacy-bundle-rspec-ruby:
-    exclusive_executor_resource: ruby-install_{{$LEGACY_RUBY}}
-    timeout: 5 Minutes
+    exclusive_executor_resource: ruby-install
+    timeout: 20 Minutes
     body: |
       #!/usr/bin/env bash
       set -eux
@@ -18,7 +18,9 @@ scripts:
       export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
 
       if [ ! -d ~/.rubies/$LEGACY_RUBY ]; then
-        ruby-install --no-install-deps $LEGACY_RUBY_ENGINE $LEGACY_RUBY_VERSION
+        RUBY_INSTALL_SRC_DIR=/tmp/src-${RUBY}
+        rm -rf ${RUBY_INSTALL_SRC_DIR}
+        ruby-install --src-dir ${RUBY_INSTALL_SRC_DIR}} --no-install-deps $LEGACY_RUBY_ENGINE $LEGACY_RUBY_VERSION
       fi
 
       if [ ! -f ~/.rubies/$LEGACY_RUBY/bin/bundle ]; then
