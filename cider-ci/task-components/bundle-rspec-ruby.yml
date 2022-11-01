@@ -1,34 +1,17 @@
 traits:
-  ruby-install: true
+  asdf-ruby: true
   Bash: true
 
 scripts:
 
   legacy-bundle-rspec-ruby:
-    exclusive_executor_resource: ruby-install
+    exclusive_executor_resource: asdf-ruby
     timeout: 20 Minutes
     body: |
       #!/usr/bin/env bash
       set -eux
-
       cd $LEIHS_LEGACY_DIR
-
-      if [ -d legacy ]; then cd legacy; fi
-
-      export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
-
-      if [ ! -d ~/.rubies/$LEGACY_RUBY ]; then
-        RUBY_INSTALL_SRC_DIR=/tmp/src-${RUBY}
-        rm -rf ${RUBY_INSTALL_SRC_DIR}
-        ruby-install --src-dir ${RUBY_INSTALL_SRC_DIR}} --no-install-deps $LEGACY_RUBY_ENGINE $LEGACY_RUBY_VERSION
-      fi
-
-      if [ ! -f ~/.rubies/$LEGACY_RUBY/bin/bundle ]; then
-        gem install bundler
-      fi
-
-      cd $LEIHS_LEGACY_DIR
-
+      asdf install ruby
       bundle install
 
   test:

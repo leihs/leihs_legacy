@@ -96,7 +96,6 @@ Feature: Lending
     Then I can choose to see all results
     When I choose to see all results, I receive a separate list with all results from this category
 
-  @flapping
   Scenario: Merging the numbers in an item popup
     Given I navigate to the open orders
     And I hover over the number of items in a line
@@ -104,7 +103,6 @@ Feature: Lending
     And I see one line per model
     And each line shows the sum of items of the respective model
 
-  @flapping
   Scenario: Clicking the last user after editing an order
     Given I navigate to the open orders
     And I open an order
@@ -159,6 +157,7 @@ Feature: Lending
     And I search for a contract with its purpose
     Then all listed contracts match the search term
 
+  @broken
   Scenario: Searching within visits
     Given visits exist
     When I am listing the visits

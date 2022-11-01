@@ -40,7 +40,6 @@ jobs:
               body: |
                 #!/usr/bin/env bash
                 set -exu
-                export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
                 { pg_restore --version | grep -q '11.' ;} && psql -d $LEIHS_DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
                 pg_restore --disable-triggers -x -O -d $LEIHS_DATABASE_NAME ./features/personas/personas.pgbin
                 if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
@@ -68,7 +67,6 @@ jobs:
               body: |
                 #!/usr/bin/env bash
                 set -exu
-                export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
                 { pg_restore --version | grep -q '11.' ;} && psql -d $LEIHS_DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
                 pg_restore --disable-triggers -x -O -d $LEIHS_DATABASE_NAME ./features/personas/demo.pgbin
                 if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
@@ -80,8 +78,10 @@ jobs:
 
         scenario tasks are up-to-date:
           name: "Scenario tasks are up-to-date"
+          include:
+            - path: cider-ci/task-components/bundle-rspec-ruby.yml
           scripts:
-            main:
+            test:
               body: |
                 #!/usr/bin/env bash
                 set -exu
@@ -104,7 +104,7 @@ jobs:
               timeout: 10 Minutes
               body: |
                 set -eu
-                export PATH=./node_modules/.bin:~/.rubies/$LEGACY_RUBY/bin:$PATH
+                export PATH=./node_modules/.bin:$PATH
 
                 asdf install nodejs lts-dubnium
                 asdf local nodejs lts-dubnium
@@ -129,7 +129,7 @@ jobs:
             test:
               body: |
                 set -eu
-                export PATH=./node_modules/.bin:~/.rubies/$LEGACY_RUBY/bin:$PATH
+                export PATH=./node_modules/.bin:$PATH
                 yarn check --integrity --verify-tree --offline
 
         backend and frontend locales are synchronised:

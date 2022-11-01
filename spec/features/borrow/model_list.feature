@@ -24,7 +24,7 @@ Feature: Model list
     | Manufacturer     |
     | Selection button |
 
-  @borrow_model_list @flapping
+  @borrow_model_list
   Scenario: Scrolling the model list
     Given I am Normin
     And I see a model list that can be scrolled
@@ -80,7 +80,7 @@ Feature: Model list
     When I am listing models
     Then I cannot deselect all the inventory pools in the inventory pool selector
 
-  @borrow_model_list @flapping
+  @borrow_model_list @broken
   Scenario: Specifying the start date of an order
     Given I am Petra
     When I am listing models and some of them are unavailable
@@ -178,7 +178,7 @@ Feature: Model list
     And the model list is unfiltered
     And the button "Reset all filters" is not visible
 
-  @borrow_model_list
+  @borrow_model_list @flapping
   Scenario: Reset all button disappears automatically when filters were set to their default positions by hand
     Given I am Normin
     And I am listing models

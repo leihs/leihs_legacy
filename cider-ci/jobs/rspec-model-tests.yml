@@ -26,7 +26,6 @@ jobs:
           test:
             body: |
               set -eux
-              export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
               bundle exec rspec $CIDER_CI_TASK_FILE
 
       include:
