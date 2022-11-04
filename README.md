@@ -8,7 +8,7 @@ information.
 
 Install needed dependencies:
 
-- [`node.js`](https://nodejs.org/en/download/), e.g. `brew install nodejs`
+- [`node.js`](https://nodejs.org/en/download/), see `asdf` and `asdf nodejs`
 - [`yarn`](https://yarnpkg.com/en/docs/install), e.g. `npm i -g yarn`
 
 ## Precompilation

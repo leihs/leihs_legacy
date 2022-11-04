@@ -7,6 +7,13 @@ tasks:
         set -eux
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/delete_lines.feature:21
+- name: features/manage/delegation.feature:76
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:76
 - name: features/manage/hand_over/assign.feature:26
   scripts:
     test:

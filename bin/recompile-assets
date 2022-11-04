@@ -1,9 +1,6 @@
 set -eux
 
-if [[ $(node --version) != v10* ]] ; then
-  asdf install nodejs lts-dubnium
-  asdf local nodejs lts-dubnium
-fi
+asdf install nodejs
 
 export RAILS_ENV=production
 export NODE_ENV=production

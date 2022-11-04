@@ -3,7 +3,6 @@ scripts:
     start_when:
       database has been configured:
         script_key: database-configure-rails-db
-    start_when:
       legacy-ruby has been bundled:
         script_key: legacy-bundle-rspec-ruby
     body: |

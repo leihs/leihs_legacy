@@ -72,7 +72,7 @@ Feature: Delegation
     Then I see the delegation's name
     And I see the contact person
 
-  @flapping
+  @broken
   Scenario: Definition of the contact person when creating an order
     Given I am Julie
     When I create an order for a delegation

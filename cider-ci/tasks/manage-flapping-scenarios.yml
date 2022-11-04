@@ -1,12 +1,19 @@
 ---
 tasks:
-- name: features/manage/delegation.feature:76
+- name: features/manage/acknowledge/add_item.feature:32
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:76
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:32
+- name: features/manage/explorative_search.feature:25
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/explorative_search.feature:25
 - name: features/manage/hand_over/add.feature:37
   scripts:
     test:
@@ -14,10 +21,7 @@ tasks:
         set -eux
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:37
-- name: spec/features/manage/take_back.feature:7
+- name: No Tasks for spec/features/manage
   scripts:
     test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:7
+      body: echo OK

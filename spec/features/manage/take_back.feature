@@ -3,7 +3,7 @@ Feature: Take back
   Background:
     Given personas dump is loaded
 
-  @manage_take_back @flapping
+  @manage_take_back
   Scenario: Taking back all items of a contract should close it
     Given I am Pius
     And there exists an open contract
