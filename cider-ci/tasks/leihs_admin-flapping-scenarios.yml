@@ -1,6 +1,0 @@
----
-tasks:
-- name: No Tasks for engines/leihs_admin/spec/features
-  scripts:
-    test:
-      body: echo OK

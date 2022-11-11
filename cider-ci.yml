@@ -16,11 +16,6 @@ include:
   # none at the moment
   # - cider-ci/jobs/manage-unstable-scenarios.yml
 
-  ## ADMIN - on branches foo/admin-bar
-  - cider-ci/jobs/leihs-admin-scenarios.yml
-  # none at the moment
-  # - cider-ci/jobs/leihs-admin-flapping-scenarios.yml
-
   - cider-ci/jobs/all-tests.yml
   - cider-ci/jobs/meta.yml
   - cider-ci/jobs/good-to-merge.yml

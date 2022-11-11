@@ -3,7 +3,6 @@ require 'yaml'
 # require 'pry'
 
 STRICT_MODE = true
-ENGINES = ['leihs_admin']
 EXCLUDE_TAGS = %w(@manual
                   @broken
                   @flapping
@@ -152,25 +151,6 @@ create_scenario_tasks(filepath,
                       framework: :rspec,
                       additional_options: "-r ./spec/steps/integration/load.rb")
 
-############################## ENGINES ##################################
-
-ENGINES.each do |engine|
-  engine_feature_dir_paths = ["engines/#{engine}/spec/features"]
-
-  filepath = "cider-ci/tasks/#{engine}-scenarios.yml"
-  create_scenario_tasks(filepath,
-                        engine_feature_dir_paths,
-                        framework: :rspec,
-                        additional_options: "-r ./engines/#{engine}/spec/load.rb")
-
-  filepath = "cider-ci/tasks/#{engine}-flapping-scenarios.yml"
-  create_scenario_tasks(filepath,
-                        engine_feature_dir_paths,
-                        framework: :rspec,
-                        additional_options: "-r ./engines/#{engine}/spec/load.rb",
-                        tags: ['@flapping'])
-end
-
 ############################## BROKEN #################################
 
 filepath = 'cider-ci/tasks/all-broken-scenarios.yml'
@@ -187,12 +167,6 @@ filepath = 'cider-ci/tasks/all-broken-scenarios.yml'
                         ['spec/features/borrow'],
                         framework: :rspec,
                         additional_options: "-r ./spec/steps/borrow/load.rb",
-                        tags: ["@#{kind}"],
-                        append: true)
-  create_scenario_tasks(filepath,
-                        ["engines/leihs_admin/spec/features"],
-                        framework: :rspec,
-                        additional_options: "-r ./engines/leihs_admin/spec/load.rb",
                         tags: ["@#{kind}"],
                         append: true)
 end

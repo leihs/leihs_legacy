@@ -40,16 +40,6 @@ GIT
   specs:
     presentoir (1.0.0)
 
-PATH
-  remote: engines/leihs_admin
-  specs:
-    leihs_admin (0.0.1)
-      rails (~> 5.0.0)
-      rails-assets-bootstrap (~> 3.3)
-      rails-assets-jquery (~> 1.5)
-      rails-assets-jquery-ujs (~> 1.0)
-      rails-assets-select2 (~> 4.0)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -529,7 +519,6 @@ DEPENDENCIES
   json (~> 1.8)
   jsrender-rails!
   kramdown
-  leihs_admin!
   liquid (~> 3.0)
   meta_request
   metric_fu
@@ -556,6 +545,7 @@ DEPENDENCIES
   rails-assets-jquery.inview (= 1.0.0)!
   rails-assets-moment (~> 2.10)!
   rails-assets-moment-range (= 2.2)!
+  rails-assets-select2 (~> 4.0)!
   rails-assets-timecop (~> 0.1)!
   rails-assets-underscore (~> 1.8)!
   rails_autolink (~> 1.0)

@@ -1,7 +1,5 @@
 eval_gemfile Pathname(File.dirname(File.absolute_path(__FILE__))).join('database', 'Gemfile')
 
-gem 'leihs_admin', path: "engines/leihs_admin"
-
 gem 'puma'
 
 gem 'audited', git: 'https://github.com/leihs/audited', branch: 'master'
@@ -44,6 +42,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'
   gem 'rails-assets-accounting.js', '~> 0.4'
   gem 'rails-assets-fullcalendar', '~> 1.5'
+  gem 'rails-assets-select2', '~> 4.0'
   gem 'rails-assets-jquery', '~> 1.5'
   gem 'rails-assets-jquery-autosize', '~> 1.18'
   gem 'rails-assets-jquery.inview', '1.0.0'

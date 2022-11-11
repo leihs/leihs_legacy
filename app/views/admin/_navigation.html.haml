@@ -1,0 +1,12 @@
+:ruby
+  navigation_dropdown_items = render(partial: "admin/navigation_dropdown_items")
+
+%li.dropdown
+  %a.dropdown-toggle{href: "#", data: {toggle: "dropdown"}}
+    %i.fa.fa-wrench
+    %span= _("Admin")
+    - if navigation_dropdown_items
+      %i.caret
+  - if navigation_dropdown_items
+    %ul.dropdown-menu
+      = navigation_dropdown_items

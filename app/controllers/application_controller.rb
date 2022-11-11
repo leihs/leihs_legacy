@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
     if logged_in?
       flash.keep
       if current_user.is_admin
-        redirect_to admin.root_path
+        redirect_to admin_root_path
       elsif current_user.has_role?(:group_manager)
         redirect_to manage_root_path
       elsif current_user.access_rights.any?

@@ -14,10 +14,6 @@ manage-flapping-scenarios:
   type: job
   job_key: manage-flapping-scenarios
   states: [passed]
-leihs-admin-scenarios:
-  type: job
-  job_key: leihs-admin-scenarios
-  states: [passed]
 rspec-model-tests:
   type: job
   job_key: rspec-model-tests

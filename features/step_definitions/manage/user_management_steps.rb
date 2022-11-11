@@ -771,11 +771,7 @@ end
 Then(/^users are sorted alphabetically by first name$/) do
   within('#user-list') do
     find('.line', match: :first)
-    t = if current_path == admin.users_path
-          all('.line > div:nth-child(1)').map(&:text).map { |t| t.split(' ').take(2).join(' ') }
-        else
-          all('.line > div:nth-child(1)').map(&:text)
-        end
+    t = all('.line > div:nth-child(1)').map(&:text)
     expect(t).to eq User.order(:firstname).paginate(page: 1, per_page: 20).map(&:name)
   end
 end

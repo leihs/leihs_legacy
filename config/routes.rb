@@ -40,7 +40,17 @@ Rails.application.routes.draw do
 
   get 'release', to: 'release_info#index', as: 'release_info'
 
-  mount LeihsAdmin::Engine => '/admin', :as => 'admin'
+  # Old Admin Section
+  namespace :admin do
+    root to: redirect('/admin/audits')
+
+    unless Rails.env.production?
+      get 'top', to: 'application#top'
+    end
+
+    get 'audits',           to: 'audits#index'
+    get ':type/:id/audits', to: 'audits#index', as: 'individual_audits'
+  end
 
   # Borrow Section
   namespace :borrow do

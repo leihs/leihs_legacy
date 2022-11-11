@@ -22,7 +22,7 @@
     %li.divider
 
 - if what_to_display.delete :admin
-  %a.dropdown-item{href: admin.root_path}
+  %a.dropdown-item{href: "/admin/"}
     %i.fa.fa-wrench
     %span= _('Admin')
   - unless what_to_display.empty?
