@@ -22,6 +22,7 @@ config/database.yml
 config/database_local.yml
 config/development.sphinx.conf
 config/environments/development_mail.rb
+config/puma.rb
 db/backups/
 db/exports/
 db/sphinx/
@@ -41,4 +42,4 @@ tmp/
 /public/packs-test
 
 # this is from npm, we currently only use yarn
-/package-lock.json 
+/package-lock.json

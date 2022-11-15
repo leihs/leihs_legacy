@@ -1,6 +1,7 @@
 eval_gemfile Pathname(File.dirname(File.absolute_path(__FILE__))).join('database', 'Gemfile')
 
 gem 'puma'
+gem 'puma_worker_killer'
 
 gem 'audited', git: 'https://github.com/leihs/audited', branch: 'master'
 gem 'axlsx', git: 'https://github.com/leihs/axlsx', ref: 'c8ac844572b25fda358cc01d2104720c4c42f450'
