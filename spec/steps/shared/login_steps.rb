@@ -1,7 +1,7 @@
 module Spec
   module LoginSteps
     step 'I am :persona' do |persona|
-      step 'I log out'
+      step('I log out') if @current_user
       @current_user = User.where(login: persona.downcase).first
       set_locale
       login_as_current_user
@@ -16,31 +16,33 @@ module Spec
       else
         visit root_path
       end
+
+      @current_user = nil
     end
 
     [:customer, :group_manager, :lending_manager, :inventory_manager]
       .each do |role|
       step "I am logged in as #{role.to_s.sub('_', ' ')}" do
+        step('I log out') if @current_user
         ip = FactoryGirl.create(:inventory_pool)
         role == :customer ? @inventory_pool = ip : @current_inventory_pool = ip
         @current_user = @customer = \
           FactoryGirl.create(role, inventory_pool: ip)
-        step 'I log out'
         set_locale
         login_as_current_user
       end
     end
 
     step 'I am logged in as admin' do
+      step('I log out') if @current_user
       @current_user = FactoryGirl.create(:admin)
-      step 'I log out'
       set_locale
       login_as_current_user
     end
 
     step 'I am logged in as the user' do
+      step('I log out') if @current_user
       @current_user = @user
-      step 'I log out'
       set_locale
       login_as_current_user
     end

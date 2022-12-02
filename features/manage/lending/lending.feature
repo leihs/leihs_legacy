@@ -99,7 +99,6 @@ Feature: Lending
   Scenario: Merging the numbers in an item popup
     Given I navigate to the open orders
     And I hover over the number of items in a line
-    Then all these items are listed
     And I see one line per model
     And each line shows the sum of items of the respective model
 

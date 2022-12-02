@@ -53,7 +53,7 @@ Then 'that model should not be available to anybody' do
   step '0 items of that model should be available to everybody'
 end
 
-Then '$n items of that model should be available to everybody' do |n|
+Then '{int} items of that model should be available to everybody' do |n|
   User.where.not(login: nil).each do |user|
     step "#{n} items of that model should be available to \"#{user.login}\""
   end

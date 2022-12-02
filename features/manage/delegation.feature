@@ -55,6 +55,7 @@ Feature: Delegation
     Then the order shows the user
     And no contact person is shown
 
+  @broken
   Scenario: Persönliche Bestellung in Delegationsbestellung ändern in Bestellung
     Given I am Pius
     And I open an order

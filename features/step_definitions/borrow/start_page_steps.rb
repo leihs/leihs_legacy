@@ -20,7 +20,7 @@ end
 
 When(/^I enter to a main category$/) do
   @main_category = (@current_user.all_categories & Category.roots).sample
-  find("[data-category_id='#{@main_category.id}'] a", match: :first).click
+  find("[data-category_id='#{@main_category.id}']", match: :first).click
 end
 
 When(/^I hover over a main category with children$/) do
@@ -67,7 +67,7 @@ end
 
 Given(/^I set a filter in the first category$/) do
   visit borrow_root_path
-  find('#categories').first('.row a').click
+  find('#categories [data-category_id]', match: :first).click
   # select last day of next month in calendar:
   find('#models-index #reset-container input[name=end_date]').click
   within('.ui-datepicker') do
@@ -89,9 +89,9 @@ end
 Then(/^I see for each category its image, or if not set, the first image of a model from this category$/) do
   @main_categories.each do |mc|
     img_el = find('a', match: :first, text: mc.name).find('img')
-    response = get img_el[:src]
+    response = get(img_el[:src])
     if image = mc.image
-      expect(response.location).to match /#{image.id}/
+      wait_until { response.location.match /#{image.id}/ } 
     end
   end
 end

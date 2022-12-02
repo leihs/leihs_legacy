@@ -68,6 +68,11 @@ Then(/^I don't see a link labeled 'Show all matching contracts'$/) do
   expect(has_no_selector?("#contracts [data-type='show-all']")).to be true
 end
 
+Given(/^I click on "Show all found Orders" on the search overview page$/) do
+  expect(current_path).to eq manage_search_results_path(@current_inventory_pool)
+  click_on "Show all found Orders"
+end
+
 Given(/^there is a "(.*?)" item in my inventory pool$/) do |arg1|
   items = @current_inventory_pool.items.items
   @item = case arg1
@@ -143,7 +148,7 @@ end
 Given(/^enough data for "(.*?)" having "(.*?)" exists$/) do |subsection, search_string|
   amount = 25
   @results = []
-  make_string = proc { "#{Faker::Lorem.characters(8)} #{search_string} #{Faker::Lorem.characters(8)}" }
+  make_string = proc { "#{Faker::Lorem.characters(number: 8)} #{search_string} #{Faker::Lorem.characters(number: 8)}" }
 
   amount.times do
     @results << \

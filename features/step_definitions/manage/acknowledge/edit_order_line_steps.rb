@@ -40,12 +40,8 @@ Then(/^the booking calendar is( not)? closed$/) do |arg1|
 end
 
 When(/^I change a contract reservations time range$/) do
-  @line =
-    if @contract
-      @contract.reservations.first
-    else
-      @customer.visits.hand_over.where(inventory_pool_id: @current_inventory_pool).first.reservations.first
-    end
+  @line = @contract.try(:reservations).try(:first) \
+    || @customer.visits.hand_over.where(inventory_pool_id: @current_inventory_pool).first.reservations.first
   @line_element = begin
                     find(".line[data-ids*='#{@line.id}']", match: :first)
                   rescue

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 set -eux
 export RAILS_ENV=development
-bundle exec rake db:environment:set db:drop db:create db:pg:structure_and_data:restore FILE=features/personas/personas.pgbin
+bundle exec rake db:environment:set db:pg:terminate_connections db:drop db:create db:pg:structure_and_data:restore FILE=features/personas/personas.pgbin

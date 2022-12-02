@@ -94,7 +94,7 @@ module Manage
              )
              expect(
                find("div[title='Entitlement #{@group.id}']")
-                 .text.start_with?(as)
+                 .text.start_with?(as.split(" ").join("\n"))
              ).to eq(true)
              new_window.close
            end

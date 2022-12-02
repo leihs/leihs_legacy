@@ -1,0 +1,28 @@
+traits:
+  Docker Engine: true
+
+scripts:
+
+  start-selenium-firefox:
+    timeout: 5 Minutes
+    ignore_state: true
+    body: |
+      # docker container prune --force
+      # docker volume prune --force
+      # DOCKER_CONTAINER_NAME=$CIDER_CI_TRIAL_ID ./bin/docker-run-firefox
+      docker compose up
+
+  test:
+    start_when:
+      firefox has started:
+        script_key: start-selenium-firefox
+        states: [ executing ]
+
+  stop-selenium-firefox:
+    start_when:
+      test is done:
+        script_key: test
+        states: [ aborted, defective, passed, failed, skipped ]
+    body: |
+      # docker stop $CIDER_CI_TRIAL_ID
+      docker compose down

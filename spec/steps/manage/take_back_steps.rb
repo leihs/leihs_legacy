@@ -61,8 +61,21 @@ module Manage
         end
       end
 
+      def try_until_no_exception(wait_time = 10)
+        Timeout.timeout(wait_time) do
+          loop do
+            begin 
+              yield
+              break
+            rescue => e
+              # loop
+            end
+          end
+        end
+      end
+
       step 'I hover over the purpose icon of the item line' do
-        find(".line[data-id='#{@item_line.id}'] .fa-comment").hover
+        try_until_no_exception { find(".line[data-id='#{@item_line.id}'] .fa-comment").hover }
       end
 
       step 'I hover over the purpose icon of the option line' do

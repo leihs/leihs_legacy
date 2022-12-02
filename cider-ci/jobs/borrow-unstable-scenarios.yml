@@ -9,12 +9,8 @@ jobs:
 
     priority: -5
 
-    run_when:
-      meta checks have passed:
-        type: job
-        job_key: meta
-        states: [passed]
-
+    include: 
+      - cider-ci/job-components/run-when-meta-passed.yml
 
     context:
 

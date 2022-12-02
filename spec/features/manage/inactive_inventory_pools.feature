@@ -5,18 +5,48 @@ Feature: Inactive inventory pools
   Background:
     Given personas dump is loaded
 
+  #########################################################################################
+  # ISSUE: Background step is not defined when running as scenario outline, that's why
+  # splitting into individual scenarios.
+  #########################################################################################
+
+  # @manage_inactive_inventory_pools
+  # Scenario Outline: Exclusion of inactive inventory pools in the topbar dropdown list
+  #   Given I am logged in as <role>
+  #   And there exists an inactive inventory pool I have access to as "<role>"
+  #   When I hover over the current inventory pool in navigation bar
+  #   Then I don't see the inactive inventory pool in the list
+  #   Examples:
+  #     | role              |
+  #     | group manager     |
+  #     | lending manager   |
+  #     | inventory manager |
+
   @manage_inactive_inventory_pools
-  Scenario Outline: Exclusion of inactive inventory pools in the topbar dropdown list
-    Given I am logged in as <role>
-    And there exists an inactive inventory pool I have access to as "<role>"
+  Scenario: Exclusion of inactive inventory pools in the topbar dropdown list
+    Given I am logged in as group manager
+    And there exists an inactive inventory pool I have access to as "group_manager"
     When I hover over the current inventory pool in navigation bar
     Then I don't see the inactive inventory pool in the list
-    Examples:
-      | role              |
-      | group manager     |
-      | lending manager   |
-      | inventory manager |
 
+  @manage_inactive_inventory_pools
+  Scenario: Exclusion of inactive inventory pools in the topbar dropdown list
+    Given I am logged in as lending manager
+    And there exists an inactive inventory pool I have access to as "lending_manager"
+    When I hover over the current inventory pool in navigation bar
+    Then I don't see the inactive inventory pool in the list
+
+  @manage_inactive_inventory_pools
+  Scenario: Exclusion of inactive inventory pools in the topbar dropdown list
+    Given I am logged in as inventory manager
+    And there exists an inactive inventory pool I have access to as "inventory_manager"
+    When I hover over the current inventory pool in navigation bar
+    Then I don't see the inactive inventory pool in the list
+
+  #########################################################################################
+  #########################################################################################
+  #########################################################################################
+  
   @manage_inactive_inventory_pools
   Scenario: Exclusion of inactive inventory pools in the autocomplete dropdown on item edit page
     Given I am logged in as inventory manager

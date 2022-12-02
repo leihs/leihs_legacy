@@ -21,7 +21,7 @@ module Manage
       end
 
       step 'I enter an inventory code' do
-        fill_in 'item[inventory_code]', with: Faker::Lorem.characters(6)
+        fill_in 'item[inventory_code]', with: Faker::Lorem.characters(number: 6)
       end
 
       step 'I select a model' do
@@ -37,10 +37,16 @@ module Manage
         fill_in 'item[serial_number]', with: serial_number
       end
 
-      step 'I see a confirmation dialog that there already exists same ' \
-           'or similar serial number' do
-        expect(page.driver.browser.switch_to.alert.text)
-          .to match /serial number already exists/
+      step 'I save and cancel the confirmation dialog' do
+        dismiss_confirm(text: /serial number already exists/) do
+          step 'I save'
+        end
+      end
+
+      step 'I accept the confirmation dialog' do
+        accept_confirm(text: /serial number already exists/) do
+          step 'I save'
+        end
       end
 
       step 'I stay on the create item page' do
@@ -52,10 +58,6 @@ module Manage
           .to be == manage_edit_item_path(@current_inventory_pool, @item)
       end
 
-      step 'the loading icon was hidden' do
-        expect(page).not_to have_selector "img[src*='loading.gif']"
-      end
-
       step 'the new item was created' do
         expect(Item.find_by_serial_number(@serial_number)).to be
       end
@@ -65,7 +67,7 @@ module Manage
       end
 
       step 'I was redirected to the inventory page' do
-        find('#inventory')
+        wait_until { first('#inventory') }
         expect(current_path)
           .to be == manage_inventory_path(@current_inventory_pool)
       end

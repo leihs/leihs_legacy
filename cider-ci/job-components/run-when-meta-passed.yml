@@ -1,0 +1,11 @@
+run_when:
+
+  # meta checks have passed:
+  #   type: job
+  #   job_key: meta
+  #   states: [passed]
+
+  branch name matches:
+    type: branch
+    include_match: '^.*$'
+    exclude_match: '^.*(no-ci|hotspot).*$'

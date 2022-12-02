@@ -41,7 +41,7 @@ end
 
 When(/^I send a reminder for this take back$/) do
   step 'I navigate to the take back visits'
-  within('.line', text: /#{@contract.user}.*#{_("Latest reminder")}/) do
+  within('.line', text: /#{@contract.user}.*\n#{_("Latest reminder")}/) do
     within '.multibutton' do
       find('.dropdown-toggle').click
       find('a', text: _('Send reminder')).click
@@ -50,7 +50,7 @@ When(/^I send a reminder for this take back$/) do
 end
 
 Then(/^the reminder is sent to the one who picked up the order$/) do
-  find('.line', text: /#{@contract.user}.*#{_("Reminder sent")}/)
+  find('.line', text: /#{@contract.user}.*\n#{_("Reminder sent")}/)
 
   #step "wird das Genehmigungsmail an den Besteller versendet"
   step 'the approval email is sent to the orderer'

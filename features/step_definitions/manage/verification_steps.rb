@@ -52,7 +52,7 @@ When(/^I enter the timeline of a model with hand overs, take backs or pending or
     end
   end
   within_window @new_window do
-    find('div.row > div > div > div', text: 'Total')
+    wait_until { first('div.row > div > div > div', text: 'Total') }
   end
 end
 

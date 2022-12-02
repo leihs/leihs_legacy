@@ -53,14 +53,14 @@ end
 Then(/^each model I've added has the minimum quantity (\d+)$/) do |n|
   within '#models' do
     all('.line').each do |line|
-      expect(line.find("input[name='template[model_links_attributes][][quantity]']").value).to eq n
+      expect(line.find("input[name='template[model_links_attributes][][quantity]']").value).to eq n.to_s
     end
   end
 end
 
 Then(/^the minimum quantity for the newly added model is (\d+)$/) do |n|
   within '#models' do
-    expect(find('.line', match: :first, text: @additional_model.name).find("input[name='template[model_links_attributes][][quantity]']").value).to eq n
+    expect(find('.line', match: :first, text: @additional_model.name).find("input[name='template[model_links_attributes][][quantity]']").value).to eq n.to_s
   end
 end
 

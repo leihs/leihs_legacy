@@ -41,7 +41,7 @@ When(/^(?:|I )go to (.+)$/) do |page_name|
 end
 
 When(/^(?:|I )am on (.+)$/) do |page_name|
-  expect(current_path).to eq path_to(page_name)
+  wait_until { current_path == path_to(page_name) }
 end
 
 When(/^(?:|I )press "([^"]*)"$/) do |button|

@@ -270,6 +270,7 @@ Then /^I can inspect each item$/ do
       find('.dropdown-toggle').click
       find('.dropdown-holder .dropdown-item', text: _('Inspect'))
     end
+    find('html').click
   end
 end
 
@@ -336,6 +337,7 @@ end
 
 
 Then /^I see search results in the following categories:$/ do |table|
+  wait_until { first('#search-overview') }
   within '#search-overview' do
     table.hashes.each do |t|
       case t[:category]
@@ -416,13 +418,13 @@ When /^I choose to see all results, I receive a separate list with all results f
 end
 
 Given /^I hover over the number of items in a line$/ do
-  find(".line [data-type='lines-cell']", match: :first).hover
-  @lines = all(".line [data-type='lines-cell']")
+  @line = find(".line [data-type='lines-cell']", match: :first)
+  @line.hover
 end
 
 Then /^all these items are listed$/ do
   all('button[data-collapsed-toggle]').each(&:click)
-  hover_for_tooltip @lines.to_a.sample
+  hover_for_tooltip @line
 end
 
 Then /^I see one line per model$/ do

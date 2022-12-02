@@ -1,0 +1,41 @@
+scripts:
+
+  legacy-service-run:
+    body: |
+      set -eux
+      cd $LEIHS_LEGACY_DIR
+      echo $PWD
+      ls -lah
+      ls -lah config
+      export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
+      mkdir -p tmp/pids
+      ruby -S \
+          bundle exec puma \
+          -e test \
+          -t 1:2 \
+          -w 2 \
+          -b tcp://0.0.0.0:${LEIHS_LEGACY_HTTP_PORT}
+    start_when:
+      database has been created:
+        script_key: create-database
+      database is configured:
+        script_key: legacy-configure-rails-db
+      gems are bundled:
+        script_key: legacy-bundle-rspec-ruby
+
+  legacy-service-stop:
+    timeout: 5 Seconds
+    body: |
+      set -eux
+      kill -INT $(lsof -t -wni tcp:${LEIHS_LEGACY_HTTP_PORT})
+      sleep 1
+    start_when:
+      test is in terminal state:
+        script_key: test
+        states: [aborted, defective, passed, failed, skipped]
+
+  test:
+    start_when:
+      legacy service is running:
+        script_key: legacy-service-run
+        states: [executing]

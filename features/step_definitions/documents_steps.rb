@@ -58,7 +58,9 @@ Given(/^I click the value list link$/) do
 end
 
 Then(/^the value list opens$/) do
-  expect(current_path).to eq borrow_user_value_list_path(@contract.id)
+  wait_until do
+    current_path == borrow_user_value_list_path(@contract.id)
+  end
 end
 
 Given(/^I click the contract link$/) do
@@ -70,7 +72,7 @@ Given(/^I click the contract link$/) do
 end
 
 Then(/^the contract opens$/) do
-  expect(current_path).to eq borrow_user_contract_path(@contract.id)
+  wait_until { current_path == borrow_user_contract_path(@contract.id) }
 end
 
 When(/^I open a value list from my documents$/) do

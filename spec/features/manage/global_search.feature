@@ -32,6 +32,7 @@ Feature: Global search within an inventory pool
     And a closed contract 4 for a user matching 'search string' created on "01.01.2017" exists
     And a closed contract 5 for a contact person of a delegation matching 'search string' created on "01.01.2016" exists
     When I search globally for 'search string'
+    And I wait until the contracts container is shown
     And I switch to the contracts tab
     Then I see contracts sorted as follows:
       | contract 1 |

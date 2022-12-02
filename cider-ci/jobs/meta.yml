@@ -109,7 +109,7 @@ jobs:
                 asdf install nodejs
 
                 mv public/assets tmp/checked_in_assets
-                bundle exec rake app:i18n:po2json
+                # bundle exec rake app:i18n:po2json
                 bin/recompile-assets
 
                 # attach for easy local debugging:

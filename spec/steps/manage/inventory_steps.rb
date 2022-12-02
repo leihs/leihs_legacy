@@ -78,7 +78,7 @@ module Manage
         within '#inventory' do
           find("[data-type='software']")
           expect(all("[data-type='software']").count).to be == 1
-          expect(all("[data-type='software']").first.text).to match @software.name
+          wait_until { all("[data-type='software']").first.text.match @software.name }
         end
       end
 

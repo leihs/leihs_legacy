@@ -8,7 +8,7 @@ Given(/^it has at least (\d+) items in the current inventory pool$/) do |arg1|
                        model: @model,
                        owner: @current_inventory_pool,
                        supplier: FactoryGirl.create(:supplier,
-                                                    name: Faker::Lorem.characters(20)))
+                                                    name: Faker::Lorem.characters(number: 20)))
   end
   expect(@model.items.where(inventory_pool_id: @current_inventory_pool).count).to be >= arg1.to_i
 end

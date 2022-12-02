@@ -152,7 +152,7 @@ module Manage
         within('.line[data-id]', text: @item.model.name) do
           within('.ui-autocomplete') do
             within('a', text: @item.inventory_code) do
-              expect(page).to have_content @item.location
+              expect(current_scope).to have_content @item.location.rstrip
             end
           end
         end

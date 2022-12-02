@@ -110,3 +110,16 @@ def do_and_wait_for_page_change(wait: 15, &block)
   yield
   wait_until(wait) { old_hash != page.html.hash }
 end
+
+def try_until_no_exception(wait_time = 10)
+  Timeout.timeout(wait_time) do
+    loop do
+      begin 
+        yield
+        break
+      rescue => e
+        # loop
+      end
+    end
+  end
+end

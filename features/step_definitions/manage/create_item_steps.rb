@@ -6,8 +6,8 @@ def fill_in_autocomplete_field(field_name, field_value)
     find('input', match: :first).native.send_keys(field_value)
   end
 
-  sleep 3
-  find('.ui-autocomplete').find('a', match: :prefer_exact, text: field_value).click
+  el = wait_until { first('.ui-autocomplete a', match: :prefer_exact, text: field_value) }
+  el.click
   find('body').click # capybara keeps focus on the autocomplete element
   expect(has_no_selector? '.ui-autocomplete').to be true
 end
@@ -233,7 +233,7 @@ end
 When(/^I enter a supplier( that does not exist)?$/) do |supplier_string|
   @suppliers_count = Supplier.count
   if supplier_string
-    @new_supplier = Faker::Lorem.words(rand 1..3).join(' ')
+    @new_supplier = Faker::Lorem.words(number: rand(1..3)).join(' ')
     expect(Supplier.find_by_name(@new_supplier)).to eq nil
   else
     @new_supplier = Supplier.first.name

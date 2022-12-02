@@ -1,0 +1,27 @@
+jobs:
+
+  leihs-admin-scenarios:
+
+    name: 'Admin: Scenarios'
+
+    description: |
+      Run Admin engine scenarios under MRI
+
+    run_when:
+      meta checks have passed:
+        type: job
+        job_key: meta
+        states: [passed]
+
+
+    context:
+
+      task_defaults:
+        max_trials: 3
+        include:
+          - cider-ci/task-components/database.yml
+          - cider-ci/task-components/docker-selenium-firefox.yml
+
+      include:
+        - cider-ci/shared/main-context.yml
+        - cider-ci/tasks/leihs_admin-scenarios.yml

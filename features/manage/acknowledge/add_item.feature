@@ -28,7 +28,6 @@ Feature: Add Item during acknowledge process
     And an additional line has been created in the backend system
     And the new line is getting visually merged with the existing line
 
-  @flapping
   Scenario: Search results should conform to the actual start and end date
     Given I open a contract for acknowledgement
     And I search for a model with default dates and note the current availability
@@ -38,6 +37,7 @@ Feature: Add Item during acknowledge process
     And I wait until the autocompletion is loaded
     Then the model's availability has changed
 
+  @flapping
   Scenario: Show autocomplete also on frenzied interaction
     Given I open a contract for acknowledgement
     When I start searching some model for adding it

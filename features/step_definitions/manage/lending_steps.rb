@@ -16,9 +16,7 @@ def check_printed_contract(window_handles, ip = nil, reservation = nil)
   sleep 1
   new_window = page.driver.browser.window_handles.last
   page.driver.browser.switch_to.window new_window
-  within_window new_window do
-    find('.contract')
-    expect(current_path).to eq manage_contract_path(ip, reservation.reload.contract) if ip and reservation
-    expect(page.evaluate_script('window.printed')).to eq 1
-  end
+  find('.contract')
+  expect(current_path).to eq manage_contract_path(ip, reservation.reload.contract) if ip and reservation
+  expect(page.evaluate_script('window.printed')).to eq 1
 end

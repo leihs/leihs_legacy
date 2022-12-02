@@ -1,5 +1,5 @@
 - changes = row['audited_changes']
-- ActiveRecord::Coders::YAMLColumn.new.load(changes).each_pair do |k, v|
+- ActiveRecord::Coders::YAMLColumn.new(:dummy).load(changes).to_h.each_pair do |k, v|
   .row
     %b.col-sm-4.text-right
       = "#{k}:"

@@ -18,10 +18,6 @@ rspec-model-tests:
   type: job
   job_key: rspec-model-tests
   states: [passed]
-rspec-integration-tests:
-  type: job
-  job_key: rspec-integration-tests
-  states: [passed]
 meta:
   type: job
   job_key: meta

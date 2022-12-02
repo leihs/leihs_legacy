@@ -91,17 +91,18 @@ class Manage::CategoriesController < Manage::ApplicationController
   def manage_links(category, links)
     return true if links.blank?
     links.each do |link|
-      parent = @category.parents.find_by_id(links[link]['parent_id'])
+      link_id = link.first
+      parent = @category.parents.find_by_id(links[link_id]['parent_id'])
       if parent # parent exists already
         existing_link = ModelGroupLink.find_edge(parent, @category)
-        if links[link]['_destroy'] == '1'
+        if links[link_id]['_destroy'] == '1'
           existing_link.destroy
         else
-          existing_link.update_attribute :label, links[link]['label']
+          existing_link.update_attribute :label, links[link_id]['label']
         end
       else
-        parent = Category.find links[link]['parent_id']
-        category.set_parent_with_label parent, links[link]['label']
+        parent = Category.find links[link_id]['parent_id']
+        category.set_parent_with_label parent, links[link_id]['label']
       end
     end
   end

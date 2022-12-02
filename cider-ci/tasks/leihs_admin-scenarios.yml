@@ -1,0 +1,26 @@
+---
+tasks:
+- name: engines/leihs_admin/spec/features/audits.feature:8
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
+        mkdir -p log
+        bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/audits.feature:8
+- name: engines/leihs_admin/spec/features/fields.feature:16
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
+        mkdir -p log
+        bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/fields.feature:16
+- name: engines/leihs_admin/spec/features/fields.feature:8
+  scripts:
+    test:
+      body: |-
+        set -eux
+        export PATH=~/.rubies/$LEGACY_RUBY/bin:$PATH
+        mkdir -p log
+        bundle exec rspec -r ./engines/leihs_admin/spec/load.rb engines/leihs_admin/spec/features/fields.feature:8

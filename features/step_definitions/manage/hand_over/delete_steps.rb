@@ -67,5 +67,5 @@ end
 
 Then(/^the availability of the keeped line is updated$/) do
   reference_line = find(".line[data-id='#{@reference_id}']")
-  expect(reference_line[:class].match('error')).to eq nil
+  wait_until { not reference_line[:class].match('error') }
 end

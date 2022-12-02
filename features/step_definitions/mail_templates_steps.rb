@@ -42,13 +42,23 @@ Then(/^the template (.*) is saved for the (whole system|current inventory pool) 
   end
 end
 
-Given(/^I have a contract with deadline (yesterday|tomorrow)( for the inventory pool "(.*?)")?$/) do |day, arg1, inventory_pool_name|
-  @visit = if arg1
-             inventory_pool = InventoryPool.find_by(name: inventory_pool_name)
-             @current_user.visits.where(inventory_pool_id: inventory_pool)
-           else
-             @current_user.visits
-           end.take_back.first
+Given(/^I have a contract with deadline (yesterday|tomorrow)$/) do |day|
+  @visit = @current_user.visits.take_back.first
+  expect(@visit).not_to be_nil
+
+  sign = case day
+         when 'yesterday'
+           :+
+         when 'tomorrow'
+           :-
+         end
+
+  Dataset.back_to_date(@visit.date.send(sign, 1.day))
+end
+
+Given(/^I have a contract with deadline (yesterday|tomorrow) for the inventory pool "(.*?)"$/) do |day, inventory_pool_name|
+  inventory_pool = InventoryPool.find_by(name: inventory_pool_name)
+  @visit = @current_user.visits.where(inventory_pool_id: inventory_pool).take_back.first
   expect(@visit).not_to be_nil
 
   sign = case day
@@ -87,7 +97,9 @@ Then(/^I receive an email formatted according to the (reminder|deadline_soon_rem
                                    language: language,
                                    format: 'text')
   variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.reservations)
-  expect(sent_mail.body.to_s).to eq Liquid::Template.parse(template.body).render(variables)
+  t_mail = Liquid::Template.parse(template.body).render(variables)
+  # `to_crlf` due to https://github.com/mikel/mail/issues/1190#issuecomment-688410428
+  expect(sent_mail.body.raw_source).to eq Mail::Utilities.to_crlf(t_mail)
 end
 
 Given(/^the (reminder) mail template looks like$/) do |template_name, string|
@@ -157,7 +169,7 @@ Then(/^I receive a reminder in "(.*?)"$/) do |locale|
                                    format: 'text')
   string = Liquid::Template.parse(template.body).render(variables)
   sent_mail = get_reminder_for_visit(@visit)
-  expect(sent_mail.body.to_s).to eq string
+  expect(sent_mail.body.to_s).to eq Mail::Utilities.to_crlf(string)
 end
 
 When(/^I edit the (reminder) with the "(.*?)" template in "(.*?)"$/) do |template_name, body, locale|
@@ -174,7 +186,7 @@ end
 
 Then(/^the failing (reminder) mail template in "(.*?)" is highlighted in red$/) do |template_name, locale|
   selector = @current_inventory_pool ? '.row.margin-vertical-s' : '.form-group'
-  expect(find(selector, text: locale).native.css_value('background-color')).to eq 'rgba(255, 176, 176, 1)'
+  expect(find(selector, text: locale).native.css_value('background-color')).to eq 'rgb(255, 176, 176)'
 end
 
 Then(/^the failing (reminder) mail template in "(.*?)" is not persisted with the "(.*?)" template$/) do |template_name, locale, body|

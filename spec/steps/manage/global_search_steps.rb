@@ -159,6 +159,10 @@ module Manage
         end
       end
 
+      step 'I wait until the contracts container is shown' do
+        find('#contracts')
+      end
+
       private
 
       def check_contracts_within_container(css_path, table)
@@ -166,7 +170,7 @@ module Manage
         within css_path do
           expect(all('.row[data-id]').map { |r| r['data-id'] }).to be ==
             table.raw.flatten.map \
-              { |row| instance_variable_get("@#{row.sub(' ', '_')}").id }
+            { |row| instance_variable_get("@#{row.sub(' ', '_')}").id }
         end
       end
     end

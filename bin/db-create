@@ -1,0 +1,17 @@
+#!/bin/sh
+set -exu
+
+# NOTE: used with docker and docker-compose
+
+createdb "$PGDATABASE"
+psql --quiet -w -d "$PGDATABASE" -f ./database/db/structure.sql
+psql --quiet -w -d "$PGDATABASE" -f ./database/db/seeds.sql
+
+# only needed for development, normally structure and seeds are already completely migrated
+bundle exec rails db:migrate
+cd database
+
+ # cleanup working dir in case our migration changed it (if there is a git repo at all)
+if git rev-parse --git-dir > /dev/null 2>&1; then
+  git checkout -f HEAD -- db/structure.sql
+fi

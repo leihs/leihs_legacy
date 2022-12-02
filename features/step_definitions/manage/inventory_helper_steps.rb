@@ -48,6 +48,7 @@ Then /^I set all their initial values$/ do
         ori_value = dp.value
         dp.set ''
         dp.set ori_value
+        dp.click
         within '.ui-datepicker-calendar' do
           find('td a', text: Date.today.day.to_s).click
         end
@@ -87,14 +88,14 @@ Then /^I set the field "(.*?)" to "(.*?)"$/ do |field_name, value|
   field = Field.find(find(".field.row.emboss", match: :prefer_exact, text: field_name)['data-id'].to_sym)
   within(".field[data-id='#{field.id}']") do
     case field.data['type']
-      when 'radio'
-        find('label', text: value).click
-      when 'select'
-        find('option', text: value).select_option
-      when 'checkbox'
-        find('label', text: value).click
-      else
-        raise 'unknown field'
+    when 'radio'
+      find('label', text: value).click
+    when 'select'
+      find('option', text: value).select_option
+    when 'checkbox'
+      find('label', text: value).click
+    else
+      raise 'unknown field'
     end
   end
 end
@@ -284,6 +285,7 @@ When(/^"(.*?)" is selected and set to "(.*?)", then "(.*?)" must also be filled 
     find('#field-input').click
     find('#field-input').set field
     find('.ui-menu-item a', match: :prefer_exact, text: field).click
+    current_scope.find_xpath("//html").first.click
     step 'I set the field "%s" to "%s"' % [field, value]
     find('.row.emboss', match: :prefer_exact, text: dependent_field)
   end

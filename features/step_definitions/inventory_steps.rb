@@ -1,17 +1,17 @@
 ###############################################
 # Inventory Pools
 
-Given "inventory pool '$inventory_pool_name'" do |inventory_pool_name|
+Given "inventory pool {string}" do |inventory_pool_name|
   @inventory_pool = LeihsFactory.create_inventory_pool name: inventory_pool_name
 end
 
-Given "inventory pool short name '$shortname'" do |shortname|
+Given "inventory pool short name {string}" do |shortname|
   @inventory_pool.shortname = shortname
   @inventory_pool.save
 end
 
 # Allow switching of the default inventory pool on which we are acting
-Given "we are using inventory pool '$inventory_pool' for now" do |inventory_pool_name|
+Given "we are using inventory pool {string} for now" do |inventory_pool_name|
   @inventory_pool = InventoryPool.find_by_name inventory_pool_name
 end
 
@@ -29,7 +29,7 @@ end
 ###############################################
 # Locations
 
-Given "a location in building '$building' room '$room' and shelf '$shelf' exists" do |building_name, room, shelf|
+Given "a location in building {string} room {string} and shelf {string} exists" do |building_name, room, shelf|
   building = FactoryGirl.create(:building, name: building_name)
   @location = FactoryGirl.create(:location, building: building, room: room, shelf: shelf)
 end
@@ -37,26 +37,26 @@ end
 ###############################################
 # Categories
 
-Given "a category '$category' exists" do |category|
+Given "a category {string} exists" do |category|
   LeihsFactory.create_category(name: category)
 end
 
-Given "the category '$category' is child of '$parent' with label '$label'" do |category, parent, label|
+Given "the category {string} is child of {string} with label {string}" do |category, parent, label|
   c = Category.where(name: category).first
   p = Category.where(name: parent).first
   c.set_parent_with_label(p, label)
 end
 
-When "the category '$category' is selected" do |category|
+When "the category {string} is selected" do |category|
   @category = Category.where(name: category).first
 end
 
-Then 'there are $d_size direct children and $t_size total children' do |d_size, t_size|
-  expect(@category.children.size).to eq d_size.to_i
-  expect(@category.descendants.size).to eq t_size.to_i
+Then 'there are {int} direct children and {int} total children' do |d_size, t_size|
+  expect(@category.children.size).to eq d_size
+  expect(@category.descendants.size).to eq t_size
 end
 
-Then "the label of the direct children are '$labels'" do |labels|
+Then "the label of the direct children are {string}" do |labels|
   @category_labels = @category.children.map { |c| c.label(@category.id) }
   labels.split(',').each do |l|
     expect(@category_labels.include?(l)).to be true
@@ -66,7 +66,7 @@ end
 ###############################################
 # Models
 
-Given "a model '$model' exists" do |model|
+Given "a model {string} exists" do |model|
   @model = LeihsFactory.create_model(product: model)
 end
 
@@ -74,23 +74,23 @@ When(/^I register a new model '([^']*)'$/) do |model|
   step "a model '#{model}' exists"
 end
 
-Given "the model '$model' belongs to the category '$category'" do |model, category|
+Given "the model {string} belongs to the category {string}" do |model, category|
   @model = Model.find_by_name(model)
   @model.categories << Category.where(name: category).first
 end
 
-When "the model '$model' is selected" do |model|
+When "the model {string} is selected" do |model|
   @model = Model.find_by_name(model)
 end
 
-Then 'there are $size models belonging to that category' do |size|
-  expect(@category.models.size).to eq size.to_i
+Then 'there are {int} models belonging to that category' do |size|
+  expect(@category.models.size).to eq size
 end
 
 ###############################################
 # Items
 
-# Given "$number items of model '$model' exist" do |number, model|
+# Given "{string} items of model {string} exist" do |number, model|
 Given(/(\d+) item(s?) of model '(.+)' exist(s?)/) do |number, plural1, model, plural2|
   @model = LeihsFactory.create_model(product: model)
   number.to_i.times do |i|
@@ -110,15 +110,15 @@ Given(/^(a?n? ?)item(s?) '([^']*)' of model '([^']*)' exist(s?)( only)?$/)\
   end
 end
 
-Given "at that location resides an item '$item' of model '$model'" do |item, model|
+Given "at that location resides an item {string} of model {string}" do |item, model|
   step "an item '#{item}' of model '#{model}' exists"
   our_item = Item.find_by_inventory_code(item)
   our_item.location = @location
   our_item.save!
 end
 
-Given '$number items of this model exist' do |number|
-  number.to_i.times do |i|
+Given '{int} items of this model exist' do |number|
+  number.times do |i|
     FactoryGirl.create(:item, owner: @inventory_pool, model: @model)
   end
   @model = Model.find(@model.id)
@@ -152,11 +152,11 @@ When 'leihs generates a new inventory code' do
   @inventory_code = Item.proposed_inventory_code(@inventory_pool)
 end
 
-Then "the generated_code should look like this '$result'" do |result|
+Then "the generated_code should look like this {string}" do |result|
   expect(@inventory_code).to eq result
 end
 
-When "we add an item '$inventory_code'" do |inventory_code|
+When "we add an item {string}" do |inventory_code|
   FactoryGirl.create(:item, owner: @inventory_pool, model: @model, inventory_code: inventory_code)
 end
 
@@ -174,7 +174,7 @@ end
 # end
 
 # Customers
-# When "I give the customer '$user' access to the inventory pool '$inventory_pool'" do |user, inventory_pool|
+# When "I give the customer {string} access to the inventory pool {string}" do |user, inventory_pool|
 #   @user = User.find_by_login user
 #   @nventory_pool = InventoryPool.find_by_name inventory_pool
 #   LeihsFactory.define_role( @user, @inventory_pool )

@@ -26,7 +26,7 @@ Then /^the (start|end) date becomes red and I see a (closed|not possible|too ear
   within '.modal' do
     el = find(".fc-widget-content.closed.#{arg1}-date").native.style('background-color')
     # NOTE our red definition is #FF4C4D == rgba(255, 76, 77, 1)
-    expect(el).to eq 'rgba(255, 76, 77, 1)'
+    expect(el).to eq 'rgb(255, 76, 77)'
 
     s = case arg2
           when 'closed'

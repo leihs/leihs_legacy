@@ -27,8 +27,15 @@ Given /^he is a (\w+)$/ do |role|
   LeihsFactory.define_role @user, @inventory_pool, role
 end
 
-Given "customer '$who' has access to inventory pool $ip_s" do |who, ip_s|
-  inventory_pools = ip_s.split(' and ').collect { | ip_name |
+Given "customer {string} has access to inventory pool {int}" do |who, ip_i|
+  ip = InventoryPool.find_by_name(ip_i.to_s)
+  user = User.find_by_login(who) || FactoryGirl.create(:user, login: who)
+  LeihsFactory.define_role(user, ip, :customer)
+  expect(user.inventory_pools.include?(ip)).to be true
+end
+
+Given "customer {string} has access to inventory pool {int} and {int}" do |who, ip_1, ip_2|
+  inventory_pools = [ip_1.to_s, ip_2.to_s].collect { | ip_name |
     InventoryPool.find_by_name ip_name
   }
   user = User.find_by_login(who) || FactoryGirl.create(:user, login: who)
@@ -54,6 +61,6 @@ do |name,email,filler,ip|
   click_button 'Submit'
 end
 
-Given "'$name' has password '$pass'" do |name,pass|
+Given "{string} has password {string}" do |name,pass|
   LeihsFactory.create_db_auth(login: name, password: pass)
 end

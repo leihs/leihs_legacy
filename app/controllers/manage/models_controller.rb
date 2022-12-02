@@ -354,7 +354,7 @@ class Manage::ModelsController < Manage::ApplicationController
     # REMAINING DATA
     params[:model].delete(:type)
     handle_images!(model, params[:model])
-    p = ActionController::Parameters.new(params[:model].map do |k, v|
+    p = ActionController::Parameters.new(params[:model].to_h.map do |k, v|
       case k
       when 'partitions_attributes'
         [:entitlements_attributes, ActionController::Parameters.new(v.map do |k, v|
@@ -379,7 +379,7 @@ class Manage::ModelsController < Manage::ApplicationController
     model.update_attributes!(cover_image_id: nil) unless model.new_record?
 
     if images_attrs = model_attrs[:images_attributes]
-      image_id, spec = images_attrs.find { |_, spec| spec[:is_cover] }
+      image_id, spec = images_attrs.to_h.find { |_, spec| spec[:is_cover] }
 
       if image_id and spec[:_destroy] != '1'
         model.cover_image_id = image_id

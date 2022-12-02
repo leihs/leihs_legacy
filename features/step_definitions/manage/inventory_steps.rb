@@ -606,7 +606,7 @@ end
 When /^I save the model and its images$/ do
   @model_name_from_url = get_rails_model_name_from_url
   step 'I press "%s"' % (_('Save %s') % _("#{@model_name_from_url.capitalize}"))
-  find('#inventory-index-view h1', match: :prefer_exact, text: _('List of Inventory'))
+  wait_until { first('#inventory-index-view h1', match: :prefer_exact, text: _('List of Inventory')) }
 end
 
 Then /^I add one or more attachments$/ do

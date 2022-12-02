@@ -1,0 +1,43 @@
+#!/bin/bash
+set -exu
+
+STAGE="${STAGE:-app}"
+IMAGE_NAME="${IMAGE_NAME:-leihs-legacy-$STAGE}"
+VERSION_NAME="${VERSION_NAME:-dev}"
+tag="${IMAGE_NAME}:${VERSION_NAME}"
+IMAGE_WORKDIR="/leihs/legacy"
+
+LEGACY_DIR="$(dirname ${BASH_SOURCE})/.."
+cd "${LEGACY_DIR}"
+
+LEGACY_DIR="$(dirname ${BASH_SOURCE})/.."
+cd "${LEGACY_DIR}"
+
+source bin/require-clean-working-tree
+if check-clean-working-tree; then
+  LEGACY_TREE_ID="$(git log -n1 --format="%T" HEAD)"
+  LEGACY_SHORT_TREE_ID="$(git log -n1 --format="%t" HEAD)"
+  LEGACY_COMMIT_ID="$(git log -n1 --format="%H" HEAD)"
+  LEGACY_SHORT_COMMIT_ID="$(git log -n1 --format="%h" HEAD)"
+fi
+
+docker buildx build \
+  --target "$STAGE" \
+  --build-arg "WORKDIR=${IMAGE_WORKDIR}" \
+  --build-arg "GIT_TREE_ID=${LEGACY_TREE_ID:-}" \
+  --build-arg "GIT_COMMIT_ID=${LEGACY_COMMIT_ID:-}" \
+  --build-arg "GIT_SHORT_COMMIT_ID=${LEGACY_COMMIT_ID:-}" \
+  -t "$tag" .
+
+# add more tags based on git state, if the working tree is clean
+if check-clean-working-tree; then
+  main_tag="${IMAGE_NAME}:tree-${LEGACY_SHORT_TREE_ID}"
+  docker image tag "$tag" "$main_tag"
+  docker image tag "$tag" "${IMAGE_NAME}:commit-${LEGACY_COMMIT_ID}"
+  # print this as the "main" tag
+  tag="$main_tag"
+fi
+
+docker image inspect "${tag}"
+
+echo "${tag}"

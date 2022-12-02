@@ -92,7 +92,7 @@ module Manage
       end
 
       step 'I fill in a serial number' do
-        serial_number = Faker::Lorem.characters(8)
+        serial_number = Faker::Lorem.characters(number: 8)
         fill_in 'item[serial_number]', with: serial_number
         @attributes.merge!(serial_number: serial_number)
       end
@@ -193,13 +193,13 @@ module Manage
       end
 
       step 'I fill in the dongle ID' do
-        dongle_id = Faker::Lorem.characters(8)
+        dongle_id = Faker::Lorem.characters(number: 8)
         fill_in 'item[properties][dongle_id]', with: dongle_id
         @attributes[:properties].merge!(dongle_id: dongle_id)
       end
 
       step 'I fill in the project number' do
-        project_number = Faker::Lorem.characters(8)
+        project_number = Faker::Lorem.characters(number: 8)
         fill_in 'item[properties][project_number]', with: project_number
         @attributes[:properties].merge!(project_number: project_number)
       end

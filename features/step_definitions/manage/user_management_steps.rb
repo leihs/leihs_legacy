@@ -28,7 +28,7 @@ end
 def check_user_list(users)
   expect(has_content?(_('List of Users'))).to be true
   within '#user-list' do
-    step 'I scroll loading all pages'
+    page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
     users.each do |user|
       find(".line [data-id='#{user.id}']", match: :prefer_exact, text: user.name)
     end
@@ -166,7 +166,7 @@ Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |
   step %Q(I can find the user administration features in the "Manage" area under "Users")
   within '#user-list' do
     find('.line', match: :first)
-    step 'I scroll loading all pages'
+    page.execute_script('window.scrollTo(0, document.body.scrollHeight)')
     @el = find('.line', match: :prefer_exact, text: @user.name)
   end
 end
@@ -333,14 +333,14 @@ Then(/^I can assign and remove roles to and from users as specified in the follo
                # the unknown_user needs to have a role first, than it can be deleted
                data = {user: {id: unknown_user.id},
                        access_right: {role: :customer},
-                       db_auth: {login: Faker::Lorem.words(3).join, password: 'password', password_confirmation: 'password'}}
+                       db_auth: {login: Faker::Lorem.words(number: 3).join, password: 'password', password_confirmation: 'password'}}
                page.driver.browser.process(:put, manage_update_inventory_pool_user_path(@inventory_pool, unknown_user, format: :json), data)
                :no_access
            end
 
     data = {user: {id: unknown_user.id},
             access_right: {role: role, suspended_until: nil},
-            db_auth: {login: Faker::Lorem.words(3).join, password: 'password', password_confirmation: 'password'}}
+            db_auth: {login: Faker::Lorem.words(number: 3).join, password: 'password', password_confirmation: 'password'}}
 
     expect(page.driver.browser.process(:put, manage_update_inventory_pool_user_path(@inventory_pool, unknown_user, format: :json), data).successful?).to be true
 

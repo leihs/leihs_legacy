@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+CONTAINERS=$(docker container ls -q)
+
+if [[ $CONTAINERS ]] ; then
+  docker kill $CONTAINERS
+  docker rm -f $CONTAINERS
+else
+  echo "no containers"
+fi

@@ -17,13 +17,13 @@ end
 
 When /^I select all reservations of an linegroup$/ do
   within '#lines' do
-    @linegroup = find('[data-selected-lines-container]', match: :first)
-    within @linegroup do
+    within find('[data-selected-lines-container]', match: :first) do
       find('.line input[type=checkbox][data-select-line]', match: :first)
       all('.line input[type=checkbox][data-select-line]', match: :first).map do |c|
         c.click
       end
     end
+    @linegroup = find('[data-selected-lines-container]', match: :first) 
   end
 end
 

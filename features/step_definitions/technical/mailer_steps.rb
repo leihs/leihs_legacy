@@ -2,8 +2,10 @@ When(/^the mail delivery method is set to "(.*?)"$/) do |method|
   case method.to_sym
   when :smtp
     @smtp_setting.update_attributes({enabled: true})
+    ActionMailer::Base.delivery_method = :smtp
   when :test
     @smtp_setting.update_attributes({enabled: false})
+    ActionMailer::Base.delivery_method = :test
   end
 end
 

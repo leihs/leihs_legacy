@@ -1,11 +1,11 @@
 FactoryGirl.define do
 
   factory :user do
-    login { Faker::Lorem.characters(12) }
+    login { Faker::Lorem.characters(number: 12) }
     firstname { Faker::Name.first_name }
     lastname { Faker::Name.last_name }
     phone { Faker::PhoneNumber.phone_number.gsub(/\D/, '') }
-    org_id { Faker::Lorem.characters(32) }
+    org_id { Faker::Lorem.characters(number: 32) }
 
     email do
       existing_emails = User.pluck :email
@@ -17,7 +17,7 @@ FactoryGirl.define do
       r
     end
 
-    badge_id { Faker::Lorem.characters(18) }
+    badge_id { Faker::Lorem.characters(number: 18) }
     address { Faker::Address.street_address }
     city { Faker::Address.city }
     country { Faker::Address.country }
@@ -26,7 +26,7 @@ FactoryGirl.define do
       Language.find_by_default(true) || create(:language, locale: 'en-GB')
     end
     delegator_user { nil }
-    organization { Faker::Lorem.characters(8) }
+    organization { Faker::Lorem.characters(number: 8) }
 
     after(:create) do |user|
       unless user.delegation?

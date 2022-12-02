@@ -85,13 +85,11 @@ def get_path(s)
 end
 
 def get_exec_command(path, framework, additional_options)
-  xvfb = "xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24'"
-
   case framework
   when :cucumber
-    exec = "#{xvfb} bundle exec cucumber #{STRICT_MODE ? "--strict " : nil}#{path}"
+    exec = "bundle exec cucumber #{STRICT_MODE ? "--strict " : nil}#{path}"
   when :rspec
-    exec = [xvfb, 'bundle exec rspec', additional_options, path].compact.join(' ')
+    exec = ['bundle exec rspec', additional_options, path].compact.join(' ')
   else
     raise 'Undefined testing framework'
   end
@@ -142,14 +140,6 @@ create_scenario_tasks(filepath,
                         tags: ["@#{kind}"],
                         append: true)
 end
-
-############################## INTEGRATION ##############################
-
-filepath = "cider-ci/tasks/integration-rspec-scenarios.yml"
-create_scenario_tasks(filepath,
-                      ['spec/features/integration'],
-                      framework: :rspec,
-                      additional_options: "-r ./spec/steps/integration/load.rb")
 
 ############################## BROKEN #################################
 

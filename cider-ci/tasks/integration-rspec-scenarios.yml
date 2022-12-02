@@ -1,6 +1,0 @@
----
-tasks:
-- name: No Tasks for spec/features/integration
-  scripts:
-    test:
-      body: echo OK

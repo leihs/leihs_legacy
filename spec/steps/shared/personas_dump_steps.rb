@@ -1,5 +1,5 @@
 require 'rails_helper'
-require "#{Rails.root}/features/support/dataset"
+require "./features/support/dataset"
 
 module Spec
   module PersonasDumpSteps

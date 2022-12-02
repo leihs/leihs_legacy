@@ -1,0 +1,6 @@
+#!/bin/sh
+set -exu
+
+# NOTE: used with docker and docker-compose
+
+dropdb -w "$PGDATABASE"

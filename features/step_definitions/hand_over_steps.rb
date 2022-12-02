@@ -1,4 +1,4 @@
-When '$who approves the order' do | who |
+When '{string} approves the order' do | who |
   post login_path(login: @last_manager_login_name)
   post manage_approve_order_path(@inventory_pool, @order, comment: 'test comment')
   @order = assigns(:order)
@@ -8,7 +8,7 @@ When '$who approves the order' do | who |
 end
 
 # OPTIMIZE 0402
-# When "$who clicks on 'hand_over'" do | who |
+# When "{string} clicks on 'hand_over'" do | who |
 #   get send('backend_inventory_pool_hand_over_index_path', @inventory_pool)
 #   @visits = assigns(:visits)
 #   response.should render_template('backend/hand_over/index')
@@ -35,7 +35,7 @@ end
 
 ###############################################
 
-Then "line $line has a quantity of $quantity for customer '$who'" do | line, quantity, who |
+Then "line {string} has a quantity of {string} for customer {string}" do | line, quantity, who |
   expect(@visits[line.to_i - 1].quantity).to eq quantity.to_i
   expect(@visits[line.to_i - 1].user.login).to eq who
 end
@@ -43,15 +43,15 @@ end
 ###############################################
 
 
-When '$who chooses one line' do | who |
+When '{string} chooses one line' do | who |
   visit = @visits.first
   get manage_hand_over_path(@inventory_pool, visit.user)
   response.should render_template('backend/hand_over/show')
   @contract = assigns(:contract)
 end
 
-# copied from 'When "$who chooses $name's order"'
-When "$who chooses $name's visit" do | who, name |
+# copied from 'When "{string} chooses {string}'s order"'
+When "{string} chooses {string}'s visit" do | who, name |
   @visit = @visits.detect { |c| c.user.login == name }
   get manage_hand_over_path(@inventory_pool, @visit.user)
   response.should render_template('backend/hand_over/show')
@@ -59,20 +59,20 @@ When "$who chooses $name's visit" do | who, name |
   @response = response
 end
 
-When "$who assigns '$item' to the first line" do | who, item |
+When "{string} assigns {string} to the first line" do | who, item |
   step "#{who} assigns '#{item}' to line 0"
 end
 
-When "$who tries to assign '$item' to the first line" do | who,item |
+When "{string} tries to assign {string} to the first line" do | who,item |
   step "#{who} tries to assign '#{item}' to line 0"
 end
 
-When "$who assigns '$item' to line $number" do | who, item, number |
+When "{string} assigns {string} to line {string}" do | who, item, number |
   step "#{who} tries to assign '#{item}' to line #{number}"
   step "#{who} should not see a flash error"
 end
 
-# When "$who tries to assign '$item' to line $number" do | who, item, number |
+# When "{string} tries to assign {string} to line {string}" do | who, item, number |
 #   post change_line_backend_inventory_pool_user_hand_over_path(
 # 	 @inventory_pool, @visit.user,
 #          reservation_id: @contract.reservations[number.to_i].id, code: item )
@@ -92,7 +92,7 @@ Then /^he sees ([0-9]+) contract line(s?) for all approved order lines$/ do | si
   expect(@contract.reservations.size).to eq size.to_i
 end
 
-Then 'the total number of contracts is $n_contracts' do |n_contracts|
+Then 'the total number of contracts is {string}' do |n_contracts|
 	expect(Contract.count).to eq n_contracts.to_i
 end
 
@@ -113,7 +113,7 @@ Then "that should not check that line since it's not from this day on" do
   # further down on the model
 end
 
-Then "the contract should only contain the item '$item'" do |item|
+Then "the contract should only contain the item {string}" do |item|
   expect(@contract.reservations.size).to eq 1
   @contract.reservations.first.item.inventory_code.shoul == item
 end

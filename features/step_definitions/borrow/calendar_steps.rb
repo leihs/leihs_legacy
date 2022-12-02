@@ -46,16 +46,16 @@ end
 
 Then(/^(the|no) availability number is shown (.*)$/) do |arg1, arg2|
   dates = case arg2
-            when 'on this specific date'
-              (@current_inventory_pool || @inventory_pool).workday.reached_max_visits
-            when 'for today'
-              Date.today
-            when 'for tomorrow'
-              Date.tomorrow
-            when 'for the next open day after tomorrow'
-              (@current_inventory_pool || @inventory_pool).next_open_date(Date.tomorrow + 1.day)
-            else
-              raise
+          when 'on this specific date'
+            (@current_inventory_pool || @inventory_pool).workday.reached_max_visits
+          when 'for today'
+            Date.today
+          when 'for tomorrow'
+            Date.tomorrow
+          when 'for the next open day after tomorrow'
+            (@current_inventory_pool || @inventory_pool).next_open_date(Date.tomorrow + 1.day)
+          else
+            raise
           end
   within '.modal' do
     Array(dates).each do |date|
@@ -65,12 +65,12 @@ Then(/^(the|no) availability number is shown (.*)$/) do |arg1, arg2|
       within ".fc-widget-content[data-date='#{date}']" do
         text = find('.fc-day-content').text
         case arg1
-          when 'the'
-            expect(text).not_to be_empty
-          when 'no'
-            expect(text).to be_empty
-          else
-            raise
+        when 'the'
+          expect(text).not_to be_empty
+        when 'no'
+          expect(text).to be_empty
+        else
+          raise
         end
       end
     end
@@ -107,7 +107,7 @@ Then /^the (start|end) date in the booking calendar becomes red and I see a (clo
   within '.modal' do
     el = find(".fc-widget-content[data-date='#{date}']").native.style('background-color')
     # NOTE our red definition is #FF4C4D == rgba(255, 76, 77, 1)
-    expect(el).to eq 'rgba(255, 76, 77, 1)'
+    expect(el).to eq 'rgb(255, 76, 77)'
 
     s = case arg2
           when 'closed'

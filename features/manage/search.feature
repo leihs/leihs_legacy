@@ -15,11 +15,11 @@ Feature: Search
     And the name of that user is shown on each contract line
     And that user's personal details are shown in the tooltip
 
-  @broken
   Scenario: No hand over without approval
     Given I am Pius
     And there is a user with an unapproved order
     When I search for that user
+    And I click on "Show all found Orders" on the search overview page
     Then I cannot hand over the unapproved order unless I approve it first
 
   Scenario: No link to show all matching contracts

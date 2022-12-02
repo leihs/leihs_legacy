@@ -279,6 +279,7 @@ But(/^I cannot assign items$/) do
       next unless has_selector?('li.ui-menu-item a')
       find('li.ui-menu-item a', match: :first).click
     end
+    find("html").click
   end
   find('#flash .error', text: _("You don't have permission to perform this action"))
 end

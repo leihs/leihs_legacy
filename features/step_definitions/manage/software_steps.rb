@@ -46,7 +46,7 @@ When(/^I select some different software$/) do
 end
 
 When(/^I enter a different serial number$/) do
-  @new_serial_number = Faker::Lorem.characters(8)
+  @new_serial_number = Faker::Lorem.characters(number: 8)
   find(".field[data-type='field']", match: :first, text: _('Serial Number')).find('input').set @new_serial_number
 end
 
@@ -161,7 +161,7 @@ end
 Then(/^for "(.*?)" one can enter some text$/) do |arg1|
   within('.field', text: _(arg1)) do
     i = find "input[type='text'],textarea"
-    i.set (t = Faker::Lorem.words(rand 3).join(' '))
+    i.set (t = Faker::Lorem.words(number: rand(3)).join(' '))
     expect(i.value).to eq t
   end
 end
@@ -211,7 +211,7 @@ end
 Then(/^I have to enter a project number$/) do
   step 'I save'
   step 'I see an error message'
-  @project_number = Faker::Lorem.characters(10)
+  @project_number = Faker::Lorem.characters(number: 10)
   find('.field', text: _('Project Number')).find('input').set @project_number
 end
 
@@ -242,7 +242,7 @@ When(/^I change the value for reference$/) do
   end
 
   if @new_reference == 'investment'
-    @new_project_number = Faker::Lorem.characters(10)
+    @new_project_number = Faker::Lorem.characters(number: 10)
     find('.field', text: _('Project Number')).find('input').set @new_project_number
   end
 end
@@ -661,7 +661,7 @@ end
 Then(/^I have to provide a dongle id$/) do
   step 'I save'
   step 'I see an error message'
-  @dongle_id = Faker::Lorem.characters(10)
+  @dongle_id = Faker::Lorem.characters(number: 10)
   find('.field', text: _('Dongle ID')).find('input').set @dongle_id
 end
 
@@ -727,7 +727,7 @@ When(/^I change the value of dongle id$/) do
     step %Q(I choose dongle as activation type)
     dongle_field = first('.field', text: _('Dongle ID'))
   end
-  dongle_field.find('input').set (@dongle_id = Faker::Lorem.characters(8))
+  dongle_field.find('input').set (@dongle_id = Faker::Lorem.characters(number: 8))
 end
 
 When(/^I change the value of total quantity$/) do

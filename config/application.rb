@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 require_relative('../lib/leihs/middleware/audit.rb')
 
 require 'rails/all'
@@ -9,6 +9,10 @@ Bundler.require(*Rails.groups)
 
 module Leihs
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 6.0
+    config.autoloader = :classic
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -23,8 +27,8 @@ module Leihs
     #
     config.i18n.enforce_available_locales = false
     # The *correct* way to do this is this:
-    #config.i18n.enforce_available_locales = true
-    #config.i18n.available_locales = [:de_CH, :en_GB, :en_US, :es, :gsw_CH]
+    # config.i18n.enforce_available_locales = true
+    # config.i18n.available_locales = %i(de-CH en-GB en-US en es fr-CH gsw-CH)
     # But the Faker gem is currently broken and does not accept properly spelled locales like 'en_US', it tries
     # to look for 'en' and that breaks. If Faker is ever fixed, we can uncomment the above lines.
 
@@ -48,6 +52,9 @@ module Leihs
     config.autoload_paths << Rails.root.join('database/lib')
 
     config.middleware.insert_before ActionDispatch::ShowExceptions, Leihs::Middleware::Audit
+
+    config.active_record.yaml_column_permitted_classes = [ActiveSupport::HashWithIndifferentAccess,
+                                                          Date]
   end
 end
 

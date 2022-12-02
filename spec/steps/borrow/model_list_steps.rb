@@ -189,7 +189,7 @@ module Borrow
       end
 
       step 'the inventory pool selection is ordered alphabetically' do
-        find('#ip-selector').click unless first('#ip-selector .dropdown')
+        find('#ip-selector').click
         wait_until { first('#ip-selector .dropdown') }
         within '#ip-selector' do
           expect(all('.dropdown-item[data-id]').map(&:text)).to eq \
@@ -205,7 +205,7 @@ module Borrow
       end
 
       step 'I sort the list by :sort_order' do |sort_order|
-        find('#model-sorting').click unless first('#model-sorting .dropdown')
+        find('#model-sorting').click
         text = case sort_order
                when 'Model, ascending'
                  "#{_('Model')} (#{_('ascending')})"
@@ -269,7 +269,7 @@ module Borrow
       end
 
       step 'I select a sorting option' do
-        find('#model-sorting').click unless first('#model-sorting .dropdown')
+        find('#model-sorting').click
         within '#model-sorting' do
           el = find('.dropdown-item', match: :first)
           @sorting = el.text
@@ -285,6 +285,7 @@ module Borrow
       step 'the list is filtered by models that are ' \
            'available in that time frame' do
         within '#model-list' do
+          wait_until { all('.line[data-id]', minimum: 1) }
           all('.line[data-id]', minimum: 1).each do |model_el|
             model = \
               Model.find_by_id(model_el['data-id']) \

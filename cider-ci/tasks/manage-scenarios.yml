@@ -6,3420 +6,3406 @@ tasks:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/login/login.feature:8
+        bundle exec cucumber --strict features/login/login.feature:8
 - name: features/manage/acknowledge/add_item.feature:15
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:15
+        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:15
 - name: features/manage/acknowledge/add_item.feature:24
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:24
-- name: features/manage/acknowledge/add_item.feature:41
+        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:24
+- name: features/manage/acknowledge/add_item.feature:31
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:41
+        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:31
 - name: features/manage/acknowledge/add_item.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:10
+        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:10
 - name: features/manage/acknowledge/delete_lines.feature:15
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/delete_lines.feature:15
+        bundle exec cucumber --strict features/manage/acknowledge/delete_lines.feature:15
 - name: features/manage/acknowledge/delete_lines.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/delete_lines.feature:10
+        bundle exec cucumber --strict features/manage/acknowledge/delete_lines.feature:10
 - name: features/manage/acknowledge/edit_order_line.feature:15
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:15
+        bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:15
 - name: features/manage/acknowledge/edit_order_line.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:22
+        bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:22
 - name: features/manage/acknowledge/edit_order_line.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:27
+        bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:27
 - name: features/manage/acknowledge/edit_order_line.feature:35
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:35
+        bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:35
 - name: features/manage/acknowledge/edit_order_line.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:10
+        bundle exec cucumber --strict features/manage/acknowledge/edit_order_line.feature:10
 - name: features/manage/acknowledge/edit_purpose.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/edit_purpose.feature:10
+        bundle exec cucumber --strict features/manage/acknowledge/edit_purpose.feature:10
 - name: features/manage/acknowledge/quick_approve.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/quick_approve.feature:16
+        bundle exec cucumber --strict features/manage/acknowledge/quick_approve.feature:16
 - name: features/manage/acknowledge/quick_approve.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/quick_approve.feature:10
+        bundle exec cucumber --strict features/manage/acknowledge/quick_approve.feature:10
 - name: features/manage/acknowledge/reject.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/reject.feature:11
+        bundle exec cucumber --strict features/manage/acknowledge/reject.feature:11
 - name: features/manage/acknowledge/reject.feature:19
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/reject.feature:19
+        bundle exec cucumber --strict features/manage/acknowledge/reject.feature:19
 - name: features/manage/add_item.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/add_item.feature:11
+        bundle exec cucumber --strict features/manage/add_item.feature:11
 - name: features/manage/add_item.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/add_item.feature:6
+        bundle exec cucumber --strict features/manage/add_item.feature:6
 - name: features/manage/availability/allocating.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/availability/allocating.feature:11
+        bundle exec cucumber --strict features/manage/availability/allocating.feature:11
 - name: features/manage/availability/availability.feature:20
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/availability/availability.feature:20
+        bundle exec cucumber --strict features/manage/availability/availability.feature:20
 - name: features/manage/availability/availability.feature:4
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/availability/availability.feature:4
+        bundle exec cucumber --strict features/manage/availability/availability.feature:4
 - name: features/manage/availability/availability.feature:32
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/availability/availability.feature:32
+        bundle exec cucumber --strict features/manage/availability/availability.feature:32
 - name: features/manage/availability/availability.feature:47
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/availability/availability.feature:47
+        bundle exec cucumber --strict features/manage/availability/availability.feature:47
 - name: features/manage/booking_calendar/availability_changes.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/booking_calendar/availability_changes.feature:10
+        bundle exec cucumber --strict features/manage/booking_calendar/availability_changes.feature:10
 - name: features/manage/booking_calendar/closed_day_alert.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/booking_calendar/closed_day_alert.feature:10
+        bundle exec cucumber --strict features/manage/booking_calendar/closed_day_alert.feature:10
 - name: features/manage/booking_calendar/summary_of_lines_in_calendar.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/booking_calendar/summary_of_lines_in_calendar.feature:10
-- name: features/manage/calendar.feature:11
+        bundle exec cucumber --strict features/manage/booking_calendar/summary_of_lines_in_calendar.feature:10
+- name: features/manage/calendar.feature:18
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/calendar.feature:11
-- name: features/manage/calendar.feature:17
+        bundle exec cucumber --strict features/manage/calendar.feature:18
+- name: features/manage/calendar.feature:24
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/calendar.feature:17
-- name: features/manage/calendar.feature:23
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/calendar.feature:23
+        bundle exec cucumber --strict features/manage/calendar.feature:24
 - name: features/manage/calendar.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/calendar.feature:7
+        bundle exec cucumber --strict features/manage/calendar.feature:7
 - name: features/manage/change_language.feature:15
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/change_language.feature:15
+        bundle exec cucumber --strict features/manage/change_language.feature:15
 - name: features/manage/change_language.feature:9
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/change_language.feature:9
+        bundle exec cucumber --strict features/manage/change_language.feature:9
 - name: features/manage/contract/contracts.feature:14
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/contract/contracts.feature:14
+        bundle exec cucumber --strict features/manage/contract/contracts.feature:14
 - name: features/manage/contract/contracts.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/contract/contracts.feature:6
+        bundle exec cucumber --strict features/manage/contract/contracts.feature:6
 - name: features/manage/daily_view/daily_view.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/daily_view/daily_view.feature:13
+        bundle exec cucumber --strict features/manage/daily_view/daily_view.feature:13
 - name: features/manage/daily_view/daily_view.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/daily_view/daily_view.feature:7
-- name: features/manage/delegation.feature:101
+        bundle exec cucumber --strict features/manage/daily_view/daily_view.feature:7
+- name: features/manage/delegation.feature:102
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:101
-- name: features/manage/delegation.feature:107
+        bundle exec cucumber --strict features/manage/delegation.feature:102
+- name: features/manage/delegation.feature:108
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:107
-- name: features/manage/delegation.feature:114
+        bundle exec cucumber --strict features/manage/delegation.feature:108
+- name: features/manage/delegation.feature:115
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:114
-- name: features/manage/delegation.feature:123
+        bundle exec cucumber --strict features/manage/delegation.feature:115
+- name: features/manage/delegation.feature:124
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:123
-- name: features/manage/delegation.feature:143
+        bundle exec cucumber --strict features/manage/delegation.feature:124
+- name: features/manage/delegation.feature:144
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:143
+        bundle exec cucumber --strict features/manage/delegation.feature:144
 - name: features/manage/delegation.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:16
-- name: features/manage/delegation.feature:152
+        bundle exec cucumber --strict features/manage/delegation.feature:16
+- name: features/manage/delegation.feature:153
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:152
-- name: features/manage/delegation.feature:158
+        bundle exec cucumber --strict features/manage/delegation.feature:153
+- name: features/manage/delegation.feature:159
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:158
-- name: features/manage/delegation.feature:164
+        bundle exec cucumber --strict features/manage/delegation.feature:159
+- name: features/manage/delegation.feature:165
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:164
+        bundle exec cucumber --strict features/manage/delegation.feature:165
 - name: features/manage/delegation.feature:3
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:3
+        bundle exec cucumber --strict features/manage/delegation.feature:3
 - name: features/manage/delegation.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:22
+        bundle exec cucumber --strict features/manage/delegation.feature:22
 - name: features/manage/delegation.feature:28
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:28
+        bundle exec cucumber --strict features/manage/delegation.feature:28
 - name: features/manage/delegation.feature:36
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:36
+        bundle exec cucumber --strict features/manage/delegation.feature:36
 - name: features/manage/delegation.feature:43
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:43
+        bundle exec cucumber --strict features/manage/delegation.feature:43
 - name: features/manage/delegation.feature:50
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:50
-- name: features/manage/delegation.feature:58
+        bundle exec cucumber --strict features/manage/delegation.feature:50
+- name: features/manage/delegation.feature:69
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:58
-- name: features/manage/delegation.feature:68
+        bundle exec cucumber --strict features/manage/delegation.feature:69
+- name: features/manage/delegation.feature:87
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:68
-- name: features/manage/delegation.feature:86
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:86
+        bundle exec cucumber --strict features/manage/delegation.feature:87
 - name: features/manage/delegation.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:10
-- name: features/manage/delegation.feature:93
+        bundle exec cucumber --strict features/manage/delegation.feature:10
+- name: features/manage/delegation.feature:94
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:93
+        bundle exec cucumber --strict features/manage/delegation.feature:94
 - name: features/manage/displaying_problems.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:21
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:21
 - name: features/manage/displaying_problems.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:27
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:27
 - name: features/manage/displaying_problems.feature:33
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:33
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:33
 - name: features/manage/displaying_problems.feature:39
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:39
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:39
 - name: features/manage/displaying_problems.feature:45
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:45
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:45
 - name: features/manage/displaying_problems.feature:51
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:51
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:51
 - name: features/manage/displaying_problems.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:7
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:7
 - name: features/manage/displaying_problems.feature:64
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:64
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:64
 - name: features/manage/displaying_problems.feature:73
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:73
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:73
 - name: features/manage/displaying_problems.feature:79
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/displaying_problems.feature:79
+        bundle exec cucumber --strict features/manage/displaying_problems.feature:79
 - name: features/manage/explorative_search.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/explorative_search.feature:11
-- name: features/manage/explorative_search.feature:36
+        bundle exec cucumber --strict features/manage/explorative_search.feature:11
+- name: features/manage/explorative_search.feature:24
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/explorative_search.feature:36
-- name: features/manage/explorative_search.feature:52
+        bundle exec cucumber --strict features/manage/explorative_search.feature:24
+- name: features/manage/explorative_search.feature:35
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/explorative_search.feature:52
+        bundle exec cucumber --strict features/manage/explorative_search.feature:35
+- name: features/manage/explorative_search.feature:51
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/explorative_search.feature:51
 - name: features/manage/hand_over/add.feature:17
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:17
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:17
 - name: features/manage/hand_over/add.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:22
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:22
 - name: features/manage/hand_over/add.feature:29
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:29
-- name: features/manage/hand_over/add.feature:42
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:29
+- name: features/manage/hand_over/add.feature:36
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:42
-- name: features/manage/hand_over/add.feature:49
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:36
+- name: features/manage/hand_over/add.feature:41
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:49
-- name: features/manage/hand_over/add.feature:56
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:41
+- name: features/manage/hand_over/add.feature:48
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:56
-- name: features/manage/hand_over/add.feature:65
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:48
+- name: features/manage/hand_over/add.feature:55
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:65
-- name: features/manage/hand_over/add.feature:70
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:55
+- name: features/manage/hand_over/add.feature:64
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:70
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:64
+- name: features/manage/hand_over/add.feature:69
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:69
 - name: features/manage/hand_over/add.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/add.feature:10
+        bundle exec cucumber --strict features/manage/hand_over/add.feature:10
 - name: features/manage/hand_over/assign.feature:18
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/assign.feature:18
+        bundle exec cucumber --strict features/manage/hand_over/assign.feature:18
+- name: features/manage/hand_over/assign.feature:25
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/hand_over/assign.feature:25
 - name: features/manage/hand_over/assign.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/assign.feature:10
-- name: features/manage/hand_over/calendar.feature:6
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/calendar.feature:6
+        bundle exec cucumber --strict features/manage/hand_over/assign.feature:10
 - name: features/manage/hand_over/change_borrower.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/change_borrower.feature:6
+        bundle exec cucumber --strict features/manage/hand_over/change_borrower.feature:6
 - name: features/manage/hand_over/delete.feature:15
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/delete.feature:15
+        bundle exec cucumber --strict features/manage/hand_over/delete.feature:15
 - name: features/manage/hand_over/delete.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/delete.feature:21
+        bundle exec cucumber --strict features/manage/hand_over/delete.feature:21
 - name: features/manage/hand_over/delete.feature:26
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/delete.feature:26
+        bundle exec cucumber --strict features/manage/hand_over/delete.feature:26
 - name: features/manage/hand_over/delete.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/delete.feature:10
-- name: features/manage/hand_over/edit_reservation.feature:16
+        bundle exec cucumber --strict features/manage/hand_over/delete.feature:10
+- name: features/manage/hand_over/edit_reservation.feature:15
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:16
-- name: features/manage/hand_over/edit_reservation.feature:21
+        bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:15
+- name: features/manage/hand_over/edit_reservation.feature:20
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:21
-- name: features/manage/hand_over/edit_reservation.feature:26
+        bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:20
+- name: features/manage/hand_over/edit_reservation.feature:25
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:26
-- name: features/manage/hand_over/edit_reservation.feature:32
+        bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:25
+- name: features/manage/hand_over/edit_reservation.feature:31
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:32
-- name: features/manage/hand_over/edit_reservation.feature:40
+        bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:31
+- name: features/manage/hand_over/edit_reservation.feature:39
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:40
+        bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:39
+- name: features/manage/hand_over/edit_reservation.feature:10
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:10
 - name: features/manage/hand_over/hand_over.feature:106
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:106
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:106
 - name: features/manage/hand_over/hand_over.feature:111
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:111
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:111
 - name: features/manage/hand_over/hand_over.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:21
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:21
 - name: features/manage/hand_over/hand_over.feature:30
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:30
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:30
 - name: features/manage/hand_over/hand_over.feature:35
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:35
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:35
 - name: features/manage/hand_over/hand_over.feature:42
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:42
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:42
 - name: features/manage/hand_over/hand_over.feature:50
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:50
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:50
 - name: features/manage/hand_over/hand_over.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:6
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:6
 - name: features/manage/hand_over/hand_over.feature:57
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:57
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:57
 - name: features/manage/hand_over/hand_over.feature:66
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:66
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:66
 - name: features/manage/hand_over/hand_over.feature:82
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:82
+        bundle exec cucumber --strict features/manage/hand_over/hand_over.feature:82
 - name: features/manage/hand_over/sign_contract.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:22
+        bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:22
 - name: features/manage/hand_over/sign_contract.feature:30
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:30
+        bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:30
 - name: features/manage/hand_over/sign_contract.feature:38
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:38
+        bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:38
 - name: features/manage/hand_over/sign_contract.feature:47
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:47
+        bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:47
 - name: features/manage/hand_over/sign_contract.feature:58
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:58
+        bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:58
 - name: features/manage/hand_over/sign_contract.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:10
+        bundle exec cucumber --strict features/manage/hand_over/sign_contract.feature:10
 - name: features/manage/inventory/categories.feature:15
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:15
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:15
 - name: features/manage/inventory/categories.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:22
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:22
 - name: features/manage/inventory/categories.feature:28
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:28
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:28
 - name: features/manage/inventory/categories.feature:34
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:34
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:34
 - name: features/manage/inventory/categories.feature:38
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:38
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:38
 - name: features/manage/inventory/categories.feature:45
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:45
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:45
 - name: features/manage/inventory/categories.feature:51
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:51
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:51
 - name: features/manage/inventory/categories.feature:57
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:57
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:57
 - name: features/manage/inventory/categories.feature:63
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:63
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:63
 - name: features/manage/inventory/categories.feature:66
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:66
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:66
 - name: features/manage/inventory/categories.feature:8
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:8
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:8
 - name: features/manage/inventory/categories.feature:76
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/categories.feature:76
+        bundle exec cucumber --strict features/manage/inventory/categories.feature:76
 - name: features/manage/inventory/copy_item.feature:59
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/copy_item.feature:59
+        bundle exec cucumber --strict features/manage/inventory/copy_item.feature:59
 - name: features/manage/inventory/copy_item.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/copy_item.feature:7
+        bundle exec cucumber --strict features/manage/inventory/copy_item.feature:7
 - name: features/manage/inventory/copy_item.feature:66
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/copy_item.feature:66
+        bundle exec cucumber --strict features/manage/inventory/copy_item.feature:66
 - name: features/manage/inventory/copy_item.feature:73
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/copy_item.feature:73
+        bundle exec cucumber --strict features/manage/inventory/copy_item.feature:73
 - name: features/manage/inventory/create_item.feature:128
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/create_item.feature:128
+        bundle exec cucumber --strict features/manage/inventory/create_item.feature:128
 - name: features/manage/inventory/create_item.feature:140
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/create_item.feature:140
+        bundle exec cucumber --strict features/manage/inventory/create_item.feature:140
 - name: features/manage/inventory/create_item.feature:4
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/create_item.feature:4
+        bundle exec cucumber --strict features/manage/inventory/create_item.feature:4
 - name: features/manage/inventory/create_item.feature:58
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/create_item.feature:58
+        bundle exec cucumber --strict features/manage/inventory/create_item.feature:58
 - name: features/manage/inventory/create_item.feature:69
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/create_item.feature:69
+        bundle exec cucumber --strict features/manage/inventory/create_item.feature:69
 - name: features/manage/inventory/create_item.feature:87
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/create_item.feature:87
+        bundle exec cucumber --strict features/manage/inventory/create_item.feature:87
 - name: features/manage/inventory/create_item.feature:92
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/create_item.feature:92
+        bundle exec cucumber --strict features/manage/inventory/create_item.feature:92
 - name: features/manage/inventory/edit_item.feature:101
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:101
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:101
 - name: features/manage/inventory/edit_item.feature:137
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:137
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:137
 - name: features/manage/inventory/edit_item.feature:147
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:147
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:147
 - name: features/manage/inventory/edit_item.feature:154
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:154
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:154
 - name: features/manage/inventory/edit_item.feature:160
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:160
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:160
 - name: features/manage/inventory/edit_item.feature:166
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:166
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:166
 - name: features/manage/inventory/edit_item.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:6
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:6
 - name: features/manage/inventory/edit_item.feature:57
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:57
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:57
 - name: features/manage/inventory/edit_item.feature:64
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:64
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:64
 - name: features/manage/inventory/edit_item.feature:83
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:83
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:83
 - name: features/manage/inventory/edit_item.feature:89
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:89
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:89
 - name: features/manage/inventory/edit_item.feature:95
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/edit_item.feature:95
+        bundle exec cucumber --strict features/manage/inventory/edit_item.feature:95
 - name: features/manage/inventory/inventory.feature:102
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:102
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:102
 - name: features/manage/inventory/inventory.feature:107
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:107
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:107
 - name: features/manage/inventory/inventory.feature:112
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:112
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:112
 - name: features/manage/inventory/inventory.feature:121
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:121
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:121
 - name: features/manage/inventory/inventory.feature:130
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:130
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:130
 - name: features/manage/inventory/inventory.feature:139
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:139
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:139
 - name: features/manage/inventory/inventory.feature:150
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:150
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:150
 - name: features/manage/inventory/inventory.feature:155
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:155
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:155
 - name: features/manage/inventory/inventory.feature:17
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:17
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:17
 - name: features/manage/inventory/inventory.feature:161
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:161
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:161
 - name: features/manage/inventory/inventory.feature:171
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:171
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:171
 - name: features/manage/inventory/inventory.feature:179
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:179
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:179
 - name: features/manage/inventory/inventory.feature:187
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:187
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:187
 - name: features/manage/inventory/inventory.feature:196
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:196
-- name: features/manage/inventory/inventory.feature:218
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:196
+- name: features/manage/inventory/inventory.feature:255
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:218
-- name: features/manage/inventory/inventory.feature:254
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:255
+- name: features/manage/inventory/inventory.feature:259
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:254
-- name: features/manage/inventory/inventory.feature:258
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:259
+- name: features/manage/inventory/inventory.feature:275
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:258
-- name: features/manage/inventory/inventory.feature:274
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:275
+- name: features/manage/inventory/inventory.feature:286
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:274
-- name: features/manage/inventory/inventory.feature:285
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:285
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:286
 - name: features/manage/inventory/inventory.feature:34
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:34
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:34
 - name: features/manage/inventory/inventory.feature:59
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:59
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:59
 - name: features/manage/inventory/inventory.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:7
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:7
 - name: features/manage/inventory/inventory.feature:87
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:87
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:87
 - name: features/manage/inventory/inventory.feature:92
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:92
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:92
 - name: features/manage/inventory/inventory.feature:97
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory.feature:97
+        bundle exec cucumber --strict features/manage/inventory/inventory.feature:97
 - name: features/manage/inventory/inventory_csv_export.feature:3
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_csv_export.feature:3
+        bundle exec cucumber --strict features/manage/inventory/inventory_csv_export.feature:3
 - name: features/manage/inventory/inventory_expert_search.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:13
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:13
 - name: features/manage/inventory/inventory_expert_search.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:16
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:16
 - name: features/manage/inventory/inventory_expert_search.feature:19
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:19
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:19
 - name: features/manage/inventory/inventory_expert_search.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:22
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:22
 - name: features/manage/inventory/inventory_expert_search.feature:25
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:25
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:25
 - name: features/manage/inventory/inventory_expert_search.feature:28
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:28
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:28
 - name: features/manage/inventory/inventory_expert_search.feature:4
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:4
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:4
 - name: features/manage/inventory/inventory_expert_search.feature:31
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:31
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:31
 - name: features/manage/inventory/inventory_expert_search.feature:34
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:34
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:34
 - name: features/manage/inventory/inventory_expert_search.feature:37
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:37
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:37
 - name: features/manage/inventory/inventory_expert_search.feature:40
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:40
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:40
 - name: features/manage/inventory/inventory_expert_search.feature:43
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:43
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:43
 - name: features/manage/inventory/inventory_expert_search.feature:46
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:46
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:46
 - name: features/manage/inventory/inventory_expert_search.feature:49
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:49
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:49
 - name: features/manage/inventory/inventory_expert_search.feature:52
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:52
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:52
 - name: features/manage/inventory/inventory_expert_search.feature:55
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:55
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:55
 - name: features/manage/inventory/inventory_expert_search.feature:58
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:58
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:58
 - name: features/manage/inventory/inventory_expert_search.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:7
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:7
 - name: features/manage/inventory/inventory_expert_search.feature:61
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:61
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:61
 - name: features/manage/inventory/inventory_expert_search.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:10
+        bundle exec cucumber --strict features/manage/inventory/inventory_expert_search.feature:10
 - name: features/manage/inventory/inventory_helper.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:11
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:11
 - name: features/manage/inventory/inventory_helper.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:16
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:16
 - name: features/manage/inventory/inventory_helper.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:21
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:21
 - name: features/manage/inventory/inventory_helper.feature:29
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:29
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:29
 - name: features/manage/inventory/inventory_helper.feature:38
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:38
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:38
 - name: features/manage/inventory/inventory_helper.feature:45
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:45
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:45
 - name: features/manage/inventory/inventory_helper.feature:54
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:54
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:54
 - name: features/manage/inventory/inventory_helper.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:7
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:7
 - name: features/manage/inventory/inventory_helper.feature:61
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:61
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:61
 - name: features/manage/inventory/inventory_helper.feature:69
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:69
+        bundle exec cucumber --strict features/manage/inventory/inventory_helper.feature:69
 - name: features/manage/inventory/model.feature:110
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:110
+        bundle exec cucumber --strict features/manage/inventory/model.feature:110
 - name: features/manage/inventory/model.feature:122
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:122
+        bundle exec cucumber --strict features/manage/inventory/model.feature:122
 - name: features/manage/inventory/model.feature:131
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:131
+        bundle exec cucumber --strict features/manage/inventory/model.feature:131
 - name: features/manage/inventory/model.feature:146
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:146
+        bundle exec cucumber --strict features/manage/inventory/model.feature:146
 - name: features/manage/inventory/model.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:16
+        bundle exec cucumber --strict features/manage/inventory/model.feature:16
 - name: features/manage/inventory/model.feature:29
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:29
+        bundle exec cucumber --strict features/manage/inventory/model.feature:29
 - name: features/manage/inventory/model.feature:37
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:37
+        bundle exec cucumber --strict features/manage/inventory/model.feature:37
 - name: features/manage/inventory/model.feature:41
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:41
+        bundle exec cucumber --strict features/manage/inventory/model.feature:41
 - name: features/manage/inventory/model.feature:45
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:45
+        bundle exec cucumber --strict features/manage/inventory/model.feature:45
 - name: features/manage/inventory/model.feature:51
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:51
+        bundle exec cucumber --strict features/manage/inventory/model.feature:51
 - name: features/manage/inventory/model.feature:58
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:58
+        bundle exec cucumber --strict features/manage/inventory/model.feature:58
 - name: features/manage/inventory/model.feature:67
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:67
+        bundle exec cucumber --strict features/manage/inventory/model.feature:67
 - name: features/manage/inventory/model.feature:8
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:8
+        bundle exec cucumber --strict features/manage/inventory/model.feature:8
 - name: features/manage/inventory/model.feature:73
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:73
+        bundle exec cucumber --strict features/manage/inventory/model.feature:73
 - name: features/manage/inventory/model.feature:80
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:80
+        bundle exec cucumber --strict features/manage/inventory/model.feature:80
 - name: features/manage/inventory/model.feature:96
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model.feature:96
+        bundle exec cucumber --strict features/manage/inventory/model.feature:96
 - name: features/manage/inventory/model_properties.feature:14
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model_properties.feature:14
+        bundle exec cucumber --strict features/manage/inventory/model_properties.feature:14
 - name: features/manage/inventory/model_properties.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model_properties.feature:22
+        bundle exec cucumber --strict features/manage/inventory/model_properties.feature:22
 - name: features/manage/inventory/model_properties.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/model_properties.feature:7
+        bundle exec cucumber --strict features/manage/inventory/model_properties.feature:7
 - name: features/manage/inventory/option.feature:18
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/option.feature:18
+        bundle exec cucumber --strict features/manage/inventory/option.feature:18
 - name: features/manage/inventory/option.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/option.feature:7
+        bundle exec cucumber --strict features/manage/inventory/option.feature:7
 - name: features/manage/inventory/retire_item.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/retire_item.feature:13
+        bundle exec cucumber --strict features/manage/inventory/retire_item.feature:13
 - name: features/manage/inventory/retire_item.feature:3
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/retire_item.feature:3
+        bundle exec cucumber --strict features/manage/inventory/retire_item.feature:3
 - name: features/manage/inventory/retire_item.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/retire_item.feature:22
+        bundle exec cucumber --strict features/manage/inventory/retire_item.feature:22
 - name: features/manage/inventory/retire_item.feature:31
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/retire_item.feature:31
+        bundle exec cucumber --strict features/manage/inventory/retire_item.feature:31
 - name: features/manage/inventory/retire_item.feature:41
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/retire_item.feature:41
+        bundle exec cucumber --strict features/manage/inventory/retire_item.feature:41
 - name: features/manage/inventory/retire_item.feature:58
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory/retire_item.feature:58
+        bundle exec cucumber --strict features/manage/inventory/retire_item.feature:58
 - name: features/manage/inventory_pool/groups.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:13
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:13
 - name: features/manage/inventory_pool/groups.feature:24
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:24
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:24
 - name: features/manage/inventory_pool/groups.feature:36
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:36
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:36
 - name: features/manage/inventory_pool/groups.feature:48
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:48
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:48
 - name: features/manage/inventory_pool/groups.feature:54
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:54
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:54
 - name: features/manage/inventory_pool/groups.feature:58
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:58
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:58
 - name: features/manage/inventory_pool/groups.feature:64
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:64
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:64
 - name: features/manage/inventory_pool/groups.feature:68
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:68
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:68
 - name: features/manage/inventory_pool/groups.feature:8
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:8
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:8
 - name: features/manage/inventory_pool/groups.feature:76
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:76
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:76
 - name: features/manage/inventory_pool/groups.feature:80
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:80
+        bundle exec cucumber --strict features/manage/inventory_pool/groups.feature:80
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:106
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:106
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:106
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:26
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:26
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:26
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:36
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:36
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:36
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:57
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:57
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:57
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:64
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:64
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:64
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:73
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:73
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:73
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:9
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:9
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:9
 - name: features/manage/inventory_pool/inventory_pool_basic_information.feature:91
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:91
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_basic_information.feature:91
 - name: features/manage/inventory_pool/inventory_pool_settings.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_settings.feature:11
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_settings.feature:11
 - name: features/manage/inventory_pool/inventory_pool_settings.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_settings.feature:16
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_settings.feature:16
 - name: features/manage/inventory_pool/inventory_pool_settings.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_settings.feature:22
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_settings.feature:22
 - name: features/manage/inventory_pool/inventory_pool_settings.feature:30
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_settings.feature:30
+        bundle exec cucumber --strict features/manage/inventory_pool/inventory_pool_settings.feature:30
 - name: features/manage/lending/day_navigation.feature:19
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/day_navigation.feature:19
-- name: features/manage/lending/lending.feature:106
+        bundle exec cucumber --strict features/manage/lending/day_navigation.feature:19
+- name: features/manage/lending/lending.feature:105
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:106
-- name: features/manage/lending/lending.feature:115
+        bundle exec cucumber --strict features/manage/lending/lending.feature:105
+- name: features/manage/lending/lending.feature:114
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:115
+        bundle exec cucumber --strict features/manage/lending/lending.feature:114
 - name: features/manage/lending/lending.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:13
-- name: features/manage/lending/lending.feature:123
+        bundle exec cucumber --strict features/manage/lending/lending.feature:13
+- name: features/manage/lending/lending.feature:122
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:123
-- name: features/manage/lending/lending.feature:128
+        bundle exec cucumber --strict features/manage/lending/lending.feature:122
+- name: features/manage/lending/lending.feature:127
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:128
-- name: features/manage/lending/lending.feature:134
+        bundle exec cucumber --strict features/manage/lending/lending.feature:127
+- name: features/manage/lending/lending.feature:133
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:134
-- name: features/manage/lending/lending.feature:140
+        bundle exec cucumber --strict features/manage/lending/lending.feature:133
+- name: features/manage/lending/lending.feature:139
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:140
-- name: features/manage/lending/lending.feature:148
+        bundle exec cucumber --strict features/manage/lending/lending.feature:139
+- name: features/manage/lending/lending.feature:147
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:148
-- name: features/manage/lending/lending.feature:154
+        bundle exec cucumber --strict features/manage/lending/lending.feature:147
+- name: features/manage/lending/lending.feature:153
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:154
+        bundle exec cucumber --strict features/manage/lending/lending.feature:153
 - name: features/manage/lending/lending.feature:19
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:19
+        bundle exec cucumber --strict features/manage/lending/lending.feature:19
 - name: features/manage/lending/lending.feature:28
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:28
+        bundle exec cucumber --strict features/manage/lending/lending.feature:28
 - name: features/manage/lending/lending.feature:35
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:35
+        bundle exec cucumber --strict features/manage/lending/lending.feature:35
 - name: features/manage/lending/lending.feature:43
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:43
+        bundle exec cucumber --strict features/manage/lending/lending.feature:43
 - name: features/manage/lending/lending.feature:50
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:50
+        bundle exec cucumber --strict features/manage/lending/lending.feature:50
 - name: features/manage/lending/lending.feature:8
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:8
+        bundle exec cucumber --strict features/manage/lending/lending.feature:8
 - name: features/manage/lending/lending.feature:72
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:72
+        bundle exec cucumber --strict features/manage/lending/lending.feature:72
 - name: features/manage/lending/lending.feature:76
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:76
+        bundle exec cucumber --strict features/manage/lending/lending.feature:76
 - name: features/manage/lending/lending.feature:80
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:80
+        bundle exec cucumber --strict features/manage/lending/lending.feature:80
 - name: features/manage/lending/lending.feature:99
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:99
+        bundle exec cucumber --strict features/manage/lending/lending.feature:99
 - name: features/manage/lending/tabs_navigation.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/tabs_navigation.feature:10
+        bundle exec cucumber --strict features/manage/lending/tabs_navigation.feature:10
 - name: features/manage/linegroup/selection.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/linegroup/selection.feature:10
+        bundle exec cucumber --strict features/manage/linegroup/selection.feature:10
 - name: features/manage/mails/delegation_mail.feature:14
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/delegation_mail.feature:14
+        bundle exec cucumber --strict features/manage/mails/delegation_mail.feature:14
 - name: features/manage/mails/delegation_mail.feature:20
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/delegation_mail.feature:20
+        bundle exec cucumber --strict features/manage/mails/delegation_mail.feature:20
 - name: features/manage/mails/delegation_mail.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/delegation_mail.feature:6
+        bundle exec cucumber --strict features/manage/mails/delegation_mail.feature:6
 - name: features/manage/mails/mail_templates.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:22
+        bundle exec cucumber --strict features/manage/mails/mail_templates.feature:22
 - name: features/manage/mails/mail_templates.feature:37
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:37
+        bundle exec cucumber --strict features/manage/mails/mail_templates.feature:37
 - name: features/manage/mails/mail_templates.feature:48
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:48
+        bundle exec cucumber --strict features/manage/mails/mail_templates.feature:48
 - name: features/manage/mails/mail_templates.feature:60
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:60
+        bundle exec cucumber --strict features/manage/mails/mail_templates.feature:60
 - name: features/manage/mails/mail_templates.feature:80
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:80
+        bundle exec cucumber --strict features/manage/mails/mail_templates.feature:80
 - name: features/manage/mails/mail_templates.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:10
+        bundle exec cucumber --strict features/manage/mails/mail_templates.feature:10
 - name: features/manage/mails/mail_templates.feature:94
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/mails/mail_templates.feature:94
+        bundle exec cucumber --strict features/manage/mails/mail_templates.feature:94
 - name: features/manage/manage_templates.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_templates.feature:13
+        bundle exec cucumber --strict features/manage/manage_templates.feature:13
 - name: features/manage/manage_templates.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_templates.feature:27
+        bundle exec cucumber --strict features/manage/manage_templates.feature:27
 - name: features/manage/manage_templates.feature:43
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_templates.feature:43
+        bundle exec cucumber --strict features/manage/manage_templates.feature:43
 - name: features/manage/manage_templates.feature:48
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_templates.feature:48
+        bundle exec cucumber --strict features/manage/manage_templates.feature:48
 - name: features/manage/manage_templates.feature:63
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_templates.feature:63
+        bundle exec cucumber --strict features/manage/manage_templates.feature:63
 - name: features/manage/manage_templates.feature:8
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_templates.feature:8
+        bundle exec cucumber --strict features/manage/manage_templates.feature:8
 - name: features/manage/manage_templates.feature:74
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_templates.feature:74
+        bundle exec cucumber --strict features/manage/manage_templates.feature:74
 - name: features/manage/manage_users.feature:12
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_users.feature:12
+        bundle exec cucumber --strict features/manage/manage_users.feature:12
 - name: features/manage/manage_users.feature:3
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_users.feature:3
+        bundle exec cucumber --strict features/manage/manage_users.feature:3
 - name: features/manage/manage_users.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_users.feature:21
+        bundle exec cucumber --strict features/manage/manage_users.feature:21
 - name: features/manage/manage_users.feature:32
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_users.feature:32
+        bundle exec cucumber --strict features/manage/manage_users.feature:32
 - name: features/manage/manage_users.feature:41
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/manage_users.feature:41
+        bundle exec cucumber --strict features/manage/manage_users.feature:41
 - name: features/manage/navigation.feature:14
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/navigation.feature:14
+        bundle exec cucumber --strict features/manage/navigation.feature:14
 - name: features/manage/navigation.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/navigation.feature:21
+        bundle exec cucumber --strict features/manage/navigation.feature:21
 - name: features/manage/navigation.feature:5
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/navigation.feature:5
-- name: features/manage/not_logged_in_information.feature:8
+        bundle exec cucumber --strict features/manage/navigation.feature:5
+- name: features/manage/old_timeline.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/not_logged_in_information.feature:8
-- name: features/manage/old_timeline.feature:17
+        bundle exec cucumber --strict features/manage/old_timeline.feature:16
+- name: features/manage/old_timeline.feature:3
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/old_timeline.feature:17
-- name: features/manage/old_timeline.feature:22
+        bundle exec cucumber --strict features/manage/old_timeline.feature:3
+- name: features/manage/old_timeline.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/old_timeline.feature:22
+        bundle exec cucumber --strict features/manage/old_timeline.feature:21
 - name: features/manage/order/change_orderer.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/change_orderer.feature:6
+        bundle exec cucumber --strict features/manage/order/change_orderer.feature:6
 - name: features/manage/order/contract.feature:107
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:107
+        bundle exec cucumber --strict features/manage/order/contract.feature:107
 - name: features/manage/order/contract.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:27
+        bundle exec cucumber --strict features/manage/order/contract.feature:27
 - name: features/manage/order/contract.feature:31
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:31
+        bundle exec cucumber --strict features/manage/order/contract.feature:31
 - name: features/manage/order/contract.feature:43
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:43
+        bundle exec cucumber --strict features/manage/order/contract.feature:43
 - name: features/manage/order/contract.feature:49
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:49
+        bundle exec cucumber --strict features/manage/order/contract.feature:49
 - name: features/manage/order/contract.feature:54
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:54
+        bundle exec cucumber --strict features/manage/order/contract.feature:54
 - name: features/manage/order/contract.feature:58
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:58
+        bundle exec cucumber --strict features/manage/order/contract.feature:58
 - name: features/manage/order/contract.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:7
+        bundle exec cucumber --strict features/manage/order/contract.feature:7
 - name: features/manage/order/contract.feature:62
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:62
+        bundle exec cucumber --strict features/manage/order/contract.feature:62
 - name: features/manage/order/contract.feature:66
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:66
+        bundle exec cucumber --strict features/manage/order/contract.feature:66
 - name: features/manage/order/contract.feature:70
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:70
+        bundle exec cucumber --strict features/manage/order/contract.feature:70
 - name: features/manage/order/contract.feature:83
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:83
+        bundle exec cucumber --strict features/manage/order/contract.feature:83
 - name: features/manage/order/contract.feature:90
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:90
+        bundle exec cucumber --strict features/manage/order/contract.feature:90
 - name: features/manage/order/contract.feature:94
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:94
+        bundle exec cucumber --strict features/manage/order/contract.feature:94
 - name: features/manage/order/contract.feature:100
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/contract.feature:100
+        bundle exec cucumber --strict features/manage/order/contract.feature:100
 - name: features/manage/order/manage_orders.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:16
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:16
 - name: features/manage/order/manage_orders.feature:3
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:3
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:3
 - name: features/manage/order/manage_orders.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:21
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:21
 - name: features/manage/order/manage_orders.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:27
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:27
 - name: features/manage/order/manage_orders.feature:32
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:32
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:32
 - name: features/manage/order/manage_orders.feature:40
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:40
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:40
 - name: features/manage/order/manage_orders.feature:56
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:56
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:56
 - name: features/manage/order/manage_orders.feature:68
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:68
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:68
 - name: features/manage/order/manage_orders.feature:80
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:80
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:80
 - name: features/manage/order/manage_orders.feature:9
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:9
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:9
 - name: features/manage/order/manage_orders.feature:88
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/order/manage_orders.feature:88
+        bundle exec cucumber --strict features/manage/order/manage_orders.feature:88
 - name: features/manage/picking_list.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/picking_list.feature:11
+        bundle exec cucumber --strict features/manage/picking_list.feature:11
 - name: features/manage/picking_list.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/picking_list.feature:21
+        bundle exec cucumber --strict features/manage/picking_list.feature:21
 - name: features/manage/picking_list.feature:50
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/picking_list.feature:50
+        bundle exec cucumber --strict features/manage/picking_list.feature:50
 - name: features/manage/picking_list.feature:62
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/picking_list.feature:62
+        bundle exec cucumber --strict features/manage/picking_list.feature:62
 - name: features/manage/purpose.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/purpose.feature:13
+        bundle exec cucumber --strict features/manage/purpose.feature:13
 - name: features/manage/purpose.feature:17
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/purpose.feature:17
+        bundle exec cucumber --strict features/manage/purpose.feature:17
 - name: features/manage/purpose.feature:28
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/purpose.feature:28
+        bundle exec cucumber --strict features/manage/purpose.feature:28
 - name: features/manage/purpose.feature:37
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/purpose.feature:37
+        bundle exec cucumber --strict features/manage/purpose.feature:37
 - name: features/manage/purpose.feature:45
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/purpose.feature:45
+        bundle exec cucumber --strict features/manage/purpose.feature:45
 - name: features/manage/purpose.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/purpose.feature:7
+        bundle exec cucumber --strict features/manage/purpose.feature:7
 - name: features/manage/search.feature:109
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:109
+        bundle exec cucumber --strict features/manage/search.feature:109
 - name: features/manage/search.feature:119
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:119
+        bundle exec cucumber --strict features/manage/search.feature:119
 - name: features/manage/search.feature:129
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:129
+        bundle exec cucumber --strict features/manage/search.feature:129
 - name: features/manage/search.feature:139
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:139
+        bundle exec cucumber --strict features/manage/search.feature:139
 - name: features/manage/search.feature:149
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:149
+        bundle exec cucumber --strict features/manage/search.feature:149
 - name: features/manage/search.feature:159
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:159
+        bundle exec cucumber --strict features/manage/search.feature:159
+- name: features/manage/search.feature:18
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/search.feature:18
 - name: features/manage/search.feature:25
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:25
+        bundle exec cucumber --strict features/manage/search.feature:25
 - name: features/manage/search.feature:32
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:32
+        bundle exec cucumber --strict features/manage/search.feature:32
 - name: features/manage/search.feature:40
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:40
+        bundle exec cucumber --strict features/manage/search.feature:40
 - name: features/manage/search.feature:5
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:5
+        bundle exec cucumber --strict features/manage/search.feature:5
 - name: features/manage/search.feature:53
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:53
+        bundle exec cucumber --strict features/manage/search.feature:53
 - name: features/manage/search.feature:89
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:89
+        bundle exec cucumber --strict features/manage/search.feature:89
 - name: features/manage/search.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:10
+        bundle exec cucumber --strict features/manage/search.feature:10
 - name: features/manage/search.feature:99
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:99
+        bundle exec cucumber --strict features/manage/search.feature:99
 - name: features/manage/software/copy_license.feature:37
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/copy_license.feature:37
+        bundle exec cucumber --strict features/manage/software/copy_license.feature:37
 - name: features/manage/software/copy_license.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/copy_license.feature:7
+        bundle exec cucumber --strict features/manage/software/copy_license.feature:7
 - name: features/manage/software/create_software.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/create_software.feature:22
+        bundle exec cucumber --strict features/manage/software/create_software.feature:22
 - name: features/manage/software/create_software.feature:46
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/create_software.feature:46
+        bundle exec cucumber --strict features/manage/software/create_software.feature:46
 - name: features/manage/software/create_software.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/create_software.feature:6
+        bundle exec cucumber --strict features/manage/software/create_software.feature:6
 - name: features/manage/software/create_software.feature:55
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/create_software.feature:55
+        bundle exec cucumber --strict features/manage/software/create_software.feature:55
 - name: features/manage/software/delete_software.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/delete_software.feature:16
+        bundle exec cucumber --strict features/manage/software/delete_software.feature:16
 - name: features/manage/software/delete_software.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/delete_software.feature:7
+        bundle exec cucumber --strict features/manage/software/delete_software.feature:7
 - name: features/manage/software/edit_software.feature:21
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/edit_software.feature:21
+        bundle exec cucumber --strict features/manage/software/edit_software.feature:21
 - name: features/manage/software/edit_software.feature:29
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/edit_software.feature:29
+        bundle exec cucumber --strict features/manage/software/edit_software.feature:29
 - name: features/manage/software/edit_software.feature:57
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/edit_software.feature:57
+        bundle exec cucumber --strict features/manage/software/edit_software.feature:57
 - name: features/manage/software/edit_software.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/edit_software.feature:7
+        bundle exec cucumber --strict features/manage/software/edit_software.feature:7
 - name: features/manage/software/edit_software.feature:71
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/edit_software.feature:71
+        bundle exec cucumber --strict features/manage/software/edit_software.feature:71
 - name: features/manage/software/search_for_software.feature:25
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/search_for_software.feature:25
+        bundle exec cucumber --strict features/manage/software/search_for_software.feature:25
 - name: features/manage/software/search_for_software.feature:37
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/search_for_software.feature:37
+        bundle exec cucumber --strict features/manage/software/search_for_software.feature:37
 - name: features/manage/software/search_for_software.feature:44
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/search_for_software.feature:44
+        bundle exec cucumber --strict features/manage/software/search_for_software.feature:44
 - name: features/manage/software/search_for_software.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/search_for_software.feature:7
+        bundle exec cucumber --strict features/manage/software/search_for_software.feature:7
 - name: features/manage/software/software_create.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/software/software_create.feature:10
+        bundle exec cucumber --strict features/manage/software/software_create.feature:10
 - name: features/manage/take_back/close_contract.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/close_contract.feature:10
-- name: features/manage/take_back/edit_take_back_end_date.feature:16
+        bundle exec cucumber --strict features/manage/take_back/close_contract.feature:10
+- name: features/manage/take_back/edit_take_back_end_date.feature:23
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:16
-- name: features/manage/take_back/edit_take_back_end_date.feature:22
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:22
+        bundle exec cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:23
 - name: features/manage/take_back/edit_take_back_end_date.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:10
+        bundle exec cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:10
 - name: features/manage/take_back/take_back.feature:17
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:17
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:17
 - name: features/manage/take_back/take_back.feature:23
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:23
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:23
 - name: features/manage/take_back/take_back.feature:31
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:31
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:31
 - name: features/manage/take_back/take_back.feature:40
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:40
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:40
 - name: features/manage/take_back/take_back.feature:45
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:45
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:45
 - name: features/manage/take_back/take_back.feature:54
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:54
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:54
 - name: features/manage/take_back/take_back.feature:66
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:66
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:66
 - name: features/manage/take_back/take_back.feature:10
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:10
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:10
 - name: features/manage/timeline.feature:3
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/timeline.feature:3
+        bundle exec cucumber --strict features/manage/timeline.feature:3
 - name: features/manage/users.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/users.feature:11
+        bundle exec cucumber --strict features/manage/users.feature:11
 - name: features/manage/users.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/users.feature:6
+        bundle exec cucumber --strict features/manage/users.feature:6
 - name: features/manage/value_list.feature:17
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/value_list.feature:17
-- name: features/manage/value_list.feature:29
+        bundle exec cucumber --strict features/manage/value_list.feature:17
+- name: features/manage/value_list.feature:39
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/value_list.feature:29
-- name: features/manage/value_list.feature:38
+        bundle exec cucumber --strict features/manage/value_list.feature:39
+- name: features/manage/value_list.feature:51
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/value_list.feature:38
-- name: features/manage/value_list.feature:50
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/value_list.feature:50
+        bundle exec cucumber --strict features/manage/value_list.feature:51
 - name: features/manage/value_list.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/value_list.feature:7
-- name: features/manage/verification.feature:15
+        bundle exec cucumber --strict features/manage/value_list.feature:7
+- name: features/manage/verification.feature:25
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/verification.feature:15
-- name: features/manage/verification.feature:24
+        bundle exec cucumber --strict features/manage/verification.feature:25
+- name: features/manage/verification.feature:38
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/verification.feature:24
-- name: features/manage/verification.feature:29
+        bundle exec cucumber --strict features/manage/verification.feature:38
+- name: features/manage/verification.feature:43
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/verification.feature:29
-- name: features/manage/verification.feature:36
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/verification.feature:36
-- name: features/manage/verification.feature:41
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/verification.feature:41
+        bundle exec cucumber --strict features/manage/verification.feature:43
 - name: features/manage/verification.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/verification.feature:7
+        bundle exec cucumber --strict features/manage/verification.feature:7
 - name: features/manage/visits.feature:4
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/visits.feature:4
+        bundle exec cucumber --strict features/manage/visits.feature:4
 - name: features/technical/automatic_email_notification.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/automatic_email_notification.feature:13
+        bundle exec cucumber --strict features/technical/automatic_email_notification.feature:13
 - name: features/technical/automatic_email_notification.feature:8
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/automatic_email_notification.feature:8
+        bundle exec cucumber --strict features/technical/automatic_email_notification.feature:8
 - name: features/technical/availability_inventory_pool_story.feature:14
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_inventory_pool_story.feature:14
+        bundle exec cucumber --strict features/technical/availability_inventory_pool_story.feature:14
 - name: features/technical/availability_inventory_pool_story.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_inventory_pool_story.feature:27
+        bundle exec cucumber --strict features/technical/availability_inventory_pool_story.feature:27
 - name: features/technical/availability_inventory_pool_story.feature:71
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_inventory_pool_story.feature:71
+        bundle exec cucumber --strict features/technical/availability_inventory_pool_story.feature:71
 - name: features/technical/availability_inventory_pool_story.feature:82
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_inventory_pool_story.feature:82
+        bundle exec cucumber --strict features/technical/availability_inventory_pool_story.feature:82
 - name: features/technical/availability_story.feature:108
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:108
+        bundle exec cucumber --strict features/technical/availability_story.feature:108
 - name: features/technical/availability_story.feature:117
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:117
+        bundle exec cucumber --strict features/technical/availability_story.feature:117
 - name: features/technical/availability_story.feature:130
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:130
+        bundle exec cucumber --strict features/technical/availability_story.feature:130
 - name: features/technical/availability_story.feature:15
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:15
+        bundle exec cucumber --strict features/technical/availability_story.feature:15
 - name: features/technical/availability_story.feature:145
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:145
+        bundle exec cucumber --strict features/technical/availability_story.feature:145
 - name: features/technical/availability_story.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:22
+        bundle exec cucumber --strict features/technical/availability_story.feature:22
 - name: features/technical/availability_story.feature:31
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:31
+        bundle exec cucumber --strict features/technical/availability_story.feature:31
 - name: features/technical/availability_story.feature:46
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:46
+        bundle exec cucumber --strict features/technical/availability_story.feature:46
 - name: features/technical/availability_story.feature:53
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:53
+        bundle exec cucumber --strict features/technical/availability_story.feature:53
 - name: features/technical/availability_story.feature:60
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:60
+        bundle exec cucumber --strict features/technical/availability_story.feature:60
 - name: features/technical/availability_story.feature:74
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:74
+        bundle exec cucumber --strict features/technical/availability_story.feature:74
 - name: features/technical/availability_story.feature:87
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:87
+        bundle exec cucumber --strict features/technical/availability_story.feature:87
 - name: features/technical/availability_story.feature:96
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/availability_story.feature:96
+        bundle exec cucumber --strict features/technical/availability_story.feature:96
 - name: features/technical/categories.feature:4
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/categories.feature:4
+        bundle exec cucumber --strict features/technical/categories.feature:4
 - name: features/technical/field/field_instance_methods.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/field/field_instance_methods.feature:11
+        bundle exec cucumber --strict features/technical/field/field_instance_methods.feature:11
 - name: features/technical/field/field_instance_methods.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/field/field_instance_methods.feature:6
+        bundle exec cucumber --strict features/technical/field/field_instance_methods.feature:6
 - name: features/technical/field/fields_controller.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/field/fields_controller.feature:6
+        bundle exec cucumber --strict features/technical/field/fields_controller.feature:6
 - name: features/technical/field/provide_accessible_fields_model.feature:9
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/field/provide_accessible_fields_model.feature:9
+        bundle exec cucumber --strict features/technical/field/provide_accessible_fields_model.feature:9
 - name: features/technical/groups.feature:39
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/groups.feature:39
+        bundle exec cucumber --strict features/technical/groups.feature:39
 - name: features/technical/groups.feature:9
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/groups.feature:9
+        bundle exec cucumber --strict features/technical/groups.feature:9
 - name: features/technical/inventory_pool/hand_over_visits_model.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_pool/hand_over_visits_model.feature:11
+        bundle exec cucumber --strict features/technical/inventory_pool/hand_over_visits_model.feature:11
 - name: features/technical/inventory_pool/hand_over_visits_model.feature:19
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_pool/hand_over_visits_model.feature:19
+        bundle exec cucumber --strict features/technical/inventory_pool/hand_over_visits_model.feature:19
 - name: features/technical/inventory_pool/hand_over_visits_model.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_pool/hand_over_visits_model.feature:27
+        bundle exec cucumber --strict features/technical/inventory_pool/hand_over_visits_model.feature:27
 - name: features/technical/inventory_pool/take_back_visits_model.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_pool/take_back_visits_model.feature:11
+        bundle exec cucumber --strict features/technical/inventory_pool/take_back_visits_model.feature:11
 - name: features/technical/inventory_pool/take_back_visits_model.feature:22
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_pool/take_back_visits_model.feature:22
+        bundle exec cucumber --strict features/technical/inventory_pool/take_back_visits_model.feature:22
 - name: features/technical/inventory_pool/take_back_visits_model.feature:32
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_pool/take_back_visits_model.feature:32
+        bundle exec cucumber --strict features/technical/inventory_pool/take_back_visits_model.feature:32
 - name: features/technical/inventory_story.feature:37
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_story.feature:37
+        bundle exec cucumber --strict features/technical/inventory_story.feature:37
 - name: features/technical/inventory_story.feature:54
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_story.feature:54
+        bundle exec cucumber --strict features/technical/inventory_story.feature:54
 - name: features/technical/inventory_story.feature:71
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_story.feature:71
+        bundle exec cucumber --strict features/technical/inventory_story.feature:71
 - name: features/technical/inventory_story.feature:9
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/inventory_story.feature:9
+        bundle exec cucumber --strict features/technical/inventory_story.feature:9
 - name: features/technical/item/search_model.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/item/search_model.feature:6
+        bundle exec cucumber --strict features/technical/item/search_model.feature:6
 - name: features/technical/mailer/mailer_settings.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/mailer/mailer_settings.feature:11
+        bundle exec cucumber --strict features/technical/mailer/mailer_settings.feature:11
 - name: features/technical/mailer/mailer_settings.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/mailer/mailer_settings.feature:16
+        bundle exec cucumber --strict features/technical/mailer/mailer_settings.feature:16
 - name: features/technical/mailer/mailer_settings.feature:25
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/mailer/mailer_settings.feature:25
+        bundle exec cucumber --strict features/technical/mailer/mailer_settings.feature:25
 - name: features/technical/mailer/mailer_settings.feature:33
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/mailer/mailer_settings.feature:33
+        bundle exec cucumber --strict features/technical/mailer/mailer_settings.feature:33
 - name: features/technical/performance_stability.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/performance_stability.feature:6
+        bundle exec cucumber --strict features/technical/performance_stability.feature:6
 - name: features/technical/user/suspend.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/user/suspend.feature:6
+        bundle exec cucumber --strict features/technical/user/suspend.feature:6
 - name: features/technical/visit/hand_over_and_take_back_model.feature:12
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/visit/hand_over_and_take_back_model.feature:12
+        bundle exec cucumber --strict features/technical/visit/hand_over_and_take_back_model.feature:12
 - name: features/technical/visit/hand_over_and_take_back_model.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/visit/hand_over_and_take_back_model.feature:6
+        bundle exec cucumber --strict features/technical/visit/hand_over_and_take_back_model.feature:6
 - name: features/technical/visit/overdue_model.feature:6
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/visit/overdue_model.feature:6
+        bundle exec cucumber --strict features/technical/visit/overdue_model.feature:6
 - name: features/technical/visit/visits_controller.feature:13
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/visit/visits_controller.feature:13
+        bundle exec cucumber --strict features/technical/visit/visits_controller.feature:13
 - name: features/technical/visit/visits_controller.feature:8
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/technical/visit/visits_controller.feature:8
+        bundle exec cucumber --strict features/technical/visit/visits_controller.feature:8
 - name: spec/features/manage/availability_calendar.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/availability_calendar.feature:7
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/availability_calendar.feature:7
 - name: spec/features/manage/case_insensitive_inventory_code.feature:20
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:20
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:20
 - name: spec/features/manage/case_insensitive_inventory_code.feature:30
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:30
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:30
 - name: spec/features/manage/case_insensitive_inventory_code.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:7
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/case_insensitive_inventory_code.feature:7
 - name: spec/features/manage/category_crud.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/category_crud.feature:7
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/category_crud.feature:7
 - name: spec/features/manage/create_software_license.feature:51
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/create_software_license.feature:51
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/create_software_license.feature:51
 - name: spec/features/manage/create_software_license.feature:8
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/create_software_license.feature:8
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/create_software_license.feature:8
 - name: spec/features/manage/edit_order.feature:17
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/edit_order.feature:17
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/edit_order.feature:17
 - name: spec/features/manage/edit_order.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/edit_order.feature:7
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/edit_order.feature:7
 - name: spec/features/manage/global_search.feature:11
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/global_search.feature:11
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/global_search.feature:11
 - name: spec/features/manage/global_search.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/global_search.feature:27
-- name: spec/features/manage/global_search.feature:44
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/global_search.feature:27
+- name: spec/features/manage/global_search.feature:45
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/global_search.feature:44
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/global_search.feature:45
 - name: spec/features/manage/hand_over.feature:18
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:18
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:18
 - name: spec/features/manage/hand_over.feature:40
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:40
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:40
 - name: spec/features/manage/hand_over.feature:50
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:50
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:50
 - name: spec/features/manage/hand_over.feature:59
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:59
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:59
 - name: spec/features/manage/hand_over.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:7
-- name: spec/features/manage/inactive_inventory_pools.feature:21
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:7
+- name: spec/features/manage/inactive_inventory_pools.feature:26
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:21
-- name: spec/features/manage/inactive_inventory_pools.feature:30
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:26
+- name: spec/features/manage/inactive_inventory_pools.feature:33
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:30
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:33
 - name: spec/features/manage/inactive_inventory_pools.feature:40
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:40
-- name: spec/features/manage/inactive_inventory_pools.feature:9
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:40
+- name: spec/features/manage/inactive_inventory_pools.feature:51
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:9
-- name: spec/features/manage/inventory.feature:16
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:51
+- name: spec/features/manage/inactive_inventory_pools.feature:60
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inventory.feature:16
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:60
+- name: spec/features/manage/inactive_inventory_pools.feature:70
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inactive_inventory_pools.feature:70
+- name: spec/features/manage/inventory.feature:37
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inventory.feature:37
+- name: spec/features/manage/inventory.feature:49
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inventory.feature:49
 - name: spec/features/manage/inventory.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inventory.feature:7
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/inventory.feature:7
 - name: spec/features/manage/model_crud.feature:29
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/model_crud.feature:29
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/model_crud.feature:29
 - name: spec/features/manage/model_crud.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/model_crud.feature:7
-- name: spec/features/manage/serial_number_validation.feature:24
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/model_crud.feature:7
+- name: spec/features/manage/serial_number_validation.feature:38
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:24
-- name: spec/features/manage/serial_number_validation.feature:41
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:41
-- name: spec/features/manage/serial_number_validation.feature:55
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:55
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:38
 - name: spec/features/manage/serial_number_validation.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:7
-- name: spec/features/manage/serial_number_validation.feature:69
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:7
+- name: spec/features/manage/serial_number_validation.feature:63
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:69
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:63
 - name: spec/features/manage/take_back.feature:19
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:19
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:19
 - name: spec/features/manage/take_back.feature:31
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:31
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:31
 - name: spec/features/manage/take_back.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:7
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/take_back.feature:7
 - name: spec/features/manage/visits_verification_filter.feature:105
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:105
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:105
 - name: spec/features/manage/visits_verification_filter.feature:17
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:17
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:17
 - name: spec/features/manage/visits_verification_filter.feature:27
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:27
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:27
 - name: spec/features/manage/visits_verification_filter.feature:34
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:34
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:34
 - name: spec/features/manage/visits_verification_filter.feature:43
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:43
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:43
 - name: spec/features/manage/visits_verification_filter.feature:50
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:50
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:50
 - name: spec/features/manage/visits_verification_filter.feature:59
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:59
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:59
 - name: spec/features/manage/visits_verification_filter.feature:66
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:66
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:66
 - name: spec/features/manage/visits_verification_filter.feature:74
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:74
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:74
 - name: spec/features/manage/visits_verification_filter.feature:81
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:81
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:81
 - name: spec/features/manage/visits_verification_filter.feature:90
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:90
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:90
 - name: spec/features/manage/visits_verification_filter.feature:97
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:97
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/visits_verification_filter.feature:97

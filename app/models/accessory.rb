@@ -19,8 +19,11 @@ class Accessory < ApplicationRecord
   validates_presence_of :name
 
   def inventory_pool_toggle=(val)
-    ip = InventoryPool.find(val.split(',')[1])
-    if val.split(',')[0] == '1'
+    ip_id = val.split(',')[1]
+    ip = InventoryPool.find(ip_id)
+    toggle_val = val.split(',')[0]
+
+    if toggle_val == '1' and not self.inventory_pool_ids.include?(ip_id)
       self.inventory_pools = self.inventory_pools + [ip]
     else
       self.inventory_pools = self.inventory_pools - [ip]

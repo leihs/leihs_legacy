@@ -1,11 +1,11 @@
-Given "a package '$package' exists" do |package|
+Given "a package {string} exists" do |package|
   step "a model '#{package}' exists"
   model = Model.find_by_name(package)
   model.is_package = true
   model.save
 end
 
-Given "item '$item' is part of package item $package_item" do |item, package_item|
+Given "item {string} is part of package item $package_item" do |item, package_item|
   package = Item.find_by_inventory_code package_item
   item    = Item.find_by_inventory_code item
   item.parent = package

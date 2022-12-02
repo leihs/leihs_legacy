@@ -15,6 +15,7 @@ jobs:
         eager_trials: 1
         include:
           - cider-ci/task-components/database.yml
+          - cider-ci/task-components/docker-selenium-firefox.yml
 
       include:
         - cider-ci/shared/main-context.yml

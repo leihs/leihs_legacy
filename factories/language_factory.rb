@@ -21,7 +21,7 @@ FactoryGirl.define do
 
   factory :language do
     active { true }
-    name { Faker::Lorem.words(1).join }
+    name { Faker::Lorem.words(number: 1).join }
     locale{ name[0..1].downcase }
     default { Language.find_by_default(true).blank? }
   end

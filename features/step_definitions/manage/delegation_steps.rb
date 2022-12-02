@@ -178,7 +178,9 @@ Given(/^there is an order placed by me personally$/) do
 end
 
 Then(/^the order shows the name of the user$/) do
-  expect(has_content?(@contract.user.name)).to be true
+  wait_until do
+    has_content?(@contract.user.name)
+  end
 end
 
 Then(/^I don't see any contact person$/) do

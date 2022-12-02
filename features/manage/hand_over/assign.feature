@@ -22,7 +22,6 @@ Feature: Assign items during hand over
      Then the first itemline in the selection matching the provided inventory code is assigned
       And no new line is added to the hand over
 
-  @broken
   Scenario: Remove the assignment of an inventory code by clear the the inventory code input
      When I open a hand over with reservations that have assigned inventory codes
       And I clean the inventory code of one of the reservations

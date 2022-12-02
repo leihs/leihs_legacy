@@ -66,7 +66,7 @@ class Model < ApplicationRecord
            dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
 
-  belongs_to(:cover_image, class_name: Image, foreign_key: :cover_image_id)
+  belongs_to(:cover_image, class_name: 'Image', foreign_key: :cover_image_id)
 
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments, allow_destroy: true

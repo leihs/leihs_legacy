@@ -67,7 +67,7 @@ Then(/^I get to the "(.*?)" page$/) do |arg1|
 end
 
 When(/^I change my password$/) do
-  @new_password = Faker::Internet.password(6)
+  @new_password = Faker::Internet.password(min_length: 6)
   find('.row', match: :prefer_exact, text: _('Password')).find("input[name='db_auth[password]']").set @new_password
   find('.row', match: :prefer_exact, text: _('Password Confirmation')).find("input[name='db_auth[password_confirmation]']").set @new_password
   find(".row button[type='submit']", text: _('Save')).click

@@ -33,7 +33,6 @@ Feature: Add reservations during hand over
     When I select the template from the list
     Then each model of the template is added to the hand over for the provided date range
 
-  @flapping
   Scenario: Add reservations which changes other reservations availability
     Given I open a hand over for today
     And I add so many reservations that I break the maximal quantity of a model

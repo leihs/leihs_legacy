@@ -64,7 +64,6 @@ end
 When(/^I set the (start|end) date in the calendar to '(.*?)'$/) do |arg1, date|
   within '.modal' do
     find("#booking-calendar-#{arg1}-date").set date
-    find('#booking-calendar-controls').click # blur input in order to fire event listeners
   end
 end
 

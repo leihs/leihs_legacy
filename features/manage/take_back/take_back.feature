@@ -71,6 +71,7 @@ Feature: Take back
   @broken
   Scenario: Treating options with multiple time windows
     Given there is a user with an option to return in two different time windows
+    And I pry
     And I open a take back for this user
     When I take back this option
     Then the option is added to the first time window

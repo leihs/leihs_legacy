@@ -79,7 +79,9 @@ end
 
 Then(/^the entry is deleted from the order$/) do
   expect(@line_ids.all? { |id| page.has_no_selector? "button[data-ids='[#{id}]']" }).to be true
-  expect(@line_ids.all? { |id| not @current_user.reservations.unsubmitted.map(&:id).include?(id) }).to be true
+  wait_until do
+    @line_ids.all? { |id| not @current_user.reservations.unsubmitted.map(&:id).include?(id) }
+  end
 end
 
 #########################################################################

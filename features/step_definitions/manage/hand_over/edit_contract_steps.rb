@@ -106,7 +106,7 @@ end
 Then(/^I see the quantity for this option$/) do
   within('.modal') do
     within('.modal-body') do
-      find(".row", text: /#{@quantity}.*#{@selected_items.first.model.name}/)
+      find(".row", text: /#{@quantity}\n.*#{@selected_items.first.model.name}/)
     end
   end
 end

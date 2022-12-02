@@ -4,7 +4,7 @@ scripts:
       #!/usr/bin/env bash
       set -eux
       if [ -d legacy ]; then cd legacy; fi
-      createdb "$DATABASE_NAME"
-      psql -d "$DATABASE_NAME" -f ./database/db/structure.sql
-      DATABASE_NAME="$DATABASE_NAME" ./database/scripts/restore-seeds
+      createdb "$LEIHS_DATABASE_NAME"
+      psql -d "$LEIHS_DATABASE_NAME" -f ./database/db/structure.sql
+      LEIHS_DATABASE_NAME="$LEIHS_DATABASE_NAME" ./database/scripts/restore-seeds
 

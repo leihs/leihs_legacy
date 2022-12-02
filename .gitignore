@@ -40,6 +40,7 @@ public/images/graphs/*
 tmp/
 /public/packs
 /public/packs-test
+/vendor/bundle/
 
 # this is from npm, we currently only use yarn
 /package-lock.json

@@ -215,6 +215,7 @@ Feature: Inventory
       | Current borrower       |
       | End date of contract   |
 
+  @flapping
   Scenario: Look of a software license line
     Given there exists a software license
     And I see retired and not retired inventory

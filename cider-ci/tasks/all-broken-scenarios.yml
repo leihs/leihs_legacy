@@ -6,85 +6,88 @@ tasks:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/acknowledge/delete_lines.feature:21
-- name: features/manage/delegation.feature:76
+        bundle exec cucumber --strict features/manage/acknowledge/delete_lines.feature:21
+- name: features/manage/delegation.feature:59
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/delegation.feature:76
-- name: features/manage/hand_over/assign.feature:26
+        bundle exec cucumber --strict features/manage/delegation.feature:59
+- name: features/manage/delegation.feature:77
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/assign.feature:26
-- name: features/manage/hand_over/edit_reservation.feature:11
+        bundle exec cucumber --strict features/manage/delegation.feature:77
+- name: features/manage/hand_over/calendar.feature:7
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/hand_over/edit_reservation.feature:11
-- name: features/manage/lending/lending.feature:161
+        bundle exec cucumber --strict features/manage/hand_over/calendar.feature:7
+- name: features/manage/lending/lending.feature:160
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:161
+        bundle exec cucumber --strict features/manage/lending/lending.feature:160
 - name: features/manage/lending/lending.feature:60
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/lending/lending.feature:60
-- name: features/manage/old_timeline.feature:4
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/old_timeline.feature:4
+        bundle exec cucumber --strict features/manage/lending/lending.feature:60
 - name: features/manage/picking_list.feature:42
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/picking_list.feature:42
-- name: features/manage/search.feature:19
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/search.feature:19
+        bundle exec cucumber --strict features/manage/picking_list.feature:42
 - name: features/manage/take_back/take_back.feature:72
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec cucumber --strict features/manage/take_back/take_back.feature:72
-- name: No Tasks for spec/features/manage
-  scripts:
-    test:
-      body: echo OK
-- name: spec/features/borrow/model_list.feature:168
+        bundle exec cucumber --strict features/manage/take_back/take_back.feature:72
+- name: features/manage/verification.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:168
+        bundle exec cucumber --strict features/manage/verification.feature:16
+- name: features/manage/verification.feature:31
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/verification.feature:31
+- name: spec/features/manage/serial_number_validation.feature:22
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:22
+- name: spec/features/manage/serial_number_validation.feature:50
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:50
 - name: spec/features/borrow/model_list.feature:84
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:84
+        bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:84

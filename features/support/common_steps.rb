@@ -2,11 +2,11 @@ Given /^pending$/ do
   pending
 end
 
-Given 'pending - reported by $who on $date' do |who, date|
+Given 'pending - reported by {string} on {string}' do |who, date|
   pending
 end
 
-Given 'resolved by $who on $date' do |who, date|
+Given 'resolved by {string} on {string}' do |who, date|
   # do nothing
 end
 
@@ -31,7 +31,7 @@ When /I fill in (\w+) of "([^\"]*)" with "([^\"]*)"/ do |order, field, value|
 end
 
 # Date changing hackery
-When 'I beam into the future to $date' do |date|
+When 'I beam into the future to {string}' do |date|
   Dataset.back_to_date( LeihsFactory.parsedate( date ) )
 end
 

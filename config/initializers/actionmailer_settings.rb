@@ -52,16 +52,21 @@ class ActionMailer::Base
     return result
   end
 
-  def self.delivery_method
-    begin
-      if SmtpSetting.first.enabled
-        :smtp
-      else
-        :test
-      end
-    rescue
-      :smtp
-    end
+  def self.file_settings
+    { :location => Rails.root.join('tmp/mails') }
   end
+
+  # NOTE: not used / used only in one test
+  # def self.delivery_method
+  #   begin
+  #     if SmtpSetting.first.enabled
+  #       :smtp
+  #     else
+  #       :test
+  #     end
+  #   rescue
+  #     :smtp
+  #   end
+  # end
 
 end

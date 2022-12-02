@@ -23,6 +23,7 @@ Feature: Breadcrumb navigation
     Then that category opens
     And that category is the second and last element of the breadcrumb navigation bar
 
+  @hotspot
   Scenario: Choosing a subcategory
     Given I am listing the main categories
     When I choose a subcategory

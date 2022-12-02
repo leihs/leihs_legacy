@@ -8,7 +8,7 @@ class Manage::EntitlementGroupsController < Manage::ApplicationController
   end
 
   def map_params(params)
-    ActionController::Parameters.new(params[:group].map do |k, v|
+    ActionController::Parameters.new(params[:group].to_h.map do |k, v|
       case k
       when 'partitions_attributes'
         [:entitlements_attributes, v.map do |ep|

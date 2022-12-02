@@ -16,11 +16,11 @@ class ModelGroup < ApplicationRecord
   ##################################################
 
   has_many :parent_links,
-           class_name: ::ModelGroupLink,
+           class_name: 'ModelGroupLink',
            foreign_key: :child_id
 
   has_many :child_links,
-           class_name: ::ModelGroupLink,
+           class_name: 'ModelGroupLink',
            foreign_key: :parent_id
 
   has_and_belongs_to_many \

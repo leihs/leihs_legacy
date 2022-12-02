@@ -111,7 +111,7 @@ Feature: Model list
     And I am listing models
     Then I can also use a date picker to specify start and end date instead of entering them by hand
 
-  @borrow_model_list @flapping
+  @borrow_model_list
   Scenario: Searching for a model
     Given I am Normin
     And I am listing models
@@ -163,8 +163,7 @@ Feature: Model list
     And the inventory pool selector is still expanded
     And the filter shows the name of the inventory pool that is left
 
-  # this one is very strange; fails locally always; passes on CI sometimes
-  @borrow_model_list @broken
+  @borrow_model_list
   Scenario: Resetting everything
     Given I am Normin
     And I am listing models
@@ -178,7 +177,7 @@ Feature: Model list
     And the model list is unfiltered
     And the button "Reset all filters" is not visible
 
-  @borrow_model_list @flapping
+  @borrow_model_list
   Scenario: Reset all button disappears automatically when filters were set to their default positions by hand
     Given I am Normin
     And I am listing models

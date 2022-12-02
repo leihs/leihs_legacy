@@ -12,6 +12,7 @@ Feature: Verification
     But I can not edit models, items, options, software or licenses
     And I can not add models, items, options, software or licenses
 
+  @broken
   Scenario: take-back in timeline not valid
     When I open the inventory
     When I enter the timeline of a model with hand overs, take backs or pending orders
@@ -26,6 +27,7 @@ Feature: Verification
     And I add a model which leads to an overbooking
     Then I see an error message
 
+  @broken
   Scenario: Overbooking in orders not possible for Group Managers in calendar
     When I open a submitted order to be verified by a Group Manager
     And I open the booking calendar

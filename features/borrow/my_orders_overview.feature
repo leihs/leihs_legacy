@@ -6,7 +6,6 @@ Feature: Viewing my orders
     And I have added items to an order
     When I open my list of orders
 
-  @rack
   Scenario: Listing items in an order
     Then I see entries grouped by start date and inventory pool
     And the models are ordered alphabetically

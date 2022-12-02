@@ -60,10 +60,6 @@ module Spec
       page.driver.browser.switch_to.alert.accept
     end
 
-    step 'I cancel the confirmation dialog' do
-      page.driver.browser.switch_to.alert.dismiss
-    end
-
     step 'I see a success message' do
       find('#flash .success')
     end
@@ -87,6 +83,10 @@ module Spec
 
     step 'I click on :text' do |text|
       click_on text
+    end
+
+    step 'the loading icon was hidden' do
+      expect(page).not_to have_selector "img[src*='loading.gif']"
     end
 
     def rescue_displaced_flash

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [[ $DOCKER_CONTAINER_NAME ]]; then
+  docker kill $DOCKER_CONTAINER_NAME >/dev/null
+  docker rm -f $DOCKER_CONTAINER_NAME >/dev/null
+  echo "$DOCKER_CONTAINER_NAME killed and removed"
+else
+  echo "no DOCKER_CONTAINER_NAME env var"
+  exit 1
+fi

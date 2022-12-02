@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_dependency 'model' # in tests Model constant seems not to autoload properly
-
 class InventoryPool < ApplicationRecord
   include Availability::InventoryPool
 

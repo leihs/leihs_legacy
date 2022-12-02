@@ -1,7 +1,6 @@
 
 Feature: Start page
 
-  @rack
   Scenario: Start page
     Given I am Normin
     And there exists a main category with own image

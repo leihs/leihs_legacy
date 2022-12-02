@@ -144,9 +144,9 @@ When /^I select the (.*?) from the list$/ do |type|
 
   within '.ui-autocomplete' do
     if type == 'option'
-      find('a', text: /#{@target_name}.*Option/).click
+      find('a', text: /#{@target_name}.*\nOption/).click
     elsif type == 'model'
-      find('a', text: /#{@target_name}.*Model/).click
+      find('a', text: /#{@target_name}\n.*\nModel/).click
     else
       find('a', text: @target_name).click
     end
@@ -183,10 +183,12 @@ When /^I add so many reservations that I break the maximal quantity of a model$/
 end
 
 Then /^I see that all reservations of that model have availability problems$/ do
-  find(".line[data-line-type='item_line']", match: :prefer_exact, text: @target_name)
-  @lines = all(".line[data-line-type='item_line']", text: @target_name)
-  @lines.each do |line|
-    line.find('.line-info.red')
+  try_until_no_exception do
+    find(".line[data-line-type='item_line']", match: :prefer_exact, text: @target_name)
+    @lines = all(".line[data-line-type='item_line']", text: @target_name)
+    @lines.each do |line|
+      line.find('.line-info.red')
+    end
   end
 end
 

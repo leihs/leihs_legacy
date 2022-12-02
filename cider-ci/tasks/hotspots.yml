@@ -1,6 +1,9 @@
 ---
 tasks:
-- name: No Tasks for features
+- name: features/borrow/breadcrumb_navigation.feature:27
   scripts:
     test:
-      body: echo OK
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/borrow/breadcrumb_navigation.feature:27

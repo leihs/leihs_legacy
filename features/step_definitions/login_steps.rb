@@ -1,4 +1,4 @@
-Given "a $role for inventory pool '$ip_name' logs in as '$who'" do | role, ip_name, who |
+Given "a $role for inventory pool {string} logs in as {string}" do | role, ip_name, who |
   step "a #{role} '#{who}' for inventory pool '#{ip_name}'"
   step "I log in as '#{who}' with password 'pass'" # use default pw
   @last_manager_login_name = who
@@ -6,18 +6,18 @@ end
 
 # This does NOT go through the UI. It simply logs in the user.
 # for 99% of our Cucumber scenarios, we don't need the UI at all!
-Given "a $role for inventory pool '$ip_name' is logged in as '$who'" do | role, ip_name, who |
+Given "a {string} for inventory pool {string} is logged in as {string}" do | role, ip_name, who |
   step "a #{role} '#{who}' for inventory pool '#{ip_name}'"
   step "I am logged in as '#{who}' with password 'foobar'"
   @last_manager_login_name = who
 end
 
-Given "I am logged in as '$username' with password '$password'" do |username, password|
+Given "I am logged in as {string} with password {string}" do |username, password|
   @current_user = User.where(login: username.downcase).first
   I18n.locale = if @current_user.language then @current_user.language.locale.to_sym else Language.default_language end
   @current_inventory_pool = @current_user.inventory_pools.managed.first
   case Capybara.current_driver
-    when /selenium/
+    when /firefox/
       visit '/'
       fill_in 'email', with: @current_user.email
       click_on _('Login')
@@ -26,7 +26,7 @@ Given "I am logged in as '$username' with password '$password'" do |username, pa
   end
 end
 
-Given "I log in as a $role for inventory pool '$ip_name'$with_access_level" do |role, ip_name,with_access_level|
+Given "I log in as a {string} for inventory pool {string}{string}" do |role, ip_name,with_access_level|
   # use default user name
   step "a #{role} 'invman0' for inventory pool '#{ip_name}'#{with_access_level}"
 
@@ -56,7 +56,7 @@ end
 # It's possible that previous steps leave the running browser instance in a logged-in
 # state, which confuses tests that rely on "When I log in as the admin".
 When 'I make sure I am logged out' do
-  step 'I log out'
+  step('I log out') if @current_user
 end
 
 When /^I am redirected to the "([^"]*)" section$/ do |section_name|

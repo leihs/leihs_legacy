@@ -3,7 +3,7 @@ def take_screenshot
   Dir.mkdir @screenshot_dir rescue nil
   path= @screenshot_dir.join("screenshot_#{Time.zone.now.iso8601.gsub(/:/,'-')}.png")
   case Capybara.current_driver
-  when :selenium_firefox
+  when :firefox
     page.driver.browser.save_screenshot(path) rescue nil
   else
     Rails.logger.warn "Taking screenshots is not implemented for #{Capybara.current_driver}."

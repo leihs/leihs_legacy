@@ -21,7 +21,6 @@ Feature: Explorative search
     When I collapse the category filter
     Then I see only the list of inventory
 
-  @flapping
   Scenario: Find a category using explorative search
     Given I open the inventory
     And I open the category filter

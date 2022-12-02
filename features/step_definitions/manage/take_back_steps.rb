@@ -49,6 +49,7 @@ Given(/^I am taking something back$/) do
 end
 
 Then(/^I receive a notification( of success)?$/) do |arg1|
+  wait_until { first("#flash") }
   within '#flash' do
     if arg1
       find('.success')
@@ -124,6 +125,7 @@ end
 Then(/^the option is added to the first time window$/) do
   @option_lines = @option.option_lines.select{|l| l.status == :signed and l.user == @user}
   @option_line = @option_lines.sort{|a, b| a.end_date <=> b.end_date}.first
+  binding.pry
   expect(find('[data-selected-lines-container]', match: :first, text: @option.inventory_code).find(".line[data-id='#{@option_line.id}'] [data-quantity-returned]").value.to_i).to be > 0
 end
 

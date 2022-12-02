@@ -133,7 +133,8 @@ end
 Then(/^I see any capacities that are still available for assignment$/) do
   @partitions.each do |partition|
     model = Model.find partition[:model_id]
-    expect(all("input[value='#{model.id}']", visible: false).first.parent.has_content?("/ #{model.items.where(inventory_pool_id: @current_inventory_pool.id).borrowable.size}")).to be true
+    el = wait_until { first("input[value='#{model.id}']", visible: false) } 
+    expect(el.send(:parent)).to have_content "/ #{model.items.where(inventory_pool_id: @current_inventory_pool.id).borrowable.size}"
   end
 end
 

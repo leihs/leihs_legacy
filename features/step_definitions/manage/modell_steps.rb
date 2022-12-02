@@ -8,7 +8,7 @@ When(/^I use the autocomplete field to add a compatible model$/) do
 end
 
 Then(/^a compatible model has been added to the model I am editing$/) do
-  find('#flash')
+  wait_until { first('#flash') }
   expect(@model.compatibles.size).to be 2
   expect(@model.compatibles.any? {|m| m.name == @comp1.name}).to be true
   expect(@model.compatibles.any? {|m| m.name == @comp2.name}).to be true
@@ -32,7 +32,7 @@ When(/^I remove a compatible model$/) do
 end
 
 Then(/^the model is saved without the compatible model that I removed$/) do
-  find('#flash')
+  wait_until { first('#flash') }
   expect(@model.reload.compatibles.empty?).to be true
 end
 
@@ -48,7 +48,7 @@ Then(/^the redundant model was not added$/) do
 end
 
 Then(/^the redundant compatible model was not added to this one$/) do
-  find('#flash')
+  wait_until { first('#flash') }
   comp_before = @model.compatibles
   expect(comp_before.count).to eq @model.reload.compatibles.count
 end
@@ -143,7 +143,7 @@ When(/^I add new allocations$/) do
 end
 
 Then(/^the changed allocations are saved$/) do
-  find('#flash')
+  wait_until { first('#flash') }
   model_group_ids = @model.reload.entitlements.map(&:entitlement_group_id)
   expect(model_group_ids).to match_array @groups.map(&:id)
 end
@@ -182,7 +182,7 @@ When(/^I delete this (.+) from the list$/) do |entity|
 end
 
 Then(/^the (.+) is deleted$/) do |entity|
-  find('#flash')
+  wait_until { first('#flash') }
   klass = case entity
           when 'model' then Model
           when 'software' then Software

@@ -1,22 +1,22 @@
-Given 'this model has $number item$s in inventory pool $ip' do |number, s, ip|
-  inventory_pool = InventoryPool.find_by_name(ip)
-  number.to_i.times do | i |
+Given 'this model has {int} item(s) in inventory pool {int}' do |number, ip|
+  inventory_pool = InventoryPool.find_by_name(ip.to_s)
+  number.times do | i |
     FactoryGirl.create(:item, owner: inventory_pool, model: @model)
   end
-  expect(inventory_pool.items.where(model_id: @model.id).count).to eq number.to_i
+  expect(inventory_pool.items.where(model_id: @model.id).count).to eq number
 end
 
-Then "the maximum number of available '$model' for '$who' is $size" do |model, who, size|
+Then "the maximum number of available {string} for {string} is {int}" do |model, who, size|
   user = User.find_by_login(who)
   @model = Model.find_by_name(model)
-  expect(user.items.where(model_id: @model.id).count).to eq size.to_i
+  expect(user.items.where(model_id: @model.id).count).to eq size
 end
 
 Then 'he gets an empty result set' do
   expect(@models_json.empty?).to be true
 end
 
-Then "he sees the '$model' model" do |model|
+Then "he sees the {string} model" do |model|
   m = Model.find_by_name(model)
   expect(@models_json.map{|x| x['label']}.include?(m.name)).to be true
 end

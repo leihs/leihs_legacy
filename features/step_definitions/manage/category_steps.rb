@@ -36,7 +36,7 @@ Then /^the category has been created with the specified name$/ do
 end
 
 Then /^the category is created with the assigned name and parent categories( and the image)?$/ do |image|
-  find('#categories-index-view h1', text: _('List of Categories'))
+  wait_until { first('#categories-index-view h1', text: _('List of Categories')) }
   expect(current_path).to eq manage_categories_path(@current_inventory_pool)
   @category = Category.find_by_name "#{@new_category_name}"
   expect(@category).not_to be_nil
@@ -139,7 +139,7 @@ end
 
 When /^I save the model$/ do
   click_button _('Save %s') % _('Model')
-  find('h1', text: _('List of Inventory'))
+  wait_until { first('h1', text: _('List of Inventory')) }
   step 'I receive a notification of success'
 end
 

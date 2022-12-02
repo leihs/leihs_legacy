@@ -1,0 +1,36 @@
+#!/bin/bash
+set -exu
+
+# builds a Dockerfile and then copies a directory out of the resulting image.
+# usage:
+# $ cd ~/CODE/leihs/legacy && bin/docker-extract-dir vendor/bundle              # copies to  ~/CODE/leihs/legacy/vendor/bundle
+# $ cd ~/CODE/leihs/legacy && bin/docker-extract-dir vendor/bundle /tmp/bundle  # copies to /tmp/bundle
+
+SRC_DIR="$1"
+DEST_DIR="${2:-$SRC_DIR}"
+
+STAGE="${STAGE:-dev}"
+IMAGE_NAME="${IMAGE_NAME:-leihs-legacy-$STAGE}"
+VERSION_NAME="${VERSION_NAME:-tmp}"
+tag="${IMAGE_NAME}:${VERSION_NAME}"
+IMAGE_WORKDIR="/leihs/legacy"
+
+LEGACY_DIR="$(dirname ${BASH_SOURCE})/.."
+cd "${LEGACY_DIR}"
+
+rm -rf "${DEST_DIR}" && mkdir -p "${DEST_DIR}"
+
+docker buildx build \
+  --target "$STAGE" \
+  --build-arg "WORKDIR=${IMAGE_WORKDIR}" \
+  -t "$tag" .
+
+docker image inspect "${tag}"
+
+container_id="$(docker create "$tag")"
+docker cp -La "$container_id:${IMAGE_WORKDIR}/${SRC_DIR}/." "${DEST_DIR}/"
+docker rm -f "$container_id"
+
+ls -la "${DEST_DIR}"
+du -chd0 "${DEST_DIR}"
+echo OK

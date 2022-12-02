@@ -78,7 +78,7 @@ When(/^I perform some activity$/) do
 end
 
 Then(/^I am redirected to the timeout page$/) do
-  expect(current_path).to eq borrow_order_timed_out_path
+  wait_until { current_path == borrow_order_timed_out_path }
 end
 
 #######################################################################

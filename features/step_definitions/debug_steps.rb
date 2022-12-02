@@ -54,11 +54,11 @@ end
 # When I switch on waiting
 # When I switch off waiting
 #
-Then 'switch $waitstate waiting' do |waitstate|
+Then 'switch {string} waiting' do |waitstate|
   @skip_wait = (waitstate == 'off')
 end
 
-Then 'set the default delay to $delay' do |delay|
+Then 'set the default delay to {string}' do |delay|
   @delay = delay.to_i
 end
 

@@ -14,7 +14,7 @@ end
 
 Then(/^I see entries grouped by start date and inventory pool$/) do
   @current_user.reservations.unsubmitted.group_by{|l| [l.start_date, l.inventory_pool]}.each do |k,v|
-    find('#current-order-lines .row', text: /#{I18n.l(k[0])}.*#{k[1].name}/)
+    find('#current-order-lines .row', text: /#{I18n.l(k[0])}\n#{k[1].name}/)
   end
 end
 
@@ -103,13 +103,13 @@ Then(/^the items are available for borrowing again$/) do
 end
 
 Then(/^I am again on the borrow section's start page$/) do
-  expect(current_path).to eq borrow_root_path
+  wait_until { current_path == borrow_root_path }
 end
 
 #############################################################################
 
 When(/^I enter a purpose$/) do
-  find("form textarea[name='purpose']", match: :first).set Faker::Lorem.sentences(2).join()
+  find("form textarea[name='purpose']", match: :first).set Faker::Lorem.sentences(number: 2).join()
 end
 
 When(/^I submit the order$/) do

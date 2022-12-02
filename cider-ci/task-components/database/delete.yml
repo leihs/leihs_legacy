@@ -3,7 +3,7 @@ scripts:
     body: |
       #!/usr/bin/env bash
       set -eux
-      dropdb "$DATABASE_NAME"
+      dropdb "$LEIHS_DATABASE_NAME"
     start_when:
       test is in terminal state:
         script_key: test

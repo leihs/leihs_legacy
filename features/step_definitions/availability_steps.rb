@@ -1,8 +1,8 @@
-Given "$number reservations exist for model '$model'" do |number, model|
+Given "{int} reservations exist for model {string}" do |number, model|
   # used by "0 reservations exist for model 'NEC 245'"
 end
 
-Given "a reservation exists for $quantity '$model' from $from to $to" do |quantity, model, from, to|
+Given "a reservation exists for {int} {string} from {string} to {string}" do |quantity, model, from, to|
   model = Model.find_by_name(model)
   inventory_pool = model.inventory_pools.select{|ip| ip.open_on?(to_date(from)) and ip.open_on?(to_date(to))}.sample
   user = inventory_pool.users.sample
@@ -11,7 +11,7 @@ Given "a reservation exists for $quantity '$model' from $from to $to" do |quanti
                              user: user,
                              inventory_pool: inventory_pool,
                              state: :submitted)
-  quantity.to_i.times do
+  quantity.times do
     @reservations << user.item_lines.create(inventory_pool: inventory_pool,
                                             status: :submitted,
                                             quantity: 1,
@@ -21,11 +21,11 @@ Given "a reservation exists for $quantity '$model' from $from to $to" do |quanti
                                             start_date: to_date(from),
                                             end_date: to_date(to))
   end
-  expect(@reservations.size).to be >= quantity.to_i
+  expect(@reservations.size).to be >= quantity
   expect(model.availability_in(inventory_pool.reload).running_reservations.size).to be >= 1
 end
 
-Given "a contract exists for $quantity '$model' from $from to $to" do |quantity, model, from, to|
+Given "a contract exists for {int} {string} from {string} to {string}" do |quantity, model, from, to|
   model = Model.find_by_name(model)
   inventory_pool = model.inventory_pools.detect { |ip| ip.open_on?(to_date(from)) && ip.open_on?(to_date(to)) }
   user = inventory_pool.users.first
@@ -34,7 +34,7 @@ Given "a contract exists for $quantity '$model' from $from to $to" do |quantity,
                              user: user,
                              inventory_pool: inventory_pool,
                              state: :approved)
-  quantity.to_i.times do
+  quantity.times do
     @reservations << user.item_lines.create(inventory_pool: inventory_pool,
                                             user: user,
                                             status: :approved,
@@ -51,21 +51,21 @@ end
 
 
 
-Given 'the maintenance period for this model is $days days' do |days|
-  @model.maintenance_period = days.to_i
+Given 'the maintenance period for this model is {int} days' do |days|
+  @model.maintenance_period = days
   @model.save
 end
 
-Given "$who marks $quantity '$model' as 'in-repair' on 18.3.2030" do |who, quantity, model|
+Given "{string} marks {int} {string} as 'in-repair' on 18.3.2030" do |who, quantity, model|
   @model = Model.find_by_name(model)
-  quantity.to_i.times do |i|
+  quantity.times do |i|
     @model.items[i].is_broken = true
     @model.items[i].is_borrowable = false
     @model.items[i].save
   end
 end
 
-Given 'the $who signs the contract' do |who|
+Given 'the {string} signs the contract' do |who|
   contract = Contract.sign!(User.find_by_login(who),
                             @current_inventory_pool,
                             @reservations.first.user,
@@ -80,13 +80,13 @@ Given 'the $who signs the contract' do |who|
 end
 
 # TODO merge with next step
-When "$who checks availability for '$what'" do |who, model|
+When "{string} checks availability for {string}" do |who, model|
   @current_user = User.find_by_login(who)
   @model = Model.find_by_name(model)
 end
 
 # TODO merge with previous step
-When "$who checks availability for '$what' on $date" do |who, model, date|
+When "{string} checks availability for {string} on {string}" do |who, model, date|
   #date = to_date(date)
   @current_user = User.find_by_login(who)
 end
@@ -95,33 +95,33 @@ Then 'it should always be available' do
   expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(Date.today, Availability::ETERNITY, @user.entitlement_group_ids)).to be > 0
 end
 
-Then '$quantity should be available from $from to $to' do |quantity, from, to|
+Then '{int} should be available from {string} to {string}' do |quantity, from, to|
   from = to_date( from )
   to   = to_date( to )
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(from, to, @user.entitlement_group_ids)).to eq quantity.to_i
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(from, to, @user.entitlement_group_ids)).to eq quantity
 end
 
-Then 'the maximum available quantity on $date is $quantity' do |date, quantity|
+Then 'the maximum available quantity on {string} is {int}' do |date, quantity|
   date = to_date(date)
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(date, date, @user.entitlement_group_ids)).to eq quantity.to_i
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(date, date, @user.entitlement_group_ids)).to eq quantity
 end
 
-Then 'if I check the maximum available quantity for $date it is $quantity on $current_date' do |date, quantity, current_date|
+Then 'if I check the maximum available quantity for {string} it is {int} on {string}' do |date, quantity, current_date|
   date = to_date(date)
   Dataset.back_to_date( to_date(current_date) )
   @inventory_pool.reload
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(date, date, @user.entitlement_group_ids)).to eq quantity.to_i
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(date, date, @user.entitlement_group_ids)).to eq quantity
   Dataset.back_to_date
   @inventory_pool.reload
 end
 
-Then 'the maximum available quantity from $start_date to $end_date is $quantity' do |start_date, end_date, quantity|
+Then 'the maximum available quantity from {string} to {string} is {int}' do |start_date, end_date, quantity|
   start_date = to_date(start_date)
   end_date   = to_date(end_date)
-  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(start_date, end_date, @user.entitlement_group_ids)).to eq quantity.to_i
+  expect(@model.availability_in(@inventory_pool).maximum_available_in_period_for_groups(start_date, end_date, @user.entitlement_group_ids)).to eq quantity
 end
 
-# When "I check the availability changes for '$model'" do |model|
+# When "I check the availability changes for {string}" do |model|
 #   @model = Model.find_by_name(model)
 #   # we have a look at the model on purpose, since in the pass this
 #   # could fail - see 5bd28c92d157220a07dff1ba9a7f43b1fac3f5fd and its fix
@@ -130,7 +130,7 @@ end
 #   visit groups_backend_inventory_pool_model_path(@inventory_pool,@model)
 # end
 
-Then "$number reservation should show an influence on today's borrowability" do |number|
+Then "{string} reservation should show an influence on today's borrowability" do |number|
   today = I18n.l Date.today
   Then "#{to_number(number)} reservations should show an influence on the borrowability on #{today}"
 end
