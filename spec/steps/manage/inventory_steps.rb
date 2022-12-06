@@ -13,9 +13,9 @@ module Manage
 
       step 'there is an item the current pool is owner of ' \
            'situated in room :room' do |room|
-        FactoryGirl.create(:item,
+        FactoryBot.create(:item,
                            owner: @current_inventory_pool,
-                           room: FactoryGirl.create(:room,
+                           room: FactoryBot.create(:room,
                                                     name: room))
       end
 
@@ -41,7 +41,7 @@ module Manage
 
       step 'there are :n items for the model in the current inventory pool' do |n|
         n.to_i.times do
-          FactoryGirl.create(:item,
+          FactoryBot.create(:item,
                              model: @model,
                              owner: @current_inventory_pool,
                              inventory_pool: @current_inventory_pool)
@@ -51,7 +51,7 @@ module Manage
       step 'there are :n licenses for the software ' \
            'in the current inventory pool' do |n|
         n.to_i.times do
-          FactoryGirl.create(:license,
+          FactoryBot.create(:license,
                              model: @software,
                              owner: @current_inventory_pool,
                              inventory_pool: @current_inventory_pool)

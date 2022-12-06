@@ -1,11 +1,11 @@
 # -*- encoding : utf-8 -*-
 
 Given(/^there exists an approved option reservation for a normal user beginning today$/) do
-  @option_line = FactoryGirl.create(:option_line,
+  @option_line = FactoryBot.create(:option_line,
                                     start_date: Date.today,
                                     end_date: Date.tomorrow,
                                     status: :approved,
-                                    user: FactoryGirl.create(:customer,
+                                    user: FactoryBot.create(:customer,
                                                              inventory_pool: @current_inventory_pool),
                                     inventory_pool: @current_inventory_pool)
   @customer = @option_line.user
@@ -17,14 +17,14 @@ When(/^I open the hand over page containing this reservation$/) do
 end
 
 When(/^I open a hand over$/) do
-  @customer = FactoryGirl.create(:customer,
+  @customer = FactoryBot.create(:customer,
                                  inventory_pool: @current_inventory_pool)
-  @contract = @order = FactoryGirl.create(:order,
+  @contract = @order = FactoryBot.create(:order,
                                           state: :approved,
                                           user: @customer,
                                           inventory_pool: @current_inventory_pool)
   3.times do
-    FactoryGirl.create(:reservation,
+    FactoryBot.create(:reservation,
                        status: :approved,
                        user: @customer,
                        order: @order,

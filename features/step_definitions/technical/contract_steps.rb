@@ -2,13 +2,13 @@ When /^I create an approved contract for "(.*?)" with a contract line without an
   user = User.where(login: name.downcase).first
 
   unless user.access_right_for(@current_inventory_pool)
-    FactoryGirl.create :access_right, user: user, inventory_pool: @current_inventory_pool
+    FactoryBot.create :access_right, user: user, inventory_pool: @current_inventory_pool
   end
 
   contract = user.orders.approved.find_by(inventory_pool_id: @current_inventory_pool)
   expect(contract).to be_nil
 
-  @reservation = FactoryGirl.create :reservation,
+  @reservation = FactoryBot.create :reservation,
                                       status: :approved,
                                       inventory_pool: @current_inventory_pool,
                                       user: user

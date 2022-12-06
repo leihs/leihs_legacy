@@ -70,11 +70,11 @@ end
 Given /^there are open contracts for all users$/ do
   @open_reservations = User.all.flat_map do |user|
     rand(3..6).times.map do
-      order = FactoryGirl.create(:order,
+      order = FactoryBot.create(:order,
                                  user: user,
                                  inventory_pool: @current_inventory_pool,
                                  state: :approved)
-      FactoryGirl.create :reservation, order: order, user: user, inventory_pool: @current_inventory_pool, status: :approved
+      FactoryBot.create :reservation, order: order, user: user, inventory_pool: @current_inventory_pool, status: :approved
     end
   end
 end
@@ -97,11 +97,11 @@ end
 
 Given /^there is an open contract with reservations for a user$/ do
   user = User.first
-  order = FactoryGirl.create(:order,
+  order = FactoryBot.create(:order,
                              user: user,
                              inventory_pool: @current_inventory_pool,
                              state: :approved)
-  @open_reservations = rand(3..6).times.map { FactoryGirl.create :reservation, order: order, user: user, inventory_pool: @current_inventory_pool, status: :approved }
+  @open_reservations = rand(3..6).times.map { FactoryBot.create :reservation, order: order, user: user, inventory_pool: @current_inventory_pool, status: :approved }
 end
 
 Given /^the first contract line starts on the same date as the second one$/ do
@@ -121,23 +121,23 @@ Then /^the first two contract reservations should now be grouped inside the firs
 end
 
 Given /^there are 2 different contracts for 2 different users$/ do
-  @open_reservation0 = FactoryGirl.create :reservation, user: User.first, inventory_pool: @current_inventory_pool, status: :approved
-  @open_reservation1 = FactoryGirl.create :reservation, user: User.last, inventory_pool: @current_inventory_pool, status: :approved
+  @open_reservation0 = FactoryBot.create :reservation, user: User.first, inventory_pool: @current_inventory_pool, status: :approved
+  @open_reservation1 = FactoryBot.create :reservation, user: User.last, inventory_pool: @current_inventory_pool, status: :approved
 end
 
 Given /^there are 2 different contracts with reservations for 2 different users$/ do
   user2 = User.first
-  order2 = FactoryGirl.create(:order,
+  order2 = FactoryBot.create(:order,
                               user: user2,
                               inventory_pool: @current_inventory_pool,
                               state: :approved)
-  @open_reservations2 = rand(3..6).times.map { FactoryGirl.create :reservation, order: order2, user: user2, inventory_pool: @current_inventory_pool, status: :approved }
+  @open_reservations2 = rand(3..6).times.map { FactoryBot.create :reservation, order: order2, user: user2, inventory_pool: @current_inventory_pool, status: :approved }
   user3 = User.last
-  order3 = FactoryGirl.create(:order,
+  order3 = FactoryBot.create(:order,
                               user: user3,
                               inventory_pool: @current_inventory_pool,
                               state: :approved)
-  @open_reservations3 = rand(3..6).times.map { FactoryGirl.create :reservation, order: order3, user: user3, inventory_pool: @current_inventory_pool, status: :approved }
+  @open_reservations3 = rand(3..6).times.map { FactoryBot.create :reservation, order: order3, user: user3, inventory_pool: @current_inventory_pool, status: :approved }
 end
 
 Then /^there are 2 hand over visits for the given inventory pool$/ do

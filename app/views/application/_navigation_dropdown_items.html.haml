@@ -1,7 +1,7 @@
 :ruby
   what_to_display = []
 
-  if controller.class.parent != Borrow
+  if controller.class.module_parent != Borrow
     what_to_display = [:borrow]
   end
   if current_user.is_admin or current_user.system_admin?

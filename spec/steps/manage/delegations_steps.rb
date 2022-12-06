@@ -22,14 +22,14 @@ module Manage
                                       name: 'leihs password',
                                       type: 'password')
 
-        FactoryGirl.create(:user_session,
+        FactoryBot.create(:user_session,
                            user: @user,
                            authentication_system: auth_system,
                            delegation: @delegation)
       end
 
       step 'the user has unsubmitted reservation for the delegation' do
-        FactoryGirl.create(:reservation,
+        FactoryBot.create(:reservation,
                            status: :unsubmitted,
                            user: @delegation,
                            delegated_user: @user,
@@ -38,12 +38,12 @@ module Manage
 
       step 'the user has submitted reservation for the delegation' do
         ActiveRecord::Base.transaction do
-          order = FactoryGirl.create(:order,
+          order = FactoryBot.create(:order,
                                      user: @delegation,
                                      state: :submitted,
                                      inventory_pool: @current_inventory_pool)
           @submitted_reservation = \
-            FactoryGirl.create(:reservation,
+            FactoryBot.create(:reservation,
                                :with_assigned_item,
                                status: :submitted,
                                user: @delegation,
@@ -55,12 +55,12 @@ module Manage
 
       step 'the user has rejected reservation for the delegation' do
         ActiveRecord::Base.transaction do
-          order = FactoryGirl.create(:order,
+          order = FactoryBot.create(:order,
                                      user: @delegation,
                                      state: :rejected,
                                      inventory_pool: @current_inventory_pool)
           @rejected_reservation = \
-            FactoryGirl.create(:reservation,
+            FactoryBot.create(:reservation,
                                :with_assigned_item,
                                status: :rejected,
                                user: @delegation,
@@ -72,12 +72,12 @@ module Manage
 
       step 'the user has closed reservation for the delegation' do
         ActiveRecord::Base.transaction do
-          contract = FactoryGirl.create(:closed_contract,
+          contract = FactoryBot.create(:closed_contract,
                                         user: @delegation,
                                         contact_person: @user,
                                         inventory_pool: @current_inventory_pool)
           @closed_reservation = \
-            FactoryGirl.create(:reservation,
+            FactoryBot.create(:reservation,
                                :with_assigned_item,
                                status: :closed,
                                user: @delegation,
@@ -89,12 +89,12 @@ module Manage
 
       step 'the user has a submitted reservation' do
         ActiveRecord::Base.transaction do
-          order = FactoryGirl.create(:order,
+          order = FactoryBot.create(:order,
                                      user: @user,
                                      state: :submitted,
                                      inventory_pool: @current_inventory_pool)
           @submitted_reservation = \
-            FactoryGirl.create(:reservation,
+            FactoryBot.create(:reservation,
                                status: :submitted,
                                user: @user,
                                order: order,

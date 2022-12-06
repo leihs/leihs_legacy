@@ -4,10 +4,10 @@ end
 
 Given(/^it has at least (\d+) items in the current inventory pool$/) do |arg1|
   arg1.to_i.times do
-    FactoryGirl.create(:item,
+    FactoryBot.create(:item,
                        model: @model,
                        owner: @current_inventory_pool,
-                       supplier: FactoryGirl.create(:supplier,
+                       supplier: FactoryBot.create(:supplier,
                                                     name: Faker::Lorem.characters(number: 20)))
   end
   expect(@model.items.where(inventory_pool_id: @current_inventory_pool).count).to be >= arg1.to_i
@@ -41,16 +41,16 @@ Given(/^it has at least (\d+) (unsubmitted|submitted|approved|signed) reservatio
     attrs[:start_date] = Date.today + rand(0..10).days
     attrs[:end_date] = Date.today + rand(10..20).days
     if [:submitted, :rejected, :approved].include? attrs[:status]
-      user = FactoryGirl.create(:customer,
+      user = FactoryBot.create(:customer,
                                 inventory_pool: @current_inventory_pool)
-      order = FactoryGirl.create(:order,
+      order = FactoryBot.create(:order,
                                  inventory_pool: @current_inventory_pool,
                                  user: user,
                                  state: attrs[:status])
       attrs['order_id'] = order.id
       attrs['user_id'] = user.id
     end
-    cl = FactoryGirl.create(:reservation, attrs.merge!(delegated_user: nil))
+    cl = FactoryBot.create(:reservation, attrs.merge!(delegated_user: nil))
 
     if status.to_sym == :signed
       contract = Contract.sign!(@current_user, @current_inventory_pool, user, [cl],

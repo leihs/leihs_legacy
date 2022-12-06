@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :suspension do
   end
@@ -6,7 +6,7 @@ FactoryGirl.define do
   factory :direct_access_right do
     user
     inventory_pool
-    role {[:customer, :group_manager, :lending_manager, :inventory_manager].sample}
+    role { [:customer, :group_manager, :lending_manager, :inventory_manager].sample }
   end
 
   factory :access_right do
@@ -15,13 +15,13 @@ FactoryGirl.define do
     inventory_pool
 
     transient do
-      suspended_until nil
-      suspended_reason nil
+      suspended_until { nil }
+      suspended_reason { nil }
     end
 
     after :create do |ac, trans|
       if trans.suspended_until
-        FactoryGirl.create :suspension,
+        FactoryBot.create :suspension,
                            suspended_until: trans.suspended_until,
                            suspended_reason: trans.suspended_reason,
                            inventory_pool_id: ac.inventory_pool_id,

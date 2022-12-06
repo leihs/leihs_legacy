@@ -9,7 +9,7 @@ When /^'(.*)' orders (\d+) '(.*)' from inventory pool (\d+)( for the same time)?
   end
 
   quantity.to_i.times do
-    FactoryGirl.create(:reservation,
+    FactoryBot.create(:reservation,
                        status: :unsubmitted,
                        model: model,
                        inventory_pool: inventory_pool,
@@ -22,7 +22,7 @@ end
 When /^all reservations of '(.*)' are submitted$/ do |who|
   expect(@user.reservations.unsubmitted.reload).not_to be_empty
   @user.reservations.unsubmitted.group_by(&:inventory_pool).each_pair do |inventory_pool, reservations|
-    order = FactoryGirl.create(:order,
+    order = FactoryBot.create(:order,
                                inventory_pool: inventory_pool,
                                user: @user,
                                purpose: "this is the required purpose",
@@ -55,14 +55,14 @@ Given /^there is a "(.*?)" contract with (\d+) reservations?$/ do |contract_type
 
   user = @inventory_pool.users.detect {|u| u.orders.where(inventory_pool_id: @inventory_pool, status: status).empty? }
   expect(user).not_to be_nil
-  @no_of_lines_at_start.times.map { FactoryGirl.create :reservation, user: user, inventory_pool: @inventory_pool, status: status }
+  @no_of_lines_at_start.times.map { FactoryBot.create :reservation, user: user, inventory_pool: @inventory_pool, status: status }
   @contract = user.orders.find_by(inventory_pool_id: @inventory_pool, status: status)
 end
 
 Given /^there is a "(SIGNED|CLOSED)" contract with reservations?$/ do |contract_type|
   status = contract_type.downcase.to_sym
 
-  @contract = FactoryGirl.create("#{contract_type.downcase}_contract", inventory_pool: @inventory_pool)
+  @contract = FactoryBot.create("#{contract_type.downcase}_contract", inventory_pool: @inventory_pool)
   @no_of_lines_at_start = @contract.reservations.count
 end
 
@@ -93,7 +93,7 @@ Given /^required test data for contract tests existing$/ do
 end
 
 Given /^an inventory pool existing$/ do
-  @inventory_pool = FactoryGirl.create :inventory_pool
+  @inventory_pool = FactoryBot.create :inventory_pool
 end
 
 When /^I add some reservations for this contract$/ do

@@ -635,16 +635,16 @@ Then(/^I cannot place any reservations in this inventory pool$/) do
 end
 
 Given(/^there exists a delegation with 'Julie' in its name$/) do
-  delegator = FactoryGirl.create(:user)
+  delegator = FactoryBot.create(:user)
   @delegation = \
-    FactoryGirl.create(:user,
+    FactoryBot.create(:user,
                        delegator_user: delegator,
                        firstname: "#{Faker::Lorem.word} Julie #{Faker::Lorem.word}")
-  FactoryGirl.create(:access_right,
+  FactoryBot.create(:access_right,
                      role: 'customer',
                      user: delegator,
                      inventory_pool: @current_inventory_pool)
-  FactoryGirl.create(:access_right,
+  FactoryBot.create(:access_right,
                      user: @delegation,
                      role: 'customer',
                      inventory_pool: @current_inventory_pool)

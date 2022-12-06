@@ -52,7 +52,7 @@ module LeihsFactory
     attributes = default_attributes.merge(attributes)
 
     u = User.find_by_login attributes[:login]
-    u ||= FactoryGirl.create :user, attributes
+    u ||= FactoryBot.create :user, attributes
 
     options[:role] ||= :customer
     options[:inventory_pool] ||= InventoryPool.first
@@ -218,7 +218,7 @@ module LeihsFactory
   #
   def self.create_dataset_simple
 
-    FactoryGirl.create :setting unless Setting.first
+    FactoryBot.create :setting unless Setting.first
 
     inventory_pool = LeihsFactory.create_inventory_pool_default_workdays
 
@@ -232,10 +232,10 @@ module LeihsFactory
                                      inventory_pool: inventory_pool})
     # Create Model and Item
     model = LeihsFactory.create_model(product: 'holey parachute')
-    FactoryGirl.create(:item, owner: inventory_pool, model: model)
+    FactoryBot.create(:item, owner: inventory_pool, model: model)
 
     # Create Authenication System if not already existing
-    FactoryGirl.create :authentication_system, name: 'DatabaseAuthentication' unless AuthenticationSystem.default_system.first
+    FactoryBot.create :authentication_system, name: 'DatabaseAuthentication' unless AuthenticationSystem.default_system.first
 
     [inventory_pool, user, customer, model]
   end
@@ -293,7 +293,7 @@ module LeihsFactory
   # default buildings
   #
   def self.create_default_building
-    FactoryGirl.create :building, code: 'ZZZ', name: 'Great Pyramid of Giza'
+    FactoryBot.create :building, code: 'ZZZ', name: 'Great Pyramid of Giza'
   end
 
   #
@@ -356,7 +356,7 @@ module LeihsFactory
      ['BU',  'Schützenmattstrsse, 1B'],
      ['KST', 'Kart-Stauffer-Strasse, 26']].each do |building|
 
-       FactoryGirl.create :building, code: building[0], name: building[1]
+       FactoryBot.create :building, code: building[0], name: building[1]
     end
   end
 

@@ -1,6 +1,6 @@
 # coding: UTF-8
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :setting do
     local_currency_string { 'CHF' }

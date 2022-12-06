@@ -11,7 +11,7 @@ module Manage
 
       step 'there is an item with uppercase inventory code in the current pool' do
         @inventory_code = Faker::Lorem.word.upcase
-        @item = FactoryGirl.create(:item,
+        @item = FactoryBot.create(:item,
                                    inventory_pool: @current_inventory_pool,
                                    owner: @current_inventory_pool,
                                    inventory_code: @inventory_code)
@@ -44,7 +44,7 @@ module Manage
 
       step 'there is a customer in the current pool' do
         @customer = \
-          FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
+          FactoryBot.create(:customer, inventory_pool: @current_inventory_pool)
       end
 
       step 'I open hand over for this customer' do

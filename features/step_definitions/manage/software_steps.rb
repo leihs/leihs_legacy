@@ -265,9 +265,9 @@ Given(/^there is a (.*) with the following properties:$/) do |arg1, table|
 
       @model = case arg1
                  when 'model'
-                   FactoryGirl.create :model, model_attrs
+                   FactoryBot.create :model, model_attrs
                  when 'software product'
-                   FactoryGirl.create :software, model_attrs
+                   FactoryBot.create :software, model_attrs
                end
 
     when 'item', 'software license'
@@ -310,9 +310,9 @@ Given(/^there is a (.*) with the following properties:$/) do |arg1, table|
 
       case arg1
         when 'item'
-          @item = FactoryGirl.create :item, item_attrs.merge({model: @model})
+          @item = FactoryBot.create :item, item_attrs.merge({model: @model})
         when 'software license'
-          @item = FactoryGirl.create :license, item_attrs.merge({model: @model})
+          @item = FactoryBot.create :license, item_attrs.merge({model: @model})
       end
 
     else
@@ -412,7 +412,7 @@ Then(/^all matching (.*) appear$/) do |arg1|
 end
 
 Given(/^a software product exists$/) do
-  @model = FactoryGirl.create :software
+  @model = FactoryBot.create :software
 end
 
 Given(/^a software license exists$/) do
@@ -421,12 +421,12 @@ Given(/^a software license exists$/) do
 end
 
 Given(/^this software license is handed over to somebody$/) do
-  @user = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
-  order = FactoryGirl.create(:order,
+  @user = FactoryBot.create(:customer, inventory_pool: @current_inventory_pool)
+  order = FactoryBot.create(:order,
                              user: @user,
                              inventory_pool: @current_inventory_pool,
                              state: :approved)
-  line = FactoryGirl.create(:item_line,
+  line = FactoryBot.create(:item_line,
                             order: order,
                             inventory_pool: @current_inventory_pool,
                             user: @user,
@@ -464,7 +464,7 @@ end
 
 Given(/^there exist licenses for this software product$/) do
   rand(1..3).times do
-    @model.items << FactoryGirl.create(:license, {owner: @current_inventory_pool, model: @model})
+    @model.items << FactoryBot.create(:license, {owner: @current_inventory_pool, model: @model})
   end
   @item = @model.items.first
 end
@@ -904,7 +904,7 @@ end
 Given(/^the license has (\d+) attachment$/) do |count|
   @attachment_filenames = []
   count.to_i.times do
-    a = FactoryGirl.create :attachment, item: @license
+    a = FactoryBot.create :attachment, item: @license
     @attachment_filenames << a.filename
   end
 end

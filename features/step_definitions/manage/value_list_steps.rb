@@ -260,11 +260,11 @@ Then(/^any options are priced according to their price set in the inventory pool
 end
 
 Given(/^there is an order with at least two models and a quantity of at least three per model$/) do
-  customer = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
-  @order = FactoryGirl.create(:order, state: :submitted, user: customer, inventory_pool: @current_inventory_pool)
-  [FactoryGirl.create(:model), FactoryGirl.create(:model)].each do |model|
+  customer = FactoryBot.create(:customer, inventory_pool: @current_inventory_pool)
+  @order = FactoryBot.create(:order, state: :submitted, user: customer, inventory_pool: @current_inventory_pool)
+  [FactoryBot.create(:model), FactoryBot.create(:model)].each do |model|
     3.times do
-      @order.reservations << FactoryGirl.create(:reservation,
+      @order.reservations << FactoryBot.create(:reservation,
                                                 user: customer,
                                                 inventory_pool: @current_inventory_pool,
                                                 order: @order,

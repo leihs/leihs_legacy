@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :user do
     login { Faker::Lorem.characters(number: 12) }
@@ -35,7 +35,7 @@ FactoryGirl.define do
     end
 
     factory :delegation do
-      delegator_user { FactoryGirl.create(:user) }
+      delegator_user { FactoryBot.create(:user) }
     end
 
     [:customer,
@@ -44,7 +44,7 @@ FactoryGirl.define do
      :inventory_manager].each do |role|
       factory role do
         transient do
-          inventory_pool nil
+          inventory_pool { nil }
         end
 
         after(:create) do |user, evaluator|

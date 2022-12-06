@@ -15,12 +15,12 @@ module Manage
 
       step 'a signed contract :n for a user matching :search_string exists' \
         do |n, search_string|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @current_inventory_pool,
                                   firstname: search_string)
         instance_variable_set \
           "@contract_#{n}",
-          FactoryGirl.create(:open_contract,
+          FactoryBot.create(:open_contract,
                              user: user,
                              inventory_pool: @current_inventory_pool)
       end
@@ -28,12 +28,12 @@ module Manage
       step 'a signed contract :n for a second user matching ' \
            ':search_string exists' \
         do |n, search_string|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @current_inventory_pool,
                                   firstname: search_string)
         instance_variable_set \
           "@contract_#{n}",
-          FactoryGirl.create(:open_contract,
+          FactoryBot.create(:open_contract,
                              user: user,
                              inventory_pool: @current_inventory_pool)
       end
@@ -41,15 +41,15 @@ module Manage
       step 'a signed contract :n for a delegation matching :search_string exists' \
         do |n, search_string|
         delegator_user = \
-          FactoryGirl.create(:customer,
+          FactoryBot.create(:customer,
                              inventory_pool: @current_inventory_pool)
-        delegation = FactoryGirl.create(:customer,
+        delegation = FactoryBot.create(:customer,
                                         inventory_pool: @current_inventory_pool,
                                         delegator_user: delegator_user,
                                         firstname: search_string)
         instance_variable_set \
           "@contract_#{n}",
-          FactoryGirl.create(:open_contract,
+          FactoryBot.create(:open_contract,
                              user: delegation,
                              contact_person: delegation.delegated_users.first,
                              inventory_pool: @current_inventory_pool)
@@ -57,12 +57,12 @@ module Manage
 
       step 'a closed contract :n for a user matching :search_string ' \
            'created on :date exists' do |n, search_string, date|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @current_inventory_pool,
                                   firstname: search_string)
         instance_variable_set \
           "@contract_#{n}",
-          FactoryGirl.create(:closed_contract,
+          FactoryBot.create(:closed_contract,
                              created_at: Date.strptime(date, '%d.%m.%Y'),
                              user: user,
                              inventory_pool: @current_inventory_pool)
@@ -72,20 +72,20 @@ module Manage
            'matching :search_string created on :date exists' \
            do |n, search_string, date|
         contact_person = \
-          FactoryGirl.create(:customer,
+          FactoryBot.create(:customer,
                              firstname: search_string,
                              inventory_pool: @current_inventory_pool)
         delegator_user = \
-          FactoryGirl.create(:customer,
+          FactoryBot.create(:customer,
                              inventory_pool: @current_inventory_pool)
-        delegation = FactoryGirl.create(:customer,
+        delegation = FactoryBot.create(:customer,
                                         inventory_pool: @current_inventory_pool,
                                         delegator_user: delegator_user,
                                         firstname: search_string)
         delegation.delegated_users << contact_person
         instance_variable_set \
           "@contract_#{n}",
-          FactoryGirl.create(:closed_contract,
+          FactoryBot.create(:closed_contract,
                              created_at: Date.strptime(date, '%d.%m.%Y'),
                              user: delegation,
                              contact_person: contact_person,
@@ -119,13 +119,13 @@ module Manage
       end
 
       step 'there is a retired item' do
-        @retired_item = FactoryGirl.create(:item,
+        @retired_item = FactoryBot.create(:item,
                                            retired: Date.today,
                                            retired_reason: Faker::Lorem.sentence)
       end
 
       step 'there is an inactive inventory pool' do
-        @inactive_pool = FactoryGirl.create(:inventory_pool)
+        @inactive_pool = FactoryBot.create(:inventory_pool)
       end
 
       step 'the owner of the item is the inactive inventory pool' do

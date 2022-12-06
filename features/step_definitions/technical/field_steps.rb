@@ -1,12 +1,12 @@
 Given /^test data setup for =Provision of accessible fields= feature$/ do
-  @inventory_pool = FactoryGirl.create :inventory_pool
+  @inventory_pool = FactoryBot.create :inventory_pool
   @minimum_field_size = Field.all.select {|f| f.data['permissions'].nil? }.size
 end
 
 Given /^a user with role (\w+) exists$/ do |manager_role|
-  @user = FactoryGirl.create(:user)
+  @user = FactoryBot.create(:user)
   @manager_role = manager_role.to_sym
-  @user.access_rights << FactoryGirl.create(:access_right, role: @manager_role, user: @user, inventory_pool: @inventory_pool)
+  @user.access_rights << FactoryBot.create(:access_right, role: @manager_role, user: @user, inventory_pool: @inventory_pool)
 end
 
 When /^you get the accessible fields for this user$/ do
@@ -28,8 +28,8 @@ Then /^the amount of the accessible fields (.*) (\w+) can be different$/ do |com
   end
 
   # create a user with higher level
-  @higher_user = FactoryGirl.create(:user)
-  @higher_user.access_rights << FactoryGirl.create(:access_right, role: higher_manager_role.to_sym, user: @higher_user, inventory_pool: @inventory_pool)
+  @higher_user = FactoryBot.create(:user)
+  @higher_user.access_rights << FactoryBot.create(:access_right, role: higher_manager_role.to_sym, user: @higher_user, inventory_pool: @inventory_pool)
   # create also data for an higher level
   @higher_accessible_fields = Field.all.select {|f| f.accessible_by? @higher_user, @inventory_pool }
   # check that the same condition holds true also for higher level
@@ -43,7 +43,7 @@ Then /^the amount of the accessible fields (.*) (\w+) can be different$/ do |com
 end
 
 Given /^an item is existing$/ do
-  @item = FactoryGirl.create :item
+  @item = FactoryBot.create :item
 end
 
 Then /^each field provides the value of the item's attribute$/ do

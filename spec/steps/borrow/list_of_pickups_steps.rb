@@ -10,7 +10,7 @@ module Borrow
       include ::Spec::PersonasDumpSteps
 
       step 'I have an approved order' do
-        FactoryGirl.create(:reservation,
+        FactoryBot.create(:reservation,
                            user: @current_user,
                            status: :approved,
                            inventory_pool: @inventory_pool)

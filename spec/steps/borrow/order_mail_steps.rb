@@ -16,15 +16,15 @@ module Borrow
       end
 
       step 'there exists pool :letter' do |letter|
-        ivar_set "@pool_#{letter}", FactoryGirl.create(:inventory_pool)
+        ivar_set "@pool_#{letter}", FactoryBot.create(:inventory_pool)
       end
 
       step 'there is a model :letter' do |letter|
-        ivar_set "@model_#{letter}", FactoryGirl.create(:model)
+        ivar_set "@model_#{letter}", FactoryBot.create(:model)
       end
 
       step 'I have access to pool :letter' do |letter|
-        FactoryGirl.create \
+        FactoryBot.create \
           :access_right,
           user: @customer,
           inventory_pool: ivar_get("@pool_#{letter}"),
@@ -33,7 +33,7 @@ module Borrow
 
       step 'pool :pool_letter has a borrowable item for model :model_letter' \
         do |pool_letter, model_letter|
-        FactoryGirl.create(:item,
+        FactoryBot.create(:item,
                            model: ivar_get("@model_#{model_letter}"),
                            is_borrowable: true,
                            owner: ivar_get("@pool_#{pool_letter}"),
@@ -42,7 +42,7 @@ module Borrow
 
       step 'the customer has an unsubmitted reservation for model :model_letter ' \
            'and pool :pool_letter' do |model_letter, pool_letter|
-        FactoryGirl.create(:reservation,
+        FactoryBot.create(:reservation,
                            status: :unsubmitted,
                            user: @customer,
                            inventory_pool: ivar_get("@pool_#{pool_letter}"),

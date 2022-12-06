@@ -14,7 +14,7 @@ def login_as_user(user, _)
 end
 
 def create_user
-  FactoryGirl.create(:user)
+  FactoryBot.create(:user)
 end
 
 def open_login
@@ -22,11 +22,11 @@ def open_login
 end
 
 def create_inventory_pool
-  FactoryGirl.create(:inventory_pool)
+  FactoryBot.create(:inventory_pool)
 end
 
 def enable_manager_for_inventory_pool(user, inventory_pool)
-  FactoryGirl.create(:access_right, user: user, inventory_pool: inventory_pool, role: 'inventory_manager')
+  FactoryBot.create(:access_right, user: user, inventory_pool: inventory_pool, role: 'inventory_manager')
 end
 
 def click_expert_search
@@ -60,7 +60,7 @@ def delete_all_fields
 end
 
 def create_item(inventory_pool)
-  FactoryGirl.create(:item, inventory_pool: inventory_pool)
+  FactoryBot.create(:item, inventory_pool: inventory_pool)
 end
 
 def check_result(expected_items)

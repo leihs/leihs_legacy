@@ -43,7 +43,7 @@ end
 When /^I assign (\w+) item(s?) to group "([^"]*)"$/ do |n, plural, to_group_name|
   n = to_number(n)
   to_group = @inventory_pool.entitlement_groups.find_by_name to_group_name
-  FactoryGirl.create(:entitlement,
+  FactoryBot.create(:entitlement,
                      model: @model,
                      entitlement_group: to_group,
                      quantity: n)
@@ -110,13 +110,13 @@ end
 When /^I lend (\w+) item(s?) of that model to "([^"]*)"$/ do |n, plural, user_login|
   user = User.find_by_login user_login
   purpose = 'this is the required purpose'
-  order = FactoryGirl.create(:order,
+  order = FactoryBot.create(:order,
                              state: :approved,
                              user: user,
                              inventory_pool: @inventory_pool,
                              purpose: purpose)
   reservations = to_number(n).times.map do
-    FactoryGirl.create(:reservation,
+    FactoryBot.create(:reservation,
                        status: :approved,
                        order: order,
                        inventory_pool: @inventory_pool,

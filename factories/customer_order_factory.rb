@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :customer_order do
-    user { FactoryGirl.create(:user) }
+    user { FactoryBot.create(:user) }
     purpose { Faker::Lorem.sentence }
     title { purpose }
   end

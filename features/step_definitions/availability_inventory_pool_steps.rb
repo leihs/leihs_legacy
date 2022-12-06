@@ -1,7 +1,7 @@
 Given 'this model has {int} item(s) in inventory pool {int}' do |number, ip|
   inventory_pool = InventoryPool.find_by_name(ip.to_s)
   number.times do | i |
-    FactoryGirl.create(:item, owner: inventory_pool, model: @model)
+    FactoryBot.create(:item, owner: inventory_pool, model: @model)
   end
   expect(inventory_pool.items.where(model_id: @model.id).count).to eq number
 end

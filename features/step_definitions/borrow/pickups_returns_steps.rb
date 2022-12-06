@@ -123,7 +123,7 @@ end
 
 Then(/^I have to return some options$/) do
   c = @current_user.contracts.open.first
-  FactoryGirl.create(:option_line,
+  FactoryBot.create(:option_line,
                      status: :signed,
                      inventory_pool: c.inventory_pool,
                      quantity: 5,

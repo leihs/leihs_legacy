@@ -10,16 +10,16 @@ module Manage
       include ::Spec::PersonasDumpSteps
 
       step 'there exists an open contract' do
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @current_inventory_pool)
-        @contract = FactoryGirl.create(:open_contract,
+        @contract = FactoryBot.create(:open_contract,
                                        inventory_pool: @current_inventory_pool,
                                        user: user)
       end
 
       step 'the contract has an item line' do
         @option_line = \
-          FactoryGirl.create(:option_line,
+          FactoryBot.create(:option_line,
                              user: @contract.user,
                              inventory_pool: @contract.inventory_pool,
                              contract: @contract,
@@ -28,7 +28,7 @@ module Manage
 
       step 'the contract has an option line' do
         @item_line = \
-          FactoryGirl.create(:item_line, :with_assigned_item,
+          FactoryBot.create(:item_line, :with_assigned_item,
                              user: @contract.user,
                              inventory_pool: @contract.inventory_pool,
                              contract: @contract,

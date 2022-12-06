@@ -128,10 +128,10 @@ Given(/^there exists a closed contract with an item, for which an other inventor
 end
 
 Given(/^there exists a closed contract with a license, for which an other inventory pool is responsible and owner$/) do
-  @contract = FactoryGirl.create(:closed_contract, inventory_pool: @current_inventory_pool)
-  software = FactoryGirl.create(:model_with_items, type: 'Software')
+  @contract = FactoryBot.create(:closed_contract, inventory_pool: @current_inventory_pool)
+  software = FactoryBot.create(:model_with_items, type: 'Software')
   @item = software.items.licenses.first
-  FactoryGirl.create(:item_line,
+  FactoryBot.create(:item_line,
                      model: software,
                      user: @contract.user,
                      item: @item,
@@ -154,29 +154,29 @@ Given(/^enough data for "(.*?)" having "(.*?)" exists$/) do |subsection, search_
     @results << \
       case subsection
       when 'Models'
-        FactoryGirl.create(:model, product: make_string.call)
+        FactoryBot.create(:model, product: make_string.call)
       when 'Software'
-        FactoryGirl.create(:software, product: make_string.call)
+        FactoryBot.create(:software, product: make_string.call)
       when 'Items'
-        FactoryGirl.create(:item, note: make_string.call, inventory_pool: @current_inventory_pool)
+        FactoryBot.create(:item, note: make_string.call, inventory_pool: @current_inventory_pool)
       when 'Licenses'
-        FactoryGirl.create(:license, note: make_string.call, inventory_pool: @current_inventory_pool)
+        FactoryBot.create(:license, note: make_string.call, inventory_pool: @current_inventory_pool)
       when 'Options'
-        FactoryGirl.create(:option, product: make_string.call, inventory_pool: @current_inventory_pool)
+        FactoryBot.create(:option, product: make_string.call, inventory_pool: @current_inventory_pool)
       when 'Users'
-        user = FactoryGirl.create(:user, lastname: make_string.call)
-        FactoryGirl.create(:access_right, user: user, inventory_pool: @current_inventory_pool, role: 'customer')
+        user = FactoryBot.create(:user, lastname: make_string.call)
+        FactoryBot.create(:access_right, user: user, inventory_pool: @current_inventory_pool, role: 'customer')
         user
       when 'Contracts'
-        user = FactoryGirl.create(:user, lastname: make_string.call)
-        FactoryGirl.create(:access_right, user: user, inventory_pool: @current_inventory_pool, role: 'customer')
-        FactoryGirl.create(:closed_contract, user: user, inventory_pool: @current_inventory_pool)
+        user = FactoryBot.create(:user, lastname: make_string.call)
+        FactoryBot.create(:access_right, user: user, inventory_pool: @current_inventory_pool, role: 'customer')
+        FactoryBot.create(:closed_contract, user: user, inventory_pool: @current_inventory_pool)
         user
       when 'Orders'
-        user = FactoryGirl.create(:user, lastname: make_string.call)
-        FactoryGirl.create(:access_right, user: user, inventory_pool: @current_inventory_pool, role: 'customer')
-        order = FactoryGirl.create(:order, user: user, inventory_pool: @current_inventory_pool, state: :submitted)
-        FactoryGirl.create(:reservation,
+        user = FactoryBot.create(:user, lastname: make_string.call)
+        FactoryBot.create(:access_right, user: user, inventory_pool: @current_inventory_pool, role: 'customer')
+        order = FactoryBot.create(:order, user: user, inventory_pool: @current_inventory_pool, state: :submitted)
+        FactoryBot.create(:reservation,
                            user: user,
                            inventory_pool: @current_inventory_pool,
                            order: order,

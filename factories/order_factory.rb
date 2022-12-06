@@ -1,8 +1,8 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :order do
     inventory_pool
-    user { FactoryGirl.create(:customer, inventory_pool: inventory_pool) }
+    user { FactoryBot.create(:customer, inventory_pool: inventory_pool) }
     purpose { Faker::Lorem.sentence }
 
     after(:build) do |order|

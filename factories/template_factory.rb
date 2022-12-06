@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :template do
     name { Faker::Name.name }
@@ -6,7 +6,7 @@ FactoryGirl.define do
 
     after(:build) do |template|
       3.times do
-        template.model_links << FactoryGirl.build(:model_link)
+        template.model_links << FactoryBot.build(:model_link)
       end
     end
   end

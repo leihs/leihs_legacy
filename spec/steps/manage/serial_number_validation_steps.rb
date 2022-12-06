@@ -10,7 +10,7 @@ module Manage
       include ::Spec::PersonasDumpSteps
 
       step 'there is an item with serial number :serial_number' do |serial_number|
-        FactoryGirl.create(:item,
+        FactoryBot.create(:item,
                            owner_id: @current_inventory_pool.id,
                            serial_number: serial_number,
                            skip_serial_number_validation: true)
@@ -73,7 +73,7 @@ module Manage
       end
 
       step 'there is another item in the current inventory pool' do
-        @item = FactoryGirl.create(:item,
+        @item = FactoryBot.create(:item,
                                    owner_id: @current_inventory_pool.id)
       end
 
@@ -133,14 +133,14 @@ module Manage
 
       step 'there is first item with serial number :serial_number' \
         do |serial_number|
-        @item_1 = FactoryGirl.create(:item,
+        @item_1 = FactoryBot.create(:item,
                                      owner: @current_inventory_pool,
                                      serial_number: serial_number)
       end
 
       step 'there is second item with serial number :serial_number' \
         do |serial_number|
-        @item_2 = FactoryGirl.build(:item,
+        @item_2 = FactoryBot.build(:item,
                                     owner: @current_inventory_pool,
                                     serial_number: serial_number)
         @item_2.skip_serial_number_validation = true
@@ -148,7 +148,7 @@ module Manage
       end
 
       step 'there is a package model' do
-        @model = FactoryGirl.create(:package_model)
+        @model = FactoryBot.create(:package_model)
       end
 
       step 'I open edit page of the model' do

@@ -1,8 +1,8 @@
 # Given "a signed contract by {string} for item {string}" do | who, inventory_code |
 #   user     = LeihsFactory.create_user( :login => who ); user.save
 #   item     = Item.find_by_inventory_code( inventory_code )
-#   contract = FactoryGirl.create :contract, :user => user, :status => :approved
-#   contract.reservations << FactoryGirl.create(:reservation, contract: contract, model: item.model, quantity: 1)
+#   contract = FactoryBot.create :contract, :user => user, :status => :approved
+#   contract.reservations << FactoryBot.create(:reservation, contract: contract, model: item.model, quantity: 1)
 #   cl = contract.reservations.first
 #   cl.update_attribute(:item, item) # don't validate - allow creation of *invalid* records!
 #   contract.reload

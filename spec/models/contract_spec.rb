@@ -4,7 +4,7 @@ require "#{Rails.root}/features/support/dataset"
 describe Contract do
 
   it 'closed contract can only have closed reservations' do
-    c = FactoryGirl.create(:open_contract)
+    c = FactoryBot.create(:open_contract)
     expect do
       c.update_attributes!(state: :closed)
     end.to raise_error \

@@ -1,15 +1,15 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :contract do
     note { Faker::Lorem.paragraph }
     purpose { Faker::Lorem.sentence }
-    created_at nil
-    inventory_pool { FactoryGirl.create(:inventory_pool) }
+    created_at { nil }
+    inventory_pool { FactoryBot.create(:inventory_pool) }
     user do
-      user = FactoryGirl.create(:user)
+      user = FactoryBot.create(:user)
       unless AccessRight.find_by(user: user,
                                  inventory_pool: inventory_pool)
-        FactoryGirl.create(:access_right,
+        FactoryBot.create(:access_right,
                            user: user,
                            inventory_pool: inventory_pool,
                            role: :customer)
@@ -19,25 +19,25 @@ FactoryGirl.define do
 
     transient do
       items do
-        Array.new(3).map { |_| FactoryGirl.create(:item) }
+        Array.new(3).map { |_| FactoryBot.create(:item) }
       end
-      contact_person nil
-      start_date nil
-      end_date nil
+      contact_person { nil }
+      start_date { nil }
+      end_date { nil }
     end
 
     factory :open_contract do
-      state :open
+      state { :open }
 
       after :build do |c, evaluator|
-        order = FactoryGirl.create(:order,
+        order = FactoryBot.create(:order,
                                    user: c.user,
                                    inventory_pool: c.inventory_pool,
                                    state: :approved)
 
         evaluator.items.each do |item|
           c.reservations << \
-            FactoryGirl.build(
+            FactoryBot.build(
               :reservation,
               status: :signed,
               inventory_pool: c.inventory_pool,
@@ -55,17 +55,17 @@ FactoryGirl.define do
     end
 
     factory :closed_contract do
-      state :closed
+      state { :closed }
 
       after :build do |c, evaluator|
-        order = FactoryGirl.create(:order,
+        order = FactoryBot.create(:order,
                                    user: c.user,
                                    inventory_pool: c.inventory_pool,
                                    state: :approved)
 
         evaluator.items.each do |item|
           c.reservations << \
-            FactoryGirl.build(
+            FactoryBot.build(
               :reservation,
               status: :closed,
               inventory_pool: c.inventory_pool,

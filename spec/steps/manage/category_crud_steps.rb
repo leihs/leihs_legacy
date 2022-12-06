@@ -10,7 +10,7 @@ module Manage
       include ::Spec::PersonasDumpSteps
 
       step 'there is a category without image' do
-        @category = FactoryGirl.create(:category)
+        @category = FactoryBot.create(:category)
       end
 
       step 'I open the edit page of the category' do

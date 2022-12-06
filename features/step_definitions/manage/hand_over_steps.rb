@@ -301,9 +301,9 @@ Then(/^the retired item is not displayed in the list$/) do
 end
 
 Given(/^there exists an item owned by the current inventory pool but in responsibility of pool "(.*?)"$/) do |arg1|
-  @item = FactoryGirl.create(:item,
+  @item = FactoryBot.create(:item,
                              owner: @current_inventory_pool,
-                             inventory_pool: FactoryGirl.create(:inventory_pool,
+                             inventory_pool: FactoryBot.create(:inventory_pool,
                                                                 name: arg1))
 end
 

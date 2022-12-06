@@ -5,11 +5,11 @@ def user_by_login(login)
 end
 
 def create_pool(name, description)
-  ip3 = FactoryGirl.create(:inventory_pool, name: name, description: description)
+  ip3 = FactoryBot.create(:inventory_pool, name: name, description: description)
 end
 
 def create_model(product_name, maintenance_period)
-  FactoryGirl.create(:model, product: product_name, maintenance_period: maintenance_period)
+  FactoryBot.create(:model, product: product_name, maintenance_period: maintenance_period)
 end
 
 def model_by_product_name(product_name)
@@ -19,11 +19,11 @@ end
 def create_an_item(ip_name, product_name, inventory_code)
   m = model_by_product_name(product_name)
   ip = inventory_pool_by_name(ip_name)
-  FactoryGirl.create(:item, model: m, inventory_pool: ip, inventory_code: inventory_code, owner: ip)
+  FactoryBot.create(:item, model: m, inventory_pool: ip, inventory_code: inventory_code, owner: ip)
 end
 
 def create_a_user(login)
-  FactoryGirl.create(:user, login: login)
+  FactoryBot.create(:user, login: login)
 end
 
 def do_logout
@@ -52,7 +52,7 @@ def create_reservation(login, ip_name, product_name)
   u = user_by_login(login)
   ip = inventory_pool_by_name(ip_name)
   m = model_by_product_name(product_name)
-  FactoryGirl.create(:reservation, user: u, start_date: Date.today, end_date: Date.tomorrow, inventory_pool: ip, model: m)
+  FactoryBot.create(:reservation, user: u, start_date: Date.today, end_date: Date.tomorrow, inventory_pool: ip, model: m)
 end
 
 def create_overdue_reservation(login, ip_name, product_name, inventory_code)
@@ -60,7 +60,7 @@ def create_overdue_reservation(login, ip_name, product_name, inventory_code)
   ip = inventory_pool_by_name(ip_name)
   m = model_by_product_name(product_name)
   i = Item.find_by(inventory_code: inventory_code)
-  r = FactoryGirl.create(:reservation, user: u, start_date: Date.yesterday - 1.day, end_date: Date.yesterday, inventory_pool: ip, model: m, returned_date: nil, item: i)
+  r = FactoryBot.create(:reservation, user: u, start_date: Date.yesterday - 1.day, end_date: Date.yesterday, inventory_pool: ip, model: m, returned_date: nil, item: i)
 
   contract = Contract.new(
     state: :open,
@@ -83,7 +83,7 @@ def create_reservation_with_item(login, ip_name, product_name, inventory_code)
   ip = inventory_pool_by_name(ip_name)
   m = model_by_product_name(product_name)
   i = Item.find_by(inventory_code: inventory_code)
-  FactoryGirl.create(:reservation, user: u, start_date: Date.today, end_date: Date.tomorrow, inventory_pool: ip, model: m, item: i)
+  FactoryBot.create(:reservation, user: u, start_date: Date.today, end_date: Date.tomorrow, inventory_pool: ip, model: m, item: i)
 end
 
 def create_future_reservation(login, ip_name, product_name, inventory_code)
@@ -91,19 +91,19 @@ def create_future_reservation(login, ip_name, product_name, inventory_code)
   ip = inventory_pool_by_name(ip_name)
   m = model_by_product_name(product_name)
   i = Item.find_by(inventory_code: inventory_code)
-  FactoryGirl.create(:reservation, user: u, start_date: Date.today + 10.day, end_date: Date.tomorrow + 12.day, inventory_pool: ip, model: m, item: i)
+  FactoryBot.create(:reservation, user: u, start_date: Date.today + 10.day, end_date: Date.tomorrow + 12.day, inventory_pool: ip, model: m, item: i)
 end
 
 def add_ip_manager(ip_name, login)
   u = user_by_login(login)
   ip = inventory_pool_by_name(ip_name)
-  FactoryGirl.create(:access_right, user: u, inventory_pool: ip, role: :inventory_manager)
+  FactoryBot.create(:access_right, user: u, inventory_pool: ip, role: :inventory_manager)
 end
 
 def add_ip_customer(ip_name, login)
   u = user_by_login(login)
   ip = inventory_pool_by_name(ip_name)
-  FactoryGirl.create(:access_right, user: u, inventory_pool: ip, role: :customer)
+  FactoryBot.create(:access_right, user: u, inventory_pool: ip, role: :customer)
 end
 
 def execute_scenario

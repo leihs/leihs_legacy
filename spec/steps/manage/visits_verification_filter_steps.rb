@@ -10,11 +10,11 @@ module Manage
       include ::Spec::PersonasDumpSteps
 
       step 'there is an inventory pool' do
-        @inventory_pool = FactoryGirl.create(:inventory_pool)
+        @inventory_pool = FactoryBot.create(:inventory_pool)
       end
 
       step 'there is a lending manager in this inventory pool' do
-        @lending_manager = FactoryGirl.create(:lending_manager,
+        @lending_manager = FactoryBot.create(:lending_manager,
                                               inventory_pool: @inventory_pool)
       end
 
@@ -27,25 +27,25 @@ module Manage
 
       step 'there is an entitlement group with required verification' do
         @entitlement_group = \
-          FactoryGirl.create(:group, is_verification_required: true)
+          FactoryBot.create(:group, is_verification_required: true)
         @inventory_pool.entitlement_groups << @entitlement_group
       end
 
       step 'there is a model with items in the group' do
-        @model = FactoryGirl.create(:model_with_items)
+        @model = FactoryBot.create(:model_with_items)
       end
 
       step 'there is a hand over :n without required verification' do |n|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @inventory_pool)
         date = Date.today + n.to_i.day
 
-        FactoryGirl.create(
+        FactoryBot.create(
           :reservation,
           inventory_pool: @inventory_pool,
           status: :approved,
           user: user,
-          model: FactoryGirl.create(:model_with_items),
+          model: FactoryBot.create(:model_with_items),
           start_date: date,
           end_date: date + 1.day
         )
@@ -62,17 +62,17 @@ module Manage
       end
 
       step 'there is a hand over :n with user to verify' do |n|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @inventory_pool)
         @entitlement_group.users << user
         date = Date.today + n.to_i.day
 
-        FactoryGirl.create(
+        FactoryBot.create(
           :reservation,
           inventory_pool: @inventory_pool,
           status: :approved,
           user: user,
-          model: FactoryGirl.create(:model_with_items),
+          model: FactoryBot.create(:model_with_items),
           start_date: date,
           end_date: date + 1.day
         )
@@ -89,17 +89,17 @@ module Manage
       end
 
       step 'there is a hand over :n with user and model to verify' do |n|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @inventory_pool)
-        model = FactoryGirl.create(:model_with_items)
+        model = FactoryBot.create(:model_with_items)
         @entitlement_group.users << user
         @entitlement_group.entitlements << \
-          FactoryGirl.create(:entitlement,
+          FactoryBot.create(:entitlement,
                              model: model,
                              quantity: 1)
         date = Date.today + n.to_i.day
 
-        FactoryGirl.create(
+        FactoryBot.create(
           :reservation,
           inventory_pool: @inventory_pool,
           status: :approved,
@@ -121,18 +121,18 @@ module Manage
       end
 
       step 'there is a take back :n without required verification' do |n|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @inventory_pool)
         date = Date.today + n.to_i.day
-        model = FactoryGirl.create(:model_with_items)
+        model = FactoryBot.create(:model_with_items)
 
         ApplicationRecord.transaction do
-          contract = FactoryGirl.build(:contract,
+          contract = FactoryBot.build(:contract,
                                        user: user,
                                        state: :open,
                                        inventory_pool: @inventory_pool)
           contract.reservations << \
-            FactoryGirl.build(
+            FactoryBot.build(
               :reservation,
               inventory_pool: @inventory_pool,
               status: :signed,
@@ -158,19 +158,19 @@ module Manage
       end
 
       step 'there is a take back :n with user to verify' do |n|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @inventory_pool)
-        model = FactoryGirl.create(:model_with_items)
+        model = FactoryBot.create(:model_with_items)
         @entitlement_group.users << user
         date = Date.today + n.to_i.day
 
         ApplicationRecord.transaction do
-          contract = FactoryGirl.build(:contract,
+          contract = FactoryBot.build(:contract,
                                        user: user,
                                        state: :open,
                                        inventory_pool: @inventory_pool)
           contract.reservations << \
-            FactoryGirl.build(
+            FactoryBot.build(
               :reservation,
               inventory_pool: @inventory_pool,
               status: :signed,
@@ -196,23 +196,23 @@ module Manage
       end
 
       step 'there is a take back :n with user and model to verify' do |n|
-        user = FactoryGirl.create(:customer,
+        user = FactoryBot.create(:customer,
                                   inventory_pool: @inventory_pool)
-        model = FactoryGirl.create(:model_with_items)
+        model = FactoryBot.create(:model_with_items)
         @entitlement_group.users << user
         @entitlement_group.entitlements << \
-          FactoryGirl.create(:entitlement,
+          FactoryBot.create(:entitlement,
                              model: model,
                              quantity: 1)
         date = Date.today + n.to_i.day
 
         ApplicationRecord.transaction do
-          contract = FactoryGirl.build(:contract,
+          contract = FactoryBot.build(:contract,
                                        user: user,
                                        state: :open,
                                        inventory_pool: @inventory_pool)
           contract.reservations << \
-            FactoryGirl.build(
+            FactoryBot.build(
               :reservation,
               inventory_pool: @inventory_pool,
               status: :signed,

@@ -18,14 +18,14 @@ module Borrow
       step 'there is a pool :letter with borrowable items ' \
            'the user has access to' do |letter|
         instance_variable_set("@pool_#{letter}",
-                              FactoryGirl.create(:inventory_pool))
-        FactoryGirl.create(
+                              FactoryBot.create(:inventory_pool))
+        FactoryBot.create(
           :access_right,
           user: @user,
           inventory_pool: instance_variable_get("@pool_#{letter}"),
           role: :customer
         )
-        FactoryGirl.create(
+        FactoryBot.create(
           :item,
           inventory_pool: instance_variable_get("@pool_#{letter}"),
           is_borrowable: true
@@ -35,8 +35,8 @@ module Borrow
       step 'there is a pool :letter without borrowable items ' \
            'the user has access to' do |letter|
         instance_variable_set("@pool_#{letter}",
-                              FactoryGirl.create(:inventory_pool))
-        FactoryGirl.create(
+                              FactoryBot.create(:inventory_pool))
+        FactoryBot.create(
           :access_right,
           user: @user,
           inventory_pool: instance_variable_get("@pool_#{letter}"),
@@ -47,8 +47,8 @@ module Borrow
       step 'there is a pool :letter the user has access to but ' \
            'the user is suspended for' do |letter|
         instance_variable_set("@pool_#{letter}",
-                              FactoryGirl.create(:inventory_pool))
-        FactoryGirl.create(
+                              FactoryBot.create(:inventory_pool))
+        FactoryBot.create(
           :access_right,
           user: @user,
           inventory_pool: instance_variable_get("@pool_#{letter}"),
@@ -60,8 +60,8 @@ module Borrow
 
       step 'there is a pool :letter the user had access to in the past' do |letter|
         instance_variable_set("@pool_#{letter}",
-                              FactoryGirl.create(:inventory_pool))
-        ar = FactoryGirl.create(
+                              FactoryBot.create(:inventory_pool))
+        ar = FactoryBot.create(
           :access_right,
           user: @user,
           inventory_pool: instance_variable_get("@pool_#{letter}"),

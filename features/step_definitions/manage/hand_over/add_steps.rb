@@ -1,5 +1,5 @@
 When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over by providing an inventory code$/ do |item_attr, item_type|
-  item = FactoryGirl.create(item_type.to_sym, inventory_pool: @current_inventory_pool)
+  item = FactoryBot.create(item_type.to_sym, inventory_pool: @current_inventory_pool)
   case item_attr
   when 'a borrowable'
     item.update_attributes(is_borrowable: true)
@@ -52,7 +52,7 @@ Then /^the item is added to the hand over for the provided date range and the in
 end
 
 When /^I add an option to the hand over by providing an inventory code$/ do
-  @option ||= FactoryGirl.create(:option, inventory_pool: @current_inventory_pool)
+  @option ||= FactoryBot.create(:option, inventory_pool: @current_inventory_pool)
   @inventory_code = @option.inventory_code
   find('#assign-or-add-input input').set @inventory_code
   find('#assign-or-add button').click
@@ -106,11 +106,11 @@ end
 When /^I type the beginning of (.*?) name to the add\/assign input field$/ do |type|
   @target_name = case type
     when 'an option'
-      @option = FactoryGirl.create(:option, inventory_pool: @current_inventory_pool)
+      @option = FactoryBot.create(:option, inventory_pool: @current_inventory_pool)
       @inventory_code = @option.inventory_code
       @option.name
     when 'a model'
-      @model = FactoryGirl.create(:model_with_items, inventory_pool: @current_inventory_pool)
+      @model = FactoryBot.create(:model_with_items, inventory_pool: @current_inventory_pool)
       @model.name
     when 'that model'
       @model.name
@@ -162,7 +162,7 @@ Then /^each model of the template is added to the hand over for the provided dat
 end
 
 When /^I add so many reservations that I break the maximal quantity of a model$/ do
-  @model ||= FactoryGirl.create(:model_with_items, inventory_pool: @current_inventory_pool)
+  @model ||= FactoryBot.create(:model_with_items, inventory_pool: @current_inventory_pool)
   @target_name = @model.name
   start_date = Date.parse find('#add-start-date').value
   end_date = Date.parse find('#add-end-date').value
@@ -199,7 +199,7 @@ When /^I add an item to the hand over$/ do
 end
 
 Given(/^there is a model or software which all items are set to "not borrowable"$/) do
-  @model = FactoryGirl.create(:model_with_items, inventory_pool: @current_inventory_pool, is_borrowable: false)
+  @model = FactoryBot.create(:model_with_items, inventory_pool: @current_inventory_pool, is_borrowable: false)
 end
 
 Then(/^the quantity on the option line is (\d+)$/) do |quantity|
@@ -210,7 +210,7 @@ Then(/^the quantity on the option line is (\d+)$/) do |quantity|
 end
 
 When /^I add a retired item to the hand over by providing an inventory code$/ do
-  item = FactoryGirl.create(:item, inventory_pool: @current_inventory_pool)
+  item = FactoryBot.create(:item, inventory_pool: @current_inventory_pool)
   item.update_attributes(retired: Date.yesterday,
                          retired_reason: Faker::Lorem.sentence)
   @inventory_code = item.inventory_code

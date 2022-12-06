@@ -12,20 +12,20 @@ module Borrow
       include ::Spec::PersonasDumpSteps
 
       step 'I have an access as customer to this inventory pool' do
-        FactoryGirl.create(:access_right,
+        FactoryBot.create(:access_right,
                            user: @current_user,
                            inventory_pool: @inventory_pool)
       end
 
       step 'this inventory pool has a borrowable item' do
-        FactoryGirl.create(:item,
+        FactoryBot.create(:item,
                            owner: @inventory_pool,
                            is_borrowable: true)
       end
 
       step 'the active inventory pool has a borrowable item' do
         @item_from_active = \
-          FactoryGirl.create(:item,
+          FactoryBot.create(:item,
                              owner: @active_inventory_pool,
                              is_borrowable: true)
       end
@@ -41,7 +41,7 @@ module Borrow
 
       step 'the inactive inventory pool has a borrowable and retired item' do
         @item_from_inactive = \
-          FactoryGirl.create(:item,
+          FactoryBot.create(:item,
                              owner: @inactive_inventory_pool,
                              retired: Date.today,
                              retired_reason: Faker::Lorem.sentence,
@@ -49,13 +49,13 @@ module Borrow
       end
 
       step 'I have an access as customer to the active inventory pool' do
-        FactoryGirl.create(:access_right,
+        FactoryBot.create(:access_right,
                            user: @current_user,
                            inventory_pool: @active_inventory_pool)
       end
 
       step 'I have an access as customer to the inactive inventory pool' do
-        FactoryGirl.create(:access_right,
+        FactoryBot.create(:access_right,
                            user: @current_user,
                            inventory_pool: @inactive_inventory_pool)
       end

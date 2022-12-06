@@ -10,7 +10,7 @@ module Borrow
       include ::Spec::PersonasDumpSteps
 
       step 'I have an unsubmitted order' do
-        FactoryGirl.create(:reservation,
+        FactoryBot.create(:reservation,
                            user: @current_user,
                            status: :unsubmitted,
                            inventory_pool: @inventory_pool)

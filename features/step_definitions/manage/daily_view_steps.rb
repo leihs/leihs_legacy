@@ -2,11 +2,11 @@
 
 Given(/^there is an order with two different time windows$/) do
   @customer = @current_inventory_pool.users.customers.first
-  @order = FactoryGirl.create(:order,
+  @order = FactoryBot.create(:order,
                               user: @customer,
                               inventory_pool: @current_inventory_pool,
                               state: :submitted)
-  FactoryGirl.create(
+  FactoryBot.create(
     :reservation,
     user: @customer,
     status: :submitted,
@@ -15,7 +15,7 @@ Given(/^there is an order with two different time windows$/) do
     start_date: Date.today,
     end_date: Date.tomorrow
   )
-  FactoryGirl.create(
+  FactoryBot.create(
     :reservation,
     user: @customer,
     status: :submitted,

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :building do
     name { Faker::Lorem.words(number: 3).join.capitalize }

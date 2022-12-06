@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence :version
 
@@ -20,19 +20,19 @@ FactoryGirl.define do
 
     description { Faker::Lorem.sentence }
     internal_description { Faker::Lorem.sentence }
-    is_package false
+    is_package { false }
     technical_detail { Faker::Lorem.sentence }
     hand_over_note { Faker::Lorem.sentence }
 
     factory :model_with_items do
       transient do
-        inventory_pool { FactoryGirl.create :inventory_pool }
-        is_borrowable true
+        inventory_pool { FactoryBot.create :inventory_pool }
+        is_borrowable { true }
       end
       after(:create) do |model, evaluator|
         3.times do
           model.items << \
-            FactoryGirl.create(:item,
+            FactoryBot.create(:item,
                                is_borrowable: evaluator.is_borrowable,
                                inventory_pool: evaluator.inventory_pool)
         end

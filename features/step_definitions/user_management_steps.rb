@@ -29,7 +29,7 @@ end
 
 Given "customer {string} has access to inventory pool {int}" do |who, ip_i|
   ip = InventoryPool.find_by_name(ip_i.to_s)
-  user = User.find_by_login(who) || FactoryGirl.create(:user, login: who)
+  user = User.find_by_login(who) || FactoryBot.create(:user, login: who)
   LeihsFactory.define_role(user, ip, :customer)
   expect(user.inventory_pools.include?(ip)).to be true
 end
@@ -38,7 +38,7 @@ Given "customer {string} has access to inventory pool {int} and {int}" do |who, 
   inventory_pools = [ip_1.to_s, ip_2.to_s].collect { | ip_name |
     InventoryPool.find_by_name ip_name
   }
-  user = User.find_by_login(who) || FactoryGirl.create(:user, login: who)
+  user = User.find_by_login(who) || FactoryBot.create(:user, login: who)
   inventory_pools.each { |ip|
     LeihsFactory.define_role(user, ip, :customer)
     expect(user.inventory_pools.include?(ip)).to be true

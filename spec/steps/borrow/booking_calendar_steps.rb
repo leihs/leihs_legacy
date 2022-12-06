@@ -16,7 +16,7 @@ module Borrow
       end
 
       step 'there is a borrowable item for the model and the inventory pool' do
-        FactoryGirl.create(:item,
+        FactoryBot.create(:item,
                            is_borrowable: true,
                            model: @model,
                            owner: @inventory_pool,
@@ -24,7 +24,7 @@ module Borrow
       end
 
       step 'I am customer of the pool' do
-        FactoryGirl.create(:access_right,
+        FactoryBot.create(:access_right,
                            user: @current_user,
                            inventory_pool: @inventory_pool)
       end

@@ -7,7 +7,7 @@ Given "a reservation exists for {int} {string} from {string} to {string}" do |qu
   inventory_pool = model.inventory_pools.select{|ip| ip.open_on?(to_date(from)) and ip.open_on?(to_date(to))}.sample
   user = inventory_pool.users.sample
   @reservations = []
-  order = FactoryGirl.create(:order,
+  order = FactoryBot.create(:order,
                              user: user,
                              inventory_pool: inventory_pool,
                              state: :submitted)
@@ -30,7 +30,7 @@ Given "a contract exists for {int} {string} from {string} to {string}" do |quant
   inventory_pool = model.inventory_pools.detect { |ip| ip.open_on?(to_date(from)) && ip.open_on?(to_date(to)) }
   user = inventory_pool.users.first
   @reservations = []
-  order = FactoryGirl.create(:order,
+  order = FactoryBot.create(:order,
                              user: user,
                              inventory_pool: inventory_pool,
                              state: :approved)

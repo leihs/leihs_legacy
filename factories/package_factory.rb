@@ -1,16 +1,16 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :package_model, parent: :model do
-    is_package true
+    is_package { true }
 
     factory :package_model_with_items do
       transient do
-        inventory_pool { FactoryGirl.create :inventory_pool }
+        inventory_pool { FactoryBot.create :inventory_pool }
       end
       after(:create) do |package, evaluator|
         3.times do
           package.items << \
-            FactoryGirl.create(:package_item_with_parts,
+            FactoryBot.create(:package_item_with_parts,
                                owner: evaluator.inventory_pool)
         end
       end
@@ -22,7 +22,7 @@ FactoryGirl.define do
       after(:create) do |item, evaluator|
         3.times do
           item.children << \
-            FactoryGirl.create(:item,
+            FactoryBot.create(:item,
                                owner: evaluator.owner,
                                parent: item)
         end

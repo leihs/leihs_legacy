@@ -256,7 +256,7 @@ Then(/^I can create new items$/) do
   c = Item.count
   attributes = {
     model_id: @inventory_pool.models.first.id,
-    room_id: FactoryGirl.create(:room).id
+    room_id: FactoryBot.create(:room).id
   }
   expect(page.driver.browser.process(:post, manage_create_item_path(@inventory_pool, format: :json), {item: attributes}).successful?).to be true
   expect(Item.count).to eq c+1
@@ -274,7 +274,7 @@ end
 
 Then(/^I can create options$/) do
   c = Option.count
-  factory_attributes = FactoryGirl.attributes_for(:option)
+  factory_attributes = FactoryBot.attributes_for(:option)
   attributes = {
       inventory_code: factory_attributes[:inventory_code],
       product: factory_attributes[:product],
@@ -288,7 +288,7 @@ end
 Then /^I can create a new user (.*?) inventory_pool$/ do |arg1|
   c = User.count
   ids = User.pluck(:id)
-  factory_attributes = FactoryGirl.attributes_for(:user)
+  factory_attributes = FactoryBot.attributes_for(:user)
   attributes = {}
   [:login, :firstname, :lastname, :phone, :email, :badge_id, :address, :city, :country, :zip].each do |a|
     attributes[a] = factory_attributes[a]
@@ -382,7 +382,7 @@ end
 
 Then(/^I can create new models$/) do
   c = Model.count
-  attributes = FactoryGirl.attributes_for :model
+  attributes = FactoryBot.attributes_for :model
 
   expect(page.driver.browser.process(:post, "/manage/#{@inventory_pool.id}/models.json", model: attributes).successful?).to be true
   expect(Model.count).to eq c+1
@@ -836,29 +836,29 @@ Given(/^there exists a contract with status "(.*?)" for a user without any other
               :signed
           end
   if state == :submitted
-    user = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
-    @contract = FactoryGirl.create(:order,
+    user = FactoryBot.create(:customer, inventory_pool: @current_inventory_pool)
+    @contract = FactoryBot.create(:order,
                                    user: user,
                                    inventory_pool: @current_inventory_pool,
                                    state: :submitted)
-    FactoryGirl.create(:reservation,
+    FactoryBot.create(:reservation,
                        user: user,
                        inventory_pool: @current_inventory_pool,
                        order: @contract,
                        status: :submitted)
   elsif state == :approved
-    user = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
-    @contract = FactoryGirl.create(:order,
+    user = FactoryBot.create(:customer, inventory_pool: @current_inventory_pool)
+    @contract = FactoryBot.create(:order,
                                    user: user,
                                    inventory_pool: @current_inventory_pool,
                                    state: :approved)
-    FactoryGirl.create(:reservation,
+    FactoryBot.create(:reservation,
                        user: user,
                        inventory_pool: @current_inventory_pool,
                        order: @contract,
                        status: :approved)
   elsif state == :signed
-    @contract = FactoryGirl.create(:open_contract, inventory_pool: @current_inventory_pool)
+    @contract = FactoryBot.create(:open_contract, inventory_pool: @current_inventory_pool)
   end
   expect(@contract).not_to be_nil
 end

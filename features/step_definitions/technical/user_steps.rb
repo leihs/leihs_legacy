@@ -46,6 +46,6 @@ Given(/^the following users exist$/) do |table|
              email: hash_row['email'],
              address: hash_row['address']}
 
-    FactoryGirl.create(:user, attrs)
+    FactoryBot.create(:user, attrs)
   end
 end

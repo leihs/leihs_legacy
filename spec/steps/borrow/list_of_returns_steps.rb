@@ -10,7 +10,7 @@ module Borrow
       include ::Spec::PersonasDumpSteps
 
       step 'I have an open contract' do
-        FactoryGirl.create(:open_contract,
+        FactoryBot.create(:open_contract,
                            user: @current_user,
                            inventory_pool: @inventory_pool)
       end

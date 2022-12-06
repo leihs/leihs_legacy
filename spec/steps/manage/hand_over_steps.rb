@@ -11,7 +11,7 @@ module Manage
       include ::Spec::PersonasDumpSteps
 
       step 'the customer has borrowed the item for today' do
-        FactoryGirl.create(:open_contract,
+        FactoryBot.create(:open_contract,
                            user: @customer,
                            inventory_pool: @inventory_pool,
                            start_date: Date.today,

@@ -12,8 +12,8 @@ module Manage
       step 'there exists an inactive inventory pool ' \
            'I have access to as :role' do |role|
         @inactive_inventory_pool = \
-          FactoryGirl.create(:inventory_pool, is_active: false)
-        FactoryGirl.create(:access_right,
+          FactoryBot.create(:inventory_pool, is_active: false)
+        FactoryBot.create(:access_right,
                            user: @current_user,
                            inventory_pool: @inactive_inventory_pool,
                            role: role.sub(' ', '_'))
@@ -31,11 +31,11 @@ module Manage
       end
 
       step 'there is an item which is owned by the current inventory pool' do
-        @item = FactoryGirl.create(:item, owner: @current_inventory_pool)
+        @item = FactoryBot.create(:item, owner: @current_inventory_pool)
       end
 
       step 'there exists an inactive inventory pool' do
-        @inactive_inventory_pool = FactoryGirl.create(:inventory_pool,
+        @inactive_inventory_pool = FactoryBot.create(:inventory_pool,
                                                       is_active: false)
       end
 
@@ -64,7 +64,7 @@ module Manage
 
       step 'there is a retired item which is owned by the the current pool ' \
            'but in responsibility of the inactive inventory pool' do
-        @item = FactoryGirl.create(:item,
+        @item = FactoryBot.create(:item,
                                    retired: Date.today,
                                    retired_reason: Faker::Lorem.sentence,
                                    inventory_pool: @inactive_inventory_pool,

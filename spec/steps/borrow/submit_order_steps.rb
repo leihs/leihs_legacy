@@ -10,7 +10,7 @@ module Borrow
       include ::Spec::PersonasDumpSteps
 
       step 'I am suspended for a pool I am a customer of' do
-        FactoryGirl.create :suspension,
+        FactoryBot.create :suspension,
                            user_id: @current_user.id,
                            inventory_pool_id: @inventory_pool.id,
                            suspended_until: Date.tomorrow,
@@ -18,12 +18,12 @@ module Borrow
       end
 
       step 'there is a borrowable item in this pool' do
-        @item = FactoryGirl.create(:item, owner: @inventory_pool)
+        @item = FactoryBot.create(:item, owner: @inventory_pool)
       end
 
       step 'I have an unsubmitted reservation for this pool ' \
            'and the model of this item' do
-        FactoryGirl.create(:reservation,
+        FactoryBot.create(:reservation,
                            user: @customer,
                            inventory_pool: @inventory_pool,
                            status: :unsubmitted,
@@ -33,7 +33,7 @@ module Borrow
       step 'I have an unsubmitted reservation for this pool ' \
            'with reservation time of :n days' do |n|
         @reservation =
-          FactoryGirl.create(:reservation,
+          FactoryBot.create(:reservation,
                              user: @customer,
                              inventory_pool: @inventory_pool,
                              status: :unsubmitted,
@@ -83,7 +83,7 @@ module Borrow
       end
 
       step 'I have an unsubmitted reservation for this pool starting yesterday' do
-        FactoryGirl.create(:reservation,
+        FactoryBot.create(:reservation,
                            user: @customer,
                            inventory_pool: @inventory_pool,
                            status: :unsubmitted,

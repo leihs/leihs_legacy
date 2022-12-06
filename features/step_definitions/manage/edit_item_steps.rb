@@ -151,7 +151,7 @@ end
 Given(/^the item has (\d+) attachment$/) do |count|
   @attachment_filenames = []
   count.to_i.times do
-    a = FactoryGirl.create :attachment, item: @item
+    a = FactoryBot.create :attachment, item: @item
     @attachment_filenames << a.filename
   end
 end

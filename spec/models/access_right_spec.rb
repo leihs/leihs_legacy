@@ -11,8 +11,8 @@ describe AccessRight do
   context 'a user and a pool' do
 
     before :example do
-      @user = FactoryGirl.create :user
-      @inventory_pool = FactoryGirl.create :inventory_pool
+      @user = FactoryBot.create :user
+      @inventory_pool = FactoryBot.create :inventory_pool
     end
 
     it 'an AccessRight can be created' do
@@ -61,10 +61,10 @@ describe AccessRight do
       context 'further pools, and users with direct_access_rights' do
 
         before :each do
-          @users = 10.times.map { FactoryGirl.create :user }
-          @pools = 3.times.map { FactoryGirl.create :inventory_pool}
+          @users = 10.times.map { FactoryBot.create :user }
+          @pools = 3.times.map { FactoryBot.create :inventory_pool}
           @direct_access_rights = 10.times.map {|i|
-            FactoryGirl.create :direct_access_right, user: @users[i], inventory_pool: @pools.sample}
+            FactoryBot.create :direct_access_right, user: @users[i], inventory_pool: @pools.sample}
         end
 
         it 'access_rights reflect direct_access_rights properly' do

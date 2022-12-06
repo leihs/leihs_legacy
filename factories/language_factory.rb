@@ -9,7 +9,7 @@ module LanguageFactory
     if languages.empty?
       Language.first
     else
-      FactoryGirl.create(:language,
+      FactoryBot.create(:language,
                          name: languages.first[:name],
                          locale: languages.first[:locale])
     end
@@ -17,7 +17,7 @@ module LanguageFactory
 
 end
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :language do
     active { true }

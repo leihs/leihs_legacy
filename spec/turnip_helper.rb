@@ -1,7 +1,7 @@
 require 'active_support/all'
 require 'capybara/rspec'
 require 'config/database.rb'
-require 'factory_girl'
+require 'factory_bot'
 require 'pry'
 require 'rails_helper'
 require 'selenium-webdriver'

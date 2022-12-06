@@ -35,7 +35,7 @@ Then(/^identical models are collapsed$/) do
 end
 
 When(/^I add the same model one more time$/) do
-  FactoryGirl.create(:reservation,
+  FactoryBot.create(:reservation,
                      user: @current_user,
                      status: :unsubmitted,
                      inventory_pool: @inventory_pool,

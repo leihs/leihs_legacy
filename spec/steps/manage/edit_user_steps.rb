@@ -12,7 +12,7 @@ module Manage
       include ::Spec::PersonasDumpSteps
 
       step 'there is a group in the current pool' do
-        @group = FactoryGirl.create(:group,
+        @group = FactoryBot.create(:group,
                                     inventory_pool: @current_inventory_pool)
       end
 

@@ -1,21 +1,21 @@
 # -*- encoding : utf-8 -*-
 
 When /^a purpose is saved, it is independent of its orders$/ do
-  purpose = FactoryGirl.create :purpose
+  purpose = FactoryBot.create :purpose
   expect { purpose.contract }.to raise_error(NoMethodError)
 end
 
 When /^each entry of a submitted order refers to a purpose$/ do
-  reservations = rand(3..6).times.map { FactoryGirl.create :reservation, status: :submitted }
+  reservations = rand(3..6).times.map { FactoryBot.create :reservation, status: :submitted }
   reservations.each do |line|
     expect(line.purpose.is_a?(Purpose)).to be true
   end
 end
 
 When /^each entry of an order can refer to a purpose$/ do
-  reservations = rand(3..6).times.map { FactoryGirl.create :reservation }
+  reservations = rand(3..6).times.map { FactoryBot.create :reservation }
   reservations.each do |line|
-    line.purpose = FactoryGirl.create :purpose
+    line.purpose = FactoryBot.create :purpose
     expect(line.purpose.is_a?(Purpose)).to be true
   end
 end
@@ -191,9 +191,9 @@ Then(/^the contract has the original plus the added purpose$/) do
 end
 
 Then(/^there is an approved and assigned reservation with purpose for a customer$/) do
-  @customer = FactoryGirl.create(:customer, inventory_pool: @current_inventory_pool)
+  @customer = FactoryBot.create(:customer, inventory_pool: @current_inventory_pool)
   @purpose = Faker::Lorem.sentence
-  @reservation = FactoryGirl.create(:item_line, :with_assigned_item, :with_purpose,
+  @reservation = FactoryBot.create(:item_line, :with_assigned_item, :with_purpose,
                                     purpose: @purpose,
                                     user: @customer,
                                     inventory_pool: @current_inventory_pool,
@@ -210,7 +210,7 @@ end
 
 Given(/^there is another approved and assigned reservation with purpose for a customer$/) do
   @another_purpose = Faker::Lorem.sentence
-  @another_reservation = FactoryGirl.create(:item_line, :with_assigned_item, :with_purpose,
+  @another_reservation = FactoryBot.create(:item_line, :with_assigned_item, :with_purpose,
                                             purpose: @another_purpose,
                                             user: @customer,
                                             inventory_pool: @current_inventory_pool,

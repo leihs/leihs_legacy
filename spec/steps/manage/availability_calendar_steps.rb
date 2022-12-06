@@ -13,20 +13,20 @@ module Manage
       step 'there is a Group :group_name' do |group_name|
         @inventory_pool ||= @current_user.inventory_pools.managed.first
         @group_members = 5.times.map do
-          FactoryGirl.create(:customer, inventory_pool: @inventory_pool)
+          FactoryBot.create(:customer, inventory_pool: @inventory_pool)
         end
-        @group = FactoryGirl.create \
+        @group = FactoryBot.create \
           :group, name: group_name, users: @group_members, \
                   inventory_pool: @inventory_pool
       end
 
       step 'there is a Model :model_name' do |model_name|
-        @model = FactoryGirl.create(:model, product: model_name)
+        @model = FactoryBot.create(:model, product: model_name)
       end
 
       step 'this Model has :num lendable Items' do |num|
         @items = num.to_i.times.map do
-          FactoryGirl.create(
+          FactoryBot.create(
             :item,
             model: @model,
             inventory_pool: @current_inventory_pool
@@ -35,7 +35,7 @@ module Manage
       end
 
       step 'those Items are all asigned to this Group' do
-        FactoryGirl.create(:entitlement,
+        FactoryBot.create(:entitlement,
                            model: @model,
                            quantity: @items.length,
                            entitlement_group: @group)
@@ -43,7 +43,7 @@ module Manage
 
       step ':num of those Items are already lent' do |num|
         @lent_items = @items.sample(num.to_i)
-        FactoryGirl.create(:open_contract,
+        FactoryBot.create(:open_contract,
                            items: @lent_items,
                            user: @group_members.sample,
                            inventory_pool: @inventory_pool,
@@ -54,12 +54,12 @@ module Manage
       step ':num of those Items are in the current Order ' \
            'from a user belonging to this Group' do |num|
         order_user = @group_members.sample
-        @order = FactoryGirl.create(:order,
+        @order = FactoryBot.create(:order,
                                     state: :submitted,
                                     user: order_user,
                                     inventory_pool: @inventory_pool)
         num.to_i.times.each do |item|
-          FactoryGirl.create(:reservation,
+          FactoryBot.create(:reservation,
                              status: :submitted,
                              model: @model,
                              user: order_user,

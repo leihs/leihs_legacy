@@ -12,7 +12,7 @@ end
 
 When(/^I add a model to an order$/) do
   @inventory_pool ||= @current_user.inventory_pools.first # OPTIMIZE
-  @new_reservation = FactoryGirl.create(:reservation,
+  @new_reservation = FactoryBot.create(:reservation,
                                         user: @current_user,
                                         delegated_user: @delegated_user,
                                         status: :unsubmitted,
@@ -22,7 +22,7 @@ end
 
 When(/^I add the same model to an order$/) do
   (@new_reservation.maximum_available_quantity + 1).times do
-    FactoryGirl.create(:reservation,
+    FactoryBot.create(:reservation,
                        status: :unsubmitted,
                        inventory_pool: @inventory_pool,
                        start_date: @new_reservation.start_date,
@@ -56,13 +56,13 @@ Given(/^(a|\d+) model(?:s)? (?:is|are) not available$/) do |n|
 
   available_lines.take(n - unavailable_lines.size).each do |line|
     (line.maximum_available_quantity + 1).times do
-      user = FactoryGirl.create(:customer, inventory_pool: line.inventory_pool)
-      FactoryGirl.create(:item_line,
+      user = FactoryBot.create(:customer, inventory_pool: line.inventory_pool)
+      FactoryBot.create(:item_line,
                          status: :submitted,
                          inventory_pool: line.inventory_pool,
                          model: line.model,
                          user: user,
-                         order: FactoryGirl.build(:order,
+                         order: FactoryBot.build(:order,
                                                   state: :submitted,
                                                   inventory_pool: line.inventory_pool,
                                                   user: user),
@@ -163,18 +163,18 @@ Then(/^the general group is used last in assignments$/) do
   quantity_in_general = av.entitlements[EntitlementGroup::GENERAL_GROUP_ID]
   quantity_not_in_general = av.entitlements.values.sum - av.entitlements[EntitlementGroup::GENERAL_GROUP_ID]
 
-  quantity_not_in_general.times.map { FactoryGirl.create :reservation, status: :approved, user: @current_user, inventory_pool: @inventory_pool, model: @model, start_date: date, end_date: date }
+  quantity_not_in_general.times.map { FactoryBot.create :reservation, status: :approved, user: @current_user, inventory_pool: @inventory_pool, model: @model, start_date: date, end_date: date }
   av = @model.availability_in(@inventory_pool.reload) # NOTE reload is to refresh the running_lines association
   expect(av.changes[date][EntitlementGroup::GENERAL_GROUP_ID][:in_quantity]).to eq quantity_in_general
 
-  FactoryGirl.create :reservation, status: :approved, user: @current_user, inventory_pool: @inventory_pool, model: @model, start_date: date, end_date: date
+  FactoryBot.create :reservation, status: :approved, user: @current_user, inventory_pool: @inventory_pool, model: @model, start_date: date, end_date: date
   av = @model.availability_in(@inventory_pool.reload) # NOTE reload is to refresh the running_lines association
   expect(av.changes[date][EntitlementGroup::GENERAL_GROUP_ID][:in_quantity]).to eq quantity_in_general - 1
 end
 
 When(/^I have (\d+) approved reservations for this model in this inventory pool$/) do |arg1|
   @date = Date.today + 1.year
-  @reservations = arg1.to_i.times.map { FactoryGirl.create :reservation, status: :approved, user: @current_user, inventory_pool: @inventory_pool, model: @model, start_date: @date, end_date: @date }
+  @reservations = arg1.to_i.times.map { FactoryBot.create :reservation, status: :approved, user: @current_user, inventory_pool: @inventory_pool, model: @model, start_date: @date, end_date: @date }
   @av = @model.availability_in(@inventory_pool.reload) # NOTE reload is to refresh the running_lines association
 end
 

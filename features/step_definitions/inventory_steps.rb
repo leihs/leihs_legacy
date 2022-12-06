@@ -30,8 +30,8 @@ end
 # Locations
 
 Given "a location in building {string} room {string} and shelf {string} exists" do |building_name, room, shelf|
-  building = FactoryGirl.create(:building, name: building_name)
-  @location = FactoryGirl.create(:location, building: building, room: room, shelf: shelf)
+  building = FactoryBot.create(:building, name: building_name)
+  @location = FactoryBot.create(:location, building: building, room: room, shelf: shelf)
 end
 
 ###############################################
@@ -94,7 +94,7 @@ end
 Given(/(\d+) item(s?) of model '(.+)' exist(s?)/) do |number, plural1, model, plural2|
   @model = LeihsFactory.create_model(product: model)
   number.to_i.times do |i|
-    FactoryGirl.create(:item, owner: @inventory_pool, model: @model)
+    FactoryBot.create(:item, owner: @inventory_pool, model: @model)
   end
 end
 
@@ -106,7 +106,7 @@ Given(/^(a?n? ?)item(s?) '([^']*)' of model '([^']*)' exist(s?)( only)?$/)\
 
   inv_codes = inventory_codes.split(/,/)
   inv_codes.each do |inv_code|
-    FactoryGirl.create(:item, owner: @inventory_pool, model: @model, inventory_code: inv_code)
+    FactoryBot.create(:item, owner: @inventory_pool, model: @model, inventory_code: inv_code)
   end
 end
 
@@ -119,7 +119,7 @@ end
 
 Given '{int} items of this model exist' do |number|
   number.times do |i|
-    FactoryGirl.create(:item, owner: @inventory_pool, model: @model)
+    FactoryBot.create(:item, owner: @inventory_pool, model: @model)
   end
   @model = Model.find(@model.id)
 end
@@ -132,7 +132,7 @@ end
 
 Given 'we have items with the following inventory_codes:' do |inventory_codes_table|
   inventory_codes_table.hashes.each do |hash|
-    FactoryGirl.create(:item, owner: @inventory_pool, model: @model, inventory_code: hash[:inventory_code])
+    FactoryBot.create(:item, owner: @inventory_pool, model: @model, inventory_code: hash[:inventory_code])
   end
 end
 
@@ -157,7 +157,7 @@ Then "the generated_code should look like this {string}" do |result|
 end
 
 When "we add an item {string}" do |inventory_code|
-  FactoryGirl.create(:item, owner: @inventory_pool, model: @model, inventory_code: inventory_code)
+  FactoryBot.create(:item, owner: @inventory_pool, model: @model, inventory_code: inventory_code)
 end
 
 # this test is specifically for the 'New Item' page

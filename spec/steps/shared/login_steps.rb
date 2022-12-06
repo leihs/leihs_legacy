@@ -24,10 +24,10 @@ module Spec
       .each do |role|
       step "I am logged in as #{role.to_s.sub('_', ' ')}" do
         step('I log out') if @current_user
-        ip = FactoryGirl.create(:inventory_pool)
+        ip = FactoryBot.create(:inventory_pool)
         role == :customer ? @inventory_pool = ip : @current_inventory_pool = ip
         @current_user = @customer = \
-          FactoryGirl.create(role, inventory_pool: ip)
+          FactoryBot.create(role, inventory_pool: ip)
         set_locale
         login_as_current_user
       end
@@ -35,7 +35,7 @@ module Spec
 
     step 'I am logged in as admin' do
       step('I log out') if @current_user
-      @current_user = FactoryGirl.create(:admin)
+      @current_user = FactoryBot.create(:admin)
       set_locale
       login_as_current_user
     end
@@ -56,7 +56,7 @@ module Spec
         if role == 'admin'
           user.update_attributes! is_admin: true
         else
-          FactoryGirl.create(
+          FactoryBot.create(
             :access_right,
             user: user, inventory_pool: ip, role: role
           )

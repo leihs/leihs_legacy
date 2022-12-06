@@ -70,7 +70,7 @@ module Manage
       end
 
       step 'there is a software' do
-        @software = FactoryGirl.create(:software)
+        @software = FactoryBot.create(:software)
       end
 
       step 'the inventory code is pre-filled' do

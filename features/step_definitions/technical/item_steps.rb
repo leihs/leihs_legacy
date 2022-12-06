@@ -1,6 +1,6 @@
 Given /^there are some items$/ do
   3.times do
-    FactoryGirl.create :item
+    FactoryBot.create :item
   end
 end
 

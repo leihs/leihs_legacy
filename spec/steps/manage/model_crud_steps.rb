@@ -10,12 +10,12 @@ module Manage
       include ::Spec::PersonasDumpSteps
 
       step 'there is a model without image' do
-        @model = FactoryGirl.create(:model)
+        @model = FactoryBot.create(:model)
       end
 
       step 'there is a model with image' do
-        @model = FactoryGirl.create(:model)
-        @image = FactoryGirl.create(:image, target: @model)
+        @model = FactoryBot.create(:model)
+        @image = FactoryBot.create(:image, target: @model)
         @filename = @image.filename
       end
      

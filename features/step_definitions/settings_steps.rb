@@ -6,7 +6,7 @@ Given(/^a settings object$/) do
 end
 
 Given(/^the settings are existing$/) do
-  FactoryGirl.create :setting unless Setting.first
+  FactoryBot.create :setting unless Setting.first
 end
 
 When(/^the settings are not existing$/) do

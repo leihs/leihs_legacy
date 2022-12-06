@@ -14,9 +14,9 @@ Given /^a model is no longer available$/ do
   if @event=='order' or @event=='hand_over'
     @entity = @contract || @order ||
               begin
-                item = FactoryGirl.create(:item,
+                item = FactoryBot.create(:item,
                                           inventory_pool: @current_inventory_pool)
-                reservation = FactoryGirl.create(:item_line, :with_purpose,
+                reservation = FactoryBot.create(:item_line, :with_purpose,
                                                  user: @customer,
                                                  item: item,
                                                  model: item.model,
@@ -106,7 +106,7 @@ end
 Given /^one item is not borrowable$/ do
   case @event
     when 'hand_over'
-      @item = FactoryGirl.create(:item, is_borrowable: false, inventory_pool: @current_inventory_pool)
+      @item = FactoryBot.create(:item, is_borrowable: false, inventory_pool: @current_inventory_pool)
       step 'I add an item to the hand over'
       @line_id = Reservation.where(item_id: @item.id).first.id
       find(".line[data-id='#{@line_id}']", text: @item.model.name).find('[data-assign-item][disabled]')
@@ -120,13 +120,13 @@ end
 
 Given /^I take back a(n)?( late)? item$/ do |grammar, is_late|
   @event = 'take_back'
-  user = FactoryGirl.create(:user)
-  FactoryGirl.create(:access_right, inventory_pool: @current_inventory_pool, user: user)
-  item = FactoryGirl.create(:item)
-  item_line = FactoryGirl.create(:item_line,
+  user = FactoryBot.create(:user)
+  FactoryBot.create(:access_right, inventory_pool: @current_inventory_pool, user: user)
+  item = FactoryBot.create(:item)
+  item_line = FactoryBot.create(:item_line,
                                  item: item,
                                  model: item.model,
-                                 contract: FactoryGirl.create(:open_contract,
+                                 contract: FactoryBot.create(:open_contract,
                                                               inventory_pool: @current_inventory_pool,
                                                               user: user),
                                  user: user,
@@ -176,7 +176,7 @@ end
 When /^one item is defective$/ do
   case @event
     when 'hand_over'
-      @item = FactoryGirl.create(:item, is_broken: true, inventory_pool: @current_inventory_pool)
+      @item = FactoryBot.create(:item, is_broken: true, inventory_pool: @current_inventory_pool)
       step 'I add an item to the hand over'
       sleep 1
       wait_until do
@@ -195,7 +195,7 @@ end
 Given /^one item is incomplete$/ do
   case @event
     when 'hand_over'
-      @item = FactoryGirl.create(:item, is_incomplete: true, inventory_pool: @current_inventory_pool)
+      @item = FactoryBot.create(:item, is_incomplete: true, inventory_pool: @current_inventory_pool)
       step 'I add an item to the hand over'
       wait_until do
         @line_id = find("input[value='#{@item.inventory_code}']").find(:xpath, 'ancestor::div[@data-id]')['data-id']
@@ -232,8 +232,8 @@ end
 
 Given(/^test data setup XXX$/) do
   @event = 'hand_over'
-  @customer = FactoryGirl.create(:user)
-  FactoryGirl.create(:access_right,
+  @customer = FactoryBot.create(:user)
+  FactoryBot.create(:access_right,
                      inventory_pool: @current_inventory_pool,
                      user: @customer,
                      role: :customer)

@@ -82,7 +82,7 @@ group :development, :test do
   gem 'bootsnap'
 
   gem 'database_cleaner'
-  gem 'factory_girl_rails', '~> 4.1'
+  gem 'factory_bot_rails', '~> 6'
   gem 'flog'
   gem 'flay'
   gem 'meta_request'

@@ -201,7 +201,7 @@ Given(/^an LDAP response object for HSLU is mocked$/) do
 end
 
 Given(/^a group called "(.*?)" exists$/) do |groupname|
-  @group = FactoryGirl.create(:group, name: groupname)
+  @group = FactoryBot.create(:group, name: groupname)
 end
 
 When(/^I log in as HSLU-LDAP user "(.*?)"$/) do |username|

@@ -124,11 +124,11 @@ Then(/^the relevant reservations show the person taking back the item in the for
 end
 
 Given(/^I am a customer with contracts with different dates$/) do
-  inventory_pool = FactoryGirl.create(:inventory_pool)
-  customer = FactoryGirl.create(:user)
-  FactoryGirl.create(:access_right, inventory_pool: inventory_pool, user: customer)
+  inventory_pool = FactoryBot.create(:inventory_pool)
+  customer = FactoryBot.create(:user)
+  FactoryBot.create(:access_right, inventory_pool: inventory_pool, user: customer)
   (Date.today..Date.today + 1.week).each do |date|
-    FactoryGirl.create(:open_contract,
+    FactoryBot.create(:open_contract,
                        inventory_pool: inventory_pool,
                        user: customer,
                        start_date: date,

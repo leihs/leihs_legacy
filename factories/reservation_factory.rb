@@ -1,11 +1,11 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   trait :shared_reservations_attributes do
     inventory_pool
     user do
       u1 = inventory_pool.users.customers.sample
       u1 ||= begin
-        u2 = FactoryGirl.create :user
+        u2 = FactoryBot.create :user
         u2.access_rights.create(inventory_pool: inventory_pool, role: :customer)
         u2
       end
@@ -22,12 +22,12 @@ FactoryGirl.define do
   factory :item_line, aliases: [:reservation] do
     shared_reservations_attributes
 
-    quantity 1
+    quantity { 1 }
     model do
       inventory_pool.models.shuffle.detect do |model|
         av = model.availability_in(inventory_pool)
         av.entitlements[nil] > 0 and av.running_reservations.empty?
-      end || FactoryGirl.create(:model_with_items, inventory_pool: inventory_pool)
+      end || FactoryBot.create(:model_with_items, inventory_pool: inventory_pool)
     end
 
     trait :with_assigned_item do
@@ -39,12 +39,12 @@ FactoryGirl.define do
       transient do
         purpose { Faker::Lorem.sentence }
       end
-      status :submitted
+      status { :submitted }
 
       after :build do |reservation, evaluator|
         unless reservation.status == :unsubmitted
           reservation.order = \
-            FactoryGirl.create(:order,
+            FactoryBot.create(:order,
                                user: reservation.user,
                                inventory_pool: reservation.inventory_pool,
                                state: reservation.status,
@@ -60,7 +60,7 @@ FactoryGirl.define do
     quantity { 1 }
     option do
       inventory_pool.options.sample ||
-          FactoryGirl.create(:option, inventory_pool: inventory_pool)
+          FactoryBot.create(:option, inventory_pool: inventory_pool)
     end
   end
 end

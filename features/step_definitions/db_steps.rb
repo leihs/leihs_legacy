@@ -7,6 +7,6 @@ end
 
 Given(/^settings exist$/) do
   unless Setting.first
-    FactoryGirl.create(:setting)
+    FactoryBot.create(:setting)
   end
 end

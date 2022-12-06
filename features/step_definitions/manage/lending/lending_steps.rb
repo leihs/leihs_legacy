@@ -1,11 +1,11 @@
 When(/^I open a hand over with an unassigned item line$/) do
   @event = 'hand_over'
-  @customer = FactoryGirl.create(:user)
-  FactoryGirl.create(:access_right,
+  @customer = FactoryBot.create(:user)
+  FactoryBot.create(:access_right,
                      user: @customer,
                      inventory_pool: @current_inventory_pool,
                      role: :customer)
-  FactoryGirl.create(:reservation,
+  FactoryBot.create(:reservation,
                      status: :approved,
                      item: nil,
                      inventory_pool: @current_inventory_pool,
