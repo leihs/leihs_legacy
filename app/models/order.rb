@@ -196,8 +196,8 @@ class Order < ApplicationRecord
   #################################################################################
 
   def reject(comment, current_user)
-    update_attributes(state: :rejected, reject_reason: comment) and
-      reservations.all? { |line| line.update_attributes(status: :rejected) } and
+    update(state: :rejected, reject_reason: comment) and
+      reservations.all? { |line| line.update(status: :rejected) } and
       Notification.order_rejected(self, comment, true, current_user)
   end
 
@@ -224,8 +224,8 @@ class Order < ApplicationRecord
   def approve(comment, send_mail = true, current_user = nil, force = false)
     if approvable? \
         or (force and current_user.has_role?(:lending_manager, inventory_pool))
-      update_attributes(state: :approved)
-      reservations.each { |cl| cl.update_attributes(status: :approved) }
+      update(state: :approved)
+      reservations.each { |cl| cl.update(status: :approved) }
       send_approved_notification(comment, send_mail, current_user)
       true
     else

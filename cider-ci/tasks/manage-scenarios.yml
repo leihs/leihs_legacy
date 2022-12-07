@@ -7,27 +7,20 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/login/login.feature:8
-- name: features/manage/acknowledge/add_item.feature:15
+- name: features/manage/acknowledge/add_item.feature:25
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:15
-- name: features/manage/acknowledge/add_item.feature:24
+        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:25
+- name: features/manage/acknowledge/add_item.feature:32
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:24
-- name: features/manage/acknowledge/add_item.feature:31
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:31
+        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:32
 - name: features/manage/acknowledge/add_item.feature:10
   scripts:
     test:
@@ -1757,20 +1750,20 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/lending/day_navigation.feature:19
-- name: features/manage/lending/lending.feature:105
+- name: features/manage/lending/lending.feature:106
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:105
-- name: features/manage/lending/lending.feature:114
+        bundle exec cucumber --strict features/manage/lending/lending.feature:106
+- name: features/manage/lending/lending.feature:115
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:114
+        bundle exec cucumber --strict features/manage/lending/lending.feature:115
 - name: features/manage/lending/lending.feature:13
   scripts:
     test:
@@ -1778,48 +1771,48 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/lending/lending.feature:13
-- name: features/manage/lending/lending.feature:122
+- name: features/manage/lending/lending.feature:123
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:122
-- name: features/manage/lending/lending.feature:127
+        bundle exec cucumber --strict features/manage/lending/lending.feature:123
+- name: features/manage/lending/lending.feature:128
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:127
-- name: features/manage/lending/lending.feature:133
+        bundle exec cucumber --strict features/manage/lending/lending.feature:128
+- name: features/manage/lending/lending.feature:134
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:133
-- name: features/manage/lending/lending.feature:139
+        bundle exec cucumber --strict features/manage/lending/lending.feature:134
+- name: features/manage/lending/lending.feature:140
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:139
-- name: features/manage/lending/lending.feature:147
+        bundle exec cucumber --strict features/manage/lending/lending.feature:140
+- name: features/manage/lending/lending.feature:148
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:147
-- name: features/manage/lending/lending.feature:153
+        bundle exec cucumber --strict features/manage/lending/lending.feature:148
+- name: features/manage/lending/lending.feature:154
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:153
+        bundle exec cucumber --strict features/manage/lending/lending.feature:154
 - name: features/manage/lending/lending.feature:19
   scripts:
     test:
@@ -1841,20 +1834,13 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/lending/lending.feature:35
-- name: features/manage/lending/lending.feature:43
+- name: features/manage/lending/lending.feature:51
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:43
-- name: features/manage/lending/lending.feature:50
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:50
+        bundle exec cucumber --strict features/manage/lending/lending.feature:51
 - name: features/manage/lending/lending.feature:8
   scripts:
     test:
@@ -1862,34 +1848,34 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/lending/lending.feature:8
-- name: features/manage/lending/lending.feature:72
+- name: features/manage/lending/lending.feature:73
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:72
-- name: features/manage/lending/lending.feature:76
+        bundle exec cucumber --strict features/manage/lending/lending.feature:73
+- name: features/manage/lending/lending.feature:77
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:76
-- name: features/manage/lending/lending.feature:80
+        bundle exec cucumber --strict features/manage/lending/lending.feature:77
+- name: features/manage/lending/lending.feature:81
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:80
-- name: features/manage/lending/lending.feature:99
+        bundle exec cucumber --strict features/manage/lending/lending.feature:81
+- name: features/manage/lending/lending.feature:100
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:99
+        bundle exec cucumber --strict features/manage/lending/lending.feature:100
 - name: features/manage/lending/tabs_navigation.feature:10
   scripts:
     test:
@@ -2555,27 +2541,20 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/software/edit_software.feature:71
-- name: features/manage/software/search_for_software.feature:25
+- name: features/manage/software/search_for_software.feature:38
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/software/search_for_software.feature:25
-- name: features/manage/software/search_for_software.feature:37
+        bundle exec cucumber --strict features/manage/software/search_for_software.feature:38
+- name: features/manage/software/search_for_software.feature:45
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/software/search_for_software.feature:37
-- name: features/manage/software/search_for_software.feature:44
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        bundle exec cucumber --strict features/manage/software/search_for_software.feature:44
+        bundle exec cucumber --strict features/manage/software/search_for_software.feature:45
 - name: features/manage/software/search_for_software.feature:7
   scripts:
     test:

@@ -81,7 +81,7 @@ class Manage::ModelsController < Manage::ApplicationController
           m = Model.find(params[:model_id])
           i = store_image_with_thumbnail!(params[:data], m)
           if params[:is_cover] == 'true'
-            m.update_attributes!(cover_image_id: i.id)
+            m.update!(cover_image_id: i.id)
           end
         end
       end
@@ -295,7 +295,7 @@ class Manage::ModelsController < Manage::ApplicationController
                                model: @model
           data[:inventory_code] ||= \
             "P-#{Item.proposed_inventory_code(current_inventory_pool)}"
-          item.update_attributes data
+          item.update data
           children['id'].each do |child_id|
             child = Item.find(child_id)
             child.skip_serial_number_validation = true
@@ -317,7 +317,7 @@ class Manage::ModelsController < Manage::ApplicationController
           next
         elsif item
           package.delete '_destroy'
-          item.update_attributes package
+          item.update package
           if children
             item.children = []
             children['id'].each do |child_id|
@@ -336,7 +336,7 @@ class Manage::ModelsController < Manage::ApplicationController
   private
 
   def inherit_attributes_from_package!(package, item)
-    item.update_attributes!(room_id: package.room_id,
+    item.update!(room_id: package.room_id,
                             shelf: package.shelf)
   end
 
@@ -372,11 +372,11 @@ class Manage::ModelsController < Manage::ApplicationController
       end
     end.to_h)
     p.permit!
-    model.update_attributes(p) and model.save
+    model.update(p) and model.save
   end
 
   def handle_images!(model, model_attrs)
-    model.update_attributes!(cover_image_id: nil) unless model.new_record?
+    model.update!(cover_image_id: nil) unless model.new_record?
 
     if images_attrs = model_attrs[:images_attributes]
       image_id, spec = images_attrs.to_h.find { |_, spec| spec[:is_cover] }

@@ -1,9 +1,9 @@
 run_when:
 
-  # meta checks have passed:
-  #   type: job
-  #   job_key: meta
-  #   states: [passed]
+  meta checks have passed:
+    type: job
+    job_key: meta
+    states: [passed]
 
   branch name matches:
     type: branch

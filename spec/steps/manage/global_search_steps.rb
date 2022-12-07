@@ -129,11 +129,11 @@ module Manage
       end
 
       step 'the owner of the item is the inactive inventory pool' do
-        @retired_item.update_attributes!(owner: @inactive_pool)
+        @retired_item.update!(owner: @inactive_pool)
       end
 
       step 'the responsible of the item is the inactive inventory pool' do
-        @retired_item.update_attributes!(inventory_pool: @inactive_pool)
+        @retired_item.update!(inventory_pool: @inactive_pool)
       end
 
       step 'I search globally for the inventory code of the item' do

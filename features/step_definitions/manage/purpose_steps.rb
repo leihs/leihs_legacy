@@ -75,7 +75,7 @@ Given(/^the current inventory pool (requires|doesn't require) purpose$/) do |arg
         else
           false
       end
-  @current_inventory_pool.update_attributes(required_purpose: b)
+  @current_inventory_pool.update(required_purpose: b)
 end
 
 Then /^I do not assign a purpose$/ do

@@ -175,7 +175,7 @@ end
 Given /^to each contract line an item is assigned$/ do
   # assign contract reservations
   @open_reservations.each do |cl|
-    cl.update_attributes(item: cl.model.items.borrowable.in_stock.first)
+    cl.update(item: cl.model.items.borrowable.in_stock.first)
   end
 end
 
@@ -222,7 +222,7 @@ end
 
 Given /^to each contract line of the user's contract an item is assigned$/ do
   @open_reservations.each do |cl|
-    cl.update_attributes(item: cl.model.items.borrowable.in_stock.first)
+    cl.update(item: cl.model.items.borrowable.in_stock.first)
   end
 end
 
@@ -230,7 +230,7 @@ Given /^to each contract line of both contracts an item is assigned$/ do
   [@open_reservations2, @open_reservations3].each do |c|
     # assign contract reservations
     c.each do |cl|
-      cl.update_attributes(item: cl.model.items.borrowable.in_stock.first)
+      cl.update(item: cl.model.items.borrowable.in_stock.first)
     end
   end
 end

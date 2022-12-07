@@ -11,7 +11,7 @@ module Borrow
 
       step "'deliver_received_order_notifications' is set to true " \
            'in admin settings' do
-        Setting.first.update_attributes! \
+        Setting.first.update! \
           deliver_received_order_notifications: true
       end
 

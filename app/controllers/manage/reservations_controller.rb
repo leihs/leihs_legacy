@@ -24,7 +24,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     params[:reservation].delete(:contract_id)
 
     @reservation = current_inventory_pool.reservations.find(params[:line_id])
-    unless @reservation.update_attributes(params[:reservation])
+    unless @reservation.update(params[:reservation])
       render status: :bad_request,
              text: @reservation.errors.full_messages.uniq.join(', ')
     end
@@ -123,7 +123,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     line = current_inventory_pool.reservations.approved.find params[:id]
 
     if item and line and line.model_id == item.model_id
-      unless line.update_attributes(item: item)
+      unless line.update(item: item)
         @error = { message: line.errors.full_messages.uniq.join(', ') }
       end
     else
@@ -143,7 +143,7 @@ class Manage::ReservationsController < Manage::ApplicationController
             { message: _('Assigning the inventory code fails') }
           end
       end
-      line.update_attributes(item: nil)
+      line.update(item: nil)
     end
 
     if @error.blank?
@@ -180,7 +180,7 @@ class Manage::ReservationsController < Manage::ApplicationController
 
   def remove_assignment
     line = current_inventory_pool.reservations.approved.find params[:id]
-    line.update_attributes(item_id: nil)
+    line.update(item_id: nil)
     head :ok
   end
 
@@ -197,16 +197,16 @@ class Manage::ReservationsController < Manage::ApplicationController
             new_line = line.dup
             new_line.quantity -= Integer(v)
             new_line.save!
-            line.update_attributes!(quantity: Integer(v))
+            line.update!(quantity: Integer(v))
           end
         end
 
         reservations.each do |l|
-          l.update_attributes!(returned_date: Time.zone.today,
+          l.update!(returned_date: Time.zone.today,
                                returned_to_user_id: current_user.id)
 
           if l.last_closed_reservation_of_contract?
-            l.contract.update_attributes!(state: :closed)
+            l.contract.update!(state: :closed)
           end
         end
 
@@ -257,7 +257,7 @@ class Manage::ReservationsController < Manage::ApplicationController
                                end
                              end
 
-            line.update_attributes!(user: user,
+            line.update!(user: user,
                                     delegated_user: delegated_user,
                                     order: new_order || nil)
           end
@@ -276,7 +276,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     model = Model.find(params[:model_id])
     ApplicationRecord.transaction(requires_new: true) do
       reservations.each do |line|
-        line.update_attributes(model: model, item_id: nil)
+        line.update(model: model, item_id: nil)
       end
     end
     if reservations.all?(&:valid?)
@@ -291,7 +291,7 @@ class Manage::ReservationsController < Manage::ApplicationController
     new_purpose =  params.permit(:purpose)[:purpose].strip.presence
     ApplicationRecord.transaction(requires_new: true) do
       reservations.each do |line|
-        line.update_attributes(line_purpose: new_purpose)
+        line.update(line_purpose: new_purpose)
       end
     end
     if reservations.all?(&:valid?)
@@ -459,7 +459,7 @@ class Manage::ReservationsController < Manage::ApplicationController
           if model_group_id_param.nil? \
             and item \
             and line \
-            and not line.update_attributes!(item: item)
+            and not line.update!(item: item)
             error = line.errors.values.join
           end
         elsif option

@@ -12,13 +12,13 @@ class Borrow::UsersController < Borrow::ApplicationController
 
   def switch_to_delegation
     if delegation = current_user.delegations.find(params[:id])
-      user_session.update_attributes! delegation_id: delegation.id
+      user_session.update! delegation_id: delegation.id
     end
     redirect_to borrow_root_path
   end
 
   def switch_back
-    user_session.update_attributes! delegation_id: nil
+    user_session.update! delegation_id: nil
     redirect_to borrow_root_path
   end
 

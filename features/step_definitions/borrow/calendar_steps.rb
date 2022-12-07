@@ -7,7 +7,7 @@ end
 Given(/^the current inventory pool has reached maximum amount of visits$/) do
   if @current_inventory_pool.workday.reached_max_visits.empty?
     # NOTE set max visits to 1 for all days
-    @current_inventory_pool.workday.update_attributes(max_visits: (0..6).inject({}) { |h, n| h[n] = 1; h })
+    @current_inventory_pool.workday.update(max_visits: (0..6).inject({}) { |h, n| h[n] = 1; h })
   end
   expect(@current_inventory_pool.workday.reached_max_visits).not_to be_empty
 end
@@ -17,7 +17,7 @@ When(/^I open the calendar of a model related to an inventory pool for which has
   @inventory_pool ||= @current_user.inventory_pools.detect do |ip|
     if ip.visits.where(is_approved: true).where('date >= ?', Date.today)
       # NOTE set max visits to 1 for all days
-      ip.workday.update_attributes(max_visits: (0..6).inject({}) { |h, n| h[n] = 1; h })
+      ip.workday.update(max_visits: (0..6).inject({}) { |h, n| h[n] = 1; h })
       true
     else
       false
@@ -30,7 +30,7 @@ When(/^I open the calendar of a model related to an inventory pool for which the
   @inventory_pool = @current_user.inventory_pools.detect { |ip| ip.workday.reservation_advance_days == arg1.to_i }
   @inventory_pool ||= begin
     ip = @current_user.inventory_pools.first
-    ip.workday.update_attributes(reservation_advance_days: arg1.to_i)
+    ip.workday.update(reservation_advance_days: arg1.to_i)
     ip
   end
   step 'I open the calendar of a model'

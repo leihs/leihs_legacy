@@ -79,7 +79,7 @@ class Manage::CategoriesController < Manage::ApplicationController
     # TODO: # Rails bug: https://github.com/rails/rails/issues/25198
     deal_with_destroy_nested_attributes!(params[:category])
     ###############################################################################
-    if @category.update_attributes(params[:category]) and @category.save!
+    if @category.update(params[:category]) and @category.save!
       manage_links @category, links
       render status: :ok, json: { id: @category.id }
     else

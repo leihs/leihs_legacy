@@ -1,12 +1,19 @@
 ---
 tasks:
-- name: features/manage/acknowledge/add_item.feature:41
+- name: features/manage/acknowledge/add_item.feature:16
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:41
+        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:16
+- name: features/manage/acknowledge/add_item.feature:42
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:42
 - name: features/manage/calendar.feature:12
   scripts:
     test:
@@ -21,6 +28,13 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/inventory/inventory.feature:219
+- name: features/manage/lending/lending.feature:44
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/lending/lending.feature:44
 - name: features/manage/not_logged_in_information.feature:9
   scripts:
     test:
@@ -28,6 +42,13 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/not_logged_in_information.feature:9
+- name: features/manage/software/search_for_software.feature:26
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/software/search_for_software.feature:26
 - name: features/manage/take_back/edit_take_back_end_date.feature:17
   scripts:
     test:

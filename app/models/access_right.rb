@@ -14,7 +14,7 @@ class AccessRight < ApplicationRecord
       Suspension.find_or_initialize_by(
         user_id: access_right.user_id,
         inventory_pool_id: access_right.inventory_pool_id
-      ).update_attributes(
+      ).update(
         suspended_until: access_right.suspended_until,
         suspended_reason: access_right.suspended_reason
       )

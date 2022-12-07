@@ -218,7 +218,7 @@ class Admin::InventoryController < Admin::ApplicationController
           and rooms.id = items.room_id
           and buildings.id = rooms.building_id
     SQL
-    result = ActiveRecord::Base.connection.exec_query(query).to_hash
+    result = ActiveRecord::Base.connection.exec_query(query).to_a
 
     objects = result.map do |row|
 
@@ -295,7 +295,7 @@ end
 #     where
 #       options.inventory_pool_id = inventory_pools.id
 #   SQL
-#   result = ActiveRecord::Base.connection.exec_query(query).to_hash
+#   result = ActiveRecord::Base.connection.exec_query(query).to_a
 #
 #   objects = result.map do |row|
 #     {

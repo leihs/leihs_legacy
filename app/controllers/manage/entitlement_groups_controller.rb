@@ -51,7 +51,7 @@ class Manage::EntitlementGroupsController < Manage::ApplicationController
     mapped_params = map_params params
     mapped_params.permit!
     mapped_params.delete(:users)
-    if @group.save and @group.update_attributes(mapped_params)
+    if @group.save and @group.update(mapped_params)
       redirect_to manage_inventory_pool_groups_path,
                   flash: { success: _('%s created') % _('Entitlement-Group') }
     else
@@ -67,7 +67,7 @@ class Manage::EntitlementGroupsController < Manage::ApplicationController
     mapped_params = map_params params
     mapped_params.permit!
     mapped_params.delete(:users)
-    if @group.update_attributes(mapped_params)
+    if @group.update(mapped_params)
       redirect_to manage_inventory_pool_groups_path,
                   flash: { success: _('%s saved') % _('Entitlement-Group') }
     else

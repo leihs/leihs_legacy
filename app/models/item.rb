@@ -486,7 +486,7 @@ class Item < ApplicationRecord
 
       if model.is_package? and !retired.nil?
         children.each do |item|
-          item.update_attributes(parent: nil)
+          item.update(parent: nil)
         end
       end
     end

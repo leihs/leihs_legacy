@@ -45,7 +45,7 @@ module Borrow
         wd = @reservation.inventory_pool.workday
         d1 = Workday::WORKDAYS[@reservation.start_date.wday]
         d2 = Workday::WORKDAYS[@reservation.end_date.wday]
-        wd.update_attributes! d1 => true, d2 => true
+        wd.update! d1 => true, d2 => true
       end
 
       step 'I open the page for this order' do
@@ -77,7 +77,7 @@ module Borrow
       end
 
       step 'the reservation advance days for this pool is set to :n' do |n|
-        @inventory_pool.workday.update_attributes!(
+        @inventory_pool.workday.update!(
           reservation_advance_days: n.to_i
         )
       end

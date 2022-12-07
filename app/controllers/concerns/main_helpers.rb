@@ -46,7 +46,7 @@ module MainHelpers
         # If user is logged in and he requested a locale change or he does not have
         # a language yet, then update his language.
         if current_user and (params[:locale] or current_user.language_locale.nil?)
-          current_user.update_attributes(language_locale: language.locale)
+          current_user.update(language_locale: language.locale)
         end
         session[:locale] = language.locale
         I18n.locale = language.locale.underscore.to_sym

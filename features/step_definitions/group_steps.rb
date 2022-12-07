@@ -127,7 +127,7 @@ When /^I lend (\w+) item(s?) of that model to "([^"]*)"$/ do |n, plural, user_lo
   end
 
   reservations.each do |cl|
-    cl.update_attributes(item: cl.model.items.borrowable.in_stock.where(inventory_pool: cl.inventory_pool).sample )
+    cl.update(item: cl.model.items.borrowable.in_stock.where(inventory_pool: cl.inventory_pool).sample )
   end
 
   contract = Contract.sign!(@user, @inventory_pool, user, reservations,
@@ -139,9 +139,9 @@ When /^"([^"]*)" returns the item$/ do |user|
   @user = User.where(login: user).first
   cl = @user.reservations.last
   ApplicationRecord.transaction do
-    cl.update_attributes(returned_date: Date.today)
+    cl.update(returned_date: Date.today)
     if cl.last_closed_reservation_of_contract?
-      cl.contract.update_attributes(state: :closed)
+      cl.contract.update(state: :closed)
     end
   end
   expect(cl.status).to be :closed

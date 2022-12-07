@@ -79,7 +79,7 @@ class ModelGroup < ApplicationRecord
   def set_parent_with_label(parent, label)
     ModelGroupLink.create_edge(parent, self)
     l = links_as_child.find_by(parent_id: parent.id)
-    l.update_attributes(label: label) if l
+    l.update(label: label) if l
   end
 
   ################################################

@@ -101,7 +101,7 @@ class Manage::ContractsController < Manage::ApplicationController
     reservations = order.reservations
     ApplicationRecord.transaction(requires_new: true) do
       reservations.each do |line|
-        line.update_attributes(user: user, delegated_user: delegated_user)
+        line.update(user: user, delegated_user: delegated_user)
       end
     end
     if reservations.all?(&:valid?)

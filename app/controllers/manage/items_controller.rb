@@ -175,7 +175,7 @@ class Manage::ItemsController < Manage::ApplicationController
             item_params[:properties] = \
               @item.properties.merge item_params[:properties].to_unsafe_hash
           end
-          saved = @item.update_attributes(item_params)
+          saved = @item.update(item_params)
 
           if params[:child_items]
             @item.children = []
@@ -261,7 +261,7 @@ class Manage::ItemsController < Manage::ApplicationController
   def inspect
     fetch_item_by_id
     [:is_borrowable, :is_incomplete, :is_broken, :status_note].each do |attr|
-      @item.update_attributes(attr => params[attr])
+      @item.update(attr => params[attr])
     end
     @item.save!
     head :ok

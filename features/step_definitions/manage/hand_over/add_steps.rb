@@ -2,9 +2,9 @@ When /^I add (a|an|a borrowable|an unborrowable) (item|license) to the hand over
   item = FactoryBot.create(item_type.to_sym, inventory_pool: @current_inventory_pool)
   case item_attr
   when 'a borrowable'
-    item.update_attributes(is_borrowable: true)
+    item.update(is_borrowable: true)
   when 'an unborrowable'
-    item.update_attributes(is_borrowable: false)
+    item.update(is_borrowable: false)
   end
   @inventory_code = item.inventory_code
   @inventory_codes ||= []
@@ -211,7 +211,7 @@ end
 
 When /^I add a retired item to the hand over by providing an inventory code$/ do
   item = FactoryBot.create(:item, inventory_pool: @current_inventory_pool)
-  item.update_attributes(retired: Date.yesterday,
+  item.update(retired: Date.yesterday,
                          retired_reason: Faker::Lorem.sentence)
   @inventory_code = item.inventory_code
   @inventory_codes ||= []

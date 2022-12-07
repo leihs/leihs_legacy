@@ -133,7 +133,7 @@ Given /^I take back a(n)?( late)? item$/ do |grammar, is_late|
                                  status: :signed,
                                  inventory_pool: @current_inventory_pool)
   if is_late
-    item_line.update_attributes(start_date: Date.today - 2,
+    item_line.update(start_date: Date.today - 2,
                                 end_date: Date.today - 1)
   end
   sleep 2

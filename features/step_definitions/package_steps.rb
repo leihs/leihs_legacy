@@ -28,7 +28,7 @@ Then "even though 'Khil Remix' is not part of a package in inventory pool 2!" do
 end
 
 Given(/^this model is a package$/) do
-  @model.update_attributes(is_package: true)
+  @model.update(is_package: true)
 end
 
 Given(/^this package item is part of this package model$/) do

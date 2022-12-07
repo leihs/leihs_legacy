@@ -22,6 +22,7 @@ Feature: Search for software
     Then all matching software licenses appear
     And all contracts containing this software product appear
 
+    @flapping
     Scenario: Displaying licenses from another inventory pool in closed contracts
       Given there exists a closed contract with a license, for which an other inventory pool is responsible and owner
       When I search globally after this license with its inventory code

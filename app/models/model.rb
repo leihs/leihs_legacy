@@ -137,7 +137,7 @@ class Model < ApplicationRecord
               .where(':id IN (items.owner_id, items.inventory_pool_id)',
                      id: ip.id)
               .distinct
-          Model.where("models.id NOT IN (#{model_ids.to_sql})")
+          where("models.id NOT IN (#{model_ids.to_sql})")
         end))
 
   scope :packages, -> { where(is_package: true) }

@@ -33,7 +33,7 @@ module LeihsFactory
     }
 
     if (lang = Language.find_by_name(attributes[:name]))
-      lang.update_attributes(locale: attributes[:locale])
+      lang.update(locale: attributes[:locale])
     else
       Language.create! default_attributes.merge(attributes)
     end
@@ -173,7 +173,7 @@ module LeihsFactory
       ip = InventoryPool.create default_attributes.merge(attributes)
       # the workday is create through InventoryPool#before_create,
       # then we cannot use InventoryPool.find_or_create_by_name
-      ip.workday.update_attributes(saturday: true, sunday: true)
+      ip.workday.update(saturday: true, sunday: true)
       ip.update_address(default_address_attributes.merge(address_attributes))
     end
     ip
@@ -189,7 +189,7 @@ module LeihsFactory
       email: 'ABC@abc.de'
     }
     ip = InventoryPool.find_or_create_by(name: default_attributes.merge(attributes)[:name])
-    ip.update_attributes default_attributes.merge(attributes)
+    ip.update default_attributes.merge(attributes)
     ip
   end
 

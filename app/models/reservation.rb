@@ -227,7 +227,7 @@ class Reservation < ApplicationRecord
     Reservation.transaction(requires_new: true) do
       start_date ||= self.start_date
       end_date ||= self.end_date
-      unless update_attributes(start_date: start_date,
+      unless update(start_date: start_date,
                                end_date: [start_date, end_date].max)
         raise errors.full_messages.uniq.join(', ')
       end

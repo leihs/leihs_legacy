@@ -1,5 +1,6 @@
 class UserSession < ApplicationRecord
   belongs_to :user
+  # belongs_to :delegation, foreign_key: :delegation_id, class_name: 'User', optional: true
   belongs_to :delegation, foreign_key: :delegation_id, class_name: 'User'
   belongs_to :authentication_system
 

@@ -195,7 +195,7 @@ Then(/^the newly created user does not have access to that inventory pool$/) do
 end
 
 When(/^on the inventory pool I enable the automatic suspension for users with overdue take backs$/) do
-  @current_inventory_pool.update_attributes(automatic_suspension: true, automatic_suspension_reason: Faker::Lorem.paragraph)
+  @current_inventory_pool.update(automatic_suspension: true, automatic_suspension_reason: Faker::Lorem.paragraph)
 end
 
 When(/^a user is already suspended for this inventory pool$/) do

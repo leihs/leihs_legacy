@@ -1,6 +1,6 @@
 Given "{string}'s email address is {string}" do |name, email|
   u = User.find_by_login(name)
-  u.update_attributes(email: email)
+  u.update(email: email)
   #u.language = Language.default_language.id # should run with default lang...
   u.save
 end

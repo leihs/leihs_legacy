@@ -1,10 +1,10 @@
 When(/^the mail delivery method is set to "(.*?)"$/) do |method|
   case method.to_sym
   when :smtp
-    @smtp_setting.update_attributes({enabled: true})
+    @smtp_setting.update({enabled: true})
     ActionMailer::Base.delivery_method = :smtp
   when :test
-    @smtp_setting.update_attributes({enabled: false})
+    @smtp_setting.update({enabled: false})
     ActionMailer::Base.delivery_method = :test
   end
 end
@@ -14,12 +14,12 @@ Then(/^ActionMailer's delivery method is "(.*?)"$/) do |method|
 end
 
 When(/^the SMTP username is set to "(.*?)"$/) do |username|
-  expect(@smtp_setting.update_attributes({username: username})).to be true
+  expect(@smtp_setting.update({username: username})).to be true
   expect(SmtpSetting.first.username).to eq username
 end
 
 When(/^the SMTP password is set to "(.*?)"$/) do |password|
-  expect(@smtp_setting.update_attributes({password: password})).to be true
+  expect(@smtp_setting.update({password: password})).to be true
   expect(SmtpSetting.first.password).to eq password
 end
 

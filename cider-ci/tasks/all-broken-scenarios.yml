@@ -28,20 +28,20 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/hand_over/calendar.feature:7
-- name: features/manage/lending/lending.feature:160
+- name: features/manage/lending/lending.feature:161
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:160
-- name: features/manage/lending/lending.feature:60
+        bundle exec cucumber --strict features/manage/lending/lending.feature:161
+- name: features/manage/lending/lending.feature:61
   scripts:
     test:
       body: |-
         set -eux
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:60
+        bundle exec cucumber --strict features/manage/lending/lending.feature:61
 - name: features/manage/picking_list.feature:42
   scripts:
     test:

@@ -229,7 +229,7 @@ class InventoryPool < ApplicationRecord
 
   def update_address(attr)
     if (a = Address.find_by(attr))
-      update_attributes(address_id: a.id)
+      update(address_id: a.id)
     else
       create_address(attr)
     end

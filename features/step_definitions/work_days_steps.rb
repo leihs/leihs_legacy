@@ -12,7 +12,7 @@ Given 'inventory_pool is open on {string}' do |days|
   inventory_pool.workday.sunday = false
   inventory_pool.workday.save
   days.split(',').each do |day|
-    inventory_pool.workday.update_attributes(day.strip.downcase => true)
+    inventory_pool.workday.update(day.strip.downcase => true)
   end
 end
 

@@ -59,7 +59,7 @@ class Manage::OrdersController < Manage::ApplicationController
   def update
     @order = Order.find(id_param)
     begin
-      @order.update_attributes!(purpose: purpose_param)
+      @order.update!(purpose: purpose_param)
       render json: @order, status: 200
     rescue => e
       render plain: e.message, status: 500
@@ -71,7 +71,7 @@ class Manage::OrdersController < Manage::ApplicationController
     Order.transaction(requires_new: true) do
       begin
         @order.reservations.each do |reservation|
-          reservation.update_attributes!(
+          reservation.update!(
             user_id: user_id_param,
             delegated_user_id: delegated_user_id_param
           )
@@ -80,13 +80,13 @@ class Manage::OrdersController < Manage::ApplicationController
         customer_order = @order.customer_order
 
         if customer_order.orders.count == 1
-          @order.update_attributes!(user_id: user_id_param)
-          customer_order.update_attributes!(user_id: user_id_param)
+          @order.update!(user_id: user_id_param)
+          customer_order.update!(user_id: user_id_param)
         else
           customer_order = CustomerOrder.create!(user_id: user_id_param,
                                                  purpose: @order.purpose,
                                                  title: @order.purpose)
-          @order.update_attributes!(user_id: user_id_param, customer_order: customer_order)
+          @order.update!(user_id: user_id_param, customer_order: customer_order)
         end
 
         head :ok

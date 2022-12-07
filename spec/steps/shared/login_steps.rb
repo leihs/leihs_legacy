@@ -54,7 +54,7 @@ module Spec
       table.headers.each do |role|
         next if AccessRight.find_by(user: user, inventory_pool: ip, role: role)
         if role == 'admin'
-          user.update_attributes! is_admin: true
+          user.update! is_admin: true
         else
           FactoryBot.create(
             :access_right,

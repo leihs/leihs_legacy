@@ -11,7 +11,7 @@ class Manage::OptionsController < Manage::ApplicationController
 
   def create
     @option = Option.new(inventory_pool: current_inventory_pool)
-    if @option.update_attributes(params[:option])
+    if @option.update(params[:option])
       redirect_to manage_inventory_path(current_inventory_pool),
                   flash: { success: _('Option saved') }
     else
@@ -22,7 +22,7 @@ class Manage::OptionsController < Manage::ApplicationController
 
   def update
     @option = current_inventory_pool.options.find params[:id]
-    if @option.update_attributes(params[:option])
+    if @option.update(params[:option])
       redirect_to manage_inventory_path(current_inventory_pool),
                   flash: { success: _('Option saved') }
     else

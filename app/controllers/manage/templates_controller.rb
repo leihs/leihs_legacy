@@ -41,7 +41,7 @@ class Manage::TemplatesController < Manage::ApplicationController
 
   def update
     begin
-      @template.update_attributes!(params[:template])
+      @template.update!(params[:template])
       flash[:notice] = _('%s successfully saved') % _('Template')
       redirect_to action: :index
     rescue => e

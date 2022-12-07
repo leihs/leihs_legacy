@@ -78,7 +78,7 @@ module Spec
 
     step 'the maximum reservation time is set to :n days' do |n|
       s = Setting.first
-      s.update_attributes!(maximum_reservation_time: n.to_i)
+      s.update!(maximum_reservation_time: n.to_i)
     end
 
     step 'I click on :text' do |text|

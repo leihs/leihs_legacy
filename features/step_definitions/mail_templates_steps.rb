@@ -109,7 +109,7 @@ Given(/^the (reminder) mail template looks like$/) do |template_name, string|
                                           name: template_name.gsub(' ', '_'),
                                           language: language,
                                           format: 'text')
-  mt.update_attributes(body: string)
+  mt.update(body: string)
 end
 
 def reset_language_for_current_user
@@ -132,7 +132,7 @@ end
 
 When(/^my language is set to "(.*?)"$/) do |locale|
   language = Language.find_by(locale: locale)
-  @current_user.update_attributes(language: language)
+  @current_user.update(language: language)
   expect(@current_user.reload.language.locale).to eq locale
 end
 

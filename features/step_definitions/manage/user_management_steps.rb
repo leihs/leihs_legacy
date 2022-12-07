@@ -154,7 +154,7 @@ Given /^a (.*?)user (with|without) assigned role appears in the user list$/ do |
         .where(inventory_pool: @current_inventory_pool)
         .active
         .first
-        .update_attributes(suspended_until: Date.today + 1.year, suspended_reason: 'suspended reason')
+        .update(suspended_until: Date.today + 1.year, suspended_reason: 'suspended reason')
   end
   case with_or_without
     when 'with'

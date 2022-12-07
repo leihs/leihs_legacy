@@ -58,7 +58,7 @@ FactoryBot.define do
 
     factory :admin do
       after(:create) do |user, evaluator|
-        user.update_attributes! is_admin: true, admin_protected: true
+        user.update! is_admin: true, admin_protected: true
       end
     end
   end

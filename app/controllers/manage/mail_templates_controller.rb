@@ -41,7 +41,7 @@ class Manage::MailTemplatesController < Manage::ApplicationController
         language: Language.find_by(locale: p[:language]),
         format: p[:format])
       @mail_templates << mt
-      unless mt.update_attributes(body: p[:body])
+      unless mt.update(body: p[:body])
         errors << mt.errors.full_messages
       end
     end

@@ -282,7 +282,7 @@ class User < ApplicationRecord
     if inventory_pool.automatic_suspension? and not suspended?(inventory_pool)
       Suspension.find_or_initialize_by(
         inventory_pool: inventory_pool,
-        user: self).update_attributes(
+        user: self).update(
           suspended_until: AccessRight::AUTOMATIC_SUSPENSION_DATE,
           suspended_reason: inventory_pool.automatic_suspension_reason)
       puts "Suspended: #{self.name} on #{inventory_pool} for overdue take back"

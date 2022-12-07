@@ -66,7 +66,7 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
       h.end_date < Time.zone.today
     end.sort_by(&:start_date)
 
-    if @inventory_pool.update_attributes(params[:inventory_pool])
+    if @inventory_pool.update(params[:inventory_pool])
       flash[:notice] = _('Inventory pool successfully updated')
       redirect_to manage_edit_inventory_pool_path(@inventory_pool)
     else

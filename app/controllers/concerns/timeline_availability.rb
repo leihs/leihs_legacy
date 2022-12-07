@@ -26,7 +26,7 @@ module TimelineAvailability
           )
       SQL
 
-      ActiveRecord::Base.connection.exec_query(query).to_hash
+      ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
     def reservation_users(reservations)
@@ -43,7 +43,7 @@ module TimelineAvailability
         	users.id in (#{user_ids.map { |id| "'#{id}'" }.join(',')})
       SQL
 
-      ActiveRecord::Base.connection.exec_query(query).to_hash
+      ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
     def entitlement_groups_users(users)
@@ -60,7 +60,7 @@ module TimelineAvailability
         	user_id in (#{user_ids.map { |id| "'#{id}'" }.join(',')})
       SQL
 
-      ActiveRecord::Base.connection.exec_query(query).to_hash
+      ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
     def entitlement_groups(
@@ -83,7 +83,7 @@ module TimelineAvailability
           and entitlement_groups.inventory_pool_id = '#{inventory_pool_id}'
       SQL
 
-      ActiveRecord::Base.connection.exec_query(query).to_hash
+      ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
     def entitlements(model_id, pool_id)
@@ -96,7 +96,7 @@ module TimelineAvailability
           AND entitlement_groups.inventory_pool_id = '#{pool_id}'
       SQL
 
-      ActiveRecord::Base.connection.exec_query(query).to_hash
+      ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
     def items(inventory_pool_id, model_id)
@@ -111,7 +111,7 @@ module TimelineAvailability
           and items.parent_id is null
       SQL
 
-      ActiveRecord::Base.connection.exec_query(query).to_hash
+      ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
     def timeline_availability(model_id, inventory_pool_id, is_lending_manager)

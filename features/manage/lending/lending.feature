@@ -40,6 +40,7 @@ Feature: Lending
     Then I see which groups the customer is a member of
     And I see which groups the customer is not a member of
 
+  @flapping
   Scenario: Scanning behavior during hand over
     When I open a hand over for a customer that has things to pick up today as well as in the future
     When I scan something (assign it using its inventory code) and it is already assigned to a future contract

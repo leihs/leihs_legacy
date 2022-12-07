@@ -17,7 +17,7 @@ namespace :app do
       audit = audits.last
       change = audit.audited_changes['price']
       next unless change.compact.size == 2 and change.last <= change.first / 1000
-      if audit.auditable.update_attributes(price: change.first)
+      if audit.auditable.update(price: change.first)
         fixed_items << { item_id: item_id, price: change.first }
       end
     end

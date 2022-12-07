@@ -28,7 +28,7 @@ When /^all reservations of '(.*)' are submitted$/ do |who|
                                purpose: "this is the required purpose",
                                state: :submitted)
     reservations.each do |reservation|
-      reservation.update_attributes(status: :submitted, order: order)
+      reservation.update(status: :submitted, order: order)
     end
   end
   expect(@user.reservations.unsubmitted.reload).to be_empty

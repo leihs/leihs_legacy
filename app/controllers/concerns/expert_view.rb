@@ -73,7 +73,7 @@ module ExpertView
       start_index = (params[:start_index] || 0).to_i
 
       result_models = InventoryPool.connection.exec_query(
-        query + " limit #{page_size + 1} offset #{start_index}").to_hash
+        query + " limit #{page_size + 1} offset #{start_index}").to_a
 
       items_in_model_page = reduced.where(
         <<-SQL

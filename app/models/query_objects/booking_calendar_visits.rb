@@ -37,6 +37,6 @@ class QueryObjects::BookingCalendarVisits
   end
 
   def run
-    ApplicationRecord.connection.exec_query(@query).to_hash
+    ApplicationRecord.connection.exec_query(@query).to_a
   end
 end

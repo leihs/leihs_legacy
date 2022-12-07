@@ -43,7 +43,7 @@ describe AccessRight do
       end
 
       it 'its role can be updated' do
-        @access_right.update_attributes role: 'inventory_manager'
+        @access_right.update role: 'inventory_manager'
         expect(AccessRight.find_by(id: @access_right.id).role.to_s).to be== 'inventory_manager'
       end
 
@@ -107,7 +107,7 @@ describe AccessRight do
 
         context 'updating some other access_right' do
           before :each do
-            @access_right.update_attributes! role: :group_manager
+            @access_right.update! role: :group_manager
           end
           it 'does really update the access_right in the database' do
             expect( AccessRight.find_by(user_id: @user.id, inventory_pool_id: @inventory_pool.id).role).to be== :group_manager

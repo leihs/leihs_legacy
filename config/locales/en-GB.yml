@@ -2,6 +2,14 @@ en-GB:
   activerecord:
     errors:
       models:
+        user_session:
+          attributes:
+            delegation:
+              required: 'is required.'
+        item_line:
+          attributes:
+            delegated_user:
+              required: 'is required.'
         model:
           attributes:
             base:

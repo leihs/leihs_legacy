@@ -68,11 +68,11 @@ module Spec
     end
 
     step 'the item is borrowable' do
-      @item.update_attributes!(is_borrowable: true)
+      @item.update!(is_borrowable: true)
     end
 
     step 'the item is retired' do
-      @item.update_attributes!(retired: true,
+      @item.update!(retired: true,
                                retired_reason: Faker::Lorem.sentence)
     end
 

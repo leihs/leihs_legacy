@@ -681,7 +681,7 @@ Given(/^a software product with more than (\d+) text rows in field "(.*?)" exist
                  td = []
                  (arg1.to_i + rand(1..10)).times { td << Faker::Lorem.paragraph }
                  m = @current_inventory_pool.models.first
-                 m.update_attributes(technical_detail: td.join("\r\n"))
+                 m.update(technical_detail: td.join("\r\n"))
                  m
                end
                r

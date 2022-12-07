@@ -128,7 +128,7 @@ Then(/^the timer is reset$/) do
 end
 
 Given(/^the timeout is set to (\d+) minutes?$/) do |arg1|
-  Setting.first.update_attributes(timeout_minutes: arg1.to_i)
+  Setting.first.update(timeout_minutes: arg1.to_i)
   expect(Setting.first.timeout_minutes).to eq arg1.to_i
 end
 

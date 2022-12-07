@@ -3,7 +3,7 @@ eval_gemfile Pathname(File.dirname(File.absolute_path(__FILE__))).join('database
 gem 'puma'
 gem 'puma_worker_killer'
 
-gem 'audited', git: 'https://github.com/leihs/audited', branch: 'mk/rails-upgrade-6.0.0'
+gem 'audited', git: 'https://github.com/leihs/audited', branch: 'mk/rails-6.1'
 gem 'axlsx', git: 'https://github.com/leihs/axlsx', ref: 'c8ac844572b25fda358cc01d2104720c4c42f450'
 gem 'barby', '~> 0.5.0'
 gem 'chunky_png', '~> 1.2'
@@ -19,7 +19,7 @@ gem 'gettext_i18n_rails', '~> 1.0'
 gem 'haml', '~> 5'
 gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'json', '~> 2'
-gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'mk/rails-upgrade-6.0.0'
+gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'mk/rails-6.1'
 gem 'kramdown' # markdown rendering
 gem 'kramdown-parser-gfm'
 gem 'liquid', '~> 3.0'
