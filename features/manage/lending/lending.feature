@@ -57,7 +57,7 @@ Feature: Lending
     And I click on "Hand Over"
     Then there are inventory codes for item and license in the contract
 
-  @broken
+  @flapping
   Scenario: Inspection during take back
     Given I take back an item
     Then I can inspect each item
@@ -157,7 +157,7 @@ Feature: Lending
     And I search for a contract with its purpose
     Then all listed contracts match the search term
 
-  @broken
+  @flapping
   Scenario: Searching within visits
     Given visits exist
     When I am listing the visits

@@ -507,12 +507,12 @@ class Model < ApplicationRecord
     SQL
   end
 
-  def as_json_with_arguments(accessories_for_ip: nil, **options)
+  def as_json_with_arguments(options = nil)
     h = as_json_without_arguments(options)
-    if accessories_for_ip
+    if options[:accessories_for_ip]
       h['accessory_names'] = \
         accessories
-          .active_in(accessories_for_ip)
+          .active_in(options[:accessories_for_ip])
           .map(&:name)
           .join(', ')
     end

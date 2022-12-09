@@ -341,8 +341,12 @@ end
 Then /^the file contains the same lines as are shown right now, including any filtering$/ do
   # not really downloading the file, but invoking directly the model class method
   require 'csv'
-  @csv = CSV.parse InventoryPool.csv_export(@current_inventory_pool, @params),
-                   {col_sep: ';', quote_char: "\"", force_quotes: true, headers: :first_row}
+  @csv =
+    CSV.new(InventoryPool.csv_export(@current_inventory_pool, @params),
+            col_sep: ';',
+            quote_char: "\"",
+            force_quotes: true,
+            headers: :first_row)
   step 'I fetch all pages of the list'
   within '#inventory' do
     ['model', 'software', 'option'].each do |type|

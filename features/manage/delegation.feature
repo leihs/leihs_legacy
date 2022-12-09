@@ -55,7 +55,7 @@ Feature: Delegation
     Then the order shows the user
     And no contact person is shown
 
-  @broken
+  @flapping
   Scenario: Persönliche Bestellung in Delegationsbestellung ändern in Bestellung
     Given I am Pius
     And I open an order
@@ -73,7 +73,7 @@ Feature: Delegation
     Then I see the delegation's name
     And I see the contact person
 
-  @broken
+  @flapping
   Scenario: Definition of the contact person when creating an order
     Given I am Julie
     When I create an order for a delegation

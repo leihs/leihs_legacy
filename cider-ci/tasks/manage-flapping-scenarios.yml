@@ -21,6 +21,20 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/calendar.feature:12
+- name: features/manage/delegation.feature:59
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/delegation.feature:59
+- name: features/manage/delegation.feature:77
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/delegation.feature:77
 - name: features/manage/inventory/inventory.feature:219
   scripts:
     test:
@@ -28,6 +42,13 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/inventory/inventory.feature:219
+- name: features/manage/lending/lending.feature:161
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/lending/lending.feature:161
 - name: features/manage/lending/lending.feature:44
   scripts:
     test:
@@ -35,6 +56,13 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/lending/lending.feature:44
+- name: features/manage/lending/lending.feature:61
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/lending/lending.feature:61
 - name: features/manage/not_logged_in_information.feature:9
   scripts:
     test:
@@ -63,6 +91,13 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/manage/value_list.feature:30
+- name: features/manage/verification.feature:31
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/manage/verification.feature:31
 - name: No Tasks for spec/features/manage
   scripts:
     test:

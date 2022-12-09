@@ -384,7 +384,7 @@ Then(/^all listed (?:orders|contracts) match the search term$/) do
     matching_contracts_ids = \
       @contracts
       .no_verification_required
-      .filter2(search_term: @search_term)
+      .filter2({search_term: @search_term})
       .map(&:id).map(&:to_s).sort
     expect(contract_ids).to eq matching_contracts_ids
   end

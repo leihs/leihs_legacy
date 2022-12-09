@@ -39,7 +39,7 @@ module ExpertFilter
       items = items.by_owner_or_responsible(inventory_pool) if inventory_pool
 
       if params[:field_filters]
-        field_filters = JSON.parse(URI.decode(params[:field_filters]))
+        field_filters = JSON.parse(URI::DEFAULT_PARSER.unescape(params[:field_filters]))
 
         if field_filters.length > 0
 
