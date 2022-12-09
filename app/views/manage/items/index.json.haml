@@ -14,7 +14,7 @@
                          include: {children: {methods: :to_s}})
                 .map do |h|
                 if current_inventory_pool.id != h['owner_id'] and current_inventory_pool.id != h['inventory_pool_id']
-                  h['current_location'] = h['inventory_pool'].to_s
+                  h['current_location'] = h['inventory_pool']['name']
                 end
                 h
               end
