@@ -103,15 +103,15 @@ class InventoryPool < ApplicationRecord
   # - we consider even unsubmitted reservations, but not the already timed out ones
   has_many :running_reservations, (lambda do
    select(<<-SQL)
-     id,
-     inventory_pool_id,
-     model_id,
-     item_id,
-     quantity,
-     start_date,
-     end_date,
-     returned_date,
-     status,
+     reservations.id,
+     reservations.inventory_pool_id,
+     reservations.model_id,
+     reservations.item_id,
+     reservations.quantity,
+     reservations.start_date,
+     reservations.end_date,
+     reservations.returned_date,
+     reservations.status,
      ARRAY(
        SELECT egu.entitlement_group_id
        FROM entitlement_groups_users egu
@@ -121,15 +121,19 @@ class InventoryPool < ApplicationRecord
        ORDER BY eg.name ASC
      ) AS user_group_ids
     SQL
+     .joins('LEFT JOIN items ON reservations.item_id = items.id')
      .where(<<-SQL)
-       status NOT IN ('draft', 'rejected', 'canceled', 'closed')
+       reservations.item_id IS NULL OR items.is_borrowable = TRUE
+     SQL
+     .where(<<-SQL)
+       reservations.status NOT IN ('draft', 'rejected', 'canceled', 'closed')
        AND NOT (
-         status = 'unsubmitted' AND
-         updated_at < '#{Time.now.utc - Setting.first.timeout_minutes.minutes}'
+         reservations.status = 'unsubmitted' AND
+         reservations.updated_at < '#{Time.now.utc - Setting.first.timeout_minutes.minutes}'
        )
        AND NOT (
-         end_date < '#{Time.zone.today}' AND
-         item_id IS NULL
+         reservations.end_date < '#{Time.zone.today}' AND
+         reservations.item_id IS NULL
        )
      SQL
   end), class_name: 'ItemLine'

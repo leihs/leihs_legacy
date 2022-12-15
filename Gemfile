@@ -60,7 +60,7 @@ source 'https://rails-assets.org' do
 end
 
 group :development do
-  gem 'metric_fu'
+  # gem 'metric_fu'
   gem 'traceroute'
   gem 'web-console'
   # gem 'web-console', '~> 2.0' # Access an IRB console on exception pages or by using <%= console %> in views

@@ -2807,6 +2807,13 @@ tasks:
         set -eux
         mkdir -p log
         bundle exec cucumber --strict features/technical/availability_story.feature:145
+- name: features/technical/availability_story.feature:158
+  scripts:
+    test:
+      body: |-
+        set -eux
+        mkdir -p log
+        bundle exec cucumber --strict features/technical/availability_story.feature:158
 - name: features/technical/availability_story.feature:22
   scripts:
     test:

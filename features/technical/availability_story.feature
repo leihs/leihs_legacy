@@ -153,3 +153,12 @@ Feature: Availability of Models
     And the maximum available quantity from '17.1.2030' to '17.1.2030' is 0
     And the maximum available quantity from '17.1.2030' to '18.1.2030' is 0
     And the maximum available quantity from '18.1.2030' to '20.1.2030' is 1
+
+  @rack
+  Scenario: A reservation of an unborrowable item shouldn't affect available quantity
+    Given there is a model "Ekachakra Pot"
+    And there is a not-borrowable item "ABC1234" for model "Ekachakra Pot"
+    And there is a borrowable item "ABC2345" for model "Ekachakra Pot"
+    And a reservation exists for item 'ABC1234' from '17.1.2030' to '17.1.2030'
+    When 'lending_manager' checks availability for 'Ekachakra Pot'
+    Then the maximum available quantity on '17.1.2030' is 1
