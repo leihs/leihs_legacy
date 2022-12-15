@@ -148,3 +148,41 @@ Then /^([^ ]*) reservation(.*)? should show an influence on the borrowability on
   # all list entries inside that 'tr' element
   expect(tr.all('li').count()).to eq number
 end
+
+Given('there is a model {string}') do |string|
+  @model = FactoryBot.create(:model, product: string, version: nil)
+end
+
+Given('there is a not-borrowable item {string} for model {string}') do |string, string2|
+  @model = Model.find_by_product(string2)
+  FactoryBot.create(:item,
+                    model: @model,
+                    inventory_code: string,
+                    owner: @inventory_pool,
+                    inventory_pool: @inventory_pool,
+                    is_borrowable: false)
+end
+
+Given('there is a borrowable item {string} for model {string}') do |string, string2|
+  @model = Model.find_by_product(string2)
+  FactoryBot.create(:item,
+                    model: @model,
+                    inventory_code: string,
+                    owner: @inventory_pool,
+                    inventory_pool: @inventory_pool,
+                    is_borrowable: true)
+end
+
+Given "a reservation exists for item {string} from {string} to {string}" do |inv_code, start_date, end_date|
+  item = Item.find_by_inventory_code(inv_code)
+  user = @inventory_pool.users.sample
+  FactoryBot.create(:reservation,
+                    inventory_pool: @inventory_pool,
+                    status: :approved,
+                    quantity: 1,
+                    user: user,
+                    model: item.model,
+                    item: item,
+                    start_date: to_date(start_date),
+                    end_date: to_date(end_date))
+end
