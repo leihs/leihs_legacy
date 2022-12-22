@@ -39,7 +39,7 @@ class Category < ModelGroup
   end
 
   def self.ancestors_of_multiple(cats, result = [])
-    pars = parents_of_multiple(cats)
+    pars = ( parents_of_multiple(cats) - result ) # avoiding endless loop
     if pars.empty?
       result
     else
