@@ -98,6 +98,7 @@ Feature: Editing an item
     And I save
     Then I see an error message that I can't change the responsible inventory pool for items that are not in stock
 
+  @unstable
   Scenario: Editing an item an all its information
     Given I edit an item that belongs to the current inventory pool and is in stock and is not part of any contract
     When I enter the following item information

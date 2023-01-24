@@ -26,7 +26,7 @@ Feature: Value list
     | Price              |
     And the models in the value list are sorted alphabetically
 
-  @flapping
+  @unstable
   Scenario: Printing value lists from the list of orders
     Given there is an order with at least two models and at least two items per model were ordered
     When I open an order

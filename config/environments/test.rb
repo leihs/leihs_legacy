@@ -6,9 +6,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.hosts << "host.docker.internal" # like "localhost" when rails is running on the docker *host* and rspec is running in a docker *container*
-  config.hosts << "example.org" # for controller test
-  config.hosts << "localhost"
+  # config.hosts << "host.docker.internal" # like "localhost" when rails is running on the docker *host* and rspec is running in a docker *container*
+  # config.hosts << "example.org" # for controller test
+  # config.hosts << "localhost"
 
   config.cache_classes = true
 

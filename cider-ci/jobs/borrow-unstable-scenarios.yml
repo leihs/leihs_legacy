@@ -9,15 +9,15 @@ jobs:
 
     priority: -5
 
-    include: 
+    include:
       - cider-ci/job-components/run-when-meta-passed.yml
 
     context:
 
       task_defaults:
         load: 1.5
-        max_trials: 16
-        eager_trials: 1
+        max_trials: 12
+        eager_trials: 3
         include:
           - cider-ci/task-components/database.yml
 

@@ -4,10 +4,7 @@ tasks:
   scripts:
     test:
       body: echo OK
-- name: spec/features/borrow/model_list.feature:84
+- name: No Tasks for spec/features/borrow
   scripts:
     test:
-      body: |-
-        set -eux
-        mkdir -p log
-        bundle exec rspec -r ./spec/steps/borrow/load.rb spec/features/borrow/model_list.feature:84
+      body: echo OK

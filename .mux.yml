@@ -3,7 +3,7 @@ windows:
   2:
     name: rails s
     command: |
-      # bundle exec rails s -p 3210
+      # ./bin/rails s -p 3210
   5:
     name: psql
     command: |

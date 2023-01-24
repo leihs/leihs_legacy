@@ -18,6 +18,7 @@ Feature: Inventory helper
     And I retire an item that is not in stock
     Then I see an error message that I can't retire the item because it's already handed over or assigned to a contract
 
+  @unstable
   Scenario: Editing items on the helper screen using a complete inventory code (barcode scanner)
     Given I go to the inventory helper screen
     When I choose all fields through a list or by name
@@ -51,6 +52,7 @@ Feature: Inventory helper
     Then I see all the values of the item in an overview with model name and the modified values are already saved
     And the changed values are highlighted
 
+  @unstable
   Scenario: Editing after automatic save
     Given I edit an item through the inventory helper using an inventory code
     When I use the edit feature
@@ -58,6 +60,7 @@ Feature: Inventory helper
     When I save
     Then my changes are saved
 
+  @unstable
   Scenario: Canceling an edit after automatic save
     Given I edit an item through the inventory helper using an inventory code
     When I use the edit feature

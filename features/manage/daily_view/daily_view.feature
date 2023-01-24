@@ -10,6 +10,7 @@ Feature: Daily view
     And I scroll to the end of the order list twice
     Then I see the longest time span of this order directly on the order's line
 
+  @unstable
   Scenario Outline: Showing whether a user is suspended
     Given the current inventory pool's users are suspended
     And I navigate to the <target>

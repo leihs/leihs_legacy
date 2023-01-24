@@ -8,13 +8,13 @@ Feature: Calendar view in the manage section
     When I see the calendar
     Then I see the availability of models on weekdays as well as holidays and weekends
 
-  @flapping
   Scenario: Overbooking in the booking calendar while editing an order
     Given I edit an order
      And I open the booking calendar
      Then there is no limit on augmenting the quantity, thus I can overbook
      And the order can be saved
 
+  @flapping
   Scenario: Overbooking in the booking calendar during a hand over
     Given I open a hand over with an unassigned item line
      And I open the booking calendar

@@ -4,100 +4,114 @@ tasks:
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:16
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/acknowledge/add_item.feature:16
 - name: features/manage/acknowledge/add_item.feature:42
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/acknowledge/add_item.feature:42
-- name: features/manage/calendar.feature:12
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/acknowledge/add_item.feature:42
+- name: features/manage/calendar.feature:18
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/calendar.feature:12
-- name: features/manage/delegation.feature:59
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/calendar.feature:18
+- name: features/manage/displaying_problems.feature:75
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/delegation.feature:59
-- name: features/manage/delegation.feature:77
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:75
+- name: features/manage/hand_over/edit_reservation.feature:40
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/delegation.feature:77
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/hand_over/edit_reservation.feature:40
 - name: features/manage/inventory/inventory.feature:219
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/inventory/inventory.feature:219
-- name: features/manage/lending/lending.feature:161
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/inventory/inventory.feature:219
+- name: features/manage/lending/lending.feature:155
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:161
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/lending/lending.feature:155
 - name: features/manage/lending/lending.feature:44
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:44
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/lending/lending.feature:44
 - name: features/manage/lending/lending.feature:61
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/lending/lending.feature:61
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/lending/lending.feature:61
 - name: features/manage/not_logged_in_information.feature:9
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/not_logged_in_information.feature:9
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/not_logged_in_information.feature:9
+- name: features/manage/order/contract.feature:84
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/order/contract.feature:84
 - name: features/manage/software/search_for_software.feature:26
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/software/search_for_software.feature:26
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/software/search_for_software.feature:26
 - name: features/manage/take_back/edit_take_back_end_date.feature:17
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:17
-- name: features/manage/value_list.feature:30
-  scripts:
-    test:
-      body: |-
-        set -eux
-        mkdir -p log
-        bundle exec cucumber --strict features/manage/value_list.feature:30
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:17
 - name: features/manage/verification.feature:31
   scripts:
     test:
       body: |-
-        set -eux
+        #!/usr/bin/env bash
+        set -euo pipefail
         mkdir -p log
-        bundle exec cucumber --strict features/manage/verification.feature:31
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/verification.feature:31
 - name: No Tasks for spec/features/manage
   scripts:
     test:

@@ -80,6 +80,7 @@ Feature: Contract
     Then I additionally see the following information
     | Serial number  |
 
+  @flapping
   Scenario: Rücknehmende Person
     Given I open a take back
     And I select all reservations of an open contract via Barcode

@@ -12,7 +12,7 @@ def task_hash(name, exec)
   { 'name' => name,
     'scripts' => {
       'test' => {
-        'body' => "set -eux\nmkdir -p log\n#{exec}"
+        'body' => "#!/usr/bin/env bash\nset -euo pipefail\nmkdir -p log\n#{exec}"
       }
     }
   }
@@ -85,11 +85,13 @@ def get_path(s)
 end
 
 def get_exec_command(path, framework, additional_options)
+  xvfb = "xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24'"
+
   case framework
   when :cucumber
-    exec = "bundle exec cucumber #{STRICT_MODE ? "--strict " : nil}#{path}"
+    exec = "#{xvfb} ./bin/cucumber #{STRICT_MODE ? "--strict " : nil}#{path}"
   when :rspec
-    exec = ['bundle exec rspec', additional_options, path].compact.join(' ')
+    exec = [xvfb, './bin/rspec', additional_options, path].compact.join(' ')
   else
     raise 'Undefined testing framework'
   end

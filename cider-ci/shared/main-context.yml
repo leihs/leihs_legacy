@@ -12,9 +12,6 @@ task_defaults:
       include_match: ^.*$
 
   ports:
-    SELENIUM_FIREFOX_PORT:
-      min: 4600
-      max: 4999
     LEIHS_LEGACY_HTTP_PORT:
       min: 3000
       max: 3199
@@ -26,10 +23,6 @@ task_defaults:
     LEIHS_LEGACY_DIR: "{{CIDER_CI_WORKING_DIR}}"
     LEIHS_DATABASE_DIR: "{{LEIHS_LEGACY_DIR}}/database"
     LEIHS_DATABASE_NAME: "leihs_test_{{CIDER_CI_TRIAL_ID}}"
-    # firefox in docker:
-    # TODO: start rails on a cider-defined port and g
-    # APP_URL: 'http://host.docker.internal:{{LEIHS_LEGACY_HTTP_PORT}}'
-    SELENIUM_URL: "http://localhost:{{SELENIUM_FIREFOX_PORT}}"
 
   trial_attachments:
     screenshots:

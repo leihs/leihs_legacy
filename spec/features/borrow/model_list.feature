@@ -80,7 +80,7 @@ Feature: Model list
     When I am listing models
     Then I cannot deselect all the inventory pools in the inventory pool selector
 
-  @borrow_model_list @flapping
+  @borrow_model_list @unstable
   Scenario: Specifying the start date of an order
     Given I am Petra
     When I am listing models and some of them are unavailable

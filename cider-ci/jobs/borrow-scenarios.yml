@@ -7,20 +7,18 @@ jobs:
     description: |
       Run Borrow scenarios under MRI
 
-    include: 
+    include:
       - cider-ci/job-components/run-when-meta-passed.yml
 
     context:
 
       task_defaults:
         load: 1.5
-        max_trials: 1
+        max_trials: 2
         # traits:
         #   ci-g2016-01: true
         include:
           - cider-ci/task-components/database.yml
-          - cider-ci/task-components/docker-selenium-firefox.yml
-          # - cider-ci/task-components/legacy-service.yml
 
       include:
         - cider-ci/shared/main-context.yml

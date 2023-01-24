@@ -89,6 +89,7 @@ Feature: Create item
     And I open the inventory
     Then I can create an item
 
+  @unstable
   Scenario: Creating an item with all its information
     Given I am Matti
     And I create an item

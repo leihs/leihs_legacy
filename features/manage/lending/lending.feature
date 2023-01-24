@@ -151,13 +151,14 @@ Feature: Lending
     And I search for a contract
     Then all listed contracts match the search term
 
+  @flapping
   Scenario: Searching purpose within contracts
     Given contracts exist
     When I am listing the contracts
     And I search for a contract with its purpose
     Then all listed contracts match the search term
 
-  @flapping
+  @unstable
   Scenario: Searching within visits
     Given visits exist
     When I am listing the visits

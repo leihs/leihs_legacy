@@ -28,53 +28,26 @@ jobs:
             - path: cider-ci/task-components/database-no-schema.yml
               submodule: [database]
             - path: cider-ci/task-components/database/configure.yml
-
           environment_variables:
             LEIHS_SECRET: secret
             RAILS_ENV: test
-
           name: "Check if personas dump needs to be and has been migrated"
-
           scripts:
             test:
-              body: |
-                #!/usr/bin/env bash
-                set -exu
-                { pg_restore --version | grep -q '11.' ;} && psql -d $LEIHS_DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
-                pg_restore --disable-triggers -x -O -d $LEIHS_DATABASE_NAME ./features/personas/personas.pgbin
-                if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
-                  echo "Run ./scripts/migrate-and-dump-personas"
-                  exit 1
-                else
-                  exit 0
-                fi
+              body: ./cider-ci/bin/check-personas-migrated
 
         migration-of-demo-dump:
           include:
             - path: cider-ci/task-components/database-no-schema.yml
               submodule: [database]
             - path: cider-ci/task-components/database/configure.yml
-
-
           environment_variables:
             LEIHS_SECRET: secret
             RAILS_ENV: test
-
           name: "Check if demo dump needs to be and has been migrated"
-
           scripts:
             test:
-              body: |
-                #!/usr/bin/env bash
-                set -exu
-                { pg_restore --version | grep -q '11.' ;} && psql -d $LEIHS_DATABASE_NAME -c "DROP SCHEMA IF EXISTS \"public\";"
-                pg_restore --disable-triggers -x -O -d $LEIHS_DATABASE_NAME ./features/personas/demo.pgbin
-                if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
-                  echo "Run ./scripts/migrate-and-dump-demo"
-                  exit 1
-                else
-                  exit 0
-                fi
+              body:  ./cider-ci/bin/check-personas-migrated
 
         scenario tasks are up-to-date:
           name: "Scenario tasks are up-to-date"
