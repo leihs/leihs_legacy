@@ -1,4 +1,0 @@
-set -eux
-
-ansible-playbook -v -i ../zhdk-inventory/staging-hosts -l zhdk-leihs-staging ../deploy/fetch-latest-dump_play.yml
-./bin/restore-prod-dump
