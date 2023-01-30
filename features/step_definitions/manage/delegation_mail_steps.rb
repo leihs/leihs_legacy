@@ -25,17 +25,17 @@ Given(/^there is (an order|a take back|an overdue take back) for a delegation th
   end
   expect(@contract).not_to be_nil
   expect(@contract.user.delegator_user).not_to eq @contract.delegated_user
-  expect(ActionMailer::Base.deliveries.count).to eq 0
+  expect(Email.count).to eq 0
 end
 
 Then(/^the approval email is sent to the orderer$/) do
   sleep 1
-  expect(ActionMailer::Base.deliveries.count).to eq 1
-  expect(ActionMailer::Base.deliveries.first.to).to eq  @contract.delegated_user.emails
+  expect(Email.count).to eq 1
+  expect(@contract.delegated_user.emails).to include Email.first.to_address
 end
 
 Then(/^the approval email is not sent to the delegated user$/) do
-  expect((ActionMailer::Base.deliveries.first.to & @contract.user.delegator_user.emails).empty?).to be true
+  expect(@contract.user.delegator_user.emails).not_to include Email.first.to_address
 end
 
 
@@ -62,7 +62,7 @@ Then(/^the reminder is not sent to the delegated user$/) do
 end
 
 When(/^I choose the mail function$/) do
-  expect(ActionMailer::Base.deliveries.count).to eq 0
+  expect(Email.count).to eq 0
   within('#delegations .line', text: @delegation) do
     find('.arrow.down').click
     @mailto_link = find('a', text: _('E-Mail'))[:href]

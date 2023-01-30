@@ -32,14 +32,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/acknowledge/add_item.feature:10
-- name: features/manage/acknowledge/delete_lines.feature:15
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/acknowledge/delete_lines.feature:15
 - name: features/manage/acknowledge/delete_lines.feature:10
   scripts:
     test:
@@ -424,54 +416,46 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/delegation.feature:94
-- name: features/manage/displaying_problems.feature:21
+- name: features/manage/displaying_problems.feature:28
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:21
-- name: features/manage/displaying_problems.feature:27
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:28
+- name: features/manage/displaying_problems.feature:34
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:27
-- name: features/manage/displaying_problems.feature:33
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:34
+- name: features/manage/displaying_problems.feature:40
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:33
-- name: features/manage/displaying_problems.feature:39
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:40
+- name: features/manage/displaying_problems.feature:46
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:39
-- name: features/manage/displaying_problems.feature:45
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:46
+- name: features/manage/displaying_problems.feature:52
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:45
-- name: features/manage/displaying_problems.feature:51
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:51
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:52
 - name: features/manage/displaying_problems.feature:7
   scripts:
     test:
@@ -480,14 +464,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:7
-- name: features/manage/displaying_problems.feature:81
+- name: features/manage/displaying_problems.feature:82
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:81
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/displaying_problems.feature:82
 - name: features/manage/explorative_search.feature:11
   scripts:
     test:
@@ -3328,38 +3312,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/item/search_model.feature:6
-- name: features/technical/mailer/mailer_settings.feature:11
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/mailer/mailer_settings.feature:11
-- name: features/technical/mailer/mailer_settings.feature:16
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/mailer/mailer_settings.feature:16
-- name: features/technical/mailer/mailer_settings.feature:25
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/mailer/mailer_settings.feature:25
-- name: features/technical/mailer/mailer_settings.feature:33
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/mailer/mailer_settings.feature:33
 - name: features/technical/performance_stability.feature:6
   scripts:
     test:

@@ -1,4 +1,5 @@
-class Mailer::Order < ActionMailer::Base
+module Mailer::Order
+  extend self
 
   def choose_language_for(contract)
     I18n.locale =
@@ -7,75 +8,79 @@ class Mailer::Order < ActionMailer::Base
 
   def approved(order, comment, sent_at = Time.zone.now)
     choose_language_for(order)
-    mail(to: order.target_user.email,
-         from: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
-         subject: _('[leihs] Reservation Confirmation'),
-         date: sent_at) do |format|
-      format.text do
-        name = 'approved'
-        template = MailTemplate.get_template(order.inventory_pool,
-                                             name,
-                                             order.target_user.language)
-        Liquid::Template
-          .parse(template.body)
-          .render(MailTemplate.liquid_variables_for_order(order, comment))
-      end
-    end
+
+    name = 'approved'
+    template = MailTemplate.get_template(order.inventory_pool,
+                                         name,
+                                         order.target_user.language)
+    body =
+      Liquid::Template
+      .parse(template.body)
+      .render(MailTemplate.liquid_variables_for_order(order, comment))
+
+    Email.create!(user_id: order.target_user.id,
+                  to_address: order.target_user.email,
+                  from_address: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
+                  subject: _('[leihs] Reservation Confirmation'),
+                  body: body)
   end
 
   def submitted(order, sent_at = Time.zone.now)
     choose_language_for(order)
-    mail(to: order.target_user.email,
-         from: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
-         subject: _('[leihs] Reservation Submitted'),
-         date: sent_at) do |format|
-      format.text do
-        name = 'submitted'
-        template = MailTemplate.get_template(order.inventory_pool,
-                                             name,
-                                             order.target_user.language)
-        Liquid::Template
-          .parse(template.body)
-          .render(MailTemplate.liquid_variables_for_order(order, nil))
-      end
-    end
+
+    name = 'submitted'
+    template = MailTemplate.get_template(order.inventory_pool,
+                                         name,
+                                         order.target_user.language)
+    body = 
+      Liquid::Template
+      .parse(template.body)
+      .render(MailTemplate.liquid_variables_for_order(order, nil))
+
+    Email.create!(user_id: order.target_user.id,
+                  to_address: order.target_user.email,
+                  from_address: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
+                  subject: _('[leihs] Reservation Submitted'),
+                  body: body)
   end
 
   def received(order, sent_at = Time.zone.now)
     smtp_settings = SmtpSetting.first
     choose_language_for(order)
-    mail(to: (order.inventory_pool.email || smtp_settings.default_from_address),
-         from: (order.inventory_pool.email || smtp_settings.default_from_address),
-         subject: _('[leihs] Order received'),
-         date: sent_at) do |format|
-      format.text do
-        name = 'received'
-        template = MailTemplate.get_template(order.inventory_pool,
-                                             name,
-                                             order.target_user.language)
-        Liquid::Template
-          .parse(template.body)
-          .render(MailTemplate.liquid_variables_for_order(order, nil))
-      end
-    end
+
+    name = 'received'
+    template = MailTemplate.get_template(order.inventory_pool,
+                                         name,
+                                         order.target_user.language)
+    body = 
+      Liquid::Template
+      .parse(template.body)
+      .render(MailTemplate.liquid_variables_for_order(order, nil))
+
+    Email.create!(inventory_pool_id: order.inventory_pool.id,
+                  to_address: (order.inventory_pool.email || smtp_settings.default_from_address),
+                  from_address: (order.inventory_pool.email || smtp_settings.default_from_address),
+                  subject: _('[leihs] Order received'),
+                  body: body)
   end
 
   def rejected(order, comment, sent_at = Time.zone.now)
     choose_language_for(order)
-    mail(to: order.target_user.email,
-         from: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
-         subject: _('[leihs] Reservation Rejected'),
-         date: sent_at) do |format|
-      format.text do
-        name = 'rejected'
-        template = MailTemplate.get_template(order.inventory_pool,
-                                             name,
-                                             order.target_user.language)
-        Liquid::Template
-          .parse(template.body)
-          .render(MailTemplate.liquid_variables_for_order(order, comment))
-      end
-    end
+
+    name = 'rejected'
+    template = MailTemplate.get_template(order.inventory_pool,
+                                         name,
+                                         order.target_user.language)
+    body = 
+      Liquid::Template
+      .parse(template.body)
+      .render(MailTemplate.liquid_variables_for_order(order, comment))
+
+    Email.create!(user_id: order.target_user.id,
+                  to_address: order.target_user.email,
+                  from_address: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
+                  subject: _('[leihs] Reservation Rejected'),
+                  body: body)
   end
 
 end

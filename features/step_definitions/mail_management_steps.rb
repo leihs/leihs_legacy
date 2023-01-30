@@ -6,11 +6,11 @@ Given "{string}'s email address is {string}" do |name, email|
 end
 
 Then '{string} receives an email' do |email|
-  expect(ActionMailer::Base.deliveries.size).to eq 1
-  @mail = ActionMailer::Base.deliveries[0]  
+  expect(Email.count).to eq 1
+  @mail = Email.all[0]  
   # ActiveMailer upcases the first letter?!
-  expect(@mail.to[0].downcase).to eq email.downcase
-  ActionMailer::Base.deliveries.clear
+  expect(@mail.to_address.downcase).to eq email.downcase
+  Email.delete_all
 end
 
 Then "its subject is {string}" do |subject|

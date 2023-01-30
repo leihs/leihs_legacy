@@ -15,7 +15,6 @@ class Manage::VisitsController < Manage::ApplicationController
             current_inventory_pool
             .visits
             .filter2(params)
-            .includes(user: :notifications)
             .where(type: type_param)
             .where(is_approved: true)
             .offset(offset_param)
@@ -42,9 +41,6 @@ class Manage::VisitsController < Manage::ApplicationController
                 Option.find_by_id(r['option_id'])
               r['model_name'] = object.name
             end
-
-            v['notifications'] = \
-              user.notifications.where('created_at >= ?', v['date']).limit(10)
           end
 
           render json: visits_json and return

@@ -89,8 +89,7 @@ class User < ApplicationRecord
     end
   end
 
-  has_many :notifications, dependent: :delete_all
-
+  has_many :emails
   has_many :reservations, dependent: :restrict_with_exception
   has_many :contracts
   has_many :item_lines, dependent: :restrict_with_exception
@@ -292,7 +291,7 @@ class User < ApplicationRecord
   def remind(reservations)
     unless reservations.empty?
       begin
-        Notification.remind_user(self, reservations)
+        Mailer.remind_user(self, reservations)
         puts "Reminded: #{self.name}"
         true
       rescue Exception => exception
@@ -308,7 +307,7 @@ class User < ApplicationRecord
   def send_deadline_soon_reminder(reservations, _reminder_user = self)
     unless reservations.empty?
       begin
-        Notification.deadline_soon_reminder(self, reservations)
+        Mailer.deadline_soon_reminder(self, reservations)
         puts "Deadline soon: #{self.name}"
       rescue
         puts "Couldn't send reminder: #{self.name}"

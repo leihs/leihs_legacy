@@ -32,7 +32,8 @@ class Manage::MailsController < Manage::ApplicationController
   end
 
   def create
-    Notification.user_email(params[:from],
+    Mailer.user_email(@user.id,
+                            params[:from],
                             params[:to],
                             params[:subject],
                             params[:body])

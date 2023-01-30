@@ -62,12 +62,12 @@ module Borrow
       end
 
       step '4 mails has been sent' do
-        expect(ActionMailer::Base.deliveries.count).to be == 4
+        expect(Email.count).to be == 4
       end
 
       step 'one mail with received template was sent to pool :letter' do |letter|
-        m = ActionMailer::Base.deliveries.find do |mail|
-          mail.to.first == ivar_get("@pool_#{letter}").email and
+        m = Email.all.find do |mail|
+          mail.to_address == ivar_get("@pool_#{letter}").email and
             mail.subject.match(/received/i)
         end
         expect(m).to be
@@ -75,8 +75,8 @@ module Borrow
 
       step 'one mail with submitted template for pool :letter ' \
            'was sent to the customer' do |letter|
-        m = ActionMailer::Base.deliveries.find do |mail|
-          mail.to.first == @customer.email and
+        m = Email.all.find do |mail|
+          mail.to_address == @customer.email and
             mail.subject.match(/submitted/i) and
             mail.body.match(/#{ivar_get("@pool_#{letter}").name}/)
         end

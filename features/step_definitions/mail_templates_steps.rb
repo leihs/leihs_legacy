@@ -72,16 +72,16 @@ Given(/^I have a contract with deadline (yesterday|tomorrow) for the inventory p
 end
 
 When(/^the reminders are sent$/) do
-  expect(ActionMailer::Base.deliveries.count).to eq 0
+  expect(Email.count).to eq 0
   User.send_deadline_soon_reminder_to_everybody
   User.remind_and_suspend_all
-  expect(ActionMailer::Base.deliveries.count).to be > 0
+  expect(Email.count).to be > 0
 end
 
 Then(/^I receive an email formatted according to the (reminder|deadline_soon_reminder) mail template$/) do |template_name|
   language = Language.find_by(locale: @current_user.language.locale)
 
-  sent_mails = ActionMailer::Base.deliveries.select { |m| m.to.include?(@current_user.email) and m.from.include?(@visit.inventory_pool.email) }
+  sent_mails = Email.all.select { |m| m.to_address == @current_user.email and m.from_address == @visit.inventory_pool.email }
   sent_mails = sent_mails.select do |m|
     m.subject == case template_name
                    when 'reminder'
@@ -99,7 +99,7 @@ Then(/^I receive an email formatted according to the (reminder|deadline_soon_rem
   variables = MailTemplate.liquid_variables_for_user(@current_user, @visit.inventory_pool, @visit.reservations)
   t_mail = Liquid::Template.parse(template.body).render(variables)
   # `to_crlf` due to https://github.com/mikel/mail/issues/1190#issuecomment-688410428
-  expect(sent_mail.body.raw_source).to eq Mail::Utilities.to_crlf(t_mail)
+  expect(sent_mail.body).to eq t_mail
 end
 
 Given(/^the (reminder) mail template looks like$/) do |template_name, string|
@@ -119,7 +119,7 @@ end
 
 def get_reminder_for_visit(visit)
   reset_language_for_current_user
-  sent_mails = ActionMailer::Base.deliveries.select { |m| m.to.include?(@current_user.email) and m.from.include?(visit.inventory_pool.email) }
+  sent_mails = Email.all.select { |m| m.to_address == @current_user.email and m.from_address == visit.inventory_pool.email }
   sent_mails = sent_mails.select { |m| m.subject == _('[leihs] Reminder') }
   expect(sent_mails.size).to eq 1
   sent_mails.first
@@ -137,16 +137,16 @@ When(/^my language is set to "(.*?)"$/) do |locale|
 end
 
 When(/^one of my submitted orders to an inventory pool without custom approved mail templates get approved$/) do
-  expect(ActionMailer::Base.deliveries.count).to eq 0
+  expect(Email.count).to eq 0
   @contract = @current_user.orders.submitted.detect { |c| c.approvable? }
   @contract.approve(Faker::Lorem.sentence)
-  expect(ActionMailer::Base.deliveries.count).to be > 0
+  expect(Email.count).to be > 0
 end
 
 Then(/^I receive an approved mail based on the system\-wide template for the language "(.*?)"$/) do |locale|
   language = Language.find_by(locale: locale)
 
-  sent_mails = ActionMailer::Base.deliveries.select { |m| m.to.include?(@current_user.email) and m.from.include?(@contract.inventory_pool.email) }
+  sent_mails = Email.all.select { |m| m.to_address == @current_user.email and m.from_address == @contract.inventory_pool.email }
   sent_mails = sent_mails.select { |m| m.subject == _('[leihs] Reservation Confirmation') }
   expect(sent_mails.size).to eq 1
   sent_mail = sent_mails.first
@@ -169,7 +169,7 @@ Then(/^I receive a reminder in "(.*?)"$/) do |locale|
                                    format: 'text')
   string = Liquid::Template.parse(template.body).render(variables)
   sent_mail = get_reminder_for_visit(@visit)
-  expect(sent_mail.body.to_s).to eq Mail::Utilities.to_crlf(string)
+  expect(sent_mail.body.to_s).to eq string
 end
 
 When(/^I edit the (reminder) with the "(.*?)" template in "(.*?)"$/) do |template_name, body, locale|

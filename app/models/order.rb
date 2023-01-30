@@ -195,29 +195,29 @@ class Order < ApplicationRecord
 
   #################################################################################
 
-  def reject(comment, current_user)
+  def reject(comment, _current_user)
     update(state: :rejected, reject_reason: comment) and
       reservations.all? { |line| line.update(status: :rejected) } and
-      Notification.order_rejected(self, comment, true, current_user)
+      Mailer.order_rejected(self, comment)
   end
 
   #################################################################################
 
-  def send_approved_notification(comment, send_mail, current_user)
+  def send_approved_notification(comment)
     with_logging_send_mail_failure do
-      Notification.order_approved(self, comment, send_mail, current_user)
+      Mailer.order_approved(self, comment)
     end
   end
 
   def send_submitted_notification
     with_logging_send_mail_failure do
-      Notification.order_submitted(self, true)
+      Mailer.order_submitted(self)
     end
   end
 
   def send_received_notification
     with_logging_send_mail_failure do
-      Notification.order_received(self, true)
+      Mailer.order_received(self)
     end
   end
 
@@ -226,7 +226,7 @@ class Order < ApplicationRecord
         or (force and current_user.has_role?(:lending_manager, inventory_pool))
       update(state: :approved)
       reservations.each { |cl| cl.update(status: :approved) }
-      send_approved_notification(comment, send_mail, current_user)
+      send_approved_notification(comment)
       true
     else
       false

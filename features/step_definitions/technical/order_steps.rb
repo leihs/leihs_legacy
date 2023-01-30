@@ -132,7 +132,7 @@ When /^I approve the contract of the borrowing user$/ do
 end
 
 Then /^the borrowing user gets one confirmation email$/ do
-  @emails = ActionMailer::Base.deliveries
+  @emails = Email.all
   expect(@emails.count).to eq 1
 end
 

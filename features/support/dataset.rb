@@ -26,6 +26,8 @@ module Dataset
     dump_file = File.join(Rails.root, 'features/personas/personas.pgbin')
     PgTasks.data_restore dump_file
     ApplicationRecord.connection.execute 'UPDATE settings SET logo_url = NULL;'
+    ApplicationRecord.connection.execute 'UPDATE smtp_settings SET enabled = TRUE;'
+    ApplicationRecord.connection.execute 'ALTER TABLE emails DISABLE TRIGGER delete_old_emails_t;'
   end
 
   def use_test_datetime

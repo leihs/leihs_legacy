@@ -1,4 +1,5 @@
-class Mailer::User < ActionMailer::Base
+module Mailer::User
+  extend self
 
   def choose_language_for(user)
     language = \
@@ -7,55 +8,58 @@ class Mailer::User < ActionMailer::Base
     I18n.locale = language || I18n.default_locale
   end
 
-  def remind(user, inventory_pool, reservations, sent_at = Time.zone.now)
+  def remind(user, inventory_pool, reservations)
     choose_language_for(user)
-    mail(to: user.emails,
-         from: (inventory_pool.email || SmtpSetting.first.default_from_address),
-         subject: _('[leihs] Reminder'),
-         date: sent_at) do |format|
-      format.text do
-        name = 'reminder'
-        template = MailTemplate.get_template(inventory_pool,
-                                             name,
-                                             user.language)
-        Liquid::Template
-          .parse(template.body)
-          .render(MailTemplate.liquid_variables_for_user(user,
-                                                         inventory_pool,
-                                                         reservations))
-      end
+
+    name = 'reminder'
+    template = MailTemplate.get_template(inventory_pool,
+                                         name,
+                                         user.language)
+    body =
+      Liquid::Template
+      .parse(template.body)
+      .render(MailTemplate.liquid_variables_for_user(user,
+                                                     inventory_pool,
+                                                     reservations))
+
+    user.emails.each do |user_email|
+      Email.create!(user_id: user.id,
+                    to_address: user_email,
+                    from_address: (inventory_pool.email || SmtpSetting.first.default_from_address),
+                    subject: _('[leihs] Reminder'),
+                    body: body)
     end
   end
 
-  def deadline_soon_reminder(user,
-                             inventory_pool,
-                             reservations,
-                             sent_at = Time.zone.now)
+  def deadline_soon_reminder(user, inventory_pool, reservations)
     choose_language_for(user)
-    mail(to: user.emails,
-         from: (inventory_pool.email || Setting.first.default_from_address),
-         subject: _('[leihs] Some items should be returned tomorrow'),
-         date: sent_at) do |format|
-      format.text do
-        name = 'deadline_soon_reminder'
-        template = MailTemplate.get_template(inventory_pool,
-                                             name,
-                                             user.language)
-        Liquid::Template
-          .parse(template.body)
-          .render(MailTemplate.liquid_variables_for_user(user,
-                                                         inventory_pool,
-                                                         reservations))
-      end
+
+    name = 'deadline_soon_reminder'
+    template = MailTemplate.get_template(inventory_pool,
+                                         name,
+                                         user.language)
+    body = 
+      Liquid::Template
+      .parse(template.body)
+      .render(MailTemplate.liquid_variables_for_user(user,
+                                                     inventory_pool,
+                                                     reservations))
+
+    user.emails.each do |user_email|
+      Email.create!(user_id: user.id,
+                    to_address: user_email,
+                    from_address: (inventory_pool.email || Setting.first.default_from_address),
+                    subject: _('[leihs] Some items should be returned tomorrow'),
+                    body: body)
     end
   end
 
-  def email(from, to, subject, body)
-    @email = body
-    mail(to: to,
-         from: from,
-         subject: "[leihs] #{subject}",
-         date: Time.zone.now)
+  def email(user, from, to, subject, body)
+    Email.create!(user_id: user.id,
+                  to_address: to,
+                  from_address: from,
+                  subject: "[leihs] #{subject}",
+                  body: body)
   end
 
 end

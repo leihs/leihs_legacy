@@ -118,9 +118,8 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
       current_inventory_pool
       .visits
       .find(params[:visit_id])
-
-    @notifications = \
-      user.notifications.where('created_at >= ?', visit.date).limit(10)
+    @emails = \
+      user.emails.where('created_at >= ?', visit.date).limit(10)
   end
 
   private
