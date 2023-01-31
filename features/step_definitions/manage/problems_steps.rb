@@ -126,15 +126,16 @@ Given /^I take back a(n)?( late)? item$/ do |grammar, is_late|
   item_line = FactoryBot.create(:item_line,
                                  item: item,
                                  model: item.model,
+                                 start_date: Date.today - 2.days,
                                  contract: FactoryBot.create(:open_contract,
-                                                              inventory_pool: @current_inventory_pool,
-                                                              user: user),
+                                                             start_date: Date.today - 2.days,
+                                                             inventory_pool: @current_inventory_pool,
+                                                             user: user),
                                  user: user,
                                  status: :signed,
                                  inventory_pool: @current_inventory_pool)
   if is_late
-    item_line.update(start_date: Date.today - 2,
-                                end_date: Date.today - 1)
+    item_line.update(end_date: Date.today - 1)
   end
   sleep 2
   @line_id = item_line.id
