@@ -18,7 +18,7 @@ class InventoryPool < ApplicationRecord
   belongs_to :address
 
   has_one :workday, dependent: :delete
-  accepts_nested_attributes_for :workday
+  accepts_nested_attributes_for :workday, update_only: true
 
   has_many :holidays, dependent: :delete_all
   accepts_nested_attributes_for(:holidays,
