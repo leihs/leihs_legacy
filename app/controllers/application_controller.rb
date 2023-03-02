@@ -1,4 +1,13 @@
 class ApplicationController < ActionController::Base
+  # https://github.com/Madek/Madek/issues/423
+  before_action do
+    begin
+      session.exists?
+    rescue JSON::ParserError
+      cookies.delete(Leihs::Constants::Legacy::SESSION_NAME)
+    end
+  end
+
   include MainHelpers
 
   layout 'splash'
