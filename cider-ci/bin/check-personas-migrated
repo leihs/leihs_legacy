@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ./bin/env/ruby-setup
+export PGVERSION='10'
+source ./cider-ci/bin/pg_env_set
 pg_restore --disable-triggers -x -O -d $LEIHS_DATABASE_NAME ./features/personas/personas.pgbin
 if bundle exec rake db:migrate:status | grep -q -E "\s*down\s*\d*\s*"; then
   echo "Run ./scripts/migrate-and-dump-personas"

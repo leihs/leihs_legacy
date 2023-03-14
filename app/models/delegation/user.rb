@@ -82,24 +82,6 @@ module Delegation::User
       #############################################################################
       #############################################################################
 
-      before_validation do
-        if delegation?
-          unless delegated_users.include? delegator_user
-            delegated_users << delegator_user
-          end
-        end
-      end
-
-      validate do
-        if delegation?
-          unless delegated_users.include? delegator_user
-            errors.add \
-              :base,
-              _('The responsible user has to be member of the delegation')
-          end
-        end
-      end
-
     end
   end
 
