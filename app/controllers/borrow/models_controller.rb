@@ -22,7 +22,8 @@ class Borrow::ModelsController < Borrow::ApplicationController
                 exclude_reservations: exclude_reservation_ids_param
               )
               .maximum_available_in_period_summed_for_groups(
-                start_date, end_date, user.entitlement_groups.map(&:id)
+                start_date, end_date, user.entitlement_groups.map(&:id),
+                sanitize_negative: true
               )
         }
       end

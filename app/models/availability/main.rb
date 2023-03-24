@@ -55,7 +55,7 @@ module Availability
     # exclude_reservations are used in borrow for dealing with the self-blocking
     # aspect of the reservations (context: change quantity for a model
     # in current order)
-    def initialize(model:, inventory_pool:, exclude_reservations:)
+    def initialize(model:, inventory_pool:, exclude_reservations:, sanitize_invalid_entitled_quantity: false)
       exclude_reservations = (exclude_reservations.presence || [])
 
       @model          = model
@@ -68,7 +68,8 @@ module Availability
         .where(model_id: @model.id)
         .where.not(id: exclude_reservations)
 
-      @entitlements = Entitlement.hash_with_generals(@inventory_pool, @model)
+      @entitlements = Entitlement.hash_with_generals(@inventory_pool, @model,
+                                                     sanitize_invalid_entitled_quantity: sanitize_invalid_entitled_quantity)
 
       @inventory_pool_and_model_group_ids = \
         Entitlement

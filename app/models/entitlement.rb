@@ -17,7 +17,8 @@ class Entitlement < ApplicationRecord
   # like {nil => 10, 41 => 3, 42 => 6, ...}
   def self.hash_with_generals(inventory_pool,
                               model,
-                              entitlement_groups = nil)
+                              entitlement_groups = nil,
+                              sanitize_invalid_entitled_quantity: false)
     entitlements = with_generals(model_ids: [model.id],
                                  inventory_pool_id: inventory_pool.id)
 
@@ -28,10 +29,26 @@ class Entitlement < ApplicationRecord
       end
     end
 
-    result = Hash[entitlements.map { |e| [e.entitlement_group_id, e.quantity] }]
+
+    result = Hash[
+      entitlements.map do |e|
+        quantity = if sanitize_invalid_entitled_quantity # case when entitled quantity is higher than actually available total quantity
+                     if e.entitlement_group_id.nil?
+                       e.quantity < 0 ? 0 : e.quantity
+                     else
+                       [e.max_possible_quantity, e.quantity].min
+                     end
+                   else
+                     e.quantity
+                   end
+        [e.entitlement_group_id, quantity]
+      end
+    ]
+
     if missing_general_group_id?(result)
       result[EntitlementGroup::GENERAL_GROUP_ID] = 0
     end
+
     result
   end
 

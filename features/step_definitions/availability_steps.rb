@@ -186,3 +186,19 @@ Given "a reservation exists for item {string} from {string} to {string}" do |inv
                     start_date: to_date(start_date),
                     end_date: to_date(end_date))
 end
+
+Given('there is an entitlement group {string} in the inventory pool {string}') do |string, string2|
+  ip = InventoryPool.find_by_name(string2)
+  @entitlement_group = FactoryBot.create(:entitlement_group, name: string, inventory_pool: ip)
+end
+
+Given('the entitlement group {string} has the entitled quantity of {int} for model {string}') do |string, int, string2|
+  m = Model.find_by_product(string2)
+  eg = EntitlementGroup.find_by_name(string)
+  FactoryBot.create(:entitlement, entitlement_group: eg, model: m, quantity: int)
+end
+
+Given('the user is member of the entitlement group {string}') do |string|
+  eg = EntitlementGroup.find_by_name(string)
+  eg.users << @user
+end

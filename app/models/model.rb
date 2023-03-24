@@ -454,17 +454,10 @@ class Model < ApplicationRecord
       .map { |v| (ensure_non_negative and v < 0) ? 0 : v }
       .sum
 
-    borrowable_quantity = \
-      borrowable_items
-      .where(inventory_pool_id: inventory_pool.id)
-      .count
-
-    result = [entitled_quantity, borrowable_quantity].min
-
-    if ensure_non_negative and result < 0
+    if ensure_non_negative and entitled_quantity < 0
       0
     else
-      result
+      entitled_quantity
     end
   end
 
@@ -483,17 +476,10 @@ class Model < ApplicationRecord
           .sum
       end
 
-    borrowable_quantity = \
-      borrowable_items
-      .where(inventory_pool_id: user.inventory_pools)
-      .count
-
-    result = [entitled_quantity, borrowable_quantity].min
-
-    if ensure_non_negative and result < 0
+    if ensure_non_negative and entitled_quantity < 0
       0
     else
-      result
+      entitled_quantity
     end
   end
 
