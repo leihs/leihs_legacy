@@ -19,50 +19,43 @@ class Borrow::BookingCalendar < ApplicationPresenter
                              exclude_reservations: @reservations,
                              sanitize_invalid_entitled_quantity: true)
     @changes = @availability.changes.to_a.sort_by(&:first)
-    @init_date = @start_date - 1.day
-    @total_borrowable_quantity = \
-      @model.total_borrowable_items_for_user_and_pool(
-        @user,
-        @inventory_pool,
-        ensure_non_negative: true
-      )
     @availabilities_per_day = availabilities_per_day
-    @total_borrowable_quantities_per_day = total_borrowable_quantities_per_day
     @visits_per_day = visits_per_day
   end
 
   def list
-    @total_borrowable_quantities_per_day.map.with_index \
-      do |total_borrow_qty_per_day, i|
-      quantity = \
-        (@availabilities_per_day[i] or total_borrow_qty_per_day)[:quantity]
-      @visits_per_day[i].merge(quantity: quantity < 0 ? 0 : quantity)
+    @availabilities_per_day.map.with_index do |qty_per_day_hash, i|
+      qty_per_day_hash.merge(@visits_per_day[i])
     end
   end
 
   private
 
-  def total_borrowable_quantities_per_day
-    (@start_date..@end_date).map do |d|
-      { d: d, quantity: @total_borrowable_quantity }
-    end
-  end
-
   def availabilities_per_day
-    result = @changes.drop(1).reduce([[@init_date, 0]]) do |memo, obj|
-      s_date = memo.last.first + 1.day
-      e_date = obj.first - 1.day
+    change_dates = @changes.map(&:first)
+    change_dates_between_start_and_end_date = \
+      change_dates.select { |d| @start_date < d && d < @end_date }
+
+    dates = change_dates_between_start_and_end_date
+    dates.unshift(@start_date).push(@end_date) # !
+
+    # [[@start_date, date_1], [date_1, date_2], [date_2, @end_date], [@end_date, @start_date]]
+    dates_tuples = dates.zip(dates.rotate)
+    # remove [@end_date, @start_date] from the end
+    dates_tuples.pop # !
+    # remove date overlappings
+    dates_tuples = dates_tuples.map! { |d1, d2| [d1, d2 - 1.day] }
+
+    result = dates_tuples.map do |d1, d2|
       qty = \
         @availability
-        .maximum_available_in_period_summed_for_groups(s_date,
-                                                       e_date,
-                                                       @group_ids,
+        .maximum_available_in_period_summed_for_groups(d1, d2, @group_ids,
                                                        sanitize_negative: true)
-      new_dates = (s_date..e_date).map { |d| [d, qty] }
-      memo + new_dates
-    end
-    result.shift(1)
-    result.map { |fst, snd| { d: fst, quantity: snd } }
+        .to_i # past date intervals return nil (nil.to_i == 0)
+      (d1..d2).map { |d| { d: d.to_s, quantity: qty } }
+    end.flatten
+
+    result
   end
 
   def visits_per_day
@@ -71,6 +64,7 @@ class Borrow::BookingCalendar < ApplicationPresenter
            start_date: @start_date_string,
            end_date: @end_date_string)
       .run
+      .map(&:symbolize_keys)
   end
 
 end
