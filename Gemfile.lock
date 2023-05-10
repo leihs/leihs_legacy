@@ -326,6 +326,7 @@ GEM
       method_source (~> 1.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
+    psych (3.3.4)
     public_suffix (5.0.0)
     puma (6.0.0)
       nio4r (~> 2.0)
@@ -515,6 +516,7 @@ DEPENDENCIES
   presentoir!
   pry
   pry-rails
+  psych (~> 3)
   puma
   puma_worker_killer
   rails (~> 6.1.0)
@@ -554,4 +556,4 @@ DEPENDENCIES
   will_paginate (~> 3.0)
 
 BUNDLED WITH
-   2.2.33
+   2.4.12
