@@ -44,7 +44,7 @@ class Borrow::BookingCalendar < ApplicationPresenter
     # remove [@end_date, @start_date] from the end
     dates_tuples.pop # !
     # remove date overlappings
-    dates_tuples = dates_tuples.map! { |d1, d2| [d1, d2 - 1.day] }
+    dates_tuples.map! { |d1, d2| [d1, d2 - 1.day] }
 
     result = dates_tuples.map do |d1, d2|
       qty = \
