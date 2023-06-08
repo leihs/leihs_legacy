@@ -11,10 +11,20 @@ class Manage::ContractsController < Manage::ApplicationController
 
   # NOTE overriding super controller
   def required_manager_role
-    closed_actions = [:create]
-    if closed_actions.include?(action_name.to_sym)
+    if action_name.to_sym == :create
       super
+    elsif action_name.to_sym == :show
+      authorize_for_show
     else
+      require_role :group_manager, current_inventory_pool
+    end
+  end
+
+  def authorize_for_show
+    contract = Contract.find(params[:id])
+    # NOTE: due to the delegations' handling in new borrow
+    unless current_user.contracts.include?(contract) \
+        or current_user.delegations.map(&:contracts).flatten.include?(contract)
       require_role :group_manager, current_inventory_pool
     end
   end
@@ -121,5 +131,9 @@ class Manage::ContractsController < Manage::ApplicationController
 
   def line_ids_param
     params.require(:line_ids)
+  end
+
+  def id_param
+    params.require(:id)
   end
 end

@@ -15,21 +15,21 @@
         = _("Start Screen")
 
     %li
-      %a{href: main_app.borrow_current_user_path}
+      %a{href: "/borrow/current-user"}
         .fa.fa-user
         = _("User data")
     %li
-      %a{href: main_app.borrow_user_documents_path}
+      %a{href: "/borrow/current-user"}
         .fa.fa-copy
         = _("My documents")
     - if current_user.delegations.exists?
       %li
-        %a{href: main_app.borrow_user_delegations_path}
+        %a{href: "/borrow/current-user"}
           .fa.fa-group
           = _("Delegations")
     - elsif current_user.delegation?
       %li
-        %a{href: main_app.borrow_user_switch_back_path}
+        %a{href: "/borrow/current-user"}
           %img.max-height-xxxs.max-width-xxs{:src => user_session.user.image_url, style: 'max-width: 100px; max-height: 100px'}
           = _("Back to %s") % user_session.user
 

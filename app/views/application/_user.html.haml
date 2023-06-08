@@ -1,4 +1,4 @@
-%li.topbar-item.dropdown-holder{:class => current_page?(borrow_current_user_path) ? "active" : nil}
+%li.topbar-item.dropdown-holder{:class => current_page?("/borrow/current-user") ? "active" : nil}
   .topbar-item-inner
     - if current_user.delegation?
       .fa.fa-group
@@ -15,24 +15,24 @@
         = _("Start Screen")
 
     %li
-      %a.dropdown-item{href: main_app.borrow_current_user_path}
+      %a.dropdown-item{href: "/borrow/current-user"}
         .width-xxxs.inline-block.text-align-center
           .fa.fa-user
         = _("User data")
     %li
-      %a.dropdown-item{href: main_app.borrow_user_documents_path}
+      %a.dropdown-item{href: "/borrow/current-user"}
         .width-xxxs.inline-block.text-align-center
           .fa.fa-copy
         = _("My documents")
     - if current_user.delegations.exists?
       %li.separated-top
-        %a.dropdown-item{href: main_app.borrow_user_delegations_path}
+        %a.dropdown-item{href: "/borrow/current-user"}
           .width-xxxs.inline-block.text-align-center
             .fa.fa-group
           = _("Delegations")
     - elsif current_user.delegation?
       %li.separated-top
-        %a.dropdown-item{href: main_app.borrow_user_switch_back_path}
+        %a.dropdown-item{href: "/borrow/current-user"}
           .width-xxxs.inline-block.text-align-center
             %img.max-height-xxxs.max-width-xxs.emboss.deep{:src => user_session.user.image_url}
           = _("Back to %s") % user_session.user

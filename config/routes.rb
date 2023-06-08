@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
 
-  root to: 'application#root'
+  if Rails.env.test?
+    # NOTE: needed because of some assertions in tests
+    get 'borrow', to: 'application#borrow'
+  end
 
   if Rails.env.development? or Rails.env.test?
+    root to: 'application#root'
+
     # NOTE: for prod path helper is added as application helper custom method
     post '/sign-in', to: 'application#sign_in'
     post '/sign-out', to: 'application#sign_out'
@@ -11,10 +16,6 @@ Rails.application.routes.draw do
   end
 
   get :status, controller: :application, action: :status
-
-  # NOTE: New Borrow
-  post "mail/received", to: "mails#send_received"
-  post "mail/submitted", to: "mails#send_submitted"
 
   # Categories
   get "categories/:id/image", to: "categories#image", as: "category_image"
@@ -56,62 +57,6 @@ Rails.application.routes.draw do
     get 'inventory/excel',        :to => 'inventory#excel_export',        :as => 'global_inventory_excel_export'
     get 'inventory/quick_csv',    :to => 'inventory#quick_csv_export',    :as => 'global_inventory_quick_csv_export'
     get 'inventory/quick_excel',  :to => 'inventory#quick_excel_export',  :as => 'global_inventory_quick_excel_export'
-  end
-
-  # Borrow Section
-  namespace :borrow do
-    root to: "application#root"
-
-    # maintenance
-    get "maintenance", to: "application#maintenance"
-
-    get "availability", to: "availability#show", as: "availability"
-    get 'booking_calendar_availability', to: 'availability#booking_calendar_availability'
-    get 'total_borrowable_quantities', to: 'availability#total_borrowable_quantities'
-
-    get "holidays", to: "holidays#index", as: "holidays"
-    get "inventory_pools", to: "inventory_pools#index", as: "inventory_pools"
-
-    get "categories", to: "categories#index"
-    get "groups", to: "groups#index"
-
-    get "models",               to: "models#index", as: "models"
-    get "models/availability",  to: "models#availability", as: "models_availability"
-    get "models/:id",           to: "models#show", as: "model"
-
-    get     "order",        to: "customer_orders#current", as: "current_order"
-    post    "order",        to: "customer_orders#submit"
-    delete  "order/remove", to: "customer_orders#remove"
-    post    "reservations",                   to: "reservations#create"
-    post    "reservations/change_time_range", to: "reservations#change_time_range", as: "change_time_range"
-    delete  "reservations",                   to: "reservations#destroy"
-    delete  "order/remove_reservations", to: "customer_orders#remove_reservations"
-    get     "order/timed_out", to: "customer_orders#timed_out"
-    post    "order/delete_unavailables", to: "customer_orders#delete_unavailables"
-    get     "orders", to: "customer_orders#index", as: "orders"
-
-    get "refresh_timeout", to: "application#refresh_timeout"
-    get "returns", to: "returns#index", as: "returns"
-
-    post  'search',               to: 'search#search',  as: "search"
-    get   'search',               to: 'search#results', as: "search_results"
-
-    get   'templates',                  to: 'templates#index',        as: "templates"
-    get   'templates/:id',              to: 'templates#show',         as: "template"
-    post  'templates/:id',              to: 'templates#select_dates', as: "template_select_dates"
-    post  'templates/:id/availability', to: 'templates#availability', as: "template_availability"
-    post  'templates/:id/add_to_order', to: 'templates#add_to_order', as: "template_add_to_order"
-
-    get "to_pick_up", to: "to_pick_up#index", as: "to_pick_up"
-    get "workdays", to: "workdays#index", as: "workdays"
-
-    get "user",                           to: "users#current",              as: "current_user"
-    get "user/documents",                 to: "users#documents",            as: "user_documents"
-    get "user/contracts/:id",             to: "users#contract",             as: "user_contract"
-    get "user/value_lists/:id",           to: "users#value_list",           as: "user_value_list"
-    get "user/delegations",               to: "users#delegations",          as: "user_delegations"
-    post "user/switch_to_delegation/:id", to: "users#switch_to_delegation", as: "user_switch_to_delegation"
-    get "user/switch_back",               to: "users#switch_back",          as: "user_switch_back"
   end
 
   # Manage Section

@@ -11,11 +11,3 @@ Feature: Changing interface language
     And I see the language list
     When I change the language to "English (US)"
     Then the language is "English (US)"
-
-  Scenario: Changing the language as normal user
-    Given I am Normin
-    And I am listing models
-    When I change the language to "English (UK)"
-    Then the language is "English (UK)"
-    When I change the language to "Deutsch"
-    Then the language is "Deutsch"

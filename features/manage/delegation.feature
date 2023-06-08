@@ -33,13 +33,6 @@ Feature: Delegation
     Then I see all results in the users box for users matching Julie
     And I see all results in delegations box for delegations matching Julie or delegations having members matching Julie
 
-  Scenario: Suspended users can't submit orders
-    Given I am Julie
-    When I switch from my user to a delegation
-    And that delegation is enabled for an inventory pool
-    But I am suspended in that inventory pool
-    Then I cannot place any reservations in this inventory pool
-
   Scenario: Filter der Delegationen
     Given I am Pius
     When I can find the user administration features in the "Manage" area under "Users"
@@ -72,16 +65,6 @@ Feature: Delegation
     And I edit the order
     Then I see the delegation's name
     And I see the contact person
-
-  @unstable
-  Scenario: Definition of the contact person when creating an order
-    Given I am Julie
-    When I create an order for a delegation
-    Then I am saved as contact person
-    Given today corresponds to the start date of the order
-    And I am Pius
-    When I hand over the items ordered for this delegation to "Mina"
-    Then "Mina" is the new contact person for this contract
 
   @rack
   Scenario: Showing me my own orders
@@ -120,26 +103,6 @@ Feature: Delegation
     When I choose another contact person for the order
     And I confirm the user change
     Then the contact person for the order has been changed accordingly
-
-  Scenario: Borrow: Creating an order with a delegation
-    Given I am Julie
-    When I hover over my name
-    And I click on "Delegations"
-    Then I see the delegations I am assigned to
-    When I pick a delegation to represent
-    Then I am logged in as that delegation
-    Given I am listing models
-    When I add an existing model to the order
-    Then the calendar opens
-    When everything I input into the calendar is valid
-    Then the model has been added to the order with the respective start and end date, quantity and inventory pool
-    When I open my list of orders
-    And I enter a purpose
-    And I take note of the reservations
-    And I submit the order
-    Then the reservations' status changes to submitted
-    And the delegation is saved as borrower
-    And I am saved as contact person
 
   Scenario: Changing delegation in an order
     Given I am Pius

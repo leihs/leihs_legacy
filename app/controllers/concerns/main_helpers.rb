@@ -27,30 +27,17 @@ module MainHelpers
     end
 
     def set_gettext_locale
-      language =
-        # user requested a change of locale
-        if params[:locale]
-          Language.where(locale: params[:locale]).first
-        # user is logged in
-        elsif current_user
-          current_user.language
-        # user is not logged in
-        elsif session[:locale]
-          Language.where(locale: session[:locale]).first
-        # default case
-        else
-          Language.default_language
-        end
+      gettext_language = if current_user
+                           if params[:locale] # user requested change of his preferred language
+                             new_user_language = Language.where(locale: params[:locale]).first
+                             current_user.update(language: new_user_language)
+                           end
+                           current_user.language or Language.default_language
+                         else
+                           Language.default_language
+                         end
 
-      unless language.nil?
-        # If user is logged in and he requested a locale change or he does not have
-        # a language yet, then update his language.
-        if current_user and (params[:locale] or current_user.language_locale.nil?)
-          current_user.update(language_locale: language.locale)
-        end
-        session[:locale] = language.locale
-        I18n.locale = language.locale.underscore.to_sym
-      end
+      I18n.locale = gettext_language.locale.underscore.to_sym
     end
 
     def set_pagination_header(paginated_active_record,

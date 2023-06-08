@@ -120,29 +120,6 @@ create_scenario_tasks(filepath,
                         append: true)
 end
 
-############################## BORROW ###################################
-
-borrow_feature_dir_paths = ['features/borrow']
-
-filepath = 'cider-ci/tasks/borrow-scenarios.yml'
-create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber)
-create_scenario_tasks(filepath,
-                      ['spec/features/borrow'],
-                      framework: :rspec,
-                      additional_options: "-r ./spec/steps/borrow/load.rb",
-                      append: true)
-
-%w(flapping unstable).each do |kind|
-  filepath = "cider-ci/tasks/borrow-#{kind}-scenarios.yml"
-  create_scenario_tasks(filepath, borrow_feature_dir_paths, framework: :cucumber, tags: ["@#{kind}"])
-  create_scenario_tasks(filepath,
-                        ['spec/features/borrow'],
-                        framework: :rspec,
-                        additional_options: "-r ./spec/steps/borrow/load.rb",
-                        tags: ["@#{kind}"],
-                        append: true)
-end
-
 ############################## BROKEN #################################
 
 filepath = 'cider-ci/tasks/all-broken-scenarios.yml'
@@ -153,12 +130,6 @@ filepath = 'cider-ci/tasks/all-broken-scenarios.yml'
                         ['spec/features/manage'],
                         framework: :rspec,
                         additional_options: "-r ./spec/steps/manage/load.rb",
-                        tags: ["@#{kind}"],
-                        append: true)
-  create_scenario_tasks(filepath,
-                        ['spec/features/borrow'],
-                        framework: :rspec,
-                        additional_options: "-r ./spec/steps/borrow/load.rb",
                         tags: ["@#{kind}"],
                         append: true)
 end

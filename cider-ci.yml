@@ -1,9 +1,6 @@
 include:
   - cider-ci/jobs/all-broken-scenarios.yml
   - cider-ci/jobs/all-tests.yml
-  - cider-ci/jobs/borrow-flapping-scenarios.yml
-  - cider-ci/jobs/borrow-scenarios.yml
-  - cider-ci/jobs/borrow-unstable-scenarios.yml
   - cider-ci/jobs/good-to-merge.yml
   - cider-ci/jobs/hotspots.yml
   - cider-ci/jobs/manage-flapping-scenarios.yml

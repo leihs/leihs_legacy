@@ -1,1 +1,0 @@
-window.App.InventoryPool.url = => "/borrow/inventory_pools"

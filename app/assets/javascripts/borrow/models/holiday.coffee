@@ -1,1 +1,0 @@
-window.App.Holiday.url = => "/borrow/holidays"

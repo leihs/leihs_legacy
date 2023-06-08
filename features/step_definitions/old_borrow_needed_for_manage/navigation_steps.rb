@@ -28,7 +28,7 @@ Then(/^the navigation contains "(.*?)"$/) do |section|
       when 'Lending'
         find("a[href='#{manage_daily_view_path(@current_inventory_pool)}']", text: _('Lending'))
       when 'Borrow'
-        find("a[href='#{borrow_root_path}']", text: _('Borrow'))
+        find("a[href='#{"/borrow"}']", text: _('Borrow'))
       else
         raise
     end

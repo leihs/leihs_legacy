@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -eux
+export RAILS_ENV=${RAILS_ENV:-test}
+export DB_NAME=${DB_NAME:-leihs_test}
+PORT=${PORT:-3210}
+bundle exec rails server -p $PORT
