@@ -2192,22 +2192,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/manage_users.feature:21
-- name: features/manage/manage_users.feature:32
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/manage_users.feature:32
-- name: features/manage/manage_users.feature:41
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/manage_users.feature:41
 - name: features/manage/navigation.feature:14
   scripts:
     test:
@@ -3032,102 +3016,102 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_inventory_pool_story.feature:82
-- name: features/technical/availability_story.feature:108
+- name: features/technical/availability_story.feature:106
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:108
-- name: features/technical/availability_story.feature:117
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:106
+- name: features/technical/availability_story.feature:118
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:117
-- name: features/technical/availability_story.feature:130
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:118
+- name: features/technical/availability_story.feature:14
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:130
-- name: features/technical/availability_story.feature:15
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:14
+- name: features/technical/availability_story.feature:132
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:15
-- name: features/technical/availability_story.feature:145
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:132
+- name: features/technical/availability_story.feature:144
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:145
-- name: features/technical/availability_story.feature:158
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:144
+- name: features/technical/availability_story.feature:20
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:158
-- name: features/technical/availability_story.feature:22
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:20
+- name: features/technical/availability_story.feature:28
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:22
-- name: features/technical/availability_story.feature:31
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:28
+- name: features/technical/availability_story.feature:42
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:31
-- name: features/technical/availability_story.feature:46
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:42
+- name: features/technical/availability_story.feature:48
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:46
-- name: features/technical/availability_story.feature:53
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:48
+- name: features/technical/availability_story.feature:54
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:53
-- name: features/technical/availability_story.feature:60
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:54
+- name: features/technical/availability_story.feature:67
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:60
-- name: features/technical/availability_story.feature:74
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:67
+- name: features/technical/availability_story.feature:79
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:74
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:79
 - name: features/technical/availability_story.feature:87
   scripts:
     test:
@@ -3136,14 +3120,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:87
-- name: features/technical/availability_story.feature:96
+- name: features/technical/availability_story.feature:98
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:96
+        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/availability_story.feature:98
 - name: features/technical/categories.feature:4
   scripts:
     test:
@@ -3168,14 +3152,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/field/field_instance_methods.feature:6
-- name: features/technical/field/fields_controller.feature:6
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/field/fields_controller.feature:6
 - name: features/technical/field/provide_accessible_fields_model.feature:9
   scripts:
     test:
@@ -3328,22 +3304,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/visit/overdue_model.feature:6
-- name: features/technical/visit/visits_controller.feature:13
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/visit/visits_controller.feature:13
-- name: features/technical/visit/visits_controller.feature:8
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/visit/visits_controller.feature:8
 - name: spec/features/manage/availability_calendar.feature:7
   scripts:
     test:

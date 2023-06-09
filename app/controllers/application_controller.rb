@@ -1,12 +1,10 @@
 class ApplicationController < ActionController::Base
   include MainHelpers
   include DevTestMisc
+  include AntiCsrf
 
   layout 'splash'
   
-  # CSRF protection
-  protect_from_forgery with: :exception
-
   attr_reader :user_session, :current_user
 
   helper_method :about_path
@@ -28,12 +26,8 @@ class ApplicationController < ActionController::Base
   before_action :better_errors_hack, if: -> { Rails.env.development? }
 
   before_action :authenticate
-  before_action :get_and_set_global_csrf_token
   before_action :set_gettext_locale
   before_action :permit_params
-
-  # FIXME!!!
-  skip_before_action :verify_authenticity_token
 
   ##########################################################################
 
@@ -55,10 +49,6 @@ class ApplicationController < ActionController::Base
     token = cookies['leihs-user-session']
     @user_session = UserSession.find_by_token(token)
     @current_user = @user_session.try { |us| us.delegation or us.user }
-  end
-
-  def get_and_set_global_csrf_token
-    @leihs_anti_csrf_token = cookies['leihs-anti-csrf-token']
   end
 
   # NOTE: see hook on top of file

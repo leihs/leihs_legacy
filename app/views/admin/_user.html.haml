@@ -34,8 +34,8 @@
           = _("Back to %s") % user_session.user
 
     %li
-      %form{type: :submit, method: :POST, action: '/sign-out'}
+      = form_tag('/sign-out', method: :POST) do
         %input{type: :hidden, name: "csrf-token", value: @leihs_anti_csrf_token}
-        %button
-          .fa.fa-sign-out
-          = _("Logout")
+          %button
+            .fa.fa-sign-out
+            = _("Logout")

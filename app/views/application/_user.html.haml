@@ -38,7 +38,7 @@
           = _("Back to %s") % user_session.user
 
     %li.separated-top
-      %form{type: :submit, method: :POST, action: '/sign-out'}
+      = form_tag('/sign-out', method: :POST) do
         %input{type: :hidden, name: "csrf-token", value: @leihs_anti_csrf_token}
         %button.dropdown-item{style: 'font-size: inherit'}
           .width-xxxs.inline-block.text-align-center
