@@ -1,5 +1,7 @@
 class Manage::OrdersController < Manage::ApplicationController
 
+  skip_forgery_protection only: [:index]
+
   # NOTE overriding super controller
   private def required_manager_role
     require_role :group_manager, current_inventory_pool

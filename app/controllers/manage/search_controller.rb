@@ -1,5 +1,7 @@
 class Manage::SearchController < Manage::ApplicationController
 
+  skip_forgery_protection only: [:search]
+
   before_action except: [:search] do
     @search_term = CGI::unescape params[:search_term]
   end

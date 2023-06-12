@@ -1,5 +1,7 @@
 class Manage::ReservationsController < Manage::ApplicationController
 
+  skip_forgery_protection only: [:print]
+
   private
 
   # NOTE overriding super controller
