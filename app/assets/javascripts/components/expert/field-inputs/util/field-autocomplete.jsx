@@ -32,7 +32,7 @@
             inputClassName='has-addon width-full ui-autocomplete-input ui-autocomplete-loading'
             element='label'
             inputId={null}
-            dropdownWidth='216px'
+            dropdownWidth='350px'
             label={this.props.label}
             _makeCall={this._makeCall}
             onChange={this._onChange}
