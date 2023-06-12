@@ -1174,7 +1174,7 @@
           inputClassName='has-addon width-full ui-autocomplete-input ui-autocomplete-loading'
           element='label'
           inputId={null}
-          dropdownWidth='216px'
+          dropdownWidth='350px'
           label={field.specific.placeholder}
           _makeCall={(term, callback) => field.specific.search(term, callback)}
           onChange={(selected) => field.specific.onChange(field, selected)}
@@ -1458,7 +1458,7 @@
           inputClassName='has-addon width-full ui-autocomplete-input ui-autocomplete-loading'
           element='label'
           inputId={null}
-          dropdownWidth='216px'
+          dropdownWidth='350px'
           label={field.specific.placeholder}
           _makeCall={(term, callback) => field.specific.search(term, callback)}
           onChange={(selected) => field.specific.onChange(field, selected)}
