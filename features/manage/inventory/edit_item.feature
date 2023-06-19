@@ -164,6 +164,12 @@ Feature: Editing an item
     And I save
     Then I see an error message that I can't retire the item because it's already handed over or assigned to a contract
 
+  Scenario: Delete item
+    Given there is a new item in the current inventory pool
+    And I edit the item
+    When I delete the item
+    Then the item was deleted successfully
+
   Scenario: View attachments (attachments field is readonly)
     Given the attachments field is configured to be editable only by the owner
     And exists an item that belongs to the current inventory pool but is not owned by it

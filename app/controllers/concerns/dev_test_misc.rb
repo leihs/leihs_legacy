@@ -31,7 +31,7 @@ module DevTestMisc
                             created_at: real_now)
 
         cookies['leihs-user-session'] = { value: token }
-        redirect_to root_path
+        redirect_to manage_root_path
       end
 
       def sign_out

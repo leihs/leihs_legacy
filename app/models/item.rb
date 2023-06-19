@@ -204,22 +204,6 @@ class Item < ApplicationRecord
     items
   end
 
-  ####################################################################
-  # preventing delete
-
-  def self.delete_all
-    false
-  end
-
-  before_destroy do
-    if model.is_package? and reservations.empty?
-      # NOTE only never handed over packages can be deleted
-    else
-      errors.add(:base, 'Item cannot be deleted')
-      throw :abort
-    end
-  end
-
   scope :borrowable, -> { where(is_borrowable: true, parent_id: nil) }
   scope :unborrowable, -> { where(is_borrowable: false) }
 
@@ -258,6 +242,22 @@ class Item < ApplicationRecord
 
   scope :items, -> { joins(:model).where(models: { type: 'Model' }) }
   scope :licenses, -> { joins(:model).where(models: { type: 'Software' }) }
+
+  ################### DESTROY RESTRICTIONS ###########################
+
+  def destroy_would_lead_to_hard_overbooking?
+    model.ordered_and_unassigned_quantity.positive? and
+      not ( model.items.in_stock.count > model.ordered_and_unassigned_quantity )
+  end
+
+  # override ActiveRecord::Base method from `config/initializers/restricted_associations.rb`
+  def can_destroy?
+    not parent and
+      not children.exists? and
+      not reservations.exists? and
+      not destroy_would_lead_to_hard_overbooking?
+  end
+  alias_method(:can_destroy, :can_destroy?) # used for JSON requests
 
   ####################################################################
 

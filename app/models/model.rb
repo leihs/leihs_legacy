@@ -493,6 +493,13 @@ class Model < ApplicationRecord
     SQL
   end
 
+  def ordered_and_unassigned_quantity
+    reservations
+      .where(status: ['submitted', 'approved'])
+      .where(item_id: nil)
+      .count
+  end
+
   def as_json_with_arguments(options = nil)
     h = as_json_without_arguments(options)
     if options[:accessories_for_ip]

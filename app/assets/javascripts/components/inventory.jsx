@@ -3,6 +3,7 @@
   /* global _ */
   /* global _jed */
   const React = window.React
+  const Flash = window.App.Flash
 
   window.Inventory = window.createReactClass({
     propTypes: {
@@ -1168,6 +1169,26 @@
 
     },
 
+    _onClickDeleteItem(event, item) {
+      url = App.Inventory.url().replace('/inventory', '') + '/items/' + item.id
+
+      $.ajax({
+        url: url,
+        method: 'DELETE',
+        dataType: 'json',
+        success: () => {
+          url = App.Inventory.url() + '?' + encodeURI('flash[success]=Item deleted')
+          window.location = url
+        },
+        error: (jqXHR, _, _) => {
+          Flash({
+            type: 'error',
+            message: jqXHR.responseJSON.message
+          })
+        }
+      })
+    },
+
     _renderModelName(model) {
       return model.name()
     },
@@ -1421,6 +1442,14 @@
                   {copyLabel}
                 </a>
               </li>
+              { item.can_destroy && 
+                <li>
+                  <a className='dropdown-item red' onClick={(event) => this._onClickDeleteItem(event, item)}>
+                    <i className='fa fa-trash'></i>
+                    {' '}
+                    Delete Item
+                  </a>
+                </li> }
             </ul>
           </div>
         </div>

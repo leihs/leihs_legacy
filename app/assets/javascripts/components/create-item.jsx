@@ -435,9 +435,10 @@
       return '/manage/' + this.props.inventory_pool.id + '/items/' + itemId + '/edit'
     },
 
-    _forward(redirectUrl, withMessage = true) {
-      var message = _.string.capitalize(this.props.item_type) + ' saved.'
-      var flash = withMessage ? { 'flash[success]': _jed(message) } : {}
+    _forward(redirectUrl, message, withMessage = true) {
+      const defaultMessage = _.string.capitalize(this.props.item_type) + ' saved.'
+      const messageToShow = message || defaultMessage
+      const flash = withMessage ? { 'flash[success]': _jed(messageToShow) } : {}
       if (redirectUrl) {
         window.location = setUrlParams(redirectUrl, flash)
       } else {
@@ -451,7 +452,7 @@
           this._showAttachmentsHintIfNeeded()
           window.location = this._editItemPath(itemId)
         } else {
-          this._forward(redirectUrl)
+          this._forward(redirectUrl, null)
         }
       }
     },
@@ -543,7 +544,7 @@
           if (this._newAttachementFiles().length > 0) {
             this._submitAttachments(data.id, data.redirect_url)
           } else {
-            this._forward(data.redirect_url, showMessage)
+            this._forward(data.redirect_url, null, showMessage)
           }
         })
         .error((res) => {
@@ -575,6 +576,31 @@
       event.preventDefault()
 
       this._save(false, true)
+    },
+
+    _onDelete(event) {
+      event.preventDefault()
+
+      $.ajax({
+        url: this.props.delete_path,
+        // data: JSON.stringify(data),
+        contentType: 'application/json',
+        dataType: 'json',
+        method: 'DELETE'
+      })
+        .done((data) => {
+          this._forward(this.props.inventory_path, 'Item deleted.')
+        })
+        .error((res) => {
+          const data = res && res.responseJSON
+          if (data) {
+            this._showErrorMessage(data.message)
+          } else {
+            this._showErrorMessage(
+              'Unexpected Error!\n' + res.statusText + '\n\n' + res.responseText
+            )
+          }
+        })
     },
 
     _showSerialNumberModal(message, copy) {
@@ -671,6 +697,12 @@
                   <i className="fa fa-copy" />
                   {' ' + _jed('Save and copy')}
                 </a>
+                { this.props.can_destroy && 
+                  <a className="dropdown-item red" id="item-delete" onClick={this._onDelete}>
+                    <i className="fa fa-trash"></i>
+                    {" " + _jed("Delete")}
+                  </a>
+                }
               </li>
             </ul>
           </div>

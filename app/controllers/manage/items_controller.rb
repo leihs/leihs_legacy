@@ -220,6 +220,14 @@ class Manage::ItemsController < Manage::ApplicationController
     end
   end
 
+  def destroy
+    begin
+      fetch_item_by_id.destroy!
+    rescue => e
+      render(status: :bad_request, json: { message: e.message })
+    end
+  end
+
   def set_copy_defaults(item)
     item.owner = current_inventory_pool
     item.serial_number = nil
@@ -343,11 +351,13 @@ class Manage::ItemsController < Manage::ApplicationController
     end
 
     @props = {
+      can_destroy: item.can_destroy?,
       edit: true,
       item: item.as_json(Manage::ItemsController::JSON_SPEC),
       item_type: item.type.downcase,
       inventory_pool: current_inventory_pool,
       save_path: manage_update_item_path,
+      delete_path: manage_delete_item_path,
       store_attachment_path: manage_item_store_attachment_react_path,
       inventory_path: manage_inventory_path,
       parent: parent,

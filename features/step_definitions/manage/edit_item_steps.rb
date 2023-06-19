@@ -167,3 +167,20 @@ end
 When(/^I edit the item$/) do
   visit manage_edit_item_path @current_inventory_pool, @item
 end
+
+When(/^there is a new item in the current inventory pool$/) do
+  @item = FactoryBot.create(:item,
+                            owner: @current_inventory_pool,
+                            inventory_pool: @current_inventory_pool)
+end
+
+When(/^I delete the item$/) do
+  find(".multibutton .dropdown-toggle").hover
+  find("#item-delete").click
+end
+
+When(/^the item was deleted successfully$/) do
+  find("#flash", text: _("Item deleted."))
+  expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
+  expect(Item.find_by_id(@item.id)).to be_nil
+end
