@@ -43,6 +43,9 @@ module Leihs
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
+    # due to host name discrepancy behind a proxy
+    config.action_controller.forgery_protection_origin_check = false
+
     config.active_record.belongs_to_required_by_default = false
     config.active_record.schema_format = :sql
     config.active_record.timestamped_migrations = false
