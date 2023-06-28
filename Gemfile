@@ -85,8 +85,10 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6'
   gem 'flog'
   gem 'flay'
-  gem 'meta_request'
+
+  gem 'pry-nav'
   gem 'pry-rails'
+
   gem 'rb-readline'
   gem 'rspec-rails', '~> 5', require: false
   # gem 'selenium-webdriver', '~> 3.14'

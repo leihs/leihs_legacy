@@ -8,3 +8,4 @@ include:
   - cider-ci/jobs/manage-unstable-scenarios.yml
   - cider-ci/jobs/meta.yml
   - cider-ci/jobs/rspec-model-tests.yml
+  - cider-ci/jobs/rspec-preflight-test.yml

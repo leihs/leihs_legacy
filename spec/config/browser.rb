@@ -1,11 +1,11 @@
 require 'active_support/all'
 require 'capybara/rspec'
-require 'config/database.rb'
 require 'factory_bot'
 require 'pry'
 require 'rails_helper'
 require 'selenium-webdriver'
 
+require_relative '../../database/spec/config/database'
 
 BROWSER_DOWNLOAD_DIR= File.absolute_path(File.expand_path(__FILE__)  + "./../../tmp")
 
@@ -52,8 +52,6 @@ RSpec.configure do |config|
   config.raise_error_for_unimplemented_steps = true
 
   config.before(type: :feature) do
-    PgTasks.truncate_tables()
-    Config::Database.restore_seeds
     Capybara.current_driver = :firefox
     page.driver.browser.manage.window.maximize
     visit(root_path)

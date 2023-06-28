@@ -1,12 +1,6 @@
 require 'rails_helper'
-require 'config/database.rb'
 
 describe AccessRight do
-
-  before :each do
-    PgTasks.truncate_tables()
-    Config::Database.restore_seeds
-  end
 
   context 'a user and a pool' do
 

@@ -1,0 +1,37 @@
+jobs:
+
+  rspec-preflight-test:
+
+    name: RSpec Preflight Test
+    description: Run model specs.
+
+    priority: 3
+
+    depends_on:
+      include:
+        - cider-ci/job-components/meta-passed.yml
+
+    run_when:
+      include:
+        - cider-ci/job-components/meta-passed.yml
+
+    context:
+
+      task_defaults:
+        max_trials: 2
+        include:
+          - cider-ci/task-components/database.yml
+        scripts:
+          test:
+            body: |
+              #!/usr/bin/env bash
+              set -euo pipefail
+              echo 'this ist just a no-op dummy'
+              exit 0
+
+      include:
+        - cider-ci/shared/main-context.yml
+
+      tasks:
+        preflight: {}
+

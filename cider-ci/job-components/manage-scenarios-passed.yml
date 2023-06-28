@@ -1,0 +1,4 @@
+manage-scenarios have passed:
+  type: job
+  job_key: manage-scenarios
+  states: [passed]

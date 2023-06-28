@@ -1,10 +1,8 @@
 require 'rails_helper'
-require 'config/database.rb'
 
 describe Reservation do
+
   before :example do
-    PgTasks.truncate_tables()
-    Config::Database.restore_seeds
     @inventory_pool = FactoryBot.create(:inventory_pool)
     @user = FactoryBot.create(:customer, inventory_pool: @inventory_pool)
   end

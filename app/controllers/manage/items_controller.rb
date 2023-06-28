@@ -160,7 +160,6 @@ class Manage::ItemsController < Manage::ApplicationController
 
   def update
     ApplicationRecord.transaction(requires_new: true) do
-
       fetch_item_by_id
       item_params = get_item_params!
 
@@ -175,7 +174,8 @@ class Manage::ItemsController < Manage::ApplicationController
             item_params[:properties] = \
               @item.properties.merge item_params[:properties].to_unsafe_hash
           end
-          saved = @item.update(item_params)
+
+          @item.update!(item_params)
 
           if params[:child_items]
             @item.children = []
@@ -192,29 +192,32 @@ class Manage::ItemsController < Manage::ApplicationController
 
       respond_to do |format|
         format.json do
-          if saved
-            if params[:copy]
-              render(status: :ok,
-                     json: { redirect_url: \
-                               manage_copy_item_path(current_inventory_pool,
-                                                     @item.id) })
-            else
-              json = @item.as_json(JSON_SPEC).to_json
-              render(status: :ok, json: json)
-            end
+          if params[:copy]
+            render(status: :ok,
+                   json: { redirect_url: \
+                           manage_copy_item_path(current_inventory_pool,
+                                                 @item.id) })
           else
-            if @item
-              render \
-                json: {
-                  message: item_errors_full_messages(@item),
-                  can_bypass_unique_serial_number_validation: \
-                    can_bypass_unique_serial_number_validation?(@item)
-                },
-                status: :bad_request
-            else
-              render json: {}, status: :not_found
-            end
+            json = @item.as_json(JSON_SPEC).to_json
+            render(status: :ok, json: json)
           end
+        end
+      end
+    end
+
+  rescue => e
+    respond_to do |format|
+      format.json do
+        if @item
+          render \
+            json: {
+              message: item_errors_full_messages(@item),
+              can_bypass_unique_serial_number_validation: \
+              can_bypass_unique_serial_number_validation?(@item)
+            },
+            status: :bad_request
+        else
+          render json: {}, status: :not_found
         end
       end
     end

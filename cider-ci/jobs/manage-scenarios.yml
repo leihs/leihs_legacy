@@ -7,10 +7,17 @@ jobs:
     priority: 0
 
     description: |
-      Run Manage scenarios under MRI
+      Run manage scenarios 
 
-    include:
-      - cider-ci/job-components/run-when-meta-passed.yml
+    depends_on:
+      include:
+        - cider-ci/job-components/preflight-passed.yml
+        - cider-ci/job-components/respec-model-passed.yml
+
+    run_when:
+      include:
+        - cider-ci/job-components/preflight-passed.yml
+        - cider-ci/job-components/respec-model-passed.yml
 
     context:
 

@@ -7,8 +7,17 @@ jobs:
 
     priority: 1
 
-    include:
-      - cider-ci/job-components/run-when-meta-passed.yml
+
+    depends_on:
+      include:
+        - cider-ci/job-components/meta-passed.yml
+        - cider-ci/job-components/preflight-passed.yml
+
+    run_when:
+      include:
+        - cider-ci/job-components/meta-passed.yml
+        - cider-ci/job-components/preflight-passed.yml
+
 
     context:
       generate_tasks:
@@ -21,7 +30,10 @@ jobs:
         scripts:
           test:
             body: |
-              set -eux
+              #!/usr/bin/env bash
+              set -euo pipefail
+              unset PGPORT unset PGUSER
+              export PGUSER="${PG15USER}"; export PGPORT="${PG15PORT}"
               bundle exec rspec $CIDER_CI_TASK_FILE
 
       include:

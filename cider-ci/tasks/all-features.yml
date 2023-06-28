@@ -1,149 +1,5 @@
 ---
 tasks:
-- name: borrow/availability
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/availability.feature"
-- name: borrow/breadcrumb_navigation
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/breadcrumb_navigation.feature"
-- name: borrow/calendar
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/calendar.feature"
-- name: borrow/calendar2
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/calendar2.feature"
-- name: borrow/explorative_search
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/explorative_search.feature"
-- name: borrow/model_overview
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/model_overview.feature"
-- name: borrow/my_orders_overview
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/my_orders_overview.feature"
-- name: borrow/navigation
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/navigation.feature"
-- name: borrow/order_window
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/order_window.feature"
-- name: borrow/orders
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/orders.feature"
-- name: borrow/pick_ups
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/pick_ups.feature"
-- name: borrow/returns
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/returns.feature"
-- name: borrow/search
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/search.feature"
-- name: borrow/start_page
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/start_page.feature"
-- name: borrow/templates
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/templates.feature"
-- name: borrow/timeoutpage
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/timeoutpage.feature"
-- name: borrow/user_documents
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/user_documents.feature"
-- name: borrow/view_my_user_data
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/borrow/view_my_user_data.feature"
 - name: login/login
   scripts:
     test:
@@ -784,14 +640,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/technical/field/field_instance_methods.feature"
-- name: technical/field/fields_controller
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/technical/field/fields_controller.feature"
 - name: technical/field/provide_accessible_fields_model
   scripts:
     test:
@@ -840,14 +688,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/technical/item/search_model.feature"
-- name: technical/mailer/mailer_settings
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/technical/mailer/mailer_settings.feature"
 - name: technical/performance_stability
   scripts:
     test:
@@ -880,11 +720,3 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/technical/visit/overdue_model.feature"
-- name: technical/visit/visits_controller
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/technical/visit/visits_controller.feature"

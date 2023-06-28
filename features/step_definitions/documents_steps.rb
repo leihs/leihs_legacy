@@ -110,7 +110,7 @@ Then(/^the relevant reservations show the person taking back the item in the for
       end
       within_window new_window do
         contract.reservations.each do |cl|
-          find('.contract .list.returned_items tr', text: /#{cl.quantity}.*#{cl.item.inventory_code}.*#{I18n.l cl.end_date}/).find('.returning_date', text: cl.returned_to_user.short_name)
+          find('.contract .list.returned_items tr', text: /#{cl.quantity}.*#{cl.item.inventory_code}.*#{I18n.l cl.end_date}/m).find('.returning_date', text: cl.returned_to_user.short_name)
         end
       end
     end

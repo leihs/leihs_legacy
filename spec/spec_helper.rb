@@ -1,4 +1,5 @@
 require 'config/browser.rb'
+require_relative '../database/spec/config/database'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

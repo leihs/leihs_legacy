@@ -1,5 +1,4 @@
 require 'rails_helper'
-require "#{Rails.root}/features/support/dataset"
 
 describe Contract do
 
@@ -11,9 +10,9 @@ describe Contract do
       /all reservations of a closed contract must be closed as well/
   end
 
-  context 'search and filter' do
-    before :all do
-      ::Dataset.restore_dump
+  context 'search and filter', db_data_seed: 'personas' do
+
+    before :each do
       user = User.find_by(login: 'normin')
       @inventory_pool = InventoryPool.find_by(name: 'IT-Ausleihe')
       Contract.update_all(user_id: user.id, inventory_pool_id: @inventory_pool.id)

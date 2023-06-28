@@ -1,8 +1,8 @@
-require "./spec/config/database.rb"
+require_relative '../../database/spec/config/database'
 
 Given(/^(?:the )database has only minimal seeds$/) do
-  PgTasks.truncate_tables
-  Config::Database.restore_seeds
+  db_clean
+  db_restore_data seeds_sql
 end
 
 Given(/^settings exist$/) do

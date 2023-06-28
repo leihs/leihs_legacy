@@ -1,0 +1,5 @@
+'rspec preflight has passed':
+  type: job
+  job_key: rspec-preflight-test
+  states: [passed]
+

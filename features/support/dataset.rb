@@ -1,3 +1,5 @@
+require_relative '../../database/spec/config/database'
+
 module Dataset
   ###########################################
   # NOTE: don't change! this was used while
@@ -22,9 +24,8 @@ module Dataset
 
   def restore_dump
     use_test_datetime
-    PgTasks.truncate_tables
-    dump_file = File.join(Rails.root, 'features/personas/personas.pgbin')
-    PgTasks.data_restore dump_file
+    db_clean
+    db_restore_data personas_sql
     ApplicationRecord.connection.execute 'UPDATE settings SET logo_url = NULL;'
     ApplicationRecord.connection.execute 'UPDATE smtp_settings SET enabled = TRUE;'
     ApplicationRecord.connection.execute 'ALTER TABLE emails DISABLE TRIGGER delete_old_emails_t;'

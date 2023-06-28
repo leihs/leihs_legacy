@@ -7,7 +7,7 @@ tasks:
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/acknowledge/delete_lines.feature:22
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/acknowledge/delete_lines.feature:22
 - name: features/manage/hand_over/calendar.feature:7
   scripts:
     test:
@@ -15,7 +15,7 @@ tasks:
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/hand_over/calendar.feature:7
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/hand_over/calendar.feature:7
 - name: features/manage/picking_list.feature:42
   scripts:
     test:
@@ -23,7 +23,7 @@ tasks:
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/picking_list.feature:42
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/picking_list.feature:42
 - name: features/manage/take_back/take_back.feature:72
   scripts:
     test:
@@ -31,7 +31,7 @@ tasks:
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/take_back/take_back.feature:72
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/take_back/take_back.feature:72
 - name: features/manage/verification.feature:16
   scripts:
     test:
@@ -39,7 +39,7 @@ tasks:
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/verification.feature:16
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/verification.feature:16
 - name: spec/features/manage/serial_number_validation.feature:22
   scripts:
     test:
@@ -47,7 +47,7 @@ tasks:
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:22
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:22
 - name: spec/features/manage/serial_number_validation.feature:50
   scripts:
     test:
@@ -55,4 +55,4 @@ tasks:
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:50
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/serial_number_validation.feature:50

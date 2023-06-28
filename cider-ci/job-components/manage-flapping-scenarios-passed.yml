@@ -1,0 +1,4 @@
+manage-flapping-scenarios:
+  type: job
+  job_key: manage-flapping-scenarios
+  states: [passed]

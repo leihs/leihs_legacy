@@ -23,31 +23,6 @@ jobs:
           asdf: true
 
       tasks:
-        migration-of-personas-dump:
-          include:
-            - path: cider-ci/task-components/database-no-schema.yml
-              submodule: [database]
-            - path: cider-ci/task-components/database/configure.yml
-          environment_variables:
-            LEIHS_SECRET: secret
-            RAILS_ENV: test
-          name: "Check if personas dump needs to be and has been migrated"
-          scripts:
-            test:
-              body: ./cider-ci/bin/check-personas-migrated
-
-        migration-of-demo-dump:
-          include:
-            - path: cider-ci/task-components/database-no-schema.yml
-              submodule: [database]
-            - path: cider-ci/task-components/database/configure.yml
-          environment_variables:
-            LEIHS_SECRET: secret
-            RAILS_ENV: test
-          name: "Check if demo dump needs to be and has been migrated"
-          scripts:
-            test:
-              body:  ./cider-ci/bin/check-personas-migrated
 
         scenario tasks are up-to-date:
           name: "Scenario tasks are up-to-date"

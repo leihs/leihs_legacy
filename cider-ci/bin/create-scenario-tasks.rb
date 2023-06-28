@@ -85,13 +85,14 @@ def get_path(s)
 end
 
 def get_exec_command(path, framework, additional_options)
+  pg15 = 'unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT};'
   xvfb = "xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24'"
 
   case framework
   when :cucumber
-    exec = "#{xvfb} ./bin/cucumber #{STRICT_MODE ? "--strict " : nil}#{path}"
+    exec = "#{pg15} #{xvfb} ./bin/cucumber #{STRICT_MODE ? "--strict " : nil}#{path}"
   when :rspec
-    exec = [xvfb, './bin/rspec', additional_options, path].compact.join(' ')
+    exec = [pg15, xvfb, './bin/rspec', additional_options, path].compact.join(' ')
   else
     raise 'Undefined testing framework'
   end
