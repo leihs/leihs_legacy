@@ -15,8 +15,6 @@ class InventoryPool < ApplicationRecord
     end
   end
 
-  belongs_to :address
-
   has_one :workday, dependent: :delete
   accepts_nested_attributes_for :workday, update_only: true
 
@@ -230,14 +228,6 @@ class InventoryPool < ApplicationRecord
   end
 
   ################################################################################
-
-  def update_address(attr)
-    if (a = Address.find_by(attr))
-      update(address_id: a.id)
-    else
-      create_address(attr)
-    end
-  end
 
   def create_workday
     self.workday ||= Workday.new

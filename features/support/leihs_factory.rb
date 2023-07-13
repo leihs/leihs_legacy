@@ -154,19 +154,11 @@ module LeihsFactory
   #
   # InventoryPool
   #
-  def self.create_inventory_pool(attributes = {}, address_attributes = {})
+  def self.create_inventory_pool(attributes = {})
     default_attributes = {
       name: 'ABC',
       shortname: 'ABC',
       email: 'abc@abc.de'
-    }
-    default_address_attributes = {
-      street: 'My Street and Number',
-      zip_code: '12345',
-      city: 'Zürich',
-      country_code: 'CH',
-      latitude: 47.3686498,
-      longitude: 8.539182499999999
     }
     ip = InventoryPool.find_by_name default_attributes.merge(attributes)[:name]
     if ip.nil?
@@ -174,7 +166,6 @@ module LeihsFactory
       # the workday is create through InventoryPool#before_create,
       # then we cannot use InventoryPool.find_or_create_by_name
       ip.workday.update(saturday: true, sunday: true)
-      ip.update_address(default_address_attributes.merge(address_attributes))
     end
     ip
   end
