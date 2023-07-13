@@ -60,7 +60,7 @@ window.FieldModels = {
       field: field,
       value: value,
       dependents: [],
-      hidden: (field.hidden ? true : false)
+      hidden: false
 
     }
 
@@ -100,7 +100,7 @@ window.FieldModels = {
             field: field,
             value: window.FieldModels._createEmptyValue(field, next_code, inventory_pool),
             dependents: [],
-            hidden: (field.hidden ? true : false)
+            hidden: false
           }
       })
 

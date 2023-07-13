@@ -248,8 +248,6 @@ Rails.application.routes.draw do
       get 'fields', to: 'fields#index', as: 'fields'
       get 'manage_fields', to: 'fields#manage_fields', as: 'manage_fields'
       post 'disable_field', to: 'fields#disable_field', as: 'disable_field'
-      post 'fields/:id', to: 'fields#hide'
-      delete 'fields', to: 'fields#reset'
 
       # Search
       post 'search',               to: 'search#search',        as: "search"

@@ -106,8 +106,6 @@ class User < ApplicationRecord
     end
   end
 
-  has_many :hidden_fields, dependent: :destroy
-
   ################################################
 
   before_save do

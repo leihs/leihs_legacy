@@ -612,16 +612,6 @@
       }
     },
 
-    _hasHiddenFields() {
-      return _.reduce(
-        this._flatFieldModels(),
-        (result, fm) => {
-          return result || fm.hidden
-        },
-        false
-      )
-    },
-
     _saveButtonText() {
       if (this.props.for_package) {
         return _jed('Save %s', _jed('Package'))
@@ -642,9 +632,7 @@
 
     _renderTitleButtons() {
       var displayAllStyle = {}
-      if (!this._hasHiddenFields()) {
-        displayAllStyle.display = 'none'
-      }
+      displayAllStyle.display = 'none'
 
       if (this.props.for_package) {
         return (

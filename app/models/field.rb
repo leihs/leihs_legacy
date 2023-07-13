@@ -111,7 +111,6 @@ class Field < ApplicationRecord
     h[:values] = values
     h[:default] = default
     h[:search_path] = search_path options[:current_inventory_pool]
-    h[:hidden] = true if options[:hidden_field_ids].try :include?, id.to_s
     h.as_json options
   end
 
