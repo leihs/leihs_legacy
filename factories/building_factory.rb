@@ -1,8 +1,11 @@
 FactoryBot.define do
 
   factory :building do
-    name { Faker::Lorem.words(number: 3).join.capitalize }
-    code { Faker::Lorem.words(number: 3).join[0..2] }
+    name { Faker::Lorem.words(number: 3).join(" ").capitalize }
+    sequence(:code) do
+      c = name.split(" ").map(&:first).join.upcase 
+      "#{c}#{_1}"
+    end
   end
 
 end
