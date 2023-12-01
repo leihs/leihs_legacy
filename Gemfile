@@ -79,6 +79,9 @@ group :development, :test do
   # gem 'capybara', '3.36.0'
   gem 'selenium-webdriver', '4.1.0'
 
+  gem 'solargraph'
+  gem 'solargraph-rails'
+
   gem 'bootsnap'
 
   gem 'database_cleaner'
