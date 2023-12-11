@@ -7,6 +7,8 @@ cd $PROJECT_DIR
 ./bin/env/geckodriver-setup
 ./bin/env/ruby-setup
 
+RAILS_ENV=test source ./database/bin/db-set-env
+
 # clean-up the mess the ruby geckodriver gem might have created by placing it in ruby/bin/geckodriver
 rm -rf ~/.asdf/installs/ruby/$(asdf current ruby | awk '{print $2; }')/bin/gecko*
 asdf reshim
