@@ -52,12 +52,17 @@ class window.App.ManageBookingCalendarDialogController extends App.BookingCalend
   setupPartitions: =>
     data = {user: [], userGroups: [], otherGroups: []}
     data.user = @user.groupIds
+
     for partition in @partitions
       if partition.group_id?
-        if _.include @user.groupIds, partition.group_id
+        if _.include(@user.groupIds, partition.group_id) and not data.userGroups.map((g) => g.id).includes partition.group_id
           data.userGroups.push partition.group()
-        else
+        else if not data.otherGroups.map((g) => g.id).includes partition.group_id
           data.otherGroups.push partition.group()
+
+    data.userGroups = _.sortBy(data.userGroups, (g) => g.name)
+    data.otherGroups = _.sortBy(data.otherGroups, (g) => g.name)
+
     @partitionsEl.html App.Render "manage/views/booking_calendar/partitions", data
 
   setupBookingCalendar: =>
