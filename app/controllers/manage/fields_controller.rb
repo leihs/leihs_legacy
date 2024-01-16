@@ -7,6 +7,7 @@ class Manage::FieldsController < Manage::ApplicationController
           f.accessible_by?(current_user, current_inventory_pool) ||
           f.id == 'inventory_code'
         ) \
+        and not (exclude_checkbox_param and f.data['type'] == 'checkbox') \
         and not DisabledField.find_by(
           inventory_pool_id: current_inventory_pool.id,
           field_id: f.id
@@ -63,5 +64,11 @@ class Manage::FieldsController < Manage::ApplicationController
         disabled_field.destroy
       end
     end
+  end
+
+  private
+
+  def exclude_checkbox_param
+    params[:exclude_checkbox] == 'true'
   end
 end

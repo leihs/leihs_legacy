@@ -28,7 +28,7 @@
     _fetchFields () {
       this.setState({loadingFields: 'loading'})
       App.Field.ajaxFetch({
-        data: $.param({target_type: 'item'})
+        data: $.param({target_type: 'item', exclude_checkbox: true})
       }).done((data) => {
         this.setState({
           loadingFields: 'done',

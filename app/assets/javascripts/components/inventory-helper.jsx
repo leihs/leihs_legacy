@@ -19,7 +19,7 @@
 
     loadFields() {
       window.leihsAjax.getAjax(
-        '/manage/' + this.props.inventory_pool_id + '/fields?target_type=item',
+        '/manage/' + this.props.inventory_pool_id + '/fields?target_type=item&exclude_checkbox=true',
         {},
         (status, response) => {
           this.setState({
