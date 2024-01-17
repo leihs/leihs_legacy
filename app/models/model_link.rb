@@ -15,8 +15,4 @@ class ModelLink < ApplicationRecord
   validates_presence_of :model_group, :model
   validates_numericality_of :quantity
 
-  def label_for_audits
-    "#{model_group.name} - #{model.name}"
-  end
-
 end

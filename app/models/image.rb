@@ -28,8 +28,4 @@ class Image < ApplicationRecord
     end
   end
 
-  def label_for_audits
-    filename
-  end
-
 end

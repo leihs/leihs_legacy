@@ -28,8 +28,4 @@ class Setting < ApplicationRecord
     raise 'Setting is a singleton' if Setting.count > 0
   end
 
-  def label_for_audits
-    'Settings'
-  end
-
 end

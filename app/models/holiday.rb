@@ -9,8 +9,4 @@ class Holiday < ApplicationRecord
     self.end_date = self.start_date if self.end_date < self.start_date
   end
 
-  def label_for_audits
-    name
-  end
-
 end

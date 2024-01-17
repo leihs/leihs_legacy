@@ -9,8 +9,4 @@ class Property < ApplicationRecord
     format '%s: %s', key, value
   end
 
-  def label_for_audits
-    to_s
-  end
-
 end

@@ -170,10 +170,6 @@ class InventoryPool < ApplicationRecord
     "#{name}"
   end
 
-  def label_for_audits
-    "#{name}"
-  end
-
   # compares two objects in order to sort them
   def <=>(other)
     self.name.casecmp other.name

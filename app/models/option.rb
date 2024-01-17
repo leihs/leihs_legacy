@@ -97,7 +97,4 @@ class Option < ApplicationRecord
     nil
   end
 
-  def label_for_audits
-    "#{product} #{version} #{inventory_code}"
-  end
 end

@@ -184,10 +184,6 @@ class User < ApplicationRecord
     name
   end
 
-  def label_for_audits
-    name
-  end
-
   def name
     "#{firstname} #{lastname}".strip
   end

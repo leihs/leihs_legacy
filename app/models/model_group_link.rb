@@ -14,8 +14,4 @@ class ModelGroupLink < ApplicationRecord
     create!(parent_id: parent.id, child_id: child.id)
   end
 
-  def label_for_audits
-    "#{model_group.try(&:name)} - #{model.try(&:name)}"
-  end
-
 end

@@ -43,15 +43,6 @@ Rails.application.routes.draw do
 
   # Old Admin Section
   namespace :admin do
-    root to: redirect('/admin/audits')
-
-    unless Rails.env.production?
-      get 'top', to: 'application#top'
-    end
-
-    get 'audits',           to: 'audits#index'
-    get ':type/:id/audits', to: 'audits#index', as: 'individual_audits'
- 
     # Export inventory of all inventory pools
     get 'inventory/csv',          :to => 'inventory#csv_export',          :as => 'global_inventory_csv_export'
     get 'inventory/excel',        :to => 'inventory#excel_export',        :as => 'global_inventory_excel_export'

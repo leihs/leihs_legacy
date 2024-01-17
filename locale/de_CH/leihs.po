@@ -3721,6 +3721,3 @@ msgstr "Die Angabe einer Telefonnummer ist empfohlen"
 
 msgid "The order has already been dealt with."
 msgstr "Die Bestellung wurde bereits bearbeitet."
-
-msgid "These audits are deprecated and no new ones are created. See "
-msgstr "Diese Audits sind veraltet und es kommen keine Neuen mehr hinzu. Siehe "

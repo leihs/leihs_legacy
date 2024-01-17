@@ -29,10 +29,6 @@ class Building < ApplicationRecord
     end
   end
 
-  def label_for_audits
-    to_s
-  end
-
   def self.filter(params)
     buildings = search(params[:search_term])
     buildings = buildings.where(id: params[:ids]) if params[:ids]

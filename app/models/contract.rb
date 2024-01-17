@@ -280,10 +280,6 @@ class Contract < ApplicationRecord
     "#{id}"
   end
 
-  def label_for_audits
-    compact_id
-  end
-
   #########################################################################
 
   def self.sign!(current_user,

@@ -20,10 +20,6 @@ class EntitlementGroup < ApplicationRecord
 
   ##########################################
 
-  def label_for_audits
-    name
-  end
-
   def to_s
     name
   end

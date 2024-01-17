@@ -22,10 +22,6 @@ class OptionLine < Reservation
     "#{option} - #{I18n.l end_date}"
   end
 
-  def label_for_audits
-    "#{option} #{_('until')} #{I18n.l end_date}"
-  end
-
   # custom valid? method
   def complete?
     self.valid?

@@ -99,10 +99,6 @@ class MailTemplate < ApplicationRecord
                           format: 'text')
   end
 
-  def label_for_audits
-    name
-  end
-
   private
 
   def syntax_validation

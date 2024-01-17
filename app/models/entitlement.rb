@@ -123,7 +123,4 @@ class Entitlement < ApplicationRecord
     max_possible_quantity - entitled_quantity_in_other_groups
   end
 
-  def label_for_audits
-    "#{model.try(&:name)} - #{entitlement_group.try(&:name)}"
-  end
 end

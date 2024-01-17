@@ -112,10 +112,6 @@ class AccessRight < ApplicationRecord
     s
   end
 
-  def label_for_audits
-    to_s
-  end
-
   def suspended?
     suspension = Suspension.find_by(
       user_id: self.user_id,

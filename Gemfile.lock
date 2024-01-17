@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/leihs/audited
-  revision: 9238849299743192a6facc5e30114effaf65b241
-  branch: mk/rails-6.1
-  specs:
-    audited (4.5.0)
-      activerecord (~> 6.1.0)
-
-GIT
   remote: https://github.com/leihs/axlsx
   revision: c8ac844572b25fda358cc01d2104720c4c42f450
   ref: c8ac844572b25fda358cc01d2104720c4c42f450
@@ -520,7 +512,6 @@ PLATFORMS
 
 DEPENDENCIES
   addressable
-  audited!
   axlsx!
   barby (~> 0.5.0)
   base32-crockford

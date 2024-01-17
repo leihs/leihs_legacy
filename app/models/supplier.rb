@@ -9,10 +9,6 @@ class Supplier < ApplicationRecord
     name
   end
 
-  def label_for_audits
-    name
-  end
-
   def self.filter(search_term: nil, pool_id: nil)
     suppliers = search(search_term).order(:name)
     if pool_id.present?

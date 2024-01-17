@@ -3,7 +3,6 @@ eval_gemfile Pathname(File.dirname(File.absolute_path(__FILE__))).join('database
 gem 'puma'
 gem 'puma_worker_killer'
 
-gem 'audited', git: 'https://github.com/leihs/audited', branch: 'mk/rails-6.1'
 gem 'axlsx', git: 'https://github.com/leihs/axlsx', ref: 'c8ac844572b25fda358cc01d2104720c4c42f450'
 gem 'barby', '~> 0.5.0'
 gem 'chunky_png', '~> 1.2'
