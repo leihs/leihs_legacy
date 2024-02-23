@@ -1,5 +1,25 @@
-class Manage::MailsController < Manage::ApplicationController
+def create
+  Mailer.user_email(@user.id,
+                    params[:from],
+                    params[:to],
+                    params[:subject],
+                    params[:body])
+  flash[:notice] = _('The mail was sent')
+  safe_redirect(params[:source_path])
+end
 
+private
+
+def safe_redirect(source_path)
+  uri = URI.parse(source_path)
+  if uri.relative? || uri.host == request.host
+    redirect_to source_path
+  else
+    redirect_to root_path
+  end
+end
+
+class Manage::MailsController < Manage::ApplicationController
   before_action do
     @user = User.find params[:user_id]
 
@@ -16,14 +36,15 @@ class Manage::MailsController < Manage::ApplicationController
     else
       # instead of sanitizing the user's name (see to_full_email_address
       # below, we use her email address only
-      @to   = @user.email
+      @to = @user.email
       @from = if current_inventory_pool
                 to_full_email_address(current_inventory_pool.name,
-                                      (if current_inventory_pool.email.blank?
-                                         smtp_settings.default_from_address
-                                       else
-                                         current_inventory_pool.email
-                                       end))
+                                      (
+                                        if current_inventory_pool.email.blank?
+                                          smtp_settings.default_from_address
+                                        else
+                                          current_inventory_pool.email
+                                        end))
               else
                 smtp_settings.default_from_address
               end
@@ -33,10 +54,10 @@ class Manage::MailsController < Manage::ApplicationController
 
   def create
     Mailer.user_email(@user.id,
-                            params[:from],
-                            params[:to],
-                            params[:subject],
-                            params[:body])
+                      params[:from],
+                      params[:to],
+                      params[:subject],
+                      params[:body])
     flash[:notice] = _('The mail was sent')
     redirect_to params[:source_path]
   end

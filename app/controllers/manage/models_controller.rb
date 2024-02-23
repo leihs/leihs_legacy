@@ -26,14 +26,29 @@ class Manage::ModelsController < Manage::ApplicationController
     @model = fetch_model
   end
 
+  # def new_old
+  #   not_authorized! unless privileged_user?
+  #
+  #   allowed_types = ['Software', 'Model']
+  #   type = params[:type].humanize
+  #   type = 'Model' unless allowed_types.include?(type)
+  #
+  #   @model = type.constantize.new
+  # end
+
   def new_old
     not_authorized! unless privileged_user?
-    @model = if params[:type] == 'package'
-               Model.new
-             else
-               (params[:type].try(:humanize) || 'Model').constantize.new
-             end
+
+    allowed_types = ['Software', 'Model']
+    type_param = params[:type].humanize
+
+    # Ensure the type is one of the allowed types; default to 'Model' if it's not.
+    type = allowed_types.include?(type_param) ? type_param : 'Model'
+
+    # Safely constantize the sanitized type
+    @model = type.constantize.new
   end
+
 
   def new
     not_authorized! unless privileged_user?
@@ -63,6 +78,7 @@ class Manage::ModelsController < Manage::ApplicationController
     [],
     ['binary.plist']
   )
+
   def store_attachment_react
     respond_to do |format|
       format.plist_binary do
@@ -80,9 +96,7 @@ class Manage::ModelsController < Manage::ApplicationController
         ApplicationRecord.transaction(requires_new: true) do
           m = Model.find(params[:model_id])
           i = store_image_with_thumbnail!(params[:data], m)
-          if params[:is_cover] == 'true'
-            m.update!(cover_image_id: i.id)
-          end
+          m.update!(cover_image_id: i.id) if params[:is_cover] == 'true'
         end
       end
     end
@@ -94,28 +108,24 @@ class Manage::ModelsController < Manage::ApplicationController
     ApplicationRecord.transaction(requires_new: true) do
       @model = case params[:model][:type]
                when 'software'
-                   Software
+                 Software
                else
-                   Model
+                 Model
                end.create(product: params[:model][:product],
                           version: params[:model][:version])
 
-      if params[:model][:is_package]
-        @model.is_package = true
-      end
+      @model.is_package = true if params[:model][:is_package]
       save_model(@model)
-      if !@model.persisted? or @model.errors.any?
-        raise ActiveRecord::Rollback
-      else
-        created = true
-      end
+      raise ActiveRecord::Rollback if !@model.persisted? or @model.errors.any?
+
+      created = true
     end
 
-    unless created
+    if created
+      render status: :ok, json: { id: @model.id }
+    else
       render status: :bad_request,
              plain: @model.errors.full_messages.uniq.join(', ')
-    else
-      render status: :ok, json: { id: @model.id }
     end
   end
 
@@ -240,7 +250,7 @@ class Manage::ModelsController < Manage::ApplicationController
             flash: { success: _('%s successfully deleted') % _('Model') }
         end
       end
-    rescue => e
+    rescue StandardError => e
       @model.errors.add(:base,
                         if e.class == ActiveRecord::DeleteRestrictionError
                           :restrict_with_exception_dependent_delete
@@ -267,6 +277,7 @@ class Manage::ModelsController < Manage::ApplicationController
   end
 
   include TimelineAvailability
+
   def timeline
     @props = {
       timeline_availability: timeline_availability(
@@ -333,11 +344,9 @@ class Manage::ModelsController < Manage::ApplicationController
     end
   end
 
-  private
-
   def inherit_attributes_from_package!(package, item)
     item.update!(room_id: package.room_id,
-                            shelf: package.shelf)
+                 shelf: package.shelf)
   end
 
   def save_model(model)
@@ -378,16 +387,14 @@ class Manage::ModelsController < Manage::ApplicationController
   def handle_images!(model, model_attrs)
     model.update!(cover_image_id: nil) unless model.new_record?
 
-    if images_attrs = model_attrs[:images_attributes]
-      image_id, spec = images_attrs.to_h.find { |_, spec| spec[:is_cover] }
+    return unless images_attrs = model_attrs[:images_attributes]
 
-      if image_id and spec[:_destroy] != '1'
-        model.cover_image_id = image_id
-      end
+    image_id, spec = images_attrs.to_h.find { |_, spec| spec[:is_cover] }
 
-      images_attrs.each_pair { |_, spec| spec.delete(:is_cover) }
+    model.cover_image_id = image_id if image_id and spec[:_destroy] != '1'
 
-      deal_with_destroy_nested_attributes!(model_attrs)
-    end
+    images_attrs.each_pair { |_, spec| spec.delete(:is_cover) }
+
+    deal_with_destroy_nested_attributes!(model_attrs)
   end
 end

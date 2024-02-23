@@ -2,7 +2,6 @@
 - content_for :inventory_section, "active"
 
 #new-model-view.wrapper.margin-top-m
-
   = render :partial => 'manage/tabs/inventory', :locals => {:active_tab => :inventory}
 
   .row.content-wrapper.min-height-xl.min-width-full.straight-top
@@ -25,9 +24,22 @@
 
         = render :partial => "form"
 
-:coffeescript
+-# - allowed_types = ['Software', 'Model']
+-# - type = @model.type.humanize
+-# - type = 'Model' unless allowed_types.include?(type)
+-#
+-# :coffeescript
+-#   jQuery -> new App.ModelsNewController
+-#     el: $("#new-model-view")
+-#     model: new App.Model #{@model.to_json}
+-#     manufacturers: #{Kernel.const_get(type).manufacturers.to_json}
 
+- allowed_types = { 'Software' => Software, 'Model' => Model }
+- type = @model.type.humanize
+- safe_class = allowed_types[type] || Model
+
+:coffeescript
   jQuery -> new App.ModelsNewController
     el: $("#new-model-view")
     model: new App.Model #{@model.to_json}
-    manufacturers: #{Kernel.const_get(@model.type || 'Model').manufacturers.to_json}
+    manufacturers: #{safe_class.manufacturers.to_json}

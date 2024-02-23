@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+validates :email, format: /\A.*@.*\z/, allow_blank: true# frozen_string_literal: true
 
 class InventoryPool < ApplicationRecord
   include Availability::InventoryPool
@@ -10,9 +10,7 @@ class InventoryPool < ApplicationRecord
   #################################################################################
 
   after_save do
-    unless is_active?
-      reservations.unsubmitted.destroy_all
-    end
+    reservations.unsubmitted.destroy_all unless is_active?
   end
 
   has_one :workday, dependent: :delete
@@ -31,9 +29,9 @@ class InventoryPool < ApplicationRecord
 
   has_many(:suspended_users,
            (lambda do
-            where.not(suspensions: { suspended_until: nil })
-              .where('suspensions.suspended_until >= ?', Time.zone.today)
-              .distinct
+              where.not(suspensions: { suspended_until: nil })
+                .where('suspensions.suspended_until >= ?', Time.zone.today)
+                .distinct
             end),
            through: :suspensions, source: :user)
 
@@ -100,7 +98,7 @@ class InventoryPool < ApplicationRecord
   #   already in the past
   # - we consider even unsubmitted reservations, but not the already timed out ones
   has_many :running_reservations, (lambda do
-   select(<<-SQL)
+    select(<<-SQL)
      reservations.id,
      reservations.inventory_pool_id,
      reservations.model_id,
@@ -119,11 +117,11 @@ class InventoryPool < ApplicationRecord
        ORDER BY eg.name ASC
      ) AS user_group_ids
     SQL
-     .joins('LEFT JOIN items ON reservations.item_id = items.id')
-     .where(<<-SQL)
+      .joins('LEFT JOIN items ON reservations.item_id = items.id')
+      .where(<<-SQL)
        reservations.item_id IS NULL OR items.is_borrowable = TRUE
-     SQL
-     .where(<<-SQL)
+      SQL
+      .where(<<-SQL)
        reservations.status NOT IN ('draft', 'rejected', 'canceled', 'closed')
        AND NOT (
          reservations.status = 'unsubmitted' AND
@@ -133,7 +131,7 @@ class InventoryPool < ApplicationRecord
          reservations.end_date < '#{Time.zone.today}' AND
          reservations.item_id IS NULL
        )
-     SQL
+      SQL
   end), class_name: 'ItemLine'
 
   #######################################################################
@@ -155,7 +153,7 @@ class InventoryPool < ApplicationRecord
     sql = all
     return sql if query.blank?
 
-    query.split.each do|q|
+    query.split.each do |q|
       q = "%#{q}%"
       sql = sql.where(arel_table[:name].matches(q)
                       .or(arel_table[:shortname].matches(q))
@@ -172,7 +170,7 @@ class InventoryPool < ApplicationRecord
 
   # compares two objects in order to sort them
   def <=>(other)
-    self.name.casecmp other.name
+    name.casecmp other.name
   end
 
   #######################################################################
@@ -238,60 +236,57 @@ class InventoryPool < ApplicationRecord
 
     model_filter_params = \
       params.clone.merge(paginate: 'false',
-                         search_targets: [:manufacturer,
-                                          :product,
-                                          :version,
-                                          :items],
+                         search_targets: %i[manufacturer
+                                            product
+                                            version
+                                            items],
                          type: model_type)
 
     # if there are NOT any params related to items
-    if [:is_borrowable,
-        :retired,
-        :category_id,
-        :in_stock,
-        :incomplete,
-        :broken,
-        :owned,
-        :responsible_inventory_pool_id].all? { |param| params[param].blank? }
-      # and one does not explicitly ask for software, models or used/unused models
-      unless ['model', 'software'].include?(model_type) or params[:used]
-        # then include options
-        options = Option.filter(params.clone.merge(paginate: 'false',
-                                                   sort: 'product',
-                                                   order: 'ASC'),
-                                self)
-      end
+    # and one does not explicitly ask for software, models or used/unused models
+    if %i[is_borrowable
+          retired
+          category_id
+          in_stock
+          incomplete
+          broken
+          owned
+          responsible_inventory_pool_id].all? { |param| params[param].blank? } && !(%w[model
+                                                                                       software].include?(model_type) or params[:used])
+      # then include options
+      options = Option.filter(params.clone.merge(paginate: 'false',
+                                                 sort: 'product',
+                                                 order: 'ASC'),
+                              self)
     end
 
     # exlude models if asked only for options
-    unless model_type == 'option'
+    if model_type == 'option'
+      models = []
+    else
       items = Item.filter(params.clone.merge(paginate: 'false', search_term: nil),
                           self)
       models = Model.filter model_filter_params.merge(items: items), self
-    else
-      models = []
     end
 
     inventory = \
       (models + (options || []))
-        .sort { |a, b| a.name.strip <=> b.name.strip }
+      .sort { |a, b| a.name.strip <=> b.name.strip }
 
-    unless params[:paginate] == 'false'
-      inventory = inventory.default_paginate params
-    end
+    inventory = inventory.default_paginate params unless params[:paginate] == 'false'
     inventory
   end
 
   ITEM_PARAMS_FOR_CSV_EXPORT = \
-    [:unborrowable,
-     :retired,
-     :category_id,
-     :in_stock,
-     :incomplete,
-     :broken,
-     :owned,
-     :responsible_inventory_pool_id,
-     :unused_models]
+    %i[unborrowable
+       retired
+       category_id
+       in_stock
+       incomplete
+       broken
+       owned
+       responsible_inventory_pool_id
+       unused_models]
 
   def self.objects_for_export(inventory_pool, params)
     items = if params[:type] != 'option'
@@ -326,13 +321,13 @@ class InventoryPool < ApplicationRecord
                true
              end
 
-    include_params = [:room, :inventory_pool, :owner, :supplier]
+    include_params = %i[room inventory_pool owner supplier]
     include_params += \
-      (global ? [:model] : [:item_lines, model: [:model_links, :model_groups]])
+      (global ? [:model] : [:item_lines, { model: %i[model_links model_groups] }])
 
     objects = []
     unless items.blank?
-      items.includes(include_params).find_each do |i, index|
+      items.includes(include_params).find_each do |i, _index|
         # How could an item ever be nil?
         objects << i.to_csv_array(global: global) unless i.nil?
       end
@@ -372,19 +367,19 @@ class InventoryPool < ApplicationRecord
     transaction(requires_new: true) do
       CSV.foreach(csv_file,
                   col_sep: ',',
-                  quote_char: "\"",
+                  quote_char: '"',
                   headers: :first_row) do |row|
         unless row['inventory_code'].blank?
           item = \
             inventory_pool
-              .items
-              .create(inventory_code: row['inventory_code'].strip,
-                      model: Model.find(row['model_id']),
-                      is_borrowable: (row['is_borrowable'] == '1' ? 1 : 0),
-                      is_inventory_relevant: \
-                        (row['is_inventory_relevant'] == '0' ? 0 : 1)) do |i|
-                          csv_import_helper(row, i)
-                        end
+            .items
+            .create(inventory_code: row['inventory_code'].strip,
+                    model: Model.find(row['model_id']),
+                    is_borrowable: (row['is_borrowable'] == '1' ? 1 : 0),
+                    is_inventory_relevant: \
+                      (row['is_inventory_relevant'] == '0' ? 0 : 1)) do |i|
+              csv_import_helper(row, i)
+            end
 
           item.valid?
           items << item
@@ -400,21 +395,21 @@ class InventoryPool < ApplicationRecord
   private
 
   def validate_inactive_conditions
-    unless is_active?
-      if orders_or_signed_contracts?
-        errors.add \
-          :base,
-          _("Inventory pool can't be deactivated " \
-            'due to existing orders or signed contracts.')
-      end
+    return if is_active?
 
-      if owns_or_has_not_retired_items?
-        errors.add \
-          :base,
-          _("Inventory pool can't be deactivated " \
-            'due to existing items which are not yet retired.')
-      end
+    if orders_or_signed_contracts?
+      errors.add \
+        :base,
+        _("Inventory pool can't be deactivated " \
+          'due to existing orders or signed contracts.')
     end
+
+    return unless owns_or_has_not_retired_items?
+
+    errors.add \
+      :base,
+      _("Inventory pool can't be deactivated " \
+        'due to existing items which are not yet retired.')
   end
 
   def orders_or_signed_contracts?
@@ -431,21 +426,11 @@ class InventoryPool < ApplicationRecord
   end
 
   def csv_import_helper(row, i)
-    unless row['serial_number'].blank?
-      i.serial_number = row['serial_number']
-    end
-    unless row['note'].blank?
-      i.note = row['note']
-    end
-    unless row['invoice_number'].blank?
-      i.invoice_number = row['invoice_number']
-    end
-    unless row['invoice_date'].blank?
-      i.invoice_date = row['invoice_date']
-    end
-    unless row['price'].blank?
-      i.price = row['price']
-    end
+    i.serial_number = row['serial_number'] unless row['serial_number'].blank?
+    i.note = row['note'] unless row['note'].blank?
+    i.invoice_number = row['invoice_number'] unless row['invoice_number'].blank?
+    i.invoice_date = row['invoice_date'] unless row['invoice_date'].blank?
+    i.price = row['price'] unless row['price'].blank?
     unless row['supplier_name'].blank?
       i.supplier = \
         Supplier.find_or_create_by(name: row['supplier_name'])
@@ -458,10 +443,9 @@ class InventoryPool < ApplicationRecord
       i.properties[:anschaffungskategorie] = \
         row['properties_anschaffungskategorie']
     end
-    unless row['properties_project_number'].blank?
-      i.properties[:reference] = 'investment'
-      i.properties[:project_number] = row['properties_project_number']
-    end
-  end
+    return if row['properties_project_number'].blank?
 
+    i.properties[:reference] = 'investment'
+    i.properties[:project_number] = row['properties_project_number']
+  end
 end

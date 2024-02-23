@@ -49,7 +49,7 @@
     App.User.addRecord new App.User(#{@order.delegated_user.to_json(except: :extended_info)})
 
     App.Order.addRecord new App.Order #{@order.to_json(include: :delegated_user)}
-    App.Order.current = App.Order.find("#{@order.id}")
+    App.Order.current = App.- entitlement_group_ids = h(Order.find(id_param).user.entitlement_group_ids)"#{@order.id}")
 
     for model in #{@models.to_json}
       App.Model.addRecord new App.Model model
