@@ -1,0 +1,300 @@
+#  brakeman --faster --skip-files cider-ci/bin/check-rails-warnings.rb,doc/import_export/csv_export_of_items.rb -o fast-skip-noignoreexists.txt
+== Brakeman Report ==
+
+Application Path: /Users/mradl/repos/leihs/legacy
+Rails Version: 6.1.7
+Brakeman Version: 6.1.2
+Scan Date: 2024-02-23 19:44:11 +0100
+Duration: 11.586799 seconds
+Checks Run: BasicAuth, BasicAuthTimingAttack, CSRFTokenForgeryCVE, ContentTag, CookieSerialization, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, DynamicFinders, EOLRails, EOLRuby, EscapeFunction, Evaluation, Execute, FileAccess, FileDisclosure, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONEncoding, JSONEntityEscape, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, MimeTypeDoS, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NestedAttributesBypass, NumberToCurrency, PageCachingCVE, Pathname, PermitAttributes, QuoteTableName, Ransack, Redirect, RegexDoS, Render, RenderDoS, RenderInline, ResponseSplitting, RouteDoS, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeConfigCve, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionManipulation, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, SprocketsPathTraversal, StripTags, SymbolDoSCVE, TemplateInjection, TranslateBug, UnsafeReflection, UnsafeReflectionMethods, ValidationRegex, VerbConfusion, WeakRSAKey, WithoutProtection, XMLDoS, YAMLParsing
+
+== Overview ==
+
+Controllers: 40
+Models: 54
+Templates: 218
+Errors: 0
+Security Warnings: 34
+
+== Warning Types ==
+
+Cross-Site Scripting: 4
+Dynamic Render Path: 1
+Mass Assignment: 1
+Remote Code Execution: 1
+SQL Injection: 27
+
+== Warnings ==
+
+Confidence: High
+Category: Cross-Site Scripting
+Check: LinkToHref
+Message: Unsafe parameter value in `link_to` href
+Code: link_to(_("Cancel"), (if params[:return_url] then   params[:return_url] else   :back end), :class => "button grey")
+File: app/views/manage/models/edit_old.html.haml
+Line: 19
+
+Confidence: High
+Category: Cross-Site Scripting
+Check: CrossSiteScripting
+Message: Unescaped model attribute
+Code: Order.find(id_param).user.entitlement_group_ids
+File: app/views/manage/orders/edit.html.haml
+Line: 51
+
+Confidence: High
+Category: Cross-Site Scripting
+Check: CrossSiteScripting
+Message: Unescaped parameter value
+Code: params[:role]
+File: app/views/manage/users/index.html.haml
+Line: 62
+
+Confidence: High
+Category: Remote Code Execution
+Check: UnsafeReflection
+Message: Unsafe reflection method `constantize` called on parameter value
+Code: (params[:type].humanize or "Model").constantize
+File: app/controllers/manage/models_controller.rb
+Line: 49
+
+Confidence: High
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: joins("      INNER JOIN (SELECT i1.id,\n                         CONCAT_WS(' ',\n                                   #{Model::SEARCHABLE_FIELDS.map do  "m1.#{f}"  end.join(", ")},\n                                   #{Model::SEARCHABLE_FIELDS.map do  "m2.#{f}"  end.join(", ")},\n                                   #{Item::SEARCHABLE_FIELDS.map do  "i1.#{f}"  end.join(", ")},\n                                   #{Item::SEARCHABLE_FIELDS.map do  "i2.#{f}"  end.join(", ")},\n                                   #{Room::SEARCHABLE_FIELDS.map do  "r.#{f}"  end.join(", ")}) AS text\n                  FROM items AS i1\n                  INNER JOIN models AS m1 ON i1.model_id = m1.id\n                  LEFT JOIN items AS i2 ON i2.parent_id = i1.id\n                  LEFT JOIN models AS m2 ON m2.id = i2.model_id\n                  LEFT JOIN rooms AS r ON r.id = i1.room_id) AS full_text\n      ON items.id = full_text.id\n")
+File: app/models/item.rb
+Line: 125
+
+Confidence: Medium
+Category: Mass Assignment
+Check: MassAssignment
+Message: Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys
+Code: params.permit!
+File: app/controllers/concerns/main_helpers.rb
+Line: 78
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ApplicationRecord.connection.exec_query("        SELECT (\n          EXISTS (\n            SELECT TRUE\n            FROM procurement_requesters_organizations\n            WHERE user_id = '#{UUIDTools::UUID.parse(id)}'\n          ) OR\n          EXISTS (\n            SELECT TRUE\n            FROM procurement_category_viewers\n            WHERE user_id = '#{UUIDTools::UUID.parse(id)}'\n          ) OR\n          EXISTS (\n            SELECT TRUE\n            FROM procurement_category_inspectors\n            WHERE user_id = '#{UUIDTools::UUID.parse(id)}'\n          ) OR\n          EXISTS (\n            SELECT TRUE\n            FROM procurement_admins\n            WHERE user_id = '#{UUIDTools::UUID.parse(id)}'\n          )\n        ) as result\n")
+File: app/controllers/concerns/procurement_access.rb
+Line: 12
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \treservations.*\n        from\n        \treservations\n        where\n        \treservations.inventory_pool_id = '#{inventory_pool_id}'\n        \tand status not in ('draft', 'rejected', 'canceled', 'closed')\n          and model_id = '#{model_id}'\n          and reservations.type = 'ItemLine'\n          and not (\n            status = 'unsubmitted' and\n            updated_at < '#{(Time.now.utc - Setting.first.timeout_minutes.minutes)}'\n          )\n          and not (\n            end_date < '#{Time.zone.today}' and\n            item_id is null\n          )\n")
+File: app/controllers/concerns/timeline_availability.rb
+Line: 29
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \tusers.*\n        from\n        \tusers\n        where\n        \tusers.id in (#{reservations.map do  r["user_id"]  end.map do  "'#{id}'"  end.join(",")})\n")
+File: app/controllers/concerns/timeline_availability.rb
+Line: 46
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \tentitlement_groups_users.*\n        from\n        \tentitlement_groups_users\n        where\n        \tuser_id in (#{users.map do  r["id"]  end.map do  "'#{id}'"  end.join(",")})\n")
+File: app/controllers/concerns/timeline_availability.rb
+Line: 63
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \tentitlement_groups.*\n        from\n        \tentitlement_groups\n        where\n        \tentitlement_groups.id in (#{(entitlements.map do  e["entitlement_group_id"]  end + entitlement_groups_users.map do  r["entitlement_group_id"]  end).map do  "'#{id}'"  end.join(",")})\n          and entitlement_groups.inventory_pool_id = '#{inventory_pool_id}'\n")
+File: app/controllers/concerns/timeline_availability.rb
+Line: 86
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        SELECT entitlements.*\n        FROM entitlements\n        JOIN entitlement_groups\n          ON entitlement_groups.id = entitlements.entitlement_group_id\n        WHERE model_id = '#{model_id}'\n          AND entitlement_groups.inventory_pool_id = '#{pool_id}'\n")
+File: app/controllers/concerns/timeline_availability.rb
+Line: 99
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \titems.*\n        from\n        \titems\n        where\n        \titems.inventory_pool_id = '#{inventory_pool_id}'\n          and items.model_id = '#{model_id}'\n          and items.parent_id is null\n")
+File: app/controllers/concerns/timeline_availability.rb
+Line: 114
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_delete("          DELETE FROM images WHERE id = '#{UUIDTools::UUID.parse(image_id)}'\n")
+File: app/controllers/concerns/workaround_rails_bug25198.rb
+Line: 14
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \treservations.*\n        from\n        \treservations\n        where\n        \treservations.inventory_pool_id = '#{inventory_pool_id}'\n        \tand status not in ('draft', 'rejected', 'canceled', 'closed')\n          and model_id = '#{model_id}'\n          and reservations.type = 'ItemLine'\n          and not (\n            status = 'unsubmitted' and\n            updated_at < '#{(Time.now.utc - Setting.first.timeout_minutes.minutes)}'\n          )\n          and not (\n            end_date < '#{Time.zone.today}' and\n            item_id is null\n          )\n")
+File: app/controllers/manage/models_controller.rb
+Line: 29
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \tusers.*\n        from\n        \tusers\n        where\n        \tusers.id in (#{reservations.map do  r["user_id"]  end.map do  "'#{id}'"  end.join(",")})\n")
+File: app/controllers/manage/models_controller.rb
+Line: 46
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \tentitlement_groups_users.*\n        from\n        \tentitlement_groups_users\n        where\n        \tuser_id in (#{users.map do  r["id"]  end.map do  "'#{id}'"  end.join(",")})\n")
+File: app/controllers/manage/models_controller.rb
+Line: 63
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \tentitlement_groups.*\n        from\n        \tentitlement_groups\n        where\n        \tentitlement_groups.id in (#{(entitlements.map do  e["entitlement_group_id"]  end + entitlement_groups_users.map do  r["entitlement_group_id"]  end).map do  "'#{id}'"  end.join(",")})\n          and entitlement_groups.inventory_pool_id = '#{inventory_pool_id}'\n")
+File: app/controllers/manage/models_controller.rb
+Line: 86
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        SELECT entitlements.*\n        FROM entitlements\n        JOIN entitlement_groups\n          ON entitlement_groups.id = entitlements.entitlement_group_id\n        WHERE model_id = '#{model_id}'\n          AND entitlement_groups.inventory_pool_id = '#{pool_id}'\n")
+File: app/controllers/manage/models_controller.rb
+Line: 99
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: ActiveRecord::Base.connection.exec_query("        select\n        \titems.*\n        from\n        \titems\n        where\n        \titems.inventory_pool_id = '#{inventory_pool_id}'\n          and items.model_id = '#{model_id}'\n          and items.parent_id is null\n")
+File: app/controllers/manage/models_controller.rb
+Line: 114
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: select("     reservations.id,\n     reservations.inventory_pool_id,\n     reservations.model_id,\n     reservations.item_id,\n     reservations.quantity,\n     reservations.start_date,\n     reservations.end_date,\n     reservations.returned_date,\n     reservations.status,\n     ARRAY(\n       SELECT egu.entitlement_group_id\n       FROM entitlement_groups_users egu\n       INNER JOIN entitlement_groups eg\n       ON eg.id = egu.entitlement_group_id\n       WHERE egu.user_id = reservations.user_id\n       ORDER BY eg.name ASC\n     ) AS user_group_ids\n").joins("LEFT JOIN items ON reservations.item_id = items.id").where("       reservations.item_id IS NULL OR items.is_borrowable = TRUE\n").where("       reservations.status NOT IN ('draft', 'rejected', 'canceled', 'closed')\n       AND NOT (\n         reservations.status = 'unsubmitted' AND\n         reservations.updated_at < '#{(Time.now.utc - Setting.first.timeout_minutes.minutes)}'\n       )\n       AND NOT (\n         reservations.end_date < '#{Time.zone.today}' AND\n         reservations.item_id IS NULL\n       )\n")
+File: app/models/inventory_pool.rb
+Line: 128
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: where(:items => ({ :retired => nil, :is_borrowable => true, :parent_id => nil })).joins("INNER JOIN (#{Entitlement.query}) AS pwg ON models.id = pwg.model_id AND inventory_pools.id = pwg.inventory_pool_id AND pwg.quantity > 0 AND (pwg.entitlement_group_id IN (SELECT entitlement_group_id FROM entitlement_groups_users WHERE user_id = '#{proxy_association.owner.id}') OR pwg.entitlement_group_id IS NULL)")
+File: app/models/user.rb
+Line: 47
+
+Confidence: Medium
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: where(:items => ({ :retired => nil, :is_borrowable => true, :parent_id => nil })).joins("INNER JOIN (#{Entitlement.query}) AS pwg ON models.id = pwg.model_id AND inventory_pools.id = pwg.inventory_pool_id AND pwg.quantity > 0 AND (pwg.entitlement_group_id IN (SELECT entitlement_group_id FROM entitlement_groups_users WHERE user_id = '#{proxy_association.owner.id}') OR pwg.entitlement_group_id IS NULL)")
+File: app/models/user.rb
+Line: 61
+
+Confidence: Weak
+Category: Cross-Site Scripting
+Check: CrossSiteScripting
+Message: Unescaped parameter value
+Code: (_("To allocate models to users use the %s.") % ("<a href=\"/manage/#{params[:inventory_pool_id]}/groups\">%s</a>" % _("Entitlement-Groups")))
+File: app/views/manage/user_groups/index.html.haml
+Line: 27
+
+Confidence: Weak
+Category: Dynamic Render Path
+Check: Render
+Message: Render path contains parameter value
+Code: render(action => current_inventory_pool.entitlement_groups.where(:id => params[:group_ids]).search(params[:search_term]).order(:name), {})
+File: app/views/manage/entitlement_groups/index.html.haml
+Line: 24
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: items.where("items.#{field_config["attribute"]} >= :from", :from => from)
+File: app/controllers/concerns/expert_comparators.rb
+Line: 121
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: items.where("items.#{field_config["attribute"]} >= :from", :from => from).where("items.#{field_config["attribute"]} <= :to", :to => to)
+File: app/controllers/concerns/expert_comparators.rb
+Line: 122
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: items.where("items.properties ->> '#{field_config["attribute"][1]}' >= :from", :from => from)
+File: app/controllers/concerns/expert_comparators.rb
+Line: 135
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: items.where("items.properties ->> '#{field_config["attribute"][1]}' >= :from", :from => from).where("items.properties ->> '#{field_config["attribute"][1]}' <= :to", :to => to)
+File: app/controllers/concerns/expert_comparators.rb
+Line: 139
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: items.where("items.properties ->> '#{field_config["attribute"][1]}' = :value", :value => value)
+File: app/controllers/concerns/expert_comparators.rb
+Line: 163
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: items.where("items.#{field_config["attribute"]} ILIKE :value", :value => ("%#{value}%"))
+File: app/controllers/concerns/expert_comparators.rb
+Line: 176
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: items.where("items.properties ->> '#{field_config["attribute"][1]}' ILIKE :value", :value => ("%#{value}%"))
+File: app/controllers/concerns/expert_comparators.rb
+Line: 188
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: items.joins(:model).where("models.id = '#{filter_value["id"]}'")
+File: app/controllers/concerns/expert_comparators.rb
+Line: 229
+
+Confidence: Weak
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: joins("INNER JOIN buildings ON buildings.id = rooms.building_id").where("        rooms.name ILIKE '%#{search_term}%' OR\n        buildings.name ILIKE '%#{search_term}%' OR\n        buildings.code ILIKE '%#{search_term}%'\n".strip_heredoc)
+File: app/models/room.rb
+Line: 22
+

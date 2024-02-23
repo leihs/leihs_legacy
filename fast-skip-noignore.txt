@@ -1,0 +1,51 @@
+# brakeman --faster --skip-files cider-ci/bin/check-rails-warnings.rb,doc/import_export/csv_export_of_items.rb -o fast-skip-noignore.txt
+
+== Brakeman Report ==
+
+Application Path: /Users/mradl/repos/leihs/legacy
+Rails Version: 6.1.7
+Brakeman Version: 6.1.2
+Scan Date: 2024-02-23 19:36:24 +0100
+Duration: 9.801176 seconds
+Checks Run: BasicAuth, BasicAuthTimingAttack, CSRFTokenForgeryCVE, ContentTag, CookieSerialization, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, DynamicFinders, EOLRails, EOLRuby, EscapeFunction, Evaluation, Execute, FileAccess, FileDisclosure, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONEncoding, JSONEntityEscape, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, MimeTypeDoS, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NestedAttributesBypass, NumberToCurrency, PageCachingCVE, Pathname, PermitAttributes, QuoteTableName, Ransack, Redirect, RegexDoS, Render, RenderDoS, RenderInline, ResponseSplitting, RouteDoS, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeConfigCve, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionManipulation, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, SprocketsPathTraversal, StripTags, SymbolDoSCVE, TemplateInjection, TranslateBug, UnsafeReflection, UnsafeReflectionMethods, ValidationRegex, VerbConfusion, WeakRSAKey, WithoutProtection, XMLDoS, YAMLParsing
+
+== Overview ==
+
+Controllers: 40
+Models: 54
+Templates: 218
+Errors: 0
+Security Warnings: 2
+Ignored Warnings: 32
+
+== Warning Types ==
+
+Remote Code Execution: 1
+SQL Injection: 1
+
+== Obsolete Ignore Entries ==
+
+1a281f28ba33ec75573d3d45d7cad50b69db6c8dbd8719f4c75c01c4b6bb47a2
+400c3caa5af50eeddbcbbed3818c55d8c4714559197a44aaa63f1cea2343e9e5
+9271822ad6ed399d3508bff716ac44324fbc614d29dcec0f58c3a00f891af4bc
+f4430cfe2042adeef0cbad41ccfea4429ef8ea8926832ce920ea5c73d3bcbaa9
+fb03debe08c0314f1746370e9647d8377d3261eb5d7b1d7b6cdee2e9c6b62502
+
+== Warnings ==
+
+Confidence: High
+Category: Remote Code Execution
+Check: UnsafeReflection
+Message: Unsafe reflection method `constantize` called on parameter value
+Code: (params[:type].humanize or "Model").constantize
+File: app/controllers/manage/models_controller.rb
+Line: 49
+
+Confidence: High
+Category: SQL Injection
+Check: SQL
+Message: Possible SQL injection
+Code: joins("      INNER JOIN (SELECT i1.id,\n                         CONCAT_WS(' ',\n                                   #{Model::SEARCHABLE_FIELDS.map do  "m1.#{f}"  end.join(", ")},\n                                   #{Model::SEARCHABLE_FIELDS.map do  "m2.#{f}"  end.join(", ")},\n                                   #{Item::SEARCHABLE_FIELDS.map do  "i1.#{f}"  end.join(", ")},\n                                   #{Item::SEARCHABLE_FIELDS.map do  "i2.#{f}"  end.join(", ")},\n                                   #{Room::SEARCHABLE_FIELDS.map do  "r.#{f}"  end.join(", ")}) AS text\n                  FROM items AS i1\n                  INNER JOIN models AS m1 ON i1.model_id = m1.id\n                  LEFT JOIN items AS i2 ON i2.parent_id = i1.id\n                  LEFT JOIN models AS m2 ON m2.id = i2.model_id\n                  LEFT JOIN rooms AS r ON r.id = i1.room_id) AS full_text\n      ON items.id = full_text.id\n")
+File: app/models/item.rb
+Line: 125
+
