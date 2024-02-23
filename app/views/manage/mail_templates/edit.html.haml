@@ -59,6 +59,18 @@
                   %strong.font-size-m= _("Body")
                 .col4of5
                   %textarea.width-full{name: "mail_templates[][body]", rows: 8}= mail_template.body
+              -# .row.emboss.padding-inset-s
+              -#   .col1of5
+              -#   .col4of5
+              -#     %details
+              -#       %summary
+              -#         %strong= _("List of available variables")
+              -#       %p
+              -#         - allowed_types = ['type1', 'type2', 'type3'] # replace with actual types
+              -#         - type = params[:type] || 'default_type'
+              -#         - type = 'default_type' unless allowed_types.include?(type)
+              -#         = capture_haml {list_variables MailTemplate.send("available_liquid_variables_for_#{type}")}
+
               .row.emboss.padding-inset-s
                 .col1of5
                 .col4of5
@@ -66,25 +78,23 @@
                     %summary
                       %strong= _("List of available variables")
                     %p
-                      -# -# Define a list of allowed types
-                      -# - allowed_types = ['type1', 'type2', 'type3'] # Replace with actual types
-                      -# -# - type = params[:type] || 'default_type'
-                      -# - type = params[:type]
-                      -# - type = 'default_type' unless allowed_types.include?(type)
-                      -# - method_name = "available_liquid_variables_for_#{type}"
-                      -#
-                      -# -# Ensure the method exists on MailTemplate and is allowed to be called
-                      -# - if MailTemplate.respond_to?(method_name)
-                      -#   = capture_haml {list_variables MailTemplate.send(method_name)}
-                      -# - else
-                      -#   %p= _("No variables available for this type.")
+                      -# Predefine a list of allowed types corresponding to safe method names
+                      - allowed_types = ['type1', 'type2', 'type3'] # Replace with actual types
+                      - default_type = 'default_type'
 
-                      - allowed_types = ['type1', 'type2', 'type3'] # replace with actual types
-                      - type = params[:type] || 'default_type'
-                      - type = 'default_type' unless allowed_types.include?(type)
+                      -# Sanitize user input
+                      - type = params[:type] || default_type
+                      - type = default_type unless allowed_types.include?(type)
 
-                      = capture_haml {list_variables MailTemplate.send("available_liquid_variables_for_#{type}")}
+                      -# Construct the method name from sanitized input
+                      - method_name = "available_liquid_variables_for_#{type}"
 
+                      -# Call the method safely
+                      = capture_haml do
+                        - if MailTemplate.respond_to?(method_name)
+                          - list_variables MailTemplate.send(method_name)
+                        - else
+                          %p= _("Method not available.")
 
 
 :scss

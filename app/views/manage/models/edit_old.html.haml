@@ -1,4 +1,5 @@
-= link_to _('Cancel'), (params[:return_url] ? h(params[:return_url]) : :back), class: 'button grey'- content_for :title, @model.is_a?(Software) ? _("Edit Software") : _("Edit Model")
+= link_to _('Cancel'), (params[:return_url] ? h(params[:return_url]) : :back), class: 'button grey'
+- content_for :title, @model.is_a?(Software) ? _("Edit Software") : _("Edit Model")
 - content_for :inventory_section, "active"
 - content_for :head
 
