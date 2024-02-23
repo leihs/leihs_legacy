@@ -4,22 +4,22 @@
 Application Path: /Users/mradl/repos/leihs/legacy
 Rails Version: 6.1.7
 Brakeman Version: 6.1.2
-Scan Date: 2024-02-23 16:51:40 +0100
-Duration: 11.776545 seconds
+Scan Date: 2024-02-23 16:59:33 +0100
+Duration: 13.341086 seconds
 Checks Run: BasicAuth, BasicAuthTimingAttack, CSRFTokenForgeryCVE, ContentTag, CookieSerialization, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, DynamicFinders, EOLRails, EOLRuby, EscapeFunction, Evaluation, Execute, FileAccess, FileDisclosure, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONEncoding, JSONEntityEscape, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, MimeTypeDoS, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NestedAttributesBypass, NumberToCurrency, PageCachingCVE, Pathname, PermitAttributes, QuoteTableName, Ransack, Redirect, RegexDoS, Render, RenderDoS, RenderInline, ResponseSplitting, RouteDoS, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeConfigCve, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionManipulation, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, SprocketsPathTraversal, StripTags, SymbolDoSCVE, TemplateInjection, TranslateBug, UnsafeReflection, UnsafeReflectionMethods, ValidationRegex, VerbConfusion, WeakRSAKey, WithoutProtection, XMLDoS, YAMLParsing
 
 == Overview ==
 
 Controllers: 40
 Models: 54
-Templates: 216
-Errors: 4
-Security Warnings: 39
+Templates: 215
+Errors: 5
+Security Warnings: 37
 
 == Warning Types ==
 
 Command Injection: 2
-Cross-Site Scripting: 4
+Cross-Site Scripting: 2
 Dangerous Send: 1
 Dynamic Render Path: 1
 Format Validation: 1
@@ -29,6 +29,9 @@ Redirect: 1
 SQL Injection: 27
 
 == Errors ==
+
+Error: app/views/manage/models/edit_old.html.haml:1 :: parse error on value "title" (tSYMBOL) Could not parse app/views/manage/models/edit_old.html.haml
+Location: Could not parse /Users/mradl/repos/leihs/legacy/app/views/manage/models/edit_old.html.haml
 
 Error: app/views/manage/users/index.html.haml:1 :: parse error on value "title" (tSYMBOL) Could not parse app/views/manage/users/index.html.haml
 Location: Could not parse /Users/mradl/repos/leihs/legacy/app/views/manage/users/index.html.haml
@@ -43,22 +46,6 @@ Error: doc/import_export/csv_export_of_items.rb:3 :: parse error on value "}" (t
 Location: /Users/mradl/.asdf/installs/ruby/3.1.4/lib/ruby/gems/3.1.0/gems/racc-1.7.3/lib/racc/parser.rb:540:in `on_error'
 
 == Warnings ==
-
-Confidence: High
-Category: Cross-Site Scripting
-Check: CrossSiteScripting
-Message: Unescaped parameter value
-Code: params[:page]
-File: app/views/manage/backend/focused_search.html.haml
-Line: 22
-
-Confidence: High
-Category: Cross-Site Scripting
-Check: LinkToHref
-Message: Unsafe parameter value in `link_to` href
-Code: link_to(_("Cancel"), (if params[:return_url] then   params[:return_url] else   :back end), :class => "button grey")
-File: app/views/manage/models/edit_old.html.haml
-Line: 18
 
 Confidence: High
 Category: Cross-Site Scripting

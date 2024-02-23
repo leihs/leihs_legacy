@@ -19,7 +19,7 @@
       for result in results 
         $('.list').append $.tmpl("tmpl/line", result)
 
-    ListPagination.current_page = #{params[:page].blank? ? 0 : params[:page]}
+    ListPagination.current_page = #{h(params[:page].blank? ? 0 : params[:page])}
     ListPagination.per_page = #{PER_PAGE}
     ListPagination.total_entries = #{@hits.values.sum}
     ListPagination.next_text = "#{_('Next')}"
