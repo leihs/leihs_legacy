@@ -143,7 +143,8 @@ class InventoryPool < ApplicationRecord
 
   validates_uniqueness_of :name
 
-  validates :email, format: /@/, allow_blank: true
+  # validates :email, format: /@/, allow_blank: true
+  validates :email, format: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i, allow_blank: true
 
   validate :validate_inactive_conditions
 

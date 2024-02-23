@@ -4,34 +4,35 @@
 Application Path: /Users/mradl/repos/leihs/legacy
 Rails Version: 6.1.7
 Brakeman Version: 6.1.2
-Scan Date: 2024-02-23 16:59:33 +0100
-Duration: 13.341086 seconds
+Scan Date: 2024-02-23 17:35:15 +0100
+Duration: 11.055249 seconds
 Checks Run: BasicAuth, BasicAuthTimingAttack, CSRFTokenForgeryCVE, ContentTag, CookieSerialization, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, DynamicFinders, EOLRails, EOLRuby, EscapeFunction, Evaluation, Execute, FileAccess, FileDisclosure, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONEncoding, JSONEntityEscape, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, MimeTypeDoS, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NestedAttributesBypass, NumberToCurrency, PageCachingCVE, Pathname, PermitAttributes, QuoteTableName, Ransack, Redirect, RegexDoS, Render, RenderDoS, RenderInline, ResponseSplitting, RouteDoS, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeConfigCve, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionManipulation, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, SprocketsPathTraversal, StripTags, SymbolDoSCVE, TemplateInjection, TranslateBug, UnsafeReflection, UnsafeReflectionMethods, ValidationRegex, VerbConfusion, WeakRSAKey, WithoutProtection, XMLDoS, YAMLParsing
 
 == Overview ==
 
 Controllers: 40
 Models: 54
-Templates: 215
-Errors: 5
-Security Warnings: 37
+Templates: 214
+Errors: 6
+Security Warnings: 34
 
 == Warning Types ==
 
 Command Injection: 2
-Cross-Site Scripting: 2
+Cross-Site Scripting: 1
 Dangerous Send: 1
 Dynamic Render Path: 1
-Format Validation: 1
 HTTP Verb Confusion: 1
 Mass Assignment: 1
-Redirect: 1
 SQL Injection: 27
 
 == Errors ==
 
 Error: app/views/manage/models/edit_old.html.haml:1 :: parse error on value "title" (tSYMBOL) Could not parse app/views/manage/models/edit_old.html.haml
 Location: Could not parse /Users/mradl/repos/leihs/legacy/app/views/manage/models/edit_old.html.haml
+
+Error: Illegal nesting: nesting within plain text is illegal.
+Location: While compiling HAML in /Users/mradl/repos/leihs/legacy/app/views/manage/orders/edit.html.haml
 
 Error: app/views/manage/users/index.html.haml:1 :: parse error on value "title" (tSYMBOL) Could not parse app/views/manage/users/index.html.haml
 Location: Could not parse /Users/mradl/repos/leihs/legacy/app/views/manage/users/index.html.haml
@@ -48,35 +49,12 @@ Location: /Users/mradl/.asdf/installs/ruby/3.1.4/lib/ruby/gems/3.1.0/gems/racc-1
 == Warnings ==
 
 Confidence: High
-Category: Cross-Site Scripting
-Check: CrossSiteScripting
-Message: Unescaped model attribute
-Code: Order.find(id_param).user.entitlement_group_ids
-File: app/views/manage/orders/edit.html.haml
-Line: 47
-
-Confidence: High
 Category: Dangerous Send
 Check: Send
 Message: User controlled method execution
-Code: MailTemplate.send("available_liquid_variables_for_#{params[:type]}")
+Code: MailTemplate.send("available_liquid_variables_for_#{(params[:type] or "default_type")}")
 File: app/views/manage/mail_templates/edit.html.haml
-Line: 69
-
-Confidence: High
-Category: Format Validation
-Check: ValidationRegex
-Message: Insufficient validation for `email` using `/@/`. Use `\A` and `\z` as anchors
-File: app/models/inventory_pool.rb
-Line: 146
-
-Confidence: High
-Category: Redirect
-Check: Redirect
-Message: Possible unprotected redirect
-Code: redirect_to(params[:source_path])
-File: app/controllers/manage/mails_controller.rb
-Line: 62
+Line: 86
 
 Confidence: Medium
 Category: Command Injection

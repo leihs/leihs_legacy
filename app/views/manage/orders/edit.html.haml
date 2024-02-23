@@ -41,28 +41,32 @@
 
     #lines.padding-inset-m= render :partial => "manage/reservations/grouped_lines", :locals => {:grouped_lines => @grouped_lines, :line_partial => "manage/reservations/order"}
 
+
 :coffeescript
+createRecord = (json, recordType) ->
+  for record in JSON.parse(json)
+    recordType.addRecord new recordType(record)
 
-  jQuery ->
+jQuery ->
+  userJson = `#{j @user.to_json(methods: :image_url, except: :extended_info)}`
+  orderJson = `#{j @order.to_json(include: :delegated_user)}`
+  modelsJson = `#{j @models.to_json}`
+  softwareJson = `#{j @software.to_json}`
+  itemsJson = `#{j @items.to_json}`
+  reservationsJson = `#{j @reservations.to_json}`
 
-    App.User.addRecord new App.User $.extend {groupIds: #{@group_ids}}, #{@user.to_json(methods: :image_url, except: :extended_info)}
-    App.User.addRecord new App.User(#{@order.delegated_user.to_json(except: :extended_info)})
+  App.User.addRecord new App.User($.extend({groupIds: #{@group_ids}}, JSON.parse(userJson)))
+  App.Order.addRecord new App.Order(JSON.parse(orderJson))
 
-    App.Order.addRecord new App.Order #{@order.to_json(include: :delegated_user)}
-    App.Order.current = App.- entitlement_group_ids = h(Order.find(id_param).user.entitlement_group_ids)"#{@order.id}")
+  createRecord(modelsJson, App.Model)
+  createRecord(softwareJson, App.Software)
+  createRecord(itemsJson, App.Item)
+  createRecord(reservationsJson, App.Reservation)
 
-    for model in #{@models.to_json}
-      App.Model.addRecord new App.Model model
+  App.Order.current = App.Order || {}
+  entitlementGroupIdsJson = `#{json_escape(Order.find(id_param).user.entitlement_group_ids.to_json)}`
+  App.Order.entitlement_group_ids = JSON.parse(entitlementGroupIdsJson)
 
-    for software in #{@software.to_json}
-      App.Software.addRecord new App.Software software
-
-    for item in #{@items.to_json}
-      App.Item.addRecord new App.Item item
-
-    for reservation in #{@reservations.to_json}
-      App.Reservation.addRecord new App.Reservation reservation
-
-    new App.OrdersEditController
-      el: "#edit-contract-view"
-      order: App.Order.find "#{@order.id}"
+  new App.OrdersEditController
+    el: "#edit-contract-view"
+    order: App.Order.find("#{@order.id}")

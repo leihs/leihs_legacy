@@ -52,6 +52,16 @@ class Manage::MailsController < Manage::ApplicationController
     end
   end
 
+  # def create
+  #   Mailer.user_email(@user.id,
+  #                     params[:from],
+  #                     params[:to],
+  #                     params[:subject],
+  #                     params[:body])
+  #   flash[:notice] = _('The mail was sent')
+  #   redirect_to params[:source_path]
+  # end
+
   def create
     Mailer.user_email(@user.id,
                       params[:from],
@@ -59,7 +69,18 @@ class Manage::MailsController < Manage::ApplicationController
                       params[:subject],
                       params[:body])
     flash[:notice] = _('The mail was sent')
-    redirect_to params[:source_path]
+    safe_redirect(params[:source_path])
+  end
+
+  private
+
+  def safe_redirect(source_path)
+    uri = URI.parse(source_path)
+    if uri.relative? || uri.host == request.host
+      redirect_to source_path
+    else
+      redirect_to root_path
+    end
   end
 
   private
