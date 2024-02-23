@@ -391,6 +391,40 @@
       "note": ""
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "7b741a1b7dd526c37ca0bb607edc4c9f9b1d8466626b1100b0c9b804bfb5fcab",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/manage/users/index.html.haml",
+      "line": 62,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross-site_scripting/",
+      "code": "params[:role]",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::UsersController",
+          "method": "index",
+          "line": 51,
+          "file": "app/controllers/manage/users_controller.rb",
+          "rendered": {
+            "name": "manage/users/index",
+            "file": "app/views/manage/users/index.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/users/index"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "7c6a82a64a0b67d4c6b13593d75491c29129649a81cdeb3c13add3ea9dc46f7f",
@@ -655,6 +689,40 @@
       "note": ""
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "b82e6858bd19504484c3901ad067359b4802701c9fe50cd34fa90f1b5a2c6e8f",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/manage/orders/edit.html.haml",
+      "line": 51,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Order.find(id_param).user.entitlement_group_ids",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::OrdersController",
+          "method": "edit",
+          "line": 37,
+          "file": "app/controllers/manage/orders_controller.rb",
+          "rendered": {
+            "name": "manage/orders/edit",
+            "file": "app/views/manage/orders/edit.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/orders/edit"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "bd4a313683893dff7d561de20ffe15cc3c03d931565ce4748416c4a6bd095449",
@@ -850,31 +918,6 @@
       "note": ""
     }
   ],
-  "ignored_errors": [
-    {
-      "message": "Illegal nesting: nesting within plain text is illegal.",
-      "file": "app/views/manage/orders/edit.html.haml"
-    },{
-
-
-      "message": "parse error on value \"title\" (tSYMBOL) Could not parse app/views/manage/users/index.html.haml",
-      "file": "app/views/manage/users/index.html.haml"
-    },
-    {
-      "message": "Indenting at the beginning of the document is illegal.",
-      "file": "app/views/staging/_deploy_information.html.haml"
-    },
-    {
-      "message": "\"$(\" is not allowed as a global variable name. near line 6: \"RAILS_ENV=test bundle exec rails runner '' 2>&1 | wc -l) -gt 0 ]; then\" While processing cider-ci/bin/check-rails-warnings.rb",
-      "file": "/Users/mradl/.asdf/installs/ruby/3.1.4/lib/ruby/gems/3.1.0/gems/brakeman-6.1.2/bundle/ruby/3.3.0/gems/ruby_parser-3.20.3/lib/ruby_lexer.rb:764:in `rb_compile_error'"
-    },
-    {
-      "message": "parse error on value \"}\" (tRCURLY) Could not parse doc/import_export/csv_export_of_items.rb",
-      "file": "/Users/mradl/.asdf/installs/ruby/3.1.4/lib/ruby/gems/3.1.0/gems/racc-1.7.3/lib/racc/parser.rb:540:in `on_error'"
-
-
-
-    }],
-  "updated": "2024-02-23 18:34:01 +0100",
+  "updated": "2024-02-23 19:14:40 +0100",
   "brakeman_version": "6.1.2"
 }
