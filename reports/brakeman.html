@@ -1,0 +1,3639 @@
+<!DOCTYPE HTML SYSTEM>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Brakeman Report</title>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript">
+    function toggle(context) {
+      var elem = document.getElementById(context);
+
+      if (elem.style.display != "block")
+        elem.style.display = "block";
+      else
+        elem.style.display = "none";
+
+      elem.parentNode.scrollIntoView();
+    }
+
+    $(document).ready(function() {
+      $('table').DataTable({
+        searching: false,
+        paging:    false,
+        info:      false
+      });
+    });
+  </script>
+  <style>
+    /* CSS style used for HTML reports */
+
+body {
+  font-family: sans-serif;
+  color: #161616;
+}
+
+a {
+  color: #161616;
+}
+
+p {
+  font-weight: bold;
+  font-size: 11pt;
+  color: #2D0200;
+ }
+
+ th {
+   background-color: #980905;
+   border-bottom: 5px solid #530200;
+   color: white;
+   font-size: 11pt;
+   padding: 1px 8px 1px 8px;
+ }
+
+ td {
+   border-bottom: 2px solid white;
+   font-family: monospace;
+   padding: 5px 8px 1px 8px;
+ }
+
+ table {
+   background-color: #FCF4D4;
+   border-collapse: collapse;
+ }
+
+ h1 {
+   color: #2D0200;
+   font-size: 14pt;
+ }
+
+ h2 {
+   color: #2D0200;
+   font-size: 12pt;
+ }
+
+ span.high-confidence {
+   font-weight:bold;
+   color: red;
+ }
+
+ span.med-confidence {
+ }
+
+ span.weak-confidence {
+   color:gray;
+ }
+
+ div.warning_message {
+   cursor: pointer;
+ }
+
+ div.warning_message:hover {
+   background-color: white;
+ }
+
+ table caption {
+   background-color: #FFE;
+   padding: 2px;
+ }
+
+ table.context {
+   margin-top: 5px;
+   margin-bottom: 5px;
+   border-left: 1px solid #90e960;
+   color: #212121;
+ }
+
+ tr.context {
+   background-color: white;
+ }
+
+ tr.first {
+   border-top: 1px solid #7ecc54;
+   padding-top: 2px;
+ }
+
+ tr.error {
+  background-color: #f4c1c1 !important
+ }
+
+ tr.near_error {
+  background-color: #f4d4d4 !important
+ }
+
+ tr.alt {
+   background-color: #e8f4d4;
+ }
+
+ td.context {
+   padding: 2px 10px 0px 6px;
+   border-bottom: none;
+ }
+
+ td.context_line {
+   padding: 2px 8px 0px 7px;
+   border-right: 1px solid #b3bda4;
+   border-bottom: none;
+   color: #6e7465;
+ }
+
+ pre.context {
+   margin-bottom: 1px;
+ }
+
+ .user_input {
+   background-color: #fcecab;
+ }
+
+ div.render_path {
+   display: none;
+   background-color: #ffe;
+   padding: 5px;
+   margin: 2px 0px 2px 0px;
+ }
+
+ div.template_name {
+   cursor: pointer;
+ }
+
+ div.template_name:hover {
+   background-color: white;
+ }
+
+ span.code {
+   font-family: monospace;
+ }
+
+ span.filename {
+   font-family: monospace;
+ }
+
+  </style>
+</head>
+<body>
+
+<h1>Brakeman Brakeman Report (brakeman -c config/brakeman.yml)</h1>
+<h1>https://medium.com/pengenpaham/brakeman-101-static-analysis-security-tool-for-ruby-on-rails-application-8fb04505c70f</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Application Path</th>
+      <th>Rails Version</th>
+      <th>Brakeman Version</th>
+      <th>Report Time</th>
+      <th>Checks Performed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/Users/mradl/repos/leihs/legacy</td>
+      <td>6.1.7</td>
+      <td>6.1.2
+      <td>
+        2024-02-23 19:51:19 +0100<br><br>
+        10.321478 seconds
+      </td>
+      <td>BasicAuth, BasicAuthTimingAttack, CSRFTokenForgeryCVE, ContentTag, CookieSerialization, CreateWith, CrossSiteScripting, DefaultRoutes, Deserialize, DetailedExceptions, DigestDoS, DynamicFinders, EOLRails, EOLRuby, EscapeFunction, Evaluation, Execute, FileAccess, FileDisclosure, FilterSkipping, ForgerySetting, HeaderDoS, I18nXSS, JRubyXML, JSONEncoding, JSONEntityEscape, JSONParsing, LinkTo, LinkToHref, MailTo, MassAssignment, MimeTypeDoS, ModelAttrAccessible, ModelAttributes, ModelSerialize, NestedAttributes, NestedAttributesBypass, NumberToCurrency, PageCachingCVE, Pathname, PermitAttributes, QuoteTableName, Ransack, Redirect, RegexDoS, Render, RenderDoS, RenderInline, ResponseSplitting, RouteDoS, SQL, SQLCVEs, SSLVerify, SafeBufferManipulation, SanitizeConfigCve, SanitizeMethods, SelectTag, SelectVulnerability, Send, SendFile, SessionManipulation, SessionSettings, SimpleFormat, SingleQuotes, SkipBeforeFilter, SprocketsPathTraversal, StripTags, SymbolDoSCVE, TemplateInjection, TranslateBug, UnsafeReflection, UnsafeReflectionMethods, ValidationRegex, VerbConfusion, WeakRSAKey, WithoutProtection, XMLDoS, YAMLParsing</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<h2 id='summary'>Summary</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Scanned/Reported</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Controllers</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <td>Models</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <td>Templates</td>
+      <td>218</td>
+    </tr>
+    <tr>
+      <td>Errors</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Security Warnings</td>
+      <td>37 <span class='high-confidence'>(4)</span></td>
+    </tr>
+  
+    <tr>
+      <td>Ignored Warnings</td>
+      <td>0</td>
+    </tr>
+  
+  </tbody>
+</table>
+<br>
+<table>
+  <thead>
+    <tr>
+      <th>Warning Type</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      <td>Command Injection</td>
+      <td>2</td>
+    </tr>
+  
+    <tr>
+      <td>Cross-Site Scripting</td>
+      <td>4</td>
+    </tr>
+  
+    <tr>
+      <td>Dangerous Send</td>
+      <td>1</td>
+    </tr>
+  
+    <tr>
+      <td>Dynamic Render Path</td>
+      <td>1</td>
+    </tr>
+  
+    <tr>
+      <td>HTTP Verb Confusion</td>
+      <td>1</td>
+    </tr>
+  
+    <tr>
+      <td>Mass Assignment</td>
+      <td>1</td>
+    </tr>
+  
+    <tr>
+      <td>SQL Injection</td>
+      <td>27</td>
+    </tr>
+  
+  </tbody>
+</table>
+<br>
+<h2>Security Warnings</h2>  
+<table>
+  <thead>
+    <tr>
+      <th>Confidence</th>
+      <th>Class</th>
+      <th>Method</th>
+      <th>Warning Type</th>
+      <th>CWE ID</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>BarcodeMaker</td>
+      <td>make_eps</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/command_injection/">Command Injection</a></td>
+      <td>[77]</td>
+      <td><div class='warning_message' onClick="toggle('context1');toggle('message1');toggle('full_message1')" >Possible command injection near line 25: <span class="code">system(&quot;inkscape -z -T -E #{&quot;eps/barcode_#{<span class="user_input">string</span>}.eps&quot;} #{&quot;svg/barcode_#{<span class="user_input">string</span>}.svg&quot;}&quot;)</span><table id='context1' class='context' style='display:none'><caption>doc/other/barcode_maker.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>20</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>		puts &quot;Making EPS for #{@string}&quot;</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>21</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>		make_svg</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>22</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>   	infile = &quot;svg/barcode_#{@string}.svg&quot;</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>23</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>   	outfile = &quot;eps/barcode_#{@string}.eps&quot;</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>24</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>   	#command = %x[inkscape -z -T -E #\{outfile\} #\{infile\}]</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>25</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>   	system &quot;inkscape -z -T -E #{outfile} #{infile}&quot;</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>26</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>	end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>28</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>	def make_svg</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>29</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>		unless File.exists?(&quot;svg/barcode_#{@string}.svg&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>30</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>			puts &quot;Making SVG for #{@string}&quot;</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>FileConversion</td>
+      <td>s(:self).create_thumbnail</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/command_injection/">Command Injection</a></td>
+      <td>[77]</td>
+      <td><div class='warning_message' onClick="toggle('context2');toggle('message2');toggle('full_message2')" >Possible command injection near line 4: <span class="code">system(&quot;convert #{<span class="user_input">filepath</span>} -resize &#39;100x100&#39; #{&quot;#{<span class="user_input">filepath</span>}.thumb&quot;}&quot;)</span><table id='context2' class='context' style='display:none'><caption>lib/file_conversion.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>1</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>module FileConversion</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>2</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def self.create_thumbnail(filepath)</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>3</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    thumbnail_filepath = &quot;#{filepath}.thumb&quot;</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>4</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if system(&quot;convert #{filepath} -resize &#39;100x100&#39; #{thumbnail_filepath}&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>5</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      thumbnail_filepath</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>6</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    else</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>7</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      raise &#39;convert: could not create thumbnail&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>8</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>9</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>MainHelpers</td>
+      <td>permit_params</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/mass_assignment/">Mass Assignment</a></td>
+      <td>[915]</td>
+      <td><div class='warning_message' onClick="toggle('context3');toggle('message3');toggle('full_message3')" >Specify exact keys allowed for mass assignment instead of using <span class="code">permit!</span> which allows any keys near line 78: <span class="code">params.permit!</span><table id='context3' class='context' style='display:none'><caption>app/controllers/concerns/main_helpers.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>73</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>    def admin?</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>74</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      current_user &amp;&amp; current_user.is_admin</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>75</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>77</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def permit_params</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>78</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      params.permit!</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>79</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>81</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def total_count(paginated_active_record, disable: false, custom_count: nil)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>82</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      if disable</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>83</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        nil</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>Concerns::ProcurementAccess</td>
+      <td>procurement_access?</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context24');toggle('message24');toggle('full_message24')" ><span id='message24' style='display:block'>Possible SQL injection near line 12: ...</span><span id='full_message24' style='display:none'>Possible SQL injection near line 12: <span class="code">ApplicationRecord.connection.exec_query(&quot;        SELECT (\n          EXISTS (\n            SELECT TRUE\n            FROM procurement_requesters_organizations\n            WHERE user_id = &#39;#{<span class="user_input">UUIDTools::UUID.parse(id)</span>}&#39;\n          ) OR\n          EXISTS (\n            SELECT TRUE\n            FROM procurement_category_viewers\n            WHERE user_id = &#39;#{<span class="user_input">UUIDTools::UUID.parse(id)</span>}&#39;\n          ) OR\n          EXISTS (\n            SELECT TRUE\n            FROM procurement_category_inspectors\n            WHERE user_id = &#39;#{<span class="user_input">UUIDTools::UUID.parse(id)</span>}&#39;\n          ) OR\n          EXISTS (\n            SELECT TRUE\n            FROM procurement_admins\n            WHERE user_id = &#39;#{<span class="user_input">UUIDTools::UUID.parse(id)</span>}&#39;\n          )\n        ) as result\n&quot;)</span></span><table id='context24' class='context' style='display:none'><caption>app/controllers/concerns/procurement_access.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>7</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      rows = ApplicationRecord.connection.exec_query &lt;&lt;-SQL</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>8</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        SELECT (</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>9</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          EXISTS (</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>10</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            SELECT TRUE</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>11</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            FROM procurement_requesters_organizations</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>12</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            WHERE user_id = &#39;#{uuid}&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>13</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          ) OR</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>14</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          EXISTS (</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>15</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            SELECT TRUE</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>16</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            FROM procurement_category_viewers</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>17</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            WHERE user_id = &#39;#{uuid}&#39;</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>InventoryPool</td>
+      <td></td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context16');toggle('message16');toggle('full_message16')" ><span id='message16' style='display:block'>Possible SQL injection near line 128: ...</span><span id='full_message16' style='display:none'>Possible SQL injection near line 128: <span class="code">select(&quot;     reservations.id,\n     reservations.inventory_pool_id,\n     reservations.model_id,\n     reservations.item_id,\n     reservations.quantity,\n     reservations.start_date,\n     reservations.end_date,\n     reservations.returned_date,\n     reservations.status,\n     ARRAY(\n       SELECT egu.entitlement_group_id\n       FROM entitlement_groups_users egu\n       INNER JOIN entitlement_groups eg\n       ON eg.id = egu.entitlement_group_id\n       WHERE egu.user_id = reservations.user_id\n       ORDER BY eg.name ASC\n     ) AS user_group_ids\n&quot;).joins(&quot;LEFT JOIN items ON reservations.item_id = items.id&quot;).where(&quot;       reservations.item_id IS NULL OR items.is_borrowable = TRUE\n&quot;).where(&quot;       reservations.status NOT IN (&#39;draft&#39;, &#39;rejected&#39;, &#39;canceled&#39;, &#39;closed&#39;)\n       AND NOT (\n         reservations.status = &#39;unsubmitted&#39; AND\n         reservations.updated_at &lt; &#39;#{(Time.now.utc - <span class="user_input">Setting.first.timeout_minutes</span>.minutes)}&#39;\n       )\n       AND NOT (\n         reservations.end_date &lt; &#39;#{Time.zone.today}&#39; AND\n         reservations.item_id IS NULL\n       )\n&quot;)</span></span><table id='context16' class='context' style='display:none'><caption>app/models/inventory_pool.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>123</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      SQL</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>124</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      .where(&lt;&lt;-SQL)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>125</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>       reservations.status NOT IN (&#39;draft&#39;, &#39;rejected&#39;, &#39;canceled&#39;, &#39;closed&#39;)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>126</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>       AND NOT (</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>127</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>         reservations.status = &#39;unsubmitted&#39; AND</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>128</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>         reservations.updated_at &lt; &#39;#{Time.now.utc - Setting.first.timeout_minutes.minutes}&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>129</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>       )</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>130</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>       AND NOT (</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>131</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>         reservations.end_date &lt; &#39;#{Time.zone.today}&#39; AND</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>132</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>         reservations.item_id IS NULL</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>133</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>       )</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>Item</td>
+      <td>search</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context4');toggle('message4');toggle('full_message4')" ><span id='message4' style='display:block'>Possible SQL injection near line 125: ...</span><span id='full_message4' style='display:none'>Possible SQL injection near line 125: <span class="code">joins(&quot;      INNER JOIN (SELECT i1.id,\n                         CONCAT_WS(&#39; &#39;,\n                                   #{<span class="user_input">[&quot;inventory_code&quot;, &quot;serial_number&quot;, &quot;invoice_number&quot;, &quot;note&quot;, &quot;name&quot;, &quot;user_name&quot;, &quot;properties&quot;].map do  &quot;m1.#{:BRAKEMAN_SAFE_LITERAL}&quot;  end.join(&quot;, &quot;)</span>},\n                                   #{[&quot;inventory_code&quot;, &quot;serial_number&quot;, &quot;invoice_number&quot;, &quot;note&quot;, &quot;name&quot;, &quot;user_name&quot;, &quot;properties&quot;].map do  &quot;m2.#{:BRAKEMAN_SAFE_LITERAL}&quot;  end.join(&quot;, &quot;)},\n                                   #{[&quot;inventory_code&quot;, &quot;serial_number&quot;, &quot;invoice_number&quot;, &quot;note&quot;, &quot;name&quot;, &quot;user_name&quot;, &quot;properties&quot;].map do  &quot;i1.#{:BRAKEMAN_SAFE_LITERAL}&quot;  end.join(&quot;, &quot;)},\n                                   #{[&quot;inventory_code&quot;, &quot;serial_number&quot;, &quot;invoice_number&quot;, &quot;note&quot;, &quot;name&quot;, &quot;user_name&quot;, &quot;properties&quot;].map do  &quot;i2.#{:BRAKEMAN_SAFE_LITERAL}&quot;  end.join(&quot;, &quot;)},\n                                   #{[&quot;inventory_code&quot;, &quot;serial_number&quot;, &quot;invoice_number&quot;, &quot;note&quot;, &quot;name&quot;, &quot;user_name&quot;, &quot;properties&quot;].map do  &quot;r.#{:BRAKEMAN_SAFE_LITERAL}&quot;  end.join(&quot;, &quot;)}) AS text\n                  FROM items AS i1\n                  INNER JOIN models AS m1 ON i1.model_id = m1.id\n                  LEFT JOIN items AS i2 ON i2.parent_id = i1.id\n                  LEFT JOIN models AS m2 ON m2.id = i2.model_id\n                  LEFT JOIN rooms AS r ON r.id = i1.room_id) AS full_text\n      ON items.id = full_text.id\n&quot;)</span></span><table id='context4' class='context' style='display:none'><caption>app/models/item.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>120</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>    room_fields = \</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>121</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      Room::SEARCHABLE_FIELDS.map { |f| &quot;r.#{f}&quot; }.join(&#39;, &#39;)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>122</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    joins(&lt;&lt;-SQL)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>123</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      INNER JOIN (SELECT i1.id,</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>124</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                         CONCAT_WS(&#39; &#39;,</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>125</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                                   #{model_fields_1},</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>126</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                                   #{model_fields_2},</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>127</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                                   #{item_fields_1},</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>128</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                                   #{item_fields_2},</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>129</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                                   #{room_fields}) AS text</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>130</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                  FROM items AS i1</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>Manage::ModelsController</td>
+      <td>running_reservations</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context18');toggle('message18');toggle('full_message18')" ><span id='message18' style='display:block'>Possible SQL injection near line 29: ...</span><span id='full_message18' style='display:none'>Possible SQL injection near line 29: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \treservations.*\n        from\n        \treservations\n        where\n        \treservations.inventory_pool_id = &#39;#{<span class="user_input">inventory_pool_id</span>}&#39;\n        \tand status not in (&#39;draft&#39;, &#39;rejected&#39;, &#39;canceled&#39;, &#39;closed&#39;)\n          and model_id = &#39;#{model_id}&#39;\n          and reservations.type = &#39;ItemLine&#39;\n          and not (\n            status = &#39;unsubmitted&#39; and\n            updated_at &lt; &#39;#{(Time.now.utc - Setting.first.timeout_minutes.minutes)}&#39;\n          )\n          and not (\n            end_date &lt; &#39;#{Time.zone.today}&#39; and\n            item_id is null\n          )\n&quot;)</span></span><table id='context18' class='context' style='display:none'><caption>app/controllers/manage/models_controller.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>25</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  def show</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>26</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    @model = fetch_model</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>27</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>29</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # def new_old</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>30</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  #   not_authorized! unless privileged_user?</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>31</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  #</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>32</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  #   allowed_types = [&#39;Software&#39;, &#39;Model&#39;]</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>33</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  #   type = params[:type].humanize</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>34</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  #   type = &#39;Model&#39; unless allowed_types.include?(type)</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>Manage::ModelsController</td>
+      <td>reservation_users</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context19');toggle('message19');toggle('full_message19')" ><span id='message19' style='display:block'>Possible SQL injection near line 46: ...</span><span id='full_message19' style='display:none'>Possible SQL injection near line 46: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \tusers.*\n        from\n        \tusers\n        where\n        \tusers.id in (#{<span class="user_input">reservations.map do  r[&quot;user_id&quot;]  end.map do  &quot;&#39;#{id}&#39;&quot;  end.join(&quot;,&quot;)</span>})\n&quot;)</span></span><table id='context19' class='context' style='display:none'><caption>app/controllers/manage/models_controller.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>42</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>    allowed_types = [&#39;Software&#39;, &#39;Model&#39;]</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>43</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    type_param = params[:type].humanize</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>45</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    # Ensure the type is one of the allowed types; default to &#39;Model&#39; if it&#39;s not.</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>46</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    type = allowed_types.include?(type_param) ? type_param : &#39;Model&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>48</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    # Safely constantize the sanitized type</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>49</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    @model = type.constantize.new</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>50</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>Manage::ModelsController</td>
+      <td>entitlement_groups_users</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context20');toggle('message20');toggle('full_message20')" ><span id='message20' style='display:block'>Possible SQL injection near line 63: ...</span><span id='full_message20' style='display:none'>Possible SQL injection near line 63: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \tentitlement_groups_users.*\n        from\n        \tentitlement_groups_users\n        where\n        \tuser_id in (#{<span class="user_input">users.map do  r[&quot;id&quot;]  end.map do  &quot;&#39;#{id}&#39;&quot;  end.join(&quot;,&quot;)</span>})\n&quot;)</span></span><table id='context20' class='context' style='display:none'><caption>app/controllers/manage/models_controller.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>58</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        Software.manufacturers</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>59</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      else</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>60</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        Model.manufacturers</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>61</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>63</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    @props = {</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>64</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      inventory_pool_id: current_inventory_pool.id,</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>65</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      create_model_path: manage_create_model_path,</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>66</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      # TODO: #{Kernel.const_get(@model.type || &#39;Model&#39;).manufacturers.to_json}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>67</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      manufacturers: manufacturers.map(&amp;:to_s),</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>68</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      store_attachment_path: manage_model_store_attachment_react_path,</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>Manage::ModelsController</td>
+      <td>entitlement_groups</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context21');toggle('message21');toggle('full_message21')" ><span id='message21' style='display:block'>Possible SQL injection near line 86: ...</span><span id='full_message21' style='display:none'>Possible SQL injection near line 86: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \tentitlement_groups.*\n        from\n        \tentitlement_groups\n        where\n        \tentitlement_groups.id in (#{<span class="user_input">(entitlements.map do  e[&quot;entitlement_group_id&quot;]  end + entitlement_groups_users.map do  r[&quot;entitlement_group_id&quot;]  end).map do  &quot;&#39;#{id}&#39;&quot;  end.join(&quot;,&quot;)</span>})\n          and entitlement_groups.inventory_pool_id = &#39;#{inventory_pool_id}&#39;\n&quot;)</span></span><table id='context21' class='context' style='display:none'><caption>app/controllers/manage/models_controller.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>82</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  def store_attachment_react</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>83</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    respond_to do |format|</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>84</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      format.plist_binary do</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>85</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        store_attachment!(</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>86</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          params[:data],</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>87</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          model_id: params[:model_id]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>88</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        )</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>89</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>90</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>91</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>Manage::ModelsController</td>
+      <td>entitlements</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context22');toggle('message22');toggle('full_message22')" >Possible SQL injection near line 99: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        SELECT entitlements.*\n        FROM entitlements\n        JOIN entitlement_groups\n          ON entitlement_groups.id = entitlements.entitlement_group_id\n        WHERE model_id = &#39;#{<span class="user_input">model_id</span>}&#39;\n          AND entitlement_groups.inventory_pool_id = &#39;#{pool_id}&#39;\n&quot;)</span><table id='context22' class='context' style='display:none'><caption>app/controllers/manage/models_controller.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>94</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>    respond_to do |format|</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>95</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      format.plist_binary do</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>96</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        ApplicationRecord.transaction(requires_new: true) do</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>97</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          m = Model.find(params[:model_id])</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>98</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          i = store_image_with_thumbnail!(params[:data], m)</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>99</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          m.update!(cover_image_id: i.id) if params[:is_cover] == &#39;true&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>100</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>101</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>102</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>103</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>Manage::ModelsController</td>
+      <td>items</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context23');toggle('message23');toggle('full_message23')" >Possible SQL injection near line 114: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \titems.*\n        from\n        \titems\n        where\n        \titems.inventory_pool_id = &#39;#{<span class="user_input">inventory_pool_id</span>}&#39;\n          and items.model_id = &#39;#{model_id}&#39;\n          and items.parent_id is null\n&quot;)</span><table id='context23' class='context' style='display:none'><caption>app/controllers/manage/models_controller.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>109</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      @model = case params[:model][:type]</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>110</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               when &#39;software&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>111</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                 Software</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>112</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               else</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>113</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                 Model</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>114</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               end.create(product: params[:model][:product],</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>115</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                          version: params[:model][:version])</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>117</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      @model.is_package = true if params[:model][:is_package]</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>118</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      save_model(@model)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>119</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      raise ActiveRecord::Rollback if !@model.persisted? or @model.errors.any?</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>TimelineAvailability</td>
+      <td>running_reservations</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context25');toggle('message25');toggle('full_message25')" ><span id='message25' style='display:block'>Possible SQL injection near line 29: ...</span><span id='full_message25' style='display:none'>Possible SQL injection near line 29: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \treservations.*\n        from\n        \treservations\n        where\n        \treservations.inventory_pool_id = &#39;#{<span class="user_input">inventory_pool_id</span>}&#39;\n        \tand status not in (&#39;draft&#39;, &#39;rejected&#39;, &#39;canceled&#39;, &#39;closed&#39;)\n          and model_id = &#39;#{model_id}&#39;\n          and reservations.type = &#39;ItemLine&#39;\n          and not (\n            status = &#39;unsubmitted&#39; and\n            updated_at &lt; &#39;#{(Time.now.utc - Setting.first.timeout_minutes.minutes)}&#39;\n          )\n          and not (\n            end_date &lt; &#39;#{Time.zone.today}&#39; and\n            item_id is null\n          )\n&quot;)</span></span><table id='context25' class='context' style='display:none'><caption>app/controllers/concerns/timeline_availability.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>24</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>            end_date &lt; &#39;#{Time.zone.today}&#39; and</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>25</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            item_id is null</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>26</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          )</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>27</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      SQL</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>29</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      ActiveRecord::Base.connection.exec_query(query).to_a</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>30</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>32</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def reservation_users(reservations)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>33</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      user_ids = reservations.map { |r| r[&#39;user_id&#39;] }</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>TimelineAvailability</td>
+      <td>reservation_users</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context26');toggle('message26');toggle('full_message26')" ><span id='message26' style='display:block'>Possible SQL injection near line 46: ...</span><span id='full_message26' style='display:none'>Possible SQL injection near line 46: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \tusers.*\n        from\n        \tusers\n        where\n        \tusers.id in (#{<span class="user_input">reservations.map do  r[&quot;user_id&quot;]  end.map do  &quot;&#39;#{id}&#39;&quot;  end.join(&quot;,&quot;)</span>})\n&quot;)</span></span><table id='context26' class='context' style='display:none'><caption>app/controllers/concerns/timeline_availability.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>41</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        	users</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>42</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        where</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>43</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        	users.id in (#{user_ids.map { |id| &quot;&#39;#{id}&#39;&quot; }.join(&#39;,&#39;)})</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>44</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      SQL</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>46</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      ActiveRecord::Base.connection.exec_query(query).to_a</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>47</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>49</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def entitlement_groups_users(users)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>50</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      user_ids = users.map { |r| r[&#39;id&#39;] }</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>TimelineAvailability</td>
+      <td>entitlement_groups_users</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context27');toggle('message27');toggle('full_message27')" ><span id='message27' style='display:block'>Possible SQL injection near line 63: ...</span><span id='full_message27' style='display:none'>Possible SQL injection near line 63: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \tentitlement_groups_users.*\n        from\n        \tentitlement_groups_users\n        where\n        \tuser_id in (#{<span class="user_input">users.map do  r[&quot;id&quot;]  end.map do  &quot;&#39;#{id}&#39;&quot;  end.join(&quot;,&quot;)</span>})\n&quot;)</span></span><table id='context27' class='context' style='display:none'><caption>app/controllers/concerns/timeline_availability.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>58</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        	entitlement_groups_users</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>59</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        where</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>60</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        	user_id in (#{user_ids.map { |id| &quot;&#39;#{id}&#39;&quot; }.join(&#39;,&#39;)})</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>61</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      SQL</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>63</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      ActiveRecord::Base.connection.exec_query(query).to_a</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>64</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>66</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def entitlement_groups(</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>67</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      entitlements,</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>68</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      entitlement_groups_users,</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>TimelineAvailability</td>
+      <td>entitlement_groups</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context28');toggle('message28');toggle('full_message28')" ><span id='message28' style='display:block'>Possible SQL injection near line 86: ...</span><span id='full_message28' style='display:none'>Possible SQL injection near line 86: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \tentitlement_groups.*\n        from\n        \tentitlement_groups\n        where\n        \tentitlement_groups.id in (#{<span class="user_input">(entitlements.map do  e[&quot;entitlement_group_id&quot;]  end + entitlement_groups_users.map do  r[&quot;entitlement_group_id&quot;]  end).map do  &quot;&#39;#{id}&#39;&quot;  end.join(&quot;,&quot;)</span>})\n          and entitlement_groups.inventory_pool_id = &#39;#{inventory_pool_id}&#39;\n&quot;)</span></span><table id='context28' class='context' style='display:none'><caption>app/controllers/concerns/timeline_availability.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>81</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        where</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>82</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        	entitlement_groups.id in (#{group_ids.map { |id| &quot;&#39;#{id}&#39;&quot; }.join(&#39;,&#39;)})</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>83</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          and entitlement_groups.inventory_pool_id = &#39;#{inventory_pool_id}&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>84</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      SQL</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>86</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      ActiveRecord::Base.connection.exec_query(query).to_a</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>87</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>89</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def entitlements(model_id, pool_id)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>90</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      query = &lt;&lt;-SQL</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>91</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        SELECT entitlements.*</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>TimelineAvailability</td>
+      <td>entitlements</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context29');toggle('message29');toggle('full_message29')" >Possible SQL injection near line 99: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        SELECT entitlements.*\n        FROM entitlements\n        JOIN entitlement_groups\n          ON entitlement_groups.id = entitlements.entitlement_group_id\n        WHERE model_id = &#39;#{<span class="user_input">model_id</span>}&#39;\n          AND entitlement_groups.inventory_pool_id = &#39;#{pool_id}&#39;\n&quot;)</span><table id='context29' class='context' style='display:none'><caption>app/controllers/concerns/timeline_availability.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>94</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>          ON entitlement_groups.id = entitlements.entitlement_group_id</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>95</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        WHERE model_id = &#39;#{model_id}&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>96</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          AND entitlement_groups.inventory_pool_id = &#39;#{pool_id}&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>97</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      SQL</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>99</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      ActiveRecord::Base.connection.exec_query(query).to_a</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>100</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>102</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def items(inventory_pool_id, model_id)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>103</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      query = &lt;&lt;-SQL</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>104</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        select</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>TimelineAvailability</td>
+      <td>items</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context30');toggle('message30');toggle('full_message30')" >Possible SQL injection near line 114: <span class="code">ActiveRecord::Base.connection.exec_query(&quot;        select\n        \titems.*\n        from\n        \titems\n        where\n        \titems.inventory_pool_id = &#39;#{<span class="user_input">inventory_pool_id</span>}&#39;\n          and items.model_id = &#39;#{model_id}&#39;\n          and items.parent_id is null\n&quot;)</span><table id='context30' class='context' style='display:none'><caption>app/controllers/concerns/timeline_availability.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>109</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        	items.inventory_pool_id = &#39;#{inventory_pool_id}&#39;</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>110</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          and items.model_id = &#39;#{model_id}&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>111</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          and items.parent_id is null</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>112</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      SQL</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>114</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      ActiveRecord::Base.connection.exec_query(query).to_a</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>115</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>117</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def timeline_availability(model_id, inventory_pool_id, is_lending_manager)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>118</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      inventory_pool = InventoryPool.find(inventory_pool_id)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>119</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      model = Model.find(model_id)</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>User</td>
+      <td>with_borrowable_items</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context5');toggle('message5');toggle('full_message5')" ><span id='message5' style='display:block'>Possible SQL injection near line 61: ...</span><span id='full_message5' style='display:none'>Possible SQL injection near line 61: <span class="code">where(:items =&gt; ({ :retired =&gt; nil, :is_borrowable =&gt; true, :parent_id =&gt; nil })).joins(&quot;INNER JOIN (#{<span class="user_input">Entitlement.query</span>}) AS pwg ON models.id = pwg.model_id AND inventory_pools.id = pwg.inventory_pool_id AND pwg.quantity &gt; 0 AND (pwg.entitlement_group_id IN (SELECT entitlement_group_id FROM entitlement_groups_users WHERE user_id = &#39;#{proxy_association.owner.id}&#39;) OR pwg.entitlement_group_id IS NULL)&quot;)</span></span><table id='context5' class='context' style='display:none'><caption>app/models/user.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>56</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  end</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>58</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  has_many(:categories, -&gt; { distinct }, through: :models) do</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>59</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def with_borrowable_items</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>60</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      where(items: { retired: nil, is_borrowable: true, parent_id: nil })</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>61</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      .joins(&quot;INNER JOIN (#{Entitlement.query}) AS pwg &quot; \</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>62</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>             &#39;ON models.id = pwg.model_id &#39; \</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>63</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>             &#39;AND inventory_pools.id = pwg.inventory_pool_id &#39; \</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>64</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>             &#39;AND pwg.quantity &gt; 0 &#39; \</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>65</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>             &#39;AND (pwg.entitlement_group_id IN &#39; \</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>66</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               &#39;(SELECT entitlement_group_id FROM entitlement_groups_users &#39; \</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>User</td>
+      <td>borrowable</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context6');toggle('message6');toggle('full_message6')" ><span id='message6' style='display:block'>Possible SQL injection near line 47: ...</span><span id='full_message6' style='display:none'>Possible SQL injection near line 47: <span class="code">where(:items =&gt; ({ :retired =&gt; nil, :is_borrowable =&gt; true, :parent_id =&gt; nil })).joins(&quot;INNER JOIN (#{<span class="user_input">Entitlement.query</span>}) AS pwg ON models.id = pwg.model_id AND inventory_pools.id = pwg.inventory_pool_id AND pwg.quantity &gt; 0 AND (pwg.entitlement_group_id IN (SELECT entitlement_group_id FROM entitlement_groups_users WHERE user_id = &#39;#{proxy_association.owner.id}&#39;) OR pwg.entitlement_group_id IS NULL)&quot;)</span></span><table id='context6' class='context' style='display:none'><caption>app/models/user.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>43</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  has_many :items, -&gt; { distinct }, through: :inventory_pools</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>44</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  has_many(:models, -&gt; { distinct }, through: :inventory_pools) do</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>45</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    def borrowable</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>46</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      where(items: { retired: nil, is_borrowable: true, parent_id: nil })</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>47</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        .joins(&quot;INNER JOIN (#{Entitlement.query}) AS pwg &quot; \</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>48</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               &#39;ON models.id = pwg.model_id &#39; \</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>49</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               &#39;AND inventory_pools.id = pwg.inventory_pool_id &#39; \</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>50</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               &#39;AND pwg.quantity &gt; 0 &#39; \</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>51</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               &#39;AND (pwg.entitlement_group_id IN &#39; \</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>52</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>               &#39;(SELECT entitlement_group_id FROM entitlement_groups_users &#39; \</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='med-confidence'>Medium</span></td>
+      <td>WorkaroundRailsBug25198</td>
+      <td>deal_with_destroy_nested_attributes!</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context17');toggle('message17');toggle('full_message17')" >Possible SQL injection near line 14: <span class="code">ActiveRecord::Base.connection.exec_delete(&quot;          DELETE FROM images WHERE id = &#39;#{<span class="user_input">UUIDTools::UUID.parse(image_id)</span>}&#39;\n&quot;)</span><table id='context17' class='context' style='display:none'><caption>app/controllers/concerns/workaround_rails_bug25198.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>9</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>            DELETE FROM images WHERE id = &#39;#{thumbnail.id}&#39;</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>10</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          SQL</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>11</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>13</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        ActiveRecord::Base.connection.exec_delete &lt;&lt;-SQL</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>14</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          DELETE FROM images WHERE id = &#39;#{UUIDTools::UUID.parse(image_id)}&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>15</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        SQL</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>17</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        images_attrs.delete(image_id)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>18</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>19</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>AuthenticatedSystem</td>
+      <td>access_denied</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/http_verb_confusion/">HTTP Verb Confusion</a></td>
+      <td>[352]</td>
+      <td><div class='warning_message' onClick="toggle('context31');toggle('message31');toggle('full_message31')" >Potential HTTP verb confusion. <span class="code">HEAD</span> is routed like <span class="code">GET</span> but <span class="code">request.get?</span> will return <span class="code">false</span> near line 18: <span class="code">if <span class="user_input">request.get?</span> then   store_location   flash[:notice] = _(&quot;You don&#39;t have permission to perform this action&quot;)   redirect_to(root_path) else   render(:status =&gt; :method_not_allowed, :plain =&gt; _(&quot;You don&#39;t have permission to perform this action&quot;)) end</span><table id='context31' class='context' style='display:none'><caption>lib/authenticated_system.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>13</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  # Override this method in your controllers if you want to have special</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>14</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # behavior in case the user is not authorized</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>15</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # to access the requested action.  For example, a popup window might</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>16</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  # simply close itself.</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>17</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def access_denied</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>18</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    if request.get?</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>19</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      store_location</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>20</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      flash[:notice] = _(&quot;You don&#39;t have permission to perform this action&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>21</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      redirect_to root_path</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>22</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    else</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>23</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      # NOTE in case of post requests</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>ExpertComparators</td>
+      <td>generic_between_value</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context8');toggle('message8');toggle('full_message8')" >Possible SQL injection near line 121: <span class="code">items.where(&quot;items.#{<span class="user_input">field_config[&quot;attribute&quot;]</span>} &gt;= :from&quot;, :from =&gt; from)</span><table id='context8' class='context' style='display:none'><caption>app/controllers/concerns/expert_comparators.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>116</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      attribute = field_config[&#39;attribute&#39;]</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>118</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      if attribute.is_a?(String)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>119</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        check_that_item_attribute(attribute)</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>120</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result = items</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>121</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result = result.where(&quot;items.#{attribute} &gt;= :from&quot;, from: from) if from</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>122</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result = result.where(&quot;items.#{attribute} &lt;= :to&quot;, to: to) if to</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>123</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>124</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      elsif attribute.is_a?(Array)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>125</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        if attribute.length != 2</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>126</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          throw &#39;Attribute length must be 2, but is: &#39; + attribute.to_s</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>ExpertComparators</td>
+      <td>generic_between_value</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context9');toggle('message9');toggle('full_message9')" ><span id='message9' style='display:block'>Possible SQL injection near line 122: ...</span><span id='full_message9' style='display:none'>Possible SQL injection near line 122: <span class="code">items.where(&quot;items.#{<span class="user_input">field_config[&quot;attribute&quot;]</span>} &gt;= :from&quot;, :from =&gt; from).where(&quot;items.#{<span class="user_input">field_config[&quot;attribute&quot;]</span>} &lt;= :to&quot;, :to =&gt; to)</span></span><table id='context9' class='context' style='display:none'><caption>app/controllers/concerns/expert_comparators.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>118</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      if attribute.is_a?(String)</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>119</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        check_that_item_attribute(attribute)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>120</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result = items</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>121</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result = result.where(&quot;items.#{attribute} &gt;= :from&quot;, from: from) if from</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>122</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result = result.where(&quot;items.#{attribute} &lt;= :to&quot;, to: to) if to</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>123</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>124</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      elsif attribute.is_a?(Array)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>125</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        if attribute.length != 2</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>126</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          throw &#39;Attribute length must be 2, but is: &#39; + attribute.to_s</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>127</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>ExpertComparators</td>
+      <td>generic_between_value</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context10');toggle('message10');toggle('full_message10')" >Possible SQL injection near line 135: <span class="code">items.where(&quot;items.properties -&gt;&gt; &#39;#{<span class="user_input">field_config[&quot;attribute&quot;][1]</span>}&#39; &gt;= :from&quot;, :from =&gt; from)</span><table id='context10' class='context' style='display:none'><caption>app/controllers/concerns/expert_comparators.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>130</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        end</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>132</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result = items</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>133</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        if from</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>134</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          result = result.where(</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>135</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            &quot;items.properties -&gt;&gt; &#39;#{attribute[1]}&#39; &gt;= :from&quot;, from: from)</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>136</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>137</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        if to</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>138</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          result = result.where(</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>139</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            &quot;items.properties -&gt;&gt; &#39;#{attribute[1]}&#39; &lt;= :to&quot;, to: to)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>140</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>ExpertComparators</td>
+      <td>generic_between_value</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context11');toggle('message11');toggle('full_message11')" ><span id='message11' style='display:block'>Possible SQL injection near line 139: ...</span><span id='full_message11' style='display:none'>Possible SQL injection near line 139: <span class="code">items.where(&quot;items.properties -&gt;&gt; &#39;#{<span class="user_input">field_config[&quot;attribute&quot;][1]</span>}&#39; &gt;= :from&quot;, :from =&gt; from).where(&quot;items.properties -&gt;&gt; &#39;#{<span class="user_input">field_config[&quot;attribute&quot;][1]</span>}&#39; &lt;= :to&quot;, :to =&gt; to)</span></span><table id='context11' class='context' style='display:none'><caption>app/controllers/concerns/expert_comparators.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>134</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>          result = result.where(</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>135</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            &quot;items.properties -&gt;&gt; &#39;#{attribute[1]}&#39; &gt;= :from&quot;, from: from)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>136</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>137</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        if to</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>138</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          result = result.where(</pre>
+            </td>
+          </tr>
+          <tr class='context alt error'>
+            <td class='context_line'>
+              <pre class='context'>139</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            &quot;items.properties -&gt;&gt; &#39;#{attribute[1]}&#39; &lt;= :to&quot;, to: to)</pre>
+            </td>
+          </tr>
+          <tr class='context near_error'>
+            <td class='context_line'>
+              <pre class='context'>140</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>141</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        result</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>142</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      else</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>143</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        throw &#39;Not supported attribute: &#39; + attribute.to_s</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>144</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>ExpertComparators</td>
+      <td>generic_equal_value</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context12');toggle('message12');toggle('full_message12')" >Possible SQL injection near line 163: <span class="code">items.where(&quot;items.properties -&gt;&gt; &#39;#{<span class="user_input">field_config[&quot;attribute&quot;][1]</span>}&#39; = :value&quot;, :value =&gt; value)</span><table id='context12' class='context' style='display:none'><caption>app/controllers/concerns/expert_comparators.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>158</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        if attribute[0] != &#39;properties&#39;</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>159</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          throw &#39;We expect properties, but is: &#39; + attribute.to_s</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>160</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>162</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        items.where(</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>163</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          &quot;items.properties -&gt;&gt; &#39;#{attribute[1]}&#39; = :value&quot;,</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>164</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          value: value)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>165</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      else</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>166</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        throw &#39;Not supported attribute: &#39; + attribute.to_s</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>167</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>168</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>ExpertComparators</td>
+      <td>generic_ilike</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context13');toggle('message13');toggle('full_message13')" >Possible SQL injection near line 176: <span class="code">items.where(&quot;items.#{<span class="user_input">field_config[&quot;attribute&quot;]</span>} ILIKE :value&quot;, :value =&gt; (&quot;%#{value}%&quot;))</span><table id='context13' class='context' style='display:none'><caption>app/controllers/concerns/expert_comparators.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>171</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      attribute = field_config[&#39;attribute&#39;]</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>173</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      if attribute.is_a?(String)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>174</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        check_that_item_attribute(attribute)</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>175</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        return items.where(</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>176</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          &quot;items.#{attribute} ILIKE :value&quot;,</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>177</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          value: &quot;%#{value}%&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>178</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      elsif attribute.is_a?(Array)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>180</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        if attribute.length != 2</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>181</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          throw &#39;Attribute length must be 2, but is: &#39; + attribute.to_s</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>ExpertComparators</td>
+      <td>generic_ilike</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context14');toggle('message14');toggle('full_message14')" >Possible SQL injection near line 188: <span class="code">items.where(&quot;items.properties -&gt;&gt; &#39;#{<span class="user_input">field_config[&quot;attribute&quot;][1]</span>}&#39; ILIKE :value&quot;, :value =&gt; (&quot;%#{value}%&quot;))</span><table id='context14' class='context' style='display:none'><caption>app/controllers/concerns/expert_comparators.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>183</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        if attribute[0] != &#39;properties&#39;</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>184</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          throw &#39;We expect properties, but is: &#39; + attribute.to_s</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>185</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        end</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>187</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        items.where(</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>188</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          &quot;items.properties -&gt;&gt; &#39;#{attribute[1]}&#39; ILIKE :value&quot;,</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>189</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          value: &quot;%#{value}%&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>190</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      else</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>191</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        throw &#39;Not supported attribute: &#39; + attribute.to_s</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>192</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>193</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>ExpertComparators</td>
+      <td>reduce_for_autocomplete_search</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context15');toggle('message15');toggle('full_message15')" >Possible SQL injection near line 229: <span class="code">items.joins(:model).where(&quot;models.id = &#39;#{<span class="user_input">filter_value[&quot;id&quot;]</span>}&#39;&quot;)</span><table id='context15' class='context' style='display:none'><caption>app/controllers/concerns/expert_comparators.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>224</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        return items</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>225</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>227</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      case field_id</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>228</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      when &#39;model_id&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>229</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        items.joins(:model).where(&quot;models.id = &#39;#{selection_id}&#39;&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>230</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      else</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>231</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        generic_equal_value(items, selection_id, field_config)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>232</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      end</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>233</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>Room</td>
+      <td>Room.search</td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/sql_injection/">SQL Injection</a></td>
+      <td>[89]</td>
+      <td><div class='warning_message' onClick="toggle('context7');toggle('message7');toggle('full_message7')" >Possible SQL injection near line 22: <span class="code">joins(&quot;INNER JOIN buildings ON buildings.id = rooms.building_id&quot;).where(&quot;        rooms.name ILIKE &#39;%#{<span class="user_input">search_term</span>}%&#39; OR\n        buildings.name ILIKE &#39;%#{<span class="user_input">search_term</span>}%&#39; OR\n        buildings.code ILIKE &#39;%#{<span class="user_input">search_term</span>}%&#39;\n&quot;.strip_heredoc)</span><table id='context7' class='context' style='display:none'><caption>app/models/room.rb</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>17</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>  end</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>19</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  def self.search(search_term)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>20</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    joins(&#39;INNER JOIN buildings ON buildings.id = rooms.building_id&#39;)</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>21</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      .where(&lt;&lt;-SQL.strip_heredoc)</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>22</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        rooms.name ILIKE &#39;%#{search_term}%&#39; OR</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>23</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        buildings.name ILIKE &#39;%#{search_term}%&#39; OR</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>24</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        buildings.code ILIKE &#39;%#{search_term}%&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>25</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      SQL</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>26</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  end</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+  </tbody>
+</table>
+<p>View Warnings</p>
+<table>
+  <thead>
+    <tr>
+      <th>Confidence</th>
+      <th>Template</th>
+      <th>Warning Type</th>
+      <th>CWE ID</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr>
+      <td><span class='high-confidence'>High</span></td>
+      <td>
+        
+          manage/users/index (Manage::UsersController#index)
+        
+      </td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/cross-site_scripting/">Cross-Site Scripting</a></td>
+      <td>[79]</td>
+      <td><div class='warning_message' onClick="toggle('context34');toggle('message34');toggle('full_message34')" >Unescaped parameter value near line 62: <span class="code">params[:role]</span><table id='context34' class='context' style='display:none'><caption>app/views/manage/users/index.html.haml</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>58</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>:coffeescript</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>59</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>  jQuery -&gt;</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>60</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    new App.UsersIndexController</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>61</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      el: $(&quot;#user-index-view&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>62</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      role: &quot;#{@role}&quot;</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='high-confidence'>High</span></td>
+      <td>
+        
+          manage/orders/edit (Manage::OrdersController#edit)
+        
+      </td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/cross_site_scripting">Cross-Site Scripting</a></td>
+      <td>[79]</td>
+      <td><div class='warning_message' onClick="toggle('context32');toggle('message32');toggle('full_message32')" >Unescaped model attribute near line 51: <span class="code">Order.find(id_param).user.entitlement_group_ids</span><table id='context32' class='context' style='display:none'><caption>app/views/manage/orders/edit.html.haml</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>46</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      modelsJson = `#{j @models.to_json}`</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>47</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      softwareJson = `#{j @software.to_json}`</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>48</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      itemsJson = `#{j @items.to_json}`</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>49</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      reservationsJson = `#{j @reservations.to_json}`</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>51</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      App.User.addRecord new App.User($.extend({groupIds: #{@group_ids}}, JSON.parse(userJson)))</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>52</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      App.Order.addRecord new App.Order(JSON.parse(orderJson))</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>54</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      createRecord(modelsJson, App.Model)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>55</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      createRecord(softwareJson, App.Software)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>56</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>      createRecord(itemsJson, App.Item)</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='high-confidence'>High</span></td>
+      <td>
+        
+          manage/mail_templates/edit (Manage::MailTemplatesController#edit)
+        
+      </td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/dangerous_send/">Dangerous Send</a></td>
+      <td>[77]</td>
+      <td><div class='warning_message' onClick="toggle('context37');toggle('message37');toggle('full_message37')" >User controlled method execution near line 95: <span class="code">MailTemplate.send(&quot;available_liquid_variables_for_#{(<span class="user_input">params[:type]</span> or &quot;default_type&quot;)}&quot;)</span><table id='context37' class='context' style='display:none'><caption>app/views/manage/mail_templates/edit.html.haml</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>90</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>                      - method_name = &quot;available_liquid_variables_for_#{type}&quot;</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>92</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                      -# Call the method safely</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>93</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                      = capture_haml do</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>94</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                        - if MailTemplate.respond_to?(method_name)</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>95</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                          - list_variables MailTemplate.send(method_name)</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>96</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                        - else</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>97</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>                          %p= _(&quot;Method not available.&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>100</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>:scss</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='high-confidence'>High</span></td>
+      <td>
+        
+          manage/models/edit_old (Manage::ModelsController#edit_old)
+        
+      </td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/link_to_href">Cross-Site Scripting</a></td>
+      <td>[79]</td>
+      <td><div class='warning_message' onClick="toggle('context35');toggle('message35');toggle('full_message35')" >Unsafe parameter value in <span class="code">link_to</span> href near line 19: <span class="code">link_to(_(&quot;Cancel&quot;), (if <span class="user_input">params[:return_url]</span> then   <span class="user_input">params[:return_url]</span> else   :back end), :class =&gt; &quot;button grey&quot;)</span><table id='context35' class='context' style='display:none'><caption>app/views/manage/models/edit_old.html.haml</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>14</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        .col1of2</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>15</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          %h1.headline-l= yield :title</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>16</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          %h2.headline-s.light= _(&quot;Make changes and save&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>17</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        .col1of2.text-align-right</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>19</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          = link_to _(&#39;Cancel&#39;), (params[:return_url] ? params[:return_url] : :back), class: &#39;button grey&#39;</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>21</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          %button#save.button.green{:autocomplete =&gt; :off}</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>22</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            = _(&quot;Save %s&quot;) % ( @model.is_a?(Software) ? _(&quot;Software&quot;) : _(&quot;Model&quot;) )</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>24</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    .padding-inset-m</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>
+        
+          manage/user_groups/index (Manage::UserGroupsController#index)
+        
+      </td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/cross_site_scripting">Cross-Site Scripting</a></td>
+      <td>[79]</td>
+      <td><div class='warning_message' onClick="toggle('context33');toggle('message33');toggle('full_message33')" >Unescaped parameter value near line 27: <span class="code">(_(&quot;To allocate models to users use the %s.&quot;) % (&quot;&lt;a href=\&quot;/manage/#{<span class="user_input">params[:inventory_pool_id]</span>}/groups\&quot;&gt;%s&lt;/a&gt;&quot; % _(&quot;Entitlement-Groups&quot;)))</span><table id='context33' class='context' style='display:none'><caption>app/views/manage/user_groups/index.html.haml</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>22</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>        %p</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>23</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          = _(&quot;A Group contains several users. These users can gain a role by assigning the role to their Group.&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>25</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        %p</pre>
+            </td>
+          </tr>
+          <tr class='context alt near_error'>
+            <td class='context_line'>
+              <pre class='context'>26</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          - link = &quot;&lt;a href=\&quot;/manage/#{inventory_pool_id}/groups\&quot;&gt;%s&lt;/a&gt;&quot; % _(&quot;Entitlement-Groups&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>27</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          != _(&quot;To allocate models to users use the %s.&quot;) % link</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>29</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        .new-admin-banner.notice.paragraph-m.row.emboss.text-align-center.padding-inset-xs.margin-top-m</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>30</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          .col1of10</pre>
+            </td>
+          </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>31</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>            %i.fa.fa-wrench.flash-icon</pre>
+            </td>
+          </tr>
+          <tr class='context'>
+            <td class='context_line'>
+              <pre class='context'>32</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>          .col8of10</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+    <tr>
+      <td><span class='weak-confidence'>Weak</span></td>
+      <td>
+        
+          manage/entitlement_groups/index (Manage::EntitlementGroupsController#index)
+        
+      </td>
+      <td><a rel="noreferrer" href="https://brakemanscanner.org/docs/warning_types/dynamic_render_path/">Dynamic Render Path</a></td>
+      <td>[22]</td>
+      <td><div class='warning_message' onClick="toggle('context36');toggle('message36');toggle('full_message36')" >Render path contains parameter value near line 24: <span class="code">render(action =&gt; current_inventory_pool.entitlement_groups.where(:id =&gt; params[:group_ids]).search(<span class="user_input">params[:search_term]</span>).order(:name), {})</span><table id='context36' class='context' style='display:none'><caption>app/views/manage/entitlement_groups/index.html.haml</caption>      <thead style='display:none'>
+        <tr>
+          <th>line number</th>
+          <th>line content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='context first'>
+          <td class='context_line'>
+            <pre class='context'>20</pre>
+          </td>
+          <td class='context'>
+            <pre class='context'>      .inline-tab-navigation</pre>
+          </td>
+        </tr>
+          <tr class='context alt'>
+            <td class='context_line'>
+              <pre class='context'>22</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>        .inline-tab-item.active= _(&quot;All&quot;)</pre>
+            </td>
+          </tr>
+          <tr class='context error'>
+            <td class='context_line'>
+              <pre class='context'>24</pre>
+            </td>
+            <td class='context'>
+              <pre class='context'>    .list-of-lines.even= render @groups</pre>
+            </td>
+          </tr>
+</tbody></table></div></td>
+    </tr>
+  
+  </tbody>
+</table>
+</body></html>

@@ -1,0 +1,986 @@
+{
+  "scan_info": {
+    "app_path": "/Users/mradl/repos/leihs/legacy",
+    "rails_version": "6.1.7",
+    "security_warnings": 37,
+    "start_time": "2024-02-23 19:51:19 +0100",
+    "end_time": "2024-02-23 19:51:29 +0100",
+    "duration": 10.321478,
+    "checks_performed": [
+      "BasicAuth",
+      "BasicAuthTimingAttack",
+      "CSRFTokenForgeryCVE",
+      "ContentTag",
+      "CookieSerialization",
+      "CreateWith",
+      "CrossSiteScripting",
+      "DefaultRoutes",
+      "Deserialize",
+      "DetailedExceptions",
+      "DigestDoS",
+      "DynamicFinders",
+      "EOLRails",
+      "EOLRuby",
+      "EscapeFunction",
+      "Evaluation",
+      "Execute",
+      "FileAccess",
+      "FileDisclosure",
+      "FilterSkipping",
+      "ForgerySetting",
+      "HeaderDoS",
+      "I18nXSS",
+      "JRubyXML",
+      "JSONEncoding",
+      "JSONEntityEscape",
+      "JSONParsing",
+      "LinkTo",
+      "LinkToHref",
+      "MailTo",
+      "MassAssignment",
+      "MimeTypeDoS",
+      "ModelAttrAccessible",
+      "ModelAttributes",
+      "ModelSerialize",
+      "NestedAttributes",
+      "NestedAttributesBypass",
+      "NumberToCurrency",
+      "PageCachingCVE",
+      "Pathname",
+      "PermitAttributes",
+      "QuoteTableName",
+      "Ransack",
+      "Redirect",
+      "RegexDoS",
+      "Render",
+      "RenderDoS",
+      "RenderInline",
+      "ResponseSplitting",
+      "RouteDoS",
+      "SQL",
+      "SQLCVEs",
+      "SSLVerify",
+      "SafeBufferManipulation",
+      "SanitizeConfigCve",
+      "SanitizeMethods",
+      "SelectTag",
+      "SelectVulnerability",
+      "Send",
+      "SendFile",
+      "SessionManipulation",
+      "SessionSettings",
+      "SimpleFormat",
+      "SingleQuotes",
+      "SkipBeforeFilter",
+      "SprocketsPathTraversal",
+      "StripTags",
+      "SymbolDoSCVE",
+      "TemplateInjection",
+      "TranslateBug",
+      "UnsafeReflection",
+      "UnsafeReflectionMethods",
+      "ValidationRegex",
+      "VerbConfusion",
+      "WeakRSAKey",
+      "WithoutProtection",
+      "XMLDoS",
+      "YAMLParsing"
+    ],
+    "number_of_controllers": 40,
+    "number_of_models": 54,
+    "number_of_templates": 218,
+    "ruby_version": "3.1.4",
+    "brakeman_version": "6.1.2"
+  },
+  "warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "01669b2633b322ebee28822b81c804836a8bc993c33178ac09b276a634209f44",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/manage/models_controller.rb",
+      "line": 86,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\tentitlement_groups.*\\n        from\\n        \\tentitlement_groups\\n        where\\n        \\tentitlement_groups.id in (#{(entitlements.map do\n e[\"entitlement_group_id\"]\n end + entitlement_groups_users.map do\n r[\"entitlement_group_id\"]\n end).map do\n \"'#{id}'\"\n end.join(\",\")})\\n          and entitlement_groups.inventory_pool_id = '#{inventory_pool_id}'\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Manage::ModelsController",
+        "method": "entitlement_groups"
+      },
+      "user_input": "(entitlements.map do\n e[\"entitlement_group_id\"]\n end + entitlement_groups_users.map do\n r[\"entitlement_group_id\"]\n end).map do\n \"'#{id}'\"\n end.join(\",\")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "026678bade2671243dc2c3bfc877993a099dafe33e272fb380fd4873d4c35a5d",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/manage/entitlement_groups/index.html.haml",
+      "line": 24,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => current_inventory_pool.entitlement_groups.where(:id => params[:group_ids]).search(params[:search_term]).order(:name), {})",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::EntitlementGroupsController",
+          "method": "index",
+          "line": 37,
+          "file": "app/controllers/manage/entitlement_groups_controller.rb",
+          "rendered": {
+            "name": "manage/entitlement_groups/index",
+            "file": "app/views/manage/entitlement_groups/index.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/entitlement_groups/index"
+      },
+      "user_input": "params[:search_term]",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "0ef729c530e6e204495717d54d5327eb60628364b6a52ab801341733927a8cdd",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/manage/models_controller.rb",
+      "line": 63,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\tentitlement_groups_users.*\\n        from\\n        \\tentitlement_groups_users\\n        where\\n        \\tuser_id in (#{users.map do\n r[\"id\"]\n end.map do\n \"'#{id}'\"\n end.join(\",\")})\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Manage::ModelsController",
+        "method": "entitlement_groups_users"
+      },
+      "user_input": "users.map do\n r[\"id\"]\n end.map do\n \"'#{id}'\"\n end.join(\",\")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "14bb268752f7fd111ddebcc681a03f11a97cb106119bc00902a98f4f1c4645b4",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/timeline_availability.rb",
+      "line": 114,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\titems.*\\n        from\\n        \\titems\\n        where\\n        \\titems.inventory_pool_id = '#{inventory_pool_id}'\\n          and items.model_id = '#{model_id}'\\n          and items.parent_id is null\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TimelineAvailability",
+        "method": "items"
+      },
+      "user_input": "inventory_pool_id",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "1a281f28ba33ec75573d3d45d7cad50b69db6c8dbd8719f4c75c01c4b6bb47a2",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/item.rb",
+      "line": 125,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "joins(\"      INNER JOIN (SELECT i1.id,\\n                         CONCAT_WS(' ',\\n                                   #{[\"inventory_code\", \"serial_number\", \"invoice_number\", \"note\", \"name\", \"user_name\", \"properties\"].map do\n \"m1.#{:BRAKEMAN_SAFE_LITERAL}\"\n end.join(\", \")},\\n                                   #{[\"inventory_code\", \"serial_number\", \"invoice_number\", \"note\", \"name\", \"user_name\", \"properties\"].map do\n \"m2.#{:BRAKEMAN_SAFE_LITERAL}\"\n end.join(\", \")},\\n                                   #{[\"inventory_code\", \"serial_number\", \"invoice_number\", \"note\", \"name\", \"user_name\", \"properties\"].map do\n \"i1.#{:BRAKEMAN_SAFE_LITERAL}\"\n end.join(\", \")},\\n                                   #{[\"inventory_code\", \"serial_number\", \"invoice_number\", \"note\", \"name\", \"user_name\", \"properties\"].map do\n \"i2.#{:BRAKEMAN_SAFE_LITERAL}\"\n end.join(\", \")},\\n                                   #{[\"inventory_code\", \"serial_number\", \"invoice_number\", \"note\", \"name\", \"user_name\", \"properties\"].map do\n \"r.#{:BRAKEMAN_SAFE_LITERAL}\"\n end.join(\", \")}) AS text\\n                  FROM items AS i1\\n                  INNER JOIN models AS m1 ON i1.model_id = m1.id\\n                  LEFT JOIN items AS i2 ON i2.parent_id = i1.id\\n                  LEFT JOIN models AS m2 ON m2.id = i2.model_id\\n                  LEFT JOIN rooms AS r ON r.id = i1.room_id) AS full_text\\n      ON items.id = full_text.id\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Item",
+        "method": "search"
+      },
+      "user_input": "[\"inventory_code\", \"serial_number\", \"invoice_number\", \"note\", \"name\", \"user_name\", \"properties\"].map do\n \"m1.#{:BRAKEMAN_SAFE_LITERAL}\"\n end.join(\", \")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "22c5c68af92d616f4922b95a81850008948086026b3113d51e85a76aa389de2a",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/expert_comparators.rb",
+      "line": 139,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "items.where(\"items.properties ->> '#{field_config[\"attribute\"][1]}' >= :from\", :from => from).where(\"items.properties ->> '#{field_config[\"attribute\"][1]}' <= :to\", :to => to)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExpertComparators",
+        "method": "generic_between_value"
+      },
+      "user_input": "field_config[\"attribute\"][1]",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "259a847aeecac1c4220983ee1d803fe9b232a29379a43ef16825fff116a97869",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/manage/models_controller.rb",
+      "line": 46,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\tusers.*\\n        from\\n        \\tusers\\n        where\\n        \\tusers.id in (#{reservations.map do\n r[\"user_id\"]\n end.map do\n \"'#{id}'\"\n end.join(\",\")})\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Manage::ModelsController",
+        "method": "reservation_users"
+      },
+      "user_input": "reservations.map do\n r[\"user_id\"]\n end.map do\n \"'#{id}'\"\n end.join(\",\")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "38f47b85e2c954678e124ba2bc1640c7810dbc722bfbc1d824ea727758028769",
+      "check_name": "LinkToHref",
+      "message": "Unsafe parameter value in `link_to` href",
+      "file": "app/views/manage/models/edit_old.html.haml",
+      "line": 19,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(_(\"Cancel\"), (if params[:return_url] then\n  params[:return_url]\nelse\n  :back\nend), :class => \"button grey\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::ModelsController",
+          "method": "edit_old",
+          "line": 134,
+          "file": "app/controllers/manage/models_controller.rb",
+          "rendered": {
+            "name": "manage/models/edit_old",
+            "file": "app/views/manage/models/edit_old.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/models/edit_old"
+      },
+      "user_input": "params[:return_url]",
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "3c1b3f8504dfafd64cc23d66893b1c32e41033556feabe13f6a526661a5bea9b",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/manage/models_controller.rb",
+      "line": 29,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\treservations.*\\n        from\\n        \\treservations\\n        where\\n        \\treservations.inventory_pool_id = '#{inventory_pool_id}'\\n        \\tand status not in ('draft', 'rejected', 'canceled', 'closed')\\n          and model_id = '#{model_id}'\\n          and reservations.type = 'ItemLine'\\n          and not (\\n            status = 'unsubmitted' and\\n            updated_at < '#{(Time.now.utc - Setting.first.timeout_minutes.minutes)}'\\n          )\\n          and not (\\n            end_date < '#{Time.zone.today}' and\\n            item_id is null\\n          )\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Manage::ModelsController",
+        "method": "running_reservations"
+      },
+      "user_input": "inventory_pool_id",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "400c3caa5af50eeddbcbbed3818c55d8c4714559197a44aaa63f1cea2343e9e5",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "lib/file_conversion.rb",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"convert #{filepath} -resize '100x100' #{\"#{filepath}.thumb\"}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "FileConversion",
+        "method": "s(:self).create_thumbnail"
+      },
+      "user_input": "filepath",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "4794e98ebef182cf82fe2c86ffe9e1bbf4bd98549ed4d0f74195168b14a245ae",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/workaround_rails_bug25198.rb",
+      "line": 14,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_delete(\"          DELETE FROM images WHERE id = '#{UUIDTools::UUID.parse(image_id)}'\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "WorkaroundRailsBug25198",
+        "method": "deal_with_destroy_nested_attributes!"
+      },
+      "user_input": "UUIDTools::UUID.parse(image_id)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "522bbae639597e520b2dd1b1c87c30884240cda24ab6972e07ba90ee7cef1dbd",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/expert_comparators.rb",
+      "line": 122,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "items.where(\"items.#{field_config[\"attribute\"]} >= :from\", :from => from).where(\"items.#{field_config[\"attribute\"]} <= :to\", :to => to)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExpertComparators",
+        "method": "generic_between_value"
+      },
+      "user_input": "field_config[\"attribute\"]",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "587e48e226d6b3c587506b3de51f5fcd2a2d4be86aca6117e2897fa80c40b77f",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/inventory_pool.rb",
+      "line": 128,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "select(\"     reservations.id,\\n     reservations.inventory_pool_id,\\n     reservations.model_id,\\n     reservations.item_id,\\n     reservations.quantity,\\n     reservations.start_date,\\n     reservations.end_date,\\n     reservations.returned_date,\\n     reservations.status,\\n     ARRAY(\\n       SELECT egu.entitlement_group_id\\n       FROM entitlement_groups_users egu\\n       INNER JOIN entitlement_groups eg\\n       ON eg.id = egu.entitlement_group_id\\n       WHERE egu.user_id = reservations.user_id\\n       ORDER BY eg.name ASC\\n     ) AS user_group_ids\\n\").joins(\"LEFT JOIN items ON reservations.item_id = items.id\").where(\"       reservations.item_id IS NULL OR items.is_borrowable = TRUE\\n\").where(\"       reservations.status NOT IN ('draft', 'rejected', 'canceled', 'closed')\\n       AND NOT (\\n         reservations.status = 'unsubmitted' AND\\n         reservations.updated_at < '#{(Time.now.utc - Setting.first.timeout_minutes.minutes)}'\\n       )\\n       AND NOT (\\n         reservations.end_date < '#{Time.zone.today}' AND\\n         reservations.item_id IS NULL\\n       )\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "InventoryPool",
+        "method": null
+      },
+      "user_input": "Setting.first.timeout_minutes",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "6128926a2f2dabb1ba6d0fe23180714f1eddea1c764a93f0e536f291b56d256f",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/timeline_availability.rb",
+      "line": 63,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\tentitlement_groups_users.*\\n        from\\n        \\tentitlement_groups_users\\n        where\\n        \\tuser_id in (#{users.map do\n r[\"id\"]\n end.map do\n \"'#{id}'\"\n end.join(\",\")})\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TimelineAvailability",
+        "method": "entitlement_groups_users"
+      },
+      "user_input": "users.map do\n r[\"id\"]\n end.map do\n \"'#{id}'\"\n end.join(\",\")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "630cfee14f17e24b3442c0caa4d5d552b54868e4bc6e40c9f3c40f642c162de0",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/procurement_access.rb",
+      "line": 12,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ApplicationRecord.connection.exec_query(\"        SELECT (\\n          EXISTS (\\n            SELECT TRUE\\n            FROM procurement_requesters_organizations\\n            WHERE user_id = '#{UUIDTools::UUID.parse(id)}'\\n          ) OR\\n          EXISTS (\\n            SELECT TRUE\\n            FROM procurement_category_viewers\\n            WHERE user_id = '#{UUIDTools::UUID.parse(id)}'\\n          ) OR\\n          EXISTS (\\n            SELECT TRUE\\n            FROM procurement_category_inspectors\\n            WHERE user_id = '#{UUIDTools::UUID.parse(id)}'\\n          ) OR\\n          EXISTS (\\n            SELECT TRUE\\n            FROM procurement_admins\\n            WHERE user_id = '#{UUIDTools::UUID.parse(id)}'\\n          )\\n        ) as result\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Concerns::ProcurementAccess",
+        "method": "procurement_access?"
+      },
+      "user_input": "UUIDTools::UUID.parse(id)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "6f9d1423e87c44832b23093c30cae29fe7271b4ad85c80adbbf8efab3d8800b8",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/timeline_availability.rb",
+      "line": 99,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        SELECT entitlements.*\\n        FROM entitlements\\n        JOIN entitlement_groups\\n          ON entitlement_groups.id = entitlements.entitlement_group_id\\n        WHERE model_id = '#{model_id}'\\n          AND entitlement_groups.inventory_pool_id = '#{pool_id}'\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TimelineAvailability",
+        "method": "entitlements"
+      },
+      "user_input": "model_id",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "7b741a1b7dd526c37ca0bb607edc4c9f9b1d8466626b1100b0c9b804bfb5fcab",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/manage/users/index.html.haml",
+      "line": 62,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross-site_scripting/",
+      "code": "params[:role]",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::UsersController",
+          "method": "index",
+          "line": 51,
+          "file": "app/controllers/manage/users_controller.rb",
+          "rendered": {
+            "name": "manage/users/index",
+            "file": "app/views/manage/users/index.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/users/index"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "7c6a82a64a0b67d4c6b13593d75491c29129649a81cdeb3c13add3ea9dc46f7f",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/expert_comparators.rb",
+      "line": 121,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "items.where(\"items.#{field_config[\"attribute\"]} >= :from\", :from => from)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExpertComparators",
+        "method": "generic_between_value"
+      },
+      "user_input": "field_config[\"attribute\"]",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "9112ac45a924fd0ada5f5cae860de936341641daea7b04603bc12edc5c801a0a",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/manage/user_groups/index.html.haml",
+      "line": 27,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "(_(\"To allocate models to users use the %s.\") % (\"<a href=\\\"/manage/#{params[:inventory_pool_id]}/groups\\\">%s</a>\" % _(\"Entitlement-Groups\")))",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::UserGroupsController",
+          "method": "index",
+          "line": 4,
+          "file": "app/controllers/manage/user_groups_controller.rb",
+          "rendered": {
+            "name": "manage/user_groups/index",
+            "file": "app/views/manage/user_groups/index.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/user_groups/index"
+      },
+      "user_input": "params[:inventory_pool_id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ]
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "9271822ad6ed399d3508bff716ac44324fbc614d29dcec0f58c3a00f891af4bc",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "doc/other/barcode_maker.rb",
+      "line": 25,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"inkscape -z -T -E #{\"eps/barcode_#{string}.eps\"} #{\"svg/barcode_#{string}.svg\"}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "BarcodeMaker",
+        "method": "make_eps"
+      },
+      "user_input": "string",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "957340219d28f74d004c9ce6e6b3a13a07d9cc1b1352f200667af97b96077c4d",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/timeline_availability.rb",
+      "line": 46,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\tusers.*\\n        from\\n        \\tusers\\n        where\\n        \\tusers.id in (#{reservations.map do\n r[\"user_id\"]\n end.map do\n \"'#{id}'\"\n end.join(\",\")})\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TimelineAvailability",
+        "method": "reservation_users"
+      },
+      "user_input": "reservations.map do\n r[\"user_id\"]\n end.map do\n \"'#{id}'\"\n end.join(\",\")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "96040f273617919ffe73784dd4bf2da4ac3f0efc7a2f427719355ce436b9d02b",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/expert_comparators.rb",
+      "line": 176,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "items.where(\"items.#{field_config[\"attribute\"]} ILIKE :value\", :value => (\"%#{value}%\"))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExpertComparators",
+        "method": "generic_ilike"
+      },
+      "user_input": "field_config[\"attribute\"]",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "9cfb6fe1d1600ef5c8b10010a15c01de18940882f076137a960e247c1ce4a177",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/manage/models_controller.rb",
+      "line": 114,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\titems.*\\n        from\\n        \\titems\\n        where\\n        \\titems.inventory_pool_id = '#{inventory_pool_id}'\\n          and items.model_id = '#{model_id}'\\n          and items.parent_id is null\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Manage::ModelsController",
+        "method": "items"
+      },
+      "user_input": "inventory_pool_id",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "9e5919e1ac3c7d9dd975cb35ee26aab5b03ee1490b89d28e6c46ff1310d9f3e0",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/timeline_availability.rb",
+      "line": 29,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\treservations.*\\n        from\\n        \\treservations\\n        where\\n        \\treservations.inventory_pool_id = '#{inventory_pool_id}'\\n        \\tand status not in ('draft', 'rejected', 'canceled', 'closed')\\n          and model_id = '#{model_id}'\\n          and reservations.type = 'ItemLine'\\n          and not (\\n            status = 'unsubmitted' and\\n            updated_at < '#{(Time.now.utc - Setting.first.timeout_minutes.minutes)}'\\n          )\\n          and not (\\n            end_date < '#{Time.zone.today}' and\\n            item_id is null\\n          )\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TimelineAvailability",
+        "method": "running_reservations"
+      },
+      "user_input": "inventory_pool_id",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "a1c4eb9b6829c26890893c7ba5dbb3d73131d87a146b13d5048b49e68b940471",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/expert_comparators.rb",
+      "line": 135,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "items.where(\"items.properties ->> '#{field_config[\"attribute\"][1]}' >= :from\", :from => from)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExpertComparators",
+        "method": "generic_between_value"
+      },
+      "user_input": "field_config[\"attribute\"][1]",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "ab663d9cf6ddec71fa360e9cc39921a922d657b941aba1414cd58cc4a076f3c2",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/user.rb",
+      "line": 61,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(:items => ({ :retired => nil, :is_borrowable => true, :parent_id => nil })).joins(\"INNER JOIN (#{Entitlement.query}) AS pwg ON models.id = pwg.model_id AND inventory_pools.id = pwg.inventory_pool_id AND pwg.quantity > 0 AND (pwg.entitlement_group_id IN (SELECT entitlement_group_id FROM entitlement_groups_users WHERE user_id = '#{proxy_association.owner.id}') OR pwg.entitlement_group_id IS NULL)\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "User",
+        "method": "with_borrowable_items"
+      },
+      "user_input": "Entitlement.query",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "ab8f09852bec6a209c3e65366c801290e10774c5e2fb2c4808b66ad86c0a892f",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/manage/models_controller.rb",
+      "line": 99,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        SELECT entitlements.*\\n        FROM entitlements\\n        JOIN entitlement_groups\\n          ON entitlement_groups.id = entitlements.entitlement_group_id\\n        WHERE model_id = '#{model_id}'\\n          AND entitlement_groups.inventory_pool_id = '#{pool_id}'\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Manage::ModelsController",
+        "method": "entitlements"
+      },
+      "user_input": "model_id",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "ab9194bcb6b54574a57d5ae6b94c1c539b7dd17a5a9d0cddaf724a0d169c8758",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/expert_comparators.rb",
+      "line": 188,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "items.where(\"items.properties ->> '#{field_config[\"attribute\"][1]}' ILIKE :value\", :value => (\"%#{value}%\"))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExpertComparators",
+        "method": "generic_ilike"
+      },
+      "user_input": "field_config[\"attribute\"][1]",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "b82e6858bd19504484c3901ad067359b4802701c9fe50cd34fa90f1b5a2c6e8f",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/manage/orders/edit.html.haml",
+      "line": 51,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Order.find(id_param).user.entitlement_group_ids",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::OrdersController",
+          "method": "edit",
+          "line": 37,
+          "file": "app/controllers/manage/orders_controller.rb",
+          "rendered": {
+            "name": "manage/orders/edit",
+            "file": "app/views/manage/orders/edit.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/orders/edit"
+      },
+      "user_input": null,
+      "confidence": "High",
+      "cwe_id": [
+        79
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "bd4a313683893dff7d561de20ffe15cc3c03d931565ce4748416c4a6bd095449",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/expert_comparators.rb",
+      "line": 163,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "items.where(\"items.properties ->> '#{field_config[\"attribute\"][1]}' = :value\", :value => value)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExpertComparators",
+        "method": "generic_equal_value"
+      },
+      "user_input": "field_config[\"attribute\"][1]",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "c913b6d7528c7bbfe53b64f90d0e74097f3d96bbc26a8617f9c169c8a1d6d9a7",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/timeline_availability.rb",
+      "line": 86,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"        select\\n        \\tentitlement_groups.*\\n        from\\n        \\tentitlement_groups\\n        where\\n        \\tentitlement_groups.id in (#{(entitlements.map do\n e[\"entitlement_group_id\"]\n end + entitlement_groups_users.map do\n r[\"entitlement_group_id\"]\n end).map do\n \"'#{id}'\"\n end.join(\",\")})\\n          and entitlement_groups.inventory_pool_id = '#{inventory_pool_id}'\\n\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "TimelineAvailability",
+        "method": "entitlement_groups"
+      },
+      "user_input": "(entitlements.map do\n e[\"entitlement_group_id\"]\n end + entitlement_groups_users.map do\n r[\"entitlement_group_id\"]\n end).map do\n \"'#{id}'\"\n end.join(\",\")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "cf633c52eb4bb18541c3af83952795b69f92d02b6656373f90a5eda8d232e905",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/room.rb",
+      "line": 22,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "joins(\"INNER JOIN buildings ON buildings.id = rooms.building_id\").where(\"        rooms.name ILIKE '%#{search_term}%' OR\\n        buildings.name ILIKE '%#{search_term}%' OR\\n        buildings.code ILIKE '%#{search_term}%'\\n\".strip_heredoc)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Room",
+        "method": "Room.search"
+      },
+      "user_input": "search_term",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "d8ef7824e00bf5229b432ff21fa484eafa83a6d5bfcd68df3f0a5d88b8217e87",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/user.rb",
+      "line": 47,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(:items => ({ :retired => nil, :is_borrowable => true, :parent_id => nil })).joins(\"INNER JOIN (#{Entitlement.query}) AS pwg ON models.id = pwg.model_id AND inventory_pools.id = pwg.inventory_pool_id AND pwg.quantity > 0 AND (pwg.entitlement_group_id IN (SELECT entitlement_group_id FROM entitlement_groups_users WHERE user_id = '#{proxy_association.owner.id}') OR pwg.entitlement_group_id IS NULL)\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "User",
+        "method": "borrowable"
+      },
+      "user_input": "Entitlement.query",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "HTTP Verb Confusion",
+      "warning_code": 118,
+      "fingerprint": "f4430cfe2042adeef0cbad41ccfea4429ef8ea8926832ce920ea5c73d3bcbaa9",
+      "check_name": "VerbConfusion",
+      "message": "Potential HTTP verb confusion. `HEAD` is routed like `GET` but `request.get?` will return `false`",
+      "file": "lib/authenticated_system.rb",
+      "line": 18,
+      "link": "https://brakemanscanner.org/docs/warning_types/http_verb_confusion/",
+      "code": "if request.get? then\n  store_location\n  flash[:notice] = _(\"You don't have permission to perform this action\")\n  redirect_to(root_path)\nelse\n  render(:status => :method_not_allowed, :plain => _(\"You don't have permission to perform this action\"))\nend",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "AuthenticatedSystem",
+        "method": "access_denied"
+      },
+      "user_input": "request.get?",
+      "confidence": "Weak",
+      "cwe_id": [
+        352
+      ]
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "f6b2c2c4dd7ed84f97fe1ba11181bf716c13d9637971fed152bc43de5f1bee2b",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/controllers/concerns/expert_comparators.rb",
+      "line": 229,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "items.joins(:model).where(\"models.id = '#{filter_value[\"id\"]}'\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ExpertComparators",
+        "method": "reduce_for_autocomplete_search"
+      },
+      "user_input": "filter_value[\"id\"]",
+      "confidence": "Weak",
+      "cwe_id": [
+        89
+      ]
+    },
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "f7efc4136a692c9e67babfd89f45ebeacb15ed37358334087c908b3f54ece502",
+      "check_name": "MassAssignment",
+      "message": "Specify exact keys allowed for mass assignment instead of using `permit!` which allows any keys",
+      "file": "app/controllers/concerns/main_helpers.rb",
+      "line": 78,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.permit!",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MainHelpers",
+        "method": "permit_params"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ]
+    },
+    {
+      "warning_type": "Dangerous Send",
+      "warning_code": 23,
+      "fingerprint": "fb03debe08c0314f1746370e9647d8377d3261eb5d7b1d7b6cdee2e9c6b62502",
+      "check_name": "Send",
+      "message": "User controlled method execution",
+      "file": "app/views/manage/mail_templates/edit.html.haml",
+      "line": 95,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_send/",
+      "code": "MailTemplate.send(\"available_liquid_variables_for_#{(params[:type] or \"default_type\")}\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Manage::MailTemplatesController",
+          "method": "edit",
+          "line": 23,
+          "file": "app/controllers/manage/mail_templates_controller.rb",
+          "rendered": {
+            "name": "manage/mail_templates/edit",
+            "file": "app/views/manage/mail_templates/edit.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "manage/mail_templates/edit"
+      },
+      "user_input": "params[:type]",
+      "confidence": "High",
+      "cwe_id": [
+        77
+      ]
+    }
+  ],
+  "ignored_warnings": [
+
+  ],
+  "errors": [
+
+  ],
+  "obsolete": [
+
+  ]
+}

@@ -1,0 +1,8 @@
+---
+:skip_files:
+  - test/
+  - cider-ci/bin/check-rails-warnings.rb
+  - doc/import_export/csv_export_of_items.rb
+:output_files:
+  - reports/brakeman.json
+  - reports/brakeman.html
