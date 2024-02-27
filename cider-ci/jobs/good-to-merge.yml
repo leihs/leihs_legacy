@@ -10,27 +10,18 @@ jobs:
       It also include *git* meta checks (only relevant for pushing to master).
       Status of this job is **used by github's "branch protection"**!
 
-    depends_on:
+    depends_on: &GOOD_TO_MERGE_DEPS
       all tests passed:
         type: job
         job_key: all-tests
         states: [passed]
-      good to merge of the database:
-        job_key: good-to-merge
+      database merged to master:
+        job_key: merged-to-master
         type: job
         submodule: [database]
         states: [passed]
 
-    run_when:
-      all tests passed:
-        type: job
-        job_key: all-tests
-        states: [passed]
-      good to merge of the database:
-        job_key: good-to-merge
-        type: job
-        submodule: [database]
-        states: [passed]
+    run_when: *GOOD_TO_MERGE_DEPS
 
     context:
       task_defaults:
@@ -49,3 +40,20 @@ jobs:
                 git rev-list --children HEAD | grep -q "$(git rev-parse origin/master)"
         include:
           - path: cider-ci/context-components/merged-submodules-check.yml
+
+  merged-to-master:
+    name: "Merged to master"
+    depends_on:
+      master branch matches:
+        type: branch
+        include_match: ^master$
+    run_when:
+      master branch matches:
+        type: branch
+        include_match: ^master$
+    context:
+      tasks:
+        merged-to-master:
+          scripts:
+            test:
+              body: "exit 0"
