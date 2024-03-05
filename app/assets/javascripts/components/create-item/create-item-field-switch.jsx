@@ -169,8 +169,7 @@
         case 'autocomplete':
           text = null
           if (field.id == 'room_id') {
-            // debugger
-            text = item.room.name
+            text = item.room.name + (!!item.room.description ? ` (${item.room.description})` : '')
           } else {
             if (itemValue) {
               var value = _.find(field.values, (v) => {

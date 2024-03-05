@@ -38,40 +38,23 @@
       if(field.values_dependency_field_id) {
 
         var url = field.values_url.replace('$$$parent_value$$$', props.dependencyValue.value.id)
-
-        var transformResult = (result) => {
-
-          return result.map((entry) => {
-
-            return {
-              label: entry.name,
-              id: entry.id
-
-            }
-          })
-
-
+        const formatLabel = entry =>  {
+          if(field.id === 'room_id') {
+            return entry.name + (!!entry.description ? ` (${entry.description})` : '')
+          } else {
+            return entry.name
+          }
         }
-
-        var data = field.values
-
-        var searchInData = (data, term) => {
-
-          return data.filter((field) => {
-
-            return field.name.toLowerCase().indexOf(term.toLowerCase()) >= 0
-
-          })
-
-        }
-
 
         var doSearch = (data, term, callback) => {
-
           callback(
-            transformResult(searchInData(data, term))
+            data
+              .map(entry => ({
+                label: formatLabel(entry),
+                id: entry.id
+              }))
+              .filter(entry => entry.label.toLowerCase().indexOf(term.toLowerCase()) >= 0)
           )
-
         }
 
         var initialText = null
@@ -85,8 +68,6 @@
             name={'item[' + selectedValue.field.id + ']'}
             initialText={initialText} />
         )
-
-        console.log('url = ' + url)
 
       } else {
 
