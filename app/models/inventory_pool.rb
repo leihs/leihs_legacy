@@ -138,8 +138,6 @@ class InventoryPool < ApplicationRecord
 
   #######################################################################
 
-  before_create :create_workday
-
   validates_presence_of :name, :shortname, :email
   validates_presence_of :automatic_suspension_reason, if: :automatic_suspension?
 
@@ -224,10 +222,6 @@ class InventoryPool < ApplicationRecord
   end
 
   ################################################################################
-
-  def create_workday
-    self.workday ||= Workday.new
-  end
 
   def inventory(params)
     model_type = case params[:type]
