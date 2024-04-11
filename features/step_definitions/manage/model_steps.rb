@@ -189,3 +189,15 @@ Then(/^the (.+) is deleted$/) do |entity|
           end
   expect(klass.find_by_id(@model.id)).to eq nil
 end
+
+When('I open the model page') do
+  visit manage_edit_model_path(@current_inventory_pool, @model)
+end
+
+When('I activate all the accessories') do
+  all('input[name*="accessories"]').filter { |i| not i.checked? }.each(&:click)
+end
+
+Then('all the accessories are activated') do
+  expect(all('input[name*="accessories"]').all?(&:checked?)).to be true
+end
