@@ -261,9 +261,9 @@ Then(/^I can change the field "(.*?)"$/) do |arg1|
   case arg1
     when 'Min. number of days between current date and hand over'
       n = rand(0..14)
-      find("input[type='number'][name='inventory_pool[workday_attributes][reservation_advance_days]']").set n
+      find("input[type='number'][name='inventory_pool[reservation_advance_days]']").set n
       step 'I save'
-      find("input[type='number'][name='inventory_pool[workday_attributes][reservation_advance_days]'][value='#{n}']")
+      find("input[type='number'][name='inventory_pool[reservation_advance_days]'][value='#{n}']")
     else
       raise
   end
