@@ -54,7 +54,7 @@ module DevTestMisc
           elsif current_user.access_rights.any?
             redirect_to '/borrow'
           else
-            redirect_to '/my/user/me?redirect-reason=no-access-legacy-root'
+            redirect_to '/my/auth-info?redirect-reason=no-access-legacy-root'
           end
         end
       end

@@ -52,7 +52,7 @@ module AuthenticatedSystem
       true
     elsif logged_in? and role.try(:to_sym) == :customer
       # if the customer role is missing, redirect to an informative page
-      redirect_to '/my/user/me?redirect-reason=no-access'
+      redirect_to '/my/auth-info?redirect-reason=no-access'
     else
       access_denied
     end
