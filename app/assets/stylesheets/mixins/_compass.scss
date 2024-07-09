@@ -1,0 +1,86 @@
+// Mixins from the retired `compass` framework
+// Reduced to exactly what is needed in Leihs
+// Vendor prefixes not needed anymore
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+}
+
+@mixin border-top-left-radius($radius) {
+  border-top-left-radius: $radius;
+}
+
+@mixin border-top-right-radius($radius) {
+  border-top-right-radius: $radius;
+}
+
+@mixin border-bottom-left-radius($radius) {
+  border-bottom-left-radius: $radius;
+}
+
+@mixin border-bottom-right-radius($radius) {
+  border-bottom-right-radius: $radius;
+}
+
+@mixin border-left-radius($radius) {
+  @include border-top-left-radius($radius);
+  @include border-bottom-left-radius($radius);
+}
+
+@mixin border-right-radius($radius) {
+  @include border-top-right-radius($radius);
+  @include border-bottom-right-radius($radius);
+}
+
+@mixin border-top-radius($radius) {
+  @include border-top-left-radius($radius);
+  @include border-top-right-radius($radius); 
+}
+
+@mixin border-bottom-radius($radius) {
+  @include border-bottom-left-radius($radius);
+  @include border-bottom-right-radius($radius);
+}
+
+@mixin box-shadow($shadow...) {
+  box-shadow: $shadow;
+}
+
+@mixin transition($transitions...) {
+  transition: $transitions;
+}
+
+@mixin box-sizing($box-model) {
+  box-sizing: $box-model;
+}
+
+@mixin text-shadow($shadow...) {
+  text-shadow: $shadow;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+}
+
+@mixin user-select($select) {
+  user-select: $select;
+}
+
+@mixin background($backgrounds...) {
+  background: $backgrounds;
+}
+
+@mixin link-colors($normal, $hover: false, $active: false, $visited: false, $focus: false) {
+  color: $normal;
+  @if $visited {
+    &:visited {
+      color: $visited; } }
+  @if $focus {
+    &:focus {
+      color: $focus; } }
+  @if $hover {
+    &:hover {
+      color: $hover; } }
+  @if $active {
+    &:active {
+      color: $active; } } }
