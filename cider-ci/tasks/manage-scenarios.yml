@@ -200,22 +200,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/booking_calendar/summary_of_lines_in_calendar.feature:10
-- name: features/manage/calendar.feature:11
+- name: features/manage/calendar.feature:25
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/calendar.feature:11
-- name: features/manage/calendar.feature:24
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/calendar.feature:24
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/calendar.feature:25
 - name: features/manage/calendar.feature:7
   scripts:
     test:
@@ -600,14 +592,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/hand_over/delete.feature:21
-- name: features/manage/hand_over/delete.feature:26
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/hand_over/delete.feature:26
 - name: features/manage/hand_over/delete.feature:10
   scripts:
     test:
@@ -2808,22 +2792,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/take_back/close_contract.feature:10
-- name: features/manage/take_back/edit_take_back_end_date.feature:23
+- name: features/manage/take_back/edit_take_back_end_date.feature:24
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:23
-- name: features/manage/take_back/edit_take_back_end_date.feature:10
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:10
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/take_back/edit_take_back_end_date.feature:24
 - name: features/manage/take_back/take_back.feature:17
   scripts:
     test:

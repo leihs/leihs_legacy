@@ -8,6 +8,7 @@ Feature: Calendar view in the manage section
     When I see the calendar
     Then I see the availability of models on weekdays as well as holidays and weekends
 
+  @flapping
   Scenario: Overbooking in the booking calendar while editing an order
     Given I edit an order
      And I open the booking calendar

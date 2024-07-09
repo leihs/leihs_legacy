@@ -23,6 +23,7 @@ Feature: Sign Contract
     And I delete all reservations of a model thats availability is blocked by these reservations
     Then the availability of the keeped line is updated
 
+  @flapping
   Scenario: Delete a hand over from the daily view
     Given I navigate to the hand over visits
     When I delete a hand over

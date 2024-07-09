@@ -8,10 +8,10 @@ class Entitlement < ApplicationRecord
   validates_numericality_of :quantity, only_integer: true, greater_than: 0
   validates_uniqueness_of :entitlement_group_id, scope: :model_id
 
-  scope :with_generals, lambda {|model_ids: nil, inventory_pool_id: nil|
+  def self.with_generals(model_ids: nil, inventory_pool_id: nil)
     find_by_sql query(model_ids: model_ids,
                       inventory_pool_id: inventory_pool_id)
-  }
+  end
 
   # returns a hash as {entitlement_group_id => quantity}
   # like {nil => 10, 41 => 3, 42 => 6, ...}
