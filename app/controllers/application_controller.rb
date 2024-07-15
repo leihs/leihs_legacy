@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    token = cookies['leihs-user-session']
+    token = cookies[Leihs::Constants::USER_SESSION_COOKIE_NAME]
     @user_session = UserSession.find_by_token(token)
     @current_user = @user_session.try { |us| us.delegation or us.user }
   end

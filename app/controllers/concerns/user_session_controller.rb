@@ -14,14 +14,12 @@ module Concerns
 
     attr_accessor :user_session
 
-    USER_SESSION_COOKIE_NAME = 'leihs-user-session'.freeze
-
     def delete_user_session_cookie
-      cookies.delete USER_SESSION_COOKIE_NAME
+      cookies.delete Leihs::Constants::USER_SESSION_COOKIE_NAME
     end
 
     def user_by_session
-      if user_session_cookie = cookies[USER_SESSION_COOKIE_NAME].presence
+      if user_session_cookie = cookies[Leihs::Constants::USER_SESSION_COOKIE_NAME].presence
         begin
           session_object = CiderCi::OpenSession::Encryptor.decrypt(
             secret_key_base, user_session_cookie
