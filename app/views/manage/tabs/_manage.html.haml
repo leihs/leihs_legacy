@@ -10,11 +10,6 @@
             = _("Inventory Pool")
 
       %li
-        %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_inventory_pool_users_path(current_inventory_pool),
-                                                                                :class => (defined? active_tab and active_tab == :users) ? "active" : ""}
-          = _("Users")
-
-      %li
         %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_inventory_pool_user_groups_path(current_inventory_pool),
                                                                                 :class => (defined? active_tab and active_tab == :user_groups) ? "active" : ""}
           = _("Groups")
