@@ -235,11 +235,6 @@ Rails.application.routes.draw do
       # Access rights
       get "access_rights", to: "access_rights#index"
 
-      # Fields
-      get 'fields', to: 'fields#index', as: 'fields'
-      get 'manage_fields', to: 'fields#manage_fields', as: 'manage_fields'
-      post 'disable_field', to: 'fields#disable_field', as: 'disable_field'
-
       # Search
       post 'search',               to: 'search#search',        as: "search"
       get  'search',               to: 'search#results',       as: "search_results"
