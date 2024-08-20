@@ -3671,6 +3671,9 @@ msgstr "Die Benutzer und Gruppen dieser Anspruchsgruppe werden im neuen Admin-Be
 msgid "legacy_manage_group_new_admin_section_notice"
 msgstr "Die Gruppen werden im neuen Admin-Bereich verwaltet."
 
+msgid "legacy_manage_inventory_pool_admin_section_notice"
+msgstr "Bis auf die Verwaltung der Anspruchsgruppen sind alle Funktionen im Admin-Bereich verfügbar."
+
 msgid "create_multiple_items_inv_code_notice"
 msgstr "Wenn mehrere Gegenstände auf einmal erstellt werden, kann der Inventarcode nicht individuell festgelegt werden. Stattdessen wird automatisch die kleinstmögliche, kontinuierliche Liste von Inventarcodes erzeugt."
 

@@ -3707,6 +3707,10 @@ window.i18n.locale_data = {
          null,
          "The groups are managed in the new Admin section."
       ],
+      "legacy_manage_inventory_pool_admin_section_notice": [
+         null,
+         "Except for the management of entitlement groups are all other functions in the Admin section."
+      ],
       "create_multiple_items_inv_code_notice": [
          null,
          "When multiple items are created at once, the inventory code cannot be set individually. Instead, the smallest possible continuous list of inventory codes is automatically generated."

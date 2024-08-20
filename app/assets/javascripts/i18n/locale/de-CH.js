@@ -4758,6 +4758,10 @@ window.i18n.locale_data = {
          null,
          "Die Gruppen werden im neuen Admin-Bereich verwaltet."
       ],
+      "legacy_manage_inventory_pool_admin_section_notice": [
+         null,
+         "Bis auf die Verwaltung der Anspruchsgruppen sind alle Funktionen im Admin-Bereich verfügbar."
+      ],
       "create_multiple_items_inv_code_notice": [
          null,
          "Wenn mehrere Gegenstände auf einmal erstellt werden, kann der Inventarcode nicht individuell festgelegt werden. Stattdessen wird automatisch die kleinstmögliche, kontinuierliche Liste von Inventarcodes erzeugt."
