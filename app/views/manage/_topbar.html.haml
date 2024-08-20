@@ -23,7 +23,7 @@
 
         - if lending_manager?
           %li.topbar-item{:class => yield(:manage_section)}
-            %a.topbar-item-inner{:href => manage_edit_inventory_pool_path(current_inventory_pool)}
+            %a.topbar-item-inner{:href => manage_inventory_pool_groups_path(current_inventory_pool)}
               = _('Manage')
 
     %ul.topbar-navigation.float-right
