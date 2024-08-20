@@ -1,4 +1,4 @@
-Feature: Groups
+Feature: Entitlement Groups
 
   Background:
     Given I am Pius

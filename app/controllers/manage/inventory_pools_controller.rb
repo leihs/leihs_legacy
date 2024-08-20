@@ -48,34 +48,6 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
     end
   end
 
-  def edit
-    @inventory_pool = current_inventory_pool
-    @holidays = \
-      @inventory_pool
-        .holidays
-        .reject { |h| h.end_date < Time.zone.today }
-        .sort_by(&:start_date)
-  end
-
-  # TODO: this mess needs to be untangled and split up
-  # into functions called by new/create/update
-  def update
-    @inventory_pool = current_inventory_pool
-    process_params params[:inventory_pool]
-    @holidays_initial = @inventory_pool.holidays.reject do |h|
-      h.end_date < Time.zone.today
-    end.sort_by(&:start_date)
-
-    if @inventory_pool.update(params[:inventory_pool])
-      flash[:notice] = _('Inventory pool successfully updated')
-      redirect_to manage_edit_inventory_pool_path(@inventory_pool)
-    else
-      setup_holidays_for_render params[:inventory_pool][:holidays_attributes]
-      flash.now[:error] = @inventory_pool.errors.full_messages.uniq.join(', ')
-      render :edit
-    end
-  end
-
   def workload(date = params[:date].try { |x| Date.parse(x) })
     today_and_next_4_days = (0..4).map { |n| date + n.days }
 

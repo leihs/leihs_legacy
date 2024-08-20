@@ -54,14 +54,6 @@ Rails.application.routes.draw do
   namespace :manage do
     root to: "application#root"
 
-    # Administrate inventory pools
-    # get     'inventory_pools',                         to: 'inventory_pools#index'
-    # get     'inventory_pools/new',                     to: 'inventory_pools#new',      as: 'new_inventory_pool'
-    # post    'inventory_pools',                         to: 'inventory_pools#create'
-    get     'inventory_pools/:inventory_pool_id/edit', to: 'inventory_pools#edit',     as: 'edit_inventory_pool'
-    put     'inventory_pools/:inventory_pool_id',      to: 'inventory_pools#update',   as: 'update_inventory_pool'
-    # delete  'inventory_pools/:inventory_pool_id',      to: 'inventory_pools#destroy',  as: 'delete_inventory_pool'
-
     # Users
     post 'users/:id/set_start_screen', to: 'users#set_start_screen'
 
@@ -114,12 +106,6 @@ Rails.application.routes.draw do
 
       ## Latest Reminder
       get 'latest_reminder', to: 'inventory_pools#latest_reminder'
-
-      ## Workdays
-      get 'workdays', to: "workdays#index"
-
-      ## Holidays
-      get 'holidays', to: "holidays#index"
 
       ## Reservations
       get     "reservations",                        to: "reservations#index"
@@ -205,7 +191,7 @@ Rails.application.routes.draw do
       # Partitions
       get 'partitions', to: "partitions#index"
 
-      # Groups
+      # Entitlement Groups
       get     'groups',           to: "entitlement_groups#index",      as: "inventory_pool_groups"
       get     'groups/:id/edit',  to: "entitlement_groups#edit",       as: "edit_inventory_pool_group"
       get     'groups/new',       to: "entitlement_groups#new",        as: "new_inventory_pool_group"
