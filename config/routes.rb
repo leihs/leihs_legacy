@@ -107,6 +107,12 @@ Rails.application.routes.draw do
       ## Latest Reminder
       get 'latest_reminder', to: 'inventory_pools#latest_reminder'
 
+      ## Workdays
+      get 'workdays', to: "workdays#index"
+
+      ## Holidays
+      get 'holidays', to: "holidays#index"
+
       ## Reservations
       get     "reservations",                        to: "reservations#index"
       post    "reservations",                        to: "reservations#create"
