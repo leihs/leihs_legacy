@@ -235,6 +235,8 @@ Rails.application.routes.draw do
       # Access rights
       get "access_rights", to: "access_rights#index"
 
+      # Fields
+      get 'fields', to: 'fields#index', as: 'fields'
       # Search
       post 'search',               to: 'search#search',        as: "search"
       get  'search',               to: 'search#results',       as: "search_results"
