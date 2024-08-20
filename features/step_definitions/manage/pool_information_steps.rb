@@ -45,6 +45,12 @@ Then(/^I see a confirmation that the information was saved$/) do
   find('#flash .notice', text: _('Inventory pool successfully updated'))
 end
 
+When(/^I enable automatic suspension and provide a reason for suspension$/) do
+  @reason = Faker::Lorem.sentence
+  @current_inventory_pool.update!(automatic_suspension: true,
+                                  automatic_suspension_reason: @reason)
+end
+
 When(/^I edit the current inventory pool$/) do
   visit manage_edit_inventory_pool_path(@current_inventory_pool)
 end
