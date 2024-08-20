@@ -247,10 +247,6 @@ Rails.application.routes.draw do
       get  'search/orders',        to: "search#orders",        as: "search_orders"
       get  'search/options',       to: "search#options",       as: "search_options"
 
-      # Mail templates
-      get 'mail_templates', to: 'mail_templates#index'
-      get 'mail_templates/:type/:name', to: 'mail_templates#edit'
-      put 'mail_templates/:type/:name', to: 'mail_templates#update'
     end
 
   end
