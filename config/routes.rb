@@ -54,14 +54,6 @@ Rails.application.routes.draw do
   namespace :manage do
     root to: "application#root"
 
-    # Administrate inventory pools
-    # get     'inventory_pools',                         to: 'inventory_pools#index'
-    # get     'inventory_pools/new',                     to: 'inventory_pools#new',      as: 'new_inventory_pool'
-    # post    'inventory_pools',                         to: 'inventory_pools#create'
-    get     'inventory_pools/:inventory_pool_id/edit', to: 'inventory_pools#edit',     as: 'edit_inventory_pool'
-    put     'inventory_pools/:inventory_pool_id',      to: 'inventory_pools#update',   as: 'update_inventory_pool'
-    # delete  'inventory_pools/:inventory_pool_id',      to: 'inventory_pools#destroy',  as: 'delete_inventory_pool'
-
     # Users
     post 'users/:id/set_start_screen', to: 'users#set_start_screen'
 
@@ -205,7 +197,7 @@ Rails.application.routes.draw do
       # Partitions
       get 'partitions', to: "partitions#index"
 
-      # Groups
+      # Entitlement Groups
       get     'groups',           to: "entitlement_groups#index",      as: "inventory_pool_groups"
       get     'groups/:id/edit',  to: "entitlement_groups#edit",       as: "edit_inventory_pool_group"
       get     'groups/new',       to: "entitlement_groups#new",        as: "new_inventory_pool_group"
@@ -237,9 +229,6 @@ Rails.application.routes.draw do
 
       # Fields
       get 'fields', to: 'fields#index', as: 'fields'
-      get 'manage_fields', to: 'fields#manage_fields', as: 'manage_fields'
-      post 'disable_field', to: 'fields#disable_field', as: 'disable_field'
-
       # Search
       post 'search',               to: 'search#search',        as: "search"
       get  'search',               to: 'search#results',       as: "search_results"
@@ -252,10 +241,6 @@ Rails.application.routes.draw do
       get  'search/orders',        to: "search#orders",        as: "search_orders"
       get  'search/options',       to: "search#options",       as: "search_options"
 
-      # Mail templates
-      get 'mail_templates', to: 'mail_templates#index'
-      get 'mail_templates/:type/:name', to: 'mail_templates#edit'
-      put 'mail_templates/:type/:name', to: 'mail_templates#update'
     end
 
   end

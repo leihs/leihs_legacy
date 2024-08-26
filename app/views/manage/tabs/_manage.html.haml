@@ -3,35 +3,7 @@
   %nav
     %ul
 
-      - if inventory_manager?
-        %li
-          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_edit_inventory_pool_path(current_inventory_pool),
-                                                                                  :class => (defined? active_tab and active_tab == :inventory_pools) ? "active" : ""}
-            = _("Inventory Pool")
-
-      %li
-        %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_inventory_pool_users_path(current_inventory_pool),
-                                                                                :class => (defined? active_tab and active_tab == :users) ? "active" : ""}
-          = _("Users")
-
-      %li
-        %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_inventory_pool_user_groups_path(current_inventory_pool),
-                                                                                :class => (defined? active_tab and active_tab == :user_groups) ? "active" : ""}
-          = _("Groups")
-
       %li
         %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_inventory_pool_groups_path(current_inventory_pool),
                                                                                 :class => (defined? active_tab and active_tab == :groups) ? "active" : ""}
           = _("Entitlement-Groups")
-
-      - if inventory_manager?
-        %li
-          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => "/manage/#{current_inventory_pool.id}/mail_templates",
-                                                                                  :class => (defined? active_tab and active_tab == :mail_templates) ? "active" : ""}
-            = _("Mail Templates")
-
-      - if inventory_manager?
-        %li
-          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => "/manage/#{current_inventory_pool.id}/manage_fields",
-                                                                                  :class => (defined? active_tab and active_tab == :manage_fields) ? "active" : ""}
-            = _("Manage %s") % _("Fields")

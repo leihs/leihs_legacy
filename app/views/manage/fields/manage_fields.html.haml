@@ -1,8 +1,0 @@
-- content_for :title, _("Manage Fields")
-- content_for :manage_section, "active"
-
-.wrapper.margin-top-m
-
-  = render :partial => 'manage/tabs/manage', :locals => {:active_tab => :manage_fields}
-
-  = react_component('ManageFields', @props)
