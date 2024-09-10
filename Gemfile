@@ -17,7 +17,7 @@ gem 'gettext_i18n_rails', '~> 1.0'
 gem 'haml', '~> 5'
 gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'json', '~> 2'
-gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'mk/rails-6.1'
+gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'rails7'
 gem 'kramdown' # markdown rendering
 gem 'kramdown-parser-gfm'
 gem 'liquid', '~> 5.0'

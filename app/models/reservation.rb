@@ -8,7 +8,7 @@
 #
 class Reservation < ApplicationRecord
   include Availability::Reservation
-  include Concerns::ScopeIfPresence
+  include ScopeIfPresence
   include Delegation::Reservation
 
   belongs_to :inventory_pool, inverse_of: :reservations

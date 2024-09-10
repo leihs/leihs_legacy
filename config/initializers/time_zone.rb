@@ -1,3 +1,5 @@
+require 'setting'
+
 if ApplicationRecord.connection.tables.include?('settings') and not Rails.env.test?
   if time_zone = Setting.first.try(:time_zone).presence
     Rails.configuration.time_zone = time_zone

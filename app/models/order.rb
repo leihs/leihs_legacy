@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  include Concerns::ScopeIfPresence
+  include ScopeIfPresence
   include DefaultPagination
   include LogSendMailFailure
 

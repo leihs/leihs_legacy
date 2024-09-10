@@ -1,6 +1,6 @@
 class Contract < ApplicationRecord
-  include Concerns::ScopeIfPresence
-  include Concerns::TimeWindows
+  include ScopeIfPresence
+  include TimeWindows
   include DefaultPagination
   include LineModules::GroupedAndMergedLines
 

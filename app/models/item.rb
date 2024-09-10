@@ -12,9 +12,9 @@
 # riding pleasure.
 #
 class Item < ApplicationRecord
-  include Concerns::InventoryCode
-  include Concerns::ItemCsv
-  include Concerns::SerialNumberValidation
+  include InventoryCode
+  include ItemCsv
+  include SerialNumberValidation
   include DefaultPagination
 
   belongs_to(:parent,
@@ -54,7 +54,7 @@ class Item < ApplicationRecord
   # resulting hashes when reading from the DB contain string keys,
   # but no symbol keys. Since we still use symbol keys everywhere
   # to access the properties, we need the following serializer:
-  serialize :properties, Concerns::HashSerializer
+  serialize :properties, HashSerializer
 
   ####################################################################
 
