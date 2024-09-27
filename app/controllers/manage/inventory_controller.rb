@@ -44,7 +44,7 @@ class Manage::InventoryController < Manage::ApplicationController
     end
   end
 
-  def show
+  def find
     @record = \
       current_inventory_pool
         .items
