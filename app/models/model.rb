@@ -496,7 +496,7 @@ class Model < ApplicationRecord
       .count
   end
 
-  def as_json_with_arguments(options = nil)
+  def as_json_with_arguments(options = {})
     h = as_json_without_arguments(options)
     if options[:accessories_for_ip]
       h['accessory_names'] = \

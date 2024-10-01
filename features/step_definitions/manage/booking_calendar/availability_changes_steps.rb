@@ -39,7 +39,7 @@ Then /^I see all availabilities in that calendar, where the small number is the 
             find('.fc-button-next').click
           end
 
-          change_date_el = find(".fc-widget-content:not(.fc-other-month)[data-date='#{next_date.to_s(:db)}']")
+          change_date_el = find(".fc-widget-content:not(.fc-other-month)[data-date='#{next_date.to_formatted_s(:db)}']")
 
           #######################################################################################################################
           # check total, where the small number is the total quantity of that specific date
