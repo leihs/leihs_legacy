@@ -497,6 +497,7 @@ class Model < ApplicationRecord
   end
 
   def as_json_with_arguments(options = nil)
+    throw "YOLO" if options.nil?
     h = as_json_without_arguments(options)
     if options[:accessories_for_ip]
       h['accessory_names'] = \
