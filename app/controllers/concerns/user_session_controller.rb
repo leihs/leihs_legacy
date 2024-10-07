@@ -58,7 +58,7 @@ module UserSessionController
   private
 
   def secret_key_base
-    Rails.application.secrets.secret_key_base.presence \
+    Rails.application.secret_key_base.presence \
       || raise('secret_key_base is missing')
   end
 

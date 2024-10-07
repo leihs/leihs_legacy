@@ -54,7 +54,7 @@ class Item < ApplicationRecord
   # resulting hashes when reading from the DB contain string keys,
   # but no symbol keys. Since we still use symbol keys everywhere
   # to access the properties, we need the following serializer:
-  serialize :properties, HashSerializer
+  serialize :properties, coder: HashSerializer
 
   ####################################################################
 

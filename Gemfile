@@ -91,7 +91,7 @@ group :development, :test do
   gem 'pry-rails'
 
   gem 'rb-readline'
-  gem 'rspec-rails', '~> 5', require: false
+  gem 'rspec-rails', '~> 7', require: false
   # gem 'selenium-webdriver', '~> 3.14'
   gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'timecop', '~> 0.7'

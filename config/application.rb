@@ -10,7 +10,7 @@ Bundler.require(*Rails.groups)
 module Leihs
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.2
 
     config.i18n.enforce_available_locales = false
 

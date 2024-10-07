@@ -5,6 +5,7 @@ asdf install nodejs
 export RAILS_ENV=production
 export NODE_ENV=production
 export LEIHS_SECRET=secret
+export SECRET_KEY_BASE_DUMMY=1
 
 # remove npm lockfile if present locally (only `yarn.lock` is used and checked into the repo)
 rm -f package-lock.json
