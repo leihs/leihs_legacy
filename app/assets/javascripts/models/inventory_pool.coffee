@@ -6,7 +6,7 @@
 
 class window.App.InventoryPool extends Spine.Model
 
-  @configure "InventoryPool", "id", "name", "default_contract_note", "reservation_advance_days"
+  @configure "InventoryPool", "id", "name", "default_contract_note", "borrow_reservation_advance_days"
 
   @hasMany "availabilities", "App.Availability", "inventory_pool_id"
   @hasMany "models", "App.Model", "inventory_pool_id"
@@ -31,4 +31,4 @@ class window.App.InventoryPool extends Spine.Model
 
   hasEnoughReservationAdvanceDays: (date)=>
     # NOTE check number of days between order submission and hand over
-    date >= moment().startOf('day').add(@reservation_advance_days || 0, 'days')
+    date >= moment().startOf('day').add(@borrow_reservation_advance_days || 0, 'days')
