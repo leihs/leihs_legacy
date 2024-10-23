@@ -209,18 +209,6 @@ class Order < ApplicationRecord
     end
   end
 
-  def send_submitted_notification
-    with_logging_send_mail_failure do
-      Mailer.order_submitted(self)
-    end
-  end
-
-  def send_received_notification
-    with_logging_send_mail_failure do
-      Mailer.order_received(self)
-    end
-  end
-
   def approve(comment, send_mail = true, current_user = nil, force = false)
     if approvable? \
         or (force and current_user.has_role?(:lending_manager, inventory_pool))
