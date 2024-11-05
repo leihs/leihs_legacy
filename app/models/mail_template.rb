@@ -26,6 +26,7 @@ class MailTemplate < ApplicationRecord
       'user.name',
       'inventory_pool.name',
       'inventory_pool.description',
+      'inventory_pool.email_signature',
       'email_signature',
       { 'reservations' => [
         'l.quantity',
@@ -42,7 +43,8 @@ class MailTemplate < ApplicationRecord
   def self.liquid_variables_for_order(order, comment = nil)
     { user: { name: order.target_user.name },
       inventory_pool: { name: order.inventory_pool.name,
-                        description: order.inventory_pool.description },
+                        description: order.inventory_pool.description,
+                        email_signature: order.inventory_pool.email_signature },
       email_signature: Setting.first.email_signature,
       reservations: order.reservations.map do |l|
        { quantity: l.quantity,
@@ -61,6 +63,7 @@ class MailTemplate < ApplicationRecord
       'user.name',
       'inventory_pool.name',
       'inventory_pool.description',
+      'inventory_pool.email_signature',
       'email_signature',
       { 'reservations' => [
         'l.quantity',
@@ -77,7 +80,8 @@ class MailTemplate < ApplicationRecord
   def self.liquid_variables_for_user(user, inventory_pool, reservations)
     { user: { name: user.name },
       inventory_pool: { name: inventory_pool.name,
-                        description: inventory_pool.description },
+                        description: inventory_pool.description,
+                        email_signature: inventory_pool.email_signature },
       email_signature: Setting.first.email_signature,
       reservations: reservations.map do |l|
        { quantity: l.quantity,
