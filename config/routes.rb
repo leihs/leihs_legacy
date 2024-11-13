@@ -188,7 +188,6 @@ Rails.application.routes.draw do
       get    'items/current_locations',        to: "items#current_locations"
       get    'items/:id',                      to: "items#show"
       put    'items/:id',                      to: "items#update",                  as: "update_item"
-      delete 'items/:id',                      to: "items#destroy",                 as: "delete_item"
       get    'items/:id/edit',                 to: "items#edit",                    as: "edit_item"
       get    'items/:id/copy',                 to: "items#copy",                    as: "copy_item"
       post   'items/:id/inspect',              to: "items#inspect"

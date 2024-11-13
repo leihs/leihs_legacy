@@ -245,17 +245,9 @@ class Item < ApplicationRecord
 
   ################### DESTROY RESTRICTIONS ###########################
 
-  def destroy_would_lead_to_hard_overbooking?
-    model.ordered_and_unassigned_quantity.positive? and
-      not ( model.items.in_stock.count > model.ordered_and_unassigned_quantity )
-  end
-
   # override ActiveRecord::Base method from `config/initializers/restricted_associations.rb`
   def can_destroy?
-    not parent and
-      not children.exists? and
-      not reservations.exists? and
-      not destroy_would_lead_to_hard_overbooking?
+    false
   end
   alias_method(:can_destroy, :can_destroy?) # used for JSON requests
 
