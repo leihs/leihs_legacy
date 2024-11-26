@@ -36,10 +36,10 @@ module Leihs
     config.eager_load_paths << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('database/lib')
 
-    config.middleware.insert_before ActionDispatch::ShowExceptions, Leihs::Middleware::Audit
-
     config.active_record.yaml_column_permitted_classes = [ActiveSupport::HashWithIndifferentAccess,
                                                           Date]
+
+    config.middleware.insert_after Rack::TempfileReaper, Leihs::Middleware::Audit
   end
 end
 
