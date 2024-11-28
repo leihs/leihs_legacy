@@ -3,7 +3,6 @@ FactoryBot.define do
   trait :shared_attachment_attributes do
     filename { Faker::Lorem.word }
     content_type { 'image/jpeg' }
-    size { 1_000_000 }
 
     transient do
       filepath { 'features/data/images/image1.jpg' }

@@ -1,4 +1,5 @@
 class Image < ApplicationRecord
+  attr_accessor :size
 
   belongs_to :target, polymorphic: true
 
