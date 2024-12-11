@@ -8,7 +8,7 @@
 #
 class Reservation < ApplicationRecord
   include Availability::Reservation
-  include Concerns::ScopeIfPresence
+  include ScopeIfPresence
   include Delegation::Reservation
 
   belongs_to :inventory_pool, inverse_of: :reservations
@@ -156,7 +156,7 @@ class Reservation < ApplicationRecord
 
   def start_date_within_advance_days_period?
     start_date < (
-      Date.today + inventory_pool.workday.reservation_advance_days.to_i.day
+      Date.today + inventory_pool.borrow_reservation_advance_days.to_i.day
     )
   end
 

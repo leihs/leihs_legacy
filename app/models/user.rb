@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  include Concerns::ProcurementAccess
+  include ProcurementAccess
   include Delegation::User
   include DefaultPagination
 
@@ -15,7 +15,7 @@ class User < ApplicationRecord
     end
   end
 
-  serialize :settings
+  serialize :settings, coder: YAML
   store_accessor :settings, [:latest_inventory_pool_id_before_logout,
                              :start_screen]
 

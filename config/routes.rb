@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     post '/sign-in', to: 'application#sign_in'
     post '/sign-out', to: 'application#sign_out'
     # fake a my page so redirects dont look like errors to the Devs
-    get '/my/user/me', to: -> (hash) { [200, {}, ["<h1>Hello Dev! In prod, this would show <code>/my/user/me</code>. Maybe try <a href='http://localhost:3240/my/user/me'><code>http://localhost:3240/my/user/me</code></a>?</h1>"]] }
+    get '/my/auth-info', to: -> (hash) { [200, {}, ["<h1>Hello Dev! In prod, this would show <code>/my/auth-info</code>. Maybe try <a href='http://localhost:3240/my/auth-info'><code>http://localhost:3240/my/auth-info</code></a>?</h1>"]] }
   end
 
   get :status, controller: :application, action: :status
@@ -53,14 +53,6 @@ Rails.application.routes.draw do
   # Manage Section
   namespace :manage do
     root to: "application#root"
-
-    # Administrate inventory pools
-    # get     'inventory_pools',                         to: 'inventory_pools#index'
-    # get     'inventory_pools/new',                     to: 'inventory_pools#new',      as: 'new_inventory_pool'
-    # post    'inventory_pools',                         to: 'inventory_pools#create'
-    get     'inventory_pools/:inventory_pool_id/edit', to: 'inventory_pools#edit',     as: 'edit_inventory_pool'
-    put     'inventory_pools/:inventory_pool_id',      to: 'inventory_pools#update',   as: 'update_inventory_pool'
-    # delete  'inventory_pools/:inventory_pool_id',      to: 'inventory_pools#destroy',  as: 'delete_inventory_pool'
 
     # Users
     post 'users/:id/set_start_screen', to: 'users#set_start_screen'
@@ -139,35 +131,35 @@ Rails.application.routes.draw do
       post    "reservations/print",                  to: "reservations#print", as: "print_reservations"
 
       # Inventory
-      get 'inventory',                  :to => "inventory#index",       :as => "inventory"
-      get 'inventory/expert/index',    :to => "expert#index"
-      get 'inventory/csv',              :to => "inventory#csv_export",  :as => "inventory_csv_export"
-      get 'inventory/excel',            :to => "inventory#excel_export",  :as => "inventory_excel_export"
-      get 'inventory/csv/expert',       :to => "expert#csv_export",  :as => "inventory_csv_export_expert"
-      get 'inventory/excel/expert',     :to => "expert#excel_export",  :as => "inventory_excel_export_expert"
-      get 'inventory/csv_import',       :to => "inventory#csv_import"
-      post 'inventory/csv_import',      :to => "inventory#csv_import"
-      get 'inventory/helper',           :to => "inventory#helper",      :as => "inventory_helper"
-      get 'inventory/helper_react',           :to => "inventory#helper_react",      :as => "inventory_helper_react"
-      get 'inventory/expert',         :to => "inventory#expert",      :as => "inventory_expert"
-      get 'inventory/:inventory_code',  :to => "inventory#show"
+      get  'inventory',                  :to => "inventory#index",         :as => "inventory"
+      get  'inventory/expert/index',     :to => "expert#index"
+      get  'inventory/csv',              :to => "inventory#csv_export",    :as => "inventory_csv_export"
+      get  'inventory/excel',            :to => "inventory#excel_export",  :as => "inventory_excel_export"
+      get  'inventory/csv/expert',       :to => "expert#csv_export",       :as => "inventory_csv_export_expert"
+      get  'inventory/excel/expert',     :to => "expert#excel_export",     :as => "inventory_excel_export_expert"
+      get  'inventory/csv_import',       :to => "inventory#csv_import"
+      post 'inventory/csv_import',       :to => "inventory#csv_import"
+      get  'inventory/helper',           :to => "inventory#helper",        :as => "inventory_helper"
+      get  'inventory/helper_react',     :to => "inventory#helper_react",  :as => "inventory_helper_react"
+      get  'inventory/expert',           :to => "inventory#expert",        :as => "inventory_expert"
+      get  'inventory/find',             :to => "inventory#find"
 
       # Models
-      get     'models',                       to: "models#index",     as: "models"
-      post    'models',                       to: "models#create",    as: "create_model"
-      get     'models/new_old',                   to: "models#new_old",       as: "new_model_old"
-      get     'models/new',                   to: "models#new",       as: "new_model"
-      post    'models/store_attachment_react',                to: "models#store_attachment_react",            as: "model_store_attachment_react"
-      post    'models/store_image_react',                to: "models#store_image_react",            as: "model_store_image_react"
-      get     'models/:id/timeline',          to: "models#timeline"
-      get     'models/:id/old_timeline',          to: "models#old_timeline"
-      put     'models/:id',                   to: "models#update"
-      get     'models/:id',                   to: "models#show"
-      delete  'models/:id',                   to: "models#destroy"
-      get     'models/:id/edit',              to: "models#edit",      as: "edit_model"
-      get     'models/:id/edit_old',              to: "models#edit_old",      as: "edit_old_model"
-      post    'models/:id/upload/image',      to: "models#upload",    type: "image"
-      post    'models/:id/upload/attachment', to: "models#upload",    type: "attachment"
+      get     'models',                          to: "models#index",                    as: "models"
+      post    'models',                          to: "models#create",                   as: "create_model"
+      get     'models/new_old',                  to: "models#new_old",                  as: "new_model_old"
+      get     'models/new',                      to: "models#new",                      as: "new_model"
+      post    'models/store_attachment_react',   to: "models#store_attachment_react",   as: "model_store_attachment_react"
+      post    'models/store_image_react',        to: "models#store_image_react",        as: "model_store_image_react"
+      get     'models/:id/timeline',             to: "models#timeline"
+      get     'models/:id/old_timeline',         to: "models#old_timeline"
+      put     'models/:id',                      to: "models#update"
+      get     'models/:id',                      to: "models#show"
+      delete  'models/:id',                      to: "models#destroy"
+      get     'models/:id/edit',                 to: "models#edit",                     as: "edit_model"
+      get     'models/:id/edit_old',             to: "models#edit_old",                 as: "edit_old_model"
+      post    'models/:id/upload/image',         to: "models#upload",                   type: "image"
+      post    'models/:id/upload/attachment',    to: "models#upload",                   type: "attachment"
 
       # Categories
       get     'categories',                       to: 'categories#index',           as: 'categories'
@@ -196,7 +188,6 @@ Rails.application.routes.draw do
       get    'items/current_locations',        to: "items#current_locations"
       get    'items/:id',                      to: "items#show"
       put    'items/:id',                      to: "items#update",                  as: "update_item"
-      delete 'items/:id',                      to: "items#destroy",                 as: "delete_item"
       get    'items/:id/edit',                 to: "items#edit",                    as: "edit_item"
       get    'items/:id/copy',                 to: "items#copy",                    as: "copy_item"
       post   'items/:id/inspect',              to: "items#inspect"
@@ -205,7 +196,7 @@ Rails.application.routes.draw do
       # Partitions
       get 'partitions', to: "partitions#index"
 
-      # Groups
+      # Entitlement Groups
       get     'groups',           to: "entitlement_groups#index",      as: "inventory_pool_groups"
       get     'groups/:id/edit',  to: "entitlement_groups#edit",       as: "edit_inventory_pool_group"
       get     'groups/new',       to: "entitlement_groups#new",        as: "new_inventory_pool_group"
@@ -237,9 +228,6 @@ Rails.application.routes.draw do
 
       # Fields
       get 'fields', to: 'fields#index', as: 'fields'
-      get 'manage_fields', to: 'fields#manage_fields', as: 'manage_fields'
-      post 'disable_field', to: 'fields#disable_field', as: 'disable_field'
-
       # Search
       post 'search',               to: 'search#search',        as: "search"
       get  'search',               to: 'search#results',       as: "search_results"
@@ -252,10 +240,6 @@ Rails.application.routes.draw do
       get  'search/orders',        to: "search#orders",        as: "search_orders"
       get  'search/options',       to: "search#options",       as: "search_options"
 
-      # Mail templates
-      get 'mail_templates', to: 'mail_templates#index'
-      get 'mail_templates/:type/:name', to: 'mail_templates#edit'
-      put 'mail_templates/:type/:name', to: 'mail_templates#update'
     end
 
   end

@@ -25,7 +25,8 @@ class Accessory < ApplicationRecord
 
     if toggle_val == '1' and not self.inventory_pool_ids.include?(ip_id)
       self.inventory_pools = self.inventory_pools + [ip]
-    else
+    end
+    if toggle_val == '0' and self.inventory_pool_ids.include?(ip_id)
       self.inventory_pools = self.inventory_pools - [ip]
     end
   end

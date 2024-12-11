@@ -12,7 +12,6 @@
 .mo
 .vagrant*
 .vagrant/*
-/database
 /tags
 Gemfile.local*
 app/controllers/authenticator/agw_info.rb

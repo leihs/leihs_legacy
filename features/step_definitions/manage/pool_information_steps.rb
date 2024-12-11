@@ -45,6 +45,12 @@ Then(/^I see a confirmation that the information was saved$/) do
   find('#flash .notice', text: _('Inventory pool successfully updated'))
 end
 
+When(/^I enable automatic suspension and provide a reason for suspension$/) do
+  @reason = Faker::Lorem.sentence
+  @current_inventory_pool.update!(automatic_suspension: true,
+                                  automatic_suspension_reason: @reason)
+end
+
 When(/^I edit the current inventory pool$/) do
   visit manage_edit_inventory_pool_path(@current_inventory_pool)
 end
@@ -261,9 +267,9 @@ Then(/^I can change the field "(.*?)"$/) do |arg1|
   case arg1
     when 'Min. number of days between current date and hand over'
       n = rand(0..14)
-      find("input[type='number'][name='inventory_pool[workday_attributes][reservation_advance_days]']").set n
+      find("input[type='number'][name='inventory_pool[reservation_advance_days]']").set n
       step 'I save'
-      find("input[type='number'][name='inventory_pool[workday_attributes][reservation_advance_days]'][value='#{n}']")
+      find("input[type='number'][name='inventory_pool[reservation_advance_days]'][value='#{n}']")
     else
       raise
   end

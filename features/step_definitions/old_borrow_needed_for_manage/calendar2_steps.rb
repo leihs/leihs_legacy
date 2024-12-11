@@ -260,7 +260,7 @@ When(/^I use the jump button to jump to the current start date$/) do
 end
 
 Then(/^the start date is shown in the calendar$/) do
-  start_date = Date.parse(find('#booking-calendar-start-date').value).to_s(:db)
+  start_date = Date.parse(find('#booking-calendar-start-date').value).to_formatted_s(:db)
   find(".fc-widget-content[data-date='#{start_date}']")
 end
 
@@ -270,7 +270,7 @@ When(/^I use the jump button to jump to the current end date$/) do
 end
 
 Then(/^the end date is shown in the calendar$/) do
-  end_date = Date.parse(find('#booking-calendar-end-date').value).to_s(:db)
+  end_date = Date.parse(find('#booking-calendar-end-date').value).to_formatted_s(:db)
   find(".fc-widget-content[data-date='#{end_date}']")
 end
 

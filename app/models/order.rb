@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  include Concerns::ScopeIfPresence
+  include ScopeIfPresence
   include DefaultPagination
   include LogSendMailFailure
 
@@ -206,18 +206,6 @@ class Order < ApplicationRecord
   def send_approved_notification(comment)
     with_logging_send_mail_failure do
       Mailer.order_approved(self, comment)
-    end
-  end
-
-  def send_submitted_notification
-    with_logging_send_mail_failure do
-      Mailer.order_submitted(self)
-    end
-  end
-
-  def send_received_notification
-    with_logging_send_mail_failure do
-      Mailer.order_received(self)
     end
   end
 

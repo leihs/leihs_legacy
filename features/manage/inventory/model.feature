@@ -26,6 +26,16 @@ Feature: Model
     And I save
     Then the new model is created and can be found in the list of unused models
 
+  Scenario: Saving model without changing accessories should not have effect on them
+
+    Bug: https://github.com/leihs/leihs/issues/1634
+
+    When I edit a model that exists, is in use and already has activated accessories
+    And I activate all the accessories
+    And I save
+    When I open the model page
+    Then all the accessories are activated
+    
   Scenario: Editing model accessories
     When I edit a model that exists, is in use and already has activated accessories
     Then I see all the accessories for this model

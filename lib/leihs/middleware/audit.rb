@@ -11,13 +11,25 @@ module Leihs
 
       def call(env)
         if unsafe_method?(env["REQUEST_METHOD"])
-          ActiveRecord::Base.transaction do
-            txid = get_txid
-            persist_request(txid, env)
-            response = @app.call(env)
-            persist_response(txid, response)
-            response
+          txid = nil
+          response = nil
+          user_id = get_user_id(env["HTTP_COOKIE"])
+
+          begin 
+            ActiveRecord::Base.transaction do
+              txid = get_txid
+              response = @app.call(env)
+            end
+          rescue => e
+            persist_request(txid, env, user_id)
+            persist_response(txid, 500)
+            raise(e)
           end
+
+          persist_request(txid, env, user_id)
+          persist_response(txid, response.first)
+
+          response
         else
           @app.call(env)
         end
@@ -26,7 +38,7 @@ module Leihs
       private
 
       def unsafe_method?(m)
-        HTTP_UNSAFE_METHODS.include?(m)
+        HTTP_UNSAFE_METHODS.any? { |unsafe_m| unsafe_m.match(/^#{m}$/i) }
       end
 
       def db_conn
@@ -37,9 +49,8 @@ module Leihs
         db_conn.execute("SELECT txid() AS txid").entries.first['txid']
       end
 
-      def persist_request(txid, env)
+      def persist_request(txid, env, user_id)
         path = env["REQUEST_PATH"]
-        user_id = get_user_id(env["HTTP_COOKIE"])
         http_uid = env["HTTP_HTTP_UID"]
         method = env["REQUEST_METHOD"].downcase
 
@@ -61,7 +72,7 @@ module Leihs
         SQL
       end
 
-      def persist_response(txid, (status))
+      def persist_response(txid, status)
         db_conn.execute <<-SQL
           INSERT INTO audited_responses (txid, status)
           VALUES ('#{txid}', '#{status}')
@@ -70,18 +81,20 @@ module Leihs
 
       def get_session_token(http_cookie = "")
         http_cookie
-          .split("; ")
-          .find { |c| c.match(/leihs-user-session/) }
+          .split(";")
+          .find { |c| c.match(Leihs::Constants::USER_SESSION_COOKIE_NAME) }
           .try(:split, "=")
           .try(:second)
       end
 
       def get_user_id(http_cookie)
-        token = get_session_token(http_cookie)
-        user_session = UserSession.find_by_token(token)
-        user_session
-          .try { |us| us.delegation or us.user }
-          .try(:id)
+        if http_cookie
+          token = get_session_token(http_cookie)
+          if token
+            user_session = UserSession.find_by_token(token)
+            user_session.try(&:user).try(&:id)
+          end
+        end
       end
     end
   end

@@ -30,7 +30,7 @@ module DevTestMisc
                             token_hash: token_hash,
                             created_at: real_now)
 
-        cookies['leihs-user-session'] = { value: token }
+        cookies[Leihs::Constants::USER_SESSION_COOKIE_NAME] = { value: token }
         redirect_to manage_root_path
       end
 
@@ -38,7 +38,7 @@ module DevTestMisc
         if current_user
           UserSession.where(user: current_user).destroy_all
         end
-        cookies.delete 'leihs-user-session'
+        cookies.delete Leihs::Constants::USER_SESSION_COOKIE_NAME
         flash[:notice] = _('You have been logged out.')
         redirect_back_or_default('/')
       end
@@ -48,13 +48,13 @@ module DevTestMisc
         if logged_in?
           flash.keep
           if current_user.is_admin
-            redirect_to admin_root_path
+            redirect_to '/admin'
           elsif current_user.has_role?(:group_manager)
             redirect_to manage_root_path
           elsif current_user.access_rights.any?
             redirect_to '/borrow'
           else
-            redirect_to '/my/user/me?redirect-reason=no-access-legacy-root'
+            redirect_to '/my/auth-info?redirect-reason=no-access-legacy-root'
           end
         end
       end

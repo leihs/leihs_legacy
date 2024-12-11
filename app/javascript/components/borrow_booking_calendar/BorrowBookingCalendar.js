@@ -349,7 +349,7 @@ const BorrowBookingCalendar = createReactClass({
 
   _isWithinAdvanceDaysPeriod(date, workday = this.state.poolContext.workday) {
     return date.isBefore(
-      this.state.todayDate.clone().add(workday.reservation_advance_days || 0, 'day'),
+      this.state.todayDate.clone().add(this.state.poolContext.inventory_pool.reservation_advance_days || 0, 'day'),
       'day'
     )
   },

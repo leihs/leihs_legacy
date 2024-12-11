@@ -23,12 +23,3 @@ instead of on request (faster).
 This is recommended when working on JS/Frontend primarily:
 
 **run `./bin/webpack-dev-server` before starting `./bin/rails server`**
-
-
-### debugging
-
-```bash
-# run a base ruby container to try out something. will self-delete on exit.
-docker run --rm -it  -v ${PWD}/:/leihs/legacy --workdir /leihs/legacy ruby:2.7.5-bullseye /bin/bash
-# or with the leihs app inside:
-```

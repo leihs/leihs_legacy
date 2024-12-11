@@ -76,11 +76,6 @@ module Spec
       expect(page).to have_content txt
     end
 
-    step 'the maximum reservation time is set to :n days' do |n|
-      s = Setting.first
-      s.update!(maximum_reservation_time: n.to_i)
-    end
-
     step 'I click on :text' do |text|
       click_on text
     end

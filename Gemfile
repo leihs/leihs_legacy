@@ -9,7 +9,6 @@ gem 'chunky_png', '~> 1.2'
 gem 'cider_ci-open_session', '~> 2.0.1'
 gem 'coffee-rails', '~> 5'
 gem 'coffee-script', '~> 2.2'
-gem 'compass-rails', '~> 3.0'
 gem 'execjs', '~> 2.6'
 gem 'font-awesome-sass', '~> 4.4' # NOTE font not found using gem 'rails-assets-font-awesome'
 # gem 'geckodriver-helper', git: 'https://github.com/leihs/geckodriver-helper'
@@ -18,10 +17,10 @@ gem 'gettext_i18n_rails', '~> 1.0'
 gem 'haml', '~> 5'
 gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'json', '~> 2'
-gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'mk/rails-6.1'
+gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'rails7'
 gem 'kramdown' # markdown rendering
 gem 'kramdown-parser-gfm'
-gem 'liquid', '~> 3.0'
+gem 'liquid', '~> 5.0'
 gem 'mini_magick', '~> 3.4'
 gem 'net-ldap', require: 'net/ldap'
 gem 'nilify_blanks', '~> 1.1'
@@ -38,7 +37,7 @@ gem 'will_paginate', '~> 3.0'
 
 # JavaScript / Frontend / Client [modern]
 gem 'webpacker', '~> 3.0'
-gem 'react-rails'
+gem 'react-rails', '~> 2.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap', '3.3.7'
@@ -92,7 +91,7 @@ group :development, :test do
   gem 'pry-rails'
 
   gem 'rb-readline'
-  gem 'rspec-rails', '~> 5', require: false
+  gem 'rspec-rails', '~> 7', require: false
   # gem 'selenium-webdriver', '~> 3.14'
   gem 'spring' # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'timecop', '~> 0.7'

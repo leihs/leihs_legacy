@@ -4,20 +4,6 @@ module Mailer
     SmtpSetting.first.enabled
   end
 
-  def self.order_submitted(order)
-    if send_mail
-      Mailer::Order.submitted(order)
-    end
-  end
-
-  # Notify the person responsible for the inventory pool that an order
-  # was received. Can be enabled in config/environment.rb
-  def self.order_received(order)
-    if (send_mail and Setting.first.deliver_received_order_notifications)
-      Mailer::Order.received(order)
-    end
-  end
-
   def self.order_approved(order, comment)
     if send_mail
       Mailer::Order.approved(order, comment)

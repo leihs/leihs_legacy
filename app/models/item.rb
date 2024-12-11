@@ -12,9 +12,9 @@
 # riding pleasure.
 #
 class Item < ApplicationRecord
-  include Concerns::InventoryCode
-  include Concerns::ItemCsv
-  include Concerns::SerialNumberValidation
+  include InventoryCode
+  include ItemCsv
+  include SerialNumberValidation
   include DefaultPagination
 
   belongs_to(:parent,
@@ -54,7 +54,7 @@ class Item < ApplicationRecord
   # resulting hashes when reading from the DB contain string keys,
   # but no symbol keys. Since we still use symbol keys everywhere
   # to access the properties, we need the following serializer:
-  serialize :properties, Concerns::HashSerializer
+  serialize :properties, coder: HashSerializer
 
   ####################################################################
 
@@ -245,17 +245,9 @@ class Item < ApplicationRecord
 
   ################### DESTROY RESTRICTIONS ###########################
 
-  def destroy_would_lead_to_hard_overbooking?
-    model.ordered_and_unassigned_quantity.positive? and
-      not ( model.items.in_stock.count > model.ordered_and_unassigned_quantity )
-  end
-
   # override ActiveRecord::Base method from `config/initializers/restricted_associations.rb`
   def can_destroy?
-    not parent and
-      not children.exists? and
-      not reservations.exists? and
-      not destroy_would_lead_to_hard_overbooking?
+    false
   end
   alias_method(:can_destroy, :can_destroy?) # used for JSON requests
 
