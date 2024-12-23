@@ -1292,7 +1292,9 @@
                 <div className='table'>
                   <div className='table-row'>
                     <div className='table-cell vertical-align-middle'>
-                      <img className='max-width-xxs max-height-xxs' src={this._modelImageUrl(model)} />
+                      <a target="_blank" href={this._modelImageUrl(model)}>
+                        <img className='max-width-xxs max-height-xxs' src={this._modelImageThumbUrl(model)} />
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -1376,8 +1378,12 @@
       return App.Inventory.url().replace('/inventory', '') + '/models/' + model.id + '/edit' + '?' + $.param({return_url: App.Inventory.url()})
     },
 
-    _modelImageUrl(model) {
+    _modelImageThumbUrl(model) {
       return '/models/' + model.id + '/image_thumb'
+    },
+
+    _modelImageUrl(model) {
+      return '/models/' + model.id + '/image'
     },
 
     _itemEditLabel() {
