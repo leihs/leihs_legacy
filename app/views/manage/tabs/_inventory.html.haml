@@ -21,11 +21,6 @@
             = _("Advanced Search")
 
         %li
-          %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_categories_path(current_inventory_pool),
-          :class => (defined? active_tab and active_tab == :categories) ? "active" : ""}
-            = _("Categories")
-
-        %li
           %a.navigation-tab-item.margin-right-xxs.padding-horizontal-m.float-left{:href => manage_templates_path(current_inventory_pool),
           :class => (defined? active_tab and active_tab == :templates) ? "active" : ""}
             = _("Templates")

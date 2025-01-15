@@ -17,13 +17,4 @@ class CategoriesController < ApplicationController
       end
   end
 
-  def image
-    category = Category.find params[:id]
-    if category.image.nil?
-      head :not_found
-    else
-      redirect_to get_image_path(category.image.id)
-    end
-  end
-
 end

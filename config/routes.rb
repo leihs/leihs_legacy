@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   get :status, controller: :application, action: :status
 
   # Categories
-  get "categories/:id/image", to: "categories#image", as: "category_image"
   get "category_links",       to: "category_links#index", as: "category_links"
 
   # Styleguide
@@ -163,12 +162,6 @@ Rails.application.routes.draw do
 
       # Categories
       get     'categories',                       to: 'categories#index',           as: 'categories'
-      post    'categories',                       to: 'categories#create'
-      get     'categories/new',                   to: 'categories#new',             as: 'new_category'
-      get     'categories/:id/edit',              to: 'categories#edit',            as: 'edit_category'
-      put     'categories/:id',                   to: 'categories#update',          as: 'update_category'
-      delete  'categories/:id',                   to: 'categories#destroy'
-      post    'categories/:id/upload/image',      to: "categories#upload",          type: "image"
 
       # Options
       get   'options',            to: "options#index"
