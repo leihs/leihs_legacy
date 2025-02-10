@@ -1,14 +1,5 @@
 class MailTemplate < ApplicationRecord
 
-  TEMPLATE_TYPES = {
-    reminder: :user,
-    deadline_soon_reminder: :user,
-    received: :order,
-    submitted: :order,
-    approved: :order,
-    rejected: :order
-  }.freeze
-
   self.inheritance_column = nil
 
   belongs_to :inventory_pool # NOTE when null, then is system-wide
@@ -19,25 +10,6 @@ class MailTemplate < ApplicationRecord
 
   after_save do
     destroy if body.blank?
-  end
-
-  def self.available_liquid_variables_for_order
-    [
-      'user.name',
-      'inventory_pool.name',
-      'inventory_pool.description',
-      'inventory_pool.email_signature',
-      'email_signature',
-      { 'reservations' => [
-        'l.quantity',
-        'l.model_name',
-        'l.start_date',
-        'l.end_date'
-      ] },
-      'comment',
-      'purpose',
-      'order_url'
-    ]
   end
 
   def self.liquid_variables_for_order(order, comment = nil)
@@ -56,25 +28,6 @@ class MailTemplate < ApplicationRecord
       purpose: order.purpose,
       order_url: order.edit_url
     }.deep_stringify_keys
-  end
-
-  def self.available_liquid_variables_for_user
-    [
-      'user.name',
-      'inventory_pool.name',
-      'inventory_pool.description',
-      'inventory_pool.email_signature',
-      'email_signature',
-      { 'reservations' => [
-        'l.quantity',
-        'l.model_name',
-        'l.item_inventory_code',
-        'l.start_date',
-        'l.end_date'
-      ] },
-      'quantity',
-      'due_date'
-    ]
   end
 
   def self.liquid_variables_for_user(user, inventory_pool, reservations)
