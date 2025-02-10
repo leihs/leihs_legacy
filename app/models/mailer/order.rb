@@ -1,9 +1,9 @@
 module Mailer::Order
   extend self
 
-  def choose_language_for(contract)
+  def choose_language_for(order)
     I18n.locale =
-      contract.target_user.language.try(:locale) || I18n.default_locale
+      order.target_user.language.try(:locale) || I18n.default_locale
   end
 
   def approved(order, comment, sent_at = Time.zone.now)

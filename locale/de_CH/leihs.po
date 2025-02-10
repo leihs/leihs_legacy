@@ -324,6 +324,9 @@ msgstr "Datum für %{model} von %{from} auf %{to} gesetzt"
 msgid "Closed"
 msgstr "Geschlossen"
 
+msgid "closed"
+msgstr "geschlossen"
+
 msgid "Compatible successfully removed"
 msgstr "Ergänzung gelöscht"
 
@@ -3724,3 +3727,24 @@ msgstr "Die Angabe einer Telefonnummer ist empfohlen"
 
 msgid "The order has already been dealt with."
 msgstr "Die Bestellung wurde bereits bearbeitet."
+
+msgid "Monday"
+msgstr "Montag"
+
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgid "Friday"
+msgstr "Freitag"
+
+msgid "Saturday"
+msgstr "Samstag"
+
+msgid "Sunday"
+msgstr "Sonntag"

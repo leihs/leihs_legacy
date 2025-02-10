@@ -481,6 +481,10 @@ window.i18n.locale_data = {
          null,
          "Geschlossen"
       ],
+      "closed": [
+         null,
+         "geschlossen"
+      ],
       "Compatible successfully removed": [
          null,
          "Ergänzung gelöscht"
@@ -4829,6 +4833,34 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "Die Bestellung wurde bereits bearbeitet."
+      ],
+      "Monday": [
+         null,
+         "Montag"
+      ],
+      "Tuesday": [
+         null,
+         "Dienstag"
+      ],
+      "Wednesday": [
+         null,
+         "Mittwoch"
+      ],
+      "Thursday": [
+         null,
+         "Donnerstag"
+      ],
+      "Friday": [
+         null,
+         "Freitag"
+      ],
+      "Saturday": [
+         null,
+         "Samstag"
+      ],
+      "Sunday": [
+         null,
+         "Sonntag"
       ]
    }
 }

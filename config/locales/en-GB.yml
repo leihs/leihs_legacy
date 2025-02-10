@@ -49,6 +49,7 @@ en-GB:
       default: ! '%d/%m/%Y'
       long: ! '%d %B, %Y'
       short: ! '%d %b'
+      without_year: ! '%d/%m'
     month_names:
     -
     - January

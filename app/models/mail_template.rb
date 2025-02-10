@@ -15,6 +15,9 @@ class MailTemplate < ApplicationRecord
   def self.liquid_variables_for_order(order, comment = nil)
     { user: { name: order.target_user.name },
       inventory_pool: { name: order.inventory_pool.name,
+                        contact: order.inventory_pool.contact,
+                        workdays: order.inventory_pool.workday.render_for_email_template,
+                        holidays: order.inventory_pool.holidays.render_for_email_template,
                         description: order.inventory_pool.description,
                         email_signature: order.inventory_pool.email_signature },
       email_signature: Setting.first.email_signature,
@@ -33,6 +36,9 @@ class MailTemplate < ApplicationRecord
   def self.liquid_variables_for_user(user, inventory_pool, reservations)
     { user: { name: user.name },
       inventory_pool: { name: inventory_pool.name,
+                        contact: inventory_pool.contact,
+                        workdays: inventory_pool.workday.render_for_email_template,
+                        holidays: inventory_pool.holidays.render_for_email_template,
                         description: inventory_pool.description,
                         email_signature: inventory_pool.email_signature },
       email_signature: Setting.first.email_signature,

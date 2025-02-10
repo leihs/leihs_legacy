@@ -18,7 +18,19 @@ class InventoryPool < ApplicationRecord
   has_one :workday, dependent: :delete
   accepts_nested_attributes_for :workday, update_only: true
 
-  has_many :holidays, dependent: :delete_all
+  has_many :holidays, dependent: :delete_all do
+    def render_for_email_template
+      future.inject([]) do |res, h|
+        span = if h.start_date == h.end_date
+                 I18n.l(h.start_date)
+               else
+                 "#{I18n.l(h.start_date, format: :without_year)} - #{I18n.l(h.end_date)}"
+               end
+        res << "#{h.name}: #{span}"
+      end.join("\n")
+    end
+  end
+
   accepts_nested_attributes_for(:holidays,
                                 allow_destroy: true,
                                 reject_if: proc { |holiday| holiday[:id] })

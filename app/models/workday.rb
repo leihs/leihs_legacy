@@ -2,10 +2,9 @@ class Workday < ApplicationRecord
 
   belongs_to :inventory_pool, inverse_of: :workday
 
-  # deprecated
+  # used in templates
   DAYS = %w(monday tuesday wednesday thursday friday saturday sunday)
 
-  # better
   WORKDAYS = %w(sunday monday tuesday wednesday thursday friday saturday)
   
   def open_on?(date)
@@ -62,6 +61,12 @@ class Workday < ApplicationRecord
       write_attribute(WORKDAYS[k.to_i], v['open'].to_i)
       max_visits[k] = v['max_visits'].presence
     end
+  end
+
+  def render_for_email_template
+    DAYS.inject([]) do |res, d|
+      res << "#{_(d.capitalize)}: #{send(d) ? send("#{d}_info") : _('closed')}"
+    end.join("\n")
   end
 
   def max_visits_on(weekday_number)
