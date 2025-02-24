@@ -26,7 +26,7 @@ class InventoryPool < ApplicationRecord
                else
                  sd_format = h.start_date.year == h.end_date.year ? :without_year : :default
                  # \u2013 is the en-dash
-                 "#{I18n.l(h.start_date, format: sd_format)} \u2013 #{I18n.l(h.end_date)}"
+                 "#{I18n.l(h.start_date, format: sd_format)}\u2013#{I18n.l(h.end_date)}"
                end
         res << "#{h.name}: #{span}"
       end.join("\n")
