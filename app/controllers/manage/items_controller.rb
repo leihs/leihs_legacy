@@ -180,11 +180,16 @@ class Manage::ItemsController < Manage::ApplicationController
           if params[:child_items]
             @item.children = []
             @item.save!
-            params[:child_items]&.each do |child_id|
-              child = Item.find(child_id)
-              child.parent = @item
-              child.skip_serial_number_validation = true
-              child.save!
+            begin
+              params[:child_items]&.each do |child_id|
+                child = Item.find(child_id)
+                child.parent = @item
+                child.skip_serial_number_validation = true
+                child.save!
+              end
+            rescue => e
+              @item.errors.add(:base, e.message)
+              raise(e)
             end
           end
         end
