@@ -2,11 +2,6 @@
   product_name = 'leihs'
   documentation_link = app_settings.try(:documentation_link).try(:strip).presence
   active_language = Language.find_by_locale(I18n.locale)
-  version_name = RELEASE_INFO.try(:[], :version_name)
-  is_release = RELEASE_INFO.try(:[], :deploy_info).try(:[], :build_is_latest_release) || false
-  deploy_time = RELEASE_INFO.try(:[], :deploy_info).try(:[], :time)
-  version_link = main_app.release_info_path + (is_release ? ('#' + version_name) : '')
-  version_hint = "Version #{version_name} Deploy #{deploy_time}"
 
 %footer.separated-top.emboss
 
@@ -23,13 +18,7 @@
       .padding-top-xxs
         .padding-top-xxs
 
-          .col1of2
-            %span.padding-top-s
-              - unless controller_path =~ /^borrow/
-                %a.dark-grey.padding-inset-s{href: version_link, title: version_hint}
-                  = version_name
-
-          .col1of2.text-align-right
+          .col1of1.text-align-right
 
             %i.fa.fa-globe.grey.margin-right-s
             - Language.active_languages.each do |language|
