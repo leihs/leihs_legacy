@@ -89,7 +89,6 @@ class User < ApplicationRecord
     end
   end
 
-  has_many :emails
   has_many :reservations, dependent: :restrict_with_exception
   has_many :contracts
   has_many :item_lines, dependent: :restrict_with_exception
@@ -210,7 +209,11 @@ class User < ApplicationRecord
   end
 
   def alternative_email
-    secondary_email.presence
+    if delegation?
+      delegator_user.secondary_email.presence
+    else
+      secondary_email.presence
+    end
   end
 
   def emails
