@@ -2412,10 +2412,6 @@ window.i18n.locale_data = {
          null,
          "[leihs] Réservation envoyée"
       ],
-      "[leihs] Reservation confirmed (with changes)": [
-         null,
-         "[leihs] Réservation confirmée (avec des changements)"
-      ],
       "[leihs] Some items should be returned tomorrow": [
          null,
          "[leihs] Des éléments doivent être retourné demain"

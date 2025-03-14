@@ -2313,10 +2313,6 @@ window.i18n.locale_data = {
          null,
          "[leihs] Reservation abgschickt"
       ],
-      "[leihs] Reservation confirmed (with changes)": [
-         null,
-         "[leihs] Reservation bewilligt (mit Änderige)"
-      ],
       "[leihs] Some items should be returned tomorrow": [
          null,
          "[leihs] Einige Sache sötted morn zruggbracht werde"

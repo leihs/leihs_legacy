@@ -499,7 +499,7 @@ msgid "[Model %s] "
 msgstr "[Modelo %s] "
 
 msgid "[leihs] Order received"
-msgstr "[leihs] Orden rechazada"
+msgstr "[leihs] Orden recibida"
 
 msgid "[leihs] Reminder"
 msgstr "[leihs] Recordatorio"
@@ -512,9 +512,6 @@ msgstr "[leihs] Reserva Rechazada"
 
 msgid "[leihs] Reservation Submitted"
 msgstr "[leihs] Reserva Presentada"
-
-msgid "[leihs] Reservation confirmed (with changes)"
-msgstr "[leihs] Reserva confirmada (con cambios)"
 
 msgid "[leihs] Some items should be returned tomorrow"
 msgstr "[leihs] Algunos elementos deberían de ser devueltos mañana"

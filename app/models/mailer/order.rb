@@ -21,7 +21,7 @@ module Mailer::Order
     Email.create!(user_id: order.target_user.id,
                   to_address: order.target_user.email,
                   from_address: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
-                  subject: _('[leihs] Reservation Confirmation'),
+                  subject: template.subject,
                   body: body)
   end
 
@@ -40,7 +40,7 @@ module Mailer::Order
     Email.create!(user_id: order.target_user.id,
                   to_address: order.target_user.email,
                   from_address: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
-                  subject: _('[leihs] Reservation Submitted'),
+                  subject: template.subject,
                   body: body)
   end
 
@@ -60,7 +60,7 @@ module Mailer::Order
     Email.create!(inventory_pool_id: order.inventory_pool.id,
                   to_address: (order.inventory_pool.email || smtp_settings.default_from_address),
                   from_address: (order.inventory_pool.email || smtp_settings.default_from_address),
-                  subject: _('[leihs] Order received'),
+                  subject: template.subject,
                   body: body)
   end
 
@@ -79,8 +79,7 @@ module Mailer::Order
     Email.create!(user_id: order.target_user.id,
                   to_address: order.target_user.email,
                   from_address: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
-                  subject: _('[leihs] Reservation Rejected'),
+                  subject: template.subject,
                   body: body)
   end
-
 end

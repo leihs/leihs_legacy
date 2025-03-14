@@ -26,7 +26,7 @@ module Mailer::User
       Email.create!(user_id: user.id,
                     to_address: user_email,
                     from_address: (inventory_pool.email || SmtpSetting.first.default_from_address),
-                    subject: _('[leihs] Reminder'),
+                    subject: template.subject,
                     body: body)
     end
   end
@@ -49,17 +49,8 @@ module Mailer::User
       Email.create!(user_id: user.id,
                     to_address: user_email,
                     from_address: (inventory_pool.email || Setting.first.default_from_address),
-                    subject: _('[leihs] Some items should be returned tomorrow'),
+                    subject: template.subject,
                     body: body)
     end
   end
-
-  def email(user, from, to, subject, body)
-    Email.create!(user_id: user.id,
-                  to_address: to,
-                  from_address: from,
-                  subject: "[leihs] #{subject}",
-                  body: body)
-  end
-
 end

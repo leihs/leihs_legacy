@@ -725,7 +725,7 @@ window.i18n.locale_data = {
       ],
       "[leihs] Order received": [
          null,
-         "[leihs] Orden rechazada"
+         "[leihs] Orden recibida"
       ],
       "[leihs] Reminder": [
          null,
@@ -742,10 +742,6 @@ window.i18n.locale_data = {
       "[leihs] Reservation Submitted": [
          null,
          "[leihs] Reserva Presentada"
-      ],
-      "[leihs] Reservation confirmed (with changes)": [
-         null,
-         "[leihs] Reserva confirmada (con cambios)"
       ],
       "[leihs] Some items should be returned tomorrow": [
          null,

@@ -1839,9 +1839,6 @@ msgstr "[leihs] Reservation abgelehnt"
 msgid "[leihs] Reservation Submitted"
 msgstr "[leihs] Reservation abgeschickt"
 
-msgid "[leihs] Reservation confirmed (with changes)"
-msgstr "[leihs] Reservation genehmigt (mit Änderungen)"
-
 msgid "[leihs] Some items should be returned tomorrow"
 msgstr "[leihs] Einige Gegenstände sollten morgen zurückgebracht werden"
 
