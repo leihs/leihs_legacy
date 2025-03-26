@@ -165,7 +165,9 @@ module LeihsFactory
       ip = InventoryPool.create default_attributes.merge(attributes)
       # the workday is create through InventoryPool#before_create,
       # then we cannot use InventoryPool.find_or_create_by_name
-      ip.workday.update(saturday: true, sunday: true)
+      ip.workday.update(saturday: true, sunday: true,
+                        saturday_orders_processing: true,
+                        sunday_orders_processing: true)
     end
     ip
   end

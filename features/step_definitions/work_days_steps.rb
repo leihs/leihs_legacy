@@ -10,9 +10,17 @@ Given 'inventory_pool is open on {string}' do |days|
   inventory_pool.workday.friday = false
   inventory_pool.workday.saturday = false
   inventory_pool.workday.sunday = false
+  inventory_pool.workday.monday_orders_processing = false
+  inventory_pool.workday.tuesday_orders_processing = false
+  inventory_pool.workday.wednesday_orders_processing = false
+  inventory_pool.workday.thursday_orders_processing = false
+  inventory_pool.workday.friday_orders_processing = false
+  inventory_pool.workday.saturday_orders_processing = false
+  inventory_pool.workday.sunday_orders_processing = false
   inventory_pool.workday.save
   days.split(',').each do |day|
-    inventory_pool.workday.update(day.strip.downcase => true)
+    inventory_pool.workday.update(day.strip.downcase => true,
+                                  "#{day.strip.downcase}_orders_processing" => true)
   end
 end
 
