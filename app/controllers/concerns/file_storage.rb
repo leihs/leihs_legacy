@@ -12,7 +12,6 @@ module FileStorage
         filename: "#{basename}_thumb#{extension}",
         size: thumbnail_file.size,
         thumbnail: true,
-        metadata: MetadataExtractor.new(thumbnail_filepath).to_hash,
         parent_id: image.id,
         content_type: file.content_type
       )
@@ -26,7 +25,6 @@ module FileStorage
       content: Base64.encode64(file.read),
       filename: file.original_filename,
       size: file.size,
-      metadata: MetadataExtractor.new(file.tempfile.path).to_hash,
       content_type: file.content_type
     )
     image.save!
@@ -38,7 +36,6 @@ module FileStorage
       content: Base64.encode64(file.read),
       filename: file.original_filename,
       size: file.size,
-      metadata: MetadataExtractor.new(file.tempfile.path).to_hash,
       content_type: file.content_type,
       **opts
     )
