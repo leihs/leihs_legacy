@@ -40,7 +40,7 @@ Then /^this model's properties are saved in the order they were given$/ do
   if @model
     model = @model
   else
-    model = Model.order('created_at DESC').first
+    model = Model.reorder('created_at DESC').first
   end
   expect(model.properties.empty?).to be false
   model.properties.each_with_index do |property, i|

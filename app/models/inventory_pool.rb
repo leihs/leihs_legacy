@@ -279,7 +279,7 @@ class InventoryPool < ApplicationRecord
     else
       models = []
     end
-
+    
     inventory = \
       (models + (options || []))
         .sort { |a, b| a.name.strip <=> b.name.strip }

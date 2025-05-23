@@ -38,7 +38,7 @@ When(/^I enter the template's name$/) do
 end
 
 When(/^I add some models to the template$/) do
-  @changed_model = @current_inventory_pool.models.find {|m| m.items.borrowable.size > 1}
+  @changed_model = @current_inventory_pool.models.find {|m| m.items.borrowable.unretired.size > 1}
   fill_in_autocomplete_field("#{_("Quantity")} / #{_("Models")}", @changed_model.name)
 end
 

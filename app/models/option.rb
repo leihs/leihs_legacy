@@ -27,6 +27,8 @@ class Option < ApplicationRecord
 
   ##########################################
 
+  default_scope { order(:name) }
+
   SEARCHABLE_FIELDS = %w(manufacturer product version inventory_code)
 
   scope :search, lambda { |query, fields = []|

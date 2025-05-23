@@ -71,7 +71,7 @@
                         %tr
                           %td{style: "width: 4em; text-align: right; border: none"}
                           %td{style: "border: none"}
-                            = "%s / %s" % [item.room.name, item.shelf]
+                            = [item.room.name, item.shelf.presence].compact.join(" / ")
                       - elsif (items_in_stock = model_item.first.items.in_stock.where(inventory_pool_id: current_inventory_pool)).count == 0
                         %td{style: "width: 4em; text-align: right; border: none"}
                         %td{style: "border: none"}
@@ -84,7 +84,7 @@
                             %td{style: "width: 4em; text-align: right; border: none"}
                               = "%dx" % location.count
                             %td{style: "border: none"}
-                              = "%s / %s" % [location.room, location.shelf]
+                              = [location.room, location.shelf.presence].compact.join(" / ")
                         - not_defined_count = items_in_stock.count - locations.to_a.sum(&:count)
                         - if not_defined_count > 0
                           %tr

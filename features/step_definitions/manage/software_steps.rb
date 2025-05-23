@@ -675,7 +675,7 @@ end
 
 Given(/^a software product with more than (\d+) text rows in field "(.*?)" exists$/) do |arg1, arg2|
   @model = case arg2
-             when 'Software Informationen'
+             when 'Software Information'
                r = @current_inventory_pool.models.where(type: 'Software').detect {|m| m.technical_detail.to_s.split("\r\n").size > arg1.to_i}
                r ||= begin
                  td = []
@@ -696,8 +696,8 @@ end
 
 When(/^I click in the field "(.*?)"$/) do |arg1|
   case arg1
-    when 'Software Informationen'
-      el = find('#technical_details textarea')
+    when 'Software Information'
+      el = find('#software_information textarea')
       @original_size = el.native.css_value('height')
       el.click
     else
@@ -706,7 +706,7 @@ When(/^I click in the field "(.*?)"$/) do |arg1|
 end
 
 When(/^this field grows up till showing the complete text$/) do
-  expect(find("#technical_details textarea").native.css_value('height').to_i).to be > @original_size.to_i
+  expect(find("#software_information textarea").native.css_value('height').to_i).to be > @original_size.to_i
 end
 
 When(/^I release the focus from this field$/) do
@@ -714,7 +714,7 @@ When(/^I release the focus from this field$/) do
 end
 
 Then(/^this field shrinks back to the original size$/) do
-  expect(find("#technical_details textarea").native.css_value('height').to_i).to eq @original_size.to_i
+  expect(find("#software_information textarea").native.css_value('height').to_i).to eq @original_size.to_i
 end
 
 When(/^I change the value of the note$/) do

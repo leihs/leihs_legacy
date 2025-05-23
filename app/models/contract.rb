@@ -64,7 +64,7 @@ class Contract < ApplicationRecord
   #########################################################################
 
   def models
-    Model.where(id: item_lines.map(&:model_id)).order('product ASC').distinct
+    Model.where(id: item_lines.map(&:model_id)).distinct
   end
 
   #########################################################################
