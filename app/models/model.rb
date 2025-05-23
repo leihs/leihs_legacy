@@ -119,6 +119,8 @@ class Model < ApplicationRecord
 
   #############################################
 
+  default_scope { order(:name) }
+
   scope :active, -> { joins(:items).where(items: { retired: nil }).distinct }
 
   scope(:without_items,
@@ -180,22 +182,21 @@ class Model < ApplicationRecord
 
   scope(:order_by_attribute_and_direction,
         (lambda do |attr, direction|
-          if %w(product version manufacturer).include? attr \
-            and ['asc', 'desc'].include? direction
-            order "#{attr} #{direction.upcase}"
+          a = attr.presence.try(:to_sym)
+          d = direction.presence.try(:to_sym)
+
+          if [:product, :version, :manufacturer, :name].include?(a) \
+              and [:asc, :desc].include?(d)
+            reorder Hash[a, d]
           else
-            default_order
+            self
           end
         end))
-
-  scope :default_order, -> { order_by_attribute_and_direction('product', 'asc') }
 
   # not using scope because not working properly
   # (if result of first is nil, an additional query is performed returning all)
   def self.find_by_name(name)
-    find_by("CONCAT_WS(' ', product, version) = ?", name) \
-      || find_by_product(name) \
-      || find_by_version(name)
+    find_by(name: name) || find_by_product(name) || find_by_version(name)
   end
 
   def self.manufacturers
