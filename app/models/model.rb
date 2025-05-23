@@ -138,6 +138,7 @@ class Model < ApplicationRecord
               .joins(:items)
               .where(':id IN (items.owner_id, items.inventory_pool_id)',
                      id: ip.id)
+              .reorder(nil)
               .distinct
           where("models.id NOT IN (#{model_ids.to_sql})")
         end))
@@ -201,7 +202,7 @@ class Model < ApplicationRecord
 
   def self.manufacturers
     distinct
-      .order(:manufacturer)
+      .reorder(:manufacturer)
       .pluck(:manufacturer)
       .reject { |s| s.nil? || s.strip.empty? }
   end
