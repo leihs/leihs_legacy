@@ -136,7 +136,7 @@ Then /^the list contains the following columns:$/ do |table|
                   if line.item_id
                     find('tr', text: '%s / %s' % [location.room_name, location.shelf])
                   else
-                    find('tr', text: '%dx %s / %s' % [location.count, location.room_name, location.shelf])
+                    find('tr', text: '%dx %s' % [location.count, [location.room_name, location.shelf.presence].compact.join(' / ')])
                   end
                 end
               end

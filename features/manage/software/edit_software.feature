@@ -19,9 +19,9 @@ Feature: Editing software
 
   #73278586
   Scenario: Size of the software information field
-    Given a software product with more than 6 text rows in field "Software Informationen" exists
+    Given a software product with more than 6 text rows in field "Software Information" exists
     When I edit this software
-    And I click in the field "Software Informationen"
+    And I click in the field "Software Information"
     Then this field grows up till showing the complete text
     When I release the focus from this field
     Then this field shrinks back to the original size
