@@ -11,6 +11,7 @@ class window.App.User extends Spine.Model
   @hasMany "contracts", "App.Contract", "user_id"
   @hasMany "accessRights", "App.AccessRight", "user_id"
   @belongsTo "delegator_user", "App.User", "delegator_user_id"
+  # @hasMany "suspensions", "App.Suspension", "user_id"
 
   @extend Spine.Model.Ajax
   @extend App.Modules.FindOrBuild
@@ -32,7 +33,11 @@ class window.App.User extends Spine.Model
       if @.isAdmin()
         _jed "Administrator"
 
-  suspendedUntil: -> @.accessRight()?.suspended_until
+  suspension: ->
+    _.find App.InventoryPool.current?.suspensions, (s) => s.user_id == @id
+
+  suspendedUntil: -> @.suspension()?.suspended_until
+  suspendedReason: -> @.suspension()?.suspended_reason
 
   suspended: ->
     if @.suspendedUntil() then moment(@.suspendedUntil()).diff(moment(), "days") >= 0 else false

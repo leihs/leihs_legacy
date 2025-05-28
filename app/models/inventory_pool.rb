@@ -41,7 +41,11 @@ class InventoryPool < ApplicationRecord
 
   has_many(:users, -> { distinct }, through: :access_rights)
 
-  has_many :suspensions, dependent: :delete_all
+  has_many(:suspensions,
+           (lambda do
+              where('suspensions.suspended_until >= ?', Time.zone.today)
+           end),
+           dependent: :delete_all)
 
   has_many(:suspended_users,
            (lambda do

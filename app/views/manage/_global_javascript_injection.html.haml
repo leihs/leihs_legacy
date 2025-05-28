@@ -2,6 +2,7 @@
   :coffeescript
     App.InventoryPool.addRecord new App.InventoryPool #{current_inventory_pool.to_json}
     App.InventoryPool.current = App.InventoryPool.find(#{current_inventory_pool.id.to_json})
+    App.InventoryPool.current.suspensions = #{current_inventory_pool.suspensions.select(:id, :user_id, :suspended_until, :suspended_reason).to_json}
     App.InventoryPool.current.suspended_user_ids = #{current_inventory_pool.suspended_users.pluck(:id).to_json}
 - if current_user
   :coffeescript

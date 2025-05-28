@@ -73,6 +73,7 @@ class window.App.OrdersIndexController extends Spine.Controller
       App.User.fetchDelegators users
 
   render: (target, data, page)=>
+    console.log data
     target.removeClass('loading-page')
     target.html App.Render "manage/views/orders/line", data, { accessRight: App.AccessRight, currentUserRole: App.User.current.role }
     if !@finished && $('.loading-page').length == 0

@@ -127,6 +127,9 @@ Rails.application.routes.draw do
       post    "reservations/take_back",              to: "reservations#take_back"
       post    "reservations/print",                  to: "reservations#print", as: "print_reservations"
 
+      ## Suspensions
+      get "suspensions", to: "suspensions#index"
+
       # Inventory
       get  'inventory',                  :to => "inventory#index",         :as => "inventory"
       get  'inventory/expert/index',     :to => "expert#index"
