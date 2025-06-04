@@ -33,6 +33,7 @@ class Manage::InventoryController < Manage::ApplicationController
                 .arel_table[:id]
                 .eq(Item.arel_table[:inventory_pool_id])
             )
+            .order(:name)
 
         @props = manage_inventory_menu.merge(responsibles: responsibles)
       end
