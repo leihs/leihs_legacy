@@ -9,6 +9,6 @@ ASDF_PLUGIN_URL=https://github.com/asdf-vm/asdf-ruby.git
 source $PROJECT_DIR/database/bin/env/asdf-helper.bash
 asdf-update-plugin
 
-bundle install --quiet "$@"
+bundle install "$@"
 
 # vi: ft=sh
