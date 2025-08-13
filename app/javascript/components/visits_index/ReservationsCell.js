@@ -67,7 +67,7 @@ class ReservationsCell extends React.Component {
         {this.props.quantity} {_jed(this.props.quantity, 'Item', 'Items')}
       </div>
       ,
-      <Popup popupRef={this.popup} key={`reservations-popup-${this.props.visit_id}`} mode="click">
+      <Popup popupRef={this.popup} key={`reservations-popup-${this.props.visit_id}`} trigger="click">
         <div style={{ opacity: '1' }} className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
           <div className="tooltipster-box">
             <div className="tooltipster-content">

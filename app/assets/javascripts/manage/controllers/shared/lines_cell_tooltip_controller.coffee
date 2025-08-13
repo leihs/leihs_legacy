@@ -1,9 +1,9 @@
 class window.App.LinesCellTooltipController extends Spine.Controller
 
   events:
-    "mouseenter [data-type='lines-cell']": "onEnter"
+    "click [data-type='lines-cell']": "onClick"
 
-  onEnter: (e)=>
+  onClick: (e)=>
     trigger = $(e.currentTarget)
     record = if trigger.closest(".line[data-type='contract']").length 
       App.Contract.findOrBuild(trigger.closest(".line[data-type='contract']").data())
@@ -16,6 +16,7 @@ class window.App.LinesCellTooltipController extends Spine.Controller
     tooltip = new App.Tooltip
       el: trigger.closest(".line-col")
       content: App.Render "views/loading", {size: "micro"}
+      trigger: 'click'      
     @fetchData record, => tooltip.update App.Render "manage/views/reservations/tooltip", record
 
   fetchData: (record, callback)=>

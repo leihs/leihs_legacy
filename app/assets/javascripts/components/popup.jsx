@@ -7,12 +7,12 @@
   window.Popup = window.createReactClass({
     getDefaultProps: function () {
     return {
-      mode: 'hover'
+      trigger: 'hover'
     }
   },
 
     propTypes: {
-      mode: PropTypes.oneOf(['hover', 'click'])
+      trigger: PropTypes.oneOf(['hover', 'click'])
     },
 
     getInitialState () {
@@ -53,13 +53,13 @@
     },
 
     handleUpdates(event) {
-      if (this.props.mode === 'hover') {
+      if (this.props.trigger === 'hover') {
         this.setState({visible: this.state.insideChild || this.state.insideThis})
       }
     },
 
     handleClick(event) {
-      if (this.props.mode === 'click') {
+      if (this.props.trigger === 'click') {
         this.setState(state => ({...state, visible: !this.state.visible}))
       }
     },
@@ -110,7 +110,7 @@
     },
 
     componentWillUpdate(nextProps, nextState) {
-      if (this.props.mode === 'click') {
+      if (this.props.trigger === 'click') {
         if (!this.state.visible && nextState.visible) {
           this.activateClickOutsideAndEsc()
         } else if (this.state.visible && !nextState.visible) {

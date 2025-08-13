@@ -52,7 +52,7 @@ class UserCell extends React.Component {
             </div>
           )}
           {this.props.is_suspended && (
-            <div className="row margin-top-m" style={{fontSize: '1.2rem'}}>
+            <div className="row margin-top-m">
               <div><b className="darkred-text">{_jed('Suspended')}!</b></div>
               {(this.props.suspended_reason || '').split('\n').map((l, i) => <div key={i}>{l}</div>)}
             </div>
@@ -78,7 +78,7 @@ class UserCell extends React.Component {
         </strong>
       </div>
       ,
-      <Popup popupRef={this.popup} key={`user-popup-${this.props.id}-${this.props.visit_id}`} mode="click">
+      <Popup popupRef={this.popup} key={`user-popup-${this.props.id}-${this.props.visit_id}`} trigger="click">
         <div style={{ opacity: '1' }} className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
           <div className="tooltipster-box">
             <div className="tooltipster-content">
