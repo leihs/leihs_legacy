@@ -35,13 +35,22 @@ class App.Tooltip
       updateAnimation: false,
       contentAsHTML: true,
       theme: 'tooltipster-default',
-      distance: 0
+      distance: 0,
+      functionAfter: () ->
+        document.removeEventListener "keydown", escHandler
 
     if options.content?
       @content = options.content
       @target.tooltipster("show")
 
-  delegateEvents: (tooltip)=>
+    target = @target
+    escHandler = (e) =>
+      if e.key == "Escape"
+        target.tooltipster "close"
+
+    document.addEventListener "keydown", escHandler
+
+  delegateEvents: (tooltip) =>
     tooltip.find("img").load @reposition
 
   disable: => @target.tooltipster "disable"
