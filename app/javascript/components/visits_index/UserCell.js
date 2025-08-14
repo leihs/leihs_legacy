@@ -51,6 +51,13 @@ class UserCell extends React.Component {
               <p className="paragraph-s line-height-s">{this.props.badge_id}</p>
             </div>
           )}
+          {this.props.is_suspended && (
+            <div className="row margin-top-m">
+              <p className="paragraph-xs line-height-s">{_jed('Suspended reason')}</p>
+              {(this.props.suspended_reason || '').split('\n')
+                .map((l, i) => <div key={i} className='paragraph-s line-height-s darkred-text'><b>{l}</b></div>)}
+            </div>
+          )}
         </div>
         {this.props.image_url && (
           <div className="col1of4">

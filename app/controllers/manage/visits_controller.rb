@@ -30,6 +30,7 @@ class Manage::VisitsController < Manage::ApplicationController
             user = User.find(v['user_id'])
 
             v['user']['is_suspended'] = user.suspended?(current_inventory_pool)
+            v['user']['suspended_reason'] = user.current_suspensions(current_inventory_pool).map { |s| s.suspended_reason }.join("\n\n")
 
             # NOTE: `extended_info` not needed and some records even contain
             # invalid UTF8 chars!

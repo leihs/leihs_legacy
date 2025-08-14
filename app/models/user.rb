@@ -342,6 +342,11 @@ class User < ApplicationRecord
       .where('suspended_until >= ?', Date.today).exists?
   end
 
+  def current_suspensions(ip)
+    suspensions.where(inventory_pool_id: ip)
+      .where("suspended_until >= ?", Date.today)
+  end
+
   #################### End role_requirement
 
   def deletable?

@@ -8,7 +8,11 @@
              address: user.address,
              image_url: user.image_url,
              zip: user.zip,
-             city: user.city }}
+             city: user.city,
+             is_suspended: user.suspended?(current_inventory_pool) ? "true" : "",
+             suspended_reason: user.current_suspensions(current_inventory_pool)
+                                    .map { |s| s.suspended_reason }.join("\n\n")
+                                    .gsub("\n", "&#10;") }}
   = label ||= user
   - if user.suspended?(current_inventory_pool)
     %span.darkred-text= "%s!" % _("Suspended")

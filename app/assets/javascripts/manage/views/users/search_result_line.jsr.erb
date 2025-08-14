@@ -1,6 +1,6 @@
 <div class='row line'>
   <div class='col2of8 line-col'>
-    <strong data-address='{{>address}}' data-badge_id='{{>badge_id}}' data-city='{{>city}}' data-email='{{>email}}' data-firstname='{{>firstname}}' data-id='{{>id}}' data-image_url='{{>image_url}}' data-lastname='{{>lastname}}' data-phone='{{>phone}}' data-type='user-cell' data-zip='{{>zip}}'>
+    <strong data-is_suspended='{{>isSuspended()}}' data-suspended_reason='{{>suspended_reason}}' data-address='{{>address}}' data-badge_id='{{>badge_id}}' data-city='{{>city}}' data-email='{{>email}}' data-firstname='{{>firstname}}' data-id='{{>id}}' data-image_url='{{>image_url}}' data-lastname='{{>lastname}}' data-phone='{{>phone}}' data-type='user-cell' data-zip='{{>zip}}'>
       {{>name()}}
       {{if isSuspended()}}
       <span class='darkred-text'>{{jed "Suspended"/}}!</span>

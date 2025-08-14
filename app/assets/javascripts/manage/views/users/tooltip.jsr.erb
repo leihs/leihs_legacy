@@ -12,7 +12,7 @@
     {{if address}}
     <div class='row margin-top-m'>
       <p class='paragraph-xs line-height-s'>{{jed "Address"/}}</p>
-      <p class='paragraph-s line-height-s'>{{>address}}{{>zip}} {{>city}}</p>
+      <p class='paragraph-s line-height-s'>{{>address}}, {{>zip}} {{>city}}</p>
     </div>
     {{/if}}
     {{if phone}}
@@ -25,6 +25,16 @@
     <div class='row margin-top-m'>
       <p class='paragraph-xs line-height-s'>{{jed "Badge"/}}</p>
       <p class='paragraph-s line-height-s'>{{>badge_id}}</p>
+    </div>
+    {{/if}}
+    {{if is_suspended}}
+    <div class='row margin-top-m'>
+      <p class="paragraph-xs line-height-s">{{jed "Suspended reason"/}}</p>
+      {{for suspended_reason.split('&#10;')}}
+        <div class='paragraph-s line-height-s darkred-text'>
+          <b>{{>#data}}</b>
+        </div>
+      {{/for}}
     </div>
     {{/if}}
   </div>

@@ -45,9 +45,29 @@ class Manage::UsersController < Manage::ApplicationController
   ######################################################################
 
   def index
+    @users = User.filter(params, current_inventory_pool)
     @role = params[:role]
-    @users = User.filter params, current_inventory_pool
-    set_pagination_header @users unless params[:paginate] == 'false'
+    set_pagination_header @users unless params[:paginate] == "false"
+    respond_to do |format|
+      format.json do
+        @users = @users.includes(:suspensions)
+        render json: @users.map { |u|
+          u.as_json(
+            methods: [:name, :image_url],
+            except: [:extended_info]
+          ).merge(
+            suspended_reason: u.suspensions.where(inventory_pool_id: current_inventory_pool)
+                                .where("suspended_until >= ?", Date.today)
+                                .map(&:suspended_reason)
+                                .join('\n\n')
+                                .gsub("\n", "&#10;")
+          )
+        }
+      end
+      format.any do
+        render :index
+      end
+    end
   end
 
   def set_start_screen(path = params[:path])
