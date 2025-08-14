@@ -4,6 +4,11 @@ class window.App.SearchResultsUsersController extends App.SearchResultsControlle
   model: "User"
   templatePath: "manage/views/users/search_result_line"
 
+  constructor: ->
+    super
+    new App.UserCellTooltipController {el: @el}
+
+
   fetch: (page, target, callback)=>
     @fetchUsers(page).done =>
       do callback
