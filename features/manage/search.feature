@@ -34,7 +34,7 @@ Feature: Search
     And there exists a closed contract with a retired item
     When I search globally after this item with its inventory code
     Then I see the item in the items container
-    And I hover over the list of items on the contract line
+    And I click on the list of items on the contract line
     Then I see in the tooltip the model name of this item
 
   Scenario: Displaying items from another inventory pool in closed contracts
@@ -43,11 +43,11 @@ Feature: Search
     When I search globally after this item with its inventory code
     Then I see the item in the items container
     And the items container shows the item line with the following information:
-    | Inventory Code             |
-    | Model name                 |
-    | Responsible inventory pool |
+      | Inventory Code             |
+      | Model name                 |
+      | Responsible inventory pool |
     And I don't see the button group on the item line
-    And I hover over the list of items on the contract line
+    And I click on the list of items on the contract line
     Then I see in the tooltip the model name of this item
 
   Scenario Outline: Showing items' problems in global search

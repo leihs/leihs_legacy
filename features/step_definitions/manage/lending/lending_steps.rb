@@ -417,9 +417,9 @@ When /^I choose to see all results, I receive a separate list with all results f
   end
 end
 
-Given /^I hover over the number of items in a line$/ do
+Given /^I click on the number of items in a line$/ do
   @line = find(".line [data-type='lines-cell']", match: :first)
-  @line.hover
+  @line.click
 end
 
 Then /^all these items are listed$/ do

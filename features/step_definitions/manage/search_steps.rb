@@ -34,7 +34,7 @@ Then(/^the name of that user is shown on each contract line$/) do
 end
 
 Then(/^that user's personal details are shown in the tooltip$/) do
-  hover_for_tooltip find("#contracts [data-type='user-cell']", match: :first)
+  find("#contracts [data-type='user-cell']", match: :first).click
   within '.tooltipster-base' do
     [@user.name, @user.email, @user.address, @user.phone, @user.badge_id].each {|info| has_content? info}
   end
@@ -112,8 +112,8 @@ Then(/^I see the item in the items area$/) do
   find('#items .line', text: @item.inventory_code)
 end
 
-Then(/^I hover over the list of (?:items|licenses) on the contract line$/) do
-  find("#contracts .line [data-type='lines-cell']", match: :first).hover
+Then(/^I click on the list of (?:items|licenses) on the contract line$/) do
+  find("#contracts .line [data-type='lines-cell']", match: :first).click
 end
 
 Then(/^I see in the tooltip the (?:model|software) name of this (?:item|license)$/) do

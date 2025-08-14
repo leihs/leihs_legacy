@@ -32,7 +32,7 @@ Feature: Search for software
       | Software name              |
       | Responsible inventory pool |
       And I don't see the button group on the license line
-      And I hover over the list of licenses on the contract line
+      And I click on the list of licenses on the contract line
       Then I see in the tooltip the software name of this license
 
   Scenario: Finding contracts for software by searching for a borrower

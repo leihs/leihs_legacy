@@ -22,7 +22,7 @@ Feature: Delegation
   Scenario: Tooltip display
     Given I am Pius
     When I search for a delegation
-    And I hover over the delegation name
+    And I click on the delegation name
     Then the tooltip shows name and responsible person for the delegation
 
   Scenario: Global search

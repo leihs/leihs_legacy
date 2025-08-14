@@ -136,7 +136,7 @@ end
 Then(/^I see the number of items on the order line and can view a popup containing the items ordered$/) do
   sum_quantity = @contract.reservations.map(&:quantity).sum
   find("#{@line_css} [data-type='lines-cell']", text: "#{sum_quantity} #{n_("Item", "Items", sum_quantity)}")
-    .hover
+    .click
   within find('.tooltipster-base') do
     @contract.models.each do |m|
       page.should have_content m.name

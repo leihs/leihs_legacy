@@ -123,3 +123,9 @@
   transition: all 0.1s ease-in-out
   *:hover > &, &:hover
     opacity: 1 !important
+
+// rich tooltips aka "popups" which are triggered by click (not hover)
+[data-type=user-cell], [data-type=lines-cell]
+  cursor: pointer
+.click-popup
+  cursor: pointer
