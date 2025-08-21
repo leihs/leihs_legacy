@@ -31,11 +31,11 @@ end
 Then(/^the approval email is sent to the orderer$/) do
   sleep 1
   expect(Email.count).to eq 1
-  expect(@contract.delegated_user.emails).to include Email.first.to_address
+  expect(@contract.delegated_user.email_addresses).to include Email.first.to_address
 end
 
 Then(/^the approval email is not sent to the delegated user$/) do
-  expect(@contract.user.delegator_user.emails).not_to include Email.first.to_address
+  expect(@contract.user.delegator_user.email_addresses).not_to include Email.first.to_address
 end
 
 

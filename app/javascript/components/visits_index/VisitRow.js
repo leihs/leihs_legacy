@@ -171,7 +171,6 @@ class VisitRow extends React.Component {
         <DaysRemindersCell
           isOverdue={this.isOverdue()}
           reminderSent={this.state.reminderSent}
-          notifications={this.props.notifications}
           v={this.props.v}
         />
         {this.renderButton()}

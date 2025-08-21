@@ -70,17 +70,21 @@ class DaysRemindersCell extends React.Component {
     }
   }
 
-  renderNotifications() {
+  renderEmails() {
     const dateAndTime = date => {
       return `${this.diffToday(date)} ${moment(date).format('LT')}`
     }
 
-    return f.map(this.props.v.notifications, n => {
+    const { emails } = this.props.v
+    if (!emails || emails.length === 0) {
+      return <div className="row width-l paragraph-s"><center>{_jed('No reminder yet')}</center></div>
+    }
+    return f.map(emails, email => {
       return (
-        <div key={n.id} className="row width-l">
+        <div key={email.id} className="row width-l">
           <div className="paragraph-s">
-            <strong>{dateAndTime(this.props.v.date)}</strong>
-            {` ${n.title}`}
+            <strong>{dateAndTime(email.updated_at)}</strong>
+            {` ${email.subject}`}
           </div>
         </div>
       )
@@ -90,11 +94,11 @@ class DaysRemindersCell extends React.Component {
   render() {
     return [
       (this.renderPopup() && (
-        <Popup popupRef={this.popup} key={`reminder-popup-${this.props.v.id}`}>
+        <Popup popupRef={this.popup} key={`reminder-popup-${this.props.v.id}`} trigger="click">
           <div style={{ opacity: '1' }} className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
             <div className="tooltipster-box">
               <div className="tooltipster-content">
-                {this.renderNotifications()}
+                {this.renderEmails()}
               </div>
             </div>
             <div className='tooltipster-arrow' style={{position: 'absolute', left: '0px', right: '0px', marginLeft: 'auto', marginRight: 'auto'}}>
@@ -107,7 +111,7 @@ class DaysRemindersCell extends React.Component {
         </Popup>
       ))
       ,
-      <div ref={ref => (this.popup = ref)} className="col1of5 line-col" key={`reminder-${this.props.v.id}`}>
+      <div ref={ref => (this.popup = ref)} className="col1of5 line-col click-popup" key={`reminder-${this.props.v.id}`}>
         {this.renderDaysCell()}
       </div>
     ]

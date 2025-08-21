@@ -89,6 +89,7 @@ class User < ApplicationRecord
     end
   end
 
+  has_many :emails
   has_many :reservations, dependent: :restrict_with_exception
   has_many :contracts
   has_many :item_lines, dependent: :restrict_with_exception
@@ -216,7 +217,7 @@ class User < ApplicationRecord
     end
   end
 
-  def emails
+  def email_addresses
     [email, alternative_email].compact.uniq
   end
 

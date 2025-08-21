@@ -27,12 +27,12 @@
 
       - if app_settings.include_customer_email_in_contracts
         - contact_person = ( @delegated_user or @user )
-        - emails = [contact_person.email.presence, contact_person.secondary_email.presence].compact
-        - if emails.any?
+        - email_addresses = [contact_person.email.presence, contact_person.secondary_email.presence].compact
+        - if email_addresses.any?
           .customer-email
             %span.email{style: 'display: block'}
               = _("E-Mail") + ': '
-              = emails.join(' / ')
+              = email_addresses.join(' / ')
 
       - if contact_details.any?
         .contact-details

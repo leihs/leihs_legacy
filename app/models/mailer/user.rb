@@ -22,7 +22,7 @@ module Mailer::User
                                                      inventory_pool,
                                                      reservations))
 
-    user.emails.each do |user_email|
+    user.email_addresses.each do |user_email|
       Email.create!(user_id: user.id,
                     to_address: user_email,
                     from_address: (inventory_pool.email || SmtpSetting.first.default_from_address),
@@ -45,7 +45,7 @@ module Mailer::User
                                                      inventory_pool,
                                                      reservations))
 
-    user.emails.each do |user_email|
+    user.email_addresses.each do |user_email|
       Email.create!(user_id: user.id,
                     to_address: user_email,
                     from_address: (inventory_pool.email || Setting.first.default_from_address),
