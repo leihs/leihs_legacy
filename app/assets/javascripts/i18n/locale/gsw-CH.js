@@ -1508,6 +1508,10 @@ window.i18n.locale_data = {
          null,
          "Erinnerig"
       ],
+      "Reminder emails": [
+         null,
+         "Erinnerigs-Mail(s)"
+      ],
       "Removed %{q} %{m}": [
          null,
          "%{q} %{m} wäggnoh"

@@ -1172,6 +1172,9 @@ msgstr "Rappel de %{q} éléments pour les contrats %{c}"
 msgid "Reminder"
 msgstr "Rappel"
 
+msgid "Reminder emails"
+msgstr "E-mail(s) de rappel"
+
 msgid "Removed %{q} %{m}"
 msgstr "%{q} %{m} supprimé(s)"
 

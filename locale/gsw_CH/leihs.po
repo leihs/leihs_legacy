@@ -1103,6 +1103,9 @@ msgstr "%{q} Mal für d Verträg %{c} erinneret"
 msgid "Reminder"
 msgstr "Erinnerig"
 
+msgid "Reminder emails"
+msgstr "Erinnerigs-Mail(s)"
+
 msgid "Removed %{q} %{m}"
 msgstr "%{q} %{m} wäggnoh"
 

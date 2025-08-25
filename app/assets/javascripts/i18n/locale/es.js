@@ -435,6 +435,10 @@ window.i18n.locale_data = {
          null,
          "Recordatorio"
       ],
+      "Reminder emails": [
+         null,
+         ""
+      ],
       "Removed %{q} %{m}": [
          null,
          "Remover %{q} %{m}"

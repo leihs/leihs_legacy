@@ -1573,6 +1573,10 @@ window.i18n.locale_data = {
          null,
          "Erinnerung"
       ],
+      "Reminder emails": [
+         null,
+         "Erinnerungs-Mail(s)"
+      ],
       "Removed %{q} %{m}": [
          null,
          "%{q} %{m} entfernt"

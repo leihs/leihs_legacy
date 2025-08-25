@@ -1603,6 +1603,10 @@ window.i18n.locale_data = {
          null,
          "Rappel"
       ],
+      "Reminder emails": [
+         null,
+         "E-mail(s) de rappel"
+      ],
       "Removed %{q} %{m}": [
          null,
          "%{q} %{m} supprimé(s)"

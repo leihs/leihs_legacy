@@ -1139,6 +1139,9 @@ msgstr ""
 msgid "Reminder"
 msgstr ""
 
+msgid "Reminder emails"
+msgstr ""
+
 msgid "Removed %{q} %{m}"
 msgstr ""
 

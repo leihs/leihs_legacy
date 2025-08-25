@@ -41,7 +41,7 @@ end
 
 When(/^I send a reminder for this take back$/) do
   step 'I navigate to the take back visits'
-  within('.line', text: /#{@contract.user}.*\n#{_("Latest reminder")}/) do
+  within('.line', text: /#{@contract.user}.*5 days ago.*\n#{_("No reminder yet")}/) do
     within '.multibutton' do
       find('.dropdown-toggle').click
       find('a', text: _('Send reminder')).click

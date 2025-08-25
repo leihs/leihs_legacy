@@ -1160,6 +1160,9 @@ msgstr "%{q} Mal für Vertrag %{c} erinnert"
 msgid "Reminder"
 msgstr "Erinnerung"
 
+msgid "Reminder emails"
+msgstr "Erinnerungs-Mail(s)"
+
 msgid "Removed %{q} %{m}"
 msgstr "%{q} %{m} entfernt"
 

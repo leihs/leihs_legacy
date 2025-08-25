@@ -1,5 +1,5 @@
 import React from 'react'
-import { Popover, Overlay } from 'react-bootstrap'
+import { Popover } from 'react-bootstrap'
 import ReactDOM from 'react-dom'
 import f from 'lodash'
 
@@ -24,36 +24,37 @@ class DaysRemindersCell extends React.Component {
   }
 
   renderPopup() {
-    return this.props.v.type == 'take_back' && (this.props.reminderSent || this.props.isOverdue)
+    const nofEmails = this.props.v.emails ? this.props.v.emails.length : 0
+    return this.props.v.type === 'take_back' && this.props.isOverdue && nofEmails > 0
   }
 
   renderDaysCell() {
     const maxDays = this.getMaxRange()
 
-    let content
-    if (this.props.v.type == 'take_back' && this.props.reminderSent) {
-      content = (
-        <div className="latest-reminder-cell text-align-center tooltipstered">
-          <strong>{`${_jed('Reminder sent')} `}</strong>
-          <i className="fa fa-envelope" />
-        </div>
-      )
-    } else if (this.props.v.type == 'take_back' && this.props.isOverdue) {
-      content = (
-        <div className="latest-reminder-cell text-align-center">
-          {_jed('Latest reminder')}
-          <i className="fa fa-envelope-alt" />
-        </div>
-      )
-    } else {
-      content = (
+    if (this.props.v.type !== 'take_back') {
+      return (
         <div className="text-align-center">
           {maxDays} {_jed(maxDays, 'day', 'days')}
         </div>
       )
     }
 
-    return content
+    if (this.props.reminderSent) {
+      return (
+        <div className="latest-reminder-cell text-align-center tooltipstered">
+          <strong>{`${_jed('Reminder sent')} `}</strong>
+          <i className="fa fa-envelope" />
+        </div>
+      )
+    }
+
+    const nofEmails = this.props.v.emails ? this.props.v.emails.length : 0
+    return (
+      <div className="latest-reminder-cell text-align-center">
+        {nofEmails > 0 ? `${nofEmails} ${_jed('Reminder emails')} ` : _jed('No reminder yet')}
+        {nofEmails > 0 && <i className="fa fa-envelope-o" />}
+      </div>
+    )
   }
 
   diffToday(date) {
@@ -92,8 +93,9 @@ class DaysRemindersCell extends React.Component {
   }
 
   render() {
+    const hasPopup = this.renderPopup()
     return [
-      (this.renderPopup() && (
+      hasPopup && (
         <Popup popupRef={this.popup} key={`reminder-popup-${this.props.v.id}`} trigger="click">
           <div style={{ opacity: '1' }} className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
             <div className="tooltipster-box">
@@ -109,9 +111,11 @@ class DaysRemindersCell extends React.Component {
             </div>
           </div>
         </Popup>
-      ))
-      ,
-      <div ref={ref => (this.popup = ref)} className="col1of5 line-col click-popup" key={`reminder-${this.props.v.id}`}>
+      ),
+      <div
+        ref={ref => (this.popup = ref)}
+        className={'col1of5 line-col' + (hasPopup ? ' click-popup' : '')}
+        key={`reminder-${this.props.v.id}`}>
         {this.renderDaysCell()}
       </div>
     ]

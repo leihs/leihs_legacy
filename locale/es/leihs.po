@@ -282,6 +282,9 @@ msgstr "Recordado %{q} veces para el contrato %{c}"
 msgid "Reminder"
 msgstr "Recordatorio"
 
+msgid "Reminder emails"
+msgstr ""
+
 msgid "Removed %{q} %{m}"
 msgstr "Remover %{q} %{m}"
 
