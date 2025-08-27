@@ -6,6 +6,8 @@ class Template < ModelGroup
   # TODO 12** validates all models are present to current inventory_pool
   # TODO 12** has_many :models through
 
+  default_scope { order(:name) }
+
   after_save do
     raise _('Template must have at least one model') if model_links.blank?
   end
