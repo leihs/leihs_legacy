@@ -1003,6 +1003,10 @@ window.i18n.locale_data = {
          null,
          "Letschti Erinnerig"
       ],
+      "Latest 10 emails": [
+         null,
+         "Di letschte 10 Mails"
+      ],
       "Legend": [
          null,
          "Erklärig"
@@ -1762,7 +1766,7 @@ window.i18n.locale_data = {
       ],
       "Take Back": [
          null,
-         "Zurggnäh"
+         "Zruggnäh"
       ],
       "Take Back Selection": [
          null,

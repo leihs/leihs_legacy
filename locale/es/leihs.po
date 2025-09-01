@@ -186,6 +186,9 @@ msgstr "Saludos cordiales,"
 msgid "Language"
 msgstr ""
 
+msgid "Latest 10 emails"
+msgstr "Últimos 10 correos electrónicos"
+
 msgid "List of available variables"
 msgstr ""
 

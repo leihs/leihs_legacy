@@ -742,6 +742,9 @@ msgstr ""
 msgid "Latest reminder"
 msgstr ""
 
+msgid "Latest 10 emails"
+msgstr ""
+
 msgid "Legend"
 msgstr ""
 

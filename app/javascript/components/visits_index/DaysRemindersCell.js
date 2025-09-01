@@ -80,16 +80,22 @@ class DaysRemindersCell extends React.Component {
     if (!emails || emails.length === 0) {
       return <div className="row width-l paragraph-s"><center>{_jed('No reminder yet')}</center></div>
     }
-    return f.map(emails, email => {
-      return (
-        <div key={email.id} className="row width-l">
-          <div className="paragraph-s">
-            <strong>{dateAndTime(email.updated_at)}</strong>
-            {` ${email.subject}`}
-          </div>
-        </div>
-      )
-    })
+
+    return (
+      <div>
+        {emails.length > 10 && <div>{_jed('Latest 10 emails')}</div>}
+        {f.map(emails.slice(0, 10), email => {
+          return (
+            <div key={email.id} className="row width-l">
+              <div className="paragraph-s">
+                <strong>{dateAndTime(email.updated_at)}</strong>
+                {` ${email.subject}`}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
   }
 
   render() {

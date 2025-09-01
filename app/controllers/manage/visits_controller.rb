@@ -45,7 +45,7 @@ class Manage::VisitsController < Manage::ApplicationController
             end
 
             v['emails'] = \
-              user.emails.where('created_at >= ?', v['date']).limit(10)
+              user.emails.where('created_at >= ?', v['date']).order(created_at: :desc)
           end
 
           render json: visits_json and return

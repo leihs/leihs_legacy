@@ -307,6 +307,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Latest 10 emails": [
+         null,
+         "Últimos 10 correos electrónicos"
+      ],
       "List of available variables": [
          null,
          ""

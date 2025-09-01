@@ -716,6 +716,9 @@ msgstr "Letschti Bsuecher:"
 msgid "Latest reminder"
 msgstr "Letschti Erinnerig"
 
+msgid "Latest 10 emails"
+msgstr "Di letschte 10 Mails"
+
 msgid "Legend"
 msgstr "Erklärig"
 
@@ -1293,7 +1296,7 @@ msgid "Swapped from %s "
 msgstr "Ersetzt %s"
 
 msgid "Take Back"
-msgstr "Zurggnäh"
+msgstr "Zruggnäh"
 
 msgid "Take Back Selection"
 msgstr "Uuswahl zruggnäh"

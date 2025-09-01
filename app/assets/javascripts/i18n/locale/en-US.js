@@ -1031,6 +1031,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Latest 10 emails": [
+         null,
+         "Latest 10 emails"
+      ],
       "Legend": [
          null,
          ""

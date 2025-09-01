@@ -1081,6 +1081,10 @@ window.i18n.locale_data = {
          null,
          "Dernier rappel"
       ],
+      "Latest 10 emails": [
+         null,
+         "Les 10 derniers e-mails"
+      ],
       "Legend": [
          null,
          "Légende"

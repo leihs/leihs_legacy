@@ -772,6 +772,9 @@ msgstr "Derniers visiteurs:"
 msgid "Latest reminder"
 msgstr "Dernier rappel"
 
+msgid "Latest 10 emails"
+msgstr "Les 10 derniers e-mails"
+
 msgid "Legend"
 msgstr "Légende"
 
