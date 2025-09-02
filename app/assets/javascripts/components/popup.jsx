@@ -89,7 +89,7 @@
     popupRef: null,
 
     componentWillReceiveProps(nextProps) {
-
+      this.setState({rectangle: nextProps.popupRef.getBoundingClientRect()})
       if(nextProps.popupRef != this.popupRef) {
 
         if (this.popupRef) {
