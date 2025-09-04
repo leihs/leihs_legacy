@@ -1,7 +1,6 @@
 class Order < ApplicationRecord
   include ScopeIfPresence
   include DefaultPagination
-  include LogSendMailFailure
 
   belongs_to :inventory_pool
   belongs_to :user
@@ -208,18 +207,12 @@ class Order < ApplicationRecord
 
   #################################################################################
 
-  def send_approved_notification(comment)
-    with_logging_send_mail_failure do
-      Mailer.order_approved(self, comment)
-    end
-  end
-
   def approve(comment, send_mail = true, current_user = nil, force = false)
     if approvable? \
         or (force and current_user.has_role?(:lending_manager, inventory_pool))
       update(state: :approved)
       reservations.each { |cl| cl.update(status: :approved) }
-      send_approved_notification(comment)
+      Mailer.order_approved(self, comment)
       true
     else
       false

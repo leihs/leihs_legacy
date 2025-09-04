@@ -1,19 +1,18 @@
 module LogSendMailFailure
-  def with_logging_send_mail_failure
-    begin
-      yield
-    rescue Exception => exception
-      # archive problem in the log, so the admin/developper
-      # can look up what happened
-      logger.error "#{exception}\n    #{exception.backtrace.join("\n    ")}"
-      message = <<-MSG
-        The following error happened while sending a notification email to
-        #{target_user.email}: #{exception}.
-        That means that the user probably did not get the mail
-        and you need to contact him/her in a different way.
-      MSG
+  extend ActiveSupport::Concern
 
-      self.errors.add(:base, message)
+  included do
+    def self.with_logging_send_mail_failure(recipient)
+      begin
+        yield
+      rescue Exception => exception
+        Rails.logger.error <<~MSG
+          The following error happened while sending a notification email to user/pool
+          #{recipient.id}: #{exception}
+          That means that the user/pool probably did not get the mail
+          and you need to contact the user/pool in a different way.
+        MSG
+      end
     end
   end
 end
