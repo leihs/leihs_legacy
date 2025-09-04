@@ -1,4 +1,5 @@
 module Mailer
+  include LogSendMailFailure
 
   def self.send_mail
     SmtpSetting.first.enabled
@@ -6,23 +7,28 @@ module Mailer
 
   def self.order_approved(order, comment)
     if send_mail
-      Mailer::Order.approved(order, comment)
+      with_logging_send_mail_failure(order.target_user) do
+        Mailer::Order.approved(order, comment)
+      end
     end
   end
 
   def self.order_rejected(order, comment)
     if send_mail
-      Mailer::Order.rejected(order, comment)
+      with_logging_send_mail_failure(order.target_user) do
+        Mailer::Order.rejected(order, comment)
+      end
     end
   end
 
   def self.deadline_soon_reminder(user, reservations)
     if send_mail
       reservations.map(&:inventory_pool).uniq.each do |inventory_pool|
-        Mailer::User.deadline_soon_reminder(user,
-                                            inventory_pool,
-                                            reservations)
-            
+        with_logging_send_mail_failure(user) do
+          Mailer::User.deadline_soon_reminder(user,
+                                              inventory_pool,
+                                              reservations)
+        end
       end
     end
   end
@@ -30,14 +36,18 @@ module Mailer
   def self.remind_user(user, reservations)
     if send_mail
       reservations.map(&:inventory_pool).uniq.each do |inventory_pool|
-        Mailer::User.remind(user, inventory_pool, reservations)
+        with_logging_send_mail_failure(user) do
+          Mailer::User.remind(user, inventory_pool, reservations)
+        end
       end
     end
   end
 
-  def self.user_email(user,from, to, subject, body)
+  def self.user_email(user, from, to, subject, body)
     if send_mail
-      Mailer::User.email(user, from, to, subject, body)
+      with_logging_send_mail_failure(user) do
+        Mailer::User.email(user, from, to, subject, body)
+      end
     end
   end
 
