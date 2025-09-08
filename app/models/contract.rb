@@ -144,7 +144,7 @@ class Contract < ApplicationRecord
         .unscoped # have to be used here, `Contract` uses current scope (WTF) !!!
         .joins(:reservations)
         .with_verifiable_user_and_model
-        .select(:id)
+        .reselect(:id)
     )
   end)
 

@@ -88,6 +88,8 @@ class Order < ApplicationRecord
         AND entitlement_groups.inventory_pool_id = reservations.inventory_pool_id
       SQL
       .distinct
+      .select('TRUE AS "to_be_verified?"')
+      .select('orders.*')
   end)
 
   scope :no_verification_required, (lambda do
@@ -97,12 +99,15 @@ class Order < ApplicationRecord
         .unscoped # have to be used here, `Order` uses current scope (WTF) !!!
         .joins(:reservations)
         .with_verifiable_user_and_model
-        .select(:id)
+        .reselect(:id)
     )
   end)
 
   def to_be_verified?
-    Order
+    # this attribute may already be available via `select('TRUE AS "to_be_verified?"')`
+    # in the `with_verifiable_user_and_model`
+    read_attribute(:to_be_verified?) ||
+      Order
       .joins(:reservations)
       .with_verifiable_user_and_model.where(id: id).exists?
   end
