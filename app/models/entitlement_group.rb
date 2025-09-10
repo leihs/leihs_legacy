@@ -5,6 +5,7 @@ class EntitlementGroup < ApplicationRecord
   belongs_to :inventory_pool
 
   has_and_belongs_to_many :users
+  has_and_belongs_to_many :groups
 
   has_many :entitlements, dependent: :restrict_with_exception
   accepts_nested_attributes_for :entitlements, allow_destroy: true

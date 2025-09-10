@@ -88,6 +88,35 @@ module Manage
         )
       end
 
+      step 'there is a hand over :n with user to verify [via group]' do |n|
+        user = FactoryBot.create(:customer,
+                                 inventory_pool: @inventory_pool)
+        simple_group = FactoryBot.create(:simple_group)
+        simple_group.users << user
+        @entitlement_group.groups << simple_group
+        date = Date.today + n.to_i.day
+
+        FactoryBot.create(
+          :reservation,
+          inventory_pool: @inventory_pool,
+          status: :approved,
+          user: user,
+          model: FactoryBot.create(:model_with_items),
+          start_date: date,
+          end_date: date + 1.day
+        )
+
+        instance_variable_set(
+          "@hand_over_#{n}",
+          Visit.find_by(
+            user: user,
+            inventory_pool: @inventory_pool,
+            type: 'hand_over',
+            date: date
+          )
+        )
+      end
+
       step 'there is a hand over :n with user and model to verify' do |n|
         user = FactoryBot.create(:customer,
                                   inventory_pool: @inventory_pool)

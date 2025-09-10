@@ -1,7 +1,5 @@
 FactoryBot.define do
-
-  factory :group, class: EntitlementGroup do
-    name { Faker::Name.name }
-    association :inventory_pool
+  factory :simple_group, class: Group do
+    name { Faker::Lorem.word }
   end
 end

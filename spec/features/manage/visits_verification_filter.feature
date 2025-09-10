@@ -5,7 +5,7 @@ Feature: Visits verification filter
     And there is a lending manager in this inventory pool
     And there is an entitlement group with required verification
     And there is a hand over 1 without required verification
-    And there is a hand over 2 with user to verify
+    And there is a hand over 2 with user to verify [via group]
     And there is a hand over 3 with user and model to verify
     And there is a take back 1 without required verification
     And there is a take back 2 with user to verify
