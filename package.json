@@ -10,7 +10,7 @@
     "eslint-config-prettier": "^2.7.0",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.4.0",
-    "lodash": "^4.17.4",
+    "lodash": ">=4.17.21",
     "prettier": "1.10.2",
     "prettier-eslint": "^8.2.1",
     "prop-types": "^15.6.0",
@@ -23,6 +23,9 @@
     "webpack-dev-server": "^2.9.4",
     "webpack-merge": "^4.1.1",
     "yarn": "^1.7.0"
+  },
+  "resolutions": {
+    "lodash": "4.17.21"
   },
   "scripts": {
     "start": "./bin/webpack-dev-server",
