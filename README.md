@@ -23,3 +23,21 @@ instead of on request (faster).
 This is recommended when working on JS/Frontend primarily:
 
 **run `./bin/webpack-dev-server` before starting `./bin/rails server`**
+
+## Recipe to update NPM packages (2025)
+
+The install scripts of the dependencies most likely won't run and also should not be run for security reasons, so we use `--ignore-scripts`. This mean means we have to run our own pre- and post-install scripts manually on the CLI. 
+
+These pre- and post-install scripts are required because `yarn install` removes the `.git` file inside `node_modules`, but that file must remain in place since the directory is tracked as a Git submodule.
+
+So what to do?
+
+First change the package version in package.json
+
+Then run the following on CLI:
+
+```sh
+rm -rf tmp/node_modules_git ; cp -R node_modules/.git tmp/node_modules_git
+yarn install --ignore-scripts
+rm -rf node_modules/.git ; cp -R tmp/node_modules_git node_modules/.git
+```
