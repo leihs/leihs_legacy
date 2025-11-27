@@ -21,7 +21,7 @@
     "react_ujs": "^2.4.1",
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-merge": "^4.1.1",
-    "yarn": "^1.7.0"
+    "yarn": "^1.22.13"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.9.4"
