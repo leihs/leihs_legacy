@@ -1,8 +1,6 @@
 {
   "dependencies": {
     "@eins78/react-autocomplete": "1.7.3-fork.1",
-    "@rails/webpacker": "3.0.2",
-    "babel-preset-react": "^6.24.1",
     "classnames": "^2.2.5",
     "coffeescript": "1.12.7",
     "create-react-class": "^15.6.2",
@@ -24,7 +22,9 @@
     "yarn": "^1.22.13"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.9.4"
+    "webpack-dev-server": "^4.15.2",
+    "@rails/webpacker": "3.0.2",
+    "babel-preset-react": "^6.24.1"
   },
   "resolutions": {
     "lodash": "4.17.21"
