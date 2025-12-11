@@ -2,11 +2,30 @@
 set -euo pipefail
 
 PROJECT_DIR="$(cd -- "$(dirname "${BASH_SOURCE}")" ; cd ../.. > /dev/null 2>&1 && pwd -P)"
-PROJECT=leihs-legacy
-ASDF_PLUGIN=firefox
-ASDF_PLUGIN_URL=https://github.com/DrTom/asdf-firefox.git
+cd $PROJECT_DIR
 
-source $PROJECT_DIR/database/bin/env/asdf-helper.bash
-asdf-update-plugin
+source $PROJECT_DIR/bin/env/select-tool-versions-manager
+source $PROJECT_DIR/bin/env/project.sh 
+
+ASDF_PLUGIN=firefox
+ASDF_PLUGIN_URL=https://github.com/bheesham/asdf-firefox.git
+
+case "$TOOL_VERSIONS_MANAGER" in
+  asdf|asdf-vm)
+    echo "Setting up firefox via asdf"
+    source $PROJECT_DIR/bin/env/asdf-helper.bash
+    asdf-update-plugin
+    asdf install firefox
+    ;;
+  mise)
+    echo "Setting up firefox via mise"
+    mise plugin install $ASDF_PLUGIN $ASDF_PLUGIN_URL
+    mise install firefox
+    ;;
+  *)
+    echo "ERROR: Unsupported TOOL_VERSIONS_MANAGER: $TOOL_VERSIONS_MANAGER"
+    exit 1
+    ;;
+esac
 
 # vi: ft=sh
