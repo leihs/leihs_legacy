@@ -3,8 +3,7 @@
 const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
 const { environment } = require('@rails/webpacker')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 environment.plugins.set(
   'BundleAnalyzerPlugin',
