@@ -5,7 +5,7 @@ const webpackMerge = require('webpack-merge')
 const { environment } = require('@rails/webpacker')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-environment.plugins.set(
+environment.plugins.prepend(
   'BundleAnalyzerPlugin',
   new BundleAnalyzerPlugin({
     analyzerMode: 'static',
