@@ -1,10 +1,30 @@
 import React from 'react'
-import cx from 'classnames'
-import { Popover, Overlay } from 'react-bootstrap'
+import ReactDOM from 'react-dom'
 
 class ReservationsCell extends React.Component {
   constructor() {
     super()
+  }
+
+  componentDidMount() {
+    const content = document.createElement('div')
+    ReactDOM.render(this.renderDateRanges(), content)
+
+    $(this.popup).tooltipster({
+      content: $(content),
+      contentAsHTML: true,
+      interactive: true,
+      theme: 'tooltipster-default',
+      trigger: 'click',
+      minWidth: 400,
+      distance: 0
+    })
+  }
+
+  componentWillUnmount() {
+    if (this.popup && $(this.popup).data('tooltipster-ns')) {
+      $(this.popup).tooltipster('destroy')
+    }
   }
 
   diffDatesInDays(start, end) {
@@ -62,29 +82,11 @@ class ReservationsCell extends React.Component {
   }
 
   render() {
-    return [
+    return (
       <div ref={ref => (this.popup = ref)} className="col1of5 line-col text-align-center click-popup" key={`reservations-${this.props.visit_id}`}>
         {this.props.quantity} {_jed(this.props.quantity, 'Item', 'Items')}
       </div>
-      ,
-      <Popup popupRef={this.popup} key={`reservations-popup-${this.props.visit_id}`} trigger="click">
-        <div style={{ opacity: '1' }} className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
-          <div className="tooltipster-box">
-            <div className="tooltipster-content">
-              <div className="min-width-l">
-                {this.renderDateRanges()}
-              </div>
-            </div>
-          </div>
-          <div className='tooltipster-arrow' style={{position: 'absolute', left: '0px', right: '0px', marginLeft: 'auto', marginRight: 'auto'}}>
-            <div className='tooltipster-arrow-uncropped'>
-              <div className='tooltipster-arrow-border'></div>
-              <div className='tooltipster-arrow-background'></div>
-            </div>
-          </div>
-        </div>
-      </Popup>
-    ]
+    )
   }
 }
 
