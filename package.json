@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.28.5",
-    "@rails/webpacker": "^4.0.0",
+    "@rails/webpacker": "^5.0.0",
     "babel-preset-react": "^6.24.1",
     "coffeescript": "1.12.7",
     "eslint": "^4.10.0",
@@ -22,7 +22,6 @@
     "eslint-plugin-react": "^7.4.0",
     "prettier": "1.10.2",
     "prettier-eslint": "^8.2.1",
-    "webpack-bundle-analyzer": "^4.9.1",
     "webpack-dev-server": "^4.15.2",
     "webpack-merge": "^4.1.1",
     "yarn": "^1.22.13"

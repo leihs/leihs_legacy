@@ -1,26 +1,17 @@
 // shared custom environment - *loader and plugins*
 
-const webpack = require('webpack')
-const webpackMerge = require('webpack-merge')
 const { environment } = require('@rails/webpacker')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
-environment.plugins.prepend(
-  'BundleAnalyzerPlugin',
-  new BundleAnalyzerPlugin({
-    analyzerMode: 'static',
-    reportFilename: 'report.html',
-    // Module sizes to show in report by default.
-    // Should be one of `stat`, `parsed` or `gzip`.
-    defaultSizes: 'parsed',
-    // Automatically open report in default browser
-    openAnalyzer: false,
-    // If `true`, Webpack Stats JSON file will be generated in bundles output directory
-    generateStatsFile: true,
-    statsFilename: 'stats.json',
-    // Log level. Can be 'info', 'warn', 'error' or 'silent'.
-    logLevel: 'info'
-  })
-)
+// Disable gzip and brotli compression
+environment.plugins.delete('Compression')
+environment.plugins.delete('Compression Brotli')
+
+// Use relative paths in source maps instead of absolute local paths
+environment.config.merge({
+  output: {
+    devtoolModuleFilenameTemplate: '[resource-path]',
+    devtoolFallbackModuleFilenameTemplate: '[resource-path]?[hash]'
+  }
+})
 
 module.exports = environment

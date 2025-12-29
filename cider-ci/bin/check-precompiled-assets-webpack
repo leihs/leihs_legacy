@@ -2,7 +2,7 @@
 
 # check webpack-compiled assets
 
-IGNORED_FILES=(stats.json report.html)
+IGNORED_FILES=()
 
 STASH=$(mktemp -d -t 'check-webpack-assets.XXXXX') && mkdir "${STASH}/a" && mkdir "${STASH}/b"
 for FILE in ${IGNORED_FILES[*]}; do
