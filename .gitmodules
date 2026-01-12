@@ -4,6 +4,3 @@
 [submodule "public/assets"]
 	path = public/assets
 	url = https://github.com/leihs/leihs_legacy_assets.git
-[submodule "node_modules"]
-	path = node_modules
-	url = https://github.com/leihs/leihs_legacy_node_modules

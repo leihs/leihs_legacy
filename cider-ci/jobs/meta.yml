@@ -71,14 +71,6 @@ jobs:
                 # don't keep the attachment if there was no failure!
                 rm tmp/attach/assets.tar.gz
 
-        node_modules are checked in:
-          scripts:
-            test:
-              body: |
-                set -eu
-                export PATH=./node_modules/.bin:$PATH
-                yarn check --integrity --verify-tree --offline
-
         backend and frontend locales are synchronised:
           name: "Backend and frontend locales are synchronised"
           scripts:

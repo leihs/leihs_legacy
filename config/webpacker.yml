@@ -5,6 +5,7 @@ default: &default
   source_entry_path: packs
   public_output_path: assets/packs
   cache_path: tmp/cache/webpacker
+  package_manager: npm
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']

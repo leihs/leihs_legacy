@@ -1,28 +1,28 @@
 {
   "dependencies": {
-    "@eins78/react-autocomplete": "1.7.3-fork.1",
-    "classnames": "^2.2.5",
-    "create-react-class": "^15.6.2",
-    "lodash": ">=4.17.21",
-    "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-autocomplete": "^1.7.2",
-    "react-bootstrap": "^0.32.0",
-    "react-dom": "^16.0.0",
-    "react_ujs": "^2.4.1"
-  },
-  "devDependencies": {
     "@babel/preset-react": "^7.28.5",
+    "@eins78/react-autocomplete": "1.7.3-fork.1",
     "@rails/webpacker": "^5.0.0",
     "babel-preset-react": "^6.24.1",
+    "classnames": "^2.2.5",
     "coffeescript": "1.12.7",
+    "create-react-class": "^15.6.2",
     "eslint": "^4.10.0",
     "eslint-config-prettier": "^2.7.0",
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-react": "^7.4.0",
+    "lodash": ">=4.17.21",
+    "prop-types": "^15.6.0",
     "prettier": "1.10.2",
     "prettier-eslint": "^8.2.1",
-    "webpack-dev-server": "^4.15.2",
+    "react": "^16.0.0",
+    "react_ujs": "^2.4.1",
+    "react-autocomplete": "^1.7.2",
+    "react-bootstrap": "^0.32.0",
+    "react-dom": "^16.0.0",
+    "webpack": "^4.47.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.3",
     "webpack-merge": "^4.1.1",
     "yarn": "^1.22.13"
   },
@@ -32,9 +32,7 @@
   "scripts": {
     "start": "./bin/webpack-dev-server",
     "lint": "eslint app/javascript/",
-    "format": "prettier --write app/javascript/{*,**/*}.js",
-    "preinstall": "rm -rf tmp/node_modules_git ; cp -R node_modules/.git tmp/node_modules_git",
-    "postinstall": "rm -rf node_modules/.git ; cp -R tmp/node_modules_git node_modules/.git"
+    "format": "prettier --write app/javascript/{*,**/*}.js"
   },
   "prettier": {
     "printWidth": 100,

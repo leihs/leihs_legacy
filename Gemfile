@@ -35,7 +35,7 @@ gem 'will_paginate', '~> 3.0'
 
 
 # JavaScript / Frontend / Client [modern]
-gem 'webpacker', '~> 3.0'
+gem 'webpacker', '~> 5.0'
 gem 'react-rails', '~> 2.0'
 
 source 'https://rails-assets.org' do
