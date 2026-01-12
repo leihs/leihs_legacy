@@ -70,7 +70,13 @@
         %tbody
           = render partial: 'documents/contract_lines', locals: {lines: not_returned_lines}
 
-  .dontbreak
+  %section.total-value
+    %p
+      %strong= _("Total price (indicative value)")
+    %p
+      = number_to_currency(@contract.total_price, format: '%n %u', :unit => app_settings.local_currency_string)
+
+  %section.dontbreak
     %section.purposes
       %h2= _("Purpose these items are borrowed for")
       %p= simple_format @contract.purpose

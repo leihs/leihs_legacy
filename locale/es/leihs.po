@@ -429,6 +429,9 @@ msgstr "Período de Tiempo"
 msgid "Today"
 msgstr "Hoy"
 
+msgid "Total price (indicative value)"
+msgstr "Precio total (valor indicativo)"
+
 msgid "Too many users found"
 msgstr ""
 

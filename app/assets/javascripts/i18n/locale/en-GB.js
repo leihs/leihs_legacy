@@ -2005,6 +2005,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Total price (indicative value)": [
+         null,
+         ""
+      ],
       "Tue": [
          null,
          ""

@@ -1124,6 +1124,9 @@ msgstr "Mengen"
 msgid "Quantity allocations"
 msgstr "Anzahl-Zuteilungen"
 
+msgid "Total price (indicative value)"
+msgstr "Gesamtpreis (Richtwert)"
+
 msgid "Total quantity"
 msgstr "Gesamtanzahl"
 

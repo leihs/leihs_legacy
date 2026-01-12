@@ -1136,6 +1136,9 @@ msgstr "Quantités"
 msgid "Quantity allocations"
 msgstr "Quantité allouée"
 
+msgid "Total price (indicative value)"
+msgstr "Prix total (valeur indicative)"
+
 msgid "Total quantity"
 msgstr "Quantité totale"
 

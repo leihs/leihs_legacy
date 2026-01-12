@@ -1067,6 +1067,9 @@ msgstr "Aazahl"
 msgid "Quantity allocations"
 msgstr "Zueteilige"
 
+msgid "Total price (indicative value)"
+msgstr "Totalprüs (Richtwärt)"
+
 msgid "Total quantity"
 msgstr "Total Aazahl"
 

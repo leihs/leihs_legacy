@@ -1525,6 +1525,10 @@ window.i18n.locale_data = {
          null,
          "Anzahl-Zuteilungen"
       ],
+      "Total price (indicative value)": [
+         null,
+         "Gesamtpreis (Richtwert)"
+      ],
       "Total quantity": [
          null,
          "Gesamtanzahl"

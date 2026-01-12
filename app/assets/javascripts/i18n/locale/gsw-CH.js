@@ -1460,6 +1460,10 @@ window.i18n.locale_data = {
          null,
          "Zueteilige"
       ],
+      "Total price (indicative value)": [
+         null,
+         "Totalprüs (Richtwärt)"
+      ],
       "Total quantity": [
          null,
          "Total Aazahl"

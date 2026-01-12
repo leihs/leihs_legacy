@@ -270,3 +270,26 @@ Then(/^I additionally see the following information$/) do |table|
   end
 
 end
+
+Then(/^I see the total price section on the contract$/) do
+  switch_to_window(windows.last)
+  @contract_element = find('.contract')
+
+  # Extract contract ID from the page and load contract
+  contract_id = @contract_element.find('h1').text.match(/\d+/)[0]
+  @contract = Contract.find_by(compact_id: contract_id)
+
+  within @contract_element do
+    @total_section = find('.total-value')
+  end
+end
+
+Then(/^the total price matches the sum of all reservation prices$/) do
+  expected_total = @contract.reservations.map(&:price).sum
+  within @total_section do
+    # Get the second paragraph which contains the price
+    displayed_text = all('p').last.text
+    displayed_total = displayed_text.gsub(/\D/, '').to_f / 100
+    expect(displayed_total).to eq expected_total
+  end
+end

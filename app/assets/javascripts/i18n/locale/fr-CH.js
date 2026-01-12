@@ -1555,6 +1555,10 @@ window.i18n.locale_data = {
          null,
          "Quantité allouée"
       ],
+      "Total price (indicative value)": [
+         null,
+         "Prix total (valeur indicative)"
+      ],
       "Total quantity": [
          null,
          "Quantité totale"

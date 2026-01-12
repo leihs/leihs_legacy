@@ -1103,6 +1103,9 @@ msgstr ""
 msgid "Quantity allocations"
 msgstr ""
 
+msgid "Total price (indicative value)"
+msgstr ""
+
 msgid "Total quantity"
 msgstr ""
 

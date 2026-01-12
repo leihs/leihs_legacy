@@ -631,6 +631,10 @@ window.i18n.locale_data = {
          null,
          "Hoy"
       ],
+      "Total price (indicative value)": [
+         null,
+         "Precio total (valor indicativo)"
+      ],
       "Too many users found": [
          null,
          ""

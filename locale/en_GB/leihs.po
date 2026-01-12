@@ -1474,6 +1474,9 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
+msgid "Total price (indicative value)"
+msgstr ""
+
 msgid "Tue"
 msgstr ""
 

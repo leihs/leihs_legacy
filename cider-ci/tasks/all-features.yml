@@ -224,14 +224,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/hand_over/sign_contract.feature"
-- name: manage/inventory/categories
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/inventory/categories.feature"
 - name: manage/inventory/copy_item
   scripts:
     test:
@@ -344,14 +336,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/inventory_pool/inventory_pool_basic_information.feature"
-- name: manage/inventory_pool/inventory_pool_settings
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/inventory_pool/inventory_pool_settings.feature"
 - name: manage/lending/day_navigation
   scripts:
     test:
@@ -392,14 +376,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/mails/delegation_mail.feature"
-- name: manage/mails/mail_templates
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/mails/mail_templates.feature"
 - name: manage/manage_templates
   scripts:
     test:
@@ -408,14 +384,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/manage_templates.feature"
-- name: manage/manage_users
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/manage_users.feature"
 - name: manage/navigation
   scripts:
     test:
@@ -568,14 +536,6 @@ tasks:
         set -euo pipefail
         mkdir -p log
         xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/timeline.feature"
-- name: manage/users
-  scripts:
-    test:
-      body: |-
-        #!/usr/bin/env bash
-        set -euo pipefail
-        mkdir -p log
-        xvfb-run -a -e log/xvfb.log ./bin/cucumber -p default --strict "features/manage/users.feature"
 - name: manage/value_list
   scripts:
     test:
