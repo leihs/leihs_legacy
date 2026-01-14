@@ -24,10 +24,6 @@ This is recommended when working on JS/Frontend primarily:
 
 **run `./bin/webpack-dev-server` before starting `./bin/rails server`**
 
-## Recipe to update NPM packages (2025)
+## NPM (2025)
 
-The install scripts of the dependencies most likely won't run and also should not be run for security reasons, so we use `--ignore-scripts`. 
-
-```sh
-yarn install --ignore-scripts
-```
+Packages are managed by NPM instead of Yarn now.
