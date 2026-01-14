@@ -11,7 +11,7 @@ function stringifyObj(obj) {
   }
 }
 
-const DebugProps = props => (
+const DebugProps = (props) => (
   <div
     className={cx('react-compoent', { 'component-debug-props': true })}
     style={{

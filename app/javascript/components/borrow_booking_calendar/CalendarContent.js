@@ -15,7 +15,7 @@ const CalendarContent = createReactClass({
   },
 
   _splitDatesInRows() {
-    var lists = _.groupBy(this.props.dates, function(element, index) {
+    var lists = _.groupBy(this.props.dates, function (element, index) {
       return Math.floor(index / 7)
     })
     return _.toArray(lists)

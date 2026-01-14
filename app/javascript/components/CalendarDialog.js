@@ -10,8 +10,7 @@ const CalendarDialog = createReactClass({
     return {}
   },
 
-  componentDidMount() {
-  },
+  componentDidMount() {},
 
   render() {
     return (

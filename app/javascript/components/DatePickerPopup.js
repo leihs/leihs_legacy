@@ -10,8 +10,7 @@ class DatePickerPopup extends React.Component {
             position: 'absolute',
             zIndex: '1',
             display: 'block'
-          }}
-        >
+          }}>
           <DatePicker
             value={this.props.value}
             visible={true}

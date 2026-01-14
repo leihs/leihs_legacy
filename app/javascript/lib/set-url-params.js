@@ -4,7 +4,7 @@ const { merge, reduce, set, isObject, isString } = require('lodash')
 const qs = require('qs')
 const parseQuery = qs.parse
 
-const formatQuery = obj =>
+const formatQuery = (obj) =>
   qs.stringify(obj, {
     skipNulls: true,
     arrayFormat: 'brackets' // NOTE: do it like rails
@@ -21,7 +21,11 @@ const setUrlParams = (currentUrl = '', ...params) => {
       path: null,
       pathname: url.pathname || url.path,
       search: formatQuery(
-        merge({}, parseQuery(url.query), reduce(params, (a, b) => merge({}, a, b)))
+        merge(
+          {},
+          parseQuery(url.query),
+          reduce(params, (a, b) => merge({}, a, b))
+        )
       )
     })
   )
@@ -29,7 +33,7 @@ const setUrlParams = (currentUrl = '', ...params) => {
 export default setUrlParams
 
 // helper
-const urlFromStringOrObject = url => {
+const urlFromStringOrObject = (url) => {
   // NOTE: `path` must only be used if no `pathname` is given!
   if (isObject(url) && (isString(url.path) || isString(url.pathname))) {
     return url // already parsed!

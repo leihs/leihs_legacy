@@ -7,7 +7,6 @@ class UserCell extends React.Component {
     super()
   }
 
-
   renderUserDetails() {
     return (
       <div className="row width-xl min-height-s padding-right-s padding-left-s">
@@ -21,7 +20,8 @@ class UserCell extends React.Component {
           {this.props.delegator_user_id && (
             <div className="row margin-top-m">
               <p className="paragraph-s line-height-s">
-                {_jed('Responsible')}: {this.props.delegator_user.firstname} {this.props.delegator_user.lastname}
+                {_jed('Responsible')}: {this.props.delegator_user.firstname}{' '}
+                {this.props.delegator_user.lastname}
               </p>
             </div>
           )}
@@ -54,14 +54,21 @@ class UserCell extends React.Component {
           {this.props.is_suspended && (
             <div className="row margin-top-m">
               <p className="paragraph-xs line-height-s">{_jed('Suspended reason')}</p>
-              {(this.props.suspended_reason || '').split('\n')
-                .map((l, i) => <div key={i} className='paragraph-s line-height-s darkred-text'><b>{l}</b></div>)}
+              {(this.props.suspended_reason || '').split('\n').map((l, i) => (
+                <div key={i} className="paragraph-s line-height-s darkred-text">
+                  <b>{l}</b>
+                </div>
+              ))}
             </div>
           )}
         </div>
         {this.props.image_url && (
           <div className="col1of4">
-            <img className="max-size-xxs margin-horziontal-auto" src={this.props.image_url} style={{maxWidth: '100px', maxHeight: '100px'}} />
+            <img
+              className="max-size-xxs margin-horziontal-auto"
+              src={this.props.image_url}
+              style={{ maxWidth: '100px', maxHeight: '100px' }}
+            />
           </div>
         )}
       </div>
@@ -70,26 +77,39 @@ class UserCell extends React.Component {
 
   render() {
     return [
-      <div ref={ref => (this.popup = ref)} className="line-col col1of5 click-popup" key={`user-${this.props.id}-${this.props.visit_id}`}>
+      <div
+        ref={(ref) => (this.popup = ref)}
+        className="line-col col1of5 click-popup"
+        key={`user-${this.props.id}-${this.props.visit_id}`}>
         <strong>
           {this.props.firstname} {this.props.lastname}
           <span className="darkred-text">
             {this.props.is_suspended && ` ${_jed('Suspended')}!`}
           </span>
         </strong>
-      </div>
-      ,
-      <Popup popupRef={this.popup} key={`user-popup-${this.props.id}-${this.props.visit_id}`} trigger="click">
-        <div style={{ opacity: '1' }} className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
+      </div>,
+      <Popup
+        popupRef={this.popup}
+        key={`user-popup-${this.props.id}-${this.props.visit_id}`}
+        trigger="click">
+        <div
+          style={{ opacity: '1' }}
+          className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
           <div className="tooltipster-box">
-            <div className="tooltipster-content">
-              {this.renderUserDetails()}
-            </div>
+            <div className="tooltipster-content">{this.renderUserDetails()}</div>
           </div>
-          <div className='tooltipster-arrow' style={{position: 'absolute', left: '0px', right: '0px', marginLeft: 'auto', marginRight: 'auto'}}>
-            <div className='tooltipster-arrow-uncropped'>
-              <div className='tooltipster-arrow-border'></div>
-              <div className='tooltipster-arrow-background'></div>
+          <div
+            className="tooltipster-arrow"
+            style={{
+              position: 'absolute',
+              left: '0px',
+              right: '0px',
+              marginLeft: 'auto',
+              marginRight: 'auto'
+            }}>
+            <div className="tooltipster-arrow-uncropped">
+              <div className="tooltipster-arrow-border"></div>
+              <div className="tooltipster-arrow-background"></div>
             </div>
           </div>
         </div>

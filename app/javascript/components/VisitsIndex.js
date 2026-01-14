@@ -17,8 +17,8 @@ class VisitsIndex extends React.Component {
     this.state = {
       search_term: null,
       tab: props.tab || 'all',
-      startDate: (props.start_date ? moment(props.start_date).format(i18n.date.L) : ''),
-      endDate: (props.end_date ? moment(props.end_date).format(i18n.date.L) : ''),
+      startDate: props.start_date ? moment(props.start_date).format(i18n.date.L) : '',
+      endDate: props.end_date ? moment(props.end_date).format(i18n.date.L) : '',
       verification: 'irrelevant',
       offset: 0,
       visits: [],
@@ -125,7 +125,7 @@ class VisitsIndex extends React.Component {
         paginate: false,
         verification: this.state.verification
       }),
-      success: data => {
+      success: (data) => {
         // this.currentXHRRequest = null
         this.onFetchSuccessCallback(data)
       },
@@ -139,7 +139,7 @@ class VisitsIndex extends React.Component {
     // const setStateCallback = data.length == 0 ? null : this.tryLoadNext
 
     this.setState(
-      prevState => {
+      (prevState) => {
         return {
           loadingFirstPage: false,
           offset: prevState.offset + 20,
@@ -253,7 +253,9 @@ class VisitsIndex extends React.Component {
   renderLinesTable() {
     return (
       <div>
-        {this.state.visits.map(v => <VisitRow key={v.id} v={v} />)}
+        {this.state.visits.map((v) => (
+          <VisitRow key={v.id} v={v} />
+        ))}
         {this.renderPaginationLoading()}
       </div>
     )
@@ -307,7 +309,7 @@ class VisitsIndex extends React.Component {
                 className="width-full"
                 id="list-search"
                 name="input"
-                placeholder={_jed("Search...")}
+                placeholder={_jed('Search...')}
                 type="text"
                 onChange={this.searchTermCallback.bind(this)}
               />

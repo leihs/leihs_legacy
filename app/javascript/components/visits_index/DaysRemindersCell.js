@@ -58,33 +58,31 @@ class DaysRemindersCell extends React.Component {
   }
 
   diffToday(date) {
-    if (
-      moment()
-        .startOf('day')
-        .diff(moment(date).startOf('day'), 'days') == 0
-    ) {
+    if (moment().startOf('day').diff(moment(date).startOf('day'), 'days') == 0) {
       return _jed('Today')
     } else {
-      return moment(date)
-        .startOf('day')
-        .from(moment().startOf('day'))
+      return moment(date).startOf('day').from(moment().startOf('day'))
     }
   }
 
   renderEmails() {
-    const dateAndTime = date => {
+    const dateAndTime = (date) => {
       return `${this.diffToday(date)} ${moment(date).format('LT')}`
     }
 
     const { emails } = this.props.v
     if (!emails || emails.length === 0) {
-      return <div className="row width-l paragraph-s"><center>{_jed('No reminder yet')}</center></div>
+      return (
+        <div className="row width-l paragraph-s">
+          <center>{_jed('No reminder yet')}</center>
+        </div>
+      )
     }
 
     return (
       <div>
         {emails.length > 10 && <div>{_jed('Latest 10 emails')}</div>}
-        {f.map(emails.slice(0, 10), email => {
+        {f.map(emails.slice(0, 10), (email) => {
           return (
             <div key={email.id} className="row width-l">
               <div className="paragraph-s">
@@ -103,23 +101,31 @@ class DaysRemindersCell extends React.Component {
     return [
       hasPopup && (
         <Popup popupRef={this.popup} key={`reminder-popup-${this.props.v.id}`} trigger="click">
-          <div style={{ opacity: '1' }} className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
+          <div
+            style={{ opacity: '1' }}
+            className="tooltipster-sidetip tooltipster-default tooltipster-top tooltipster-initial">
             <div className="tooltipster-box">
-              <div className="tooltipster-content">
-                {this.renderEmails()}
-              </div>
+              <div className="tooltipster-content">{this.renderEmails()}</div>
             </div>
-            <div className='tooltipster-arrow' style={{position: 'absolute', left: '0px', right: '0px', marginLeft: 'auto', marginRight: 'auto'}}>
-              <div className='tooltipster-arrow-uncropped'>
-                <div className='tooltipster-arrow-border'></div>
-                <div className='tooltipster-arrow-background'></div>
+            <div
+              className="tooltipster-arrow"
+              style={{
+                position: 'absolute',
+                left: '0px',
+                right: '0px',
+                marginLeft: 'auto',
+                marginRight: 'auto'
+              }}>
+              <div className="tooltipster-arrow-uncropped">
+                <div className="tooltipster-arrow-border"></div>
+                <div className="tooltipster-arrow-background"></div>
               </div>
             </div>
           </div>
         </Popup>
       ),
       <div
-        ref={ref => (this.popup = ref)}
+        ref={(ref) => (this.popup = ref)}
         className={'col1of5 line-col' + (hasPopup ? ' click-popup' : '')}
         key={`reminder-${this.props.v.id}`}>
         {this.renderDaysCell()}

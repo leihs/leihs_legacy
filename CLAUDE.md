@@ -25,17 +25,6 @@ leihs legacy is a Rails 7.2 application for equipment lending management. It use
 - `RAILS_ENV=test source ./database/bin/db-set-env` - Set database environment variables
 - Database is in separate `/database/` Rails app with own migrations
 
-### Yarn Package Management
-When running destructive yarn commands (e.g., `yarn install --ignore-scripts`, `yarn upgrade`), ALWAYS surround with backup/restore of `node_modules/.git`:
-
-```bash
-rm -rf tmp/node_modules_git ; cp -R node_modules/.git tmp/node_modules_git
-yarn install --ignore-scripts
-rm -rf node_modules/.git ; cp -R tmp/node_modules_git node_modules/.git
-```
-
-This is required because `node_modules/` is tracked as a Git submodule.
-
 ## Architecture
 
 ### Two-App Structure

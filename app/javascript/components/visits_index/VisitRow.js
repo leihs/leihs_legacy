@@ -14,26 +14,16 @@ class VisitRow extends React.Component {
 
   diffToday(date) {
     let tmp
-    if (
-      moment()
-        .startOf('day')
-        .diff(moment(date).startOf('day'), 'days') == 0
-    ) {
+    if (moment().startOf('day').diff(moment(date).startOf('day'), 'days') == 0) {
       tmp = _jed('Today')
     } else {
-      tmp = moment(date)
-        .startOf('day')
-        .from(moment().startOf('day'))
+      tmp = moment(date).startOf('day').from(moment().startOf('day'))
     }
     return tmp
   }
 
   isOverdue() {
-    return (
-      moment()
-        .startOf('day')
-        .diff(moment(this.props.v.date).startOf('day'), 'days') >= 1
-    )
+    return moment().startOf('day').diff(moment(this.props.v.date).startOf('day'), 'days') >= 1
   }
 
   renderFromDate() {

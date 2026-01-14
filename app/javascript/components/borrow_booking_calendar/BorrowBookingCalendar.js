@@ -19,7 +19,7 @@ const BorrowBookingCalendar = createReactClass({
       startDate: this.props.initialStartDate,
       endDate: this.props.initialEndDate,
       selectedDate: null,
-      quantity: (this.props.initialQuantity || 1),
+      quantity: this.props.initialQuantity || 1,
       isLoading: true,
       calendarData: [],
       poolContext: this.props.inventoryPools[0]
@@ -37,17 +37,15 @@ const BorrowBookingCalendar = createReactClass({
     if (_.isEmpty(this.state.calendarData)) {
       fromDate = this._getFirstDateInCalendarView(this.state.todayDate)
     } else {
-      fromDate = _.last(this.state.calendarData)
-        .date.clone()
-        .add(1, 'day')
+      fromDate = _.last(this.state.calendarData).date.clone().add(1, 'day')
     }
 
     if (this.state.isLoading) {
       this._fetchAvailabilities(
         fromDate.format(this._f),
         toDate ? toDate.format(this._f) : this._getLastDateInCalendarView().format(this._f)
-      ).done(data => {
-        const newDates = _.map(data.list, avalObject => {
+      ).done((data) => {
+        const newDates = _.map(data.list, (avalObject) => {
           return {
             date: moment(avalObject.d),
             availableQuantity: avalObject.quantity,
@@ -55,7 +53,7 @@ const BorrowBookingCalendar = createReactClass({
           }
         })
 
-        this.setState(prevState => {
+        this.setState((prevState) => {
           return {
             isLoading: false,
             calendarData: prevState.calendarData.concat(newDates)
@@ -80,9 +78,7 @@ const BorrowBookingCalendar = createReactClass({
   },
 
   _getLastDateInCalendarView(date = null) {
-    return this._getFirstDateInCalendarView(date)
-      .clone()
-      .add(41, 'day')
+    return this._getFirstDateInCalendarView(date).clone().add(41, 'day')
   },
 
   _dropUntil(arr, func) {
@@ -95,7 +91,7 @@ const BorrowBookingCalendar = createReactClass({
 
   _getDatesForCurrentMonthView() {
     const firstDate = this._getFirstDateInCalendarView()
-    const arr1 = this._dropUntil(this.state.calendarData, el => {
+    const arr1 = this._dropUntil(this.state.calendarData, (el) => {
       return el.date.isSame(firstDate)
     })
     return _.take(arr1, 42)
@@ -103,7 +99,7 @@ const BorrowBookingCalendar = createReactClass({
 
   existingReservations() {
     // component used for editing existing reservations
-    return (this.props.reservations.length != 0)
+    return this.props.reservations.length != 0
   },
 
   // TODO: a single callback should be given to this component.
@@ -159,7 +155,7 @@ const BorrowBookingCalendar = createReactClass({
         inventory_pool_id: this.state.poolContext.inventory_pool.id
       },
       success: successCallback,
-      error: (xhr) => this.setState({serverError: xhr.responseText})
+      error: (xhr) => this.setState({ serverError: xhr.responseText })
     })
   },
 
@@ -170,10 +166,10 @@ const BorrowBookingCalendar = createReactClass({
       method: 'DELETE',
       dataType: 'json',
       data: {
-        line_ids: _.take(reservation_ids, (this.props.initialQuantity - this.state.quantity))
+        line_ids: _.take(reservation_ids, this.props.initialQuantity - this.state.quantity)
       },
       success: (data) => this.props.finishCallback(data),
-      error: (xhr) => this.setState({serverError: xhr.responseText})
+      error: (xhr) => this.setState({ serverError: xhr.responseText })
     })
   },
 
@@ -187,11 +183,11 @@ const BorrowBookingCalendar = createReactClass({
         end_date: this.state.endDate.format(this._f),
         model_id: this.props.model.id,
         inventory_pool_id: this.state.poolContext.inventory_pool.id,
-        quantity: (this.state.quantity - this.props.initialQuantity)
+        quantity: this.state.quantity - this.props.initialQuantity
       },
       success: (data) => this.props.finishCallback(data),
       error: (xhr) => {
-        this.setState({serverError: xhr.responseText})
+        this.setState({ serverError: xhr.responseText })
       }
     })
   },
@@ -213,7 +209,7 @@ const BorrowBookingCalendar = createReactClass({
 
   _switchMonth(direction) {
     this.setState(
-      prevState => {
+      (prevState) => {
         let firstDateOfMonth
         switch (direction) {
           case 'forward':
@@ -238,7 +234,10 @@ const BorrowBookingCalendar = createReactClass({
   },
 
   _isLoadedUptoDate(date) {
-    return _.any(_.map(this.state.calendarData, el => el.date), d => d.isSame(date))
+    return _.any(
+      _.map(this.state.calendarData, (el) => el.date),
+      (d) => d.isSame(date)
+    )
   },
 
   _changeStartDate(sd) {
@@ -309,7 +308,7 @@ const BorrowBookingCalendar = createReactClass({
         isLoading: true,
         poolContext: _.find(
           this.props.inventoryPools,
-          ip => ip.inventory_pool.id == event.target.value
+          (ip) => ip.inventory_pool.id == event.target.value
         )
       },
       () => this._fetchAndUpdateCalendarData(toDate)
@@ -327,10 +326,10 @@ const BorrowBookingCalendar = createReactClass({
   _isAvailableForDateRange() {
     const range = _.select(
       this.state.calendarData,
-      el =>
+      (el) =>
         el.date.isSameOrAfter(this.state.startDate) && el.date.isSameOrBefore(this.state.endDate)
     )
-    const maxAval = _.min(_.map(range, el => el.availableQuantity))
+    const maxAval = _.min(_.map(range, (el) => el.availableQuantity))
     return this.state.quantity <= maxAval
   },
 
@@ -349,24 +348,24 @@ const BorrowBookingCalendar = createReactClass({
 
   _isWithinAdvanceDaysPeriod(date, workday = this.state.poolContext.workday) {
     return date.isBefore(
-      this.state.todayDate.clone().add(this.state.poolContext.inventory_pool.reservation_advance_days || 0, 'day'),
+      this.state.todayDate
+        .clone()
+        .add(this.state.poolContext.inventory_pool.reservation_advance_days || 0, 'day'),
       'day'
     )
   },
 
   _poolHasStillCapacityFor(date) {
-    const dateContext = _.find(this.state.calendarData, el => el.date.isSame(date, 'day'))
+    const dateContext = _.find(this.state.calendarData, (el) => el.date.isSame(date, 'day'))
     return (
       dateContext &&
-      (
-        this.state.poolContext.workday.max_visits[dateContext.date.day()] == null ||
-        dateContext.visitsCount < this.state.poolContext.workday.max_visits[dateContext.date.day()]
-      )
+      (this.state.poolContext.workday.max_visits[dateContext.date.day()] == null ||
+        dateContext.visitsCount < this.state.poolContext.workday.max_visits[dateContext.date.day()])
     )
   },
 
   getHoliday(date) {
-    return _.find(this.state.poolContext.holidays, holiday => {
+    return _.find(this.state.poolContext.holidays, (holiday) => {
       return (
         date.isSameOrAfter(moment(holiday.start_date), 'day') &&
         date.isSameOrBefore(moment(holiday.end_date), 'day')
@@ -429,7 +428,7 @@ const BorrowBookingCalendar = createReactClass({
         <div id="booking-calendar-errors">
           <div className="padding-horizontal-m padding-bottom-m">
             <div className="row emboss red text-align-center font-size-m padding-inset-s">
-              <strong>{errors.push('') && errors.map(el => _jed(el)).join('. ')}</strong>
+              <strong>{errors.push('') && errors.map((el) => _jed(el)).join('. ')}</strong>
             </div>
           </div>
         </div>
@@ -455,11 +454,11 @@ const BorrowBookingCalendar = createReactClass({
   },
 
   hasQuantityChanged() {
-    return (this.hasQuantityDecreased() || this.hasQuantityIncreased())
+    return this.hasQuantityDecreased() || this.hasQuantityIncreased()
   },
 
   renderAddButton(errors) {
-    const isEnabled = (errors.length == 0 && this.state.quantity > 0)
+    const isEnabled = errors.length == 0 && this.state.quantity > 0
     return (
       <button
         className="button green"
@@ -486,9 +485,7 @@ const BorrowBookingCalendar = createReactClass({
         <div>
           <div className="height-s" />
           <div style={{ textAlign: 'center' }}>
-            <button
-              className="button white large"
-              onClick={this.reloadCalendarContent}>
+            <button className="button white large" onClick={this.reloadCalendarContent}>
               {_jed('click here to reload')}
             </button>
           </div>
@@ -630,8 +627,8 @@ const BorrowBookingCalendar = createReactClass({
                 nextMonthCallback={this._goToNextMonth}
                 previousMonthCallback={this._goToPreviousMonth}
                 previousMonthExists={
-                  (this.state.firstDateOfCurrentMonth.year() > this.state.todayDate.year()) ||
-                  (this.state.firstDateOfCurrentMonth.month() != this.state.todayDate.month())
+                  this.state.firstDateOfCurrentMonth.year() > this.state.todayDate.year() ||
+                  this.state.firstDateOfCurrentMonth.month() != this.state.todayDate.month()
                 }
               />
               {this.renderContent()}

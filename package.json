@@ -7,14 +7,14 @@
     "classnames": "^2.2.5",
     "coffeescript": "1.12.7",
     "create-react-class": "^15.6.2",
-    "eslint": "^4.10.0",
-    "eslint-config-prettier": "^2.7.0",
-    "eslint-plugin-prettier": "^2.3.1",
-    "eslint-plugin-react": "^7.4.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-react": "^7.37.5",
     "lodash": ">=4.17.21",
+    "prettier": "^3.7.4",
+    "prettier-eslint": "^16.4.2",
     "prop-types": "^15.6.0",
-    "prettier": "1.10.2",
-    "prettier-eslint": "^8.2.1",
     "react": "^16.0.0",
     "react_ujs": "^2.4.1",
     "react-autocomplete": "^1.7.2",
@@ -40,39 +40,9 @@
     "semi": false,
     "trailingComma": "none",
     "bracketSpacing": true,
-    "jsxBracketSameLine": true
+    "bracketSameLine": true
   },
-  "eslintConfig": {
-    "env": {
-      "es6": true,
-      "browser": true,
-      "commonjs": true
-    },
-    "parserOptions": {
-      "ecmaVersion": 2016,
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "impliedStrict": true,
-        "jsx": true,
-        "experimentalObjectRestSpread": true
-      }
-    },
-    "plugins": [
-      "prettier",
-      "react"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "prettier",
-      "prettier/react",
-      "prettier/standard",
-      "plugin:react/recommended"
-    ],
-    "rules": {
-      "prettier/prettier": [
-        "error"
-      ],
-      "react/prop-types": "off"
-    }
+  "devDependencies": {
+    "globals": "^17.0.0"
   }
 }

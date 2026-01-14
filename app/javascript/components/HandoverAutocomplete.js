@@ -75,18 +75,18 @@ export const HandoverAutocomplete = createReactClass({
     }
 
     const models = _.sortBy(
-      _.filter(items, i => i.props.item.type === _jed('Model')),
-      i => i.props.item.name
+      _.filter(items, (i) => i.props.item.type === _jed('Model')),
+      (i) => i.props.item.name
     )
 
     const options = _.sortBy(
-      _.filter(items, i => i.props.item.type === _jed('Option')),
-      i => i.props.item.name
+      _.filter(items, (i) => i.props.item.type === _jed('Option')),
+      (i) => i.props.item.name
     )
 
     const templates = _.sortBy(
-      _.filter(items, i => i.props.item.type === _jed('Template')),
-      i => i.props.item.name
+      _.filter(items, (i) => i.props.item.type === _jed('Template')),
+      (i) => i.props.item.name
     )
 
     // searched but no results:
@@ -162,7 +162,7 @@ export const HandoverAutocomplete = createReactClass({
         inputProps={inputProps}
         renderMenu={this._renderMenu}
         selectOnInputClick={false}
-        getItemValue={item => item.name}
+        getItemValue={(item) => item.name}
         onSelect={this._handleSelect}
         onChange={this._handleChange}
         renderItem={this._renderMenuItem}

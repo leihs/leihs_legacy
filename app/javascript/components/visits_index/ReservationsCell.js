@@ -28,16 +28,11 @@ class ReservationsCell extends React.Component {
   }
 
   diffDatesInDays(start, end) {
-    return (
-      1 +
-      moment(end)
-        .endOf('day')
-        .diff(moment(start).startOf('day'), 'days')
-    )
+    return 1 + moment(end).endOf('day').diff(moment(start).startOf('day'), 'days')
   }
 
   renderGroupedReservations(reservations) {
-    const tmp = _.groupBy(reservations, r => r.model_name)
+    const tmp = _.groupBy(reservations, (r) => r.model_name)
     return _.map(tmp, (reservations, model_name) => {
       return (
         <div key={model_name} className="row padding-top-xs">
@@ -55,14 +50,16 @@ class ReservationsCell extends React.Component {
   }
 
   renderDateRanges() {
-    const tmp = _.groupBy(this.props.reservations, r => [r.start_date, r.end_date])
+    const tmp = _.groupBy(this.props.reservations, (r) => [r.start_date, r.end_date])
     return _.map(tmp, (reservations, dates) => {
       const startDate = reservations[0].start_date
       const endDate = reservations[0].end_date
       const diffDates = this.diffDatesInDays(startDate, endDate)
 
       return (
-        <div key={`${startDate}-${endDate}`} className="exclude-last-child padding-bottom-m margin-bottom-m no-last-child-margin">
+        <div
+          key={`${startDate}-${endDate}`}
+          className="exclude-last-child padding-bottom-m margin-bottom-m no-last-child-margin">
           <div className="row margin-bottom-s">
             <div className="col1of2">
               <span>
@@ -83,7 +80,10 @@ class ReservationsCell extends React.Component {
 
   render() {
     return (
-      <div ref={ref => (this.popup = ref)} className="col1of5 line-col text-align-center click-popup" key={`reservations-${this.props.visit_id}`}>
+      <div
+        ref={(ref) => (this.popup = ref)}
+        className="col1of5 line-col text-align-center click-popup"
+        key={`reservations-${this.props.visit_id}`}>
         {this.props.quantity} {_jed(this.props.quantity, 'Item', 'Items')}
       </div>
     )
