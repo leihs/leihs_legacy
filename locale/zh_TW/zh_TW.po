@@ -1,0 +1,3605 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: version 0.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-16 15:51+0100\n"
+"PO-Revision-Date: 2024-12-10 08:58+0800\n"
+"Last-Translator: \n"
+"Language-Team: Sheng-Tse Hsiao\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.5\n"
+
+msgid "Additional label in inventory codes"
+msgstr "庫存代碼中的額外標籤"
+
+msgid "Visible for borrowers in frontend"
+msgstr "在前端對借用人可見"
+
+msgid "Print dialog will open aut."
+msgstr "列印對話框將自動開啟。"
+
+msgid "Used for sending e-mails from leihs"
+msgstr "用於從leihs發送電子郵件"
+
+msgid ""
+"This note is added to any contract, but can be changed individually before "
+"actually printing and signing each contract."
+msgstr ""
+"此備註將添加到任何合約，但在實際列印和簽署每份合約之前，可以進行個別更改。"
+
+msgid " at the inventory pool "
+msgstr "在庫存池中"
+
+msgid " item(s)"
+msgstr "物品(或物品)"
+
+msgid " item(s) due on "
+msgstr "物品到期於"
+
+msgid "%d day in the future"
+msgid_plural "%d days in the future"
+msgstr[0] "%d 天後"
+
+msgid "%s (View in Order)"
+msgstr "%s(在訂單中查看)"
+
+msgid "%s Search Results for \"%s\""
+msgstr "%s 搜尋結果，搜尋關鍵字為 「%s」"
+
+msgid "%s until %s"
+msgstr "%s 直到 %s"
+
+msgid ""
+"Users who don't bring back the items on the required date are suspended from "
+"next day on."
+msgstr "未在請求的日期歸還物品的使用者將於次日起被暫停。"
+
+msgid "Automatic suspension"
+msgstr "自動暫停"
+
+msgid "Automatic suspension reason"
+msgstr "自動暫停原因"
+
+msgid "A model for the Inventory Code / Serial Number '%s' was not found"
+msgstr "找不到庫存代碼/序號「%s」的型號"
+
+msgid "A model with the ID '%s' was not found"
+msgstr "找不到ID為「%s」的型號"
+
+msgid "A package cannot be nested to another package"
+msgstr "無法將一個包裹嵌套到另一個包裹中"
+
+msgid "A template with the ID '%s' was not found"
+msgstr "找不到ID為「%s」的範本"
+
+msgid "Ablauf Garantie"
+msgstr "保固到期"
+
+msgid "Ablauf Vertrag"
+msgstr "合約到期"
+
+msgid "Access Level: %d"
+msgstr "存取等級:%d"
+
+msgid "Access Right successfully created"
+msgstr "存取權限已成功建立"
+
+msgid "Access Right successfully updated"
+msgstr "存取權限已成功更新"
+
+msgid "Access right reinstated"
+msgstr "存取權限已恢復"
+
+msgid "Acknowledge"
+msgstr "確認"
+
+msgid "Add"
+msgstr "新增"
+
+msgid "Add %s"
+msgstr "新增 %s"
+
+msgid "Add Model"
+msgstr "新增型號"
+
+msgid "Add Option"
+msgstr "新增選項"
+
+msgid "Add Purpose"
+msgstr "新增目的"
+
+msgid "Add/Assign"
+msgstr "新增/分配"
+
+msgid "Added"
+msgstr "已新增"
+
+msgid "Additional notes"
+msgstr "附加註釋"
+
+msgid "Address"
+msgstr "地址"
+
+msgid "Admin"
+msgstr "管理員"
+
+msgid "Administrators"
+msgstr "管理員"
+
+msgid "All"
+msgstr "全部"
+
+msgid "Ankunftsdatum"
+msgstr "到達日期"
+
+msgid "Ankunftsnotiz"
+msgstr "到達備註"
+
+msgid "Ankunftszustand"
+msgstr "到達狀態"
+
+msgid "Anschaffungskategorie"
+msgstr "購置類別"
+
+msgid "Werkstatt-Technik"
+msgstr "車間技術"
+
+msgid "Produktionstechnik"
+msgstr "生產技術"
+
+msgid "AV-Technik"
+msgstr "視聽設備技術"
+
+msgid "Musikinstrumente"
+msgstr "音樂樂器"
+
+msgid "Facility Management"
+msgstr "設施管理"
+
+msgid "IC-Technik/Software"
+msgstr "IC科技/軟體"
+
+msgid "Approval Successful"
+msgstr "成功核准"
+
+msgid "Approve"
+msgstr "核准"
+
+msgid "Approve order"
+msgstr "核准訂單"
+
+msgid "Approve anyway"
+msgstr "無論如何核准"
+
+msgid "Save anyway"
+msgstr "無論如何儲存"
+
+msgid "Approved"
+msgstr "已核准"
+
+msgid "Approved Items"
+msgstr "已核准的物品"
+
+msgid "Approved on"
+msgstr "已核准於"
+
+msgid "Assign"
+msgstr "分配"
+
+msgid "Assigning the inventory code fails"
+msgstr "分配庫存代碼失敗"
+
+msgid "Attachment was successfully created."
+msgstr "附件已成功建立。"
+
+msgid "Attempt to add node to own graph collection"
+msgstr "嘗試將節點新增到自己的圖形集合中"
+
+msgid "Auswahl"
+msgstr "選擇"
+
+msgid "Availability Timeline"
+msgstr "可用時間表"
+
+msgid "Available"
+msgstr "可用"
+
+msgid "Available in entitlement-group '"
+msgstr "在資格群組中可用’"
+
+msgid "Available in total: "
+msgstr "總共可用:"
+
+msgid "available quantity"
+msgstr "可用數量"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "Back to this take back"
+msgstr "返回此歸還"
+
+msgid "Back to this hand over"
+msgstr "返回此移交"
+
+msgid "Backend"
+msgstr "後端"
+
+msgid "Badge ID was updated"
+msgstr "識別證ID已更新"
+
+msgid "Badge%s"
+msgstr "識別證 %s"
+
+msgid "Barcode"
+msgstr "條碼"
+
+msgid "Reference"
+msgstr "參考"
+
+msgid "Body"
+msgstr "主體"
+
+msgid "Book"
+msgstr "預約"
+
+msgid "Borrowable"
+msgstr "可借用"
+
+msgid "Borrowed Items"
+msgstr "已借用物品"
+
+msgid "Borrowed until"
+msgstr "已借用直到"
+
+msgid "Borrower"
+msgstr "借用人"
+
+msgid "Broken"
+msgstr "損壞"
+
+msgid "Building"
+msgid_plural "Buildings"
+msgstr[0] "建築物"
+
+msgid "Building together with a general room successfully created"
+msgstr "與一般房間一起成功建立"
+
+msgid "Room"
+msgid_plural "Rooms"
+msgstr[0] "房間"
+
+msgid "CSV"
+msgstr "CSV"
+
+msgid "CSV export"
+msgstr "CSV匯出"
+
+msgid "Excel export"
+msgstr "Excel匯出"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Cancel Edit"
+msgstr "取消編輯"
+
+msgid "Categories"
+msgstr "類別"
+
+msgid "Category"
+msgstr "類別"
+
+msgid "Change Borrower"
+msgstr "變更借用人"
+
+msgid "Change Borrower Successful"
+msgstr "成功變更借用人"
+
+msgid "Change orderer"
+msgstr "變更訂貨人"
+
+msgid "Change orderer Successful"
+msgstr "成功變更訂貨人"
+
+msgid "Changed %s from %s to %s"
+msgstr "已將 %s 從 %s 更改為 %s"
+
+msgid "Changed dates for %{model} from %{from} to %{to}"
+msgstr "已將 %{model} 的日期從 %{from} 更改為 %{to}"
+
+msgid "Closed"
+msgstr "已關閉"
+
+msgid "Compatible successfully removed"
+msgstr "相容性已成功刪除"
+
+msgid "Compatibles"
+msgstr "相容性"
+
+msgid "Complete"
+msgstr "完成"
+
+msgid "Complete Search"
+msgstr "完整搜尋"
+
+msgid "Completeness"
+msgstr "完整性"
+
+msgid "Consider opening hours"
+msgstr "考慮開放時間"
+
+msgid "Contract"
+msgstr "合約"
+
+msgid "Default Contract Note"
+msgstr "預設合約備註"
+
+msgid "Contract %d has been signed by %s"
+msgstr "合約 %d 已由 %s 簽署"
+
+msgid "Contract No."
+msgstr "合約編號."
+
+msgid "Contract Nr."
+msgstr "合約編號."
+
+msgid "Contracts"
+msgstr "合約"
+
+msgid "Couldn't update "
+msgstr "無法更新"
+
+msgid "Created at"
+msgstr "建立於"
+
+msgid "Current Order"
+msgstr "目前訂單"
+
+msgid "Currently Borrowed Items"
+msgstr "目前已借用物品"
+
+msgid "Currently has items to return"
+msgstr "目前有需要歸還的物品"
+
+msgid "Currently has open orders"
+msgstr "目前有未完成的訂單"
+
+msgid "Currently you have no items in your order."
+msgstr "目前您的訂單中沒有任何物品。"
+
+msgid "Daily View"
+msgstr "每日瀏覽"
+
+msgid "Day"
+msgstr "天"
+
+msgid "Days"
+msgstr "天"
+
+msgid "Deadline soon"
+msgstr "截止日期即將到期"
+
+msgid "Deadline soon reminder sent for %{q} items on contracts %{c}"
+msgstr "已發送截止日期即將到期的提醒，涉及 %{q} 物品，合約編號為 %{c}"
+
+msgid "Dear client,"
+msgstr "尊敬的客戶，"
+
+msgid "Dear leihs client,"
+msgstr "尊敬的Leihs客戶，"
+
+msgid "Dear leihs manager,"
+msgstr "尊敬的Leihs經理，"
+
+msgid "Defective"
+msgstr "有缺陷"
+
+msgid "Delete"
+msgstr "刪除"
+
+msgid "Delete %s"
+msgstr "刪除 %s"
+
+msgid "Delete line"
+msgstr "刪除行"
+
+msgid "Delete Selection"
+msgstr "刪除選擇"
+
+msgid "Delete this line"
+msgstr "刪除此行"
+
+msgid "Description"
+msgstr "敘述"
+
+msgid "Documents"
+msgstr "文件"
+
+msgid "My documents"
+msgstr "我的文件"
+
+msgid "Documents for hand over"
+msgstr "移交文件"
+
+msgid "Documents for take back"
+msgstr "收回文件"
+
+msgid "E-Mail"
+msgstr "信箱"
+
+msgid "ERROR"
+msgstr "錯誤"
+
+msgid "Edit"
+msgstr "編輯"
+
+msgid "Edit %s"
+msgstr "編輯 %s"
+
+msgid "Edit Model"
+msgstr "編輯型號"
+
+msgid "Edit Software"
+msgstr "編輯軟體"
+
+msgid "Edit Item"
+msgstr "編輯物品"
+
+msgid "Edit License"
+msgstr "編輯授權"
+
+msgid "Edit Option"
+msgstr "編輯選項"
+
+msgid "Edit Order"
+msgstr "編輯訂單"
+
+msgid "Edit Purpose"
+msgstr "編輯目的"
+
+msgid "Edit Selection"
+msgstr "編輯選擇"
+
+msgid "Edit multiple selected reservations"
+msgstr "編輯多個已選定的預約"
+
+msgid "Edit purpose for order from"
+msgstr "編輯訂單目的，來自"
+
+msgid "Edit this Order"
+msgstr "編輯此訂單"
+
+msgid "Editing mail templates for the inventory pool %s"
+msgstr "編輯庫存池 %s 的郵件模板"
+
+msgid "Editing system-wide mail templates"
+msgstr "編輯全系統的郵件範本"
+
+msgid "Empty Username and/or Password"
+msgstr "清空使用者名稱和/或密碼"
+
+msgid "End date"
+msgstr "結束日期"
+
+msgid "Equipment Booking and Inventory Management System"
+msgstr "設備預約及庫存管理系統"
+
+msgid "Error"
+msgstr "錯誤"
+
+msgid "Error creating the accessory."
+msgstr "建立附件時發生錯誤。"
+
+msgid "Error deleting the accessory."
+msgstr "刪除附件時發生錯誤。"
+
+msgid "Error destroying the item package"
+msgstr "刪除物品包裹時發生錯誤"
+
+msgid "Error destroying the package"
+msgstr "刪除包裹時發生錯誤"
+
+msgid "Error saving the package"
+msgstr "儲存包裹時發生錯誤"
+
+msgid "Error updating inventory code"
+msgstr "更新庫存代碼時發生錯誤"
+
+msgid "Expected to be returned."
+msgstr "預計歸還。"
+
+msgid "Finish this hand over"
+msgstr "完成此移交"
+
+msgid "Finish this take back"
+msgstr "完成此歸還"
+
+msgid "Format"
+msgstr "格式"
+
+msgid "Found %d matches"
+msgstr "找到 %d 個相符"
+
+msgid "Found %s"
+msgstr "找到 %s"
+
+msgid "Fri"
+msgstr "週五"
+
+msgid "Frontend"
+msgstr "前端"
+
+msgid "Functional"
+msgstr "功能性"
+
+msgid "General Information"
+msgstr "一般資訊"
+
+msgid "Go Back"
+msgstr "回到"
+
+msgid "Entitlement-Group %s"
+msgstr "資格群組 %s"
+
+msgid "Hand Over"
+msgstr "移交"
+
+msgid "Hand Over Selection"
+msgstr "移交選擇"
+
+# 交給託付，交付？
+msgid "Hand Over to"
+msgstr "移交給"
+
+msgid "Hand Over to %s"
+msgstr "移交給 %s"
+
+msgid "Hand Overs"
+msgstr "移交"
+
+msgid "Help"
+msgstr "助手"
+
+msgid "Highlight available items."
+msgstr "標記可用物品。"
+
+msgid "IMEI-Number"
+msgstr "IMEI號碼"
+
+msgid "Important notes for hand over"
+msgstr "移交重要注意事項"
+
+msgid "In Stock"
+msgstr "有存貨"
+
+msgid "in stock"
+msgstr "有存貨"
+
+msgid "rentable"
+msgstr "可出租的"
+
+msgid "not in stock"
+msgstr "沒存貨"
+
+msgid "In Total"
+msgstr "總共"
+
+msgid "Incomplete"
+msgstr "不完整"
+
+msgid "Inconsistent Inventory Pool"
+msgstr "庫存池不一致"
+
+msgid "Initial Price"
+msgstr "初始價格"
+
+msgid "Inspect"
+msgstr "檢查"
+
+msgid "Inspect Item"
+msgstr "檢查項目"
+
+msgid "Insurance Number"
+msgstr "保險號碼"
+
+msgid "Internal Description"
+msgstr "內部說明"
+
+msgid "Introduction"
+msgstr "介紹"
+
+msgid "Invalid order_lines"
+msgstr "Invalid order_lines"
+
+msgid "Invalid technical user - contact your leihs admin"
+msgstr "無效的技術使用者 - 請聯繫您的leihs管理員"
+
+msgid "Invalid username/password"
+msgstr "無效的使用者名稱/密碼"
+
+msgid "Inventory"
+msgstr "庫存"
+
+msgid "Inventory Code"
+msgstr "庫存代碼"
+
+msgid "Inventory Code / Name"
+msgstr "庫存代碼/名稱"
+
+msgid "Inventory Pool"
+msgstr "庫存池"
+
+msgid "Inventory pool successfully created"
+msgstr "庫存池創建成功"
+
+msgid "Inventory Pool is missing"
+msgstr "庫存池遺失"
+
+msgid "Inventory Pools"
+msgstr "庫存池"
+
+msgid "Inventory code"
+msgstr "庫存代碼"
+
+msgid "Inventory code updated"
+msgstr "庫存代碼已更新"
+
+msgid "Inventory pool"
+msgid_plural "Inventory pools"
+msgstr[0] "庫存池"
+
+msgid "InventoryPool|Email"
+msgstr "庫存池｜信箱"
+
+msgid "InventoryPool|Shortname"
+msgstr "庫存池｜簡稱"
+
+msgid "Investment"
+msgstr "資產"
+
+msgid "Invoice Date"
+msgstr "發票日期"
+
+msgid "Invoice Information"
+msgstr "發票資訊"
+
+msgid "Invoice Number"
+msgstr "發票號碼"
+
+msgid "Item"
+msgid_plural "Items"
+msgstr[0] "物品"
+
+msgid "Item handed over as part of contract %d."
+msgstr "物品已作為合約 %d 的一部分移交。"
+
+msgid "Item is defective"
+msgstr "物品有缺陷"
+
+msgid "Item is incomplete"
+msgstr "物品不完整"
+
+msgid "Item is overdue and therefore unavailable!"
+msgstr "物品已逾期，因此無法提供！"
+
+msgid "Item is part of package"
+msgstr "物品是包裹的一部分"
+
+msgid "Item is reserved in the future, therefore it's not available!"
+msgstr "物品已保留，因此無法使用！"
+
+msgid "Item not borrowable"
+msgstr "物品不可藉用"
+
+msgid "Item package successfully destroyed"
+msgstr "物品包成功銷毀"
+
+msgid "Item saved."
+msgstr "物品已儲存。"
+
+msgid "License saved."
+msgstr "授權已儲存。"
+
+msgid "Item taken back"
+msgstr "物品被收回"
+
+msgid "Items"
+msgstr "物品"
+
+msgid "Key"
+msgstr "金鑰"
+
+msgid "Kind regards,"
+msgstr "祝福您,"
+
+msgid "Language"
+msgstr "語言"
+
+msgid "Last Checked"
+msgstr "最後檢查"
+
+msgid "License Version"
+msgstr "授權版本"
+
+# 是否需翻譯？
+msgid "item_version"
+msgstr "item_version"
+
+msgid "Last Visitors:"
+msgstr "最後訪客:"
+
+msgid "Latest reminder"
+msgstr "最新提醒"
+
+msgid "Legend"
+msgstr "說明"
+
+msgid "Lender"
+msgstr "借出者"
+
+msgid "Lending"
+msgstr "借出中"
+
+msgid "Lending / Daily View"
+msgstr "借出/每日查看"
+
+msgid "Lending Contract No."
+msgstr "借出的合約編號."
+
+msgid "Lending Contract No. %d"
+msgstr "借出合約編號. %d"
+
+msgid "Lending Contract No. %s"
+msgstr "借出合約編號. %s"
+
+msgid "Lending Contracts No. %s"
+msgstr "借出合約編號. %s"
+
+msgid "List of %s"
+msgstr "%s 的清單"
+
+msgid "List of available variables"
+msgstr "可用變數清單"
+
+msgid "List of Rooms"
+msgstr "房間清單"
+
+msgid "List of Buildings"
+msgstr "建築物清單"
+
+msgid "List of Contracts"
+msgstr "合約清單"
+
+msgid "List of Inventory"
+msgstr "庫存清單"
+
+msgid "List of Inventory Pools"
+msgstr "庫存池清單"
+
+msgid "List of Orders"
+msgstr "訂單清單"
+
+msgid "List of Visits"
+msgstr "訪問清單"
+
+msgid "Loading"
+msgstr "載入中"
+
+msgid "Location"
+msgstr "位置"
+
+msgid "Locations"
+msgstr "位置"
+
+msgid "%s location"
+msgid_plural "%s locations"
+msgstr[0] "%s 位置"
+
+msgid "Location not defined"
+msgstr "未定義位置"
+
+msgid "Logged in successfully"
+msgstr "已成功登入"
+
+msgid "Login"
+msgstr "登入"
+
+msgid "Logout"
+msgstr "登出"
+
+msgid "MAC-Address"
+msgstr "MAC位址"
+
+msgid "Mail Templates"
+msgstr "郵件範本"
+
+msgid "Manufacturer"
+msgstr "製造商"
+
+msgid "Manufacturer (A-Z)"
+msgstr "製造商(A至Z)"
+
+msgid "Manufacturer (Z-A)"
+msgstr "製造商(Z至A)"
+
+msgid "Matching Templates"
+msgstr "相符的範本"
+
+msgid "Max. visits"
+msgstr "最大值。訪問"
+
+msgid "Mobile"
+msgstr "手機"
+
+# 模型or型號
+msgid "Model"
+msgstr "型號"
+
+msgid "Model (A-Z)"
+msgstr "型號(A至Z)"
+
+msgid "Model (Z-A)"
+msgstr "型號(Z至A)"
+
+msgid "Model must be selected"
+msgstr "必須選擇型號"
+
+msgid "Model not present anymore"
+msgstr "型號不再存在"
+
+msgid "Model successfully added as compatible"
+msgstr "型號已成功添加為相容"
+
+msgid "Model successfully removed"
+msgstr "型號已成功刪除"
+
+msgid "Models"
+msgstr "型號"
+
+msgid "Mon"
+msgstr "週一"
+
+msgid "Name"
+msgstr "姓名"
+
+msgid "Name / ID"
+msgstr "姓名/ ID"
+
+msgid "New Borrower"
+msgstr "新借用人"
+
+msgid "New Orderer"
+msgstr "新訂購者"
+
+msgid "New Package"
+msgstr "新包裹"
+
+msgid "New item created."
+msgstr "新物品已建立。"
+
+# 下一個？
+msgid "Next"
+msgstr "下一步"
+
+msgid "No"
+msgstr "無"
+
+msgid "No description available for this model."
+msgstr "此型號無可用描述。"
+
+msgid "No entries found"
+msgstr "找不到條目"
+
+msgid "No entry found"
+msgstr "未找到條目"
+
+msgid "No hand overs found"
+msgstr "未發現移交"
+
+msgid "No reminder yet"
+msgstr "還沒提醒"
+
+msgid "No take backs found"
+msgstr "沒有找到歸還"
+
+msgid "None"
+msgstr "無"
+
+msgid "Not Borrowable"
+msgstr "不可借用"
+
+msgid "Not available"
+msgstr "不可用"
+
+msgid "Not categorized"
+msgstr "未分類"
+
+msgid "Note"
+msgstr "備註"
+
+msgid "Number of items"
+msgstr "物品的編號"
+
+msgid "OK"
+msgstr "確定"
+
+msgid "One of the managers approves/denies or changes your reservation"
+msgstr "其中一位經理批准/拒絕或更改您的預訂"
+
+msgid "Open"
+msgstr "打開"
+
+msgid "Open Datepicker"
+msgstr "打開日期選擇器"
+
+# 未結訂單？？
+msgid "Open Orders"
+msgstr "打開訂單"
+
+msgid "Opening Hours"
+msgstr "營業時間"
+
+msgid "Order"
+msgstr "訂單"
+
+msgid "%s Order"
+msgid_plural "%s Orders"
+msgstr[0] "%s 訂單"
+
+msgid "Order approved"
+msgstr "訂單已獲批准"
+
+msgid "Order from"
+msgstr "訂購自"
+
+msgid "Order from %s"
+msgstr "訂購自 %s"
+
+msgid "Order received"
+msgstr "已收到訂單"
+
+msgid "Order rejected"
+msgstr "訂單被拒絕"
+
+msgid "Order submitted"
+msgstr "已提交訂單"
+
+msgid "Orders"
+msgstr "訂單"
+
+msgid "Other entitlement-groups"
+msgstr "其他資格群組"
+
+msgid "Overbooked Quantity"
+msgstr "超額預訂數量"
+
+msgid "Overbooking"
+msgstr "超額預訂"
+
+msgid "Overdue"
+msgstr "逾期"
+
+msgid "Overdue Returns"
+msgstr "逾期歸還"
+
+msgid "Overdue Visit"
+msgstr "逾期訪問"
+
+msgid "Owned"
+msgstr "已擁有"
+
+msgid "Owner"
+msgstr "擁有者"
+
+msgid "Package"
+msgstr "包裹"
+
+msgid "Packages"
+msgstr "包裹"
+
+msgid "Package Code"
+msgstr "包裹代碼"
+
+msgid "Package successfully destroyed"
+msgstr "包裹成功銷毀"
+
+msgid "Package successfully saved"
+msgstr "包裹已成功保存"
+
+msgid "Password"
+msgstr "密碼"
+
+msgid "Password Confirmation"
+msgstr "密碼確認"
+
+msgid "Password changed"
+msgstr "密碼已變更"
+
+msgid "Pending"
+msgstr "等待中"
+
+msgid "Period"
+msgstr "期間"
+
+msgid "Phone"
+msgstr "電話"
+
+msgid "Phone%s"
+msgstr "電話 %s"
+
+msgid "Manage inventory, place reservations on items and pick them up"
+msgstr "管理庫存、預訂物品並取貨"
+
+msgid ""
+"Please note that these contracts, while they do belong to approved orders, "
+"may be changed by the lending manager at any time. They represent only a "
+"current snapshot of the order and might not contain the same items as the "
+"final contract once you pick up your items."
+msgstr ""
+"請注意，這些合約雖然屬於已批准的訂單，但可能隨時被借出經理更改。它們只代表訂"
+"單的當前快照，當您取回物品時，最終合約可能包含的物品可能不同。"
+
+msgid "Please provide a purpose..."
+msgstr "請提供一個目的..."
+
+msgid "Please provide all required fields"
+msgstr "請提供所有必填欄位"
+
+msgid "Please provide an inventory code"
+msgstr "請提供庫存代碼"
+
+msgid "Please select some fields."
+msgstr "請選擇一些欄位。"
+
+msgid "Please specify the purpose of your order here..."
+msgstr "請在此註明您的訂單目的..."
+
+msgid "Previous"
+msgstr "以前的"
+
+msgid "Price"
+msgstr "價格"
+
+msgid "Print"
+msgstr "列印"
+
+msgid "Print Contracts"
+msgstr "列印合約"
+
+msgid "Problems"
+msgstr "問題"
+
+msgid "Project Number"
+msgstr "專案編號"
+
+msgid "Purpose"
+msgstr "目的"
+
+msgid "Purpose changed '%s' for '%s'"
+msgstr "目的已更改為“%s”的“%s”"
+
+msgid "Purpose changed '%{from}' for '%{to}'"
+msgstr "目的已將“%{from}”更改為“%{to}”"
+
+msgid "Purpose these items are borrowed for"
+msgstr "借用這些物品的目的"
+
+msgid "Qty."
+msgstr "數量."
+
+msgid "Quantity"
+msgstr "數量"
+
+msgid "Quantities"
+msgstr "數量"
+
+msgid "Quantity allocations"
+msgstr "數量分配"
+
+msgid "Total quantity"
+msgstr "總數"
+
+msgid "Quantity: %d"
+msgstr "數量: %d"
+
+msgid "Reason for Retirement"
+msgstr "退役原因"
+
+msgid "Recommended Accessories"
+msgstr "推薦配件"
+
+msgid "Accessories"
+msgstr "配件"
+
+msgid "Reject"
+msgstr "拒絕"
+
+msgid "Rejected"
+msgstr "已拒絕"
+
+msgid "Rejected on"
+msgstr "已拒絕於"
+
+msgid "Rejection Successful"
+msgstr "拒絕成功"
+
+msgid "Relevant for inventory"
+msgstr "與庫存相關"
+
+msgid "Remind"
+msgstr "提醒"
+
+msgid "Reminded %{q} items for contracts %{c}"
+msgstr "提醒了 %{q} 項合約 %{c}。"
+
+msgid "Reminder"
+msgstr "提醒"
+
+msgid "Removed %{q} %{m}"
+msgstr "已刪除 %{q} %{m}"
+
+msgid "Requested Items"
+msgstr "請求的物品"
+
+msgid "Reservation"
+msgstr "預約"
+
+msgid "Contact"
+msgstr "聯繫"
+
+msgid "Contact person"
+msgstr "聯絡人"
+
+msgid "Responsible"
+msgstr "負責的"
+
+msgid "Responsible department"
+msgstr "責任部門"
+
+msgid "Responsible person"
+msgstr "負責人"
+
+msgid "Retire"
+msgstr "退役"
+
+msgid "Retire Item"
+msgstr "退役物品"
+
+msgid "Retired"
+msgstr "已退役"
+
+msgid "retired"
+msgstr "已退役"
+
+msgid "not retired"
+msgstr "未退役"
+
+msgid "Retirement"
+msgstr "退役"
+
+msgid "Return"
+msgstr "返回"
+
+msgid "Return to this hand over"
+msgstr "返回本次交接"
+
+msgid "Returned Items"
+msgstr "退回的物品"
+
+msgid "Save"
+msgstr "儲存"
+
+msgid "Save %s"
+msgstr "儲存 %s"
+
+msgid "Save and copy"
+msgstr "儲存並複製"
+
+msgid "Save and copy %s"
+msgstr "儲存並複製 %s"
+
+msgid "Copy Item"
+msgstr "複製項目"
+
+msgid "Copy License"
+msgstr "複製授權"
+
+msgid "Create copied item"
+msgstr "建立複製的項目"
+
+msgid "Changes"
+msgstr "變更"
+
+msgid "Save changes"
+msgstr "儲存變更"
+
+msgid "Saved"
+msgstr "已儲存"
+
+msgid "Search"
+msgstr "搜尋"
+
+msgid "Search Results for \"%s\""
+msgstr "%s 搜尋結果"
+
+msgid "Search..."
+msgstr "搜尋..."
+
+msgid "admin_search_term"
+msgstr "admin_search_term"
+
+msgid "Searching"
+msgstr "搜尋中"
+
+msgid "Selected Pools (%s)"
+msgstr "選定的池 (%s)"
+
+msgid "Selection"
+msgstr "選擇"
+
+msgid "Serial Number"
+msgstr "序號"
+
+msgid "Settings for %s"
+msgstr "%s 的設定"
+
+msgid "Shelf"
+msgstr "架子"
+
+msgid "Show"
+msgstr "顯示"
+
+msgid "Show user"
+msgstr "顯示使用者"
+
+msgid "Show delegation"
+msgstr "顯示委派"
+
+msgid "Show Availability"
+msgstr "顯示可用"
+
+msgid "Show all %s..."
+msgstr "顯示所有 %s …"
+
+msgid "Show all ..."
+msgstr "顯示所有..."
+
+msgid "Signature"
+msgstr "簽名"
+
+msgid "Signed"
+msgstr "已簽署"
+
+msgid "Signed contracts"
+msgstr "已簽署合約"
+
+msgid "Something went wrong!"
+msgstr "發生錯誤!"
+
+msgid "Start"
+msgstr "開始"
+
+msgid "Start Date must be before End Date"
+msgstr "開始日期必須早於結束日期"
+
+msgid "End Date cannot be in the past"
+msgstr "結束日期不能是過去的日期"
+
+msgid "Start Screen"
+msgstr "開始畫面"
+
+msgid "Start date"
+msgstr "開始日期"
+
+msgid "Status"
+msgstr "狀態"
+
+msgid "Submission failed"
+msgstr "提交失敗"
+
+msgid "Submit"
+msgstr "提交"
+
+msgid "Submit Order"
+msgstr "提交訂單"
+
+msgid "Submitted"
+msgstr "已提交"
+
+msgid "Successful Order"
+msgstr "訂單成功"
+
+msgid "Successfully set."
+msgstr "設定成功。"
+
+msgid "Supplier"
+msgstr "供應商"
+
+msgid "Suppliers"
+msgstr "供應商"
+
+msgid "Swapped %{from} for %{to}"
+msgstr "將 %{from} 換成了 %{to}"
+
+msgid "Swapped from %s "
+msgstr "與 %s 交換"
+
+msgid "Take Back"
+msgstr "歸還"
+
+msgid "Take Back Selection"
+msgstr "歸還選擇"
+
+msgid "Take Back from"
+msgstr "歸還自"
+
+msgid "Take Back from %s"
+msgstr "歸還自 %s"
+
+msgid "Take Backs"
+msgstr "歸還"
+
+msgid "Technical Details"
+msgstr "技術細節"
+
+msgid "Templates"
+msgstr "範本"
+
+msgid "Terms and conditions of the lender apply."
+msgstr "借用人的條款和條件適用。"
+
+msgid ""
+"That means that the user probably did not get the approval mail and you need "
+"to contact him/her in a different way."
+msgstr "這意味著該使用者可能沒有收到批准郵件，您需要以其他方式與他/她聯繫。"
+
+msgid "The Category must be empty"
+msgstr "類別必須為空"
+
+msgid "The Inventory Code %s was not found."
+msgstr "找不到庫存代碼 %s 。"
+
+msgid "The Inventory Code %s was not found for %s"
+msgstr "找不到 %s 的庫存代碼 %s"
+
+msgid "The Inventory Pool must be empty"
+msgstr "庫存池必須為空"
+
+msgid "The accessory was successfully created."
+msgstr "配件已成功建立。"
+
+msgid "The accessory was successfully deleted."
+msgstr "配件已成功刪除。"
+
+msgid "%s successfully deleted"
+msgstr "%s已成功刪除"
+
+msgid "The admin role cannot be scoped to an inventory pool"
+msgstr "管理者角色的範圍不能限定為庫存池"
+
+msgid "The assignment for %s was removed"
+msgstr "%s 的分配已刪除"
+
+msgid ""
+"The following error happened while sending a notification email to %{email}:"
+"\\n"
+msgstr "在發送通知電子郵件至 %{email} 時發生以下錯誤:\\n"
+
+msgid "The entitlement-group quantities were successfully saved."
+msgstr "權利組數量已成功保存。"
+
+msgid "The inventory code %s is not valid for this model"
+msgstr "庫存代碼 %s 對此型號無效"
+
+msgid "The item belongs to a package"
+msgstr "該物品屬於一個包裹"
+
+msgid ""
+"The item cannot be retired because it's not returned yet or has already been "
+"assigned to a contract line."
+msgstr "該物料無法退回，因為它尚未退回或已分配到合約行。"
+
+msgid "The item doesn't belong to the inventory pool related to this contract"
+msgstr "該物料不屬於與此合約相關的庫存池"
+
+msgid "The item doesn't match with the reserved model"
+msgstr "該物品與預訂型號不符"
+
+msgid ""
+"The item is already handed over or assigned to a different contract line"
+msgstr "該物料已移交或分配給不同的合約行"
+
+msgid "The item with the inventory code %s was not found"
+msgstr "未找到庫存代碼 %s 的物品"
+
+msgid "The item %s will be retired and no longer available for rentals."
+msgstr "物品 %s 將退役並且不再可供出租。"
+
+msgid "The line was not found"
+msgstr "沒有找到該線路"
+
+msgid "The mail was sent"
+msgstr "郵件已發送"
+
+msgid ""
+"The model cannot be changed because the item is used in contracts already."
+msgstr "該型號無法更改，因為該項目已在合約中使用。"
+
+msgid "The model is already compatible"
+msgstr "此型號已相容"
+
+msgid "The new user details could not be saved."
+msgstr "無法儲存新用戶詳細資料。"
+
+msgid "The option could not be added"
+msgstr "無法新增該選項"
+
+msgid ""
+"The option doesn't belong to the inventory pool related to this contract"
+msgstr "該選項不屬於與該合約相關的庫存池"
+
+msgid "The parent item doesn't exist (parent_id: %d)"
+msgstr "父項目不存在 (parent_id: %d)"
+
+msgid "The properties have been updated."
+msgstr "屬性已更新。"
+
+msgid "The selected reservations have been moved"
+msgstr "所選預訂已被移動"
+
+msgid "The selected model is not a package"
+msgstr "所選型號不是套餐"
+
+msgid "The user does not have an email address"
+msgstr "使用者沒有電子郵件地址"
+
+msgid ""
+"This contract is not signable because it doesn't have any contract "
+"reservations."
+msgstr "該合約不可簽署，因為它沒有任何合約保留。"
+
+msgid ""
+"This contract is not signable because none of the reservations have a "
+"purpose."
+msgstr "該合約不可簽署，因為所有預訂均無目的。"
+
+msgid ""
+"This contract is not signable because some reservations are not assigned."
+msgstr "由於某些預訂未分配，因此無法簽署此合約。"
+
+msgid ""
+"This contract is not signable because the delegated user is either missing "
+"or not part of this delegation."
+msgstr "該合約不可簽署，因為受委託的用戶缺失或不屬於該委託。"
+
+msgid "Delegated user is not member of the contract's delegation or is empty"
+msgstr "委託用戶不是合約委託的成員或為空"
+
+msgid "Delegated user must be empty for contract's normal user"
+msgstr "合約普通用戶的委託用戶必須為空"
+
+msgid "Entitlement-Groups of this customer"
+msgstr "該客戶的權利群組"
+
+msgid "This inventory pool is closed on that day."
+msgstr "該庫存池於當天關閉。"
+
+msgid "No orders are possible on this start date"
+msgstr "在此開始日期無法下訂單"
+
+msgid "Booking is no longer possible on this start date"
+msgstr "此開始日期無法再預訂"
+
+msgid "Booking is no longer possible on this end date"
+msgstr "在此結束日期不再可以預訂"
+
+msgid "Inventory pool successfully updated."
+msgstr "庫存池已成功更新。"
+
+msgid "This is a package containing the following items"
+msgstr "這是一個包含以下物品的包裹"
+
+msgid ""
+"This is the list of items you requested. To complete this order, please %s."
+msgstr "這是您請求的項目清單。 要完成此訂單，請%s。"
+
+msgid "This item was retired"
+msgstr "該物品已退役"
+
+msgid ""
+"This item will be given to a different inventory pool and not show up in "
+"yours anymore!"
+msgstr "此物品將被轉交給另一個庫存池，將不再顯示在您的庫存中！"
+
+msgid "This model is now in %d categories"
+msgstr "此型號現在屬於 %d 個類別"
+
+msgid "This order has already been approved."
+msgstr "此訂單已經被批准。"
+
+msgid "This order is not approvable because doesn't have any models."
+msgstr "此訂單無法批准，因為它沒有任何型號。"
+
+msgid ""
+"This order is not approvable because some reserved models are not available."
+msgstr "此訂單無法批准，因為一些預留的型號不可用。"
+
+msgid ""
+"This order is not approvable because the inventory pool is closed on either "
+"the start or enddate."
+msgstr "此訂單無法批准，因為庫存池在開始日期或結束日期上已關閉。"
+
+msgid "Thu"
+msgstr "週四"
+
+msgid "Time window"
+msgstr "時間視窗"
+
+msgid "Timeline"
+msgstr "時間表"
+
+msgid "Today"
+msgstr "今天"
+
+msgid "Too many users found"
+msgstr "發現用戶太多"
+
+msgid "Total"
+msgstr "總共"
+
+msgid "Tue"
+msgstr "週二"
+
+msgid "Umzug"
+msgstr "移交"
+
+msgid "borrowable"
+msgstr "可借用"
+
+msgid "unborrowable"
+msgstr "不可借用"
+
+msgid "Unborrowable"
+msgstr "不可借用"
+
+msgid "Borrowable Items"
+msgstr "可借用物品"
+
+msgid "Unborrowable Items"
+msgstr "可借用物品"
+
+msgid "Unsigned"
+msgstr "未簽署"
+
+msgid "Unsigned Hand Over"
+msgstr "未簽署的移交"
+
+msgid "Unsigned contracts"
+msgstr "未簽署的合約"
+
+msgid "Unsubmitted"
+msgstr "尚未提交"
+
+msgid "Unsuccessful reminder of %{q} items for contracts %{c}"
+msgstr "對於合約 %{c} 的 %{q} 項目的提醒未成功。"
+
+msgid "Updated at"
+msgstr "已更新於"
+
+msgid "Upload error."
+msgstr "上傳錯誤。"
+
+msgid "User"
+msgid_plural "Users"
+msgstr[0] "使用者"
+
+msgid "Delegation"
+msgstr "委託"
+
+msgid "Delegations"
+msgstr "委託"
+
+msgid "User details were updated successfully."
+msgstr "用戶詳細資訊已成功更新。"
+
+msgid "User data"
+msgstr "使用者資料"
+
+msgid "User created successfully"
+msgstr "使用者新增成功"
+
+msgid "User must be selected"
+msgstr "必須選擇用戶"
+
+msgid "User or Order not found"
+msgstr "未找到用戶或訂單"
+
+msgid "User swapped %{from} for %{to}"
+msgstr "使用者將 %{from} 換成了 %{to}"
+
+msgid "User unknown"
+msgstr "使用者未知"
+
+msgid "User/Typical usage"
+msgstr "使用者/典型用量"
+
+msgid "Username"
+msgstr "使用者名稱"
+
+msgid "Users"
+msgstr "使用者"
+
+msgid "Value"
+msgstr "值"
+
+msgid "Value List"
+msgstr "值清單"
+
+msgid "Value List for Lending Contract No."
+msgstr "借出合約編號的值清單."
+
+msgid "Value List for Lending Contract No. %s"
+msgstr "借出合約編號 %s 的值清單"
+
+msgid "View %s"
+msgstr "查看 %s"
+
+msgid "View Item"
+msgstr "查看物品"
+
+msgid "View Model"
+msgstr "查看型號"
+
+msgid "View Option"
+msgstr "查看選項"
+
+msgid "Visits"
+msgstr "訪問"
+
+msgid "Warning"
+msgstr "警告"
+
+msgid "Wed"
+msgstr "週三"
+
+msgid "Welcome %s"
+msgstr "歡迎 %s"
+
+msgid "Working order"
+msgstr "進行中訂單"
+
+msgid "Workload"
+msgstr "工作量"
+
+msgid "Write a note... (the note will be part of the contract)"
+msgstr "寫一個備註...（備註將成為合約的一部分）"
+
+msgid "Write a comment. The comment will be part of the rejection e-mail."
+msgstr "寫一個意見。意見將成為拒絕郵件的一部分。"
+
+msgid ""
+"Write a comment... (your comment will be part of the confirmation e-mail)"
+msgstr "寫一個意見...（您的意見將成為確認郵件的一部分）"
+
+msgid "Write a note... the note will be part of the contract"
+msgstr "寫一個備註...該備註將成為合約的一部分"
+
+msgid "Yes"
+msgstr "是"
+
+msgid "You are not the owner of this item"
+msgstr "您不是該物品的所有者"
+
+msgid "You bring back your items"
+msgstr "您歸還您的物品"
+
+msgid "You can edit your personal data"
+msgstr "您可以編輯您的個人數據"
+
+msgid "You can't add a package to a package."
+msgstr "您無法將包裹新增至包裹。"
+
+msgid ""
+"You cannot delete all reservations of an order. Perhaps you want to reject "
+"it instead?"
+msgstr "您無法刪除訂單的所有預訂。 也許你想拒絕它？"
+
+msgid ""
+"You do not have any items in your order. Please %s and choose items for your "
+"order."
+msgstr "您的訂單中沒有任何物品。 請%s並為您的訂單選擇物品。"
+
+msgid "You don't have access to this item."
+msgstr "您無權存取該項目。"
+
+msgid "You don't have any rights to access this application."
+msgstr "您無權存取此應用程式。"
+
+msgid "You don't have permission to perform this action"
+msgstr "您無權執行此操作"
+
+msgid "You have %{no_access} to any inventory pools!"
+msgstr "您對任何庫存池都擁有 %{no_access} 權限！"
+
+msgid "You have access to the following inventory pools"
+msgstr "您可以訪問以下庫存池"
+
+msgid "You have access to the following inventory pools:"
+msgstr "您可以訪問以下庫存池:"
+
+msgid "You have been logged out."
+msgstr "您已登出。"
+
+msgid "You are not logged in."
+msgstr "你沒有登入。"
+
+msgid "You were served by %s"
+msgstr "%s 為您服務"
+
+msgid "You pick up the reserved items at the inventory pool"
+msgstr "您在庫存池中提取保留的物品"
+
+msgid "You place a reservation for some items in this system"
+msgstr "您在此系統中預訂了某些物品"
+
+msgid "You should redo your action or reload the page!"
+msgstr "您應該重做您的操作或重新加載頁面！"
+
+msgid "You wait for confirmation from the inventory pools in question"
+msgstr "您等待相關庫存池的確認"
+
+msgid "Your order was successfully transmitted to those responsible and is %s."
+msgstr "您的訂單已成功傳送給負責人，是 %s。"
+
+msgid "Zielraum"
+msgstr "目標空間"
+
+msgid "[Model %s] "
+msgstr "[型號 %s]"
+
+msgid "[leihs] Order received"
+msgstr "[系統] 已接收訂單"
+
+msgid "[leihs] Reminder"
+msgstr "[系統] 提醒"
+
+msgid "[leihs] Reservation Confirmation"
+msgstr "[系統] 預約確認"
+
+msgid "[leihs] Reservation Rejected"
+msgstr "[系統] 預約已拒絕"
+
+msgid "[leihs] Reservation Submitted"
+msgstr "[系統] 預約已提交"
+
+msgid "[leihs] Reservation confirmed (with changes)"
+msgstr "[系統] 預約已確認（有變更）"
+
+msgid "[leihs] Some items should be returned tomorrow"
+msgstr "[系統] 有些物品明天應該歸還"
+
+msgid "already in Category"
+msgstr "已在類別中"
+
+msgid "assigned to %s"
+msgstr "分配給 %s"
+
+msgid "available"
+msgstr "可用"
+
+msgid "awaiting approval"
+msgstr "正在等待批准"
+
+msgid "could not be assigned for take back"
+msgstr "無法分配進行歸還"
+
+msgid "current page is set as start page"
+msgstr "目前頁面設定為起始頁"
+
+msgid "day"
+msgid_plural "days"
+msgstr[0] "天"
+
+msgid "delete"
+msgstr "刪除"
+
+msgid "doesn't match parent's attribute"
+msgstr "與父屬性不符"
+
+msgid "entries%s"
+msgstr "條目%s"
+
+msgid "extend"
+msgstr "延長"
+
+msgid "for '%s'"
+msgstr "至 「%s」"
+
+msgid "for max."
+msgstr "至最大。"
+
+msgid "found %i"
+msgstr "已找到 %i"
+
+msgid "general"
+msgstr "一般"
+
+msgid "go back"
+msgstr "回到"
+
+msgid "go to today"
+msgstr "到今天"
+
+msgid "here"
+msgstr "在此"
+
+msgid "in"
+msgstr "這"
+
+msgid "Inventory pool is closed on end date"
+msgstr "庫存池於結束日期關閉"
+
+msgid "Inventory pool is closed on start date"
+msgstr "庫存池於開始日期關閉"
+
+msgid "is late"
+msgstr "晚了"
+
+msgid "item not assigned. "
+msgstr "項目未分配。"
+
+msgid "jump to this date"
+msgstr "跳到這個日期"
+
+msgid "Running Account"
+msgstr "運行帳戶"
+
+msgid "more"
+msgstr "更多"
+
+msgid "more properties"
+msgstr "更多財產"
+
+msgid "Property"
+msgstr "財產"
+
+msgid "Properties"
+msgstr "財產"
+
+msgid "no image"
+msgstr "沒有影像"
+
+msgid "no item assigned"
+msgstr "沒有指定項目"
+
+msgid "no purpose specified"
+msgstr "沒有指定目的"
+
+msgid "not available. "
+msgstr "無法使用。"
+
+msgid "not available"
+msgstr "無法使用"
+
+msgid "%s not available"
+msgstr "%s 無法使用"
+
+msgid "not borrowable"
+msgstr "不可借用"
+
+msgid "not valid. "
+msgstr "無效。"
+
+msgid "on time!"
+msgstr "準時！"
+
+msgid "open datepicker"
+msgstr "打開日期選擇器"
+
+msgid "overdue"
+msgstr "逾期"
+
+msgid "please wait"
+msgstr "請稍候"
+
+msgid "please wait..."
+msgstr "請稍候..."
+
+msgid "quantity increased by %s"
+msgstr "數量增加了 %s"
+
+msgid "quantity not available. "
+msgstr "數量不詳。"
+
+msgid "reserved / item assigned in future"
+msgstr "保留/將來分配的項目"
+
+msgid "reset user"
+msgstr "重置用戶"
+
+msgid "set current page as start page"
+msgstr "將目前頁面設定為起始頁"
+
+msgid "show less"
+msgstr "顯示較少"
+
+msgid "show less properties"
+msgstr "顯示較少的屬性"
+
+msgid "show package parts"
+msgstr "顯示包裝零件"
+
+msgid "since"
+msgstr "自從"
+
+msgid "since max."
+msgstr "自從最大值。"
+
+msgid "submit it"
+msgstr "提交它"
+
+msgid "therefore you may not be able to change some of these fields"
+msgstr "因此您可能無法更改其中一些字段"
+
+msgid "this is a package"
+msgstr "這是一個包"
+
+msgid "to edit this item"
+msgstr "編輯此項目"
+
+msgid "to substitute"
+msgstr "來代替"
+
+msgid "today"
+msgstr "今天"
+
+msgid "unavailable / can't be guaranteed"
+msgstr "不可用/無法保證"
+
+msgid "unknown Model"
+msgstr "未知型號"
+
+msgid "until"
+msgstr "直到"
+
+msgid "upcoming"
+msgstr "即將到來"
+
+msgid "was assigned for take back"
+msgstr "被分配收回"
+
+msgid "while deleting a hand over line"
+msgstr "刪除移交線時"
+
+msgid "while deleting hand over for"
+msgstr "刪除移交時"
+
+msgid "while deleting multiple order reservations"
+msgstr "刪除多個訂單預訂時"
+
+msgid "while deleting order line for"
+msgstr "刪除訂單行時"
+
+msgid "while try to send an e-mail reminder to:"
+msgstr "同時嘗試發送電子郵件提醒至:"
+
+msgid "with comment"
+msgstr "有評論"
+
+msgid "without conflict"
+msgstr "沒有衝突"
+
+msgid "you cannot hand out reservations which are starting in the future"
+msgstr "您不能提供未來開始的預訂"
+
+msgid "you cannot hand out reservations which are ending in the past"
+msgstr "您不能分發過去結束的預訂"
+
+msgid "you cannot hand out reservations with unassigned inventory codes"
+msgstr "您無法使用未分配的庫存代碼進行預訂"
+
+msgid "Helper"
+msgstr "助手"
+
+msgid "Advanced Search"
+msgstr "進階搜尋"
+
+msgid "Suspended"
+msgstr "已暫停"
+
+msgid "Edit User"
+msgstr "編輯使用者"
+
+msgid "Customer"
+msgstr "顧客"
+
+msgid "Group manager"
+msgstr "群組管理者"
+
+msgid "Lending manager"
+msgstr "貸款經理"
+
+msgid "Inventory manager"
+msgstr "庫存經理"
+
+msgid "New"
+msgstr "新"
+
+msgid "New Delegation"
+msgstr "新委派"
+
+msgid "New User"
+msgstr "新用戶"
+
+msgid "New Template"
+msgstr "新模板"
+
+msgid "New Category"
+msgstr "新類別"
+
+msgid "New Entitlement-Group"
+msgstr "新權利群組"
+
+msgid "List of %d Users"
+msgstr "%d 個使用者的列表"
+
+msgid "List of Users"
+msgstr "使用者列表"
+
+msgid "Contract expiration"
+msgstr "合約到期"
+
+msgid "Warranty expiration"
+msgstr "保固期滿"
+
+msgid "Process multiple fields for multiple items in a row"
+msgstr "處理連續多個項目的多個字段"
+
+msgid "Select Field"
+msgstr "選擇字段"
+
+msgid "no fields selected"
+msgstr "未選擇任何字段"
+
+msgid "Apply Fields on Item"
+msgstr "在項目上應用字段"
+
+msgid "no item selected"
+msgstr "未選擇任何項目"
+
+msgid "requested"
+msgstr "請求的"
+
+msgid "Option"
+msgstr "選項"
+
+msgid "Options"
+msgstr "選項"
+
+msgid "Inventory Helper"
+msgstr "庫存助手"
+
+msgid "Inventory Advanced Search"
+msgstr "庫存高級搜尋"
+
+msgid "Select Image"
+msgstr "選擇影像"
+
+msgid "Select File"
+msgstr "選擇文件"
+
+msgid "Image"
+msgstr "影像"
+
+msgid "Images"
+msgstr "圖片"
+
+msgid "Attachments"
+msgstr "附件"
+
+msgid "undo"
+msgstr "撤銷"
+
+msgid "Do you realy want to delete the '%s' category?"
+msgstr "您確實要刪除“%s”類別嗎？"
+
+msgid "Create %s"
+msgstr "創建%s"
+
+msgid "Create new category"
+msgstr "建立新類別"
+
+msgid "Category name"
+msgstr "分類名稱"
+
+msgid "List of Categories"
+msgstr "類別列表"
+
+msgid "Label"
+msgstr "標籤"
+
+msgid "not used"
+msgstr "未使用"
+
+msgid "used"
+msgstr "已使用"
+
+msgid "Model|Images|File file size"
+msgstr "型號|圖片|文件檔案大小"
+
+msgid "Model|Images|File content type"
+msgstr "型號|圖片|文件內容類型"
+
+msgid "Item|Retired reason"
+msgstr "項目|退役原因"
+
+msgid "You can not create a package without any item"
+msgstr "您無法建立沒有任何項目的包"
+
+msgid "Packages created"
+msgstr "創建的包"
+
+msgid "Attention"
+msgstr "注意"
+
+msgid "This user is suspended."
+msgstr "該用戶已被暫停。"
+
+msgid "Email"
+msgstr "信箱"
+
+msgid "Short Name"
+msgstr "簡稱"
+
+msgid "Inventory pool successfully updated"
+msgstr "庫存池已成功更新"
+
+msgid "Basic Information"
+msgstr "基本資訊"
+
+msgid "Workdays"
+msgstr "工作日"
+
+msgid "Closed Days"
+msgstr "休息日"
+
+msgid "Toggle %s"
+msgstr "切換 %s"
+
+msgid "Search %s"
+msgstr "搜尋 %s"
+
+msgid "by browsing categories"
+msgstr "透過瀏覽類別"
+
+msgid "Select"
+msgstr "選擇"
+
+msgid "Closed Day"
+msgstr "休息日"
+
+msgid "Borrow"
+msgstr "借用"
+
+msgid "Borrow section"
+msgstr "借用部分"
+
+msgid "Manage section"
+msgstr "管理欄目"
+
+msgid "Overview"
+msgstr "總覽"
+
+msgid "Manage"
+msgstr "管理"
+
+msgid "Manage %s"
+msgstr "管理 %s"
+
+msgid "Nothing selected"
+msgstr "未選擇任何內容"
+
+msgid "Collection"
+msgid_plural "Collections"
+msgstr[0] "集合"
+
+msgid "%s Return"
+msgid_plural "%s Returns"
+msgstr[0] "%s 歸還"
+
+msgid "Returns"
+msgstr "歸還"
+
+msgid "not yet saved"
+msgstr "尚未保存"
+
+msgid "Prepackaged"
+msgstr "預包裝"
+
+msgid "Model saved"
+msgstr "型號已儲存"
+
+msgid "The package is not in stock"
+msgstr "該包裹沒有庫存"
+
+msgid "The items of the package can not be edited"
+msgstr "包裹內的物品無法編輯"
+
+msgid "Access"
+msgstr "存取"
+
+msgid "Access rights"
+msgstr "訪問權"
+
+msgid "Entitlement-Group"
+msgstr "資格群組"
+
+msgid "Entitlement-Groups"
+msgstr "資格群組"
+
+msgid "Remove"
+msgstr "消除"
+
+msgid "List of Entitlement-Groups"
+msgstr "權利群組列表"
+
+msgid "Allocations"
+msgstr "分配"
+
+msgid "%s created"
+msgstr "%s 已創建"
+
+msgid "Name of the user"
+msgstr "使用者名稱"
+
+msgid "Name of the model"
+msgstr "型號名稱"
+
+msgid "Name of the entitlement-group"
+msgstr "權利組的名稱"
+
+msgid "Name of the template"
+msgstr "模板名稱"
+
+msgid "%s saved"
+msgstr "%s 已保存"
+
+msgid "Order overview"
+msgstr "訂單總覽"
+
+msgid "To pick up"
+msgstr "撿起"
+
+msgid "deployed %s ago"
+msgstr "%s 前部署"
+
+msgid "is %s ago"
+msgstr "%s 前"
+
+msgid "one day ago"
+msgstr "一天前"
+
+msgid "this is the branch '%s'"
+msgstr "這是分支“%s”"
+
+msgid "last change by '%s'"
+msgstr "‘%s’ 的最後更改"
+
+msgid "Add to order"
+msgstr "新增到訂單"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Reset all filter"
+msgstr "重置所有過濾器"
+
+msgid "All %s"
+msgstr "全部 %s"
+
+msgid "ascending"
+msgstr "由小到大"
+
+msgid "descending"
+msgstr "由大到小"
+
+msgid "All inventory pools"
+msgstr "所有庫存池"
+
+msgid "Inventory pools"
+msgstr "庫存池"
+
+msgid "Show all search results"
+msgstr "顯示所有搜尋結果"
+
+msgid "Show all properties"
+msgstr "顯示所有屬性"
+
+msgid "Show less properties"
+msgstr "顯示更少的屬性"
+
+msgid "Last name"
+msgstr "姓氏"
+
+msgid "First name"
+msgstr "名字"
+
+msgid "City"
+msgstr "城市"
+
+msgid "Country"
+msgstr "國家"
+
+msgid "Zip"
+msgstr "郵遞區號"
+
+msgid "Suspended until"
+msgstr "暫停直到"
+
+msgid "Suspended reason"
+msgstr "暫停原因"
+
+msgid "Role"
+msgstr "角色"
+
+msgid "Access as"
+msgstr "訪問方式為"
+
+msgid "No access"
+msgstr "無法訪問"
+
+msgid "User|Email"
+msgstr "使用者|郵箱"
+
+msgid "User|Lastname"
+msgstr "用戶|姓氏"
+
+msgid "User|Firstname"
+msgstr "用戶|名字"
+
+msgid "User|AccessRight|Suspended reason"
+msgstr "使用者|存取權限|暫停原因"
+
+msgid "AccessRight"
+msgstr "訪問權"
+
+msgid "The selected inventory pool is closed on that day"
+msgstr "所選庫存池當天關閉"
+
+msgid "Item is not available in that time range"
+msgstr "物品在該時間範圍內不可用"
+
+msgid "Purpose of the order"
+msgstr "訂單目的"
+
+msgid "Specification of the purpose is required"
+msgstr "需要具體說明目的"
+
+msgid "Specification of the contact person is required"
+msgstr "需註明聯絡人"
+
+msgid "Change"
+msgstr "變更"
+
+msgid "Change %s"
+msgstr "變更 %s"
+
+msgid "Change entry"
+msgstr "更改條目"
+
+msgid "Save change"
+msgstr "儲存變更"
+
+msgid "Continue this order"
+msgstr "繼續此訂單"
+
+msgid ""
+"Please solve the conflicts for all highlighted reservations in order to "
+"continue."
+msgstr "請解決所有突出顯示的預訂的衝突才能繼續。"
+
+msgid "You have permission to access the following inventory pool"
+msgid_plural "You have permission to access the following inventory pools"
+msgstr[0] "您有權存取以下庫存池"
+
+msgid "No description"
+msgstr "沒有說明"
+
+msgid "for"
+msgstr "為了"
+
+msgid "Open orders"
+msgstr "打開訂單"
+
+msgid ""
+"These orders have been successfully submitted, but are NOT YET APPROVED."
+msgstr "這些訂單已成功提交，但「尚未獲得批准」。"
+
+msgid "Search for '%s'"
+msgstr "搜尋“%s”"
+
+msgid "Your order has been successfully submitted, but is NOT YET APPROVED."
+msgstr "您的訂單已成功提交，但「尚未獲得批准」。"
+
+msgid "Continue with available models only"
+msgstr "僅繼續使用可用型號"
+
+msgid "Your order has been modified. All reservations are now available."
+msgstr "您的訂單已被修改。 所有預訂現已開放。"
+
+msgid "Borrow template"
+msgstr "借用模板"
+
+msgid "Please select a template."
+msgstr "請選擇一個模板。"
+
+msgid "The template \"%s\" will be deleted and no longer available for usage."
+msgstr "模板“%s”將被刪除並且不再可用。"
+
+msgid "Please adapt the specific quantities to fit your needs."
+msgstr "請調整具體數量以滿足您的需求。"
+
+msgid "Insert 0 for the entries you dont need."
+msgstr "為不需要的條目插入 0。"
+
+msgid ""
+"The highlighted entries are not accomplishable for the intended quantity."
+msgstr "突出顯示的條目無法達到預期的數量。"
+
+msgid "Please contact the concerned inventory pool."
+msgstr "請聯絡相關庫存池。"
+
+msgid "Continue"
+msgstr "繼續"
+
+msgid "Availability"
+msgstr "可用性"
+
+msgid "Entry"
+msgstr "入口"
+
+msgid "%s will be removed from the template and not been added to your order."
+msgstr "%s 將從模板中刪除，並且不會添加到您的訂單中。"
+
+msgid "The order will be discarded."
+msgstr "該訂單將被丟棄。"
+
+msgid "This entry will be removed from the order."
+msgstr "該條目將從訂單中刪除。"
+
+msgid "The template has been added to your order."
+msgstr "此範本已新增至您的訂單。"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Document"
+msgstr "文件"
+
+msgid "%d minutes passed. The items are not reserved for you any more!"
+msgstr "%d 分鐘過去了。 這些物品不再為您保留！"
+
+msgid "Time until your order times out. Click to reset."
+msgstr "直到您的訂單超時為止。 點擊以重置。"
+
+msgid "Your order will time out in %s."
+msgstr "您的訂單將在 %s 後逾時。"
+
+msgid "Reset timeout"
+msgstr "重置超時"
+
+msgid "Your order ist empty."
+msgstr "您的訂單是空的。"
+
+msgid "Borrow items"
+msgstr "借用物品"
+
+msgid "from %s"
+msgstr "來自 %s"
+
+msgid "Please select a time range and continue."
+msgstr "請選擇時間範圍並繼續。"
+
+msgid "You can modify the time range for each separate model in the next step."
+msgstr "您可以在下一個步驟中修改每個單獨型號的時間範圍。"
+
+msgid "List of templates"
+msgstr "模板列表"
+
+msgid "Template"
+msgstr "範本"
+
+msgid "Template must have at least one model"
+msgstr "範本必須至少包含一個型號"
+
+msgid "%s created successfully"
+msgstr "%s 創建成功"
+
+msgid "%s successfully saved"
+msgstr "%s 已成功保存"
+
+msgid "Source code"
+msgstr "原始碼"
+
+msgid "Complete order"
+msgstr "完成訂單"
+
+msgid ""
+"The responsible inventory pool cannot be changed because it's not returned "
+"yet or has already been assigned to a contract line."
+msgstr "無法更改負責庫存池，因為它尚未退回或已分配給合約行。"
+
+msgid "Send reminder"
+msgstr "發送提醒"
+
+msgid "Approval failed"
+msgstr "批准失敗"
+
+msgid "Deleted"
+msgstr "已刪除"
+
+msgid "Reminder sent"
+msgstr "已發送提醒"
+
+msgid "Available in total"
+msgstr "總共可用"
+
+msgid "Loading availability"
+msgstr "裝載可用性"
+
+msgid "Availability loaded"
+msgstr "已載入可用性"
+
+msgid "Invalid data"
+msgstr "無效數據"
+
+msgid "Reject order"
+msgstr "拒絕訂單"
+
+msgid "Inventory code, model name, search term"
+msgstr "庫存代碼、型號名稱、搜尋詞"
+
+msgid "Adding item"
+msgstr "新增項目"
+
+msgid "Added %s"
+msgstr "已新增 %s"
+
+msgid "Close"
+msgstr "關閉"
+
+msgid "Removing items"
+msgstr "移除物品中"
+
+msgid "Edit reservation"
+msgstr "編輯預約"
+
+msgid "Availability for"
+msgstr "可用於"
+
+msgid "Please select an inventory pool"
+msgstr "請選擇庫存池"
+
+msgid "%s visit overdue"
+msgid_plural "%s visits overdue"
+msgstr[0] "%s 造訪逾期"
+
+msgid "%s future visit"
+msgid_plural "%s future visits"
+msgstr[0] "%s 下次訪問"
+
+msgid "%s visit today"
+msgid_plural "%s visits today"
+msgstr[0] "%s 今天訪問"
+
+msgid "%s quantity increased to %s"
+msgstr "%s 數量增加至 %s"
+
+msgid "%s assigned to %s"
+msgstr "%s 分配給 %s"
+
+msgid "%s is already assigned to a contract"
+msgstr "%s 已分配給合約"
+
+msgid "%s is already assigned to this contract"
+msgstr "%s 已分配給此合約"
+
+msgid "%s is already assigned to a different contract"
+msgstr "%s 已分配給不同的合約"
+
+msgid "Hand over of %s item"
+msgid_plural "Hand over of %s items"
+msgstr[0] "移交 %s 件物品"
+
+msgid "Hand over completed"
+msgstr "移交完成"
+
+msgid "Open %s"
+msgstr "打開 %s"
+
+msgid "%s item"
+msgid_plural "%s items"
+msgstr[0] "%s 物品"
+
+msgid "%s room"
+msgid_plural "%s rooms"
+msgstr[0] "%s 房間"
+
+msgid "to %s"
+msgstr "至 %s"
+
+msgid "Back to this user"
+msgstr "返回該用戶"
+
+msgid "Extend entry"
+msgstr "擴充條目"
+
+msgid "%s selected for take back"
+msgstr "%s 選擇收回"
+
+msgid "%s was not found for this take back"
+msgstr "找不到此回收的 %s"
+
+msgid "You can not take back more items then you handed over"
+msgstr "您不能收回比您移交的更多的物品"
+
+msgid "You can not take back more options then you handed over"
+msgstr "您無法收回比您移交更多的選項"
+
+msgid "You have to provide the quantity for the things you want to return"
+msgstr "您必須提供您想要退回的物品的數量"
+
+msgid "Take back completed"
+msgstr "歸還完成"
+
+msgid "Take back of %s item"
+msgid_plural "Take back of %s items"
+msgstr[0] "歸還 %s 件物品"
+
+msgid "No."
+msgstr "編號."
+
+msgid "Contract signed"
+msgstr "合約簽訂"
+
+msgid "You cannot delete this user"
+msgstr "您無法刪除該用戶"
+
+msgid "Add inventory"
+msgstr "新增庫存"
+
+msgid "Active Inventory"
+msgstr "啟用庫存"
+
+msgid "Unused Models"
+msgstr "未使用的型號"
+
+msgid "Used Models"
+msgstr "二手型號"
+
+msgid "Responsible inventory pool"
+msgstr "負責任的庫存池"
+
+msgid "from"
+msgstr "來自"
+
+msgid "to"
+msgstr "至"
+
+msgid "Create new item"
+msgstr "建立新物品"
+
+msgid "Insert all required information"
+msgstr "插入所有必要的資訊"
+
+msgid "Make changes and save"
+msgstr "進行更改並儲存"
+
+msgid "Create new model"
+msgstr "建立新型號"
+
+msgid "The model needs a product name."
+msgstr "此型號需要產品名稱。"
+
+msgid "A model with the same product name and empty version already exists."
+msgstr "已存在具有相同產品名稱和空白版本的型號。"
+
+msgid "A model with the same product name and version already exists."
+msgstr "已存在具有相同產品名稱和版本的型號。"
+
+msgid "Removed on save"
+msgstr "儲存時移除"
+
+msgid "File has to be uploaded on save"
+msgstr "儲存時必須上傳文件"
+
+msgid "Upload problems"
+msgstr "上傳問題"
+
+msgid "%s was saved, but there were problems uploading files"
+msgstr "%s 已儲存，但上傳檔案時出現問題"
+
+msgid ""
+"%s was saved, but there were problems uploading some images. Only images "
+"smaller than 8MB and of type png, gif and jpg are allowed."
+msgstr ""
+"%s 已儲存，但上傳某些圖像時出現問題。 僅允許使用小於 8MB 且類型為 png、gif "
+"和 jpg 的圖像。"
+
+msgid "Uploading files - please wait"
+msgstr "正在上傳文件 - 請稍候"
+
+# 套件包or程式包
+# https://breezymove.blogspot.com/2013/04/package.html
+msgid "Save package"
+msgstr "儲存包裹"
+
+msgid "Add item"
+msgstr "新增物品"
+
+msgid "Search Results for %s"
+msgstr "%s 的搜尋結果"
+
+msgid "Show all found %s"
+msgstr "顯示所有找到的 %s"
+
+msgid "Please provide a search term"
+msgstr "請提供搜尋字詞"
+
+msgid "Start search"
+msgstr "開始搜尋"
+
+msgid "models"
+msgstr "型號"
+
+msgid "items"
+msgstr "物品"
+
+msgid "contracts"
+msgstr "合約"
+
+msgid "orders"
+msgstr "訂單"
+
+msgid "Search results (%s) for %s"
+msgstr "搜索結果（%s）:%s"
+
+msgid "Search results (%s) for \"%s\""
+msgstr "搜索結果（%s）:%s"
+
+msgid "Create new option"
+msgstr "建立新選項"
+
+msgid "Option saved"
+msgstr "選項已儲存"
+
+msgid "Notification"
+msgstr "通知"
+
+msgid "Hide notification"
+msgstr "隱藏通知"
+
+msgid "Changed"
+msgstr "已更改"
+
+msgid "Parent categories"
+msgstr "父類別"
+
+msgid "Subordinate to %s"
+msgstr "隸屬於 %s"
+
+msgid "Category saved"
+msgstr "類別已儲存"
+
+msgid "in the future"
+msgstr "將來"
+
+msgid "in the past"
+msgstr "過去"
+
+msgid "Borrowable items"
+msgstr "可借用物品"
+
+msgid "Available for borrower"
+msgstr "可供借用人使用"
+
+msgid "is part of a package"
+msgstr "是包裹的一部分"
+
+msgid "Packages updated"
+msgstr "包裹已更新"
+
+msgid "Save Package"
+msgstr "保存包裹"
+
+msgid "Print Selection"
+msgstr "列印選擇"
+
+msgid "Undo approval"
+msgstr "撤銷批准"
+
+msgid "Verify"
+msgstr "驗證"
+
+msgid "To be verified"
+msgstr "待驗證"
+
+msgid "Verify + approve order"
+msgstr "驗證+批准訂單"
+
+msgid "No verification required"
+msgstr "無需驗證"
+
+msgid "Verification required"
+msgstr "需要驗證"
+
+msgid "User to be verified"
+msgstr "待驗證用戶"
+
+msgid "User and model to be verified"
+msgstr "待驗證的使用者和型號"
+
+msgid "Statistics"
+msgstr "統計"
+
+msgid "Who borrowed the most things?"
+msgstr "誰借的東西最多？"
+
+msgid "lends"
+msgstr "借出"
+
+msgid "Which inventory pool is busiest?"
+msgstr "哪個庫存池最繁忙？"
+
+msgid "Who bought the most items?"
+msgstr "誰購買的物品最多？"
+
+msgid "Maintenance"
+msgstr "維護"
+
+msgid "New users will get customer access automatically."
+msgstr "新使用者將自動獲得客戶存取權。"
+
+msgid "Software"
+msgstr "軟體"
+
+msgid "Software Information"
+msgstr "軟體資訊"
+
+msgid "Software License"
+msgstr "軟體授權"
+
+msgid "License"
+msgid_plural "Licenses"
+msgstr[0] "授權"
+
+msgid "Activation Type"
+msgstr "啟動類型"
+
+msgid "License Type"
+msgstr "授權類型"
+
+msgid "Create new software license"
+msgstr "建立新軟體授權"
+
+msgid "Create new software"
+msgstr "建立新軟體"
+
+msgid "Free"
+msgstr "免費"
+
+msgid "Single Workplace"
+msgstr "單人工作室"
+
+msgid "Multiple Workplace"
+msgstr "多人工作室"
+
+msgid "License Server"
+msgstr "授權伺服器"
+
+msgid "License Number"
+msgstr "授權號碼"
+
+msgid "Site License"
+msgstr "站點授權"
+
+msgid "Concurrent"
+msgstr "並行"
+
+msgid "Operating System"
+msgstr "作業系統"
+
+msgid "Installation"
+msgstr "安裝"
+
+msgid "Hints"
+msgstr "提示"
+
+msgid "Local"
+msgstr "本地"
+
+msgid "License expiration"
+msgstr "授權到期"
+
+msgid "Maintenance expiration"
+msgstr "維護到期"
+
+msgid "Maintenance contract"
+msgstr "維護合約"
+
+msgid "Procured by"
+msgstr "採購者"
+
+msgid "Picking List"
+msgstr "提貨清單"
+
+msgid "remaining"
+msgstr "剩餘的"
+
+msgid "Category can have only one image."
+msgstr "每個類別只能有一張圖片。"
+
+msgid "Used on the start page in the borrow section"
+msgstr "用於起始頁的借閱部分"
+
+msgid "A package item must belong to a package model"
+msgstr "包項必須屬於包型號"
+
+msgid "Product"
+msgstr "產品"
+
+msgid "Min. number of days between current date and hand over"
+msgstr "分鐘 目前日期與移交之間的天數"
+
+msgid "Status note"
+msgstr "狀態說明"
+
+msgid "Which item is busiest?"
+msgstr "哪個項目最忙？"
+
+msgid "Which inventory pool has the most contracts?"
+msgstr "哪個庫存池擁有最多合約？"
+
+msgid "Currency"
+msgstr "貨幣"
+
+msgid "Fields"
+msgstr "欄位"
+
+msgid "Field"
+msgstr "欄位"
+
+msgid "Show all fields"
+msgstr "顯示所有欄位"
+
+msgid "Reset visibility of all fields on the item forms"
+msgstr "重置項目表單上所有欄位的可見性"
+
+msgid "Hide this field from all item forms"
+msgstr "在所有項目表單中隱藏此字段"
+
+msgid "last used +1"
+msgstr "最後使用+1"
+
+msgid "fill up gaps"
+msgstr "填補空白"
+
+msgid "assign highest available"
+msgstr "分配最高的可用值"
+
+msgid "Swap Model"
+msgstr "互換型號"
+
+msgid "Budget limits"
+msgstr "預算限制"
+
+msgid "Budget period"
+msgstr "預算期間"
+
+msgid "Budget periods"
+msgstr "預算期間"
+
+msgid "Budget period end date"
+msgstr "預算期間結束日期"
+
+msgid "The budget period is closed"
+msgstr "預算期已結束"
+
+msgid "requesting phase until %s"
+msgstr "請求階段直到 %s"
+
+msgid "inspection phase until %s"
+msgstr "檢查階段直到 %s"
+
+msgid "Model name"
+msgstr "型號名稱"
+
+msgid "Requested quantity"
+msgstr "請求數量"
+
+msgid "Approved quantity"
+msgstr "核准數量"
+
+msgid "Order quantity"
+msgstr "訂單數量"
+
+msgid "Requests"
+msgstr "請求"
+
+msgid "Template Categories"
+msgstr "模板類別"
+
+msgid "Edit templates"
+msgstr "Edit templates"
+
+msgid "Requester"
+msgstr "請求者"
+
+msgid "Requesters"
+msgstr "請求者"
+
+msgid "Not a requester"
+msgstr "不是請求者"
+
+msgid "My entitlement-groups"
+msgstr "我的權利組"
+
+msgid "My requests"
+msgstr "我的請求"
+
+msgid "Motivation"
+msgstr "動機"
+
+msgid "Inspectors"
+msgstr "檢驗員"
+
+msgid "Inspection"
+msgstr "檢查"
+
+msgid "Inspection comment"
+msgstr "檢驗意見"
+
+msgid "Inspection start date"
+msgstr "檢查開始日期"
+
+msgid "Priority"
+msgstr "順位"
+
+msgid "Inspector's priority"
+msgstr "檢查員的優先級"
+
+msgid "Name of receiver"
+msgstr "收件人姓名"
+
+msgid "Organisation"
+msgstr "組織"
+
+msgid "Organisations"
+msgstr "組織機構"
+
+msgid "Organisation unit"
+msgstr "組織單位"
+
+msgid "Organisations of the requesters"
+msgstr "請求者的組織"
+
+msgid "Department"
+msgstr "部門"
+
+msgid "Attachment"
+msgstr "附件"
+
+msgid "In inspection"
+msgstr "檢驗中"
+
+msgid "Denied"
+msgstr "被拒絕"
+
+msgid "Partially approved"
+msgstr "部分批准"
+
+msgid "incl. VAT"
+msgstr "包括 加值稅"
+
+msgid "Item price"
+msgstr "物品價格"
+
+msgid "State"
+msgstr "狀態"
+
+msgid "State of Request"
+msgstr "請求狀態"
+
+msgid "Move to another entitlement-group"
+msgstr "移至另一個權利組"
+
+msgid "Move to another budget period"
+msgstr "轉到另一個預算期間"
+
+msgid "Point of Delivery"
+msgstr "交貨點"
+
+msgid "max 255 characters"
+msgstr "最多255字元"
+
+msgid "Article or Project"
+msgstr "文章或項目"
+
+msgid "Procurement"
+msgstr "採購"
+
+msgid "Inquiry to procurement request"
+msgstr "詢價採購請求"
+
+msgid "Article nr. or Producer nr."
+msgstr "文章編號 或製作人編號。"
+
+msgid "Replacement"
+msgstr "替代品"
+
+msgid "Choose an article/project"
+msgstr "選擇一篇文章/項目"
+
+msgid "Choose an article or a category"
+msgstr "選擇文章或類別"
+
+msgid "Request moved"
+msgstr "請求已轉移"
+
+msgid "Mandatory"
+msgstr "強制的"
+
+msgid "High"
+msgstr "高"
+
+msgid "Normal"
+msgstr "一般"
+
+msgid "Medium"
+msgstr "中"
+
+msgid "Low"
+msgstr "低"
+
+msgid "Are you sure you want to delete '%s'?"
+msgstr "您確定要刪除「 %s 」嗎？"
+
+msgid "Type in a search term"
+msgstr "輸入搜尋詞"
+
+msgid "No results"
+msgstr "沒有結果"
+
+msgid "Searching..."
+msgstr "搜尋中..."
+
+msgid "must be greater or equal to the inspection start date"
+msgstr "必須大於或等於檢定開始日期"
+
+msgid "Check invalid fields"
+msgstr "檢查無效字段"
+
+msgid "Name of the requester"
+msgstr "請求者姓名"
+
+msgid "Add article for specific entitlement-group"
+msgstr "新增特定權利組的文章"
+
+msgid "You have unsaved data. Would you like to delete the data?"
+msgstr "您有未儲存的資料。 您想刪除資料嗎？"
+
+msgid "Special filters"
+msgstr "特殊過濾器"
+
+msgid "Only my own requests"
+msgstr "只是我自己的請求"
+
+msgid "Only my own categories"
+msgstr "只有我自己的類別"
+
+msgid "Only categories with requests"
+msgstr "僅限有請求的類別"
+
+msgid "New line (Add Article or Project)"
+msgstr "新行（新增文章或項目）"
+
+msgid "Create request for this category"
+msgstr "為此類別建立請求"
+
+msgid "Create request for another user"
+msgstr "為另一個使用者建立請求"
+
+msgid "Select all"
+msgstr "選取全部"
+
+msgid "None selected"
+msgstr "未選擇任何物品"
+
+msgid "All selected"
+msgstr "已選取全部"
+
+msgid "selected"
+msgstr "已選取"
+
+msgid "You are not authorized for this action."
+msgstr "您未被授權執行此操作。"
+
+msgid "Current budget period not defined yet"
+msgstr "當前預算期尚未定義"
+
+msgid "No categories defined yet"
+msgstr "尚未定義任何類別"
+
+msgid "No admins defined yet"
+msgstr "尚未定義任何管理員"
+
+msgid "No requesters defined yet"
+msgstr "尚未定義任何請求者"
+
+msgid "Create new budget period"
+msgstr "創建新的預算期"
+
+msgid "Total of all requests in state \"New\""
+msgstr "所有處於「新」狀態的請求總數"
+
+msgid "Total of all approved requests"
+msgstr "所有已核准請求的總數"
+
+msgid "Create request by choosing an article or project"
+msgstr "通過選擇一個文章或專案來創建請求"
+
+msgid "Current total of budget period"
+msgstr "目前預算期的總額"
+
+msgid "Current total of category"
+msgstr "目前類別的總額"
+
+msgid "Current total of selected requests"
+msgstr "所選請求的目前總額"
+
+msgid "% used (category limit - total of selected requests)"
+msgstr "% 已使用(類別限制 - 所選請求的總額)"
+
+msgid "Add new article to category"
+msgstr "將新文章新增至類別"
+
+msgid "Delete category with all it's articles/projects"
+msgstr "刪除類別及其所有文章/項目"
+
+msgid "Add new requester"
+msgstr "新增請求者"
+
+msgid "Main category"
+msgstr "主要類別"
+
+msgid "Subcategory"
+msgstr "子類別"
+
+msgid "Subcategories"
+msgstr "子類別"
+
+msgid "Add new main category"
+msgstr "新增的主類別"
+
+msgid "Add new subcategory"
+msgstr "新增子類別"
+
+msgid "Delete main category"
+msgstr "刪除主類別"
+
+msgid "Delete subcategory"
+msgstr "刪除子類別"
+
+msgid "Choose a suggested article or a category"
+msgstr "選擇推薦的文章或類別"
+
+msgid ""
+"You do not have the responsibility to lend this item. Responsible for this "
+"item is the pool \"%s\"."
+msgstr "您沒有責任借出該物品。 負責此項的是池「%s」。"
+
+msgid "First admin user"
+msgstr "第一個管理員用戶"
+
+msgid ""
+"First admin user has been created. Default database authentication system "
+"has been configured."
+msgstr "第一個管理員用戶已建立。預設資料庫驗證系統已配置。"
+
+msgid "Authentication System"
+msgstr "認證系統"
+
+msgid "Authentication Systems"
+msgstr "認證系統"
+
+msgid "List of Authentication Systems"
+msgstr "認證系統列表"
+
+msgid "Same or similar serial number already exists."
+msgstr "相同或相似的序號已存在。"
+
+msgid "Active"
+msgstr "啟用"
+
+msgid "active"
+msgstr "啟用"
+
+msgid "inactive"
+msgstr "停用"
+
+# 是否需翻譯？
+msgid "admin_active"
+msgstr "admin_active"
+
+msgid "admin_inactive"
+msgstr "admin_inactive"
+
+msgid "admin_all"
+msgstr "admin_inactive"
+
+msgid ""
+"Inventory pool can't be deactivated due to existing orders or signed "
+"contracts."
+msgstr "庫存池無法因現有訂單或簽署的合約而停用。"
+
+msgid ""
+"Inventory pool can't be deactivated due to existing items which are not yet "
+"retired."
+msgstr "由於現有物品尚未退役，因此無法停用庫存池。"
+
+msgid "Action"
+msgstr "操作"
+
+msgid "Entity"
+msgstr "實體"
+
+msgid ""
+"Upload a comma separated CSV file (with UTF-8 encoding), each row describing "
+"an item."
+msgstr "上傳逗號分隔的 CSV 檔案（使用 UTF-8 編碼），每行描述一個項目。"
+
+msgid "Accepted columns"
+msgstr "接受的列"
+
+msgid "required"
+msgstr "必需的"
+
+msgid "All other columns are ignored."
+msgstr "所有其他列都將被忽略。"
+
+msgid "or"
+msgstr "或"
+
+msgid "Insert a default comment"
+msgstr "插入預設評論"
+
+msgid "1 value per line, blank lines ignored"
+msgstr "每行 1 個值，忽略空白行"
+
+msgid "accounting type"
+msgstr "會計類型"
+
+msgid "internal order"
+msgstr "內部訂單"
+
+msgid "general ledger account"
+msgstr "總帳科目"
+
+msgid "cost center"
+msgstr "成本中心"
+
+msgid "investment"
+msgstr "資產"
+
+msgid "aquisition"
+msgstr "獲得"
+
+msgid "Accounts"
+msgstr "帳戶"
+
+msgid "(unknown)"
+msgstr "(未知)"
+
+msgid "Languages"
+msgstr "語言"
+
+msgid "List of Languages"
+msgstr "語言列表"
+
+msgid "Update"
+msgstr "更新"
+
+msgid "Fields have been updated successfully."
+msgstr "字段已成功更新。"
+
+msgid "is not a valid URL"
+msgstr "為無效網址"
+
+msgid "is not a HTTP(S) URL"
+msgstr "為非https網址"
+
+msgid "all models"
+msgstr "全部型號"
+
+msgid "only models with items"
+msgstr "僅具有項目的型號"
+
+msgid "only models without items"
+msgstr "僅型號，無項目"
+
+msgid "Only enter whole numbers"
+msgstr "只輸入整數"
+
+msgid "No orders are possible on this end date"
+msgstr "在此結束日期無法下訂單"
+
+msgid ""
+"A change of the highlighted attributes requires a restart of the legacy "
+"service."
+msgstr "更改突出顯示的屬性需要重新啟動舊服務。"
+
+msgid "You are suspended for this inventory pool"
+msgstr "您因該庫存池而被暫停"
+
+msgid "Does not have any reservable items"
+msgstr "沒有任何可預訂的項目"
+
+msgid ""
+"These mail templates are copied for a new inventory pool when it is created."
+msgstr "建立新庫存池時，將複製這些郵件範本以用於新庫存池。"
+
+msgid "User does not have access to inventory pool: %s"
+msgstr "使用者無權存取庫存池:%s"
+
+msgid "User is suspended for inventory pool: %s"
+msgstr "User is suspended for inventory pool: %s"
+
+msgid "An order can not have multiple delegated users."
+msgstr "一個訂單不能有多個委託用戶。"
+
+msgid "Invalid date"
+msgstr "無效日期"
+
+msgid "Start and end date cannot be in the past"
+msgstr "開始日期和結束日期不能是過去的日期"
+
+msgid "click here to reload"
+msgstr "點擊此處重新加載"
+
+msgid "Item was not saved"
+msgstr "項目未儲存"
+
+msgid "Item was saved."
+msgstr "項目已儲存。"
+
+msgid "Please select an item."
+msgstr "請選擇一個項目。"
+
+msgid "Unexpected error."
+msgstr "意外的錯誤。"
+
+msgid "use barcode scanner to assign fields to item immediately"
+msgstr "使用條碼掃描器立即將欄位指派給項目"
+
+msgid "or search for item"
+msgstr "或搜尋項目"
+
+msgid "and assign fields"
+msgstr "並分配字段"
+
+msgid "Enable"
+msgstr "啟用"
+
+msgid "Disable"
+msgstr "停用"
+
+msgid "enabled"
+msgstr "已啟用"
+
+msgid "disabled"
+msgstr "已停用"
+
+msgid "for licenses"
+msgstr "針對授權"
+
+msgid "for items"
+msgstr "針對物品"
+
+msgid ""
+"Allocations in other entitlement-groups considered - still available "
+"quantity of borrowable and not retired items"
+msgstr "考慮其他資格群組的分配 - 仍然可用的可借用且未退出物品的數量"
+
+msgid "Total quantity of borrowable and not retired items"
+msgstr "可借用且未退出物品的總數量"
+
+msgid "Content"
+msgstr "內容"
+
+msgid "Maximum reservation time is restricted to"
+msgstr "預約時間上限被限制為"
+
+msgid "There are open reservations for delegated users: "
+msgstr "有委派的使用者有未完成的預約:"
+
+msgid ""
+"This order is not approvable because some reservations violate the minimal "
+"reservation advance period of the inventory pool. Please adjust the start "
+"date accordingly."
+msgstr ""
+"此訂單無法批准，因為一些預約違反了庫存池的最小預約提前期限。請相應地調整開始"
+"日期。"
+
+msgid "The item is already retired"
+msgstr "該物品已經退役"
+
+msgid "Cover Image"
+msgstr "封面圖片"
+
+msgid "Roles for users and groups can be managed in the new %s."
+msgstr "使用新的 %s可以管理使用者和群組的角色。"
+
+msgid "admin section of this inventory-pool"
+msgstr "此庫存池的管理員部分"
+
+msgid "Groups"
+msgstr "群組"
+
+msgid "Manage user roles via Groups."
+msgstr "透過群組管理使用者角色。"
+
+msgid ""
+"A Group contains several users. These users can gain a role by assigning the "
+"role to their Group."
+msgstr ""
+"一個群組包含多個使用者。這些使用者可以通過將角色分配給他們的群組來獲得一個角"
+"色。"
+
+msgid "To allocate models to users use the %s."
+msgstr "使用%s來分配型號給使用者。"
+
+msgid "Expand All"
+msgstr "展開全部"
+
+msgid "Close All"
+msgstr "關閉全部"
+
+msgid "Inactive pools cannot have items, which are not retired."
+msgstr "不活動的池不能擁有尚未退出的物品。"
+
+msgid "legacy_manage_users_new_admin_section_notice"
+msgstr "legacy_manage_users_new_admin_section_notice"
+
+msgid "legacy_manage_group_new_admin_section_notice"
+msgstr "legacy_manage_group_new_admin_section_notice"
+
+msgid "legacy_manage_entitlement_group_new_admin_section_notice"
+msgstr "legacy_manage_entitlement_group_new_admin_section_notice"
+
+msgid "create_multiple_items_inv_code_notice"
+msgstr "create_multiple_items_inv_code_notice"
+
+msgid "create_multiple_items_label_quantity"
+msgstr "create_multiple_items_label_quantity"
+
+msgid "Lending Terms"
+msgstr "借用規則"
+
+msgid "accept_lending_terms_label"
+msgstr "accept_lending_terms_label"
+
+msgid "The order has already been dealt with."
+msgstr "該訂單已經處理完畢。"
+
+msgid "These audits are deprecated and no new ones are created. See "
+msgstr "這些審計已被廢棄，且不再創建新的。參見"
