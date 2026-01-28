@@ -385,6 +385,10 @@ class Manage::ItemsController < Manage::ApplicationController
 
   def fetch_item_by_id
     @item = Item.find params[:id]
+    unless current_inventory_pool.owner_or_responsible_for?(@item)
+      raise ActiveRecord::RecordNotFound
+    end
+    return @item
   end
 
   def check_keys_in_hash_recursive(keys, hash)
