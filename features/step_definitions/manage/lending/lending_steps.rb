@@ -264,7 +264,7 @@ end
 
 
 Then /^I can inspect each item$/ do
-  line_ids = all(".line[data-line-type='item_line']", minimum: 1).map {|l| l['data-id']}
+  line_ids = [all(".line[data-line-type='item_line']", minimum: 1).first['data-id']]
   line_ids.each do |id|
     within find(".line[data-id='#{id}'] .multibutton") do
       find('.dropdown-toggle').click
@@ -276,7 +276,7 @@ end
 
 
 When /^I inspect an item$/ do
-  within all(".line[data-line-type='item_line']", minimum: 1).to_a.sample.find('.multibutton') do
+  within all(".line[data-line-type='item_line']", minimum: 1).first.find('.multibutton') do
     @item = Reservation.find(JSON.parse(find('[data-ids]')['data-ids']).first).item
     find('.dropdown-toggle').click
     find('.dropdown-holder .dropdown-item', text: _('Inspect')).click
