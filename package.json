@@ -29,6 +29,9 @@
   "resolutions": {
     "lodash": "4.17.21"
   },
+  "overrides": {
+    "tar": "^7.5.9"
+  },
   "scripts": {
     "start": "./bin/webpack-dev-server",
     "lint": "eslint app/javascript/",
