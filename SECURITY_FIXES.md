@@ -22,6 +22,20 @@
 | #447 | node-forge (npm) | package-lock.json | ASN.1 OID Integer Truncation | CVE-2025-12816 | 0.10.0 → 1.3.3 (override) |
 | #458 | rack (RubyGems) | Gemfile.lock | Stored XSS in Rack::Directory via javascript: filenames | CVE-2026-25500 | 2.2.21 → 2.2.22 |
 
+### Low Severity
+
+| # | Package | Source | Vulnerability | CVE | Fix |
+|---|---------|--------|---------------|-----|-----|
+| #455 | qs (npm) | package-lock.json | arrayLimit bypass in comma parsing allows DoS | CVE-2026-2391 | 6.14.1 → 6.15.0 (override) |
+| #430 | node-forge (npm) | package-lock.json | Prototype Pollution in debug API | — | 0.10.0 → 1.3.3 (override) |
+| #429 | node-forge (npm) | package-lock.json | URL parsing could lead to undesired behavior | — | 0.10.0 → 1.3.3 (override) |
+
+## Unresolved — No Fix Available
+
+| # | Package | Current | Vulnerability | CVE | Status |
+|---|---------|---------|---------------|-----|--------|
+| #449 | elliptic (npm) | 6.6.1 | Uses a Cryptographic Primitive with a Risky Implementation | CVE-2025-14505 | No patched version exists yet. Transitive via webpack 4 → crypto-browserify. Only exploitable if an attacker obtains both a faulty and correct signature for the same inputs. |
+
 ## Unresolved — Requires Webpack 5 Migration
 
 The following moderate-severity alerts are all rooted in the webpack 4 / webpacker 5 dependency tree. Their fix versions involve incompatible major version jumps that would break the current build. Resolving them requires migrating from webpacker 5 (webpack 4) to a modern bundler setup (e.g. jsbundling-rails with webpack 5 or esbuild).
