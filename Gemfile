@@ -2,6 +2,7 @@ eval_gemfile Pathname(File.dirname(File.absolute_path(__FILE__))).join('database
 
 gem 'puma', '~> 6.0'
 gem 'puma_worker_killer'
+gem 'connection_pool', '< 3.0'
 
 gem 'axlsx', git: 'https://github.com/leihs/axlsx', ref: 'c8ac844572b25fda358cc01d2104720c4c42f450'
 gem 'barby', '~> 0.5.0'
@@ -17,7 +18,7 @@ gem 'gettext_i18n_rails', '~> 1.0'
 gem 'haml', '~> 5'
 gem 'jquery-tmpl-rails', '~> 1.1'
 gem 'json', '~> 2'
-gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'rails7'
+gem 'jsrender-rails', git: 'https://github.com/leihs/jsrender-rails', branch: 'rails8'
 gem 'kramdown' # markdown rendering
 gem 'kramdown-parser-gfm'
 gem 'liquid', '~> 5.0'
@@ -70,7 +71,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'cucumber-rails', '~> 2.5', require: false # it already includes capybara # NOTE '~> 1.4' doesn't work beacause 'gherkin'
+  gem 'cucumber-rails', '~> 4.0', require: false # it already includes capybara # NOTE '~> 1.4' doesn't work beacause 'gherkin'
   # gem 'cucumber-rails', require: false
   # gem 'cucumber', '~> 3'
   # gem 'capybara', '3.36.0'
