@@ -24,7 +24,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.3",
     "webpack-merge": "^4.1.1",
-    "yarn": "^1.22.13"
+    "yarn": "^1.22.22"
   },
   "overrides": {
     "tar": "^7.5.9",
