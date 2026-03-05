@@ -65,6 +65,7 @@ group :development do
 end
 
 group :test do
+  gem 'image_processing', '~> 1.2'
   gem 'open4'
   gem 'turnip'
   gem 'mail'
