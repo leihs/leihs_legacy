@@ -111,7 +111,7 @@ Given /^one item is not borrowable$/ do
       @line_id = Reservation.where(item_id: @item.id).first.id
       find(".line[data-id='#{@line_id}']", text: @item.model.name).find('[data-assign-item][disabled]')
     when 'take_back'
-      @line_id ||= find(".line[data-line-type='item_line']", match: :first)['data-id']
+      @line_id = find(".line[data-line-type='item_line']", match: :first)[:"data-id"]
       step 'I mark the item as not borrowable'
     else
       raise
@@ -150,12 +150,14 @@ end
 
 def open_inspection_for_line(line_id)
   expect(line_id).not_to be_blank
-  line_css = ".line[data-id='#{line_id}']"
-  multibutton_css = "#{line_css} .multibutton"
-  find(line_css, wait: 20)
-  find("#{multibutton_css} .dropdown-toggle", wait: 20).hover
-  find("#{multibutton_css} .dropdown-holder .dropdown-item", text: _('Inspect'), wait: 20).click
-  find('.modal', wait: 20)
+  sleep 1
+  multibutton_css = ".line[data-id='#{line_id}'] .multibutton"
+  sleep 1
+  page.execute_script %Q( $("#{multibutton_css} .dropdown-toggle").trigger("mouseover") )
+  sleep 1
+  find("#{multibutton_css} .dropdown-holder .dropdown-item", text: _('Inspect')).click
+  sleep 1
+  find('.modal')
 end
 
 Then /^I mark the item as (.*)$/ do |arg1|
@@ -170,8 +172,10 @@ Then /^I mark the item as (.*)$/ do |arg1|
     else
       raise
   end
-  find(".modal button[type='submit']", wait: 20).click
-  expect(page).to have_no_selector('.modal', wait: 20)
+  wait_until do
+    first(".modal button[type='submit']").try(:click)
+    first('.modal').nil?
+  end
 end
 
 When /^one item is defective$/ do
@@ -203,7 +207,7 @@ Given /^one item is incomplete$/ do
       end
     when 'take_back'
       wait_until do
-        @line_id ||= find(".line[data-line-type='item_line']", match: :first)['data-id']
+        @line_id = find(".line[data-line-type='item_line']", match: :first)['data-id']
       end
       step 'I mark the item as incomplete'
     else
