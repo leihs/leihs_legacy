@@ -200,9 +200,11 @@ class Order < ApplicationRecord
   #################################################################################
 
   def reject(comment, _current_user)
-    update(state: :rejected, reject_reason: comment) and
-      reservations.all? { |line| line.update(status: :rejected) } and
+    if update(state: :rejected, reject_reason: comment) and
+        reservations.all? { |line| line.update(status: :rejected) }
       Mailer.order_rejected(self, comment)
+      true
+    end
   end
 
   #################################################################################
