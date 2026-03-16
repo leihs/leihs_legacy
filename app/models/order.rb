@@ -204,6 +204,8 @@ class Order < ApplicationRecord
         reservations.all? { |line| line.update(status: :rejected) }
       Mailer.order_rejected(self, comment)
       true
+    else
+      false
     end
   end
 
@@ -212,10 +214,12 @@ class Order < ApplicationRecord
   def approve(comment, send_mail = true, current_user = nil, force = false)
     if approvable? \
         or (force and current_user.has_role?(:lending_manager, inventory_pool))
-      update(state: :approved)
-      reservations.each { |cl| cl.update(status: :approved) }
-      Mailer.order_approved(self, comment)
-      true
+      if update(state: :approved) and reservations.all? { |cl| cl.update(status: :approved) }
+        Mailer.order_approved(self, comment)
+        true
+      else
+        false
+      end
     else
       false
     end
