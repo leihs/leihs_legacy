@@ -41,3 +41,4 @@ tmp/
 /public/packs-test
 /vendor/bundle/
 node_modules
+.cider-ci_private/
