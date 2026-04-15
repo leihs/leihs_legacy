@@ -1,9 +1,19 @@
 module ExpertComparators
   extend ActiveSupport::Concern
 
+  JSON_PROPERTY_KEY_RE = /\A[a-z_]+\z/
+
   included do
 
     private
+
+    def validate_json_property_key!(key)
+      k = key.to_s
+      unless k.match?(JSON_PROPERTY_KEY_RE)
+        throw 'Invalid JSON property key for field attribute: ' + k.inspect
+      end
+      k
+    end
 
     def reduce_for_radio(items, filter_value, field_config)
       selection_id = filter_value['selection']
@@ -129,14 +139,15 @@ module ExpertComparators
           throw 'We expect properties, but is: ' + attribute.to_s
         end
 
+        prop_key = validate_json_property_key!(attribute[1])
         result = items
         if from
           result = result.where(
-            "items.properties ->> '#{attribute[1]}' >= :from", from: from)
+            "items.properties ->> '#{prop_key}' >= :from", from: from)
         end
         if to
           result = result.where(
-            "items.properties ->> '#{attribute[1]}' <= :to", to: to)
+            "items.properties ->> '#{prop_key}' <= :to", to: to)
         end
         result
       else
@@ -159,8 +170,9 @@ module ExpertComparators
           throw 'We expect properties, but is: ' + attribute.to_s
         end
 
+        prop_key = validate_json_property_key!(attribute[1])
         items.where(
-          "items.properties ->> '#{attribute[1]}' = :value",
+          "items.properties ->> '#{prop_key}' = :value",
           value: value)
       else
         throw 'Not supported attribute: ' + attribute.to_s
@@ -184,8 +196,9 @@ module ExpertComparators
           throw 'We expect properties, but is: ' + attribute.to_s
         end
 
+        prop_key = validate_json_property_key!(attribute[1])
         items.where(
-          "items.properties ->> '#{attribute[1]}' ILIKE :value",
+          "items.properties ->> '#{prop_key}' ILIKE :value",
           value: "%#{value}%")
       else
         throw 'Not supported attribute: ' + attribute.to_s
@@ -226,7 +239,7 @@ module ExpertComparators
 
       case field_id
       when 'model_id'
-        items.joins(:model).where("models.id = '#{selection_id}'")
+        items.joins(:model).where(models: { id: selection_id })
       else
         generic_equal_value(items, selection_id, field_config)
       end

@@ -43,12 +43,8 @@ class Visit < ApplicationRecord
 
     query.split.each do |q|
       q = "%#{q}%"
-      sql = sql.where(
-        User.arel_table[:login].matches(q)
-        .or(User.arel_table[:firstname].matches(q))
-        .or(User.arel_table[:lastname].matches(q))
-        .or(User.arel_table[:badge_id].matches(q))
-        .or(Arel::Nodes::SqlLiteral.new(<<~SQL)
+      exists_sql = sanitize_sql_array(
+        [<<~SQL.squish, q]
           EXISTS (
             SELECT true
             FROM reservations
@@ -60,10 +56,16 @@ class Visit < ApplicationRecord
               coalesce(models.version, '') ||
               coalesce(options.product, '') ||
               coalesce(options.version, '')
-            ) ILIKE '#{q}'
+            ) ILIKE ?
           )
         SQL
-        )
+      )
+      sql = sql.where(
+        User.arel_table[:login].matches(q)
+        .or(User.arel_table[:firstname].matches(q))
+        .or(User.arel_table[:lastname].matches(q))
+        .or(User.arel_table[:badge_id].matches(q))
+        .or(Arel.sql(exists_sql))
       )
     end
 

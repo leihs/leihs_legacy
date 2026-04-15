@@ -710,7 +710,20 @@ Given(/^there exists a software license, owned by my inventory pool, but given r
 end
 
 Given(/^there exists a software license, which is not in stock and another inventory pool is responsible for it$/) do
-  @item = @license = Item.licenses.where.not(inventory_pool_id: nil).where('owner_id = :ip_id AND inventory_pool_id != :ip_id', {ip_id: @current_inventory_pool.id}).detect { |i| not i.in_stock? }
+  @item = @license = \
+    Item
+      .licenses
+      .where
+      .not(inventory_pool_id: nil)
+      .where('owner_id = :ip_id AND inventory_pool_id != :ip_id',
+             {ip_id: @current_inventory_pool.id})
+      .detect do |i|
+      !i.in_stock? &&
+        i.current_borrower.present? &&
+        i.current_return_date.present? &&
+        i.properties[:operating_system].present? &&
+        i.properties[:license_type].present?
+    end
   expect(@license).not_to be_nil
 end
 

@@ -137,17 +137,21 @@ class InventoryPool < ApplicationRecord
      .where(<<-SQL)
        reservations.item_id IS NULL OR items.is_borrowable = TRUE
      SQL
-     .where(<<-SQL)
-       reservations.status NOT IN ('draft', 'rejected', 'canceled', 'closed')
-       AND NOT (
-         reservations.status = 'unsubmitted' AND
-         reservations.updated_at < '#{Time.now.utc - Setting.first.timeout_minutes.minutes}'
-       )
-       AND NOT (
-         reservations.end_date < '#{Time.zone.today}' AND
-         reservations.item_id IS NULL
-       )
-     SQL
+     .where(
+       [<<~SQL.squish,
+          reservations.status NOT IN ('draft', 'rejected', 'canceled', 'closed')
+          AND NOT (
+            reservations.status = 'unsubmitted' AND
+            reservations.updated_at < ?
+          )
+          AND NOT (
+            reservations.end_date < ? AND
+            reservations.item_id IS NULL
+          )
+        SQL
+        Time.now.utc - Setting.first.timeout_minutes.minutes,
+        Time.zone.today]
+     )
   end), class_name: 'ItemLine'
 
   #######################################################################
