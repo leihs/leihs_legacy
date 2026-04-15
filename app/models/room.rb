@@ -17,12 +17,14 @@ class Room < ApplicationRecord
   end
 
   def self.search(search_term)
+    return none if search_term.blank?
+
+    term = "%#{sanitize_sql_like(search_term.to_s)}%"
     joins('INNER JOIN buildings ON buildings.id = rooms.building_id')
-      .where(<<-SQL.strip_heredoc)
-        rooms.name ILIKE '%#{search_term}%' OR
-        buildings.name ILIKE '%#{search_term}%' OR
-        buildings.code ILIKE '%#{search_term}%'
-      SQL
+      .where(
+        'rooms.name ILIKE :term OR buildings.name ILIKE :term OR buildings.code ILIKE :term',
+        term: term
+      )
   end
 
   def to_s

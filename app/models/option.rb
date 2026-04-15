@@ -31,6 +31,10 @@ class Option < ApplicationRecord
 
   SEARCHABLE_FIELDS = %w(manufacturer product version inventory_code)
 
+  SORTABLE_COLUMNS = %w(
+    name manufacturer product version inventory_code price created_at updated_at
+  ).freeze
+
   scope :search, lambda { |query, fields = []|
     sql = all
     return sql if query.blank?
@@ -53,8 +57,11 @@ class Option < ApplicationRecord
                                [:manufacturer, :product, :versin])
     end
     options = options.where(id: params[:ids]) if params[:ids]
-    if params[:sort] and params[:order]
-      options = options.order("#{params[:sort]} #{params[:order]}")
+    if params[:sort].present? && params[:order].present?
+      sort_col = SORTABLE_COLUMNS.include?(params[:sort].to_s) ? params[:sort].to_s : 'name'
+      direction = params[:order].to_s.downcase
+      direction = 'asc' unless %w(asc desc).include?(direction)
+      options = options.reorder(sort_col => direction)
     end
     options = options.default_paginate params unless params[:paginate] == 'false'
     options

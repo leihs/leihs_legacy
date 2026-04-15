@@ -43,29 +43,43 @@ class User < ApplicationRecord
   has_many :items, -> { distinct }, through: :inventory_pools
   has_many(:models, -> { distinct }, through: :inventory_pools) do
     def borrowable
+      owner_id = proxy_association.owner.id
+      join_sql = ApplicationRecord.sanitize_sql_array(
+        [<<~SQL.squish,
+           INNER JOIN (#{Entitlement.query}) AS pwg
+           ON models.id = pwg.model_id
+           AND inventory_pools.id = pwg.inventory_pool_id
+           AND pwg.quantity > 0
+           AND (pwg.entitlement_group_id IN
+             (SELECT entitlement_group_id FROM entitlement_groups_users
+              WHERE user_id = ?)
+           OR pwg.entitlement_group_id IS NULL)
+         SQL
+         owner_id]
+      )
       where(items: { retired: nil, is_borrowable: true, parent_id: nil })
-        .joins("INNER JOIN (#{Entitlement.query}) AS pwg " \
-               'ON models.id = pwg.model_id ' \
-               'AND inventory_pools.id = pwg.inventory_pool_id ' \
-               'AND pwg.quantity > 0 ' \
-               'AND (pwg.entitlement_group_id IN ' \
-               '(SELECT entitlement_group_id FROM entitlement_groups_users ' \
-               "WHERE user_id = '#{proxy_association.owner.id}') " \
-               'OR pwg.entitlement_group_id IS NULL)')
+        .joins(join_sql)
     end
   end
 
   has_many(:categories, -> { distinct }, through: :models) do
     def with_borrowable_items
+      owner_id = proxy_association.owner.id
+      join_sql = ApplicationRecord.sanitize_sql_array(
+        [<<~SQL.squish,
+           INNER JOIN (#{Entitlement.query}) AS pwg
+           ON models.id = pwg.model_id
+           AND inventory_pools.id = pwg.inventory_pool_id
+           AND pwg.quantity > 0
+           AND (pwg.entitlement_group_id IN
+             (SELECT entitlement_group_id FROM entitlement_groups_users
+              WHERE user_id = ?)
+           OR pwg.entitlement_group_id IS NULL)
+         SQL
+         owner_id]
+      )
       where(items: { retired: nil, is_borrowable: true, parent_id: nil })
-      .joins("INNER JOIN (#{Entitlement.query}) AS pwg " \
-             'ON models.id = pwg.model_id ' \
-             'AND inventory_pools.id = pwg.inventory_pool_id ' \
-             'AND pwg.quantity > 0 ' \
-             'AND (pwg.entitlement_group_id IN ' \
-               '(SELECT entitlement_group_id FROM entitlement_groups_users ' \
-               "WHERE user_id = '#{proxy_association.owner.id}') " \
-                 'OR pwg.entitlement_group_id IS NULL)')
+        .joins(join_sql)
     end
   end
 
@@ -152,7 +166,10 @@ class User < ApplicationRecord
       unless params[:delegation_id].blank?
         users = users.find(params[:delegation_id]).delegated_users
       end
-      users = users.send params[:role] unless params[:role].blank?
+      if (role_scope = params[:role]).present?
+        allowed = AccessRight::ROLES_HIERARCHY.map { |r| r.to_s.pluralize }
+        users = users.public_send(role_scope) if allowed.include?(role_scope)
+      end
     else
       users = all
     end

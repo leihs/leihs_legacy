@@ -2,7 +2,10 @@ class QueryObjects::CategoryChildrenWithReservableItems
   attr_reader :query
 
   def initialize(user_id:, parent_id:)
-    @query = <<~SQL
+    uid = UUIDTools::UUID.parse(user_id).to_s
+    pid = UUIDTools::UUID.parse(parent_id).to_s
+    @query = ApplicationRecord.sanitize_sql_array(
+      [<<~SQL,
       WITH all_borrowable_categories AS (
         SELECT DISTINCT model_groups.id, model_groups.name
         FROM model_groups
@@ -39,10 +42,10 @@ class QueryObjects::CategoryChildrenWithReservableItems
         AND (pwg.entitlement_group_id IN
                (SELECT entitlement_group_id
                 FROM entitlement_groups_users
-                WHERE user_id = '#{UUIDTools::UUID.parse(user_id)}')
+                WHERE user_id = ?)
              OR pwg.entitlement_group_id IS NULL)
         WHERE inventory_pools.is_active = 't'
-          AND access_rights.user_id = '#{UUIDTools::UUID.parse(user_id)}'
+          AND access_rights.user_id = ?
           AND model_groups.type = 'Category'
           AND items.retired IS NULL
           AND items.is_borrowable = 't'
@@ -51,7 +54,7 @@ class QueryObjects::CategoryChildrenWithReservableItems
       SELECT model_groups.id, model_groups.name
       FROM model_groups
       JOIN model_group_links ON model_group_links.child_id = model_groups.id
-      WHERE model_group_links.parent_id = '#{UUIDTools::UUID.parse(parent_id)}'
+      WHERE model_group_links.parent_id = ?
       AND ARRAY(
         WITH RECURSIVE category_tree(parent_id, child_id, PATH) AS
         (SELECT parent_id, child_id, ARRAY[parent_id]
@@ -71,5 +74,7 @@ class QueryObjects::CategoryChildrenWithReservableItems
       )
       ORDER BY model_groups.name ASC
     SQL
+       uid, uid, pid]
+    )
   end
 end
