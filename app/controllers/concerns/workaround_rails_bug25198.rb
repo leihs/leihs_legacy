@@ -5,14 +5,17 @@ module WorkaroundRailsBug25198
         next unless spec[:_destroy] == '1'
         thumbnails = Image.where(parent_id: image_id)
         thumbnails.each do |thumbnail|
-          ActiveRecord::Base.connection.exec_delete <<-SQL
-            DELETE FROM images WHERE id = '#{thumbnail.id}'
-          SQL
+          sql = ApplicationRecord.sanitize_sql_array(
+            ['DELETE FROM images WHERE id = ?', thumbnail.id]
+          )
+          ApplicationRecord.connection.exec_delete(sql)
         end
 
-        ActiveRecord::Base.connection.exec_delete <<-SQL
-          DELETE FROM images WHERE id = '#{UUIDTools::UUID.parse(image_id)}'
-        SQL
+        parsed_image_id = UUIDTools::UUID.parse(image_id).to_s
+        sql = ApplicationRecord.sanitize_sql_array(
+          ['DELETE FROM images WHERE id = ?', parsed_image_id]
+        )
+        ApplicationRecord.connection.exec_delete(sql)
 
         images_attrs.delete(image_id)
       end

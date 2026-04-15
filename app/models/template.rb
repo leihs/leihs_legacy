@@ -1,6 +1,8 @@
 class Template < ModelGroup
   include DefaultPagination
 
+  SORTABLE_COLUMNS = %w(name created_at updated_at).freeze
+
   # TODO: 12** belongs_to :inventory_pool through
   # TODO 12** validates belongs_to 1 and only 1 inventory pool
   # TODO 12** validates all models are present to current inventory_pool
@@ -15,8 +17,11 @@ class Template < ModelGroup
     unless params[:search_term].blank?
       templates = templates.search(params[:search_term])
     end
-    templates = \
-      templates.order("#{params[:sort] || 'name'} #{params[:order] || 'ASC'}")
+    requested_sort = (params[:sort].presence || 'name').to_s
+    sort_col = SORTABLE_COLUMNS.include?(requested_sort) ? requested_sort : 'name'
+    direction = (params[:order] || 'ASC').to_s.downcase
+    direction = 'asc' unless %w(asc desc).include?(direction)
+    templates = templates.reorder(sort_col => direction)
     templates = templates.default_paginate params
     templates
   end
