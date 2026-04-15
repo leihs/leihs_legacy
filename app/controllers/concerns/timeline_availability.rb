@@ -6,25 +6,30 @@ module TimelineAvailability
     private
 
     def running_reservations(inventory_pool_id, model_id)
-      query = <<-SQL
-        select
-        	reservations.*
-        from
-        	reservations
-        where
-        	reservations.inventory_pool_id = '#{inventory_pool_id}'
-        	and status not in ('draft', 'rejected', 'canceled', 'closed')
-          and model_id = '#{model_id}'
-          and reservations.type = 'ItemLine'
-          and not (
-            status = 'unsubmitted' and
-            updated_at < '#{Time.now.utc - Setting.first.timeout_minutes.minutes}'
-          )
-          and not (
-            end_date < '#{Time.zone.today}' and
-            item_id is null
-          )
-      SQL
+      timeout_at = Time.now.utc - Setting.first.timeout_minutes.minutes
+      today = Time.zone.today
+      query = ActiveRecord::Base.sanitize_sql_array(
+        [<<~SQL,
+           select
+            reservations.*
+           from
+            reservations
+           where
+            reservations.inventory_pool_id = ?
+            and status not in ('draft', 'rejected', 'canceled', 'closed')
+            and model_id = ?
+            and reservations.type = 'ItemLine'
+            and not (
+              status = 'unsubmitted' and
+              updated_at < ?
+            )
+            and not (
+              end_date < ? and
+              item_id is null
+            )
+         SQL
+         inventory_pool_id, model_id, timeout_at, today]
+      )
 
       ActiveRecord::Base.connection.exec_query(query).to_a
     end
@@ -34,14 +39,17 @@ module TimelineAvailability
 
       return [] if user_ids.empty?
 
-      query = <<-SQL
-        select
-        	users.*
-        from
-        	users
-        where
-        	users.id in (#{user_ids.map { |id| "'#{id}'" }.join(',')})
-      SQL
+      query = ActiveRecord::Base.sanitize_sql_array(
+        [<<~SQL,
+           select
+            users.*
+           from
+            users
+           where
+            users.id in (?)
+         SQL
+         user_ids]
+      )
 
       ActiveRecord::Base.connection.exec_query(query).to_a
     end
@@ -51,14 +59,17 @@ module TimelineAvailability
 
       return [] if user_ids.empty?
 
-      query = <<-SQL
-        select
-        	entitlement_groups_users.*
-        from
-        	entitlement_groups_users
-        where
-        	user_id in (#{user_ids.map { |id| "'#{id}'" }.join(',')})
-      SQL
+      query = ActiveRecord::Base.sanitize_sql_array(
+        [<<~SQL,
+           select
+            entitlement_groups_users.*
+           from
+            entitlement_groups_users
+           where
+            user_id in (?)
+         SQL
+         user_ids]
+      )
 
       ActiveRecord::Base.connection.exec_query(query).to_a
     end
@@ -73,43 +84,55 @@ module TimelineAvailability
 
       return [] if group_ids.empty?
 
-      query = <<-SQL
-        select
-        	entitlement_groups.*
-        from
-        	entitlement_groups
-        where
-        	entitlement_groups.id in (#{group_ids.map { |id| "'#{id}'" }.join(',')})
-          and entitlement_groups.inventory_pool_id = '#{inventory_pool_id}'
-      SQL
+      ids = group_ids.compact.uniq
+      return [] if ids.empty?
+
+      query = ActiveRecord::Base.sanitize_sql_array(
+        [<<~SQL,
+           select
+            entitlement_groups.*
+           from
+            entitlement_groups
+           where
+            entitlement_groups.id in (?)
+            and entitlement_groups.inventory_pool_id = ?
+         SQL
+         ids, inventory_pool_id]
+      )
 
       ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
     def entitlements(model_id, pool_id)
-      query = <<-SQL
-        SELECT entitlements.*
-        FROM entitlements
-        JOIN entitlement_groups
-          ON entitlement_groups.id = entitlements.entitlement_group_id
-        WHERE model_id = '#{model_id}'
-          AND entitlement_groups.inventory_pool_id = '#{pool_id}'
-      SQL
+      query = ActiveRecord::Base.sanitize_sql_array(
+        [<<~SQL,
+           SELECT entitlements.*
+           FROM entitlements
+           JOIN entitlement_groups
+             ON entitlement_groups.id = entitlements.entitlement_group_id
+           WHERE model_id = ?
+             AND entitlement_groups.inventory_pool_id = ?
+         SQL
+         model_id, pool_id]
+      )
 
       ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
     def items(inventory_pool_id, model_id)
-      query = <<-SQL
-        select
-        	items.*
-        from
-        	items
-        where
-        	items.inventory_pool_id = '#{inventory_pool_id}'
-          and items.model_id = '#{model_id}'
-          and items.parent_id is null
-      SQL
+      query = ActiveRecord::Base.sanitize_sql_array(
+        [<<~SQL,
+           select
+            items.*
+           from
+            items
+           where
+            items.inventory_pool_id = ?
+            and items.model_id = ?
+            and items.parent_id is null
+         SQL
+         inventory_pool_id, model_id]
+      )
 
       ActiveRecord::Base.connection.exec_query(query).to_a
     end

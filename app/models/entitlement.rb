@@ -61,6 +61,30 @@ class Entitlement < ApplicationRecord
   end
 
   def self.query(model_ids: nil, inventory_pool_id: nil)
+    model_ids = Array(model_ids).compact.presence
+    first_model_clause = if model_ids
+                           ApplicationRecord.sanitize_sql_array(['AND model_id IN (?)', model_ids])
+                         else
+                           ''
+                         end
+    first_pool_clause = if inventory_pool_id
+                          ApplicationRecord.sanitize_sql_array(
+                            ['AND entitlement_groups.inventory_pool_id = ?', inventory_pool_id]
+                          )
+                        else
+                          ''
+                        end
+    second_model_clause = if model_ids
+                            ApplicationRecord.sanitize_sql_array(['AND i.model_id IN (?)', model_ids])
+                          else
+                            ''
+                          end
+    second_pool_clause = if inventory_pool_id
+                           ApplicationRecord.sanitize_sql_array(['AND i.inventory_pool_id = ?', inventory_pool_id])
+                         else
+                           ''
+                         end
+
     # NOTE: this query is duplicated in new leihs-borrow !!
     <<-SQL
       SELECT model_id,
@@ -71,8 +95,8 @@ class Entitlement < ApplicationRecord
       INNER JOIN entitlement_groups
         ON entitlements.entitlement_group_id = entitlement_groups.id
       WHERE TRUE
-     #{"AND model_id IN ('#{model_ids.join('\', \'')}') " if model_ids}
-     #{"AND entitlement_groups.inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id}
+      #{first_model_clause}
+      #{first_pool_clause}
 
       UNION
 
@@ -92,8 +116,8 @@ class Entitlement < ApplicationRecord
       FROM items AS i
       WHERE i.retired IS NULL AND i.is_borrowable = true
         AND i.parent_id IS NULL
-     #{"AND i.model_id IN ('#{model_ids.join('\', \'')}') " if model_ids}
-     #{"AND i.inventory_pool_id = \'#{inventory_pool_id}\' " if inventory_pool_id}
+      #{second_model_clause}
+      #{second_pool_clause}
       GROUP BY i.inventory_pool_id, i.model_id
     SQL
   end
