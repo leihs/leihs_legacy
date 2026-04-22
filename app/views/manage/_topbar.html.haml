@@ -26,6 +26,12 @@
             %a.topbar-item-inner{:href => manage_inventory_pool_groups_path(current_inventory_pool)}
               = _('Manage')
 
+        - if group_manager?
+          %li.topbar-item.topbar-item--new-inventory
+            %a.topbar-item-inner{:href => "/inventory/#{current_inventory_pool.id}"}
+              = _('Inventory')
+              %span.topbar-new-inventory__badge.badge.blue= _('New inventory badge')
+
     %ul.topbar-navigation.float-right
       = render partial: 'application/navigation'
       = render partial: 'application/user'
