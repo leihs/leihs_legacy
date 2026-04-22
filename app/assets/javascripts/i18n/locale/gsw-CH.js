@@ -2654,6 +2654,10 @@ window.i18n.locale_data = {
          null,
          "Inventar-Verwalter"
       ],
+      "New inventory badge": [
+         null,
+         "Neu"
+      ],
       "New Delegation": [
          null,
          "Noii Delegation"

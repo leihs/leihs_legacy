@@ -2103,6 +2103,9 @@ msgstr "Inventar-Verwalter"
 msgid "New"
 msgstr "Neu"
 
+msgid "New inventory badge"
+msgstr "Neu"
+
 msgid "New Delegation"
 msgstr "Neue Delegation"
 

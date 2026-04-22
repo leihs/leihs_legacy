@@ -213,6 +213,9 @@ msgstr ""
 msgid "Model successfully added as compatible"
 msgstr "Modelo agregado correctamente como compatible"
 
+msgid "New inventory badge"
+msgstr "New"
+
 msgid "New item created."
 msgstr "Nuevo elemento creado"
 

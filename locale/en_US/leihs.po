@@ -2049,6 +2049,9 @@ msgstr ""
 msgid "Inventory manager"
 msgstr ""
 
+msgid "New inventory badge"
+msgstr "New"
+
 msgid "New Delegation"
 msgstr ""
 

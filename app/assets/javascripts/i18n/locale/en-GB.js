@@ -2622,6 +2622,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "New inventory badge": [
+         null,
+         "New"
+      ],
       "New User": [
          null,
          ""
