@@ -27,73 +27,22 @@ module ExpertView
     def items_for_view(inventory_pool, params)
       reduced = matching_items(inventory_pool, params)
 
-      query = <<-SQL
-
-        select
-          *
-        from
-        (
-          (
-            select
-              'model' as type,
-              models.type as model_type,
-              models.id as id,
-              trim(models.product) as product,
-              trim(models.version) as version,
-              null as option_price,
-              null as option_inventory_code,
-              models.is_package as model_is_package
-            from
-              models
-            where
-              models.id IN (#{reduced.select(:model_id).to_sql})
-          )
-          union
-          (
-            select
-              'option' as type,
-              null as model_type,
-              options.id as id,
-              options.product as product,
-              options.version as version,
-              options.price as option_price,
-              options.inventory_code as option_inventory_code,
-              null as model_is_package
-            from
-              options
-            where
-              true = false
-          )
-          order by
-            product, version
-        ) as merged
-      SQL
-
       page_size = (params[:page_size] || 20).to_i
       start_index = (params[:start_index] || 0).to_i
 
-      result_models = InventoryPool.connection.exec_query(
-        query + " limit #{page_size + 1} offset #{start_index}").to_a
+      # Item-centric pagination ordered by inventory_code (same idea as Inventory GET /items).
+      # Previously we paginated models by product/version then loaded their items, which
+      # produced a different first page than a global code-sorted item list.
+      # Wrap `reduced` in a subquery so ORDER BY is not combined with DISTINCT in one SELECT.
+      item_page_scope = Item.from("(#{reduced.to_sql}) AS items")
+                            .reorder(Arel.sql('items.inventory_code ASC'))
+                            .limit(page_size + 1)
+                            .offset(start_index)
+      page_records = item_page_scope.to_a
+      has_more = page_records.size > page_size
+      page_records = page_records.first(page_size)
 
-      items_in_model_page = reduced.where(
-        <<-SQL
-          items.model_id IN (
-            select id from (#{query} limit #{page_size} offset #{start_index}
-          ) as merged)
-        SQL
-      )
-      items_for_model = Item.distinct.where(
-        <<-SQL
-          items.id in (
-            #{items_in_model_page.select(:id).to_sql}
-          )
-          or items.parent_id in (
-            #{items_in_model_page.select(:id).to_sql}
-          )
-        SQL
-      )
-
-      result_items = items_for_model.map do |item|
+      result_items = page_records.map do |item|
         {
           id: item.id,
           model_id: item.model_id,
@@ -108,10 +57,27 @@ module ExpertView
         }
       end
 
-      has_more = result_models.length > page_size
+      model_ids_ordered = page_records.map(&:model_id).uniq
+      models_by_id = Model.where(id: model_ids_ordered).index_by(&:id)
+
+      result_models = model_ids_ordered.filter_map do |mid|
+        m = models_by_id[mid]
+        next unless m
+
+        {
+          'type' => 'model',
+          'model_type' => m.type,
+          'id' => m.id,
+          'product' => m.product.to_s.strip,
+          'version' => m.version.to_s.strip,
+          'option_price' => nil,
+          'option_inventory_code' => nil,
+          'model_is_package' => m.is_package
+        }
+      end
 
       {
-        data: result_models.slice(0, page_size),
+        data: result_models,
         items: result_items,
         has_more: has_more,
         page_size: page_size,

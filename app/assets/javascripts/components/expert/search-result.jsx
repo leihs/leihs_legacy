@@ -409,9 +409,64 @@
 
     },
 
+    _modelEntryMap(sr) {
+      var map = {}
+      sr.inventory.data.forEach((entry) => {
+        if(entry.type == 'model') {
+          map[entry.id] = entry
+        }
+      })
+      return map
+    },
 
+    _modelLabelFromEntry(entry) {
+      if(!entry) {
+        return ''
+      }
+      var label = entry.product || ''
+      if(entry.version) {
+        label += ' ' + entry.version
+      }
+      return label.trim()
+    },
+
+    _searchResultPageFlatByInventoryCode(sr) {
+      var self = this
+      var modelsById = this._modelEntryMap(sr)
+      var items = sr.inventory.items || []
+      var rows = []
+
+      items.forEach((item) => {
+        var modelEntry = modelsById[item.model_id]
+        var label = self._modelLabelFromEntry(modelEntry)
+        var key = modelEntry ? String(modelEntry.model_type || 'model').toLowerCase() : 'model'
+        var is_package = modelEntry && modelEntry.model_is_package
+        var is_child = !!item.parent_id
+        var child_count = 0
+        if(is_package && !is_child) {
+          child_count = items.filter((ch) => {
+            return ch.parent_id == item.id
+          }).length
+        }
+
+        rows.push(self._searchResultItem(
+          key,
+          item,
+          is_package && !is_child,
+          child_count,
+          is_child,
+          label
+        ))
+      })
+      return rows
+    },
 
     _searchResultPage(sr) {
+
+      var renderType = 'new'
+      if(renderType == 'new') {
+        return this._searchResultPageFlatByInventoryCode(sr)
+      }
 
       return sr.inventory.data.map((entry) => {
         return this._searchResultLine(sr, entry)
