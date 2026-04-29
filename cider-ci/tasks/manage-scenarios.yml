@@ -1864,6 +1864,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/navigation.feature:41
+- name: features/manage/navigation.feature:47
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/navigation.feature:47
 - name: features/manage/old_timeline.feature:16
   scripts:
     test:

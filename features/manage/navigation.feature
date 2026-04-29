@@ -42,3 +42,9 @@ Feature: Navigation
     Given a "customer" for inventory pool "Topbar Role Test Pool" is logged in as "role_test_client"
     When I visit the homepage
     Then I do not see the new inventory button
+
+  @rack @hide_new_inventory_button
+  Scenario: New inventory button is hidden for managers when env toggle is disabled
+    Given a "group_manager" for inventory pool "Topbar Role Test Pool" is logged in as "role_test_group"
+    When I visit the lending section
+    Then I do not see the new inventory button
