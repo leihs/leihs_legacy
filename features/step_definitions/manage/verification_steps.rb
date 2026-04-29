@@ -3,6 +3,14 @@ When(/^I open the inventory$/) do
   expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
 end
 
+Then(/^I see the new inventory button$/) do
+  expect(has_selector?('#topbar a[data-test-id="topbar-inventory-new"]')).to be true
+end
+
+Then(/^I do not see the new inventory button$/) do
+  expect(has_no_selector?('#topbar a[data-test-id="topbar-inventory-new"]')).to be true
+end
+
 #Then(/^I can export to a csv-file$/) do
 Then(/^I can export to a CSV file$/) do
   find('.dropdown-toggle', text: _('Export'), match: :prefer_exact).hover
