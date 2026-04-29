@@ -84,7 +84,8 @@ class Manage::ApplicationController < ApplicationController
                 :super_user?,
                 :inventory_manager?,
                 :lending_manager?,
-                :group_manager?)
+                :group_manager?,
+                :show_new_inventory_button?)
 
   def current_inventory_pool
     return @current_inventory_pool if @current_inventory_pool # OPTIMIZE
@@ -126,6 +127,12 @@ class Manage::ApplicationController < ApplicationController
 
   def group_manager?
     current_user.has_role?(:group_manager, current_inventory_pool)
+  end
+
+  def show_new_inventory_button?
+    ActiveModel::Type::Boolean.new.cast(
+      ENV.fetch('LEIHS_SHOW_NEW_INVENTORY_BUTTON', 'true')
+    )
   end
 
   def owner?

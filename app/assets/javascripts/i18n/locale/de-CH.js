@@ -2739,6 +2739,10 @@ window.i18n.locale_data = {
          null,
          "Neu"
       ],
+      "New inventory badge": [
+         null,
+         "Neu"
+      ],
       "New Delegation": [
          null,
          "Neue Delegation"

@@ -2013,6 +2013,9 @@ msgstr ""
 msgid "New"
 msgstr ""
 
+msgid "New inventory badge"
+msgstr ""
+
 msgid "New Delegation"
 msgstr ""
 
