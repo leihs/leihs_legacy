@@ -59,6 +59,14 @@ Before do
   visit(root_path)
 end
 
+Around('@hide_new_inventory_button') do |scenario, block|
+  previous = ENV['LEIHS_SHOW_NEW_INVENTORY_BUTTON']
+  ENV['LEIHS_SHOW_NEW_INVENTORY_BUTTON'] = 'false'
+  block.call
+ensure
+  ENV['LEIHS_SHOW_NEW_INVENTORY_BUTTON'] = previous
+end
+
 module Capybara::Node::Finders
   # override due to raising an error instead of returning nil
   def first(*args, **options, &optional_filter_block)
