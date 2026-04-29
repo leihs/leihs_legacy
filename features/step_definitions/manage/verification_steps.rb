@@ -1,5 +1,5 @@
 When(/^I open the inventory$/) do
-  find('#topbar .topbar-navigation .topbar-item a', text: _('Inventory')).click
+  find('#topbar a[data-test-id="topbar-inventory-legacy"]').click
   expect(current_path).to eq manage_inventory_path(@current_inventory_pool)
 end
 
