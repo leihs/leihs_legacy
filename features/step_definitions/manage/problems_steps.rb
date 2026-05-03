@@ -122,7 +122,11 @@ Given /^I take back a(n)?( late)? item$/ do |grammar, is_late|
   @event = 'take_back'
   user = FactoryBot.create(:user)
   FactoryBot.create(:access_right, inventory_pool: @current_inventory_pool, user: user)
-  item = FactoryBot.create(:item)
+  item = FactoryBot.create(
+    :item,
+    owner: @current_inventory_pool,
+    inventory_pool: @current_inventory_pool
+  )
   item_line = FactoryBot.create(:item_line,
                                  item: item,
                                  model: item.model,

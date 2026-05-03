@@ -2058,6 +2058,9 @@ msgstr "Gestionnaires d'inventaire"
 msgid "New"
 msgstr "Nouveau"
 
+msgid "New inventory badge"
+msgstr "New"
+
 msgid "New Delegation"
 msgstr "Nouvelle Delegation"
 

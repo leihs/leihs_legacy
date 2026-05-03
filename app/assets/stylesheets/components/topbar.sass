@@ -63,3 +63,36 @@ a.topbar-logo, a.topbar-logo:hover
 .topbar-item:active, .topbar-item.active
   .topbar-item-inner
     @extend .focus-thin
+
+.topbar-item.topbar-item--new-inventory
+  overflow: visible
+  position: relative
+  z-index: 2000
+
+  a.topbar-item-inner
+    border: 1px solid $newinventory-button-border
+    background: $newinventory-button-background
+    font-weight: 600
+    overflow: visible
+    padding: 0 10px 0 12px
+    text-overflow: clip
+    white-space: nowrap
+
+  a.topbar-item-inner:hover
+    background: darken($almostwhite, 4%) !important
+    border: 1px solid $blue !important
+    @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.1) !important)
+
+  .topbar-new-inventory__badge
+    position: absolute
+    top: 1px
+    right: -1px
+    margin: 0
+    font-size: $font-size-xxxs
+    font-weight: normal
+    line-height: 1
+    padding: 1px 3px
+    z-index: 1
+    border-radius: $border-radius-xs
+    background: $newinventory-badge-blue
+    transform: translate(48%, -38%)

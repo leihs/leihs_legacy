@@ -15,6 +15,10 @@ jobs:
         type: job
         job_key: all-tests
         states: [passed]
+      lints were successful:
+        type: job
+        job_key: lint
+        states: [passed]
       database merged to master:
         job_key: merged-to-master
         type: job

@@ -1988,6 +1988,9 @@ msgstr "Uusleih-Verwalter"
 msgid "Inventory manager"
 msgstr "Inventar-Verwalter"
 
+msgid "New inventory badge"
+msgstr "Neu"
+
 msgid "New Delegation"
 msgstr "Noii Delegation"
 

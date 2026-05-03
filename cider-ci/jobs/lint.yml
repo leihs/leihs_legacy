@@ -1,0 +1,25 @@
+jobs:
+  lint:
+    name: "Linting"
+    description: |
+      Code checks: static checks and metrics: complexity, duplication, and format,
+        also other consistency checks.
+    priority: 3
+    run_when:
+      any branch has been updated:
+        type: branch
+        include_match: ^.*$
+        exclude_match: "^.*(no-ci|hotspot).*$"
+    context:
+      task_defaults:
+        git_options:
+          submodules:
+            include_match: ^.*$
+      tasks:
+        ruby-commited:
+          scripts:
+            test:
+              body: |
+                #!/usr/bin/env bash
+                set -euo pipefail
+                ./bin/check-ruby-commited
