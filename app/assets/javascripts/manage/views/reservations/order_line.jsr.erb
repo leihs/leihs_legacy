@@ -20,11 +20,7 @@
     {{if ~renderAvailability}}
     <span class='grey-text'>
       /
-      {{if subreservations}}
-      {{>model().availability().withoutLines(subreservations).maxAvailableForGroups(start_date, end_date, user().groupIds)}}
-      {{else}}
-      {{>model().availability().withoutLines([#view.data]).maxAvailableForGroups(start_date, end_date, user().groupIds)}}
-      {{/if}}
+      {{>effectiveAvailableForUser()}}
     </span>
     {{/if}}
   </div>

@@ -1,13 +1,35 @@
-window.App.Modules.LineProblems = 
+window.App.Modules.LineProblems =
 
   anyProblems: -> !! @getProblems().length
 
-  getProblems: -> 
+  _isSoftOverbooked: (avail, reservationsToExclude) ->
+    _.any avail.changes, (change) =>
+      _.any change[2], (allocation) =>
+        _.any reservationsToExclude, (line) =>
+          allocation.running_reservations? and
+          _.include(allocation.running_reservations, line.id) and
+          not avail.groupIsIn(line.user().groupIds, allocation.group_id)
+
+  effectiveAvailableForUser: ->
+    return null unless @model_id?
+    avail = @model().availability()
+    return null unless avail?
+    reservationsToExclude = if @subreservations? then @subreservations else [@]
+    maxAvailableForUser = avail.withoutLines(reservationsToExclude).maxAvailableForGroups(@start_date, @end_date, @user().groupIds)
+    quantity = if @subreservations?
+      _.reduce @subreservations, ((mem, l)-> mem + l.quantity), 0
+    else
+      @quantity
+    if @_isSoftOverbooked(avail, reservationsToExclude) then maxAvailableForUser - quantity else maxAvailableForUser
+
+  getProblems: ->
     problems = []
 
     if @model_id?
       reservationsToExclude = if @subreservations? then @subreservations else [@]
-      maxAvailableForUser = @model().availability().withoutLines(reservationsToExclude).maxAvailableForGroups(@start_date, @end_date, @user().groupIds)
+      avail = @model().availability()
+      maxAvailableForUser = avail.withoutLines(reservationsToExclude).maxAvailableForGroups(@start_date, @end_date, @user().groupIds)
+      softOverbooked = @_isSoftOverbooked(avail, reservationsToExclude)
       quantity = if @subreservations?
         _.reduce @subreservations, ((mem, l)-> mem + l.quantity), 0
       else
@@ -25,11 +47,12 @@ window.App.Modules.LineProblems =
         message: "#{_jed("Overdue")} #{_jed("since")} #{days} #{_jed(days, "day")}"
 
     # AVAILABILITY
-    else if maxAvailableForUser? and maxAvailableForUser < quantity
-      maxAvailableInTotal = @model().availability().withoutLines(reservationsToExclude, true).maxAvailableInTotal(@start_date, @end_date)
-      problems.push 
+    else if maxAvailableForUser? and (maxAvailableForUser < quantity or softOverbooked)
+      effectiveAvailable = if softOverbooked then maxAvailableForUser - quantity else maxAvailableForUser
+      maxAvailableInTotal = avail.withoutLines(reservationsToExclude, true).maxAvailableInTotal(@start_date, @end_date)
+      problems.push
         type: "availability"
-        message: "#{_jed("Not available")} #{maxAvailableForUser}(#{maxAvailableInTotal})/#{@model().availability().total_rentable}"
+        message: "#{_jed("Not available")} #{effectiveAvailable}(#{maxAvailableInTotal})/#{avail.total_rentable}"
 
     if @item()
 
