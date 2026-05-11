@@ -28,7 +28,6 @@ Capybara.register_driver :firefox do |app|
     Pathname.new(`asdf where firefox`.strip).join("bin/firefox").expand_path.to_s
   end
   Selenium::WebDriver::Firefox.path = firefox_bin_path
-  capabilities = Selenium::WebDriver::Remote::Capabilities.firefox
 
   profile = Selenium::WebDriver::Firefox::Profile.new
   opts = Selenium::WebDriver::Firefox::Options.new(
@@ -39,7 +38,6 @@ Capybara.register_driver :firefox do |app|
   # opts.args << '--devtools' # NOTE: useful for local debug
   Capybara::Selenium::Driver.new(
     app,
-    capabilities: capabilities,
     browser: :firefox,
     options: opts)
 end

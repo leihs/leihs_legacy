@@ -318,7 +318,7 @@ end
 
 def parsed_query(export_format)
   find('.dropdown-toggle', text: _('Export'), match: :prefer_exact).hover
-  href = find("##{export_format}-export")[:href]
+  href = find("##{export_format}-export", visible: :all)[:href]
   uri = URI.parse href
   expect(uri.path).to eq send("manage_inventory_#{export_format}_export_path", @current_inventory_pool)
   Rack::Utils.parse_nested_query uri.query

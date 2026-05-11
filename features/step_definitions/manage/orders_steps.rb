@@ -252,7 +252,9 @@ end
 
 def hand_over_assign_or_add(s)
   find('#assign-or-add-input input').set s
-  find('form#assign-or-add .row a:not(.red)', text: s).click
+  el = find('form#assign-or-add .row a:not(.red)', text: s)
+  el.hover
+  el.click
   find('#flash .notice', text: _('Added %s') % s)
 end
 

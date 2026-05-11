@@ -75,7 +75,7 @@ group :development, :test do
   # gem 'cucumber-rails', require: false
   # gem 'cucumber', '~> 3'
   # gem 'capybara', '3.36.0'
-  gem "selenium-webdriver", "4.1.0"
+  gem "selenium-webdriver", "~> 4.1"
 
   gem "solargraph"
   gem "solargraph-rails"
