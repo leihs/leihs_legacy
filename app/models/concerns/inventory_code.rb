@@ -29,6 +29,17 @@ module InventoryCode
       inventory_code.reverse.sub(/[^\d]*/, '').sub(/[^\d]+.*/, '').reverse.to_i
     end
 
+    def strip_pool_prefix(code, shortname)
+      pkg_prefix = "P-#{shortname}"
+      if code.start_with?(pkg_prefix)
+        code[pkg_prefix.length..]
+      elsif code.start_with?(shortname)
+        code[shortname.length..]
+      else
+        code
+      end
+    end
+
     # proposes the next available number based on the owner inventory_pool
     # tries to take the next free inventory code
     # after the previously created Item
@@ -40,16 +51,24 @@ module InventoryCode
         .first
         .try(:inventory_code)
 
+      shortname = prefix_for_inventory_code(inventory_pool)
+
+      pool_nums = Item.where(owner_id: inventory_pool)
+        .pluck(:inventory_code)
+        .map { |c| last_number(strip_pool_prefix(c.to_s, shortname)) }
+        .to_set
+
       next_num = case type
                   when :lowest
-                    free_inventory_code_ranges(from: 0).first.first
+                    n = 1
+                    n += 1 while pool_nums.include?(n)
+                    n
                   when :highest
                     free_inventory_code_ranges(from: 0).last.first
                   else # :last
-                    latest_number = last_number(latest_inventory_code)
-                    free_inventory_code_ranges(from: latest_number)
-                      .first
-                      .first
+                    n = [last_number(strip_pool_prefix(latest_inventory_code.to_s, shortname)), 1].max
+                    n += 1 while pool_nums.include?(n)
+                    n
                   end
 
       prefix_number(inventory_pool, next_num)
