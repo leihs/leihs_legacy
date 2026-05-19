@@ -1,18 +1,12 @@
 module ExpertComparators
   extend ActiveSupport::Concern
 
-  JSON_PROPERTY_KEY_RE = /\A[a-z_]+\z/
-
   included do
 
     private
 
-    def validate_json_property_key!(key)
-      k = key.to_s
-      unless k.match?(JSON_PROPERTY_KEY_RE)
-        throw 'Invalid JSON property key for field attribute: ' + k.inspect
-      end
-      k
+    def quoted_items_column(attribute)
+      "items.#{ApplicationRecord.connection.quote_column_name(attribute)}"
     end
 
     def reduce_for_radio(items, filter_value, field_config)
@@ -126,10 +120,10 @@ module ExpertComparators
       attribute = field_config['attribute']
 
       if attribute.is_a?(String)
-        check_that_item_attribute(attribute)
+        column = quoted_items_column(attribute)
         result = items
-        result = result.where("items.#{attribute} >= :from", from: from) if from
-        result = result.where("items.#{attribute} <= :to", to: to) if to
+        result = result.where("#{column} >= ?", from) if from
+        result = result.where("#{column} <= ?", to) if to
         result
       elsif attribute.is_a?(Array)
         if attribute.length != 2
@@ -139,16 +133,10 @@ module ExpertComparators
           throw 'We expect properties, but is: ' + attribute.to_s
         end
 
-        prop_key = validate_json_property_key!(attribute[1])
+        prop_key = attribute[1].to_s
         result = items
-        if from
-          result = result.where(
-            "items.properties ->> '#{prop_key}' >= :from", from: from)
-        end
-        if to
-          result = result.where(
-            "items.properties ->> '#{prop_key}' <= :to", to: to)
-        end
+        result = result.where('items.properties ->> ? >= ?', prop_key, from) if from
+        result = result.where('items.properties ->> ? <= ?', prop_key, to) if to
         result
       else
         throw 'Not supported attribute: ' + attribute.to_s
@@ -159,7 +147,6 @@ module ExpertComparators
       attribute = field_config['attribute']
 
       if attribute.is_a?(String)
-        check_that_item_attribute(attribute)
         return items.where(attribute => value)
       elsif attribute.is_a?(Array)
 
@@ -170,10 +157,7 @@ module ExpertComparators
           throw 'We expect properties, but is: ' + attribute.to_s
         end
 
-        prop_key = validate_json_property_key!(attribute[1])
-        items.where(
-          "items.properties ->> '#{prop_key}' = :value",
-          value: value)
+        items.where('items.properties ->> ? = ?', attribute[1].to_s, value)
       else
         throw 'Not supported attribute: ' + attribute.to_s
       end
@@ -183,10 +167,8 @@ module ExpertComparators
       attribute = field_config['attribute']
 
       if attribute.is_a?(String)
-        check_that_item_attribute(attribute)
-        return items.where(
-          "items.#{attribute} ILIKE :value",
-          value: "%#{value}%")
+        column = quoted_items_column(attribute)
+        return items.where("#{column} ILIKE ?", "%#{value}%")
       elsif attribute.is_a?(Array)
 
         if attribute.length != 2
@@ -196,10 +178,10 @@ module ExpertComparators
           throw 'We expect properties, but is: ' + attribute.to_s
         end
 
-        prop_key = validate_json_property_key!(attribute[1])
         items.where(
-          "items.properties ->> '#{prop_key}' ILIKE :value",
-          value: "%#{value}%")
+          'items.properties ->> ? ILIKE ?',
+          attribute[1].to_s,
+          "%#{value}%")
       else
         throw 'Not supported attribute: ' + attribute.to_s
       end
@@ -242,36 +224,6 @@ module ExpertComparators
         items.joins(:model).where(models: { id: selection_id })
       else
         generic_equal_value(items, selection_id, field_config)
-      end
-    end
-
-    def valid_attributes
-      %w(
-        inventory_code
-        invoice_date
-        invoice_number
-        is_borrowable
-        is_broken
-        is_incomplete
-        is_inventory_relevant
-        last_check
-        name
-        note
-        price
-        responsible
-        retired
-        retired_reason
-        room_id
-        serial_number
-        shelf
-        status_note
-        user_name
-      )
-    end
-
-    def check_that_item_attribute(attribute)
-      unless valid_attributes.include?(attribute)
-        throw 'Unexpected attribute: ' + attribute
       end
     end
 
