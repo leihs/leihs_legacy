@@ -132,11 +132,11 @@ module ExpertComparators
         result = items
         if from
           result = result.where(
-            "items.properties ->> '#{attribute[1]}' >= :from", from: from)
+            "items.properties ->> :attribute >= :from", attribute: attribute[1], from: from)
         end
         if to
           result = result.where(
-            "items.properties ->> '#{attribute[1]}' <= :to", to: to)
+              "items.properties ->> :attribute <= :to", attribute: attribute[1], to: to)
         end
         result
       else
@@ -160,7 +160,8 @@ module ExpertComparators
         end
 
         items.where(
-          "items.properties ->> '#{attribute[1]}' = :value",
+          "items.properties ->> :attribute = :value",
+          attribute: attribute[1],
           value: value)
       else
         throw 'Not supported attribute: ' + attribute.to_s
@@ -185,7 +186,8 @@ module ExpertComparators
         end
 
         items.where(
-          "items.properties ->> '#{attribute[1]}' ILIKE :value",
+          "items.properties ->> :attribute ILIKE :value",
+          attribute: attribute[1],
           value: "%#{value}%")
       else
         throw 'Not supported attribute: ' + attribute.to_s
@@ -226,7 +228,7 @@ module ExpertComparators
 
       case field_id
       when 'model_id'
-        items.joins(:model).where("models.id = '#{selection_id}'")
+        items.joins(:model).where(models: { id: selection_id })
       else
         generic_equal_value(items, selection_id, field_config)
       end
