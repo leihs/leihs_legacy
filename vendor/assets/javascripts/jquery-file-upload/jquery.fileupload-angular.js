@@ -1,18 +1,18 @@
 /*
- * jQuery File Upload AngularJS Plugin 2.0.1
+ * jQuery File Upload AngularJS Plugin
  * https://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2013, Sebastian Tschan
  * https://blueimp.net
  *
  * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
-/*jslint nomen: true, unparam: true */
-/*global define, angular */
+/* jshint nomen:false */
+/* global define, angular, require */
 
-(function (factory) {
+;(function (factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // Register as an anonymous AMD module:
@@ -24,6 +24,16 @@
             './jquery.fileupload-video',
             './jquery.fileupload-validate'
         ], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS:
+        factory(
+            require('jquery'),
+            require('angular'),
+            require('./jquery.fileupload-image'),
+            require('./jquery.fileupload-audio'),
+            require('./jquery.fileupload-video'),
+            require('./jquery.fileupload-validate')
+        );
     } else {
         factory();
     }
@@ -36,16 +46,12 @@
         // for the fileUpload directive and default handlers for
         // File Upload events:
         .provider('fileUpload', function () {
-            var scopeApply = function () {
+            var scopeEvalAsync = function (expression) {
                     var scope = angular.element(this)
-                            .fileupload('option', 'scope')(),
-                        $timeout = angular.injector(['ng'])
-                            .get('$timeout');
-                    // Safe apply, makes sure $apply is called
-                    // asynchronously outside of the $digest cycle:
-                    $timeout(function () {
-                        scope.$apply();
-                    });
+                            .fileupload('option', 'scope');
+                    // Schedule a new $digest cycle if not already inside of one
+                    // and evaluate the given expression:
+                    scope.$evalAsync(expression);
                 },
                 addFileMethods = function (scope, data) {
                     var files = data.files,
@@ -66,10 +72,11 @@
                         };
                     });
                     file.$submit = function () {
-                        return data.submit();
+                        if (!file.error) {
+                            return data.submit();
+                        }
                     };
                     file.$cancel = function () {
-                        scope.clear(files);
                         return data.abort();
                     };
                 },
@@ -78,7 +85,7 @@
                 handleResponse: function (e, data) {
                     var files = data.result && data.result.files;
                     if (files) {
-                        data.scope().replace(data.files, files);
+                        data.scope.replace(data.files, files);
                     } else if (data.errorThrown ||
                             data.textStatus === 'error') {
                         data.files[0].error = data.errorThrown ||
@@ -89,12 +96,12 @@
                     if (e.isDefaultPrevented()) {
                         return false;
                     }
-                    var scope = data.scope(),
+                    var scope = data.scope,
                         filesCopy = [];
                     angular.forEach(data.files, function (file) {
                         filesCopy.push(file);
                     });
-                    scope.$apply(function () {
+                    scope.$parent.$applyAsync(function () {
                         addFileMethods(scope, data);
                         var method = scope.option('prependFiles') ?
                                 'unshift' : 'push';
@@ -103,7 +110,7 @@
                     data.process(function () {
                         return scope.process(data);
                     }).always(function () {
-                        scope.$apply(function () {
+                        scope.$parent.$applyAsync(function () {
                             addFileMethods(scope, data);
                             scope.replace(filesCopy, data.files);
                         });
@@ -115,18 +122,12 @@
                         }
                     });
                 },
-                progress: function (e, data) {
-                    if (e.isDefaultPrevented()) {
-                        return false;
-                    }
-                    data.scope().$apply();
-                },
                 done: function (e, data) {
                     if (e.isDefaultPrevented()) {
                         return false;
                     }
                     var that = this;
-                    data.scope().$apply(function () {
+                    data.scope.$apply(function () {
                         data.handleResponse.call(that, e, data);
                     });
                 },
@@ -134,19 +135,21 @@
                     if (e.isDefaultPrevented()) {
                         return false;
                     }
-                    var that = this;
+                    var that = this,
+                        scope = data.scope;
                     if (data.errorThrown === 'abort') {
+                        scope.clear(data.files);
                         return;
                     }
-                    data.scope().$apply(function () {
+                    scope.$apply(function () {
                         data.handleResponse.call(that, e, data);
                     });
                 },
-                stop: scopeApply,
-                processstart: scopeApply,
-                processstop: scopeApply,
+                stop: scopeEvalAsync,
+                processstart: scopeEvalAsync,
+                processstop: scopeEvalAsync,
                 getNumberOfFiles: function () {
-                    var scope = this.scope();
+                    var scope = this.scope;
                     return scope.queue.length - scope.processing();
                 },
                 dataType: 'json',
@@ -196,10 +199,10 @@
         })
 
         // The FileUploadController initializes the fileupload widget and
-        // provides scope methods to control the File Upload functionality: 
+        // provides scope methods to control the File Upload functionality:
         .controller('FileUploadController', [
-            '$scope', '$element', '$attrs', '$window', 'fileUpload',
-            function ($scope, $element, $attrs, $window, fileUpload) {
+            '$scope', '$element', '$attrs', '$window', 'fileUpload','$q',
+            function ($scope, $element, $attrs, $window, fileUpload, $q) {
                 var uploadMethods = {
                     progress: function () {
                         return $element.fileupload('progress');
@@ -208,7 +211,10 @@
                         return $element.fileupload('active');
                     },
                     option: function (option, data) {
-                        return $element.fileupload('option', option, data);
+                        if (arguments.length === 1) {
+                            return $element.fileupload('option', option);
+                        }
+                        $element.fileupload('option', option, data);
                     },
                     add: function (data) {
                         return $element.fileupload('add', data);
@@ -258,19 +264,21 @@
                 $scope.applyOnQueue = function (method) {
                     var list = this.queue.slice(0),
                         i,
-                        file;
+                        file,
+                        promises = [];
                     for (i = 0; i < list.length; i += 1) {
                         file = list[i];
                         if (file[method]) {
-                            file[method]();
+                            promises.push(file[method]());
                         }
                     }
+                    return $q.all(promises);
                 };
                 $scope.submit = function () {
-                    this.applyOnQueue('$submit');
+                    return this.applyOnQueue('$submit');
                 };
                 $scope.cancel = function () {
-                    this.applyOnQueue('$cancel');
+                    return this.applyOnQueue('$cancel');
                 };
                 // Add upload methods to the scope:
                 angular.extend($scope, uploadMethods);
@@ -278,12 +286,10 @@
                 // the options provided via "data-"-parameters,
                 // as well as those given via options object:
                 $element.fileupload(angular.extend(
-                    {scope: function () {
-                        return $scope;
-                    }},
+                    {scope: $scope},
                     fileUpload.defaults
                 )).on('fileuploadadd', function (e, data) {
-                    data.scope = $scope.option('scope');
+                    data.scope = $scope;
                 }).on('fileuploadfail', function (e, data) {
                     if (data.errorThrown === 'abort') {
                         return;
@@ -320,9 +326,11 @@
                     'fileuploadprocessalways',
                     'fileuploadprocessstop'
                 ].join(' '), function (e, data) {
-                    if ($scope.$emit(e.type, data).defaultPrevented) {
-                        e.preventDefault();
-                    }
+                    $scope.$parent.$applyAsync(function () {
+                        if ($scope.$emit(e.type, data).defaultPrevented) {
+                            e.preventDefault();
+                        }
+                    });
                 }).on('remove', function () {
                     // Remove upload methods from the scope,
                     // when the widget is removed:
@@ -378,8 +386,9 @@
                 $scope.$watch(
                     $attrs.fileUploadPreview + '.preview',
                     function (preview) {
+                        $element.empty();
                         if (preview) {
-                            $element.empty().append(preview);
+                            $element.append(preview);
                         }
                     }
                 );

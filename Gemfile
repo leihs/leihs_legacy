@@ -52,8 +52,6 @@ source "https://rails-assets.org" do
   gem "rails-assets-moment-range", "2.2"
   gem "rails-assets-timecop", "~> 0.1"
   gem "rails-assets-underscore", "~> 1.8"
-  # gem 'rails-assets-spine', '~> 1.3.0'
-  # gem 'rails-assets-uri.js', '~> 1.16'
 end
 
 group :development do

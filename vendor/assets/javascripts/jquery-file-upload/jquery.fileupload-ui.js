@@ -1,29 +1,39 @@
 /*
- * jQuery File Upload User Interface Plugin 9.0.0
+ * jQuery File Upload User Interface Plugin
  * https://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2010, Sebastian Tschan
  * https://blueimp.net
  *
  * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
-/*jslint nomen: true, unparam: true, regexp: true */
-/*global define, window, URL, webkitURL, FileReader */
+/* jshint nomen:false */
+/* global define, require, window */
 
-(function (factory) {
+;(function (factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // Register as an anonymous AMD module:
         define([
             'jquery',
-            'tmpl',
+            'blueimp-tmpl',
             './jquery.fileupload-image',
             './jquery.fileupload-audio',
             './jquery.fileupload-video',
             './jquery.fileupload-validate'
         ], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS:
+        factory(
+            require('jquery'),
+            require('blueimp-tmpl'),
+            require('./jquery.fileupload-image'),
+            require('./jquery.fileupload-audio'),
+            require('./jquery.fileupload-video'),
+            require('./jquery.fileupload-validate')
+        );
     } else {
         // Browser globals:
         factory(
@@ -31,7 +41,7 @@
             window.tmpl
         );
     }
-}(function ($, tmpl, loadImage) {
+}(function ($, tmpl) {
     'use strict';
 
     $.blueimp.fileupload.prototype._specialOptions.push(
@@ -62,6 +72,11 @@
             // The expected data type of the upload response, sets the dataType
             // option of the $.ajax upload requests:
             dataType: 'json',
+
+            // Error and info messages:
+            messages: {
+                unknownError: 'Unknown error'
+            },
 
             // Function returning the current number of files,
             // used by the maxNumberOfFiles validation:
@@ -96,12 +111,10 @@
                     options.prependFiles ? 'prepend' : 'append'
                 ](data.context);
                 that._forceReflow(data.context);
-                $.when(
-                    that._transition(data.context),
-                    data.process(function () {
-                        return $this.fileupload('process', data);
-                    })
-                ).always(function () {
+                that._transition(data.context);
+                data.process(function () {
+                    return $this.fileupload('process', data);
+                }).always(function () {
                     data.context.each(function (index) {
                         $(this).find('.size').text(
                             that._formatFileSize(data.files[index].size)
@@ -214,7 +227,7 @@
                         if (data.errorThrown !== 'abort') {
                             var file = data.files[index];
                             file.error = file.error || data.errorThrown ||
-                                true;
+                                data.i18n('unknownError');
                             deferred = that._addFinishedDeferreds();
                             that._transition($(this)).done(
                                 function () {
@@ -371,7 +384,9 @@
                     };
                 if (data.url) {
                     data.dataType = data.dataType || that.options.dataType;
-                    $.ajax(data).done(removeNode);
+                    $.ajax(data).done(removeNode).fail(function () {
+                        that._trigger('destroyfailed', e, data);
+                    });
                 } else {
                     removeNode();
                 }
@@ -517,12 +532,12 @@
             var template = $(e.currentTarget)
                     .closest('.template-upload,.template-download'),
                 data = template.data('data') || {};
-            if (!data.jqXHR) {
-                data.context = data.context || template;
+            data.context = data.context || template;
+            if (data.abort) {
+                data.abort();
+            } else {
                 data.errorThrown = 'abort';
                 this._trigger('fail', e, data);
-            } else {
-                data.jqXHR.abort();
             }
         },
 

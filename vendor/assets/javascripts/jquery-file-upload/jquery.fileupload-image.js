@@ -1,18 +1,18 @@
 /*
- * jQuery File Upload Image Preview & Resize Plugin 1.6.0
+ * jQuery File Upload Image Preview & Resize Plugin
  * https://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2013, Sebastian Tschan
  * https://blueimp.net
  *
  * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
+ * https://opensource.org/licenses/MIT
  */
 
-/*jslint nomen: true, unparam: true, regexp: true */
-/*global define, window, document, DataView, Blob, Uint8Array */
+/* jshint nomen:false */
+/* global define, require, window, Blob */
 
-(function (factory) {
+;(function (factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // Register as an anonymous AMD module:
@@ -20,11 +20,22 @@
             'jquery',
             'load-image',
             'load-image-meta',
+            'load-image-scale',
             'load-image-exif',
-            'load-image-ios',
             'canvas-to-blob',
             './jquery.fileupload-process'
         ], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS:
+        factory(
+            require('jquery'),
+            require('blueimp-load-image/js/load-image'),
+            require('blueimp-load-image/js/load-image-meta'),
+            require('blueimp-load-image/js/load-image-scale'),
+            require('blueimp-load-image/js/load-image-exif'),
+            require('blueimp-canvas-to-blob'),
+            require('./jquery.fileupload-process')
+        );
     } else {
         // Browser globals:
         factory(
@@ -96,6 +107,10 @@
             action: 'setImage',
             name: '@imagePreviewName',
             disabled: '@disableImagePreview'
+        },
+        {
+            action: 'deleteImageReferences',
+            disabled: '@disableImageReferencesDeletion'
         }
     );
 
@@ -106,7 +121,7 @@
         options: {
             // The regular expression for the types of images to load:
             // matched against the file type:
-            loadImageFileTypes: /^image\/(gif|jpeg|png)$/,
+            loadImageFileTypes: /^image\/(gif|jpeg|png|svg\+xml)$/,
             // The maximum file size of images to load:
             loadImageMaxFileSize: 10000000, // 10MB
             // The maximum width of resized images:
@@ -201,6 +216,12 @@
                             return dfd.promise();
                         }
                     }
+                    // Prevent orienting the same image twice:
+                    if (data.orientation) {
+                        delete options.orientation;
+                    } else {
+                        data.orientation = options.orientation;
+                    }
                 }
                 if (img) {
                     resolve(loadImage.scale(img, options));
@@ -226,7 +247,7 @@
                                     blob.name = file.name;
                                 } else if (file.name) {
                                     blob.name = file.name.replace(
-                                        /\..+$/,
+                                        /\.\w+$/,
                                         '.' + blob.type.substr(6)
                                     );
                                 }
@@ -284,6 +305,16 @@
             setImage: function (data, options) {
                 if (data.preview && !options.disabled) {
                     data.files[data.index][options.name || 'preview'] = data.preview;
+                }
+                return data;
+            },
+
+            deleteImageReferences: function (data, options) {
+                if (!options.disabled) {
+                    delete data.img;
+                    delete data.canvas;
+                    delete data.preview;
+                    delete data.imageHead;
                 }
                 return data;
             }
