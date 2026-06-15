@@ -1,6 +1,6 @@
 eval_gemfile Pathname(File.dirname(File.absolute_path(__FILE__))).join("database", "Gemfile")
 
-gem "puma", "~> 6.0"
+gem "puma", "~> 7.0"
 gem "puma_worker_killer"
 gem "connection_pool", "< 3.0"
 

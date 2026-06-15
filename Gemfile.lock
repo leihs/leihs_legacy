@@ -307,8 +307,7 @@ GEM
       railties (>= 3.0)
     msgpack (1.7.2)
     multi_test (1.1.0)
-    mustermann (3.1.1)
-    net-imap (0.6.4)
+    net-imap (0.6.4.1)
       date
       net-protocol
     net-ldap (0.19.0)
@@ -348,16 +347,13 @@ GEM
       pry (>= 0.13.0)
     psych (3.3.4)
     public_suffix (7.0.5)
-    puma (6.6.1)
+    puma (7.2.1)
       nio4r (~> 2.0)
     puma_worker_killer (0.3.1)
       get_process_mem (~> 0.2)
       puma (>= 2.7)
     racc (1.8.1)
     rack (2.2.23)
-    rack-protection (3.2.0)
-      base64 (>= 0.1.0)
-      rack (~> 2.2, >= 2.2.4)
     rack-proxy (0.7.7)
       rack
     rack-session (1.0.2)
@@ -492,11 +488,6 @@ GEM
     sequel (5.82.0)
       bigdecimal
     sexp_processor (4.17.2)
-    sinatra (3.2.0)
-      mustermann (~> 3.0)
-      rack (~> 2.2, >= 2.2.4)
-      rack-protection (= 3.2.0)
-      tilt (~> 2.0)
     singleton (0.2.0)
     solargraph (0.50.0)
       backport (~> 1.2)
@@ -544,7 +535,7 @@ GEM
       memoist3 (~> 1.0.0)
     temple (0.10.3)
     thor (1.5.0)
-    tilt (2.4.0)
+    tilt (2.7.0)
     timecop (0.9.10)
     timeout (0.6.1)
     traceroute (0.8.1)
@@ -581,7 +572,7 @@ GEM
     will_paginate (3.3.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yard (0.9.36)
+    yard (0.9.44)
     zeitwerk (2.7.5)
 
 PLATFORMS
@@ -631,7 +622,7 @@ DEPENDENCIES
   pry-nav
   pry-rails
   psych (~> 3)
-  puma (~> 6.0)
+  puma (~> 7.0)
   puma_worker_killer
   rails (~> 8.1.3)
   rails-assets-accounting.js (~> 0.4)!
@@ -659,7 +650,6 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   selenium-webdriver (~> 4.1)
   sequel
-  sinatra
   solargraph
   solargraph-rails
   spring
