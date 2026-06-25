@@ -4,7 +4,7 @@ gem "puma", "~> 7.0"
 gem "puma_worker_killer"
 gem "connection_pool", "< 3.0"
 
-gem "axlsx", git: "https://github.com/leihs/axlsx", ref: "c8ac844572b25fda358cc01d2104720c4c42f450"
+gem "caxlsx"
 gem "barby", "~> 0.5.0"
 gem "chunky_png", "~> 1.2"
 gem "cider_ci-open_session", "~> 2.0.1"
