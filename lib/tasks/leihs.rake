@@ -113,8 +113,15 @@ namespace :leihs do
     puts 'Deadline soon reminded ----------------------'
   end
 
+  desc 'Cleanup stale attachments'
+  task cleanup_attachments: :environment do
+    puts 'Cleaning up stale attachments...'
+    Attachment.cleanup_stale!
+    puts 'Attachment cleanup complete -------------------------'
+  end
+
   desc 'Cron: Remind & Maintenance'
-  task cron: [:remind_and_suspend, :maintenance, :deadline_soon_reminder]
+  task cron: [:remind_and_suspend, :maintenance, :deadline_soon_reminder, :cleanup_attachments]
 
   desc 'Recreate DB and reindex'
   task reset: :environment  do
