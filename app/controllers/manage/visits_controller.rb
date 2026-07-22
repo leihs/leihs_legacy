@@ -92,7 +92,7 @@ class Manage::VisitsController < Manage::ApplicationController
     end
     grouped_reservations.each_pair do |k, reservations|
       user = User.find(k[:user_id])
-      user.remind(reservations)
+      user.remind(reservations, [visit.id])
     end
 
     head :ok
