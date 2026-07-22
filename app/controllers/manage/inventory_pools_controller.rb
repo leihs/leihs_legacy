@@ -91,12 +91,7 @@ class Manage::InventoryPoolsController < Manage::ApplicationController
       .visits
       .find(params[:visit_id])
     @emails = \
-      user.emails
-          .joins(:email_visits)
-          .where(template: %w[reminder deadline_soon_reminder],
-                 email_visits: { visit_id: visit.id })
-          .order(created_at: :desc)
-          .limit(10)
+      user.emails.where('created_at >= ?', visit.date).limit(10)
   end
 
   private

@@ -22,9 +22,7 @@ module Mailer::Order
                   to_address: order.target_user.email,
                   from_address: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
                   subject: template.subject,
-                  body: body,
-                  template: name,
-                  source_pool_id: order.inventory_pool.id)
+                  body: body)
   end
 
   def rejected(order, comment, sent_at = Time.zone.now)
@@ -43,8 +41,6 @@ module Mailer::Order
                   to_address: order.target_user.email,
                   from_address: (order.inventory_pool.email || SmtpSetting.first.default_from_address),
                   subject: template.subject,
-                  body: body,
-                  template: name,
-                  source_pool_id: order.inventory_pool.id)
+                  body: body)
   end
 end

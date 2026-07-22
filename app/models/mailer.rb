@@ -21,24 +21,23 @@ module Mailer
     end
   end
 
-  def self.deadline_soon_reminder(user, reservations, visit_ids)
+  def self.deadline_soon_reminder(user, reservations)
     if send_mail
       reservations.map(&:inventory_pool).uniq.each do |inventory_pool|
         with_logging_send_mail_failure(user) do
           Mailer::User.deadline_soon_reminder(user,
                                               inventory_pool,
-                                              reservations,
-                                              visit_ids)
+                                              reservations)
         end
       end
     end
   end
 
-  def self.remind_user(user, reservations, visit_ids)
+  def self.remind_user(user, reservations)
     if send_mail
       reservations.map(&:inventory_pool).uniq.each do |inventory_pool|
         with_logging_send_mail_failure(user) do
-          Mailer::User.remind(user, inventory_pool, reservations, visit_ids)
+          Mailer::User.remind(user, inventory_pool, reservations)
         end
       end
     end

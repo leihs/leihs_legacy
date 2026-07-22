@@ -233,19 +233,17 @@ class User < ApplicationRecord
 
   def self.remind_and_suspend_all
     # TODO: dry
-    grouped_reservation_visits = \
+    grouped_reservations = \
       Visit
         .take_back_overdue
-        .flat_map { |visit| visit.reservations.map { |vl| [vl, visit] } }
-        .group_by do |(vl, _visit)|
+        .flat_map(&:reservations)
+        .group_by do |vl|
           { inventory_pool: vl.inventory_pool,
             user_id: (vl.delegated_user_id || vl.user_id) }
         end
-    grouped_reservation_visits.each_pair do |k, reservation_visits|
+    grouped_reservations.each_pair do |k, reservations|
       user = User.find(k[:user_id])
-      reservations = reservation_visits.map(&:first)
-      visit_ids = reservation_visits.map { |(_vl, visit)| visit.id }.uniq
-      user.remind(reservations, visit_ids)
+      user.remind(reservations)
     end
     # TODO: dry
     grouped_reservations = \
@@ -262,20 +260,18 @@ class User < ApplicationRecord
   end
 
   def self.send_deadline_soon_reminder_to_everybody
-    grouped_reservation_visits = \
+    grouped_reservations = \
       Visit
         .take_back
         .where('date = ?', Date.tomorrow)
-        .flat_map { |visit| visit.reservations.map { |vl| [vl, visit] } }
-        .group_by do |(vl, _visit)|
+        .flat_map(&:reservations)
+        .group_by do |vl|
           { inventory_pool: vl.inventory_pool,
             user_id: (vl.delegated_user_id || vl.user_id) }
         end
-    grouped_reservation_visits.each_pair do |k, reservation_visits|
+    grouped_reservations.each_pair do |k, reservations|
       user = User.find(k[:user_id])
-      reservations = reservation_visits.map(&:first)
-      visit_ids = reservation_visits.map { |(_vl, visit)| visit.id }.uniq
-      user.send_deadline_soon_reminder(reservations, visit_ids)
+      user.send_deadline_soon_reminder(reservations)
     end
   end
 
@@ -290,10 +286,10 @@ class User < ApplicationRecord
     end
   end
 
-  def remind(reservations, visit_ids)
+  def remind(reservations)
     unless reservations.empty?
       begin
-        Mailer.remind_user(self, reservations, visit_ids)
+        Mailer.remind_user(self, reservations)
         puts "Reminded: #{self.name}"
         true
       rescue Exception => exception
@@ -306,10 +302,10 @@ class User < ApplicationRecord
     end
   end
 
-  def send_deadline_soon_reminder(reservations, visit_ids, _reminder_user = self)
+  def send_deadline_soon_reminder(reservations, _reminder_user = self)
     unless reservations.empty?
       begin
-        Mailer.deadline_soon_reminder(self, reservations, visit_ids)
+        Mailer.deadline_soon_reminder(self, reservations)
         puts "Deadline soon: #{self.name}"
       rescue
         puts "Couldn't send reminder: #{self.name}"
