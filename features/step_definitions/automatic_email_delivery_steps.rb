@@ -39,6 +39,41 @@ Then(/^the day before the take back I receive a deadline soon email$/) do
   expect(Email.where(user_id: @current_user.id).empty?).to be false
 
   expect(Email.all.detect {|x| x.to_address == @current_user.email}.nil?).to be false
+
+  deadline_soon_reservation = @current_user.reservations.signed.where('end_date > ?', Date.today).first
+  pool = deadline_soon_reservation.inventory_pool
+  visit = pool.visits.take_back.where(user_id: @current_user.id).where('date = ?', deadline_soon_reservation.end_date).first
+  expect(visit).not_to be_nil
+
+  # an unrelated, non-reminder email for the same user/pool must not be
+  # picked up by the visits-list reminder scoping
+  Email.create!(user_id: @current_user.id,
+                to_address: @current_user.email,
+                from_address: 'sender@example.com',
+                subject: 'Unrelated approved mail',
+                body: 'x',
+                template: 'approved',
+                source_pool_id: pool.id)
+
+  # a reminder tied to a different visit for the same user/pool must not
+  # leak into this visit's scoped reminder list either
+  other_visit_email = Email.create!(user_id: @current_user.id,
+                                    to_address: @current_user.email,
+                                    from_address: 'sender@example.com',
+                                    subject: 'Reminder for a different visit',
+                                    body: 'x',
+                                    template: 'deadline_soon_reminder',
+                                    source_pool_id: pool.id)
+  EmailVisit.create!(email: other_visit_email, visit_id: SecureRandom.uuid)
+
+  scoped_emails = \
+    visit.emails.where(user_id: @current_user.id, template: %w[reminder deadline_soon_reminder])
+
+  expect(scoped_emails).not_to be_empty
+  expect(scoped_emails.pluck(:template).uniq).to eq(['deadline_soon_reminder'])
+  expect(scoped_emails.map(&:subject)).not_to include('Unrelated approved mail')
+  expect(scoped_emails.map(&:subject)).not_to include('Reminder for a different visit')
+  expect(scoped_emails.first.visits).to eq([visit])
 end
 
 Then(/^the day after the take back I receive a remember email$/) do
