@@ -16,6 +16,7 @@ Feature: Sending email for orders placed by a delegation
     When I send a reminder for this take back
     Then the reminder is sent to the one who picked up the order
     And the approval email is not sent to the delegated user
+    And the reminder email is tied to the correct visit
 
   Scenario: Sending email from the client to a delegation
     When I search for a delegation
