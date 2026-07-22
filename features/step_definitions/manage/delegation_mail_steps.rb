@@ -38,6 +38,12 @@ Then(/^the approval email is not sent to the delegated user$/) do
   expect(@contract.user.delegator_user.email_addresses).not_to include Email.first.to_address
 end
 
+Then(/^the approval email is tagged with the approved template and pool$/) do
+  email = Email.first
+  expect(email.template).to eq('approved')
+  expect(email.source_pool_id).to eq(@order.inventory_pool_id)
+end
+
 
 When(/^I send a reminder for this take back$/) do
   step 'I navigate to the take back visits'

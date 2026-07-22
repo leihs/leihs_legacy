@@ -10,6 +10,7 @@ Feature: Sending email for orders placed by a delegation
     Then I receive a notification of success
     And the approval email is sent to the orderer
     And the approval email is not sent to the delegated user
+    And the approval email is tagged with the approved template and pool
 
   Scenario: Reminder email for a delegation's order
     Given there is an overdue take back for a delegation that was not placed by a person responsible for that delegation
