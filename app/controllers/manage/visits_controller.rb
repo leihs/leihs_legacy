@@ -45,7 +45,11 @@ class Manage::VisitsController < Manage::ApplicationController
             end
 
             v['emails'] = \
-              user.emails.where('created_at >= ?', v['date']).order(created_at: :desc)
+              user.emails
+                  .joins(:email_visits)
+                  .where(template: %w[reminder deadline_soon_reminder],
+                         email_visits: { visit_id: v['id'] })
+                  .order(created_at: :desc)
           end
 
           render json: visits_json and return
@@ -92,7 +96,7 @@ class Manage::VisitsController < Manage::ApplicationController
     end
     grouped_reservations.each_pair do |k, reservations|
       user = User.find(k[:user_id])
-      user.remind(reservations)
+      user.remind(reservations, [visit.id])
     end
 
     head :ok

@@ -51,6 +51,43 @@ Then(/^the day after the take back I receive a remember email$/) do
   expect(Email.where(user_id: @current_user.id).empty?).to be false
 
   expect(Email.all.detect {|x| x.to_address == @current_user.email }.nil?).to be false
+
+  overdue_reservation = @current_user.reservations.signed.where('end_date < ?', Date.today).first
+  pool = overdue_reservation.inventory_pool
+  visit = pool.visits.take_back.where(user_id: @current_user.id).where('date = ?', overdue_reservation.end_date).first
+  expect(visit).not_to be_nil
+
+  # an unrelated, non-reminder email for the same user/pool must not be
+  # picked up by the visits-list reminder scoping
+  Email.create!(user_id: @current_user.id,
+                to_address: @current_user.email,
+                from_address: 'sender@example.com',
+                subject: 'Unrelated approved mail',
+                body: 'x',
+                template: 'approved',
+                source_pool_id: pool.id)
+
+  # a reminder tied to a different visit for the same user/pool must not
+  # leak into this visit's scoped reminder list either
+  other_visit_email = Email.create!(user_id: @current_user.id,
+                                    to_address: @current_user.email,
+                                    from_address: 'sender@example.com',
+                                    subject: 'Reminder for a different visit',
+                                    body: 'x',
+                                    template: 'reminder',
+                                    source_pool_id: pool.id)
+  EmailVisit.create!(email: other_visit_email, visit_id: SecureRandom.uuid)
+
+  scoped_emails = \
+    @current_user.emails
+                 .joins(:email_visits)
+                 .where(template: %w[reminder deadline_soon_reminder],
+                        email_visits: { visit_id: visit.id })
+
+  expect(scoped_emails).not_to be_empty
+  expect(scoped_emails.pluck(:template).uniq).to eq(['reminder'])
+  expect(scoped_emails.map(&:subject)).not_to include('Unrelated approved mail')
+  expect(scoped_emails.map(&:subject)).not_to include('Reminder for a different visit')
 end
 
 Then(/^for each further day I receive an additional remember email$/) do
