@@ -3,4 +3,5 @@ class EmailVisit < ApplicationRecord
   self.primary_key = [:email_id, :visit_id]
 
   belongs_to :email
+  belongs_to :visit
 end

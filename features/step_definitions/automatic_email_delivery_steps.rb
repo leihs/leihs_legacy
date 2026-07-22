@@ -79,15 +79,13 @@ Then(/^the day after the take back I receive a remember email$/) do
   EmailVisit.create!(email: other_visit_email, visit_id: SecureRandom.uuid)
 
   scoped_emails = \
-    @current_user.emails
-                 .joins(:email_visits)
-                 .where(template: %w[reminder deadline_soon_reminder],
-                        email_visits: { visit_id: visit.id })
+    visit.emails.where(user_id: @current_user.id, template: %w[reminder deadline_soon_reminder])
 
   expect(scoped_emails).not_to be_empty
   expect(scoped_emails.pluck(:template).uniq).to eq(['reminder'])
   expect(scoped_emails.map(&:subject)).not_to include('Unrelated approved mail')
   expect(scoped_emails.map(&:subject)).not_to include('Reminder for a different visit')
+  expect(scoped_emails.first.visits).to eq([visit])
 end
 
 Then(/^for each further day I receive an additional remember email$/) do
