@@ -102,3 +102,39 @@ Then(/^for each further day I receive an additional remember email$/) do
   expect(Email.all.detect {|x| x.to_address == @current_user.email }.nil?).to be false
 end
 
+Given(/^I have two overdue take backs with different end dates in the same pool$/) do
+  first_reservation = @current_user.reservations.signed.first
+  pool = first_reservation.inventory_pool
+
+  item = FactoryBot.create(:item, owner: pool, inventory_pool: pool)
+  contract = FactoryBot.create(:open_contract,
+                               user: @current_user,
+                               inventory_pool: pool,
+                               items: [item],
+                               start_date: Time.zone.today,
+                               end_date: Time.zone.today + 3.days)
+  second_reservation = contract.reservations.first
+
+  @bundling_pool = pool
+  Dataset.back_to_date(second_reservation.end_date + 1.day)
+
+  overdue_reservations = @current_user.reservations.signed.where(inventory_pool_id: pool.id).where('end_date < ?', Date.today)
+  expect(overdue_reservations.pluck(:end_date).uniq.length).to eq(2)
+end
+
+When(/^the overdue reminders are sent$/) do
+  User.remind_and_suspend_all
+end
+
+Then(/^one reminder email is sent that is tied to both visits$/) do
+  reminder_emails = Email.where(user_id: @current_user.id,
+                                template: 'reminder',
+                                source_pool_id: @bundling_pool.id)
+
+  expect(reminder_emails.count).to eq(1)
+
+  visits = reminder_emails.first.visits
+  expect(visits.length).to eq(2)
+  expect(visits.map(&:inventory_pool_id).uniq).to eq([@bundling_pool.id])
+end
+
