@@ -1744,22 +1744,22 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/linegroup/selection.feature:10
-- name: features/manage/mails/delegation_mail.feature:14
+- name: features/manage/mails/delegation_mail.feature:15
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/mails/delegation_mail.feature:14
-- name: features/manage/mails/delegation_mail.feature:20
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/mails/delegation_mail.feature:15
+- name: features/manage/mails/delegation_mail.feature:22
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/mails/delegation_mail.feature:20
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/mails/delegation_mail.feature:22
 - name: features/manage/mails/delegation_mail.feature:6
   scripts:
     test:
@@ -2608,6 +2608,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/automatic_email_notification.feature:13
+- name: features/technical/automatic_email_notification.feature:19
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/technical/automatic_email_notification.feature:19
 - name: features/technical/automatic_email_notification.feature:8
   scripts:
     test:
