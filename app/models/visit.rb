@@ -24,6 +24,9 @@ class Visit < ApplicationRecord
   belongs_to :user
   belongs_to :inventory_pool
 
+  has_many :email_visits, foreign_key: :visit_id, inverse_of: :visit
+  has_many :emails, through: :email_visits
+
   #################################################################################
   def reservations
     Reservation.where(id: reservation_ids)

@@ -38,6 +38,12 @@ Then(/^the approval email is not sent to the delegated user$/) do
   expect(@contract.user.delegator_user.email_addresses).not_to include Email.first.to_address
 end
 
+Then(/^the approval email is tagged with the approved template and pool$/) do
+  email = Email.first
+  expect(email.template).to eq('approved')
+  expect(email.source_pool_id).to eq(@order.inventory_pool_id)
+end
+
 
 When(/^I send a reminder for this take back$/) do
   step 'I navigate to the take back visits'
@@ -54,6 +60,22 @@ Then(/^the reminder is sent to the one who picked up the order$/) do
 
   #step "wird das Genehmigungsmail an den Besteller versendet"
   step 'the approval email is sent to the orderer'
+end
+
+Then(/^the reminder email is tied to the correct visit$/) do
+  pool_ids = @contract.reservations.map(&:inventory_pool_id).uniq
+  user_ids = @contract.reservations.map(&:user_id).uniq
+
+  reminder_emails = Email.where(template: 'reminder', source_pool_id: pool_ids)
+  expect(reminder_emails.count).to eq(1)
+
+  visits = reminder_emails.first.visits
+  expect(visits.length).to eq(1)
+
+  visit = visits.first
+  expect(pool_ids).to include(visit.inventory_pool_id)
+  expect(user_ids).to include(visit.user_id)
+  expect(visit.date).to be < Date.today
 end
 
 Then(/^the reminder is not sent to the delegated user$/) do

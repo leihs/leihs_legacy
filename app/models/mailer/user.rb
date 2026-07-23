@@ -8,7 +8,7 @@ module Mailer::User
     I18n.locale = language || I18n.default_locale
   end
 
-  def remind(user, inventory_pool, reservations)
+  def remind(user, inventory_pool, reservations, visit_ids)
     choose_language_for(user)
 
     name = 'reminder'
@@ -23,22 +23,25 @@ module Mailer::User
                                                      reservations))
 
     user.email_addresses.each do |user_email|
-      Email.create!(user_id: user.id,
-                    to_address: user_email,
-                    from_address: (inventory_pool.email || SmtpSetting.first.default_from_address),
-                    subject: template.subject,
-                    body: body)
+      email = Email.create!(user_id: user.id,
+                            to_address: user_email,
+                            from_address: (inventory_pool.email || SmtpSetting.first.default_from_address),
+                            subject: template.subject,
+                            body: body,
+                            template: name,
+                            source_pool_id: inventory_pool.id)
+      visit_ids.each { |visit_id| EmailVisit.create!(email: email, visit_id: visit_id) }
     end
   end
 
-  def deadline_soon_reminder(user, inventory_pool, reservations)
+  def deadline_soon_reminder(user, inventory_pool, reservations, visit_ids)
     choose_language_for(user)
 
     name = 'deadline_soon_reminder'
     template = MailTemplate.get_template(inventory_pool,
                                          name,
                                          user.language)
-    body = 
+    body =
       Liquid::Template
       .parse(template.body)
       .render(MailTemplate.liquid_variables_for_user(user,
@@ -46,11 +49,14 @@ module Mailer::User
                                                      reservations))
 
     user.email_addresses.each do |user_email|
-      Email.create!(user_id: user.id,
-                    to_address: user_email,
-                    from_address: (inventory_pool.email || Setting.first.default_from_address),
-                    subject: template.subject,
-                    body: body)
+      email = Email.create!(user_id: user.id,
+                            to_address: user_email,
+                            from_address: (inventory_pool.email || Setting.first.default_from_address),
+                            subject: template.subject,
+                            body: body,
+                            template: name,
+                            source_pool_id: inventory_pool.id)
+      visit_ids.each { |visit_id| EmailVisit.create!(email: email, visit_id: visit_id) }
     end
   end
 end
