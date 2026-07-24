@@ -53,7 +53,8 @@ class Manage::ModelsController < Manage::ApplicationController
       store_attachment_path: manage_model_store_attachment_react_path,
       store_image_path: manage_model_store_image_react_path,
       inventory_path: manage_inventory_path,
-      type: (params[:type] == 'software' ? 'software' : 'model')
+      type: (params[:type] == 'software' ? 'software' : 'model'),
+      has_pickup_locations: current_inventory_pool.pickup_locations.exists?
     }
   end
 
@@ -150,6 +151,7 @@ class Manage::ModelsController < Manage::ApplicationController
       store_image_path: manage_model_store_image_react_path,
       inventory_path: manage_inventory_path,
       type: (model.type == 'Software' ? 'software' : 'model'),
+      has_pickup_locations: current_inventory_pool.pickup_locations.exists?,
       edit_data: {
         model: model,
         max_borrowable_quantity: max_borrowable_quantity,

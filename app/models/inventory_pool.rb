@@ -79,6 +79,8 @@ class InventoryPool < ApplicationRecord
     end
   end
 
+  has_many :pickup_locations, dependent: :delete_all
+
   has_many :mail_templates, dependent: :delete_all
 
   def suppliers
