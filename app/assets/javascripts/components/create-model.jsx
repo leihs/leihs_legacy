@@ -1038,18 +1038,18 @@
 
       var fields = [
         'product',
-        'is_package'
-      ]
-      if(this.props.has_pickup_locations) {
-        fields.push('transportable')
-      }
-      return fields.concat([
+        'is_package',
         'version',
         'manufacturer',
         'description',
         'technical_details',
         'internal_description',
-        'hand_over_notes',
+        'hand_over_notes'
+      ]
+      if(this.props.has_pickup_locations) {
+        fields.push('transportable')
+      }
+      return fields.concat([
         'allocations',
         'categories'
       ])
