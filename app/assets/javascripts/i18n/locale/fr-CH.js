@@ -2649,6 +2649,10 @@ window.i18n.locale_data = {
          null,
          "ceci est un paquet"
       ],
+      "Model is transportable": [
+         null,
+         "Le modèle est transportable"
+      ],
       "to edit this item": [
          null,
          "pour modifier cet élément"

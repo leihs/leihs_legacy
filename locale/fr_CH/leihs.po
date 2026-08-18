@@ -1977,6 +1977,9 @@ msgstr "par conséquent, vous ne pourrez peut-être pas modifier certains de ces
 msgid "this is a package"
 msgstr "ceci est un paquet"
 
+msgid "Model is transportable"
+msgstr "Le modèle est transportable"
+
 msgid "to edit this item"
 msgstr "pour modifier cet élément"
 

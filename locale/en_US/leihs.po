@@ -1971,6 +1971,9 @@ msgstr ""
 msgid "this is a package"
 msgstr ""
 
+msgid "Model is transportable"
+msgstr ""
+
 msgid "to edit this item"
 msgstr ""
 

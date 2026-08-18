@@ -190,6 +190,17 @@
             checked: (edit ? model.is_package : false)
           }),
 
+          ...(this.props.enable_alternative_pickup_locations ? [
+            this.createFieldModel({
+              type: 'checkbox',
+              key: 'transportable',
+              label: 'Model is transportable',
+              mandatory: false,
+
+              checked: (edit ? model.transportable : true)
+            })
+          ] : []),
+
           this.createFieldModel({
             type: 'text',
             key: 'version',
@@ -745,6 +756,10 @@
         m.model.is_package = this.fieldByKey('is_package').state.checked
       }
 
+      if(this.props.enable_alternative_pickup_locations && this.props.type != 'software') {
+        m.model.transportable = this.fieldByKey('transportable').state.checked
+      }
+
       return m
     },
 
@@ -1023,7 +1038,7 @@
         ]
       }
 
-      return [
+      var fields = [
         'product',
         'is_package',
         'version',
@@ -1031,10 +1046,15 @@
         'description',
         'technical_details',
         'internal_description',
-        'hand_over_notes',
+        'hand_over_notes'
+      ]
+      if(this.props.enable_alternative_pickup_locations) {
+        fields.push('transportable')
+      }
+      return fields.concat([
         'allocations',
         'categories'
-      ]
+      ])
     },
 
     rightFields() {

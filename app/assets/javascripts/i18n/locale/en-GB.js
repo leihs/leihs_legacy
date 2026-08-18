@@ -2518,6 +2518,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Model is transportable": [
+         null,
+         ""
+      ],
       "to edit this item": [
          null,
          ""
