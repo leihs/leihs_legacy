@@ -2018,6 +2018,9 @@ msgstr "deshalb können Sie einige Felder nicht editieren"
 msgid "this is a package"
 msgstr "dies ist ein Paket"
 
+msgid "Transportable (items can be shipped by courier)"
+msgstr "Transportfähig (Gegenstände können per Kurier versendet werden)"
+
 msgid "to edit this item"
 msgstr "diesen Gegenstand zu editieren"
 

@@ -191,6 +191,15 @@
           }),
 
           this.createFieldModel({
+            type: 'checkbox',
+            key: 'transportable',
+            label: 'Transportable (items can be shipped by courier)',
+            mandatory: false,
+
+            checked: (edit ? model.transportable : true)
+          }),
+
+          this.createFieldModel({
             type: 'text',
             key: 'version',
             label: 'Version',
@@ -745,6 +754,10 @@
         m.model.is_package = this.fieldByKey('is_package').state.checked
       }
 
+      if(this.props.has_pickup_locations) {
+        m.model.transportable = this.fieldByKey('transportable').state.checked
+      }
+
       return m
     },
 
@@ -1023,9 +1036,14 @@
         ]
       }
 
-      return [
+      var fields = [
         'product',
-        'is_package',
+        'is_package'
+      ]
+      if(this.props.has_pickup_locations) {
+        fields.push('transportable')
+      }
+      return fields.concat([
         'version',
         'manufacturer',
         'description',
@@ -1034,7 +1052,7 @@
         'hand_over_notes',
         'allocations',
         'categories'
-      ]
+      ])
     },
 
     rightFields() {

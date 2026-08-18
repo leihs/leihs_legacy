@@ -1910,6 +1910,9 @@ msgstr "drum chönd si allefalls einige Fälder nöd ändere"
 msgid "this is a package"
 msgstr "das isch es Paket"
 
+msgid "Transportable (items can be shipped by courier)"
+msgstr ""
+
 msgid "to edit this item"
 msgstr "dä Gägestand ändere"
 

@@ -1932,6 +1932,9 @@ msgstr ""
 msgid "this is a package"
 msgstr ""
 
+msgid "Transportable (items can be shipped by courier)"
+msgstr ""
+
 msgid "to edit this item"
 msgstr ""
 
