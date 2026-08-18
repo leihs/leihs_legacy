@@ -2518,6 +2518,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Transportable (items can be shipped by courier)": [
+         null,
+         ""
+      ],
       "to edit this item": [
          null,
          ""
