@@ -1910,6 +1910,15 @@ msgstr "drum chönd si allefalls einige Fälder nöd ändere"
 msgid "this is a package"
 msgstr "das isch es Paket"
 
+msgid "Model is transportable"
+msgstr "Modell isch transportierbar"
+
+msgid "Software is transportable"
+msgstr "Software isch transportierbar"
+
+msgid "Ordering at alternative pickup locations possible"
+msgstr "Bestellig a alternativ Abholort möglich"
+
 msgid "to edit this item"
 msgstr "dä Gägestand ändere"
 

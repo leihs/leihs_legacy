@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eux
 
-asdf install nodejs
+./bin/env/nodejs-setup
 
 export RAILS_ENV=production
 export NODE_ENV=production
@@ -9,6 +9,10 @@ export LEIHS_SECRET=secret
 export SECRET_KEY_BASE_DUMMY=1
 
 npm ci --ignore-scripts
+
+# Webpacker 5 still shells out to `yarn --version` even though this app uses npm.
+# yarn is installed as an npm dependency; put it on PATH for the rake tasks below.
+export PATH="$PWD/node_modules/.bin:$PATH"
 
 # i18n/locales
 bundle exec rake app:i18n:po2json

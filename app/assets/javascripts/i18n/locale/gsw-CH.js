@@ -2550,6 +2550,18 @@ window.i18n.locale_data = {
          null,
          "das isch es Paket"
       ],
+      "Model is transportable": [
+         null,
+         "Modell isch transportierbar"
+      ],
+      "Software is transportable": [
+         null,
+         "Software isch transportierbar"
+      ],
+      "Ordering at alternative pickup locations possible": [
+         null,
+         "Bestellig a alternativ Abholort möglich"
+      ],
       "to edit this item": [
          null,
          "dä Gägestand ändere"
