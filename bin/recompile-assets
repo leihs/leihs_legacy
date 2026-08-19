@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 set -eux
 
-asdf install nodejs
+PROJECT_DIR="$(cd -- "$(dirname "${BASH_SOURCE}")" ; cd .. > /dev/null 2>&1 && pwd -P)"
+cd "$PROJECT_DIR"
+
+source "$PROJECT_DIR/bin/env/select-tool-versions-manager"
+./bin/env/nodejs-setup
 
 export RAILS_ENV=production
 export NODE_ENV=production
@@ -9,6 +13,9 @@ export LEIHS_SECRET=secret
 export SECRET_KEY_BASE_DUMMY=1
 
 npm ci --ignore-scripts
+
+export PATH="$PROJECT_DIR/node_modules/.bin:$PATH"
+export NODE_OPTIONS="--openssl-legacy-provider"
 
 # i18n/locales
 bundle exec rake app:i18n:po2json
