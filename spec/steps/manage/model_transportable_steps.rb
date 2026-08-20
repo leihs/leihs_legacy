@@ -27,6 +27,11 @@ module Manage
         FactoryBot.create(:pickup_location, inventory_pool: @current_inventory_pool)
       end
 
+      step 'the current pool has alternative pickup locations enabled' do
+        FactoryBot.create(:pickup_location, inventory_pool: @current_inventory_pool)
+        @current_inventory_pool.update!(enable_alternative_pickup_locations: true)
+      end
+
       step 'the transportable checkbox is not visible' do
         expect(page).not_to have_selector('#transportable')
       end

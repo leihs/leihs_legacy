@@ -4,7 +4,7 @@ Feature: Model transportable
     Given personas dump is loaded
 
   @manage_model_transportable
-  Scenario: Transportable checkbox is hidden when the pool has no pickup locations
+  Scenario: Transportable checkbox is hidden when alternative pickup locations are disabled
     Given I am Mike
     When I open the create model page
     Then the transportable checkbox is not visible
@@ -13,9 +13,19 @@ Feature: Model transportable
     Then the transportable checkbox is not visible
 
   @manage_model_transportable
-  Scenario: Transportable checkbox is shown and persisted when the pool has pickup locations
+  Scenario: Transportable checkbox is hidden when pool has locations but feature is disabled
     Given I am Mike
     And the current pool has a pickup location
+    When I open the create model page
+    Then the transportable checkbox is not visible
+    Given there is a model
+    When I open the edit page of the model
+    Then the transportable checkbox is not visible
+
+  @manage_model_transportable
+  Scenario: Transportable checkbox is shown and persisted when alternative pickup locations are enabled
+    Given I am Mike
+    And the current pool has alternative pickup locations enabled
     When I open the create model page
     Then the transportable checkbox is visible
     And the transportable checkbox is checked

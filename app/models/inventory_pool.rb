@@ -83,7 +83,7 @@ class InventoryPool < ApplicationRecord
   has_many :pickup_locations, dependent: :delete_all, inverse_of: :inventory_pool
 
   def has_pickup_locations?
-    pickup_locations.exists?
+    enable_alternative_pickup_locations
   end
 
   def suppliers
