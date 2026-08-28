@@ -236,7 +236,7 @@ class User < ApplicationRecord
     grouped_reservation_visits = \
       Visit
         .take_back_overdue
-        .flat_map { |visit| visit.reservations.map { |vl| [vl, visit] } }
+        .flat_map { |visit| visit.reservations.not_dropped_off_at_pickup_location.map { |vl| [vl, visit] } }
         .group_by do |(vl, _visit)|
           { inventory_pool: vl.inventory_pool,
             user_id: (vl.delegated_user_id || vl.user_id) }
@@ -251,7 +251,7 @@ class User < ApplicationRecord
     grouped_reservations = \
       Visit
         .take_back_overdue
-        .flat_map(&:reservations)
+        .flat_map { |visit| visit.reservations.not_dropped_off_at_pickup_location }
         .group_by do |vl|
           { inventory_pool: vl.inventory_pool, user_id: vl.user_id }
         end
@@ -266,7 +266,7 @@ class User < ApplicationRecord
       Visit
         .take_back
         .where('date = ?', Date.tomorrow)
-        .flat_map { |visit| visit.reservations.map { |vl| [vl, visit] } }
+        .flat_map { |visit| visit.reservations.not_dropped_off_at_pickup_location.map { |vl| [vl, visit] } }
         .group_by do |(vl, _visit)|
           { inventory_pool: vl.inventory_pool,
             user_id: (vl.delegated_user_id || vl.user_id) }

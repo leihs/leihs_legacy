@@ -40,6 +40,8 @@ class Reservation < ApplicationRecord
     scope status, -> { where(status: status) }
   end
 
+  scope :not_dropped_off_at_pickup_location, -> { where(sent_back_to_main_location_at: nil) }
+
   #########################################################################
 
   default_scope { order(:created_at) }
