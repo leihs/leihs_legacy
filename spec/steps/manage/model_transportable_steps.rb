@@ -27,6 +27,18 @@ module Manage
         visit manage_edit_model_path(@current_inventory_pool, @model)
       end
 
+      step 'there is a software' do
+        @software = FactoryBot.create(:software, transportable: true)
+      end
+
+      step 'I open the edit page of the software' do
+        visit manage_edit_model_path(@current_inventory_pool, @software)
+      end
+
+      step 'I open the edit page of the created software' do
+        visit manage_edit_model_path(@current_inventory_pool, @software)
+      end
+
       step 'there is a package model' do
         @model = FactoryBot.create(:package_model)
       end
@@ -90,6 +102,15 @@ module Manage
 
       step 'the created model is transportable' do
         expect(@model.reload.transportable).to eq(true)
+      end
+
+      step 'the created software is not transportable' do
+        @software = Software.find_by!(product: @product_name)
+        expect(@software.transportable).to eq(false)
+      end
+
+      step 'the created software is transportable' do
+        expect(@software.reload.transportable).to eq(true)
       end
     end
   end

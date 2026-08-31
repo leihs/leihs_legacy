@@ -2635,6 +2635,10 @@ window.i18n.locale_data = {
          null,
          "Modell ist transportierbar"
       ],
+      "Software is transportable": [
+         null,
+         "Software ist transportierbar"
+      ],
       "to edit this item": [
          null,
          "diesen Gegenstand zu editieren"

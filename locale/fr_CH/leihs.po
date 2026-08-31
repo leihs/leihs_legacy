@@ -1980,6 +1980,9 @@ msgstr "ceci est un paquet"
 msgid "Model is transportable"
 msgstr "Le modèle est transportable"
 
+msgid "Software is transportable"
+msgstr "Le logiciel est transportable"
+
 msgid "to edit this item"
 msgstr "pour modifier cet élément"
 

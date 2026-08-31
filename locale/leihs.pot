@@ -1935,6 +1935,9 @@ msgstr ""
 msgid "Model is transportable"
 msgstr ""
 
+msgid "Software is transportable"
+msgstr ""
+
 msgid "to edit this item"
 msgstr ""
 

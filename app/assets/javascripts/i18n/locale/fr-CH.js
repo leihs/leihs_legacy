@@ -2653,6 +2653,10 @@ window.i18n.locale_data = {
          null,
          "Le modèle est transportable"
       ],
+      "Software is transportable": [
+         null,
+         "Le logiciel est transportable"
+      ],
       "to edit this item": [
          null,
          "pour modifier cet élément"

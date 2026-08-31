@@ -2554,6 +2554,10 @@ window.i18n.locale_data = {
          null,
          "Modell isch transportierbar"
       ],
+      "Software is transportable": [
+         null,
+         "Software isch transportierbar"
+      ],
       "to edit this item": [
          null,
          "dä Gägestand ändere"

@@ -2619,6 +2619,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Software is transportable": [
+         null,
+         ""
+      ],
       "to edit this item": [
          null,
          ""

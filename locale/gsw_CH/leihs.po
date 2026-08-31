@@ -1913,6 +1913,9 @@ msgstr "das isch es Paket"
 msgid "Model is transportable"
 msgstr "Modell isch transportierbar"
 
+msgid "Software is transportable"
+msgstr "Software isch transportierbar"
+
 msgid "to edit this item"
 msgstr "dä Gägestand ändere"
 

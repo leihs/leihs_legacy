@@ -2021,6 +2021,9 @@ msgstr "dies ist ein Paket"
 msgid "Model is transportable"
 msgstr "Modell ist transportierbar"
 
+msgid "Software is transportable"
+msgstr "Software ist transportierbar"
+
 msgid "to edit this item"
 msgstr "diesen Gegenstand zu editieren"
 

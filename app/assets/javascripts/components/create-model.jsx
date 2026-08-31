@@ -127,6 +127,16 @@
               manufacturer: (edit ? model.manufacturer || '' : '')
             }),
 
+            ...(this.props.enable_alternative_pickup_locations ? [
+              this.createFieldModel({
+                type: 'checkbox',
+                key: 'transportable',
+                label: 'Software is transportable',
+                mandatory: false,
+
+                checked: (edit ? model.transportable : true)
+              })
+            ] : []),
 
             this.createFieldModel({
               type: 'software_information',
@@ -194,7 +204,7 @@
             this.createFieldModel({
               type: 'checkbox',
               key: 'transportable',
-              label: 'Model is transportable',
+              label: (this.props.type == 'software' ? 'Software is transportable' : 'Model is transportable'),
               mandatory: false,
 
               checked: (edit ? model.transportable : true)
@@ -601,7 +611,7 @@
 
       if(this.props.type == 'software') {
 
-        return {
+        var softwareRequest = {
           // NOTE: Rails unfortunately automatically wraps the parameters {model: {...}} if you dont do it,
           // which is confusing, but we do it anyways here explicitly.
           model: {
@@ -631,6 +641,12 @@
 
           }
         }
+
+        if(this.props.enable_alternative_pickup_locations) {
+          softwareRequest.model.transportable = this.fieldByKey('transportable').state.checked
+        }
+
+        return softwareRequest
 
 
       }
@@ -756,7 +772,7 @@
         m.model.is_package = this.fieldByKey('is_package').state.checked
       }
 
-      if(this.props.enable_alternative_pickup_locations && this.props.type != 'software') {
+      if(this.props.enable_alternative_pickup_locations) {
         m.model.transportable = this.fieldByKey('transportable').state.checked
       }
 
@@ -1031,11 +1047,15 @@
     leftFields() {
 
       if(this.props.type == 'software') {
-        return [
+        var softwareFields = [
           'product',
           'version',
           'manufacturer'
         ]
+        if(this.props.enable_alternative_pickup_locations) {
+          softwareFields.push('transportable')
+        }
+        return softwareFields
       }
 
       var fields = [
