@@ -72,6 +72,7 @@ class InventoryPool < ApplicationRecord
   has_many :visits
   has_many :orders
   has_many :contracts
+  has_many :pickup_locations
 
   has_many :entitlement_groups do
     def with_general

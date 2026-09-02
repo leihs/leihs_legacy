@@ -12,6 +12,10 @@ class MailTemplate < ApplicationRecord
     destroy if body.blank?
   end
 
+  def self.pickup_location_name_for(reservation, inventory_pool)
+    reservation.pickup_location&.name || inventory_pool.default_pickup_location_name
+  end
+
   def self.liquid_variables_for_order(order, comment = nil)
     { user: { name: order.target_user.name },
       inventory_pool: { name: order.inventory_pool.name,
@@ -25,7 +29,8 @@ class MailTemplate < ApplicationRecord
        { quantity: l.quantity,
          model_name: l.model.name,
          start_date: l.start_date,
-         end_date: l.end_date }
+         end_date: l.end_date,
+         pickup_location_name: pickup_location_name_for(l, order.inventory_pool) }
       end,
       comment: comment,
       purpose: order.purpose,
@@ -47,7 +52,8 @@ class MailTemplate < ApplicationRecord
          model_name: l.model.name,
          item_inventory_code: l.item.inventory_code,
          start_date: l.start_date,
-         end_date: l.end_date }
+         end_date: l.end_date,
+         pickup_location_name: pickup_location_name_for(l, inventory_pool) }
       end,
       quantity: reservations.to_a.sum(&:quantity),
       due_date: reservations.first.end_date

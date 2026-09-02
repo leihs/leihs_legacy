@@ -18,6 +18,7 @@ class Reservation < ApplicationRecord
   belongs_to :model
   belongs_to :handed_over_by_user, class_name: 'User'
   belongs_to :returned_to_user, class_name: 'User'
+  belongs_to :pickup_location, optional: true
 
   has_many :entitlement_groups, through: :user
 
