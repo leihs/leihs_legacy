@@ -1983,6 +1983,9 @@ msgstr "Le modèle est transportable"
 msgid "Software is transportable"
 msgstr "Le logiciel est transportable"
 
+msgid "Ordering at alternative pickup locations possible"
+msgstr "Commande possible vers des lieux de retrait alternatifs"
+
 msgid "to edit this item"
 msgstr "pour modifier cet élément"
 

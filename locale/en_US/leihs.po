@@ -1977,6 +1977,9 @@ msgstr ""
 msgid "Software is transportable"
 msgstr ""
 
+msgid "Ordering at alternative pickup locations possible"
+msgstr ""
+
 msgid "to edit this item"
 msgstr ""
 

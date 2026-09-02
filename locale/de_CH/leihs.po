@@ -2024,6 +2024,9 @@ msgstr "Modell ist transportierbar"
 msgid "Software is transportable"
 msgstr "Software ist transportierbar"
 
+msgid "Ordering at alternative pickup locations possible"
+msgstr "Bestellung an alternative Abholorte möglich"
+
 msgid "to edit this item"
 msgstr "diesen Gegenstand zu editieren"
 

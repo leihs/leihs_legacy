@@ -2639,6 +2639,10 @@ window.i18n.locale_data = {
          null,
          "Software ist transportierbar"
       ],
+      "Ordering at alternative pickup locations possible": [
+         null,
+         "Bestellung an alternative Abholorte möglich"
+      ],
       "to edit this item": [
          null,
          "diesen Gegenstand zu editieren"

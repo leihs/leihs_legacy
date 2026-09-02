@@ -18,6 +18,7 @@
         label: label,
         mandatory: mandatory,
         disabled: disabled,
+        info: params.info,
         specific: params.specific
       }
 
@@ -132,6 +133,7 @@
                 type: 'checkbox',
                 key: 'transportable',
                 label: 'Software is transportable',
+                info: 'Ordering at alternative pickup locations possible',
                 mandatory: false,
 
                 checked: (edit ? model.transportable : true)
@@ -205,6 +207,7 @@
               type: 'checkbox',
               key: 'transportable',
               label: (this.props.type == 'software' ? 'Software is transportable' : 'Model is transportable'),
+              info: 'Ordering at alternative pickup locations possible',
               mandatory: false,
 
               checked: (edit ? model.transportable : true)
@@ -2412,6 +2415,25 @@
         }
       }
       var renderMandatory = () => (f.mandatory ? ' *' : null)
+      var renderInfo = () => (f.info ? (
+        <i className='fa fa-info-circle'
+           style={{marginLeft: '0.35em', color: '#888', cursor: 'help'}}
+           ref={(el) => {
+             if (!el || el._tooltipsterInit) {
+               return
+             }
+             el._tooltipsterInit = true
+             $(el).tooltipster({
+               animation: 'fade',
+               arrow: true,
+               content: _jed(f.info),
+               delay: 0,
+               theme: 'tooltipster-default',
+               trigger: 'hover',
+               contentAsHTML: false
+             })
+           }}></i>
+      ) : null)
 
       var labelStyle = {
         color: (f.disabled ? '#aaa' : '3a3a3a')
@@ -2425,6 +2447,7 @@
               <strong className='font-size-m inline-block' style={labelStyle}>
                 {renderLabel()}
                 {renderMandatory()}
+                {renderInfo()}
               </strong>
             </div>
             <div className='col1of2'>

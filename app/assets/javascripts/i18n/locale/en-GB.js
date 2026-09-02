@@ -2526,6 +2526,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Ordering at alternative pickup locations possible": [
+         null,
+         ""
+      ],
       "to edit this item": [
          null,
          ""

@@ -1916,6 +1916,9 @@ msgstr "Modell isch transportierbar"
 msgid "Software is transportable"
 msgstr "Software isch transportierbar"
 
+msgid "Ordering at alternative pickup locations possible"
+msgstr "Bestellig a alternativ Abholort möglich"
+
 msgid "to edit this item"
 msgstr "dä Gägestand ändere"
 

@@ -2558,6 +2558,10 @@ window.i18n.locale_data = {
          null,
          "Software isch transportierbar"
       ],
+      "Ordering at alternative pickup locations possible": [
+         null,
+         "Bestellig a alternativ Abholort möglich"
+      ],
       "to edit this item": [
          null,
          "dä Gägestand ändere"
