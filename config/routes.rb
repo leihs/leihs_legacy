@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   if Rails.env.test?
     # NOTE: needed because of some assertions in tests
     get 'borrow', to: 'application#borrow'
+    post 'redirect_then_query', to: 'application#redirect_then_query'
   end
 
   if Rails.env.development? or Rails.env.test?

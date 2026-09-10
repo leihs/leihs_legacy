@@ -10,6 +10,27 @@ module DevTestMisc
         def borrow
           render plain: "BORROW\nRails-Env: #{Rails.env}\nCurrent-User: #{current_user.name}"
         end
+
+        # Regression test for Madek/Madek#946: catches a genuine DB-level
+        # abort locally (like a real controller's rescue block would), calls
+        # `redirect_to` -- which should heal the connection -- and then
+        # writes to the DB again. If the heal didn't happen, this write
+        # silently fails to persist (connection still aborted at that
+        # point), which the spec observes as a missing Language row, without
+        # needing the request itself to crash.
+        def redirect_then_query
+          begin
+            ActiveRecord::Base.connection.execute('SELECT 1/0')
+          rescue ActiveRecord::StatementInvalid
+          end
+
+          redirect_to status_path
+
+          begin
+            Language.create!(name: 'Test Language After Redirect', locale: 'xx')
+          rescue ActiveRecord::StatementInvalid
+          end
+        end
       end
 
       def sign_in
