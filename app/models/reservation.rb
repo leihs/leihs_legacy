@@ -158,9 +158,13 @@ class Reservation < ApplicationRecord
   end
 
   def start_date_within_advance_days_period?
-    start_date < (
-      Date.today + inventory_pool.borrow_reservation_advance_days.to_i.day
-    )
+    if pickup_location_id
+      start_date < inventory_pool.earliest_possible_pickup_date(advance_days_with_pickup_location)
+    else
+      start_date < (
+        Date.today + inventory_pool.borrow_reservation_advance_days.to_i.day
+      )
+    end
   end
 
   # custom valid? method
@@ -248,6 +252,11 @@ class Reservation < ApplicationRecord
   ############################################
 
   private
+
+  def advance_days_with_pickup_location
+    [inventory_pool.borrow_reservation_advance_days.to_i,
+     inventory_pool.transfer_buffer_before_pick_up.to_i].max
+  end
 
   def date_sequence
     # OPTIMIZE: strange behavior: in some cases, this error raises when shouldn't

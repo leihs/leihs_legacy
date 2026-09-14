@@ -30,6 +30,29 @@ class Workday < ApplicationRecord
     end
   end
 
+  def orders_processing_day?(date)
+    return false if date.nil?
+
+    case date.wday
+    when 1
+      return monday_orders_processing
+    when 2
+      return tuesday_orders_processing
+    when 3
+      return wednesday_orders_processing
+    when 4
+      return thursday_orders_processing
+    when 5
+      return friday_orders_processing
+    when 6
+      return saturday_orders_processing
+    when 0
+      return sunday_orders_processing
+    else
+      return false # Should not be reached
+    end
+  end
+
   def previous_open_date(date = Time.zone.today)
     unless closed_days.size == 7
       until open_on?(date -= 1.day); end

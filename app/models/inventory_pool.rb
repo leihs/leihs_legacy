@@ -126,6 +126,7 @@ class InventoryPool < ApplicationRecord
      reservations.end_date,
      reservations.returned_date,
      reservations.status,
+     reservations.pickup_location_id,
      ARRAY(
        SELECT egu.entitlement_group_id
        FROM entitlement_groups_users egu
@@ -221,6 +222,41 @@ class InventoryPool < ApplicationRecord
 
   def open_on?(date)
     workday.open_on?(date) and running_holiday_on(date).nil?
+  end
+
+  def orders_processing?(date)
+    return false unless workday.orders_processing_day?(date)
+
+    holiday = running_holiday_on(date)
+    holiday.nil? or holiday.orders_processing
+  end
+
+  # Earliest date, from today, that's at least +advance_days+
+  # orders-processing days away and itself open (not a weekend/holiday).
+  # Unlike step_orders_processing_days, today itself counts as the first
+  # advance day.
+  def earliest_possible_pickup_date(advance_days)
+    date = Time.zone.today
+    in_advance = 0
+    while (advance_days.to_i.positive? && in_advance < advance_days.to_i) ||
+          !open_on?(date)
+      in_advance += 1 if orders_processing?(date)
+      date += 1.day
+    end
+    date
+  end
+
+  # Steps from date via +step+ (:+ or :-) one calendar day at a time until n
+  # orders-processing days have been stepped onto, returning the resulting
+  # date. Only days stepped onto count, so date itself is never counted;
+  # non-processing days are skipped over without counting. n <= 0 is a no-op.
+  def step_orders_processing_days(date, n, step: :+)
+    remaining = n.to_i
+    while remaining > 0
+      date = date.public_send(step, 1.day)
+      remaining -= 1 if orders_processing?(date)
+    end
+    date
   end
 
   def running_holiday_on(date)
