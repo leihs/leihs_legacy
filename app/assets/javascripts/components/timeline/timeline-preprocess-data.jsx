@@ -34,7 +34,7 @@ window.TimelinePreprocessData = {
 
   reservationEndDates(timeline_availability) {
     return timeline_availability.running_reservations.map(
-      (rr) => rr.end_date
+      (rr) => rr.timeline_end_date || rr.end_date
     )
   },
 
@@ -85,8 +85,8 @@ window.TimelinePreprocessData = {
   },
 
   reservationIntersectsDay(rf, day) {
-    var start = moment(rf.start_date)
-    var end = moment(rf.end_date)
+    var start = moment(rf.timeline_start_date || rf.start_date)
+    var end = moment(rf.timeline_end_date || rf.end_date)
     var late = TimelineUtil.late(rf)
     var reserved = TimelineUtil.reserved(rf)
 
@@ -165,12 +165,12 @@ window.TimelinePreprocessData = {
 
     return _.find(rfs, (rfi) => {
 
-      var startA = moment(rf.start_date)
-      var endA = moment(rf.end_date)
+      var startA = moment(rf.timeline_start_date || rf.start_date)
+      var endA = moment(rf.timeline_end_date || rf.end_date)
       var lateA = TimelineUtil.late(rf)
       var reservedA = TimelineUtil.reserved(rf)
-      var startB = moment(rfi.start_date)
-      var endB = moment(rfi.end_date)
+      var startB = moment(rfi.timeline_start_date || rfi.start_date)
+      var endB = moment(rfi.timeline_end_date || rfi.end_date)
       var lateB = TimelineUtil.late(rfi)
       var reservedB = TimelineUtil.reserved(rfi)
 
@@ -338,12 +338,14 @@ window.TimelinePreprocessData = {
           (memo, r) => {
 
             var ds = []
-            memo[r.start_date] = r.start_date
-            var before_start_date = moment(r.start_date).add(- 1, 'days').format('YYYY-MM-DD')
+            var timelineStartDate = r.timeline_start_date || r.start_date
+            var timelineEndDate = r.timeline_end_date || r.end_date
+            memo[timelineStartDate] = timelineStartDate
+            var before_start_date = moment(timelineStartDate).add(- 1, 'days').format('YYYY-MM-DD')
             memo[before_start_date] = before_start_date
             if(!TimelineUtil.late(r)) {
-              memo[r.end_date] = r.end_date
-              var after_end_date = moment(r.end_date).add(+ 1, 'days').format('YYYY-MM-DD')
+              memo[timelineEndDate] = timelineEndDate
+              var after_end_date = moment(timelineEndDate).add(+ 1, 'days').format('YYYY-MM-DD')
               memo[after_end_date] = after_end_date
 
             }
@@ -363,8 +365,8 @@ window.TimelinePreprocessData = {
     return _.filter(
       timeline_availability.running_reservations,
       (r) => {
-        var start = moment(r.start_date)
-        var end = moment(r.end_date)
+        var start = moment(r.timeline_start_date || r.start_date)
+        var end = moment(r.timeline_end_date || r.end_date)
         return start.isSameOrBefore(m) && (end.isSameOrAfter(m) || TimelineUtil.late(r))
       }
     )

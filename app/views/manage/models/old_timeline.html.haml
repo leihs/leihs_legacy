@@ -49,6 +49,21 @@
       # if line is reserved in the future and assigned an item, then the item will be reserved until then and not available from now on
       start_date = line.reserved? ? Date.today : line.start_date
 
+      # a pickup-location reservation also blocks its transfer-buffer window
+      if line.pickup_location_id
+        start_date = \
+          current_inventory_pool.step_orders_processing_days(
+            start_date, current_inventory_pool.transfer_buffer_before_pick_up.to_i, step: :-
+          )
+        unless line.late?
+          widened_end_date = \
+            current_inventory_pool.step_orders_processing_days(
+              line.end_date, current_inventory_pool.transfer_buffer_after_drop_off.to_i, step: :+
+            )
+          end_date = widened_end_date.tomorrow.to_time - 1.second
+        end
+      end
+
       events[group_id] ||= []
       events[group_id] << {:start         => start_date.to_time.to_formatted_s(:rfc822),
                            :end           => end_date.to_time.to_formatted_s(:rfc822),

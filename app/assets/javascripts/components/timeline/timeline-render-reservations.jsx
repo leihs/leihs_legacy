@@ -24,8 +24,8 @@ window.TimelineRenderReservations = {
 
       return line.map((rr) => {
 
-        var start = moment(rr.start_date)
-        var end = moment(rr.end_date)
+        var start = moment(rr.timeline_start_date || rr.start_date)
+        var end = moment(rr.timeline_end_date || rr.end_date)
 
         var offset = TimelineUtil.daysDifference(start, firstMoment)
 

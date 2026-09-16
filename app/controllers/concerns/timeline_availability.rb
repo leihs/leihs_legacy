@@ -2,7 +2,6 @@ module TimelineAvailability
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def running_reservations(inventory_pool_id, model_id)
@@ -27,6 +26,29 @@ module TimelineAvailability
       SQL
 
       ActiveRecord::Base.connection.exec_query(query).to_a
+    end
+
+    # For reservations with a pickup_location, the timeline should show the
+    # reservation as blocking through its transfer-buffer window too, not
+    # just its own start_date/end_date.
+    def add_timeline_dates!(reservations, inventory_pool)
+      reservations.each do |r|
+        if r['pickup_location_id']
+          r['timeline_start_date'] =
+            widened_timeline_date(inventory_pool, r['start_date'],
+                                  inventory_pool.transfer_buffer_before_pick_up, step: :-)
+          r['timeline_end_date'] =
+            widened_timeline_date(inventory_pool, r['end_date'],
+                                  inventory_pool.transfer_buffer_after_drop_off, step: :+)
+        else
+          r['timeline_start_date'] = r['start_date']
+          r['timeline_end_date'] = r['end_date']
+        end
+      end
+    end
+
+    def widened_timeline_date(inventory_pool, date, buffer_days, step:)
+      inventory_pool.step_orders_processing_days(date.to_date, buffer_days.to_i, step:)
     end
 
     def reservation_users(reservations)
@@ -119,6 +141,7 @@ module TimelineAvailability
       model = Model.find(model_id)
 
       running_reservations = running_reservations(inventory_pool.id, model.id)
+      add_timeline_dates!(running_reservations, inventory_pool)
       entitlements = entitlements(model.id, inventory_pool.id)
       reservation_users = reservation_users(running_reservations)
       entitlement_groups_users = entitlement_groups_users(reservation_users)
@@ -129,13 +152,13 @@ module TimelineAvailability
 
       {
         maintenance_period: model.maintenance_period.to_i,
-        running_reservations: running_reservations,
-        entitlements: entitlements,
-        reservation_users: reservation_users,
-        entitlement_groups_users: entitlement_groups_users,
-        entitlement_groups: entitlement_groups,
-        items: items,
-        is_lending_manager: is_lending_manager
+        running_reservations:,
+        entitlements:,
+        reservation_users:,
+        entitlement_groups_users:,
+        entitlement_groups:,
+        items:,
+        is_lending_manager:
       }
     end
   end
