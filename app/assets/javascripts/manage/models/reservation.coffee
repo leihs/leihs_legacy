@@ -95,3 +95,60 @@ window.App.Reservation::removeAssignment = ->
   $.post("/manage/#{App.InventoryPool.current.id}/reservations/#{@id}/remove_assignment")
   @refresh {item_id: null}
   App.Reservation.trigger "update", @
+
+window.App.Reservation::alternativePickupLocationsEnabled = ->
+  !!App.InventoryPool.current?.enable_alternative_pickup_locations
+
+window.App.Reservation::pickupLocationName = ->
+  @pickup_location?.name
+
+window.App.Reservation::showsPickupLocation = ->
+  @eligibleForCourier() and !!@pickupLocationName()
+
+window.App.Reservation::modelIsTransportable = ->
+  !!@model()?.transportable
+
+window.App.Reservation::eligibleForCourier = ->
+  @alternativePickupLocationsEnabled() and
+    !!@pickup_location_id and
+    @modelIsTransportable()
+
+window.App.Reservation::showsHandedToCourierForPickup = ->
+  @eligibleForCourier() and @status is "approved"
+
+window.App.Reservation::showsHandedToCourierForReturn = ->
+  @eligibleForCourier() and @status is "signed" and not @option_id
+
+window.App.Reservation::handedToCourierForPickup = ->
+  !!@sent_to_pickup_location_at
+
+window.App.Reservation::handedToCourierForReturn = ->
+  !!@sent_back_to_main_location_at
+
+window.App.Reservation::toggleCourier = (direction, handed, options = {})->
+  $.ajax
+    url: "/manage/#{App.InventoryPool.current.id}/reservations/#{@id}/toggle_courier"
+    type: "POST"
+    data:
+      direction: direction
+      handed: handed
+  .done (data)=>
+    # Assign courier fields only — avoid Spine refresh/update (full list
+    # re-render) and avoid Model#load calling association getters as setters.
+    data = JSON.parse(data) if typeof data is "string"
+    root = @constructor.irecords[@id] or @
+    if data?
+      for key in [
+        "sent_to_pickup_location_at"
+        "sent_to_pickup_location_by_user_id"
+        "sent_back_to_main_location_at"
+        "sent_back_to_main_location_by_user_id"
+        "pickup_location_id"
+        "pickup_location"
+      ]
+        root[key] = data[key] if Object::hasOwnProperty.call(data, key)
+    options.onSuccess?(data)
+  .fail (e)=>
+    msg = e.responseJSON?.message || e.responseText
+    App.Flash(type: "error", message: msg)
+    options.onError?(e)

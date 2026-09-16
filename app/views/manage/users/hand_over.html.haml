@@ -1,7 +1,8 @@
 - content_for :title, _("Hand Over to %s") % @user
 - content_for :lending_section, "active"
 
-#hand-over-view.wrapper.margin-top-m
+- pul_enabled = current_inventory_pool.enable_alternative_pickup_locations
+#hand-over-view.wrapper.margin-top-m{class: ("with-alternative-pickup-locations" if pul_enabled), :"data-alternative-pickup-locations" => (pul_enabled || nil)}
 
   = render :partial => 'manage/tabs/lending', :locals => {:active_tab => :visits}
 
@@ -34,7 +35,7 @@
 
         .float-right= render :partial => "manage/users/hand_over/selection"
 
-    #lines.padding-inset-m.padding-top-xxs= render :partial => "manage/reservations/grouped_lines_with_action_date", :locals => {:grouped_lines_by_date => @grouped_lines_by_date, :line_partial => "manage/reservations/hand_over"}
+    #lines.padding-inset-m.padding-top-xxs= render :partial => "manage/reservations/grouped_lines_with_action_date", :locals => {:grouped_lines_by_date => @grouped_lines_by_date, :line_partial => "manage/reservations/hand_over", :show_courier_select_all => current_inventory_pool.enable_alternative_pickup_locations}
 
 :coffeescript
 
@@ -51,7 +52,7 @@
     for option in #{@options.to_json}
       App.Option.addRecord new App.Option option
 
-    for reservation in #{@reservations.to_json}
+    for reservation in #{Reservation.as_json_with_pickup_location(@reservations).to_json}
       App.Reservation.addRecord new App.Reservation reservation
 
     for item in #{@items.to_json(include: {children: {methods: :to_s}})}

@@ -15,6 +15,12 @@
     .line-info
       height: 100%
 
+  // Multi-line pickup labels need to grow beyond the fixed row height
+  // (orders list, booking calendar, and lending lines).
+  &:not([class*='height']):has([data-pickup-location])
+    min-height: $space-xxl
+    height: auto
+
   &.small:not([class*='height'])
     height: $space-l
 
@@ -40,7 +46,7 @@
       color: $lightgrey
 
 .line-actions
-  
+
   .button
     max-width: 160px
 
@@ -65,6 +71,113 @@
 
   &:last-child:not([class*='padding'])
     padding-right: $space-s
+
+// Pickup-location / courier layout: only when the pool flag is on
+// (class and/or data attr from enable_alternative_pickup_locations).
+#hand-over-view.with-alternative-pickup-locations,
+#take-back-view.with-alternative-pickup-locations,
+#edit-contract-view.with-alternative-pickup-locations,
+#hand-over-view[data-alternative-pickup-locations],
+#take-back-view[data-alternative-pickup-locations],
+#edit-contract-view[data-alternative-pickup-locations]
+  // Grow for multi-line pickup/courier labels; keep row height compact
+  // once the courier column is wide enough for a 2-line label.
+  .line:not([class*='height']):has([data-pickup-location]),
+  .line:not([class*='height']):has([data-toggle-courier-to-pickup]),
+  .line:not([class*='height']):has([data-toggle-courier-to-main])
+    min-height: $space-xxl
+    height: auto
+
+    .line-info
+      height: 100%
+
+  .line[data-line-type='item_line'] .has-addon
+    min-width: 10em
+
+  .line[data-line-type='item_line'],
+  .line[data-line-type='option_line']
+    table-layout: fixed
+
+    > .line-info + .line-col
+      width: 5%
+
+  .line-actions
+    white-space: nowrap
+
+    .multibutton
+      white-space: nowrap
+
+  .line-col
+    input[data-toggle-courier-to-pickup],
+    input[data-toggle-courier-to-main]
+      flex-shrink: 0
+      margin-top: 0.15em
+
+    // Checkbox beside text; only the text spans wraps to 2 lines.
+    label.font-normal
+      display: inline-flex
+      flex-wrap: nowrap
+      align-items: flex-start
+      column-gap: 0.35em
+      max-width: 100%
+      line-height: 1.15
+
+      > span
+        display: inline-block
+        width: 5.75em
+        white-space: normal
+
+    [data-pickup-location]
+      display: inline-block
+      margin-top: 2px
+
+    &.col3of10.text-align-left
+      overflow-wrap: anywhere
+
+    // Wider than plain .col1of10 (10%) so checkbox + 2-line label fit.
+    &.col1of10.text-align-left
+      width: 14%
+      min-width: 8.5em
+      padding-left: 6px
+      padding-right: 4px
+
+    &:not([class*='padding'])
+      padding: 0 0 0 10px
+
+    &.col1of10.text-align-left:not([class*='padding'])
+      padding-left: 6px
+      padding-right: 4px
+
+  .grouped-lines-header
+    display: flex
+    align-items: center
+    position: relative
+
+    > .col1of2:nth-child(2)
+      display: flex
+      align-items: center
+      justify-content: flex-end
+
+    [data-courier-select-all]
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      z-index: 1
+
+  [data-courier-select-all]
+    display: inline-flex
+    align-items: center
+    column-gap: 0.35em
+    font-size: $font-size-xs
+    max-width: 100%
+    min-width: 0
+    white-space: normal
+
+    &.is-empty
+      display: none
+
+    input[data-select-courier-lines]
+      flex-shrink: 0
 
 .line-info
   left: 1px

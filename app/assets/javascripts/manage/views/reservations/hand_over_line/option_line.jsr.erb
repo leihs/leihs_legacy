@@ -15,7 +15,7 @@
   <div class='col1of10 line-col text-align-center'>
     <span class='grey-text'>{{>option().inventory_code}}</span>
   </div>
-  <div class='col4of10 line-col text-align-left'>
+  <div class='{{if alternativePickupLocationsEnabled()}}col3of10{{else}}col4of10{{/if}} line-col text-align-left'>
     <strong class='test-fix-timeline'>{{>option().name()}}</strong>
   </div>
   <div class='col1of10 line-col text-align-center'>
@@ -31,6 +31,10 @@
     {{/if}}
     {{/if}}
   </div>
+  {{if alternativePickupLocationsEnabled()}}
+  <div class='col1of10 line-col text-align-left'>
+  </div>
+  {{/if}}
   <div class='col1of10 line-col text-align-center'>
     {{if ~renderAvailability && anyProblems()}}
     <div class='emboss red padding-inset-xxs-alt text-align-center tooltip' data-tooltip-data='{{JSON getProblems()/}}' data-tooltip-template='manage/views/reservations/problems_tooltip'>

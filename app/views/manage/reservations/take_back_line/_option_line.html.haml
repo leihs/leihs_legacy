@@ -1,3 +1,4 @@
+- pul = current_inventory_pool.enable_alternative_pickup_locations
 .line.light.row.focus-hover-thin{:"data-line-type" => "option_line", :"data-id" => line.id}
 
   .line-info
@@ -19,13 +20,16 @@
   .col1of10.line-col.text-align-center
     %span.grey-text= line.option.inventory_code
 
-  .col4of10.line-col.text-align-left
+  %div{class: "#{pul ? 'col3of10' : 'col4of10'} line-col text-align-left"}
     %strong= line.option.name
 
   .col1of10.line-col.text-align-center
     - if purpose = line.order.try(&:purpose).presence
       .tooltip{:"title" => purpose, :"data-tooltip-template" => "manage/views/purposes/tooltip"}
         %i.fa.fa-comment.grey
+
+  - if pul
+    .col1of10.line-col.text-align-left
 
   .col1of10.line-col.text-align-center
 

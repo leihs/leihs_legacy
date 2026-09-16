@@ -11,8 +11,10 @@ class window.App.HandOverController extends Spine.Controller
 
   constructor: ->
     super
+    do @applyAlternativePickupLocationsUi
     @lineSelection = new App.LineSelectionController {el: @el, markVisitLinesController: new App.MarkVisitLinesController {el: @el}}
     @lineSelection.el.on "change", => @onSelectionChange(@getSelectedReservations())
+    @courierController = new App.ReservationsCourierController {el: @el}
 
     @fetchFunctionsSetup
       "Model": "Item"
@@ -27,6 +29,14 @@ class window.App.HandOverController extends Spine.Controller
     new App.ReservationsEditController {el: @el, user: @user, hand_over: true}
     new App.OptionLineChangeController {el: @el}
     new App.ModelCellTooltipController {el: @el}
+
+  applyAlternativePickupLocationsUi: =>
+    enabled = !!App.InventoryPool.current?.enable_alternative_pickup_locations
+    @el.toggleClass("with-alternative-pickup-locations", enabled)
+    if enabled
+      @el.attr("data-alternative-pickup-locations", true)
+    else
+      @el.removeAttr("data-alternative-pickup-locations")
 
   delegateEvents: =>
     super
@@ -103,7 +113,10 @@ class window.App.HandOverController extends Spine.Controller
     @reservationsContainer.html App.Render "manage/views/reservations/grouped_lines_with_action_date", App.Modules.HasLines.groupByDateRange(@getLines(), false, "start_date"),
       linePartial: "manage/views/reservations/hand_over_line"
       renderAvailability: renderAvailability
+      showCourierSelectAll: !!App.InventoryPool.current?.enable_alternative_pickup_locations
+      canToggleCourier: App.AccessRight.atLeastRole(App.User.current.role, "lending_manager")
     do @lineSelection.restore
+    do @courierController.syncHeaders
 
   handOver: =>
     reservations = @getSelectedReservations()
