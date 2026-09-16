@@ -1,4 +1,6 @@
 - content_for :title, "#{_("Picking List")}"
+- show_pickup_location = current_inventory_pool.enable_alternative_pickup_locations
+- col_count = show_pickup_location ? 5 : 4
 
 .picking_list
 
@@ -14,19 +16,21 @@
 
 
   - if defined?(@contract) and ['open', 'closed'].include?(@contract.state)
-    - lines_by_end_date = @contract.reservations.includes(:item).group_by{|line| line.end_date }
+    - lines_by_end_date = @contract.reservations.includes(:item, :pickup_location).group_by{|line| line.end_date }
     - lines_by_end_date.each_pair do |end_date, reservations|
       %section.list
         %table
           %thead
             %tr
-              %th.end_date{colspan: 4, style: "text-align: left; padding: 2em 0em 1em 0em;"}
+              %th.end_date{colspan: col_count, style: "text-align: left; padding: 2em 0em 1em 0em;"}
                 = "%s: %s" % [_("End date"), l(end_date)]
             %tr
-              %td.quantity= _("Quantity")
-              %td.inventory_code= _("Inventory Code")
-              %td.model_name= _("Model")
-              %td.location= "%s / %s" % [_("Room"), _("Shelf")]
+              %th.quantity= _("Quantity")
+              %th.inventory_code= _("Inventory Code")
+              %th.model_name= _("Model")
+              %th.location= "%s / %s" % [_("Room"), _("Shelf")]
+              - if show_pickup_location
+                %th.pickup_location= _("Pickup location")
           %tbody
             - sorted_lines = reservations.sort_by { |line| (line.item.respond_to?(:room) and line.item.room) ? "%s / %s" % [line.item.room.name, line.item.shelf] : "zzzz (no locations displayed at the end of the list)"  }
             - sorted_lines.each do |line|
@@ -39,56 +43,64 @@
                     %i= _("Location not defined")
                   - else
                     = "%s / %s" % [line.item.room.name, line.item.shelf]
+                - if show_pickup_location
+                  %td.pickup_location= line.pickup_location&.name || current_inventory_pool.name
 
 
   - else
-    - lines_by_start_date = (@reservations || @contract.reservations).includes(:model).group_by{|line| line.start_date }
+    - lines_by_start_date = (@reservations || @contract.reservations).includes(:model, :pickup_location).group_by{|line| line.start_date }
     - lines_by_start_date.each_pair do |start_date, reservations|
       %section.list
         %table
           %thead
             %tr
-              %th.start_date{colspan: 4, style: "text-align: left; padding: 2em 0em 1em 0em;"}
+              %th.start_date{colspan: col_count, style: "text-align: left; padding: 2em 0em 1em 0em;"}
                 = "%s: %s" % [_("Start date"), l(start_date)]
             %tr
-              %td.quantity= _("Quantity")
-              %td.inventory_code= _("Inventory Code")
-              %td.model_name= _("Model")
-              %td.location= "%s x %s / %s" % [_("available quantity"), _("Room"), _("Shelf")]
+              %th.quantity= _("Quantity")
+              %th.inventory_code= _("Inventory Code")
+              %th.model_name= _("Model")
+              %th.location= "%s x %s / %s" % [_("available quantity"), _("Room"), _("Shelf")]
+              - if show_pickup_location
+                %th.pickup_location= _("Pickup location")
           %tbody
-            - models_lines = reservations.group_by { |line| [line.model, line.item] }
-            - Hash[models_lines.sort_by {|k,v| k.first.to_s or k.last }].each_pair do |model_item, reservations|
+            - models_lines = reservations.group_by { |line| [line.model, line.item, line.pickup_location_id] }
+            - sorted_groups = models_lines.sort_by { |(model, item, _), _lines| [model.to_s, ((item.respond_to?(:room) && item.room) ? "#{item.room.name} / #{item.shelf}" : "zzzz")] }
+            - sorted_groups.each do |(model, item, _pickup_location_id), lines|
               %tr{style: "vertical-align: top"}
-                %td.quantity= reservations.sum &:quantity
-                %td.inventory_code= model_item.last.inventory_code if model_item.last
-                %td.model_name= model_item.first.name
+                %td.quantity= lines.sum &:quantity
+                %td.inventory_code= item.inventory_code if item
+                %td.model_name= model.name
                 %td.location
-                  - if model_item.first.is_a?(Option)
+                  - if model.is_a?(Option)
                     %i= _("Location not defined")
                   - else
-                    %table
-                      - if item = model_item.last
+                    %table.location-breakdown
+                      - if item
                         %tr
-                          %td{style: "width: 4em; text-align: right; border: none"}
-                          %td{style: "border: none"}
+                          %td.count
+                          %td.place
                             = [item.room.name, item.shelf.presence].compact.join(" / ")
-                      - elsif (items_in_stock = model_item.first.items.in_stock.where(inventory_pool_id: current_inventory_pool)).count == 0
-                        %td{style: "width: 4em; text-align: right; border: none"}
-                        %td{style: "border: none"}
-                          %i= _("Not available")
+                      - elsif (items_in_stock = model.items.in_stock.where(inventory_pool_id: current_inventory_pool)).count == 0
+                        %tr
+                          %td.count
+                          %td.place
+                            %i= _("Not available")
                       - else
                         - locations = items_in_stock.select("COUNT(items.room_id) AS count, items.room_id, rooms.name AS room, shelf").joins(:room).group('items.room_id', 'rooms.name', 'shelf').order("count DESC, room ASC, shelf ASC")
                         - locations.to_a.delete_if {|location| location.room.blank? and location.shelf.blank? }
                         - locations.each do |location|
                           %tr
-                            %td{style: "width: 4em; text-align: right; border: none"}
+                            %td.count
                               = "%dx" % location.count
-                            %td{style: "border: none"}
+                            %td.place
                               = [location.room, location.shelf.presence].compact.join(" / ")
                         - not_defined_count = items_in_stock.count - locations.to_a.sum(&:count)
                         - if not_defined_count > 0
                           %tr
-                            %td{style: "width: 4em; text-align: right; border: none"}
+                            %td.count
                               = "%dx" % not_defined_count
-                            %td{style: "border: none"}
+                            %td.place
                               %i= _("Location not defined")
+                - if show_pickup_location
+                  %td.pickup_location= lines.first.pickup_location&.name || current_inventory_pool.name

@@ -12,16 +12,26 @@
     .row
       = line.item.inventory_code
 
-  .col4of10.line-col.text-align-left
+  .col3of10.line-col.text-align-left
     %strong= line.model.name
     - unless line.model.hand_over_note.blank?
       %br
       %span.grey-text= line.model.hand_over_note
+    - if current_inventory_pool.enable_alternative_pickup_locations && line.pickup_location.present? && line.model&.transportable
+      %br
+      %span.orange-text{:"data-pickup-location" => true}
+        = "#{_('Pickup location')}: #{line.pickup_location.name}"
 
   .col1of10.line-col.text-align-center
     - if purpose = line.order.try(&:purpose).presence
       .tooltip{:"title" => purpose, :"data-tooltip-template" => "manage/views/purposes/tooltip"}
         %i.fa.fa-comment.grey
+
+  .col1of10.line-col.text-align-left
+    - if current_inventory_pool.enable_alternative_pickup_locations && line.eligible_for_courier? && line.status == :signed && line.option_id.blank?
+      %label.font-normal
+        %input{type: :checkbox, autocomplete: :off, :"data-toggle-courier-to-main" => true, checked: line.sent_back_to_main_location_at.present?}
+        = _("Handed to courier")
 
   .col1of10.line-col.text-align-center
 

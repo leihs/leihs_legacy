@@ -6,7 +6,8 @@ class Manage::ReservationsController < Manage::ApplicationController
 
   # NOTE overriding super controller
   def required_manager_role
-    closed_actions = [:assign, :assign_or_create, :remove_assignment, :take_back]
+    closed_actions = [:assign, :assign_or_create, :remove_assignment, :take_back,
+                      :toggle_courier]
     if closed_actions.include?(action_name.to_sym)
       super
     else
@@ -214,6 +215,69 @@ class Manage::ReservationsController < Manage::ApplicationController
 
         head :ok
       end
+    rescue => e
+      Rails.logger.warn e.message
+      render status: :bad_request, plain: e.message
+    end
+  end
+
+  # Mark reservation as handed to / returned from courier for alternative pickup locations.
+  # Does not create a contract (hand-over) and does not close the line (take-back).
+  def toggle_courier
+    unless current_inventory_pool.enable_alternative_pickup_locations
+      return render status: :forbidden,
+                    plain: 'Alternative pickup locations are disabled'
+    end
+
+    reservation = current_inventory_pool.reservations.find(params[:id])
+    handed = ActiveModel::Type::Boolean.new.cast(params[:handed])
+    direction = params[:direction].to_s
+
+    unless reservation.pickup_location_id.present?
+      return render status: :bad_request,
+                    plain: 'Reservation has no alternative pickup location'
+    end
+    unless reservation.model&.transportable
+      return render status: :bad_request,
+                    plain: 'Model is not transportable'
+    end
+
+    begin
+      case direction
+      when 'to_pickup'
+        if handed
+          reservation.update!(
+            sent_to_pickup_location_at: Time.current,
+            sent_to_pickup_location_by_user_id: current_user.id
+          )
+        else
+          reservation.update!(
+            sent_to_pickup_location_at: nil,
+            sent_to_pickup_location_by_user_id: nil
+          )
+        end
+      when 'to_main'
+        unless reservation.status == :signed
+          return render status: :bad_request,
+                        plain: 'Only signed reservations can be handed to courier for return'
+        end
+        if handed
+          reservation.update!(
+            sent_back_to_main_location_at: Time.current,
+            sent_back_to_main_location_by_user_id: current_user.id
+          )
+        else
+          reservation.update!(
+            sent_back_to_main_location_at: nil,
+            sent_back_to_main_location_by_user_id: nil
+          )
+        end
+      else
+        return render status: :bad_request,
+                      plain: "Unknown direction '#{direction}'"
+      end
+
+      render json: reservation
     rescue => e
       Rails.logger.warn e.message
       render status: :bad_request, plain: e.message

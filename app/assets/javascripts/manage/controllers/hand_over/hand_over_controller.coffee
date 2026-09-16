@@ -13,6 +13,7 @@ class window.App.HandOverController extends Spine.Controller
     super
     @lineSelection = new App.LineSelectionController {el: @el, markVisitLinesController: new App.MarkVisitLinesController {el: @el}}
     @lineSelection.el.on "change", => @onSelectionChange(@getSelectedReservations())
+    @courierController = new App.ReservationsCourierController {el: @el}
 
     @fetchFunctionsSetup
       "Model": "Item"
@@ -103,7 +104,9 @@ class window.App.HandOverController extends Spine.Controller
     @reservationsContainer.html App.Render "manage/views/reservations/grouped_lines_with_action_date", App.Modules.HasLines.groupByDateRange(@getLines(), false, "start_date"),
       linePartial: "manage/views/reservations/hand_over_line"
       renderAvailability: renderAvailability
+      showCourierSelectAll: true
     do @lineSelection.restore
+    do @courierController.syncHeaders
 
   handOver: =>
     reservations = @getSelectedReservations()

@@ -104,6 +104,7 @@ class Manage::UsersController < Manage::ApplicationController
       @reservations = \
         @user
         .reservations
+        .includes(:pickup_location)
         .where(status: :approved, inventory_pool: current_inventory_pool)
       @orders = @reservations.map(&:order)
       @models = @reservations.map(&:model).select { |m| m.type == 'Model' }.uniq
@@ -130,6 +131,7 @@ class Manage::UsersController < Manage::ApplicationController
       @reservations = \
         @user
           .reservations
+          .includes(:pickup_location)
           .signed
           .where(inventory_pool_id: current_inventory_pool)
           .includes([:model, :item, :order])

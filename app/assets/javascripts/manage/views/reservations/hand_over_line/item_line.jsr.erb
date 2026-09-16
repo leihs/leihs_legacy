@@ -1,5 +1,5 @@
 <div class='line light row focus-hover-thin' data-id='{{>id}}' data-line-type='item_line'>
-  <div class='{{if ~renderAvailability && anyProblems()}}line-info red{{/if}}'></div>
+  <div class='line-info{{if ~renderAvailability && anyProblems()}} red{{/if}}'></div>
   <div class='line-col padding-left-xs'>
     <div class='row'>
       <div class='col1of4'>
@@ -18,7 +18,7 @@
       {{/if}}
     </div>
   </div>
-  <div class='col4of10 line-col text-align-left'>
+  <div class='col3of10 line-col text-align-left'>
     <strong class='test-fix-timeline' data-id='{{>model().id}}' data-type='model-cell'>
       {{>model().name()}}
     </strong>
@@ -39,6 +39,12 @@
     <br>
     <span class='grey-text'>{{>model().hand_over_note}}</span>
     {{/if}}
+    {{if showsAlternativePickupLocation()}}
+    <br>
+    <span class='orange-text' data-pickup-location>
+      {{jed "Pickup location"/}}: {{>pickupLocationName()}}
+    </span>
+    {{/if}}
   </div>
   <div class='col1of10 line-col text-align-center'>
     {{if order()}}
@@ -51,6 +57,14 @@
       <i class='fa fa-comment fa-flip-horizontal lightgrey'></i>
     </div>
     {{/if}}
+    {{/if}}
+  </div>
+  <div class='col1of10 line-col text-align-left'>
+    {{if showsHandedToCourierForPickup()}}
+    <label class='font-normal'>
+      <input autocomplete='off' data-toggle-courier-to-pickup type='checkbox' {{if handedToCourierForPickup()}}checked{{/if}}>
+      {{jed "Handed to courier"/}}
+    </label>
     {{/if}}
   </div>
   <div class='col1of10 line-col text-align-center'>

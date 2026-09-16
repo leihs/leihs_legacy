@@ -34,7 +34,7 @@
 
         .float-right= render :partial => "manage/users/take_back/selection"
 
-    #lines.padding-inset-m.padding-top-xxs= render :partial => "manage/reservations/grouped_lines_with_action_date", :locals => {:grouped_lines_by_date => @grouped_lines_by_date, :line_partial => "manage/reservations/take_back"}
+    #lines.padding-inset-m.padding-top-xxs= render :partial => "manage/reservations/grouped_lines_with_action_date", :locals => {:grouped_lines_by_date => @grouped_lines_by_date, :line_partial => "manage/reservations/take_back", :show_courier_select_all => true}
 
 :coffeescript
 
