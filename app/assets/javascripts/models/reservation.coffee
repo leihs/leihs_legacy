@@ -6,7 +6,7 @@
 
 class window.App.Reservation extends Spine.Model
 
-  @configure "Reservation", "id", "inventory_pool_id", "user_id", "delegated_user_id", "status", "contract_id", "order_id", "model_id", "option_id", "purpose_id", "quantity", "start_date", "end_date", "item_id", "line_purpose"
+  @configure "Reservation", "id", "inventory_pool_id", "user_id", "delegated_user_id", "status", "contract_id", "order_id", "model_id", "option_id", "purpose_id", "quantity", "start_date", "end_date", "item_id", "line_purpose", "pickup_location_id", "pickup_location", "sent_to_pickup_location_at", "sent_to_pickup_location_by_user_id", "sent_back_to_main_location_at", "sent_back_to_main_location_by_user_id"
 
   @belongsTo "contract", "App.Contract", "contract_id"
   @belongsTo "order", "App.Order", "order_id"

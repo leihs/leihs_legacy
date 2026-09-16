@@ -21,6 +21,12 @@
   </div>
   <div class='col5of10 line-col text-align-left'>
     <strong>{{>model().name()}}</strong>
+    {{if showsAlternativePickupLocation()}}
+    <br>
+    <span class='orange-text' data-pickup-location>
+      {{jed "Pickup location"/}}: {{>pickupLocationName()}}
+    </span>
+    {{/if}}
   </div>
   <div class='col4of10 line-col'>
     {{if model().availability}}

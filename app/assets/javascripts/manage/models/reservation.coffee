@@ -95,3 +95,47 @@ window.App.Reservation::removeAssignment = ->
   $.post("/manage/#{App.InventoryPool.current.id}/reservations/#{@id}/remove_assignment")
   @refresh {item_id: null}
   App.Reservation.trigger "update", @
+
+window.App.Reservation::alternativePickupLocationsEnabled = ->
+  !!App.InventoryPool.current?.enable_alternative_pickup_locations
+
+window.App.Reservation::pickupLocationName = ->
+  @pickup_location?.name
+
+window.App.Reservation::showsAlternativePickupLocation = ->
+  @alternativePickupLocationsEnabled() and
+    !!@pickup_location_id and
+    !!@pickupLocationName() and
+    @modelIsTransportable()
+
+window.App.Reservation::modelIsTransportable = ->
+  !!@model()?.transportable
+
+window.App.Reservation::eligibleForCourier = ->
+  @showsAlternativePickupLocation() and @modelIsTransportable()
+
+window.App.Reservation::showsHandedToCourierForPickup = ->
+  @eligibleForCourier() and @status is "approved"
+
+window.App.Reservation::showsHandedToCourierForReturn = ->
+  @eligibleForCourier() and @status is "signed" and not @option_id
+
+window.App.Reservation::handedToCourierForPickup = ->
+  !!@sent_to_pickup_location_at
+
+window.App.Reservation::handedToCourierForReturn = ->
+  !!@sent_back_to_main_location_at
+
+window.App.Reservation::toggleCourier = (direction, handed, options = {})->
+  $.ajax
+    url: "/manage/#{App.InventoryPool.current.id}/reservations/#{@id}/toggle_courier"
+    type: "POST"
+    data:
+      direction: direction
+      handed: handed
+  .done (data)=>
+    @refresh data
+    App.Reservation.trigger "update", @ unless options.silent
+  .fail (e)=>
+    msg = e.responseJSON?.message || e.responseText
+    App.Flash(type: "error", message: msg)

@@ -3588,3 +3588,9 @@ msgstr ""
 
 msgid "Sunday"
 msgstr ""
+
+msgid "Pickup location"
+msgstr ""
+
+msgid "Handed to courier"
+msgstr ""

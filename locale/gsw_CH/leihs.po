@@ -3042,3 +3042,9 @@ msgstr "D Aagab vonere Natelnummere isch empfohle"
 
 msgid "The order has already been dealt with."
 msgstr "De Bschtellig isch scho bearbeitet worde."
+
+msgid "Pickup location"
+msgstr "Abholort"
+
+msgid "Handed to courier"
+msgstr "A Kurier übergeh"

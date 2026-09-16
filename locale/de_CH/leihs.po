@@ -3766,3 +3766,9 @@ msgstr "Samstag"
 
 msgid "Sunday"
 msgstr "Sonntag"
+
+msgid "Pickup location"
+msgstr "Abholort"
+
+msgid "Handed to courier"
+msgstr "An Kurier übergeben"

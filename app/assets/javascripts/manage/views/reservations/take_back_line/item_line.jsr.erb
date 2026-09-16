@@ -12,7 +12,7 @@
   <div class='col2of10 line-col text-align-center'>
     <div class='row'>{{>item().inventory_code}}</div>
   </div>
-  <div class='col4of10 line-col text-align-left'>
+  <div class='col3of10 line-col text-align-left'>
     <strong class='test-fix-timeline' data-id='{{>model().id}}' data-type='model-cell'>
       {{>model().name()}}
     </strong>
@@ -20,11 +20,25 @@
     <br>
     <span>{{>model().accessory_names}}</span>
     {{/if}}
+    {{if showsAlternativePickupLocation()}}
+    <br>
+    <span class='orange-text' data-pickup-location>
+      {{jed "Pickup location"/}}: {{>pickupLocationName()}}
+    </span>
+    {{/if}}
   </div>
   <div class='col1of10 line-col text-align-center'>
     <div class='tooltip' data-tooltip-template='manage/views/purposes/tooltip' title='{{>contract().purpose}}'>
       <i class='fa fa-comment'></i>
     </div>
+  </div>
+  <div class='col1of10 line-col text-align-left'>
+    {{if showsHandedToCourierForReturn()}}
+    <label class='font-normal'>
+      <input autocomplete='off' data-toggle-courier-to-main type='checkbox' {{if handedToCourierForReturn()}}checked{{/if}}>
+      {{jed "Handed to courier"/}}
+    </label>
+    {{/if}}
   </div>
   <div class='col1of10 line-col text-align-center'>
     {{if ~renderAvailability && anyProblems()}}

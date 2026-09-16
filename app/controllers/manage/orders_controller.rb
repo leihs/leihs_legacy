@@ -37,7 +37,7 @@ class Manage::OrdersController < Manage::ApplicationController
       @user = @order.user
       @group_ids = @user.entitlement_group_ids
       add_visitor(@user)
-      @reservations = @order.reservations
+      @reservations = @order.reservations.includes(:pickup_location)
       @models = @reservations.map(&:model).select { |m| m.type == 'Model' }.uniq
       @software = @reservations.map(&:model).select { |m| m.type == 'Software' }.uniq
       @items = \

@@ -6,7 +6,7 @@
 
 class window.App.InventoryPool extends Spine.Model
 
-  @configure "InventoryPool", "id", "name", "default_contract_note", "borrow_reservation_advance_days"
+  @configure "InventoryPool", "id", "name", "default_contract_note", "borrow_reservation_advance_days", "enable_alternative_pickup_locations", "default_pickup_location_name", "transfer_buffer_after_drop_off", "transfer_buffer_before_pick_up"
 
   @hasMany "availabilities", "App.Availability", "inventory_pool_id"
   @hasMany "models", "App.Model", "inventory_pool_id"

@@ -3461,3 +3461,9 @@ msgstr "L'indication d'un numéro de téléphone est recommandée"
 
 msgid "The order has already been dealt with."
 msgstr "L'ordre a déjà été traité."
+
+msgid "Pickup location"
+msgstr "Lieu de retrait"
+
+msgid "Handed to courier"
+msgstr "Remis au coursier"

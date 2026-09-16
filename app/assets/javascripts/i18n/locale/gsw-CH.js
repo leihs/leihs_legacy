@@ -4035,6 +4035,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "De Bschtellig isch scho bearbeitet worde."
+      ],
+      "Pickup location": [
+         null,
+         "Abholort"
+      ],
+      "Handed to courier": [
+         null,
+         "A Kurier übergeh"
       ]
    }
 }

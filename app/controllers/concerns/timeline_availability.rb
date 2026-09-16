@@ -127,6 +127,10 @@ module TimelineAvailability
       )
       items = items(inventory_pool.id, model.id)
 
+      if inventory_pool.enable_alternative_pickup_locations
+        apply_pickup_location_buffers!(running_reservations, inventory_pool)
+      end
+
       {
         maintenance_period: model.maintenance_period.to_i,
         running_reservations: running_reservations,
@@ -137,6 +141,22 @@ module TimelineAvailability
         items: items,
         is_lending_manager: is_lending_manager
       }
+    end
+
+    # Extend visual/occupancy end date by transfer_buffer_after_drop_off for
+    # reservations that use an alternative pickup location.
+    def apply_pickup_location_buffers!(running_reservations, inventory_pool)
+      buffer_days = inventory_pool.transfer_buffer_after_drop_off.to_i
+      return if buffer_days <= 0
+
+      running_reservations.each do |reservation|
+        next if reservation['pickup_location_id'].blank?
+
+        end_date = reservation['end_date']
+        next if end_date.blank?
+
+        reservation['end_date'] = (Date.parse(end_date.to_s) + buffer_days).to_s
+      end
     end
   end
 end

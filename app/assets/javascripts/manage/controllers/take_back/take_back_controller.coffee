@@ -19,6 +19,7 @@ class window.App.TakeBackController extends Spine.Controller
     App.TakeBackController.readyForTakeBack = []
     @lineSelection = new App.LineSelectionController {el: @el, markVisitLinesController: new App.MarkVisitLinesController {el: @el}}
     @returnedQuantitiesController = new App.ReturnedQuantityController {el: @el}
+    @courierController = new App.ReservationsCourierController {el: @el}
     if @getLines().length
       do @fetchAvailability
     do @setupAutocomplete
@@ -55,8 +56,10 @@ class window.App.TakeBackController extends Spine.Controller
     @reservationsContainer.html App.Render "manage/views/reservations/grouped_lines_with_action_date", App.Modules.HasLines.groupByDateRange(@getLines(), false, "end_date"),
       linePartial: "manage/views/reservations/take_back_line"
       renderAvailability: renderAvailability
+      showCourierSelectAll: true
     do @returnedQuantitiesController.restore
     do @lineSelection.restore
+    do @courierController.syncHeaders
 
   takeBack: =>
     returnedQuantity = {}

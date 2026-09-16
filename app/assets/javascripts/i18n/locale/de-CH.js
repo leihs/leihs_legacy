@@ -4885,6 +4885,14 @@ window.i18n.locale_data = {
       "Sunday": [
          null,
          "Sonntag"
+      ],
+      "Pickup location": [
+         null,
+         "Abholort"
+      ],
+      "Handed to courier": [
+         null,
+         "An Kurier übergeben"
       ]
    }
 }

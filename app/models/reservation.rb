@@ -19,6 +19,8 @@ class Reservation < ApplicationRecord
   belongs_to :handed_over_by_user, class_name: 'User'
   belongs_to :returned_to_user, class_name: 'User'
   belongs_to :pickup_location, optional: true
+  belongs_to :sent_to_pickup_location_by_user, class_name: 'User', optional: true
+  belongs_to :sent_back_to_main_location_by_user, class_name: 'User', optional: true
 
   has_many :entitlement_groups, through: :user
 
@@ -244,6 +246,31 @@ class Reservation < ApplicationRecord
   def last_closed_reservation_of_contract?
     contract.reservations.all? { |r| r.status == :closed }
   end
+
+  def eligible_for_courier?
+    pickup_location_id.present? && model&.transportable
+  end
+
+  def handed_to_courier_for_pickup?
+    sent_to_pickup_location_at.present?
+  end
+
+  def handed_to_courier_for_return?
+    sent_back_to_main_location_at.present?
+  end
+
+  def as_json_with_pickup_location(options = {})
+    h = as_json_without_pickup_location(options)
+    if pickup_location
+      h['pickup_location'] = {
+        'id' => pickup_location.id,
+        'name' => pickup_location.name
+      }
+    end
+    h
+  end
+  alias_method :as_json_without_pickup_location, :as_json
+  alias_method :as_json, :as_json_with_pickup_location
 
   ############################################
 

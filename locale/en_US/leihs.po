@@ -3052,3 +3052,9 @@ msgstr "The indication of a telephone number is recommended"
 
 msgid "The order has already been dealt with."
 msgstr "The order has already been dealt with."
+
+msgid "Pickup location"
+msgstr "Pickup location"
+
+msgid "Handed to courier"
+msgstr "Handed to courier"

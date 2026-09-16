@@ -722,3 +722,9 @@ msgstr "Se recomienda indicar un número de teléfono"
 
 msgid "The order has already been dealt with."
 msgstr "El pedido ya ha sido procesado."
+
+msgid "Pickup location"
+msgstr "Lugar de recogida"
+
+msgid "Handed to courier"
+msgstr "Entregado al mensajero"

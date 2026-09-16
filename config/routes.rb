@@ -122,6 +122,7 @@ Rails.application.routes.draw do
       post    "reservations/for_template",           to: "reservations#create_for_template"
       post    "reservations/:id/assign",             to: "reservations#assign"
       post    "reservations/:id/remove_assignment",  to: "reservations#remove_assignment"
+      post    "reservations/:id/toggle_courier",     to: "reservations#toggle_courier"
       put     "reservations/:line_id",               to: "reservations#update"
       delete  "reservations/:line_id",               to: "reservations#destroy"
       post    "reservations/take_back",              to: "reservations#take_back"

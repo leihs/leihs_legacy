@@ -3802,6 +3802,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "The order has already been dealt with."
+      ],
+      "Pickup location": [
+         null,
+         "Pickup location"
+      ],
+      "Handed to courier": [
+         null,
+         "Handed to courier"
       ]
    }
 }

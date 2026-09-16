@@ -1,4 +1,32 @@
 <div class='emboss deep padding-bottom-s margin-bottom-m' data-selected-lines-container>
+  {{if ~showCourierSelectAll}}
+  <div class='grouped-lines-header row'>
+    <div class='col1of2 padding-vertical-s'>
+      <label class='padding-inset-s inline'>
+        <input autocomplete='off' data-select-lines type='checkbox'>
+      </label>
+      <p class='paragraph-s inline'>
+        {{day start_date/}}
+        {{date start_date/}}
+        -
+        {{day end_date/}}
+        {{date end_date/}}
+      </p>
+    </div>
+    <div class='col1of2 padding-inset-s text-align-right'>
+      <p class='paragraph-s inline'>
+        {{diffDatesInDays start_date end_date/}}
+      </p>
+    </div>
+    <label class='font-normal' data-courier-select-all>
+      <input autocomplete='off' data-select-courier-lines type='checkbox'>
+      {{jed "Select all"/}}
+    </label>
+  </div>
+  <div class='row'>
+    {{partial ~linePartial reservations #view.ctx/}}
+  </div>
+  {{else}}
   <div class='row'>
     <div class='col1of2 padding-vertical-s'>
       <label class='padding-inset-s inline'>
@@ -21,4 +49,5 @@
   <div class='row'>
     {{partial ~linePartial reservations #view.ctx/}}
   </div>
+  {{/if}}
 </div>
