@@ -57,5 +57,19 @@ window.TimelineUtil = {
       timeline_availability.items,
       (i) => i.id == rr.item_id
     ).inventory_code
+  },
+
+  pickupLocationName(timeline_availability, rr) {
+
+    if(!rr.pickup_location_id) {
+      return null
+    }
+
+    var pickupLocation = _.find(
+      timeline_availability.pickup_locations,
+      (pl) => pl.id == rr.pickup_location_id
+    )
+
+    return pickupLocation ? pickupLocation.name : null
   }
 }

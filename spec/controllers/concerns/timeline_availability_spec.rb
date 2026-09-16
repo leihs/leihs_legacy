@@ -28,4 +28,20 @@ describe TimelineAvailability do
       expect(pul['timeline_end_date']).to eq Date.new(2026, 9, 25)
     end
   end
+
+  describe '#pickup_locations' do
+    it "returns the pool's pickup locations as rows with id and name" do
+      inventory_pool = FactoryBot.create(:inventory_pool)
+      other_pool = FactoryBot.create(:inventory_pool)
+      pickup_location = FactoryBot.create(:pickup_location,
+                                          inventory_pool: inventory_pool,
+                                          name: 'Reception Desk')
+      FactoryBot.create(:pickup_location, inventory_pool: other_pool)
+
+      rows = harness.send(:pickup_locations, inventory_pool.id)
+
+      expect(rows.map { |r| r['id'] }).to eq [pickup_location.id]
+      expect(rows.first['name']).to eq 'Reception Desk'
+    end
+  end
 end

@@ -8,6 +8,13 @@ window.TimelineRenderReservations = {
       <span key='label'>{label}</span>
     ]
 
+    var pickupLocationName = TimelineUtil.pickupLocationName(timeline_availability, rr)
+    if(pickupLocationName) {
+      elements.push(
+        <span key='pickup_location' style={{marginLeft: '5px', fontStyle: 'italic'}}>({pickupLocationName})</span>
+      )
+    }
+
     var inventoryCode = TimelineUtil.inventoryCode(timeline_availability, rr)
     if(inventoryCode) {
       elements.push(

@@ -68,7 +68,7 @@
       events[group_id] << {:start         => start_date.to_time.to_formatted_s(:rfc822),
                            :end           => end_date.to_time.to_formatted_s(:rfc822),
                            :durationEvent => true,
-                           :title         => "#{user} (#{line.item.try(:inventory_code) || _("Quantity: %d") % line.quantity})",
+                           :title         => "#{user}#{" <i>(#{h(line.pickup_location.name)})</i>" if line.pickup_location}#{" (#{line.item.inventory_code})" if line.item}",
                            :description   => begin
                               # construct the popup that is being displayed when you click on an event
                               link_string, link_path =

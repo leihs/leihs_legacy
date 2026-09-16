@@ -136,6 +136,19 @@ module TimelineAvailability
       ActiveRecord::Base.connection.exec_query(query).to_a
     end
 
+    def pickup_locations(inventory_pool_id)
+      query = <<-SQL
+        select
+        	pickup_locations.*
+        from
+        	pickup_locations
+        where
+        	pickup_locations.inventory_pool_id = '#{inventory_pool_id}'
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(query).to_a
+    end
+
     def timeline_availability(model_id, inventory_pool_id, is_lending_manager)
       inventory_pool = InventoryPool.find(inventory_pool_id)
       model = Model.find(model_id)
@@ -149,6 +162,7 @@ module TimelineAvailability
         entitlements, entitlement_groups_users, inventory_pool.id
       )
       items = items(inventory_pool.id, model.id)
+      pickup_locations = pickup_locations(inventory_pool.id)
 
       {
         maintenance_period: model.maintenance_period.to_i,
@@ -158,6 +172,7 @@ module TimelineAvailability
         entitlement_groups_users:,
         entitlement_groups:,
         items:,
+        pickup_locations:,
         is_lending_manager:
       }
     end
