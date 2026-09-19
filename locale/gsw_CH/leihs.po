@@ -1808,6 +1808,9 @@ msgstr "De Grätepark isch am Rückgabetag zue"
 msgid "Inventory pool is closed on start date"
 msgstr "De Grätepark isch am Startdatum zue."
 
+msgid "Start date is too soon for the pickup location's transfer buffer"
+msgstr "Das Startdatum isch z'früeh wäg de Transferziit zum Abholort"
+
 msgid "is late"
 msgstr "verschpötet"
 

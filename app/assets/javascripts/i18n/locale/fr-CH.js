@@ -2513,6 +2513,10 @@ window.i18n.locale_data = {
          null,
          "Le groupe d'inventaire est fermé à la date de début"
       ],
+      "Start date is too soon for the pickup location's transfer buffer": [
+         null,
+         "La date de début est trop proche compte tenu du délai de transfert du lieu de retrait"
+      ],
       "is late": [
          null,
          "est en retard"

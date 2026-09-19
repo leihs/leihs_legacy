@@ -1916,6 +1916,9 @@ msgstr "Der Gerätepark ist am gewünschten Rückgabetag geschlossen"
 msgid "Inventory pool is closed on start date"
 msgstr "Der Gerätepark ist am gewünschten Starttag geschlossen"
 
+msgid "Start date is too soon for the pickup location's transfer buffer"
+msgstr "Das Startdatum ist wegen der Transferzeit zum Abholort zu früh"
+
 msgid "is late"
 msgstr "verspätet"
 

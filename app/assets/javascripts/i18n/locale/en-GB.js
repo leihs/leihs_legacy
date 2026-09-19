@@ -2390,6 +2390,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Start date is too soon for the pickup location's transfer buffer": [
+         null,
+         ""
+      ],
       "is late": [
          null,
          ""

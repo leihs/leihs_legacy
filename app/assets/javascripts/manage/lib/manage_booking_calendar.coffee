@@ -97,7 +97,16 @@ class window.App.ManageBookingCalendar extends App.BookingCalendar
 
   getInventoryPool: => App.InventoryPool.current
 
+  # true if a pickup-location reservation's start date would be too soon,
+  # given the inventory pool's advance-days/transfer-buffer requirements
+  isTooSoonForPickupLocation: (date)=>
+    return false unless _.any(@reservations, (r)-> r.pickup_location_id)
+    ip = @getInventoryPool()
+    advanceDays = Math.max(ip.borrow_reservation_advance_days || 0, ip.transfer_buffer_before_pick_up || 0)
+    moment(date).isBefore(ip.earliestPossiblePickupDate(advanceDays), 'day')
+
   isClosedDay: (date)=>
     ip = @getInventoryPool()
     super or
-      not ip.isVisitPossible(moment(date))
+      not ip.isVisitPossible(moment(date)) or
+      @isTooSoonForPickupLocation(date)

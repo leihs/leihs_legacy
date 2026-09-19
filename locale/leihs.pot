@@ -1830,6 +1830,9 @@ msgstr ""
 msgid "Inventory pool is closed on start date"
 msgstr ""
 
+msgid "Start date is too soon for the pickup location's transfer buffer"
+msgstr ""
+
 msgid "is late"
 msgstr ""
 

@@ -2414,6 +2414,10 @@ window.i18n.locale_data = {
          null,
          "De Grätepark isch am Startdatum zue."
       ],
+      "Start date is too soon for the pickup location's transfer buffer": [
+         null,
+         "Das Startdatum isch z'früeh wäg de Transferziit zum Abholort"
+      ],
       "is late": [
          null,
          "verschpötet"

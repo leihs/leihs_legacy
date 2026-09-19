@@ -2495,6 +2495,10 @@ window.i18n.locale_data = {
          null,
          "Der Gerätepark ist am gewünschten Starttag geschlossen"
       ],
+      "Start date is too soon for the pickup location's transfer buffer": [
+         null,
+         "Das Startdatum ist wegen der Transferzeit zum Abholort zu früh"
+      ],
       "is late": [
          null,
          "verspätet"
