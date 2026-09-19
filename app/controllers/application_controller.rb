@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include MainHelpers
   include DevTestMisc
   include AntiCsrf
+  include TransactionHealing
 
   layout 'splash'
   
