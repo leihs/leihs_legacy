@@ -102,6 +102,11 @@ class window.App.ManageBookingCalendarDialogController extends App.BookingCalend
       errors.push _jed("Inventory pool is closed on start date")
     if ip.isClosedOn @getEndDate()
       errors.push _jed("Inventory pool is closed on end date")
+    if _.any(@reservations, (r)-> r.pickup_location_id)
+      advanceDays = Math.max(ip.borrow_reservation_advance_days || 0, ip.transfer_buffer_before_pick_up || 0)
+      earliestPickupDate = ip.earliestPossiblePickupDate(advanceDays)
+      if @getStartDate().isBefore(earliestPickupDate, 'day')
+        errors.push _jed("Start date is too soon for the pickup location's transfer buffer")
 
     if errors.length
       @showError errors.join(", ")
