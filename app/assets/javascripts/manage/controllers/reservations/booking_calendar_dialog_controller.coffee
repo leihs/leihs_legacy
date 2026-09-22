@@ -92,6 +92,7 @@ class window.App.ManageBookingCalendarDialogController extends App.BookingCalend
   # true if a pickup-location reservation's start date is too soon given the
   # inventory pool's advance-days/transfer-buffer requirements
   startDateTooSoonForPickupLocation: =>
+    return false if @startDateDisabled # start date not being edited here (e.g. take back)
     return false unless _.any(@reservations, (r)-> r.pickup_location_id)
     ip = @getSelectedInventoryPool()
     advanceDays = Math.max(ip.borrow_reservation_advance_days || 0, ip.transfer_buffer_before_pick_up || 0)

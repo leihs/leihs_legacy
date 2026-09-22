@@ -12,6 +12,7 @@ class window.App.ManageBookingCalendar extends App.BookingCalendar
 
   setup: (options)->
     @partitionSelector_el = @el.find "select#booking-calendar-partitions"
+    @startDateDisabled = options.startDateDisabled
     if options.startDateDisabled
       @startDate_el.prop "disabled", true
       @startDate_el.val moment().format("YYYY-MM-DD")
@@ -100,6 +101,7 @@ class window.App.ManageBookingCalendar extends App.BookingCalendar
   # true if a pickup-location reservation's start date would be too soon,
   # given the inventory pool's advance-days/transfer-buffer requirements
   isTooSoonForPickupLocation: (date)=>
+    return false if @startDateDisabled # start date not being edited here (e.g. take back)
     return false unless _.any(@reservations, (r)-> r.pickup_location_id)
     ip = @getInventoryPool()
     advanceDays = Math.max(ip.borrow_reservation_advance_days || 0, ip.transfer_buffer_before_pick_up || 0)
