@@ -5,10 +5,14 @@ set -eu
 
 # make sure all submodules are checked out
 # WARNING: test is false-positive without this:
-git fetch --all 1>&2 # print stdout to stderr
+# Only origin/master is needed. Do not use `git fetch --all`: it fetches every branch, and on
+# older git it spawns a per-remote subprocess that ignores --no-recurse-submodules and then
+# fetches, on demand, every submodule commit referenced by any branch. A single branch pointing
+# at an unpushed submodule commit aborts that fetch ("upload-pack: not our ref").
+git fetch --no-recurse-submodules origin master 1>&2 # print stdout to stderr
 git submodule update --init --recursive 1>&2
 
 git submodule foreach --recursive \
-  'git fetch --all > /dev/null && git rev-list origin/master -- | grep -q "^$(git rev-parse HEAD)$"'
+  'git fetch origin master > /dev/null && git rev-list origin/master -- | grep -q "^$(git rev-parse HEAD)$"'
 
 echo "OK"
