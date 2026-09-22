@@ -5,17 +5,22 @@
 #
 #= require_self
 #
-##### RAILS ASSETS
+##### THIRD PARTY LIBRARIES
 #
-#= require jquery
-#= require jquery-ui
-#= require jquery-ujs
-#= require jquery.inview
-#= require moment
-#= require moment-range
-#= require fullcalendar
-#= require underscore
-#= require accounting.js/accounting.js
+# npm packages, served by Sprockets from node_modules (see config/initializers/assets.rb,
+# versions pinned in package.json). jquery and fullcalendar are vendored because their
+# exact upstream versions are not published on npm (see vendor/assets/javascripts/*/VENDOR.md).
+# NOTE: the order matters (jquery first), keep it.
+#
+#= require jquery/jquery-1.10.2
+#= require jquery-ui-dist/jquery-ui
+#= require jquery-ujs/src/rails
+#= require jquery-inview/jquery.inview
+#= require moment/moment
+#= require moment-range/dist/moment-range
+#= require fullcalendar/fullcalendar-1.6.7
+#= require underscore/underscore-umd
+#= require accounting/accounting
 #
 ##### VENDOR
 #

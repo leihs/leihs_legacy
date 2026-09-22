@@ -38,7 +38,7 @@ jobs:
               body: |
                 #!/usr/bin/env bash
                 set -exu
-                git fetch --all
+                git fetch --no-recurse-submodules origin master
                 #
                 # check if your tree still contains the current commit from master
                 git rev-list --children HEAD | grep -q "$(git rev-parse origin/master)"
