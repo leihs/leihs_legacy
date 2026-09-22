@@ -7,9 +7,9 @@
 #
 #= require jqBarGraph/jqBarGraph.1.2
 #
-##### RAILS ASSETS
+##### NPM (node_modules)
 #
-#= require jquery-autosize
+#= require jquery-autosize/jquery.autosize
 #
 ##### APP
 #
