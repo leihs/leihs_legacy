@@ -38,21 +38,11 @@ gem "will_paginate", "~> 3.0"
 gem "webpacker", "~> 5.0"
 gem "react-rails", "~> 2.0"
 
-source "https://rails-assets.org" do
-  gem "rails-assets-bootstrap", "~> 3.3"
-  gem "rails-assets-accounting.js", "~> 0.4"
-  gem "rails-assets-fullcalendar", "~> 1.5"
-  gem "rails-assets-select2", "~> 4.0"
-  gem "rails-assets-jquery", "~> 1.5"
-  gem "rails-assets-jquery-autosize", "~> 1.18"
-  gem "rails-assets-jquery.inview", "~> 1.0"
-  gem "rails-assets-jquery-ui", "~> 1.1"
-  gem "rails-assets-jquery-ujs", "~> 1.0"
-  gem "rails-assets-moment", "~> 2.10"
-  gem "rails-assets-moment-range", "2.2"
-  gem "rails-assets-timecop", "~> 0.1"
-  gem "rails-assets-underscore", "~> 1.8"
-end
+# NOTE: The frontend libraries that used to be sourced from rails-assets.org
+# are now provided via npm/webpack (jquery, jquery-ui, jquery-ujs,
+# jquery.inview, jquery-autosize, moment, underscore, accounting) or vendored
+# directly (fullcalendar 1.6.7, jquery.inview, timecop, jquery-ui theme CSS).
+# bootstrap, select2 and moment-range were unused and dropped.
 
 group :development do
   # gem 'metric_fu'

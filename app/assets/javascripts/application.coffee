@@ -7,15 +7,11 @@
 #
 ##### RAILS ASSETS
 #
-#= require jquery
-#= require jquery-ui
-#= require jquery-ujs
-#= require jquery.inview
-#= require moment
-#= require moment-range
-#= require fullcalendar
-#= require underscore
-#= require accounting.js/accounting.js
+# NOTE: jquery, jquery-ui, jquery-ujs, jquery.inview, moment, fullcalendar,
+# underscore and accounting.js used to be sourced from rails-assets.org.
+# They are now bundled via webpack (see app/javascript/packs/application.js)
+# and exposed as globals ($, jQuery, _, moment, accounting, ...) before this
+# sprockets bundle runs.
 #
 ##### VENDOR
 #

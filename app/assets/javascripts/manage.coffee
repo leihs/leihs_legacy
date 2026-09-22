@@ -9,7 +9,7 @@
 #
 ##### RAILS ASSETS
 #
-#= require jquery-autosize
+# jquery-autosize is now bundled via webpack (see packs/application.js)
 #
 ##### APP
 #
