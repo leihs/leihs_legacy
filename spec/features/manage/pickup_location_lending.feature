@@ -100,16 +100,16 @@ Feature: Pickup location lending UI
     Then the pickup location is not shown in the edit reservation dialog
 
   @manage_pickup_location_lending
-  Scenario: Edit reservation shows pool name for main warehouse
+  Scenario: Edit reservation hides pickup location for main warehouse
     Given I am Pius
     And the current pool has alternative pickup locations enabled
     And a customer for my inventory pool exists
     And an item owned by my inventory pool exists
     And the customer has an approved reservation for the item without an alternative pickup location
     When I open hand over for the user
-    Then the pool name is shown as pickup location on the hand over line
+    Then the pickup location is not shown on the hand over line
     And I open the edit reservation dialog for the line
-    Then the pool name is shown as pickup location in the edit reservation dialog
+    Then the pickup location is not shown in the edit reservation dialog
 
   @manage_pickup_location_lending
   Scenario: Take-back hides courier checkbox for main warehouse
@@ -120,7 +120,7 @@ Feature: Pickup location lending UI
     And the customer has borrowed the item for today
     When I open take back for the user
     Then the handed to courier checkbox is not shown on the take back line
-    And the pool name is shown as pickup location on the take back line
+    And the pickup location is not shown on the take back line
 
   @manage_pickup_location_lending
   Scenario: Take-back hides courier checkbox for a non-transportable model
@@ -132,7 +132,7 @@ Feature: Pickup location lending UI
     And the customer has borrowed the item for today with an alternative pickup location
     When I open take back for the user
     Then the handed to courier checkbox is not shown on the take back line
-    And the pickup location is shown on the take back line
+    And the pickup location is not shown on the take back line
 
   @manage_pickup_location_lending
   Scenario: Take-back courier checkbox is shown only for transportable pickup-location lines
@@ -147,7 +147,7 @@ Feature: Pickup location lending UI
     And the courier select-all checkbox is shown on the take back group
 
   @manage_pickup_location_lending
-  Scenario: Hand-over list and Edit Selection show courier only for transportable models
+  Scenario: Hand-over list and Edit Selection show pickup and courier only for transportable models
     Given I am Pius
     And the current pool has alternative pickup locations enabled
     And a customer for my inventory pool exists
@@ -156,9 +156,21 @@ Feature: Pickup location lending UI
     And the customer has approved reservations for both items with an alternative pickup location
     And the second item model has three non-adjacent unavailable periods within the reservation range
     When I open hand over for the user
-    Then the pickup location is shown on both hand over lines and courier only for the second item
+    Then the pickup location and courier are shown only on the hand over line for the second item
     When I select both hand over lines
     And I open Edit Selection
-    Then the pickup location is shown for both models in the edit reservation dialog
+    Then the pickup location is shown only for the transportable model in the edit reservation dialog
     And three unavailable date ranges are shown for the transportable model in the edit reservation dialog
+
+  @manage_pickup_location_lending
+  Scenario: Edit Selection shows separate calendar rows per pickup location
+    Given I am Pius
+    And the current pool has alternative pickup locations enabled
+    And a customer for my inventory pool exists
+    And two items of the same model owned by my inventory pool exist
+    And the customer has approved reservations for both items with different alternative pickup locations
+    When I open hand over for the user
+    And I select both hand over lines
+    And I open Edit Selection
+    Then the edit reservation dialog shows a separate row for each pickup location
 

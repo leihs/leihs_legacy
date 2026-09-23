@@ -44,7 +44,7 @@
                   - else
                     = "%s / %s" % [line.item.room.name, line.item.shelf]
                 - if show_pickup_location
-                  %td.pickup_location= line.pickup_location&.name || current_inventory_pool.name
+                  %td.pickup_location= line.pickup_location&.name || current_inventory_pool.default_pickup_location_name
 
 
   - else
@@ -103,4 +103,4 @@
                             %td.place
                               %i= _("Location not defined")
                 - if show_pickup_location
-                  %td.pickup_location= lines.first.pickup_location&.name || current_inventory_pool.name
+                  %td.pickup_location= lines.first.pickup_location&.name || current_inventory_pool.default_pickup_location_name

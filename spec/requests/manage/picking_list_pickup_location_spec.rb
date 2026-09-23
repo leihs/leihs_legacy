@@ -69,7 +69,7 @@ describe 'Manage picking list pickup location column', type: :request do
     expect(response.body).to include('Alt Desk')
   end
 
-  it 'shows the pool name when pickup_location_id is empty' do
+  it 'shows default_pickup_location_name when pickup_location_id is empty' do
     item = FactoryBot.create(:item, owner: @inventory_pool)
     reservation = FactoryBot.create(
       :reservation,
@@ -85,11 +85,36 @@ describe 'Manage picking list pickup location column', type: :request do
     print_picking_list([reservation.id])
 
     expect(response).to have_http_status(:ok)
+    expect(header_labels).to include('Pickup location')
     pickup_cells = Nokogiri::HTML(response.body)
       .css('.picking_list tbody tr td.pickup_location')
       .map { |td| td.text.strip }
-    expect(pickup_cells).to eq [@inventory_pool.name]
-    expect(pickup_cells.join).not_to include('Main Warehouse')
+    expect(pickup_cells).to eq ['Main Warehouse']
+  end
+
+  it 'shows the alternative pickup location for a non-transportable model' do
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    item.model.update!(transportable: false)
+    reservation = FactoryBot.create(
+      :reservation,
+      status: :approved,
+      user: @customer,
+      inventory_pool: @inventory_pool,
+      model: item.model,
+      item: item,
+      pickup_location: @pickup_location,
+      start_date: Date.today,
+      end_date: Date.tomorrow
+    )
+
+    print_picking_list([reservation.id])
+
+    expect(response).to have_http_status(:ok)
+    expect(header_labels).to include('Pickup location')
+    pickup_cells = Nokogiri::HTML(response.body)
+      .css('.picking_list tbody tr td.pickup_location')
+      .map { |td| td.text.strip }
+    expect(pickup_cells).to eq ['Alt Desk']
   end
 
   it 'keeps the original four columns when the feature is off' do
