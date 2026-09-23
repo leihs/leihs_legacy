@@ -100,10 +100,10 @@ window.App.Reservation::alternativePickupLocationsEnabled = ->
   !!App.InventoryPool.current?.enable_alternative_pickup_locations
 
 window.App.Reservation::pickupLocationName = ->
-  @pickup_location?.name or App.InventoryPool.current?.name
+  @pickup_location?.name
 
 window.App.Reservation::showsPickupLocation = ->
-  @alternativePickupLocationsEnabled() and !!@pickupLocationName()
+  @eligibleForCourier() and !!@pickupLocationName()
 
 window.App.Reservation::modelIsTransportable = ->
   !!@model()?.transportable
