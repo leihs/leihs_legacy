@@ -100,19 +100,18 @@ window.App.Reservation::alternativePickupLocationsEnabled = ->
   !!App.InventoryPool.current?.enable_alternative_pickup_locations
 
 window.App.Reservation::pickupLocationName = ->
-  @pickup_location?.name
+  @pickup_location?.name or App.InventoryPool.current?.name
 
-window.App.Reservation::showsAlternativePickupLocation = ->
-  @alternativePickupLocationsEnabled() and
-    !!@pickup_location_id and
-    !!@pickupLocationName() and
-    @modelIsTransportable()
+window.App.Reservation::showsPickupLocation = ->
+  @alternativePickupLocationsEnabled() and !!@pickupLocationName()
 
 window.App.Reservation::modelIsTransportable = ->
   !!@model()?.transportable
 
 window.App.Reservation::eligibleForCourier = ->
-  @showsAlternativePickupLocation() and @modelIsTransportable()
+  @alternativePickupLocationsEnabled() and
+    !!@pickup_location_id and
+    @modelIsTransportable()
 
 window.App.Reservation::showsHandedToCourierForPickup = ->
   @eligibleForCourier() and @status is "approved"
@@ -139,3 +138,4 @@ window.App.Reservation::toggleCourier = (direction, handed, options = {})->
   .fail (e)=>
     msg = e.responseJSON?.message || e.responseText
     App.Flash(type: "error", message: msg)
+    options.onError?(e)

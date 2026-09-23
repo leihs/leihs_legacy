@@ -10,15 +10,19 @@
     @include link-colors($darkergrey, $darkergrey, $darkergrey, $darkergrey, $darkergrey)
 
   &:not([class*='height'])
-    min-height: $space-xxl
-    height: auto
+    height: $space-xxl
 
     .line-info
       height: 100%
 
-  &.small:not([class*='height'])
-    min-height: $space-l
+  // Multi-line pickup labels need to grow beyond the fixed row height
+  // (orders list, booking calendar, and lending lines).
+  &:not([class*='height']):has([data-pickup-location])
+    min-height: $space-xxl
     height: auto
+
+  &.small:not([class*='height'])
+    height: $space-l
 
     .line-info
       height: 100%
@@ -41,21 +45,10 @@
     .button
       color: $lightgrey
 
-  &[data-line-type='item_line'] .has-addon
-    min-width: 10em
-
-  &[data-line-type='item_line'],
-  &[data-line-type='option_line']
-    table-layout: fixed
-
-    > .line-info + .line-col
-      width: 5%
-
 .line-actions
-  white-space: nowrap
 
-  .multibutton
-    white-space: nowrap
+  .button
+    max-width: 160px
 
 .line-col
   float: none
@@ -64,35 +57,8 @@
   line-height: $line-height-s
   vertical-align: middle
 
-  input[data-toggle-courier-to-pickup],
-  input[data-toggle-courier-to-main]
-    flex-shrink: 0
-
-  label.font-normal
-    display: flex
-    align-items: center
-    column-gap: 0.35em
-    max-width: 100%
-    min-width: 0
-    white-space: normal
-
-  [data-pickup-location]
-    display: inline-block
-    margin-top: 4px
-
-  &.col3of10.text-align-left
-    overflow-wrap: anywhere
-
-  &[data-reject-reason]
-    min-width: 0
-    white-space: normal
-    overflow-wrap: anywhere
-
-  &.col1of10.text-align-left
-    min-width: 0
-
   &:not([class*='padding'])
-    padding: 0 0 0 10px
+    padding: 0 0 0 $space-m
 
   &:not([class*='text-align'])
     text-align: right
@@ -106,36 +72,97 @@
   &:last-child:not([class*='padding'])
     padding-right: $space-s
 
-.grouped-lines-header
-  display: flex
-  align-items: center
-  position: relative
+// Pickup-location / courier layout: scoped to lending screens that show
+// multi-line labels and the courier column (avoids orders-list fallout).
+#hand-over-view,
+#take-back-view,
+#edit-contract-view
+  .line:not([class*='height'])
+    min-height: $space-xxl
+    height: auto
 
-  > .col1of2:nth-child(2)
+    .line-info
+      height: 100%
+
+  .line.small:not([class*='height'])
+    min-height: $space-l
+    height: auto
+
+    .line-info
+      height: 100%
+
+  .line[data-line-type='item_line'] .has-addon
+    min-width: 10em
+
+  .line[data-line-type='item_line'],
+  .line[data-line-type='option_line']
+    table-layout: fixed
+
+    > .line-info + .line-col
+      width: 5%
+
+  .line-actions
+    white-space: nowrap
+
+    .multibutton
+      white-space: nowrap
+
+  .line-col
+    input[data-toggle-courier-to-pickup],
+    input[data-toggle-courier-to-main]
+      flex-shrink: 0
+
+    label.font-normal
+      display: flex
+      align-items: center
+      column-gap: 0.35em
+      max-width: 100%
+      min-width: 0
+      white-space: normal
+
+    [data-pickup-location]
+      display: inline-block
+      margin-top: 4px
+
+    &.col3of10.text-align-left
+      overflow-wrap: anywhere
+
+    &.col1of10.text-align-left
+      min-width: 0
+
+    &:not([class*='padding'])
+      padding: 0 0 0 10px
+
+  .grouped-lines-header
     display: flex
     align-items: center
-    justify-content: flex-end
+    position: relative
+
+    > .col1of2:nth-child(2)
+      display: flex
+      align-items: center
+      justify-content: flex-end
+
+    [data-courier-select-all]
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      z-index: 1
 
   [data-courier-select-all]
-    position: absolute
-    top: 50%
-    transform: translateY(-50%)
-    z-index: 1
+    display: inline-flex
+    align-items: center
+    column-gap: 0.35em
+    font-size: $font-size-xs
+    max-width: 100%
+    min-width: 0
+    white-space: normal
 
-[data-courier-select-all]
-  display: inline-flex
-  align-items: center
-  column-gap: 0.35em
-  font-size: $font-size-xs
-  max-width: 100%
-  min-width: 0
-  white-space: normal
+    &.is-empty
+      display: none
 
-  &.is-empty
-    display: none
-
-  input[data-select-courier-lines]
-    flex-shrink: 0
+    input[data-select-courier-lines]
+      flex-shrink: 0
 
 .line-info
   left: 1px

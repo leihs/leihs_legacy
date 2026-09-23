@@ -27,7 +27,11 @@ class window.App.ReservationsCourierController extends Spine.Controller
     currentId = $(e.currentTarget).closest("[data-id]").data("id")
     line = App.Reservation.find(currentId)
     return unless line? and @supportsCourier(line, direction)
-    line.toggleCourier(direction, handed)
+    line.toggleCourier(direction, handed,
+      onError: =>
+        $(e.currentTarget).prop("checked", !handed)
+        do @syncHeaders
+    )
 
   toggleGroup: (e)=>
     e.stopPropagation()
@@ -35,14 +39,27 @@ class window.App.ReservationsCourierController extends Spine.Controller
     handed = e.currentTarget.checked
     {direction, lines} = @groupCourierLines(container)
     return unless lines.length
+    previous = for line in lines
+      if direction is "to_pickup"
+        line.handedToCourierForPickup()
+      else
+        line.handedToCourierForReturn()
     @syncCourierCheckboxes(lines, direction, handed)
     if lines.length == 1
-      lines[0].toggleCourier(direction, handed)
+      lines[0].toggleCourier(direction, handed,
+        onError: =>
+          @syncCourierCheckboxes(lines, direction, previous[0])
+          do @syncHeaders
+      )
       return
     requests = (line.toggleCourier(direction, handed, silent: true) for line in lines)
-    $.when(requests...).always =>
+    $.when(requests...).done =>
       App.Reservation.trigger "update", lines[0]
       App.Reservation.trigger "refresh"
+    .fail =>
+      for line, i in lines
+        @syncCourierCheckboxes([line], direction, previous[i])
+      do @syncHeaders
 
   syncCourierCheckboxes: (lines, direction, handed)=>
     selector = @selectorFor(direction)

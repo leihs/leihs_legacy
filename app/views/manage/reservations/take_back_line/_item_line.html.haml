@@ -17,10 +17,10 @@
     - unless line.model.hand_over_note.blank?
       %br
       %span.grey-text= line.model.hand_over_note
-    - if current_inventory_pool.enable_alternative_pickup_locations && line.pickup_location.present? && line.model&.transportable
+    - if current_inventory_pool.enable_alternative_pickup_locations
       %br
       %span.orange-text{:"data-pickup-location" => true}
-        = "#{_('Pickup location')}: #{line.pickup_location.name}"
+        = "#{_('Pickup location')}: #{line.pickup_location&.name || current_inventory_pool.name}"
 
   .col1of10.line-col.text-align-center
     - if purpose = line.order.try(&:purpose).presence
