@@ -1,16 +1,18 @@
 require 'rails_helper'
 
 describe Availability::Main do
+  # anchored relative to today (with a week of margin) so the fixed
+  # calendar dates below never drift into the past as time passes
   def mon
-    Date.new(2026, 9, 21)
+    Date.current.next_occurring(:monday) + 1.week
   end
 
   def fri
-    Date.new(2026, 9, 25)
+    mon + 4.days
   end
 
   def mon_after
-    Date.new(2026, 9, 28)
+    mon + 7.days
   end
 
   before :example do
@@ -63,15 +65,16 @@ describe Availability::Main do
 
     it 'widens the blocked range backward and forward by orders-processing buffer days' do
       # before pick-up buffer of 2 processing days steps back over the
-      # weekend, so Thursday 9/17 is already blocked
-      expect(available_on(Date.new(2026, 9, 17))).to eq 2
+      # weekend, so the Thursday before is already blocked
+      expect(available_on(mon - 4.days)).to eq 2
       expect(available_on(mon)).to eq 2
       expect(available_on(fri)).to eq 2
 
       # after drop-off buffer of 2 processing days steps forward over the
-      # weekend, so it's still blocked on 9/28 and only free again on 9/30
+      # weekend, so it's still blocked the Monday after and only free again
+      # two days later
       expect(available_on(mon_after)).to eq 2
-      expect(available_on(Date.new(2026, 9, 30))).to eq 3
+      expect(available_on(mon_after + 2.days)).to eq 3
     end
   end
 
@@ -97,8 +100,8 @@ describe Availability::Main do
     it 'skips a holiday flagged as not orders_processing, widening the block further, like a weekend' do
       pickup_location = FactoryBot.create(:pickup_location,
                                           inventory_pool: @inventory_pool)
-      wed = Date.new(2026, 9, 23)
-      thu = Date.new(2026, 9, 24)
+      wed = mon + 2.days
+      thu = mon + 3.days
       @inventory_pool.holidays.create!(name: 'Holiday', start_date: thu,
                                        end_date: thu, orders_processing: false)
       FactoryBot.create(:item_line,
@@ -110,11 +113,11 @@ describe Availability::Main do
                         end_date: wed,
                         pickup_location:)
 
-      # without the holiday, buffer of 2 would land on Friday 9/25 (Thu,
-      # Fri); the holiday on Thursday isn't counted, so it lands on Monday
-      # 9/28 (Fri, then skip the weekend, then Monday) instead
+      # without the holiday, buffer of 2 would land on the Friday (Thu,
+      # Fri); the holiday on Thursday isn't counted, so it lands on the
+      # Monday after (Fri, then skip the weekend, then Monday) instead
       expect(available_on(mon_after)).to eq 2
-      expect(available_on(Date.new(2026, 9, 29))).to eq 3
+      expect(available_on(mon_after + 1.day)).to eq 3
     end
   end
 end
