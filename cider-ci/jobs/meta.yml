@@ -54,7 +54,7 @@ jobs:
                 set -eu
                 export PATH=./node_modules/.bin:$PATH
 
-                asdf install nodejs
+                ./bin/env/nodejs-setup
 
                 mv public/assets tmp/checked_in_assets
                 # bundle exec rake app:i18n:po2json
