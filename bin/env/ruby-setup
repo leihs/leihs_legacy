@@ -26,5 +26,13 @@ case "$TOOL_VERSIONS_MANAGER" in
     ;;
 esac
 
+# Install the bundler version the lockfile was written with explicitly (and
+# under this script's exclusive CI resource) instead of letting bundler's
+# self-manager auto-install it on first use, which raced on shared executors.
+BUNDLER_VERSION="$(sed -n '/^BUNDLED WITH/{n;s/^[[:space:]]*//;p;}' Gemfile.lock)"
+if [ -n "$BUNDLER_VERSION" ] && ! gem list -i bundler -v "$BUNDLER_VERSION" > /dev/null; then
+  gem install bundler -v "$BUNDLER_VERSION" --no-document
+fi
+
 bundle install --quiet "$@"
 # vi: ft=sh
