@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eux
 
-git fetch --all
+git fetch --all --no-recurse-submodules
 
 BACKEND_LOCALES=$(git diff HEAD..HEAD^1 locale)
 FRONTEND_LOCALES=$(git diff HEAD..HEAD^1 app/assets/javascripts/i18n/locale)
