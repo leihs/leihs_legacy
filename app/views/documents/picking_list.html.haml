@@ -64,11 +64,7 @@
               - if show_pickup_location
                 %th.pickup_location= _("Pickup location")
           %tbody
-            - models_lines = if show_pickup_location
-                               reservations.group_by { |line| [line.model, line.item, line.pickup_location_id] }
-                             else
-                               reservations.group_by { |line| [line.model, line.item, nil] }
-                             end
+            - models_lines = reservations.group_by { |line| [line.model, line.item, (show_pickup_location ? line.pickup_location_id : nil)] }
             - sorted_groups = models_lines.sort_by { |(model, item, _), _lines| [model.to_s, ((item.respond_to?(:room) && item.room) ? "#{item.room.name} / #{item.shelf}" : "zzzz")] }
             - sorted_groups.each do |(model, item, _pickup_location_id), lines|
               %tr{style: "vertical-align: top"}
