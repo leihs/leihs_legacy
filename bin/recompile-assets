@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -eux
 
-asdf install nodejs
+# nodejs via asdf or mise, whichever the machine has (see bin/env/select-tool-versions-manager)
+./bin/env/nodejs-setup
 
 export RAILS_ENV=production
 export NODE_ENV=production
