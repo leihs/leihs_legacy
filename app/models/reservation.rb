@@ -251,16 +251,10 @@ class Reservation < ApplicationRecord
     pickup_location_id.present? && model&.transportable
   end
 
-  def handed_to_courier_for_pickup?
-    sent_to_pickup_location_at.present?
-  end
-
-  def handed_to_courier_for_return?
-    sent_back_to_main_location_at.present?
-  end
-
+  # Explicit serializer for manage Spine bootstraps / courier AJAX.
+  # Prefer this over aliasing as_json globally.
   def as_json_with_pickup_location(options = {})
-    h = as_json_without_pickup_location(options)
+    h = as_json(options)
     if pickup_location
       h['pickup_location'] = {
         'id' => pickup_location.id,
@@ -269,8 +263,10 @@ class Reservation < ApplicationRecord
     end
     h
   end
-  alias_method :as_json_without_pickup_location, :as_json
-  alias_method :as_json, :as_json_with_pickup_location
+
+  def self.as_json_with_pickup_location(records, options = {})
+    Array(records).map { |r| r.as_json_with_pickup_location(options) }
+  end
 
   ############################################
 

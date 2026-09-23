@@ -51,7 +51,7 @@
     for option in #{@options.to_json}
       App.Option.addRecord new App.Option option
 
-    for reservation in #{@reservations.to_json}
+    for reservation in #{Reservation.as_json_with_pickup_location(@reservations).to_json}
       App.Reservation.addRecord new App.Reservation reservation
 
     for item in #{@items.to_json(include: {children: {methods: :to_s}})}

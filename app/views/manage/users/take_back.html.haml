@@ -54,7 +54,7 @@
     for item in #{@items.to_json}
       App.Item.addRecord new App.Item item
 
-    for reservation in #{@reservations.to_json}
+    for reservation in #{Reservation.as_json_with_pickup_location(@reservations).to_json}
       App.Reservation.addRecord new App.Reservation reservation
 
     new App.TakeBackController

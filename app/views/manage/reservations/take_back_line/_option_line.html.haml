@@ -19,13 +19,15 @@
   .col1of10.line-col.text-align-center
     %span.grey-text= line.option.inventory_code
 
-  .col4of10.line-col.text-align-left
+  .col3of10.line-col.text-align-left
     %strong= line.option.name
 
   .col1of10.line-col.text-align-center
     - if purpose = line.order.try(&:purpose).presence
       .tooltip{:"title" => purpose, :"data-tooltip-template" => "manage/views/purposes/tooltip"}
         %i.fa.fa-comment.grey
+
+  .col1of10.line-col.text-align-left
 
   .col1of10.line-col.text-align-center
 

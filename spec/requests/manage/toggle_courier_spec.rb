@@ -63,7 +63,7 @@ describe 'Manage::ReservationsController#toggle_courier', type: :request do
     expect(reservation.sent_to_pickup_location_at).to be_nil
   end
 
-  it 'sets sent_back_to_main_location fields without returning the item' do
+  it 'marks courier drop-off via sent_back without closing or freeing the item' do
     item = FactoryBot.create(:item, owner: @inventory_pool)
     contract = FactoryBot.create(:open_contract,
                                   inventory_pool: @inventory_pool,
@@ -76,10 +76,38 @@ describe 'Manage::ReservationsController#toggle_courier', type: :request do
 
     expect(response).to have_http_status(:ok)
     reservation.reload
+    # Dual-state: borrow shows returned via sent_back; returned_date stays nil
+    # so before_save does not close the line and availability stays blocked.
     expect(reservation.status).to eq :signed
     expect(reservation.returned_date).to be_nil
     expect(reservation.sent_back_to_main_location_at).to be_present
     expect(reservation.sent_back_to_main_location_by_user_id).to eq @manager.id
+  end
+
+  it 'allows warehouse take_back after courier drop-off and then closes the line' do
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    contract = FactoryBot.create(:open_contract,
+                                  inventory_pool: @inventory_pool,
+                                  user: @customer,
+                                  items: [item])
+    reservation = contract.reservations.first
+    reservation.update!(pickup_location: @pickup_location)
+
+    toggle(reservation, direction: 'to_main', handed: true)
+    expect(response).to have_http_status(:ok)
+    reservation.reload
+    expect(reservation.status).to eq :signed
+    expect(reservation.returned_date).to be_nil
+
+    post "/manage/#{@inventory_pool.id}/reservations/take_back",
+         params: { ids: [reservation.id] }
+
+    expect(response).to have_http_status(:ok)
+    reservation.reload
+    expect(reservation.status).to eq :closed
+    expect(reservation.returned_date).to eq Time.zone.today
+    expect(reservation.returned_to_user_id).to eq @manager.id
+    expect(contract.reload.state).to eq 'closed'
   end
 
   it 'forbids courier toggle when alternative pickup locations are disabled' do
@@ -115,6 +143,39 @@ describe 'Manage::ReservationsController#toggle_courier', type: :request do
     toggle(reservation, direction: 'to_pickup', handed: true)
 
     expect(response).to have_http_status(:bad_request)
+  end
+
+  it 'rejects to_pickup when reservation is not approved' do
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    contract = FactoryBot.create(:open_contract,
+                                  inventory_pool: @inventory_pool,
+                                  user: @customer,
+                                  items: [item])
+    reservation = contract.reservations.first
+    reservation.update!(pickup_location: @pickup_location)
+
+    toggle(reservation, direction: 'to_pickup', handed: true)
+
+    expect(response).to have_http_status(:bad_request)
+    expect(reservation.reload.sent_to_pickup_location_at).to be_nil
+  end
+
+  it 'rejects to_main when reservation is not signed' do
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    reservation = FactoryBot.create(
+      :reservation,
+      status: :approved,
+      user: @customer,
+      inventory_pool: @inventory_pool,
+      model: item.model,
+      item: item,
+      pickup_location: @pickup_location
+    )
+
+    toggle(reservation, direction: 'to_main', handed: true)
+
+    expect(response).to have_http_status(:bad_request)
+    expect(reservation.reload.sent_back_to_main_location_at).to be_nil
   end
 
   it 'rejects to_main when reservation has no alternative pickup location' do

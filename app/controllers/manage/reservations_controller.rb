@@ -222,7 +222,11 @@ class Manage::ReservationsController < Manage::ApplicationController
   end
 
   # Mark reservation as handed to / returned from courier for alternative pickup locations.
-  # Does not create a contract (hand-over) and does not close the line (take-back).
+  # Hand-over (to_pickup): does not create a contract.
+  # Take-back (to_main): sets sent_back_to_main_location_at only — intentionally
+  # leaves status signed and returned_date nil so the item stays unavailable and
+  # warehouse take-back still works. Borrow treats sent_back as returned/CLOSED
+  # and reminder jobs skip via not_dropped_off_at_pickup_location.
   def toggle_courier
     unless current_inventory_pool.enable_alternative_pickup_locations
       return render status: :forbidden,
@@ -245,6 +249,10 @@ class Manage::ReservationsController < Manage::ApplicationController
     begin
       case direction
       when 'to_pickup'
+        unless reservation.status == :approved
+          return render status: :bad_request,
+                        plain: 'Only approved reservations can be handed to courier for pickup'
+        end
         if handed
           reservation.update!(
             sent_to_pickup_location_at: Time.current,
@@ -277,7 +285,7 @@ class Manage::ReservationsController < Manage::ApplicationController
                       plain: "Unknown direction '#{direction}'"
       end
 
-      render json: reservation
+      render json: reservation.as_json_with_pickup_location
     rescue => e
       Rails.logger.warn e.message
       render status: :bad_request, plain: e.message

@@ -14,7 +14,7 @@ describe 'Reservation pickup location serialization and courier flags' do
                                           name: 'Alt Desk')
   end
 
-  it 'includes nested pickup_location in as_json when set' do
+  it 'includes nested pickup_location in as_json_with_pickup_location when set' do
     reservation = FactoryBot.create(
       :reservation,
       status: :approved,
@@ -23,7 +23,7 @@ describe 'Reservation pickup location serialization and courier flags' do
       pickup_location: @pickup_location
     )
 
-    json = reservation.as_json
+    json = reservation.as_json_with_pickup_location
     expect(json['pickup_location_id']).to eq @pickup_location.id
     expect(json['pickup_location']).to eq(
       'id' => @pickup_location.id,
@@ -31,7 +31,7 @@ describe 'Reservation pickup location serialization and courier flags' do
     )
   end
 
-  it 'omits nested pickup_location in as_json when not set' do
+  it 'omits nested pickup_location in as_json_with_pickup_location when not set' do
     reservation = FactoryBot.create(
       :reservation,
       status: :approved,
@@ -39,39 +39,8 @@ describe 'Reservation pickup location serialization and courier flags' do
       inventory_pool: @inventory_pool
     )
 
+    expect(reservation.as_json_with_pickup_location).not_to have_key('pickup_location')
     expect(reservation.as_json).not_to have_key('pickup_location')
-  end
-
-  it 'reports handed-to-courier flags from timestamps' do
-    reservation = FactoryBot.create(
-      :reservation,
-      status: :approved,
-      user: @user,
-      inventory_pool: @inventory_pool,
-      pickup_location: @pickup_location
-    )
-
-    expect(reservation.handed_to_courier_for_pickup?).to be false
-    expect(reservation.handed_to_courier_for_return?).to be false
-
-    reservation.update!(
-      sent_to_pickup_location_at: Time.current,
-      sent_to_pickup_location_by_user_id: @user.id
-    )
-    expect(reservation.handed_to_courier_for_pickup?).to be true
-
-    item = FactoryBot.create(:item, owner: @inventory_pool)
-    contract = FactoryBot.create(:open_contract,
-                                  inventory_pool: @inventory_pool,
-                                  user: @user,
-                                  items: [item])
-    signed = contract.reservations.first
-    expect(signed.handed_to_courier_for_return?).to be false
-    signed.update!(
-      sent_back_to_main_location_at: Time.current,
-      sent_back_to_main_location_by_user_id: @user.id
-    )
-    expect(signed.handed_to_courier_for_return?).to be true
   end
 
   it 'is eligible for courier only with alt pickup and a transportable model' do
@@ -135,8 +104,8 @@ describe TimelineAvailability do
       }
     ]
 
-    # timeline_availability only calls apply when feature on; method itself
-    # still applies when invoked — feature gate is in timeline_availability.
-    expect(@inventory_pool.enable_alternative_pickup_locations).to be false
+    apply_pickup_location_buffers!(reservations, @inventory_pool)
+
+    expect(reservations[0]['end_date']).to eq '2026-09-10'
   end
 end

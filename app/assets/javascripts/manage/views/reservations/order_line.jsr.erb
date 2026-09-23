@@ -28,7 +28,7 @@
     <strong class='test-fix-timeline' data-id='{{>model().id}}' data-type='model-cell'>
       {{>model().name()}}
     </strong>
-    {{if showsAlternativePickupLocation()}}
+    {{if showsPickupLocation()}}
     <br>
     <span class='orange-text' data-pickup-location>
       {{jed "Pickup location"/}}: {{>pickupLocationName()}}

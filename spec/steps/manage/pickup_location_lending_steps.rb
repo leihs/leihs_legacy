@@ -142,6 +142,33 @@ module Manage
         end
       end
 
+      step 'the pickup location is shown on the take back line' do
+        within '#lines' do
+          expect(page).to have_selector('[data-pickup-location].orange-text',
+                                        text: @pickup_location.name)
+        end
+      end
+
+      step 'the pool name is shown as pickup location on the hand over line' do
+        pool = @inventory_pool || @current_inventory_pool
+        within '#lines' do
+          expect(page).to have_selector(
+            '[data-pickup-location].orange-text',
+            text: pool.name
+          )
+        end
+      end
+
+      step 'the pool name is shown as pickup location on the take back line' do
+        pool = @inventory_pool || @current_inventory_pool
+        within '#lines' do
+          expect(page).to have_selector(
+            '[data-pickup-location].orange-text',
+            text: pool.name
+          )
+        end
+      end
+
       step 'the handed to courier checkbox is shown on the hand over line' do
         within '#lines' do
           courier = find('[data-toggle-courier-to-pickup]')
@@ -417,15 +444,18 @@ module Manage
         end
       end
 
-      step 'the pickup location and handed to courier are shown only ' \
-           'on the hand over line for the second item' do
+      step 'the pickup location is shown on both hand over lines and ' \
+           'courier only for the second item' do
         expect(page).to have_content('Availability loaded')
         within '#lines' do
-          expect(page).to have_selector('[data-pickup-location]', count: 1)
+          expect(page).to have_selector('[data-pickup-location]', count: 2)
           expect(page).to have_selector('[data-toggle-courier-to-pickup]', count: 1)
 
           first_line = find(".line[data-id='#{@reservation.id}']")
-          expect(first_line).to have_no_selector('[data-pickup-location]')
+          expect(first_line).to have_selector(
+            '[data-pickup-location].orange-text',
+            text: @pickup_location.name
+          )
           expect(first_line).to have_no_selector('[data-toggle-courier-to-pickup]')
 
           second_line = find(".line[data-id='#{@reservation_2.id}']")
@@ -464,20 +494,20 @@ module Manage
         JS
       end
 
-      step 'the pickup location is shown only for the transportable model ' \
+      step 'the pickup location is shown for both models ' \
            'in the edit reservation dialog' do
         within '.modal #booking-calendar-lines' do
-          expect(page).to have_selector('[data-pickup-location]', count: 1)
+          expect(page).to have_selector('[data-pickup-location]', count: 2)
 
-          non_transportable = find('.line.row', text: @item.model.name)
-          expect(non_transportable).to have_no_selector('[data-pickup-location]')
+          [@item.model.name, @item_2.model.name].each do |model_name|
+            row = find('.line.row', text: model_name)
+            pickup = row.find('[data-pickup-location]')
+            expect(pickup).to be_visible
+            expect(pickup[:class]).to include('orange-text')
+            expect(pickup.text.strip)
+              .to eq "#{_('Pickup location')}: #{@pickup_location.name}"
+          end
 
-          transportable = find('.line.row', text: @item_2.model.name)
-          pickup = transportable.find('[data-pickup-location]')
-          expect(pickup).to be_visible
-          expect(pickup[:class]).to include('orange-text')
-          expect(pickup.text.strip)
-            .to eq "#{_('Pickup location')}: #{@pickup_location.name}"
           font_weight = page.evaluate_script(<<~JS)
             window.getComputedStyle(
               document.querySelector(
@@ -532,6 +562,19 @@ module Manage
       step 'the pickup location is not shown in the edit reservation dialog' do
         within '.modal #booking-calendar-lines' do
           expect(page).not_to have_selector('[data-pickup-location]')
+        end
+      end
+
+      step 'the pool name is shown as pickup location in the edit reservation dialog' do
+        pool = @inventory_pool || @current_inventory_pool
+        within '.modal #booking-calendar-lines' do
+          row = find('.line.row', match: :first)
+          model_col = row.find('.col5of10.line-col')
+          pickup = model_col.find('[data-pickup-location]')
+          expect(pickup).to be_visible
+          expect(pickup[:class]).to include('orange-text')
+          expect(pickup.text.strip)
+            .to eq "#{_('Pickup location')}: #{pool.name}"
         end
       end
     end
