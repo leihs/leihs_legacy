@@ -22,7 +22,13 @@ require 'selenium/webdriver'
 
 
 Capybara.register_driver :firefox do |app|
-  firefox_bin_path = if ENV["TOOL_VERSIONS_MANAGER"] == "mise"
+  # Mirrors bin/env/select-tool-versions-manager (and spec/config/browser.rb):
+  # TOOL_VERSIONS_MANAGER wins, otherwise mise if available, else asdf.
+  tool_versions_manager = ENV["TOOL_VERSIONS_MANAGER"].to_s.strip
+  if tool_versions_manager.empty?
+    tool_versions_manager = system("type mise > /dev/null 2>&1") ? "mise" : "asdf"
+  end
+  firefox_bin_path = if tool_versions_manager == "mise"
     Pathname.new(`mise where firefox`.strip).join("bin/firefox").expand_path.to_s
   else
     Pathname.new(`asdf where firefox`.strip).join("bin/firefox").expand_path.to_s

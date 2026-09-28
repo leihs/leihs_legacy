@@ -10,9 +10,14 @@ cd $PROJECT_DIR
 
 RAILS_ENV=test source ./database/bin/db-set-env
 
-# clean-up the mess the ruby geckodriver gem might have created by placing it in ruby/bin/geckodriver
-rm -rf ~/.asdf/installs/ruby/$(asdf current ruby | awk '{print $2; }')/bin/gecko*
-asdf reshim
+# clean-up the mess the ruby geckodriver gem might have created by placing it
+# in ruby's bin dir (asdf or mise install), then refresh the shims
+source ./bin/env/select-tool-versions-manager
+rm -rf "$(ruby -e 'puts RbConfig::CONFIG["bindir"]')"/gecko*
+case "$TOOL_VERSIONS_MANAGER" in
+  mise) mise reshim ;;
+  *)    asdf reshim ;;
+esac
 
 bundle exec cucumber "$@"
 # vi: ft=sh
