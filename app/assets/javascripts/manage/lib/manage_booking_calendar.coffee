@@ -19,26 +19,12 @@ class window.App.ManageBookingCalendar extends App.BookingCalendar
     @models = options.models
     do @setupPartitionSelector
 
+  # data-value is rendered as "[id1,id2,...]" with unquoted ids, so jQuery can't parse it as JSON
   getGroupIds: =>
-    # This whole method is some ugly hack for something which did not work and its unclear how it should work.
-    # The ids returned were wrapped with [ ] brackets which obviously could not be found with active record.
-    # The calender however will be refactored anyway.
-    value = @partitionSelector_el.find("option:selected").data("value")
-    if value.constructor == Array
-      value.map(
-        (v) =>
-          if v.indexOf('[') > - 1
-            v.replace('[', '').replace(']', '')
-          else
-            v
-      )
-    else if typeof value == 'string'
-      if value.indexOf('[') > - 1
-        [value.replace('[', '').replace(']', '')]
-      else
-        [value]
-    else
-      [value]
+    @partitionSelector_el.find("option:selected").attr("data-value")
+      .replace(/[\[\]\s]/g, '')
+      .split(',')
+      .filter (id) -> id.length
 
   setDayElement: (date, dayElement, holidays)=>
     available = true
