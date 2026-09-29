@@ -255,16 +255,14 @@ class Manage::ReservationsController < Manage::ApplicationController
         end
         if handed
           unless reservation.sent_to_pickup_location_at
-            reservation.update!(
-              sent_to_pickup_location_at: Time.current,
-              sent_to_pickup_location_by_user_id: current_user.id
-            )
+            stamp_courier!(reservation,
+                           sent_to_pickup_location_at: Time.current,
+                           sent_to_pickup_location_by_user_id: current_user.id)
           end
         elsif reservation.sent_to_pickup_location_at
-          reservation.update!(
-            sent_to_pickup_location_at: nil,
-            sent_to_pickup_location_by_user_id: nil
-          )
+          stamp_courier!(reservation,
+                         sent_to_pickup_location_at: nil,
+                         sent_to_pickup_location_by_user_id: nil)
         end
       when 'to_main'
         unless reservation.status == :signed
@@ -273,16 +271,14 @@ class Manage::ReservationsController < Manage::ApplicationController
         end
         if handed
           unless reservation.sent_back_to_main_location_at
-            reservation.update!(
-              sent_back_to_main_location_at: Time.current,
-              sent_back_to_main_location_by_user_id: current_user.id
-            )
+            stamp_courier!(reservation,
+                           sent_back_to_main_location_at: Time.current,
+                           sent_back_to_main_location_by_user_id: current_user.id)
           end
         elsif reservation.sent_back_to_main_location_at
-          reservation.update!(
-            sent_back_to_main_location_at: nil,
-            sent_back_to_main_location_by_user_id: nil
-          )
+          stamp_courier!(reservation,
+                         sent_back_to_main_location_at: nil,
+                         sent_back_to_main_location_by_user_id: nil)
         end
       else
         return render status: :bad_request,
@@ -586,5 +582,13 @@ class Manage::ReservationsController < Manage::ApplicationController
     end
 
     [line, error]
+  end
+
+  private
+
+  # Timestamp-only. update! would reject the stamp when unrelated
+  # Reservation validations fail (lost pool access, left delegation).
+  def stamp_courier!(reservation, attributes)
+    reservation.update_columns(attributes.merge(updated_at: Time.current))
   end
 end
