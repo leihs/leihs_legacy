@@ -314,6 +314,90 @@ module Manage
                                       minimum: 2, wait: 10)
       end
 
+      step 'one of the borrowed reservations was already handed back by someone else' do
+        other = FactoryBot.create(:lending_manager,
+                                   inventory_pool: @inventory_pool)
+        reservation = Reservation.signed.where(user_id: @customer.id).order(:id).first
+        @prestamped_at = 2.days.ago.change(usec: 0)
+        reservation.update!(
+          sent_back_to_main_location_at: @prestamped_at,
+          sent_back_to_main_location_by_user_id: other.id
+        )
+        @prestamped_reservation = reservation
+        @prestamped_by_id = other.id
+      end
+
+      step 'the already handed reservation keeps its courier stamp' do
+        reservation = @prestamped_reservation.reload
+        expect(reservation.sent_back_to_main_location_at.to_i).to eq @prestamped_at.to_i
+        expect(reservation.sent_back_to_main_location_by_user_id).to eq @prestamped_by_id
+      end
+
+      step 'the other reservation is marked as sent back by me' do
+        other = nil
+        Timeout.timeout(Capybara.default_max_wait_time) do
+          loop do
+            other = Reservation.signed
+              .where(user_id: @customer.id)
+              .where.not(id: @prestamped_reservation.id)
+              .first
+            break if other&.reload&.sent_back_to_main_location_at.present?
+            sleep 0.2
+          end
+        end
+        expect(other.sent_back_to_main_location_by_user_id).to eq @current_user.id
+        @signed_reservations = Reservation.signed.where(user_id: @customer.id)
+      end
+
+      step 'the next courier select-all rejects the first line' do
+        expect(page).to have_selector('[data-toggle-courier-to-main]',
+                                      minimum: 2, wait: 10)
+        page.execute_script(<<~JS)
+          (function() {
+            var original = App.Reservation.prototype.toggleCourier;
+            var inputs = document.querySelectorAll('[data-toggle-courier-to-main]');
+            var failingId = inputs[0].closest('[data-id]').getAttribute('data-id');
+            App.Reservation.prototype.toggleCourier = function(direction, handed, options) {
+              if (String(this.id) === String(failingId)) {
+                var deferred = jQuery.Deferred();
+                deferred.reject({ responseText: 'forced failure' });
+                return deferred.promise();
+              }
+              return original.call(this, direction, handed, options || {});
+            };
+          })();
+        JS
+      end
+
+      step 'I check the courier select-all checkbox despite one failure' do
+        within '#lines' do
+          find('[data-select-courier-lines]', visible: true).set(true)
+        end
+      end
+
+      step 'one take-back courier checkbox is checked and one is not' do
+        expect(page).to have_selector('[data-toggle-courier-to-main]:checked',
+                                      count: 1, wait: 10)
+        expect(page).to have_selector('[data-toggle-courier-to-main]:not(:checked)',
+                                      count: 1)
+      end
+
+      step 'exactly one reservation is marked as sent back to the main location' do
+        sent = []
+        Timeout.timeout(Capybara.default_max_wait_time) do
+          loop do
+            sent = Reservation.signed.where(user_id: @customer.id).select do |reservation|
+              reservation.reload.sent_back_to_main_location_at.present?
+            end
+            break if sent.count == 1
+            sleep 0.2
+          end
+        end
+        expect(sent.count).to eq 1
+        expect(sent.first.sent_back_to_main_location_by_user_id).to eq @current_user.id
+        @signed_reservations = Reservation.signed.where(user_id: @customer.id)
+      end
+
       step 'only the first reservation is marked as sent back to the main location' do
         first_line_id = page.evaluate_script(<<~JS)
           document.querySelector('[data-toggle-courier-to-main]:checked')

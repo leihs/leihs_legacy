@@ -67,6 +67,34 @@ Feature: Pickup location lending UI
     And both reservations are still signed and not returned
 
   @manage_pickup_location_lending
+  Scenario: Group courier select-all does not restamp a line already handed back
+    Given I am Pius
+    And the current pool has alternative pickup locations enabled
+    And a customer for my inventory pool exists
+    And two items owned by my inventory pool exist
+    And the customer has borrowed both items for today with an alternative pickup location
+    And one of the borrowed reservations was already handed back by someone else
+    When I open take back for the user
+    And I check the courier select-all checkbox for the group
+    Then the already handed reservation keeps its courier stamp
+    And the other reservation is marked as sent back by me
+    And both reservations are still signed and not returned
+
+  @manage_pickup_location_lending
+  Scenario: Group courier select-all reverts only the line whose request fails
+    Given I am Pius
+    And the current pool has alternative pickup locations enabled
+    And a customer for my inventory pool exists
+    And two items owned by my inventory pool exist
+    And the customer has borrowed both items for today with an alternative pickup location
+    When I open take back for the user
+    And the next courier select-all rejects the first line
+    And I check the courier select-all checkbox despite one failure
+    Then one take-back courier checkbox is checked and one is not
+    And exactly one reservation is marked as sent back to the main location
+    And both reservations are still signed and not returned
+
+  @manage_pickup_location_lending
   Scenario: Courier select-all is shown only for groups with courier checkboxes
     Given I am Pius
     And the current pool has alternative pickup locations enabled

@@ -18,6 +18,10 @@ describe TimelineAvailability do
 
       harness.send(:add_timeline_dates!, reservations, inventory_pool)
 
+      expect(plain['start_date']).to eq Date.new(2026, 9, 21)
+      expect(plain['end_date']).to eq Date.new(2026, 9, 23)
+      expect(pul['start_date']).to eq Date.new(2026, 9, 21)
+      expect(pul['end_date']).to eq Date.new(2026, 9, 23)
       expect(plain['timeline_start_date']).to eq Date.new(2026, 9, 21)
       expect(plain['timeline_end_date']).to eq Date.new(2026, 9, 23)
 

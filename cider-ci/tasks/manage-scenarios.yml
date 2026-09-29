@@ -3216,46 +3216,46 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/model_transportable.feature:97
-- name: spec/features/manage/pickup_location_lending.feature:103
+- name: spec/features/manage/pickup_location_lending.feature:110
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:103
-- name: spec/features/manage/pickup_location_lending.feature:115
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:110
+- name: spec/features/manage/pickup_location_lending.feature:121
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:115
-- name: spec/features/manage/pickup_location_lending.feature:126
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:121
+- name: spec/features/manage/pickup_location_lending.feature:131
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:126
-- name: spec/features/manage/pickup_location_lending.feature:138
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:131
+- name: spec/features/manage/pickup_location_lending.feature:143
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:138
-- name: spec/features/manage/pickup_location_lending.feature:150
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:143
+- name: spec/features/manage/pickup_location_lending.feature:154
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:150
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:154
 - name: spec/features/manage/pickup_location_lending.feature:17
   scripts:
     test:
@@ -3264,6 +3264,30 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:17
+- name: spec/features/manage/pickup_location_lending.feature:166
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:166
+- name: spec/features/manage/pickup_location_lending.feature:178
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:178
+- name: spec/features/manage/pickup_location_lending.feature:194
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:194
 - name: spec/features/manage/pickup_location_lending.feature:32
   scripts:
     test:
@@ -3304,22 +3328,22 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:70
-- name: spec/features/manage/pickup_location_lending.feature:82
+- name: spec/features/manage/pickup_location_lending.feature:84
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:82
-- name: spec/features/manage/pickup_location_lending.feature:93
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:84
+- name: spec/features/manage/pickup_location_lending.feature:98
   scripts:
     test:
       body: |-
         #!/usr/bin/env bash
         set -euo pipefail
         mkdir -p log
-        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:93
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/pickup_location_lending.feature:98
 - name: spec/features/manage/serial_number_validation.feature:38
   scripts:
     test:
