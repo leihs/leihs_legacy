@@ -32,6 +32,8 @@ class window.App.ReservationsCourierController extends Spine.Controller
       onError: =>
         $(e.currentTarget).prop("checked", !handed)
         do @syncHeaders
+      onSuccess: =>
+        do @syncHeaders
     )
 
   toggleGroup: (e)=>
@@ -58,6 +60,8 @@ class window.App.ReservationsCourierController extends Spine.Controller
       changing[0].toggleCourier(direction, handed,
         onError: =>
           @syncCourierCheckboxes(changing, direction, previousChanging[0])
+          do @syncHeaders
+        onSuccess: =>
           do @syncHeaders
       )
       return

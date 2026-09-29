@@ -135,6 +135,7 @@ window.App.Reservation::toggleCourier = (direction, handed, options = {})->
   .done (data)=>
     @refresh data
     App.Reservation.trigger "update", @ unless options.silent
+    options.onSuccess?(data)
   .fail (e)=>
     msg = e.responseJSON?.message || e.responseText
     App.Flash(type: "error", message: msg)

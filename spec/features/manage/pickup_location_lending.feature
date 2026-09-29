@@ -93,6 +93,19 @@ Feature: Pickup location lending UI
     And both reservations are still signed and not returned
 
   @manage_pickup_location_lending
+  Scenario: Checking courier lines one by one updates the select-all header
+    Given I am Pius
+    And the current pool has alternative pickup locations enabled
+    And a customer for my inventory pool exists
+    And two items owned by my inventory pool exist
+    And the customer has borrowed both items for today with an alternative pickup location
+    When I open take back for the user
+    And I check each handed to courier checkbox on the take back lines
+    Then the courier select-all checkbox is checked
+    When I uncheck the handed to courier checkbox on the first take back line
+    Then the courier select-all checkbox is not checked
+
+  @manage_pickup_location_lending
   Scenario: Group courier select-all reverts only the line whose request fails
     Given I am Pius
     And the current pool has alternative pickup locations enabled

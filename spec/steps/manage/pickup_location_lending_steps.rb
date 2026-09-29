@@ -331,6 +331,31 @@ module Manage
                                       count: 1)
       end
 
+      step 'I check each handed to courier checkbox on the take back lines' do
+        expect(page).to have_content('Availability loaded')
+        within '#lines' do
+          all('[data-toggle-courier-to-main]', minimum: 2).each do |box|
+            box.set(true)
+          end
+        end
+      end
+
+      step 'I uncheck the handed to courier checkbox on the first take back line' do
+        within '#lines' do
+          first('[data-toggle-courier-to-main]').set(false)
+        end
+      end
+
+      step 'the courier select-all checkbox is checked' do
+        expect(page).to have_selector('[data-select-courier-lines]:checked',
+                                      visible: true, wait: 10)
+      end
+
+      step 'the courier select-all checkbox is not checked' do
+        expect(page).to have_selector('[data-select-courier-lines]:not(:checked)',
+                                      visible: true, wait: 10)
+      end
+
       step 'I check the courier select-all checkbox for the group' do
         within '#lines' do
           find('[data-select-courier-lines]', visible: true).set(true)
