@@ -189,6 +189,46 @@ describe 'Manage::ReservationsController#toggle_courier', type: :request do
     expect(reservation.reload.sent_to_pickup_location_at).to be_nil
   end
 
+  it 'stamps to_main when the delegated user has left the delegation' do
+    member = FactoryBot.create(:user)
+    delegation = FactoryBot.create(:customer,
+                                    inventory_pool: @inventory_pool,
+                                    delegator_user: FactoryBot.create(:user))
+    delegation.delegated_users << member
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    contract = FactoryBot.create(:open_contract,
+                                  inventory_pool: @inventory_pool,
+                                  user: delegation,
+                                  contact_person: member,
+                                  items: [item])
+    reservation = contract.reservations.first
+    reservation.update!(pickup_location: @pickup_location)
+    # Join-row delete skips the callback that blocks removing a member
+    # who still has an open reservation.
+    DelegationUser.where(delegation_id: delegation.id, user_id: member.id).delete_all
+
+    expect {
+      reservation.update!(sent_back_to_main_location_at: Time.current,
+                          sent_back_to_main_location_by_user_id: @manager.id)
+    }.to raise_error(ActiveRecord::RecordInvalid)
+
+    toggle(reservation, direction: 'to_main', handed: true)
+
+    expect(response).to have_http_status(:ok)
+    reservation.reload
+    expect(reservation.status).to eq :signed
+    expect(reservation.returned_date).to be_nil
+    expect(reservation.sent_back_to_main_location_at).to be_present
+    expect(reservation.sent_back_to_main_location_by_user_id).to eq @manager.id
+
+    toggle(reservation, direction: 'to_main', handed: false)
+    expect(response).to have_http_status(:ok)
+    reservation.reload
+    expect(reservation.sent_back_to_main_location_at).to be_nil
+    expect(reservation.sent_back_to_main_location_by_user_id).to be_nil
+    expect(reservation.status).to eq :signed
+  end
+
   it 'does not let a group manager stamp a courier handover' do
     group_manager = FactoryBot.create(:group_manager,
                                        inventory_pool: @inventory_pool)
@@ -309,5 +349,55 @@ describe 'Manage::ReservationsController#toggle_courier', type: :request do
 
     expect(response).to have_http_status(:bad_request)
     expect(reservation.reload.sent_to_pickup_location_at).to be_nil
+  end
+
+  it 'renders the courier checkbox disabled for a group manager' do
+    group_manager = FactoryBot.create(:group_manager,
+                                       inventory_pool: @inventory_pool)
+    login_as(group_manager)
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    FactoryBot.create(
+      :reservation,
+      status: :approved,
+      user: @customer,
+      inventory_pool: @inventory_pool,
+      model: item.model,
+      item: item,
+      pickup_location: @pickup_location,
+      sent_to_pickup_location_at: 1.day.ago,
+      sent_to_pickup_location_by_user_id: @manager.id
+    )
+
+    get "/manage/#{@inventory_pool.id}/users/#{@customer.id}/hand_over"
+
+    expect(response).to have_http_status(:ok)
+    doc = Nokogiri::HTML(response.body)
+    box = doc.at_css('[data-toggle-courier-to-pickup]')
+    expect(box).to be_present
+    expect(box['disabled']).to be_present
+    expect(box['checked']).to be_present
+    select_all = doc.at_css('[data-select-courier-lines]')
+    expect(select_all['disabled']).to be_present
+  end
+
+  it 'renders the courier checkbox enabled for a lending manager' do
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    FactoryBot.create(
+      :reservation,
+      status: :approved,
+      user: @customer,
+      inventory_pool: @inventory_pool,
+      model: item.model,
+      item: item,
+      pickup_location: @pickup_location
+    )
+
+    get "/manage/#{@inventory_pool.id}/users/#{@customer.id}/hand_over"
+
+    expect(response).to have_http_status(:ok)
+    box = Nokogiri::HTML(response.body).at_css('[data-toggle-courier-to-pickup]')
+    expect(box).to be_present
+    expect(box['disabled']).to be_nil
+    expect(box['checked']).to be_nil
   end
 end
