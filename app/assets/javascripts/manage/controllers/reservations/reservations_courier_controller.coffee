@@ -59,14 +59,18 @@ class window.App.ReservationsCourierController extends Spine.Controller
           do @syncHeaders
       )
       return
-    requests = (line.toggleCourier(direction, handed, silent: true) for line in changing)
-    $.when(requests...).done =>
-      App.Reservation.trigger "update", changing[0]
-      App.Reservation.trigger "refresh"
-    .fail =>
-      for line, i in changing
-        @syncCourierCheckboxes([line], direction, previousChanging[i])
-      do @syncHeaders
+    pending = changing.length
+    for line, i in changing
+      do (line, i) =>
+        line.toggleCourier(direction, handed, silent: true)
+          .fail =>
+            @syncCourierCheckboxes([line], direction, previousChanging[i])
+          .always =>
+            pending -= 1
+            if pending is 0
+              App.Reservation.trigger "update", changing[0]
+              App.Reservation.trigger "refresh"
+              do @syncHeaders
 
   syncCourierCheckboxes: (lines, direction, handed)=>
     selector = @selectorFor(direction)
