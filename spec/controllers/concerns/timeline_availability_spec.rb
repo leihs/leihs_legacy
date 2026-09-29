@@ -25,8 +25,7 @@ describe TimelineAvailability do
       expect(plain['timeline_start_date']).to eq Date.new(2026, 9, 21)
       expect(plain['timeline_end_date']).to eq Date.new(2026, 9, 23)
 
-      # before_pick_up=2 steps back over the weekend: Thu(1) Fri... wait
-      # backward from Monday skips Sun/Sat, counts Fri(1) Thu(2) -> 9/17
+      # before_pick_up=2 steps back from Monday skips Sun/Sat, counts Fri(1) Thu(2) -> 9/17
       expect(pul['timeline_start_date']).to eq Date.new(2026, 9, 17)
       # after_drop_off=2 steps forward from Wednesday: Thu(1) Fri(2) -> 9/25
       expect(pul['timeline_end_date']).to eq Date.new(2026, 9, 25)
