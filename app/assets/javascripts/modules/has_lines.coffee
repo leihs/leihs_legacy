@@ -86,7 +86,10 @@ App.Modules.HasLines =
     _.each reservations, (reservation) =>
       reservation = $.extend(true, {}, reservation)
       reservation.ids = [reservation.id]
-      existingLine = _.find(result, (l)-> l.model_id is reservation.model_id) if reservation.model_id?
+      existingLine = _.find(result, (l) ->
+        l.model_id is reservation.model_id and
+          l.pickup_location_id is reservation.pickup_location_id
+      ) if reservation.model_id?
       if existingLine?
         existingLine.subreservations = [existingLine] unless existingLine.subreservations?
         existingLine.subreservations.push reservation

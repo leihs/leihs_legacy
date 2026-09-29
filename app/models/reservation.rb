@@ -19,6 +19,8 @@ class Reservation < ApplicationRecord
   belongs_to :handed_over_by_user, class_name: 'User'
   belongs_to :returned_to_user, class_name: 'User'
   belongs_to :pickup_location, optional: true
+  belongs_to :sent_to_pickup_location_by_user, class_name: 'User', optional: true
+  belongs_to :sent_back_to_main_location_by_user, class_name: 'User', optional: true
 
   has_many :entitlement_groups, through: :user
 
@@ -55,7 +57,7 @@ class Reservation < ApplicationRecord
         end))
 
   def self.filter(params, inventory_pool)
-    reservations = inventory_pool.reservations
+    reservations = inventory_pool.reservations.includes(:pickup_location)
 
     reservations
       .scope_if_presence(params[:contract_ids]) do |rs, ids|
@@ -247,6 +249,27 @@ class Reservation < ApplicationRecord
 
   def last_closed_reservation_of_contract?
     contract.reservations.all? { |r| r.status == :closed }
+  end
+
+  def eligible_for_courier?
+    pickup_location_id.present? && model&.transportable
+  end
+
+  # Explicit serializer for manage Spine bootstraps / courier AJAX.
+  # Prefer this over aliasing as_json globally.
+  def as_json_with_pickup_location(options = {})
+    h = as_json(options)
+    if pickup_location
+      h['pickup_location'] = {
+        'id' => pickup_location.id,
+        'name' => pickup_location.name
+      }
+    end
+    h
+  end
+
+  def self.as_json_with_pickup_location(records, options = {})
+    Array(records).map { |r| r.as_json_with_pickup_location(options) }
   end
 
   ############################################

@@ -1022,6 +1022,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "El pedido ya ha sido procesado."
+      ],
+      "Pickup location": [
+         null,
+         "Lugar de recogida"
+      ],
+      "Handed to courier": [
+         null,
+         "Entregado al mensajero"
       ]
    }
 }

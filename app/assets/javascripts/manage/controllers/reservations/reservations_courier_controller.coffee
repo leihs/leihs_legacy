@@ -1,0 +1,127 @@
+class window.App.ReservationsCourierController extends Spine.Controller
+
+  events:
+    "change [data-toggle-courier-to-pickup]": "toggleToPickup"
+    "change [data-toggle-courier-to-main]": "toggleToMain"
+    "change [data-select-courier-lines]": "toggleGroup"
+    "click [data-toggle-courier-to-pickup]": "stopPropagation"
+    "click [data-toggle-courier-to-main]": "stopPropagation"
+    "click [data-select-courier-lines]": "stopPropagation"
+
+  constructor: ->
+    super
+    do @syncHeaders
+
+  stopPropagation: (e)=>
+    e.stopPropagation()
+
+  toggleToPickup: (e)=>
+    @toggleCurrent(e, "to_pickup")
+
+  toggleToMain: (e)=>
+    @toggleCurrent(e, "to_main")
+
+  toggleCurrent: (e, direction)=>
+    e.stopPropagation()
+    return if e.currentTarget.disabled
+    handed = e.currentTarget.checked
+    currentId = $(e.currentTarget).closest("[data-id]").data("id")
+    line = App.Reservation.find(currentId)
+    return unless line? and @supportsCourier(line, direction)
+    line.toggleCourier(direction, handed,
+      onError: =>
+        $(e.currentTarget).prop("checked", !handed)
+        do @syncHeaders
+      onSuccess: =>
+        do @syncHeaders
+    )
+
+  toggleGroup: (e)=>
+    e.stopPropagation()
+    return if e.currentTarget.disabled
+    container = $(e.currentTarget).closest("[data-selected-lines-container]")
+    handed = e.currentTarget.checked
+    {direction, lines} = @groupCourierLines(container)
+    return unless lines.length
+    previous = for line in lines
+      if direction is "to_pickup"
+        line.handedToCourierForPickup()
+      else
+        line.handedToCourierForReturn()
+    changing = []
+    previousChanging = []
+    for line, i in lines
+      unless previous[i] is handed
+        changing.push line
+        previousChanging.push previous[i]
+    return do @syncHeaders unless changing.length
+    @syncCourierCheckboxes(changing, direction, handed)
+    if changing.length == 1
+      changing[0].toggleCourier(direction, handed,
+        onError: =>
+          @syncCourierCheckboxes(changing, direction, previousChanging[0])
+          do @syncHeaders
+        onSuccess: =>
+          do @syncHeaders
+      )
+      return
+    pending = changing.length
+    for line, i in changing
+      do (line, i) =>
+        line.toggleCourier(direction, handed, silent: true)
+          .fail =>
+            @syncCourierCheckboxes([line], direction, previousChanging[i])
+          .always =>
+            pending -= 1
+            if pending is 0
+              App.Reservation.trigger "update", changing[0]
+              App.Reservation.trigger "refresh"
+              do @syncHeaders
+
+  syncCourierCheckboxes: (lines, direction, handed)=>
+    selector = @selectorFor(direction)
+    for line in lines
+      @el.find("[data-id='#{line.id}'] #{selector}").prop("checked", handed)
+
+  groupCourierLines: (container)=>
+    {direction, inputs} = @courierInputs(container)
+    ids = ($(input).closest("[data-id]").data("id") for input in inputs)
+    lines = (App.Reservation.find(id) for id in ids)
+    lines = (line for line in lines when line? and @supportsCourier(line, direction))
+    {direction, lines}
+
+  courierInputs: (container)=>
+    pickup = container.find("[data-toggle-courier-to-pickup]")
+    return {direction: "to_pickup", inputs: pickup} if pickup.length
+    {direction: "to_main", inputs: container.find("[data-toggle-courier-to-main]")}
+
+  selectorFor: (direction)=>
+    if direction is "to_pickup"
+      "[data-toggle-courier-to-pickup]"
+    else
+      "[data-toggle-courier-to-main]"
+
+  syncHeaders: =>
+    @el.find("[data-selected-lines-container]").each (i, el) =>
+      @syncHeaderFor($(el))
+
+  syncHeaderFor: (container)=>
+    label = container.find("[data-courier-select-all]")
+    return unless label.length
+    inputs = container.find("[data-toggle-courier-to-pickup], [data-toggle-courier-to-main]")
+    label.toggleClass("is-empty", inputs.length == 0)
+    return unless inputs.length
+    target = inputs.filter(":visible").first()
+    target = inputs.first() unless target.length
+    header = label.closest(".grouped-lines-header")
+    checkbox = label.find("[data-select-courier-lines]")
+    label.css("left", 0)
+    inset = checkbox.offset().left - label.offset().left
+    label.css("left", target.offset().left - header.offset().left - inset)
+    label.find("[data-select-courier-lines]").prop("checked", inputs.filter(":not(:checked)").length == 0)
+
+  supportsCourier: (line, direction)=>
+    if direction is "to_pickup"
+      line.showsHandedToCourierForPickup()
+    else
+      line.showsHandedToCourierForReturn()
