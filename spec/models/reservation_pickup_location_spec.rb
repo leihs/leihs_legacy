@@ -64,4 +64,29 @@ describe 'Reservation pickup location serialization and courier flags' do
     item.model.update!(transportable: false)
     expect(reservation.reload.eligible_for_courier?).to be false
   end
+
+  it 'preloads pickup_location for the reservations index' do
+    2.times do
+      FactoryBot.create(
+        :reservation,
+        status: :approved,
+        user: @user,
+        inventory_pool: @inventory_pool,
+        pickup_location: @pickup_location
+      )
+    end
+
+    reservations = Reservation.filter({}, @inventory_pool).to_a
+    queries = []
+    callback = lambda do |_name, _start, _finish, _id, payload|
+      sql = payload[:sql]
+      queries << sql if sql.match?(/FROM "pickup_locations"/)
+    end
+    ActiveSupport::Notifications.subscribed(callback, 'sql.active_record') do
+      Reservation.as_json_with_pickup_location(reservations)
+    end
+
+    expect(queries).to be_empty
+    expect(reservations.map { |r| r.pickup_location.name }.uniq).to eq ['Alt Desk']
+  end
 end

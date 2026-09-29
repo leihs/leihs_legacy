@@ -57,7 +57,7 @@ class Reservation < ApplicationRecord
         end))
 
   def self.filter(params, inventory_pool)
-    reservations = inventory_pool.reservations
+    reservations = inventory_pool.reservations.includes(:pickup_location)
 
     reservations
       .scope_if_presence(params[:contract_ids]) do |rs, ids|
