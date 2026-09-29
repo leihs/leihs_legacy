@@ -17,7 +17,7 @@
           %p.paragraph-s.inline
             = interval dates[0], dates[1]
         %label.font-normal{:"data-courier-select-all" => true}
-          %input{:type => :checkbox, :"data-select-courier-lines" => true, :autocomplete => :off}
+          %input{:type => :checkbox, :"data-select-courier-lines" => true, :autocomplete => :off, :disabled => !lending_manager?}
           = _("Select all")
 
       .row

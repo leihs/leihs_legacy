@@ -30,7 +30,7 @@
   .col1of10.line-col.text-align-left
     - if current_inventory_pool.enable_alternative_pickup_locations && line.eligible_for_courier? && line.status == :signed && line.option_id.blank?
       %label.font-normal
-        %input{type: :checkbox, autocomplete: :off, :"data-toggle-courier-to-main" => true, checked: line.sent_back_to_main_location_at.present?}
+        %input{type: :checkbox, autocomplete: :off, :"data-toggle-courier-to-main" => true, checked: line.sent_back_to_main_location_at.present?, disabled: !lending_manager?}
         = _("Handed to courier")
 
   .col1of10.line-col.text-align-center

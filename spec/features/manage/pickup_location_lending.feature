@@ -29,6 +29,18 @@ Feature: Pickup location lending UI
     And the reservation is still approved without a contract
 
   @manage_pickup_location_lending
+  Scenario: Group manager sees courier handover but cannot change it
+    Given I am logged in as group manager
+    And the current pool has alternative pickup locations enabled
+    And a customer for my inventory pool exists
+    And an item owned by my inventory pool exists
+    And the customer has an approved reservation for the item with an alternative pickup location
+    And the approved reservation was already handed to the courier
+    When I open hand over for the user
+    Then the handed to courier checkbox is shown but disabled on the hand over line
+    And the courier select-all checkbox is disabled
+
+  @manage_pickup_location_lending
   Scenario: Take-back shows courier checkbox when feature enabled
     Given I am Pius
     And the current pool has alternative pickup locations enabled

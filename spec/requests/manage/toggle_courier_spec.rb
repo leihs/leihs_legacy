@@ -164,6 +164,27 @@ describe 'Manage::ReservationsController#toggle_courier', type: :request do
     expect(contract.reload.state).to eq 'closed'
   end
 
+  it 'does not let a group manager stamp a courier handover' do
+    group_manager = FactoryBot.create(:group_manager,
+                                       inventory_pool: @inventory_pool)
+    login_as(group_manager)
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    reservation = FactoryBot.create(
+      :reservation,
+      status: :approved,
+      user: @customer,
+      inventory_pool: @inventory_pool,
+      model: item.model,
+      item: item,
+      pickup_location: @pickup_location
+    )
+
+    toggle(reservation, direction: 'to_pickup', handed: true)
+
+    expect(response).to have_http_status(:method_not_allowed)
+    expect(reservation.reload.sent_to_pickup_location_at).to be_nil
+  end
+
   it 'forbids courier toggle when alternative pickup locations are disabled' do
     @inventory_pool.update!(enable_alternative_pickup_locations: false)
     item = FactoryBot.create(:item, owner: @inventory_pool)

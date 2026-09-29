@@ -105,6 +105,7 @@ class window.App.HandOverController extends Spine.Controller
       linePartial: "manage/views/reservations/hand_over_line"
       renderAvailability: renderAvailability
       showCourierSelectAll: true
+      canToggleCourier: App.AccessRight.atLeastRole(App.User.current.role, "lending_manager")
     do @lineSelection.restore
     do @courierController.syncHeaders
 

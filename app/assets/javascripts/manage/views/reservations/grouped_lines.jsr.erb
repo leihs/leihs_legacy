@@ -19,7 +19,7 @@
       </p>
     </div>
     <label class='font-normal' data-courier-select-all>
-      <input autocomplete='off' data-select-courier-lines type='checkbox'>
+      <input autocomplete='off' data-select-courier-lines type='checkbox' {{if !~canToggleCourier}}disabled{{/if}}>
       {{jed "Select all"/}}
     </label>
   </div>

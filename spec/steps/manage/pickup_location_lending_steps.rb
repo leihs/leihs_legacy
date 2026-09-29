@@ -159,6 +159,31 @@ module Manage
         end
       end
 
+      step 'the approved reservation was already handed to the courier' do
+        other = FactoryBot.create(:lending_manager,
+                                   inventory_pool: @inventory_pool)
+        @reservation.update!(
+          sent_to_pickup_location_at: 1.day.ago,
+          sent_to_pickup_location_by_user_id: other.id
+        )
+      end
+
+      step 'the handed to courier checkbox is shown but disabled ' \
+           'on the hand over line' do
+        expect(page).to have_content('Availability loaded')
+        within '#lines' do
+          courier = find('[data-toggle-courier-to-pickup]')
+          expect(courier).to be_disabled
+          expect(courier).to be_checked
+        end
+      end
+
+      step 'the courier select-all checkbox is disabled' do
+        within '#lines' do
+          expect(find('[data-select-courier-lines]', visible: true)).to be_disabled
+        end
+      end
+
       step 'I check the handed to courier checkbox on the hand over line' do
         within '#lines' do
           find('[data-toggle-courier-to-pickup]').set(true)

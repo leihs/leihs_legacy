@@ -62,7 +62,7 @@
   <div class='col1of10 line-col text-align-left'>
     {{if showsHandedToCourierForPickup()}}
     <label class='font-normal'>
-      <input autocomplete='off' data-toggle-courier-to-pickup type='checkbox' {{if handedToCourierForPickup()}}checked{{/if}}>
+      <input autocomplete='off' data-toggle-courier-to-pickup type='checkbox' {{if handedToCourierForPickup()}}checked{{/if}} {{if !~canToggleCourier}}disabled{{/if}}>
       {{jed "Handed to courier"/}}
     </label>
     {{/if}}

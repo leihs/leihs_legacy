@@ -23,6 +23,7 @@ class window.App.ReservationsCourierController extends Spine.Controller
 
   toggleCurrent: (e, direction)=>
     e.stopPropagation()
+    return if e.currentTarget.disabled
     handed = e.currentTarget.checked
     currentId = $(e.currentTarget).closest("[data-id]").data("id")
     line = App.Reservation.find(currentId)
@@ -35,6 +36,7 @@ class window.App.ReservationsCourierController extends Spine.Controller
 
   toggleGroup: (e)=>
     e.stopPropagation()
+    return if e.currentTarget.disabled
     container = $(e.currentTarget).closest("[data-selected-lines-container]")
     handed = e.currentTarget.checked
     {direction, lines} = @groupCourierLines(container)

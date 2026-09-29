@@ -57,6 +57,7 @@ class window.App.TakeBackController extends Spine.Controller
       linePartial: "manage/views/reservations/take_back_line"
       renderAvailability: renderAvailability
       showCourierSelectAll: true
+      canToggleCourier: App.AccessRight.atLeastRole(App.User.current.role, "lending_manager")
     do @returnedQuantitiesController.restore
     do @lineSelection.restore
     do @courierController.syncHeaders
