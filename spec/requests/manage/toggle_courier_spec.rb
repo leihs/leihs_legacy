@@ -63,6 +63,60 @@ describe 'Manage::ReservationsController#toggle_courier', type: :request do
     expect(reservation.sent_to_pickup_location_at).to be_nil
   end
 
+  it 'does not restamp a line already handed to the courier' do
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    original_user = FactoryBot.create(:lending_manager,
+                                        inventory_pool: @inventory_pool)
+    stamped_at = 2.days.ago.change(usec: 0)
+    reservation = FactoryBot.create(
+      :reservation,
+      status: :approved,
+      user: @customer,
+      inventory_pool: @inventory_pool,
+      model: item.model,
+      item: item,
+      pickup_location: @pickup_location,
+      sent_to_pickup_location_at: stamped_at,
+      sent_to_pickup_location_by_user_id: original_user.id
+    )
+
+    toggle(reservation, direction: 'to_pickup', handed: true)
+
+    expect(response).to have_http_status(:ok)
+    reservation.reload
+    expect(reservation.sent_to_pickup_location_at.to_i).to eq stamped_at.to_i
+    expect(reservation.sent_to_pickup_location_by_user_id).to eq original_user.id
+
+    toggle(reservation, direction: 'to_pickup', handed: false)
+    toggle(reservation, direction: 'to_pickup', handed: false)
+    expect(response).to have_http_status(:ok)
+    expect(reservation.reload.sent_to_pickup_location_at).to be_nil
+  end
+
+  it 'does not restamp a line already handed back from the pickup location' do
+    item = FactoryBot.create(:item, owner: @inventory_pool)
+    original_user = FactoryBot.create(:lending_manager,
+                                        inventory_pool: @inventory_pool)
+    stamped_at = 2.days.ago.change(usec: 0)
+    contract = FactoryBot.create(:open_contract,
+                                  inventory_pool: @inventory_pool,
+                                  user: @customer,
+                                  items: [item])
+    reservation = contract.reservations.first
+    reservation.update!(
+      pickup_location: @pickup_location,
+      sent_back_to_main_location_at: stamped_at,
+      sent_back_to_main_location_by_user_id: original_user.id
+    )
+
+    toggle(reservation, direction: 'to_main', handed: true)
+
+    expect(response).to have_http_status(:ok)
+    reservation.reload
+    expect(reservation.sent_back_to_main_location_at.to_i).to eq stamped_at.to_i
+    expect(reservation.sent_back_to_main_location_by_user_id).to eq original_user.id
+  end
+
   it 'marks courier drop-off via sent_back without closing or freeing the item' do
     item = FactoryBot.create(:item, owner: @inventory_pool)
     contract = FactoryBot.create(:open_contract,

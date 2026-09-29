@@ -254,11 +254,13 @@ class Manage::ReservationsController < Manage::ApplicationController
                         plain: 'Only approved reservations can be handed to courier for pickup'
         end
         if handed
-          reservation.update!(
-            sent_to_pickup_location_at: Time.current,
-            sent_to_pickup_location_by_user_id: current_user.id
-          )
-        else
+          unless reservation.sent_to_pickup_location_at
+            reservation.update!(
+              sent_to_pickup_location_at: Time.current,
+              sent_to_pickup_location_by_user_id: current_user.id
+            )
+          end
+        elsif reservation.sent_to_pickup_location_at
           reservation.update!(
             sent_to_pickup_location_at: nil,
             sent_to_pickup_location_by_user_id: nil
@@ -270,11 +272,13 @@ class Manage::ReservationsController < Manage::ApplicationController
                         plain: 'Only signed reservations can be handed to courier for return'
         end
         if handed
-          reservation.update!(
-            sent_back_to_main_location_at: Time.current,
-            sent_back_to_main_location_by_user_id: current_user.id
-          )
-        else
+          unless reservation.sent_back_to_main_location_at
+            reservation.update!(
+              sent_back_to_main_location_at: Time.current,
+              sent_back_to_main_location_by_user_id: current_user.id
+            )
+          end
+        elsif reservation.sent_back_to_main_location_at
           reservation.update!(
             sent_back_to_main_location_at: nil,
             sent_back_to_main_location_by_user_id: nil

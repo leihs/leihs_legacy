@@ -44,21 +44,28 @@ class window.App.ReservationsCourierController extends Spine.Controller
         line.handedToCourierForPickup()
       else
         line.handedToCourierForReturn()
-    @syncCourierCheckboxes(lines, direction, handed)
-    if lines.length == 1
-      lines[0].toggleCourier(direction, handed,
+    changing = []
+    previousChanging = []
+    for line, i in lines
+      unless previous[i] is handed
+        changing.push line
+        previousChanging.push previous[i]
+    return do @syncHeaders unless changing.length
+    @syncCourierCheckboxes(changing, direction, handed)
+    if changing.length == 1
+      changing[0].toggleCourier(direction, handed,
         onError: =>
-          @syncCourierCheckboxes(lines, direction, previous[0])
+          @syncCourierCheckboxes(changing, direction, previousChanging[0])
           do @syncHeaders
       )
       return
-    requests = (line.toggleCourier(direction, handed, silent: true) for line in lines)
+    requests = (line.toggleCourier(direction, handed, silent: true) for line in changing)
     $.when(requests...).done =>
-      App.Reservation.trigger "update", lines[0]
+      App.Reservation.trigger "update", changing[0]
       App.Reservation.trigger "refresh"
     .fail =>
-      for line, i in lines
-        @syncCourierCheckboxes([line], direction, previous[i])
+      for line, i in changing
+        @syncCourierCheckboxes([line], direction, previousChanging[i])
       do @syncHeaders
 
   syncCourierCheckboxes: (lines, direction, handed)=>
