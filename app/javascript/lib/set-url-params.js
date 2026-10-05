@@ -2,7 +2,9 @@ const parseUrl = require('url').parse
 const formatUrl = require('url').format
 const { merge, reduce, set, isObject, isString } = require('lodash')
 const qs = require('qs')
-const parseQuery = qs.parse
+// default arrayLimit (20) turns larger arrays into index-keyed objects,
+// see https://github.com/leihs/leihs/issues/2279
+const parseQuery = (str) => qs.parse(str, { arrayLimit: 1000 })
 
 const formatQuery = (obj) =>
   qs.stringify(obj, {
