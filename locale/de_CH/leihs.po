@@ -3757,3 +3757,9 @@ msgstr "Samstag"
 
 msgid "Sunday"
 msgstr "Sonntag"
+
+msgid "The list could not be loaded"
+msgstr "Die Liste konnte nicht geladen werden"
+
+msgid "Try again"
+msgstr "Erneut versuchen"

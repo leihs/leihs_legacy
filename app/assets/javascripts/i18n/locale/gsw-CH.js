@@ -4023,6 +4023,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "De Bschtellig isch scho bearbeitet worde."
+      ],
+      "The list could not be loaded": [
+         null,
+         "D Lischte het nöd chöne glade werde"
+      ],
+      "Try again": [
+         null,
+         "Nomal probiere"
       ]
    }
 }

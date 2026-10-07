@@ -6,22 +6,20 @@ class window.App.SearchResultsItemsController extends App.SearchResultsControlle
   templatePath: "manage/views/items/line"
   type: "item"
 
-  fetch: (page, target, callback)=>
-    @fetchItems(page).done (data)=>
-      items = (App[@model].find datum.id for datum in data)
-      @fetchModels(items).done => do callback
+  fetchRelated: (items)=> @fetchModels(items)
 
-  fetchItems: (page)=>
+  fetchRecords: (page)=>
     App[@model].ajaxFetch
       data: $.param
         search_term: @searchTerm
         type: @type
         page: page
         current_inventory_pool: false
+        disable_total_count: true
 
   fetchModels:(items) =>
     ids = _.uniq _.map items, (i)-> i.model_id
-    return {done: (c)->c()} unless ids.length
+    return $.when() unless ids.length
     App[@dependingOnModel].ajaxFetch
       data: $.param
         ids: ids

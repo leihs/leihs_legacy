@@ -3043,3 +3043,9 @@ msgstr "The indication of a telephone number is recommended"
 
 msgid "The order has already been dealt with."
 msgstr "The order has already been dealt with."
+
+msgid "The list could not be loaded"
+msgstr ""
+
+msgid "Try again"
+msgstr ""

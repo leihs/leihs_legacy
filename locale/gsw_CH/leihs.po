@@ -3033,3 +3033,9 @@ msgstr "D Aagab vonere Natelnummere isch empfohle"
 
 msgid "The order has already been dealt with."
 msgstr "De Bschtellig isch scho bearbeitet worde."
+
+msgid "The list could not be loaded"
+msgstr "D Lischte het nöd chöne glade werde"
+
+msgid "Try again"
+msgstr "Nomal probiere"

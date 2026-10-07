@@ -41,7 +41,7 @@ module MainHelpers
     end
 
     def set_pagination_header(paginated_active_record,
-                              disable_total_count: false,
+                              disable_total_count: params[:disable_total_count] == 'true',
                               custom_count: nil)
       headers['X-Pagination'] = {
         total_count: total_count(paginated_active_record,

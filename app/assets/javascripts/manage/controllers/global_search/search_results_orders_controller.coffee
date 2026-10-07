@@ -11,23 +11,20 @@ class window.App.SearchResultsOrdersController extends App.SearchResultsControll
     new App.OrdersApproveController {el: @el}
     new App.ContractsRejectController {el: @el, async: true, callback: @orderRejected}
 
-  fetch: (page, target, callback)=>
-    @fetchOrders(page).done (data)=>
-      orders = (App.Order.find datum.id for datum in data)
-      @fetchUsers(orders).done =>
-        @fetchReservations(orders).done =>
-          do callback
+  fetchRelated: (orders)=>
+    @fetchUsers(orders).then => @fetchReservations(orders)
 
-  fetchOrders: (page)=>
+  fetchRecords: (page)=>
     App.Order.ajaxFetch
       data: $.param
         page: page
         search_term: @searchTerm
+        disable_total_count: true
         status: ["approved", "submitted", "rejected"]
 
   fetchUsers: (orders)=>
     ids = _.uniq _.map orders, (r)-> r.user_id
-    return {done: (c)->c()} unless ids.length
+    return $.when() unless ids.length
     App.User.ajaxFetch
       data: $.param
         ids: ids
@@ -38,7 +35,7 @@ class window.App.SearchResultsOrdersController extends App.SearchResultsControll
 
   fetchReservations: (orders)=>
     ids = _.flatten _.map orders, (r)-> r.id
-    return {done: (c)->c()} unless ids.length
+    return $.when() unless ids.length
     App.Reservation.ajaxFetch
       data: $.param
         order_ids: ids

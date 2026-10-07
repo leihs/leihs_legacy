@@ -3452,3 +3452,9 @@ msgstr "L'indication d'un numéro de téléphone est recommandée"
 
 msgid "The order has already been dealt with."
 msgstr "L'ordre a déjà été traité."
+
+msgid "The list could not be loaded"
+msgstr "La liste n'a pas pu être chargée"
+
+msgid "Try again"
+msgstr "Réessayer"

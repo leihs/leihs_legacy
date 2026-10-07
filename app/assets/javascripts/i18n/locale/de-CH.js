@@ -4873,6 +4873,14 @@ window.i18n.locale_data = {
       "Sunday": [
          null,
          "Sonntag"
+      ],
+      "The list could not be loaded": [
+         null,
+         "Die Liste konnte nicht geladen werden"
+      ],
+      "Try again": [
+         null,
+         "Erneut versuchen"
       ]
    }
 }

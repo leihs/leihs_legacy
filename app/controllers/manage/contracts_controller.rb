@@ -41,17 +41,12 @@ class Manage::ContractsController < Manage::ApplicationController
                                       nil,
                                       current_inventory_pool,
                                       paginate: false)
-        count = Contract.from(@contracts).count
+        disable_total_count = params[:disable_total_count] == 'true'
+        custom_count = if params[:global_contracts_search] == 'true' && !disable_total_count
+                         Contract.from(@contracts).count
+                       end
         @contracts = @contracts.default_paginate(params).order('created_at DESC')
-        set_pagination_header(
-          @contracts,
-          disable_total_count: (
-            params[:disable_total_count] == 'true' ? true : false
-          ),
-          custom_count: (
-            params[:global_contracts_search] == 'true' ? count : nil
-          )
-        )
+        set_pagination_header(@contracts, custom_count: custom_count)
       end
     end
   end

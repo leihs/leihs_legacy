@@ -25,3 +25,16 @@ Feature: List of contracts
     And I can open the contract of any contract line
     Then I see the total price section on the contract
     And the total price matches the sum of all reservation prices
+
+  Scenario Outline: A list whose reservations fail to load can be retried
+    Given the next reservations request of a list fails once
+    When I open the tab "<tab>"
+    Then the loading icon is replaced by a retry control
+    When I retry loading the first page
+    Then the list shows its lines
+    And the reservations were requested again
+
+    Examples:
+      | tab       |
+      | Orders    |
+      | Contracts |

@@ -165,3 +165,81 @@ Feature: Search
     Then the first page of results is shown
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Orders"
+
+  Scenario Outline: Loading icon appears when scrolling for more global search results
+    Given I am Mike
+    And enough data for "<subsection>" having "search string" exists
+    And the browser window is short enough that the next page loads only on scroll
+    When I search globally for "search string"
+    Then the search results for "search string" are displayed
+    When I click on the tab named "<subsection>"
+    Then the first page of results is shown with a loading icon below the fold
+    When I scroll the loading icon into view while the next page is held
+    Then the loading icon is visible while the next page is loading
+    When the next page finishes loading
+    Then I see all the entries matching "search string" in the "<subsection>"
+    And the loading icon is gone
+
+    Examples:
+      | subsection |
+      | Orders     |
+      | Contracts  |
+
+  Scenario: A failed contracts page can be retried once
+    Given I am Mike
+    And enough data for "Contracts" having "search string" exists
+    And the browser window is short enough that the next page loads only on scroll
+    When I search globally for "search string"
+    Then the search results for "search string" are displayed
+    When I click on the tab named "Contracts"
+    Then the first page of results is shown with a loading icon below the fold
+    When I scroll the loading icon into view and the next page fails
+    Then the loading icon is replaced by a retry control
+    And the next page was requested once
+    When I retry loading the next page
+    Then I see all the entries matching "search string" in the "Contracts"
+    And the loading icon is gone
+    And the next page was requested twice
+    And no page after the short last page was requested
+
+  Scenario: A contracts page whose reservations fail to load can be retried
+    Given I am Mike
+    And enough data for "Contracts" having "search string" exists
+    And the browser window is short enough that the next page loads only on scroll
+    When I search globally for "search string"
+    Then the search results for "search string" are displayed
+    When I click on the tab named "Contracts"
+    Then the first page of results is shown with a loading icon below the fold
+    When I scroll the loading icon into view and the reservations of the next page fail
+    Then the loading icon is replaced by a retry control
+    And the next page was requested once
+    When I retry loading the next page
+    Then I see all the entries matching "search string" in the "Contracts"
+    And the loading icon is gone
+    And the next page was requested twice
+
+  Scenario: A failed first contracts page can be retried
+    Given I am Mike
+    And enough data for "Contracts" having "search string" exists
+    And the first page of the contracts search results fails once
+    When I search globally for "search string"
+    Then the search results for "search string" are displayed
+    When I click on the tab named "Contracts"
+    Then the loading icon is replaced by a retry control
+    When I retry loading the first page
+    Then the first page of results is shown
+    And the first page was requested twice
+
+  Scenario: A short last contracts page does not request another page
+    Given I am Mike
+    And enough data for "Contracts" having "search string" exists
+    And the browser window is short enough that the next page loads only on scroll
+    When I search globally for "search string"
+    Then the search results for "search string" are displayed
+    When I click on the tab named "Contracts"
+    Then the first page of results is shown with a loading icon below the fold
+    When I scroll the loading icon into view and count later pages
+    Then I see all the entries matching "search string" in the "Contracts"
+    And the loading icon is gone
+    And the next page was requested once
+    And no page after the short last page was requested

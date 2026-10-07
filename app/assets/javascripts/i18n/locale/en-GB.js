@@ -3790,6 +3790,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "The order has already been dealt with."
+      ],
+      "The list could not be loaded": [
+         null,
+         ""
+      ],
+      "Try again": [
+         null,
+         ""
       ]
    }
 }

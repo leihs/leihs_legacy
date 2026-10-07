@@ -23,9 +23,7 @@ class Manage::OrdersController < Manage::ApplicationController
           ).reorder('newest_created_at_per_user desc, user_id, created_at desc')
         end
 
-        set_pagination_header @orders, disable_total_count: (
-          params[:disable_total_count] == 'true' ? true : false
-        )
+        set_pagination_header @orders
       end
     end
   end

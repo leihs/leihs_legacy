@@ -205,6 +205,204 @@ Then(/^the first page of results is shown$/) do
   expect(page).to have_selector '.row.line'
 end
 
+Given 'the browser window is short enough that the next page loads only on scroll' do
+  page.driver.browser.manage.window.resize_to(1200, 500)
+end
+
+Then 'the first page of results is shown with a loading icon below the fold' do
+  expect(page).to have_selector('.row.line', count: 20)
+  expect(page).to have_selector('.loading-page img[src*="loading"]', visible: :all)
+  below_the_fold = page.evaluate_script(<<~JS)
+    (function() {
+      var pageEl = document.querySelector('.loading-page');
+      var img = pageEl.querySelector('img');
+      return pageEl.getBoundingClientRect().top >= window.innerHeight &&
+        img.getBoundingClientRect().top >= window.innerHeight;
+    })()
+  JS
+  expect(below_the_fold).to eq true
+end
+
+When 'I scroll the loading icon into view while the next page is held' do
+  page.execute_script(<<~JS)
+    (function() {
+      if (window.__searchPage2HoldInstalled) return;
+      window.__searchPage2HoldInstalled = true;
+      window.__realAjax = $.ajax;
+      window.__page2Intercepted = false;
+      window.__releasePage2 = null;
+      $.ajax = function() {
+        var args = arguments;
+        var opts = typeof args[0] === 'string' ? (args[1] || {}) : args[0];
+        var blob = String((opts && opts.data) || '') + '&' + String((opts && opts.url) || '');
+        if (!window.__page2Intercepted && /(?:^|[?&])page=2(?:&|$)/.test(blob)) {
+          window.__page2Intercepted = true;
+          var deferred = $.Deferred();
+          window.__releasePage2 = function() {
+            return window.__realAjax.apply($, args).done(deferred.resolve).fail(deferred.reject);
+          };
+          return deferred.promise();
+        }
+        return window.__realAjax.apply($, args);
+      };
+    })()
+  JS
+  already_requested = page.evaluate_script('window.__page2Intercepted === true')
+  raise 'next page was requested before scrolling' if already_requested
+
+  page.execute_script(<<~JS)
+    (function() {
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    })()
+  JS
+end
+
+Then 'the loading icon is visible while the next page is loading' do
+  deadline = Time.now + Capybara.default_max_wait_time
+  visible = false
+  intercepted = false
+  until Time.now > deadline
+    visible = page.evaluate_script(<<~JS)
+      (function() {
+        var img = document.querySelector('.loading-page img');
+        if (!img) return false;
+        var rect = img.getBoundingClientRect();
+        var style = window.getComputedStyle(img);
+        return style.display !== 'none' && style.visibility !== 'hidden' &&
+          rect.width > 0 && rect.height > 0 &&
+          rect.top < window.innerHeight && rect.bottom > 0;
+      })()
+    JS
+    intercepted = page.evaluate_script('window.__page2Intercepted === true')
+    break if visible && intercepted
+    sleep 0.2
+  end
+  expect(intercepted).to eq true
+  expect(visible).to eq true
+  expect(page.evaluate_script("document.querySelectorAll('.row.line').length")).to eq 20
+end
+
+When 'the next page finishes loading' do
+  page.execute_script(<<~JS)
+    (function() {
+      var release = window.__releasePage2;
+      window.__releasePage2 = null;
+      if (window.__realAjax) $.ajax = window.__realAjax;
+      if (release) release();
+    })()
+  JS
+  expect(page).to have_selector('.row.line', minimum: 21)
+  deadline = Time.now + Capybara.default_max_wait_time
+  until Time.now > deadline
+    break if page.has_no_selector?('.loading-page', wait: 0)
+    page.execute_script(<<~JS)
+      (function() {
+        var el = document.querySelector('.loading-page');
+        if (el) el.scrollIntoView(false);
+        $(window).trigger('scroll');
+      })()
+    JS
+    sleep 0.2
+  end
+end
+
+Then 'the loading icon is gone' do
+  expect(page).to have_no_selector('.loading-page')
+end
+
+def install_search_page_counter(fail_first: nil)
+  page.execute_script(<<~JS, fail_first)
+    (function(failFirst) {
+      if (window.__searchPageCounterInstalled) return;
+      window.__searchPageCounterInstalled = true;
+      window.__page2Count = 0;
+      window.__page3Count = 0;
+      window.__realAjax = $.ajax;
+      var failed = false;
+      $.ajax = function() {
+        var args = arguments;
+        var opts = typeof args[0] === 'string' ? (args[1] || {}) : args[0];
+        var blob = String((opts && opts.data) || '') + '&' + String((opts && opts.url) || '');
+        var isPage = function(n) {
+          return new RegExp('(?:^|[?&])page=' + n + '(?:&|$)').test(blob);
+        };
+        if (isPage(2)) window.__page2Count += 1;
+        if (isPage(3)) window.__page3Count += 1;
+        if (failFirst && !failed && new RegExp(failFirst).test(blob)) {
+          failed = true;
+          return $.Deferred().reject().promise();
+        }
+        return window.__realAjax.apply($, args);
+      };
+    })(arguments[0]);
+  JS
+end
+
+Given 'the first page of the contracts search results fails once' do
+  FailingContractsSearchPage.pending_failures = 1
+end
+
+Then 'the first page was requested twice' do
+  expect(FailingContractsSearchPage.requests).to eq 2
+end
+
+When 'I scroll the loading icon into view and the next page fails' do
+  install_search_page_counter(fail_first: '(?:^|[?&])page=2(?:&|$)')
+  already_requested = page.evaluate_script('window.__page2Count > 0')
+  raise 'next page was requested before scrolling' if already_requested
+  page.execute_script('window.scrollTo(0, document.documentElement.scrollHeight)')
+end
+
+When 'I scroll the loading icon into view and the reservations of the next page fail' do
+  install_search_page_counter(fail_first: 'contract_ids')
+  already_requested = page.evaluate_script('window.__page2Count > 0')
+  raise 'next page was requested before scrolling' if already_requested
+  page.execute_script('window.scrollTo(0, document.documentElement.scrollHeight)')
+end
+
+Then 'the loading icon is replaced by a retry control' do
+  expect(page).to have_selector('.page-load-retry', visible: :all)
+  expect(page).to have_no_selector('.loading-page img', visible: :all)
+end
+
+Then 'the next page was requested once' do
+  expect(page.evaluate_script('window.__page2Count')).to eq 1
+end
+
+Then 'the next page was requested twice' do
+  expect(page.evaluate_script('window.__page2Count')).to eq 2
+end
+
+Then 'no page after the short last page was requested' do
+  expect(page.evaluate_script('window.__page3Count')).to eq 0
+end
+
+When(/^I retry loading the (?:next|first) page$/) do
+  find('.page-load-retry', visible: :all).click
+end
+
+When 'I scroll the loading icon into view and count later pages' do
+  install_search_page_counter
+  already_requested = page.evaluate_script('window.__page2Count > 0')
+  raise 'next page was requested before scrolling' if already_requested
+  page.execute_script('window.scrollTo(0, document.documentElement.scrollHeight)')
+  deadline = Time.now + Capybara.default_max_wait_time
+  until Time.now > deadline
+    lines = page.evaluate_script("document.querySelectorAll('.row.line').length")
+    loading = page.has_selector?('.loading-page', visible: :all, wait: 0)
+    break if lines >= 25 && !loading
+    page.execute_script(<<~JS)
+      (function() {
+        var el = document.querySelector('.loading-page');
+        if (el) el.scrollIntoView(false);
+        window.scrollTo(0, document.documentElement.scrollHeight);
+        $(window).trigger('scroll');
+      })()
+    JS
+    sleep 0.2
+  end
+end
+
 Then(/^I see all the entries matching "(.*?)" in the "(.*?)"$/) do |search_string, subsection|
   @results.each do |r|
     case subsection

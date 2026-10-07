@@ -722,3 +722,9 @@ msgstr "Se recomienda indicar un número de teléfono"
 
 msgid "The order has already been dealt with."
 msgstr "El pedido ya ha sido procesado."
+
+msgid "The list could not be loaded"
+msgstr "No se pudo cargar la lista"
+
+msgid "Try again"
+msgstr "Reintentar"

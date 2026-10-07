@@ -284,6 +284,23 @@ Then(/^I see the total price section on the contract$/) do
   end
 end
 
+Given 'the next reservations request of a list fails once' do
+  wait_until(Capybara.default_max_wait_time) { page.evaluate_script('jQuery.active') == 0 }
+  FailingReservationsRequest.pending_failures = 1
+end
+
+Then 'the reservations were requested again' do
+  expect(FailingReservationsRequest.requests).to be >= 2
+  expect(FailingReservationsRequest.pending_failures).to eq 0
+end
+
+Then 'the list shows its lines' do
+  within '#contracts' do
+    find('.line', match: :first)
+    expect(page).to have_no_selector('.page-load-retry')
+  end
+end
+
 Then(/^the total price matches the sum of all reservation prices$/) do
   expected_total = @contract.reservations.map(&:price).sum
   within @total_section do

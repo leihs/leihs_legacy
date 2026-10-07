@@ -240,6 +240,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/contract/contracts.feature:23
+- name: features/manage/contract/contracts.feature:29
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/contract/contracts.feature:29
 - name: features/manage/contract/contracts.feature:6
   scripts:
     test:
@@ -2232,6 +2240,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/search.feature:159
+- name: features/manage/search.feature:169
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/search.feature:169
 - name: features/manage/search.feature:18
   scripts:
     test:
@@ -2240,6 +2256,38 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/search.feature:18
+- name: features/manage/search.feature:188
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/search.feature:188
+- name: features/manage/search.feature:205
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/search.feature:205
+- name: features/manage/search.feature:221
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/search.feature:221
+- name: features/manage/search.feature:233
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/cucumber --strict features/manage/search.feature:233
 - name: features/manage/search.feature:25
   scripts:
     test:

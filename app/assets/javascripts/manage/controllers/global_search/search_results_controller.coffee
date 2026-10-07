@@ -9,25 +9,31 @@ class window.App.SearchResultsController extends Spine.Controller
       accessRight: App.AccessRight
       currentUserRole: App.User.current.role
       currentInventoryPool: App.InventoryPool.current
-    @pagination = new App.ListPaginationController {el: @list, fetch: @_fetch}
+    @pagination = new App.OnDemandPaginationController {el: @list, fetch: @_fetch}
     do @reset
 
   reset: =>
     @records = {}
-    @list.html App.Render "manage/views/lists/loading"
-    @_fetch 1, @list
+    @finished = false
+    @list.html App.Render "manage/views/lists/loading_page", 1, {page: 1}
+    @pagination.loadPage @list.find(".loading-page")
 
   _fetch: (page, target)=>
-    callback = _.after 2, => @render(target,@records[page], page, @additionalData)
-    @fetch(page, target, callback).done (data, status, xhr) => 
+    @fetchRecords(page)
+    .then (data, status, xhr) =>
       @pagination.set JSON.parse(xhr.getResponseHeader("X-Pagination"))
-      records = (App[@model].find(datum.id) for datum in data)
-      @records[page] = records
-      do callback
+      @records[page] = (App[@model].find(datum.id) for datum in data)
+      @finished = data.length < @pagination.perPage
+      @fetchRelated @records[page]
+    .then =>
+      @render(target, @records[page], page)
 
-  render: (target, data, page, additionalData)=>
+  fetchRelated: => $.when()
+
+  render: (target, data, page)=>
     if page == 1 and (not data? or data.length == 0)
-      target.html App.Render "manage/views/lists/no_results"
-    else
-      target.html App.Render @templatePath, data, additionalData
-      @pagination.renderPlaceholders() if page == 1
+      @list.html App.Render "manage/views/lists/no_results"
+      return
+    target.removeClass "loading-page"
+    target.html App.Render @templatePath, data, @additionalData
+    @pagination.appendNextPage @list, page unless @finished

@@ -9,22 +9,19 @@ class window.App.SearchResultsModelsController extends App.SearchResultsControll
     super
     new App.TimeLineController {el: @el}
 
-  fetch: (page, target, callback)=>
-    @fetchModels(page).done (data)=>
-      models = (App[@model].find datum.id for datum in data)
-      @fetchAvailability(models).done =>
-        do callback
+  fetchRelated: (models)=> @fetchAvailability(models)
 
-  fetchModels: (page)=>
+  fetchRecords: (page)=>
     App[@model].ajaxFetch
       data: $.param
         search_term: @searchTerm
         type: @type
         page: page
+        disable_total_count: true
 
   fetchAvailability: (models)=>
     ids = _.map models, (m)-> m.id
-    return {done: (c)->c()} unless ids.length
+    return $.when() unless ids.length
     App.Availability.ajaxFetch
       url: App.Availability.url()+"/in_stock"
       data: $.param

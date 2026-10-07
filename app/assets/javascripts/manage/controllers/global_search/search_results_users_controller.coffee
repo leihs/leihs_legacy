@@ -9,15 +9,12 @@ class window.App.SearchResultsUsersController extends App.SearchResultsControlle
     new App.UserCellTooltipController {el: @el}
 
 
-  fetch: (page, target, callback)=>
-    @fetchUsers(page).done =>
-      do callback
-
-  fetchUsers: (page)=>
+  fetchRecords: (page)=>
     App.User.ajaxFetch
       data: $.param
         search_term: @searchTerm
         page: page
+        disable_total_count: true
     .done (data)=>
       users = (App.User.find datum.id for datum in data)
       App.User.fetchDelegators users

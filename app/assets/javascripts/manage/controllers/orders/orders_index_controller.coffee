@@ -9,7 +9,7 @@ class window.App.OrdersIndexController extends Spine.Controller
     new App.UserCellTooltipController {el: @el}
     new App.OrdersApproveController {el: @el}
     new App.OrdersRejectController {el: @el, async: true, callback: @orderRejected}
-    @pagination = new App.OrdersPaginationController {el: @list, fetch: @fetch}
+    @pagination = new App.OnDemandPaginationController {el: @list, fetch: @fetch}
     @search = new App.ListSearchController {el: @el.find("#list-search"), reset: @reset}
     @filter = new App.ListFiltersController {el: @el.find("#list-filters"), reset: @reset}
     @range = new App.ListRangeController {el: @el.find("#list-range"), reset: @reset}
@@ -19,16 +19,17 @@ class window.App.OrdersIndexController extends Spine.Controller
   reset: =>
     @orders = {}
     @finished = false
-    @list.html App.Render "manage/views/lists/loading"
-    @fetch 1, @list
-    @pagination.page = 1
+    @list.html App.Render "manage/views/lists/loading_page", 1, {page: 1}
+    @pagination.loadPage @list.find(".loading-page")
 
   fetch: (page, target)=>
-    @fetchOrders(page).done =>
-      @fetchUsers(page).done =>
-        @fetchReservations page, =>
-          if @orders[page]
-            @render target, @orders[page], page
+    @fetchOrders(page)
+    .then =>
+      @fetchUsers(page)
+    .then =>
+      @fetchReservations(page)
+    .then =>
+      @render target, @orders[page], page if @orders[page]
 
   fetchOrders: (page)=>
     data = $.extend @tabs.getData(), $.extend @filter.getData(),
@@ -47,23 +48,22 @@ class window.App.OrdersIndexController extends Spine.Controller
     App.Order.ajaxFetch({ data: $.param data })
     .done (data, status, xhr) =>
       @pagination.set JSON.parse(xhr.getResponseHeader("X-Pagination"))
-      @finished = true if data.length == 0
+      @finished = data.length < @pagination.perPage
       orders = (App.Order.find(datum.id) for datum in data)
       @orders[page] = orders
 
-  fetchReservations: (page, callback)=>
+  fetchReservations: (page)=>
     ids = _.map @orders[page], (o) -> o.id
-    do callback unless ids.length
-    done = _.after Math.ceil(ids.length/50), callback
+    requests = []
     _(ids).each_slice 50, (slice)=>
-      App.Reservation.ajaxFetch
+      requests.push App.Reservation.ajaxFetch
         data: $.param
           order_ids: slice
-      .done done
+    $.when requests...
 
   fetchUsers: (page)=>
     ids = _.filter (_.map @orders[page], (c) -> c.user_id), (id) -> not App.User.exists(id)?
-    return {done: (c)=>c()} unless ids.length
+    return $.when() unless ids.length
     App.User.ajaxFetch
       data: $.param
         ids: _.uniq(ids)
@@ -75,6 +75,4 @@ class window.App.OrdersIndexController extends Spine.Controller
   render: (target, data, page)=>
     target.removeClass('loading-page')
     target.html App.Render "manage/views/orders/line", data, { accessRight: App.AccessRight, currentUserRole: App.User.current.role }
-    if !@finished && $('.loading-page').length == 0
-      nextPage = page + 1
-      @list.append(App.Render("manage/views/lists/loading_page", nextPage, {page: nextPage}))
+    @pagination.appendNextPage @list, page unless @finished

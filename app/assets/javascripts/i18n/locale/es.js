@@ -1022,6 +1022,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "El pedido ya ha sido procesado."
+      ],
+      "The list could not be loaded": [
+         null,
+         "No se pudo cargar la lista"
+      ],
+      "Try again": [
+         null,
+         "Reintentar"
       ]
    }
 }
