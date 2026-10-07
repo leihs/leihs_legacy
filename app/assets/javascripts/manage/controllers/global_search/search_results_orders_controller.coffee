@@ -23,6 +23,7 @@ class window.App.SearchResultsOrdersController extends App.SearchResultsControll
       data: $.param
         page: page
         search_term: @searchTerm
+        disable_total_count: true
         status: ["approved", "submitted", "rejected"]
 
   fetchUsers: (orders)=>

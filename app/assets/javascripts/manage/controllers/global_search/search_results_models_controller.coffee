@@ -21,6 +21,7 @@ class window.App.SearchResultsModelsController extends App.SearchResultsControll
         search_term: @searchTerm
         type: @type
         page: page
+        disable_total_count: true
 
   fetchAvailability: (models)=>
     ids = _.map models, (m)-> m.id

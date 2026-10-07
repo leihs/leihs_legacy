@@ -25,7 +25,7 @@ class Manage::ItemsController < Manage::ApplicationController
              current_inventory_pool
           end
     @items = Item.filter params, cip
-    set_pagination_header(@items) unless params[:paginate] == 'false'
+    set_pagination_header(@items, disable_total_count: params[:disable_total_count] == 'true') unless params[:paginate] == 'false'
   end
 
   def current_locations

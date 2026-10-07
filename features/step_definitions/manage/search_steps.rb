@@ -205,6 +205,111 @@ Then(/^the first page of results is shown$/) do
   expect(page).to have_selector '.row.line'
 end
 
+Given 'the browser window is short enough that the next page loads only on scroll' do
+  page.driver.browser.manage.window.resize_to(1200, 500)
+end
+
+Then 'the first page of results is shown with a loading icon below the fold' do
+  expect(page).to have_selector('.row.line', count: 20)
+  expect(page).to have_selector('.loading-page img[src*="loading"]', visible: :all)
+  below_the_fold = page.evaluate_script(<<~JS)
+    (function() {
+      var pageEl = document.querySelector('.loading-page');
+      var img = pageEl.querySelector('img');
+      return pageEl.getBoundingClientRect().top >= window.innerHeight &&
+        img.getBoundingClientRect().top >= window.innerHeight;
+    })()
+  JS
+  expect(below_the_fold).to eq true
+end
+
+When 'I scroll the loading icon into view while the next page is held' do
+  page.execute_script(<<~JS)
+    (function() {
+      if (window.__searchPage2HoldInstalled) return;
+      window.__searchPage2HoldInstalled = true;
+      window.__realAjax = $.ajax;
+      window.__page2Intercepted = false;
+      window.__releasePage2 = null;
+      $.ajax = function() {
+        var args = arguments;
+        var opts = typeof args[0] === 'string' ? (args[1] || {}) : args[0];
+        var blob = String((opts && opts.data) || '') + '&' + String((opts && opts.url) || '');
+        if (!window.__page2Intercepted && /(?:^|[?&])page=2(?:&|$)/.test(blob)) {
+          window.__page2Intercepted = true;
+          var deferred = $.Deferred();
+          window.__releasePage2 = function() {
+            return window.__realAjax.apply($, args).done(deferred.resolve).fail(deferred.reject);
+          };
+          return deferred.promise();
+        }
+        return window.__realAjax.apply($, args);
+      };
+    })()
+  JS
+  already_requested = page.evaluate_script('window.__page2Intercepted === true')
+  raise 'next page was requested before scrolling' if already_requested
+
+  page.execute_script(<<~JS)
+    (function() {
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    })()
+  JS
+end
+
+Then 'the loading icon is visible while the next page is loading' do
+  deadline = Time.now + Capybara.default_max_wait_time
+  visible = false
+  intercepted = false
+  until Time.now > deadline
+    visible = page.evaluate_script(<<~JS)
+      (function() {
+        var img = document.querySelector('.loading-page img');
+        if (!img) return false;
+        var rect = img.getBoundingClientRect();
+        var style = window.getComputedStyle(img);
+        return style.display !== 'none' && style.visibility !== 'hidden' &&
+          rect.width > 0 && rect.height > 0 &&
+          rect.top < window.innerHeight && rect.bottom > 0;
+      })()
+    JS
+    intercepted = page.evaluate_script('window.__page2Intercepted === true')
+    break if visible && intercepted
+    sleep 0.2
+  end
+  expect(intercepted).to eq true
+  expect(visible).to eq true
+  expect(page.evaluate_script("document.querySelectorAll('.row.line').length")).to eq 20
+end
+
+When 'the next page finishes loading' do
+  page.execute_script(<<~JS)
+    (function() {
+      var release = window.__releasePage2;
+      window.__releasePage2 = null;
+      if (window.__realAjax) $.ajax = window.__realAjax;
+      if (release) release();
+    })()
+  JS
+  expect(page).to have_selector('.row.line', minimum: 21)
+  deadline = Time.now + Capybara.default_max_wait_time
+  until Time.now > deadline
+    break if page.has_no_selector?('.loading-page', wait: 0)
+    page.execute_script(<<~JS)
+      (function() {
+        var el = document.querySelector('.loading-page');
+        if (el) el.scrollIntoView(false);
+        $(window).trigger('scroll');
+      })()
+    JS
+    sleep 0.2
+  end
+end
+
+Then 'the loading icon is gone' do
+  expect(page).to have_no_selector('.loading-page')
+end
+
 Then(/^I see all the entries matching "(.*?)" in the "(.*?)"$/) do |search_string, subsection|
   @results.each do |r|
     case subsection

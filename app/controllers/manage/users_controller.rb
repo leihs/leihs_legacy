@@ -47,7 +47,7 @@ class Manage::UsersController < Manage::ApplicationController
   def index
     @users = User.filter(params, current_inventory_pool)
     @role = params[:role]
-    set_pagination_header @users unless params[:paginate] == "false"
+    set_pagination_header(@users, disable_total_count: params[:disable_total_count] == 'true') unless params[:paginate] == "false"
     respond_to do |format|
       format.json do
         @users = @users.includes(:suspensions)
