@@ -165,3 +165,22 @@ Feature: Search
     Then the first page of results is shown
     And I scroll to the end of the list
     Then I see all the entries matching "search string" in the "Orders"
+
+  Scenario Outline: Loading icon appears when scrolling for more global search results
+    Given I am Mike
+    And enough data for "<subsection>" having "search string" exists
+    And the browser window is short enough that the next page loads only on scroll
+    When I search globally for "search string"
+    Then the search results for "search string" are displayed
+    When I click on the tab named "<subsection>"
+    Then the first page of results is shown with a loading icon below the fold
+    When I scroll the loading icon into view while the next page is held
+    Then the loading icon is visible while the next page is loading
+    When the next page finishes loading
+    Then I see all the entries matching "search string" in the "<subsection>"
+    And the loading icon is gone
+
+    Examples:
+      | subsection |
+      | Orders     |
+      | Contracts  |

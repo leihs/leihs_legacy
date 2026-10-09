@@ -18,3 +18,4 @@ class window.App.SearchResultsOptionsController extends App.SearchResultsControl
       data: $.param
         search_term: @searchTerm
         page: page
+        disable_total_count: true

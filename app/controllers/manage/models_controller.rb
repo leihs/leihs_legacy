@@ -19,7 +19,7 @@ class Manage::ModelsController < Manage::ApplicationController
 
   def index
     @models = Model.filter params, current_inventory_pool
-    set_pagination_header(@models) unless params[:paginate] == 'false'
+    set_pagination_header(@models, disable_total_count: params[:disable_total_count] == 'true') unless params[:paginate] == 'false'
   end
 
   def show

@@ -2,7 +2,7 @@ class Manage::OptionsController < Manage::ApplicationController
 
   def index
     @options = Option.filter params, current_inventory_pool
-    set_pagination_header(@options) unless params[:paginate] == 'false'
+    set_pagination_header(@options, disable_total_count: params[:disable_total_count] == 'true') unless params[:paginate] == 'false'
   end
 
   def new

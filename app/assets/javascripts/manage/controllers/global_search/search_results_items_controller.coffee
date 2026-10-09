@@ -18,6 +18,7 @@ class window.App.SearchResultsItemsController extends App.SearchResultsControlle
         type: @type
         page: page
         current_inventory_pool: false
+        disable_total_count: true
 
   fetchModels:(items) =>
     ids = _.uniq _.map items, (i)-> i.model_id

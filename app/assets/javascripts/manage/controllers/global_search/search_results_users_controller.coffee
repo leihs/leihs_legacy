@@ -18,6 +18,7 @@ class window.App.SearchResultsUsersController extends App.SearchResultsControlle
       data: $.param
         search_term: @searchTerm
         page: page
+        disable_total_count: true
     .done (data)=>
       users = (App.User.find datum.id for datum in data)
       App.User.fetchDelegators users

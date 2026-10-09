@@ -21,6 +21,7 @@ class window.App.SearchResultsContractsController extends App.SearchResultsContr
       data: $.param
         search_term: @searchTerm
         global_contracts_search: true
+        disable_total_count: true
         page: page
         status: ["open", "closed"]
 
