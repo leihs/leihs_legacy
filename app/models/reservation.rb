@@ -159,16 +159,6 @@ class Reservation < ApplicationRecord
     inventory_pool.open_on?(start_date) and inventory_pool.open_on?(end_date)
   end
 
-  def start_date_within_advance_days_period?
-    if pickup_location_id
-      start_date < inventory_pool.earliest_possible_pickup_date(advance_days_with_pickup_location)
-    else
-      start_date < (
-        Date.today + inventory_pool.borrow_reservation_advance_days.to_i.day
-      )
-    end
-  end
-
   # custom valid? method
   def complete?
     self.valid? and self.available?
@@ -203,16 +193,6 @@ class Reservation < ApplicationRecord
   end
 
   ############################################
-
-  def submittable?
-    if start_date_within_advance_days_period?
-      errors.add(:base,
-                 _('This order is not approvable because some reservations ' \
-                   'violate the minimal reservation advance period of the ' \
-                   'inventory pool. Please adjust the start date accordingly.'))
-    end
-    errors.empty?
-  end
 
   def approvable?
     if delegated_user.try :suspended?, inventory_pool
@@ -275,11 +255,6 @@ class Reservation < ApplicationRecord
   ############################################
 
   private
-
-  def advance_days_with_pickup_location
-    [inventory_pool.borrow_reservation_advance_days.to_i,
-     inventory_pool.transfer_buffer_before_pick_up.to_i].max
-  end
 
   def date_sequence
     # OPTIMIZE: strange behavior: in some cases, this error raises when shouldn't

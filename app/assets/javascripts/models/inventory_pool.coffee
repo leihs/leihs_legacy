@@ -43,9 +43,9 @@ class window.App.InventoryPool extends Spine.Model
     )
     not holiday or holiday.orders_processing
 
-  # mirrors InventoryPool#earliest_possible_pickup_date (Ruby): today counts
-  # as the first advance day, closed days are skipped without counting but
-  # still advanced past.
+  # earliest open date at least advanceDays orders-processing days from
+  # today; today counts as the first advance day, closed days are skipped
+  # without counting.
   earliestPossiblePickupDate: (advanceDays)=>
     date = moment().startOf('day')
     inAdvance = 0

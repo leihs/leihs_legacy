@@ -231,21 +231,6 @@ class InventoryPool < ApplicationRecord
     holiday.nil? or holiday.orders_processing
   end
 
-  # Earliest date, from today, that's at least +advance_days+
-  # orders-processing days away and itself open (not a weekend/holiday).
-  # Unlike step_orders_processing_days, today itself counts as the first
-  # advance day.
-  def earliest_possible_pickup_date(advance_days)
-    date = Time.zone.today
-    in_advance = 0
-    while (advance_days.to_i.positive? && in_advance < advance_days.to_i) ||
-          !open_on?(date)
-      in_advance += 1 if orders_processing?(date)
-      date += 1.day
-    end
-    date
-  end
-
   # Steps from date via +step+ (:+ or :-) one calendar day at a time until n
   # orders-processing days have been stepped onto, returning the resulting
   # date. Only days stepped onto count, so date itself is never counted;
