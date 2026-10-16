@@ -493,11 +493,11 @@ module Manage
       step 'the courier select-all checkbox is not shown for the group ' \
            'without a pickup location' do
         within '#lines' do
-          containers = all('[data-selected-lines-container]', minimum: 2)
-          warehouse = containers.find do |container|
-            container.has_no_selector?('[data-toggle-courier-to-pickup]', wait: 0)
-          end
-          expect(warehouse).to be_present
+          expect(page).to have_selector('[data-selected-lines-container]',
+                                        minimum: 2)
+          warehouse = find(:xpath,
+                           './/*[@data-selected-lines-container]' \
+                           '[not(.//*[@data-toggle-courier-to-pickup])]')
           expect(warehouse).to have_no_selector('[data-select-courier-lines]',
                                                 visible: true)
         end
