@@ -19,6 +19,53 @@ module Manage
                            items: [@item])
       end
 
+      step 'my inventory pool has a transfer buffer before pick up of :n days' do |n|
+        @inventory_pool.update!(enable_alternative_pickup_locations: true,
+                                transfer_buffer_before_pick_up: n.to_i)
+      end
+
+      step 'the customer has an approved reservation at a pickup location next week' do
+        start_date = @inventory_pool.next_open_date(Date.today + 7.days)
+        @reservation = FactoryBot.create(
+          :reservation,
+          inventory_pool: @inventory_pool,
+          user: @customer,
+          status: :approved,
+          start_date:,
+          end_date: @inventory_pool.next_open_date(start_date + 1.day),
+          pickup_location: FactoryBot.create(:pickup_location,
+                                             inventory_pool: @inventory_pool)
+        )
+      end
+
+      step 'I open the booking calendar for the reservation' do
+        find(".line[data-id='#{@reservation.id}'] .line-actions [data-edit-lines]")
+          .click
+        find('#booking-calendar .fc-widget-content', match: :first)
+      end
+
+      step 'I pick today as start date' do
+        within('.modal') { find("td[data-date='#{Date.today}']").click }
+        sleep 1
+        find('.tooltipster-default .button#set-start-date').click
+      end
+
+      step 'I see a warning that the start date is too soon for the transfer buffer' do
+        within '.modal' do
+          find('.red',
+               text: _("Start date is too soon for the pickup location's transfer buffer"))
+        end
+      end
+
+      step 'I save the booking calendar' do
+        find('#submit-booking-calendar:not(:disabled)').click
+        expect(page).to have_no_selector('#booking-calendar')
+      end
+
+      step 'the start date of the reservation is today' do
+        expect(@reservation.reload.start_date).to eq Date.today
+      end
+
       step 'I open hand over for the user' do
         visit manage_hand_over_path(@inventory_pool, @customer)
       end

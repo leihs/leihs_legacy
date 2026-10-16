@@ -3072,6 +3072,14 @@ tasks:
         set -euo pipefail
         mkdir -p log
         unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:7
+- name: spec/features/manage/hand_over.feature:70
+  scripts:
+    test:
+      body: |-
+        #!/usr/bin/env bash
+        set -euo pipefail
+        mkdir -p log
+        unset PGPORT; unset PGUSER; export PGUSER=${PG15USER}; export PGPORT=${PG15PORT}; xvfb-run -a -e log/xvfb.log --server-args='-screen 0 1920x1080x24' ./bin/rspec -r ./spec/steps/manage/load.rb spec/features/manage/hand_over.feature:70
 - name: spec/features/manage/inactive_inventory_pools.feature:26
   scripts:
     test:

@@ -100,7 +100,7 @@ class window.App.ManageBookingCalendarDialogController extends App.BookingCalend
 
   # overwrite
   validationAlerts: =>
-    # NOTE most of these are just warnings (not preventing as error) # TODO dry with super valid()
+    # NOTE these are just warnings (not preventing as error) # TODO dry with super valid()
     ip = @getSelectedInventoryPool()
     errors = []
     if not ip.isVisitPossible @getStartDate()
@@ -119,7 +119,6 @@ class window.App.ManageBookingCalendarDialogController extends App.BookingCalend
     else
       @errorsContainer.html ""
 
-  # unlike the warnings above, this one actually blocks submission
-  valid: => not @startDateTooSoonForPickupLocation()
+  valid: => true
 
   store: => # virtual

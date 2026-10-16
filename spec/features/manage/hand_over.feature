@@ -65,3 +65,16 @@ Feature: Hand over
     When I open hand over for the user
     And I enter the item's model name in the "Add/Assign" input field
     Then the results of the autocomplete menu are empty
+
+  @manage_hand_over
+  Scenario: Handing over a pickup location reservation earlier than its transfer buffer allows
+    Given I am Pius
+    And a customer for my inventory pool exists
+    And my inventory pool has a transfer buffer before pick up of 3 days
+    And the customer has an approved reservation at a pickup location next week
+    When I open hand over for the user
+    And I open the booking calendar for the reservation
+    And I pick today as start date
+    Then I see a warning that the start date is too soon for the transfer buffer
+    When I save the booking calendar
+    Then the start date of the reservation is today
