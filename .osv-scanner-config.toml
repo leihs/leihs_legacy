@@ -1,0 +1,78 @@
+# osv-scanner config file
+# Suppress false positives or accepted risks here.
+# https://google.github.io/osv-scanner/configuration/
+
+# webpack-dev-server 3 (local dev server only, pinned by @rails/webpacker 5).
+# Fix requires replacing webpacker 5 / webpack 4.
+
+[[IgnoredVulns]]
+id = "GHSA-c7qv-q95q-8v27"
+ignoreUntil = 2027-01-15
+reason = "http-proxy-middleware 0.19.1 (via webpack-dev-server 3): fix only in 2.x; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-2p57-rm9w-gvfp"
+ignoreUntil = 2027-01-15
+reason = "ip 1.1.9 (via webpack-dev-server 3): no fix available; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-86w9-cpqp-85rv"
+ignoreUntil = 2027-01-15
+reason = "node-forge 1.4.0 (via webpack-dev-server 3/selfsigned): no fix available; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-w5hq-g745-h8pq"
+ignoreUntil = 2027-01-15
+reason = "uuid 3.4.0 (via webpack-dev-server 3/webpack-log, requires uuid/v4 which uuid >= 8 removed): fix only in uuid >= 11.1.1; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-g84c-rxfj-3j2c"
+ignoreUntil = 2027-01-15
+reason = "webpack-dev-middleware 3.7.3 (via webpack-dev-server 3): fix only in 7.4.6; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-wr3j-pwj9-hqq6"
+ignoreUntil = 2027-01-15
+reason = "webpack-dev-middleware 3.7.3 (via webpack-dev-server 3): fix only in 5.3.4; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-64mm-vxmg-q3vj"
+ignoreUntil = 2027-01-15
+reason = "http-proxy-middleware 0.19.1 (via webpack-dev-server 3): fix only in 2.0.10; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-4v9v-hfq4-rm2v"
+ignoreUntil = 2027-01-15
+reason = "webpack-dev-server 3.11.3 (direct, pinned by @rails/webpacker 5 / webpack 4): fix only in 5.2.1; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-79cf-xcqc-c78w"
+ignoreUntil = 2027-01-15
+reason = "webpack-dev-server 3.11.3 (direct, pinned by @rails/webpacker 5 / webpack 4): fix only in 5.2.4; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-9jgg-88mc-972h"
+ignoreUntil = 2027-01-15
+reason = "webpack-dev-server 3.11.3 (direct, pinned by @rails/webpacker 5 / webpack 4): fix only in 5.2.1; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-f5vj-f2hx-8m93"
+ignoreUntil = 2027-01-15
+reason = "webpack-dev-server 3.11.3 (direct, pinned by @rails/webpacker 5 / webpack 4): fix only in 5.2.6; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-m28w-2pqf-7qgj"
+ignoreUntil = 2027-01-15
+reason = "webpack-dev-server 3.11.3 (direct, pinned by @rails/webpacker 5 / webpack 4): fix only in 5.2.6; local dev server only"
+
+[[IgnoredVulns]]
+id = "GHSA-mx8g-39q3-5c79"
+ignoreUntil = 2027-01-15
+reason = "webpack-dev-server 3.11.3 (direct, pinned by @rails/webpacker 5 / webpack 4): fix only in 5.2.5; local dev server only"
+
+# webpack 4 node polyfills (node-libs-browser/crypto-browserify). Not included in the built packs.
+
+[[IgnoredVulns]]
+id = "GHSA-848j-6mx2-7j84"
+ignoreUntil = 2027-01-15
+reason = "elliptic 6.6.1 (via webpack 4 node-libs-browser/crypto-browserify): no fix available; build time only, not bundled into packs"
