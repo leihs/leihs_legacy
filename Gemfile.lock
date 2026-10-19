@@ -276,7 +276,7 @@ GEM
       monetize (~> 1.9)
       money (~> 6.13)
       railties (>= 3.0)
-    msgpack (1.7.2)
+    msgpack (1.8.5)
     multi_test (1.1.0)
     net-imap (0.6.6)
       date
@@ -436,7 +436,7 @@ GEM
     ruby_parser (3.21.1)
       racc (~> 1.5)
       sexp_processor (~> 4.16)
-    rubyzip (3.3.0)
+    rubyzip (3.7.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
