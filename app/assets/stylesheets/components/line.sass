@@ -72,6 +72,13 @@
   &:last-child:not([class*='padding'])
     padding-right: $space-s
 
+// Rendered empty on rows without pickup location so the centered text stays aligned
+.pickup-location-indicator
+  display: inline-block
+  width: $space-m
+  text-align: right
+  color: $darkergrey
+
 // Pickup-location / courier layout: only when the pool flag is on
 // (class and/or data attr from enable_alternative_pickup_locations).
 #hand-over-view.with-alternative-pickup-locations,
