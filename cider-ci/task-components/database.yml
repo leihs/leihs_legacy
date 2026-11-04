@@ -1,5 +1,5 @@
 traits:
-  asdf: true
+  mise: true
 
 include:
   - path: cider-ci/task-components/database.yml
