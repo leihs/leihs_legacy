@@ -1,4 +1,4 @@
-firefox 140.10.2esr
-geckodriver 0.36.0
+firefox 153.7.0esr
+geckodriver 0.37.1
 nodejs 22.13.0
 ruby 3.3.8
