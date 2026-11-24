@@ -15,10 +15,7 @@ id = "GHSA-2p57-rm9w-gvfp"
 ignoreUntil = 2027-01-15
 reason = "ip 1.1.9 (via webpack-dev-server 3): no fix available; local dev server only"
 
-[[IgnoredVulns]]
-id = "GHSA-86w9-cpqp-85rv"
-ignoreUntil = 2027-01-15
-reason = "node-forge 1.4.0 (via webpack-dev-server 3/selfsigned): no fix available; local dev server only"
+# GHSA-86w9-cpqp-85rv (node-forge): fixed by upgrade to 1.4.3; ignore removed 2026-11-23
 
 [[IgnoredVulns]]
 id = "GHSA-w5hq-g745-h8pq"

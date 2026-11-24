@@ -38,9 +38,11 @@ Given /^I try to approve a contract that has problems$/ do
 end
 
 Then /^I got an information that this contract has problems$/ do
-  error = find('.modal .row.emboss.red')
-  expect(error.text)
-    .to be == @contract.errors.full_messages.join(' ')
+  expected = @contract.errors.full_messages.join(' ')
+  # The red banner is `.row.emboss.red`, but its visible text is empty under
+  # Firefox: the sentence is the inner paragraph. Wait until that node shows it.
+  error = find('.modal .emboss.red .paragraph-s', text: expected)
+  expect(error.text).to be == expected
 end
 
 When /^I approve anyway$/ do
