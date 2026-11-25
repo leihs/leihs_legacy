@@ -15,15 +15,12 @@ id = "GHSA-2p57-rm9w-gvfp"
 ignoreUntil = 2027-01-15
 reason = "ip 1.1.9 (via webpack-dev-server 3): no fix available; local dev server only"
 
-[[IgnoredVulns]]
-id = "GHSA-86w9-cpqp-85rv"
-ignoreUntil = 2027-01-15
-reason = "node-forge 1.4.0 (via webpack-dev-server 3/selfsigned): no fix available; local dev server only"
+# GHSA-86w9-cpqp-85rv (node-forge): fixed by upgrade to 1.4.3; ignore removed 2026-11-23
 
 [[IgnoredVulns]]
 id = "GHSA-w5hq-g745-h8pq"
 ignoreUntil = 2027-01-15
-reason = "uuid 3.4.0 (via webpack-dev-server 3/webpack-log, requires uuid/v4 which uuid >= 8 removed): fix only in uuid >= 11.1.1; local dev server only"
+reason = "uuid via webpack-log/sockjs (webpack-dev-server 3): uuid@11 breaks webpack-log require('uuid/v4'); local/build tooling only"
 
 [[IgnoredVulns]]
 id = "GHSA-g84c-rxfj-3j2c"

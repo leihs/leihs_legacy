@@ -152,7 +152,6 @@ Then(/^I see the purpose on the order line$/) do
   expect(find(@line_css).has_content? @contract.purpose.to_s).to be true
 end
 
-
 Then(/^I can approve the order$/) do
   expect(find(@line_css).has_selector? '[data-order-approve]').to be true
 end
@@ -251,12 +250,37 @@ But(/^I cannot hand over$/) do
 end
 
 def hand_over_assign_or_add(s)
+  # Flash is position:fixed with z-index 2000. A leftover notice from a prior
+  # add (e.g. models before options) can swallow the autocomplete click so the
+  # create/increase never runs and the flash assertion times out.
+  if page.has_selector?('#flash .fa-times-circle', wait: 0)
+    find('#flash .fa-times-circle').click
+    expect(page).to have_no_selector('#flash .fa-times-circle')
+  end
+
   find('#assign-or-add-input input').set s
-  el = find('form#assign-or-add .row a:not(.red)', text: s)
-  el.hover
-  el.click
-  find('#flash .notice', text: _('Added %s') % s)
+  # Search is debounced and briefly shows a loading state; wait for a result.
+  expect(page).to have_no_selector('form#assign-or-add .loading-bg-small')
+  within '.ui-autocomplete' do
+    find("a[title='#{s}']", match: :prefer_exact, text: s).click
+  end
+
+  # Success flash is either "Added %s" (new line) or "%s quantity increased to %s"
+  # when that option is already on the hand-over for the same date range
+  # (ReservationsAddController#addOption). Personas freeze time to 2018-06-27,
+  # where Normin's approved hand-over already includes "Akku AA 86" — so this
+  # scenario often hits the quantity-increase path, not "Added %s".
+  added = _('Added %s') % s
+  increased_rx = Regexp.new(
+    '\A' + Regexp.escape(_('%s quantity increased to %s'))
+      .sub('%s', Regexp.escape(s))
+      .sub('%s', '\\d+') + '\z'
+  )
+  notice = find('#flash .notice', text: s, wait: 10).text
+  expect(notice == added || notice.match?(increased_rx))
+    .to be(true), "expected Added or quantity-increased flash, got: #{notice.inspect}"
 end
+
 
 Then(/^I can add models$/) do
   @model = if @current_user.access_right_for(@current_inventory_pool).role == :group_manager
