@@ -17,3 +17,9 @@ window.App.Order::sign = (data)-> $.post "#{App.InventoryPool.url}/#{App.Invento
 window.App.Order::editPath = -> "#{App.Order.url()}/#{@id}/edit"
 
 window.App.Order::handOverPath = -> "#{App.Order.url()}/#{@id}/hand_over"
+
+window.App.Order::alternativePickupLocationsEnabled = ->
+  !!App.InventoryPool.current?.enable_alternative_pickup_locations
+
+window.App.Order::hasAlternativePickupLocation = ->
+  _.some @reservations().all(), (r) -> !!r.pickup_location_id

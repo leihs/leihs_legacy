@@ -98,6 +98,20 @@ module Availability
                              [reservation.start_date, Time.zone.today].max
                            end
 
+        if reservation.pickup_location_id
+          # NOTE: DON'T RECALCULATE PAST still applies: widening backward
+          # must not push unavailable_from before today.
+          unavailable_from = \
+            [
+              @inventory_pool.step_orders_processing_days(
+                unavailable_from,
+                @inventory_pool.transfer_buffer_before_pick_up,
+                step: :-
+              ),
+              Time.zone.today
+            ].max
+        end
+
         ######################### EXTEND END DATE #################################
         # If overdue, extend end_date to today.
         #
@@ -126,8 +140,16 @@ module Availability
             Time.zone.today
           ].max
 
-        unavailable_until = @model.being_maintained_until(@inventory_pool,
-                                                          unavailable_until)
+        unavailable_until = \
+          if reservation.pickup_location_id
+            @inventory_pool.step_orders_processing_days(
+              unavailable_until,
+              @inventory_pool.transfer_buffer_after_drop_off,
+              step: :+
+            )
+          else
+            @model.being_maintained_until(@inventory_pool, unavailable_until)
+          end
 
         ###################### GROUP ALLOCATIONS ##################################
         inner_changes = \

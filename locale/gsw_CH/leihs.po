@@ -1808,6 +1808,9 @@ msgstr "De Grätepark isch am Rückgabetag zue"
 msgid "Inventory pool is closed on start date"
 msgstr "De Grätepark isch am Startdatum zue."
 
+msgid "Start date is too soon for the pickup location's transfer buffer"
+msgstr "Das Startdatum isch z'früeh wäg de Transferziit zum Abholort"
+
 msgid "is late"
 msgstr "verschpötet"
 
@@ -1909,6 +1912,15 @@ msgstr "drum chönd si allefalls einige Fälder nöd ändere"
 
 msgid "this is a package"
 msgstr "das isch es Paket"
+
+msgid "Model is transportable"
+msgstr "Modell isch transportierbar"
+
+msgid "Software is transportable"
+msgstr "Software isch transportierbar"
+
+msgid "Ordering at alternative pickup locations possible"
+msgstr "Bestellig a alternativ Abholort möglich"
 
 msgid "to edit this item"
 msgstr "dä Gägestand ändere"
@@ -3033,6 +3045,12 @@ msgstr "D Aagab vonere Natelnummere isch empfohle"
 
 msgid "The order has already been dealt with."
 msgstr "De Bschtellig isch scho bearbeitet worde."
+
+msgid "Pickup location"
+msgstr "Abholort"
+
+msgid "Handed to courier"
+msgstr "A Kurier übergeh"
 
 msgid "The list could not be loaded"
 msgstr "D Lischte het nöd chöne glade werde"

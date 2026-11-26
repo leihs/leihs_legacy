@@ -1023,6 +1023,14 @@ window.i18n.locale_data = {
          null,
          "El pedido ya ha sido procesado."
       ],
+      "Pickup location": [
+         null,
+         "Lugar de recogida"
+      ],
+      "Handed to courier": [
+         null,
+         "Entregado al mensajero"
+      ],
       "The list could not be loaded": [
          null,
          "No se pudo cargar la lista"

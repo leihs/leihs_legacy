@@ -1830,6 +1830,9 @@ msgstr ""
 msgid "Inventory pool is closed on start date"
 msgstr ""
 
+msgid "Start date is too soon for the pickup location's transfer buffer"
+msgstr ""
+
 msgid "is late"
 msgstr ""
 
@@ -1930,6 +1933,15 @@ msgid "therefore you may not be able to change some of these fields"
 msgstr ""
 
 msgid "this is a package"
+msgstr ""
+
+msgid "Model is transportable"
+msgstr ""
+
+msgid "Software is transportable"
+msgstr ""
+
+msgid "Ordering at alternative pickup locations possible"
 msgstr ""
 
 msgid "to edit this item"
@@ -3578,6 +3590,12 @@ msgid "Saturday"
 msgstr ""
 
 msgid "Sunday"
+msgstr ""
+
+msgid "Pickup location"
+msgstr ""
+
+msgid "Handed to courier"
 msgstr ""
 
 msgid "The list could not be loaded"

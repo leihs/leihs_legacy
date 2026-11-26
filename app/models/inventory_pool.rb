@@ -72,6 +72,7 @@ class InventoryPool < ApplicationRecord
   has_many :visits
   has_many :orders
   has_many :contracts
+  has_many :pickup_locations
 
   has_many :entitlement_groups do
     def with_general
@@ -80,6 +81,7 @@ class InventoryPool < ApplicationRecord
   end
 
   has_many :mail_templates, dependent: :delete_all
+  has_many :pickup_locations, dependent: :delete_all, inverse_of: :inventory_pool
 
   def suppliers
     Supplier
@@ -124,6 +126,7 @@ class InventoryPool < ApplicationRecord
      reservations.end_date,
      reservations.returned_date,
      reservations.status,
+     reservations.pickup_location_id,
      ARRAY(
        SELECT egu.entitlement_group_id
        FROM entitlement_groups_users egu
@@ -219,6 +222,26 @@ class InventoryPool < ApplicationRecord
 
   def open_on?(date)
     workday.open_on?(date) and running_holiday_on(date).nil?
+  end
+
+  def orders_processing?(date)
+    return false unless workday.orders_processing_day?(date)
+
+    holiday = running_holiday_on(date)
+    holiday.nil? or holiday.orders_processing
+  end
+
+  # Steps from date via +step+ (:+ or :-) one calendar day at a time until n
+  # orders-processing days have been stepped onto, returning the resulting
+  # date. Only days stepped onto count, so date itself is never counted;
+  # non-processing days are skipped over without counting. n <= 0 is a no-op.
+  def step_orders_processing_days(date, n, step: :+)
+    remaining = n.to_i
+    while remaining > 0
+      date = date.public_send(step, 1.day)
+      remaining -= 1 if orders_processing?(date)
+    end
+    date
   end
 
   def running_holiday_on(date)

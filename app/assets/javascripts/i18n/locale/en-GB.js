@@ -2390,6 +2390,10 @@ window.i18n.locale_data = {
          null,
          ""
       ],
+      "Start date is too soon for the pickup location's transfer buffer": [
+         null,
+         ""
+      ],
       "is late": [
          null,
          ""
@@ -2515,6 +2519,18 @@ window.i18n.locale_data = {
          ""
       ],
       "this is a package": [
+         null,
+         ""
+      ],
+      "Model is transportable": [
+         null,
+         ""
+      ],
+      "Software is transportable": [
+         null,
+         ""
+      ],
+      "Ordering at alternative pickup locations possible": [
          null,
          ""
       ],
@@ -3790,6 +3806,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "The order has already been dealt with."
+      ],
+      "Pickup location": [
+         null,
+         "Pickup location"
+      ],
+      "Handed to courier": [
+         null,
+         "Handed to courier"
       ],
       "The list could not be loaded": [
          null,

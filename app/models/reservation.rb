@@ -18,6 +18,9 @@ class Reservation < ApplicationRecord
   belongs_to :model
   belongs_to :handed_over_by_user, class_name: 'User'
   belongs_to :returned_to_user, class_name: 'User'
+  belongs_to :pickup_location, optional: true
+  belongs_to :sent_to_pickup_location_by_user, class_name: 'User', optional: true
+  belongs_to :sent_back_to_main_location_by_user, class_name: 'User', optional: true
 
   has_many :entitlement_groups, through: :user
 
@@ -40,6 +43,8 @@ class Reservation < ApplicationRecord
     scope status, -> { where(status: status) }
   end
 
+  scope :not_dropped_off_at_pickup_location, -> { where(sent_back_to_main_location_at: nil) }
+
   #########################################################################
 
   default_scope { order(:created_at) }
@@ -52,7 +57,7 @@ class Reservation < ApplicationRecord
         end))
 
   def self.filter(params, inventory_pool)
-    reservations = inventory_pool.reservations
+    reservations = inventory_pool.reservations.includes(:pickup_location)
 
     reservations
       .scope_if_presence(params[:contract_ids]) do |rs, ids|
@@ -154,12 +159,6 @@ class Reservation < ApplicationRecord
     inventory_pool.open_on?(start_date) and inventory_pool.open_on?(end_date)
   end
 
-  def start_date_within_advance_days_period?
-    start_date < (
-      Date.today + inventory_pool.borrow_reservation_advance_days.to_i.day
-    )
-  end
-
   # custom valid? method
   def complete?
     self.valid? and self.available?
@@ -194,16 +193,6 @@ class Reservation < ApplicationRecord
   end
 
   ############################################
-
-  def submittable?
-    if start_date_within_advance_days_period?
-      errors.add(:base,
-                 _('This order is not approvable because some reservations ' \
-                   'violate the minimal reservation advance period of the ' \
-                   'inventory pool. Please adjust the start date accordingly.'))
-    end
-    errors.empty?
-  end
 
   def approvable?
     if delegated_user.try :suspended?, inventory_pool
@@ -240,6 +229,27 @@ class Reservation < ApplicationRecord
 
   def last_closed_reservation_of_contract?
     contract.reservations.all? { |r| r.status == :closed }
+  end
+
+  def eligible_for_courier?
+    pickup_location_id.present? && model&.transportable
+  end
+
+  # Explicit serializer for manage Spine bootstraps / courier AJAX.
+  # Prefer this over aliasing as_json globally.
+  def as_json_with_pickup_location(options = {})
+    h = as_json(options)
+    if pickup_location
+      h['pickup_location'] = {
+        'id' => pickup_location.id,
+        'name' => pickup_location.name
+      }
+    end
+    h
+  end
+
+  def self.as_json_with_pickup_location(records, options = {})
+    Array(records).map { |r| r.as_json_with_pickup_location(options) }
   end
 
   ############################################

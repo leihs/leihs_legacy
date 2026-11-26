@@ -1916,6 +1916,9 @@ msgstr "Der Gerätepark ist am gewünschten Rückgabetag geschlossen"
 msgid "Inventory pool is closed on start date"
 msgstr "Der Gerätepark ist am gewünschten Starttag geschlossen"
 
+msgid "Start date is too soon for the pickup location's transfer buffer"
+msgstr "Das Startdatum ist wegen der Transferzeit zum Abholort zu früh"
+
 msgid "is late"
 msgstr "verspätet"
 
@@ -2017,6 +2020,15 @@ msgstr "deshalb können Sie einige Felder nicht editieren"
 
 msgid "this is a package"
 msgstr "dies ist ein Paket"
+
+msgid "Model is transportable"
+msgstr "Modell ist transportierbar"
+
+msgid "Software is transportable"
+msgstr "Software ist transportierbar"
+
+msgid "Ordering at alternative pickup locations possible"
+msgstr "Bestellung an alternative Abholorte möglich"
 
 msgid "to edit this item"
 msgstr "diesen Gegenstand zu editieren"
@@ -3757,6 +3769,12 @@ msgstr "Samstag"
 
 msgid "Sunday"
 msgstr "Sonntag"
+
+msgid "Pickup location"
+msgstr "Abholort"
+
+msgid "Handed to courier"
+msgstr "An Kurier übergeben"
 
 msgid "The list could not be loaded"
 msgstr "Die Liste konnte nicht geladen werden"

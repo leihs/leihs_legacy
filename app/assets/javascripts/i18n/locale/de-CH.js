@@ -2495,6 +2495,10 @@ window.i18n.locale_data = {
          null,
          "Der Gerätepark ist am gewünschten Starttag geschlossen"
       ],
+      "Start date is too soon for the pickup location's transfer buffer": [
+         null,
+         "Das Startdatum ist wegen der Transferzeit zum Abholort zu früh"
+      ],
       "is late": [
          null,
          "verspätet"
@@ -2630,6 +2634,18 @@ window.i18n.locale_data = {
       "this is a package": [
          null,
          "dies ist ein Paket"
+      ],
+      "Model is transportable": [
+         null,
+         "Modell ist transportierbar"
+      ],
+      "Software is transportable": [
+         null,
+         "Software ist transportierbar"
+      ],
+      "Ordering at alternative pickup locations possible": [
+         null,
+         "Bestellung an alternative Abholorte möglich"
       ],
       "to edit this item": [
          null,
@@ -4873,6 +4889,14 @@ window.i18n.locale_data = {
       "Sunday": [
          null,
          "Sonntag"
+      ],
+      "Pickup location": [
+         null,
+         "Abholort"
+      ],
+      "Handed to courier": [
+         null,
+         "An Kurier übergeben"
       ],
       "The list could not be loaded": [
          null,

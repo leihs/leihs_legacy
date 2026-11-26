@@ -89,9 +89,18 @@ class window.App.ManageBookingCalendarDialogController extends App.BookingCalend
   # overwrite
   getSelectedInventoryPool: => App.InventoryPool.current
 
+  # true if a pickup-location reservation's start date is too soon given the
+  # inventory pool's advance-days/transfer-buffer requirements
+  startDateTooSoonForPickupLocation: =>
+    return false if @startDateDisabled # start date not being edited here (e.g. take back)
+    return false unless _.any(@reservations, (r)-> r.pickup_location_id)
+    ip = @getSelectedInventoryPool()
+    advanceDays = Math.max(ip.borrow_reservation_advance_days || 0, ip.transfer_buffer_before_pick_up || 0)
+    @getStartDate().isBefore(ip.earliestPossiblePickupDate(advanceDays), 'day')
+
   # overwrite
   validationAlerts: =>
-    # NOTE this are just warnings (not preventing as error) # TODO dry with super valid()
+    # NOTE these are just warnings (not preventing as error) # TODO dry with super valid()
     ip = @getSelectedInventoryPool()
     errors = []
     if not ip.isVisitPossible @getStartDate()
@@ -102,6 +111,8 @@ class window.App.ManageBookingCalendarDialogController extends App.BookingCalend
       errors.push _jed("Inventory pool is closed on start date")
     if ip.isClosedOn @getEndDate()
       errors.push _jed("Inventory pool is closed on end date")
+    if @startDateTooSoonForPickupLocation()
+      errors.push _jed("Start date is too soon for the pickup location's transfer buffer")
 
     if errors.length
       @showError errors.join(", ")

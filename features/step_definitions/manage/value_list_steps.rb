@@ -113,7 +113,7 @@ Then /^the list contains the following columns:$/ do |table|
             expect(find('tbody tr', text: line.item.inventory_code).find('.item_price').text.gsub(/\D/, '')).to eq ('%.2f' % line.price).gsub(/\D/, '')
           }
         when 'Room / Shelf'
-          find('table thead tr td.location', text: '%s / %s' % [_('Room'), _('Shelf')])
+          find('table thead tr th.location, table thead tr td.location', text: '%s / %s' % [_('Room'), _('Shelf')])
           reservations = @selected_lines_by_date ? @selected_lines_by_date : @contract.reservations
           reservations.each {|line|
             find('tbody tr', text: line.item ? line.item.inventory_code : line.model.name).find('.location', text:
@@ -124,7 +124,7 @@ Then /^the list contains the following columns:$/ do |table|
                 end)
           }
         when 'available quantity x Room / Shelf'
-          find('table thead tr td.location', text: '%s x %s / %s' % [_('available quantity'), _('Room'), _('Shelf')])
+          find('table thead tr th.location, table thead tr td.location', text: '%s x %s / %s' % [_('available quantity'), _('Room'), _('Shelf')])
           reservations = @selected_lines_by_date ? @selected_lines_by_date : @contract.reservations
           reservations.each do |line|
             within find('tr', match: :prefer_exact, text: line.model).find('.location') do

@@ -2414,6 +2414,10 @@ window.i18n.locale_data = {
          null,
          "De Grätepark isch am Startdatum zue."
       ],
+      "Start date is too soon for the pickup location's transfer buffer": [
+         null,
+         "Das Startdatum isch z'früeh wäg de Transferziit zum Abholort"
+      ],
       "is late": [
          null,
          "verschpötet"
@@ -2549,6 +2553,18 @@ window.i18n.locale_data = {
       "this is a package": [
          null,
          "das isch es Paket"
+      ],
+      "Model is transportable": [
+         null,
+         "Modell isch transportierbar"
+      ],
+      "Software is transportable": [
+         null,
+         "Software isch transportierbar"
+      ],
+      "Ordering at alternative pickup locations possible": [
+         null,
+         "Bestellig a alternativ Abholort möglich"
       ],
       "to edit this item": [
          null,
@@ -4023,6 +4039,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "De Bschtellig isch scho bearbeitet worde."
+      ],
+      "Pickup location": [
+         null,
+         "Abholort"
+      ],
+      "Handed to courier": [
+         null,
+         "A Kurier übergeh"
       ],
       "The list could not be loaded": [
          null,

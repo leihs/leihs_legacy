@@ -1875,6 +1875,9 @@ msgstr "Le groupe d'inventaire est fermé à la date de fin"
 msgid "Inventory pool is closed on start date"
 msgstr "Le groupe d'inventaire est fermé à la date de début"
 
+msgid "Start date is too soon for the pickup location's transfer buffer"
+msgstr "La date de début est trop proche compte tenu du délai de transfert du lieu de retrait"
+
 msgid "is late"
 msgstr "est en retard"
 
@@ -1976,6 +1979,15 @@ msgstr "par conséquent, vous ne pourrez peut-être pas modifier certains de ces
 
 msgid "this is a package"
 msgstr "ceci est un paquet"
+
+msgid "Model is transportable"
+msgstr "Le modèle est transportable"
+
+msgid "Software is transportable"
+msgstr "Le logiciel est transportable"
+
+msgid "Ordering at alternative pickup locations possible"
+msgstr "Commande possible vers des lieux de retrait alternatifs"
 
 msgid "to edit this item"
 msgstr "pour modifier cet élément"
@@ -3452,6 +3464,12 @@ msgstr "L'indication d'un numéro de téléphone est recommandée"
 
 msgid "The order has already been dealt with."
 msgstr "L'ordre a déjà été traité."
+
+msgid "Pickup location"
+msgstr "Lieu de retrait"
+
+msgid "Handed to courier"
+msgstr "Remis au coursier"
 
 msgid "The list could not be loaded"
 msgstr "La liste n'a pas pu être chargée"

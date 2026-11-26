@@ -2513,6 +2513,10 @@ window.i18n.locale_data = {
          null,
          "Le groupe d'inventaire est fermé à la date de début"
       ],
+      "Start date is too soon for the pickup location's transfer buffer": [
+         null,
+         "La date de début est trop proche compte tenu du délai de transfert du lieu de retrait"
+      ],
       "is late": [
          null,
          "est en retard"
@@ -2648,6 +2652,18 @@ window.i18n.locale_data = {
       "this is a package": [
          null,
          "ceci est un paquet"
+      ],
+      "Model is transportable": [
+         null,
+         "Le modèle est transportable"
+      ],
+      "Software is transportable": [
+         null,
+         "Le logiciel est transportable"
+      ],
+      "Ordering at alternative pickup locations possible": [
+         null,
+         "Commande possible vers des lieux de retrait alternatifs"
       ],
       "to edit this item": [
          null,
@@ -4587,6 +4603,14 @@ window.i18n.locale_data = {
       "The order has already been dealt with.": [
          null,
          "L'ordre a déjà été traité."
+      ],
+      "Pickup location": [
+         null,
+         "Lieu de retrait"
+      ],
+      "Handed to courier": [
+         null,
+         "Remis au coursier"
       ],
       "The list could not be loaded": [
          null,

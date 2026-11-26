@@ -16,9 +16,11 @@ class window.App.TakeBackController extends Spine.Controller
 
   constructor: ->
     super
+    do @applyAlternativePickupLocationsUi
     App.TakeBackController.readyForTakeBack = []
     @lineSelection = new App.LineSelectionController {el: @el, markVisitLinesController: new App.MarkVisitLinesController {el: @el}}
     @returnedQuantitiesController = new App.ReturnedQuantityController {el: @el}
+    @courierController = new App.ReservationsCourierController {el: @el}
     if @getLines().length
       do @fetchAvailability
     do @setupAutocomplete
@@ -26,6 +28,14 @@ class window.App.TakeBackController extends Spine.Controller
     new App.ReservationsEditController {el: @el, user: @user, contract: @contract, startDateDisabled: true, quantityDisabled: true}
     new PreChange "[data-quantity-returned]"
     new App.ModelCellTooltipController {el: @el}
+
+  applyAlternativePickupLocationsUi: =>
+    enabled = !!App.InventoryPool.current?.enable_alternative_pickup_locations
+    @el.toggleClass("with-alternative-pickup-locations", enabled)
+    if enabled
+      @el.attr("data-alternative-pickup-locations", true)
+    else
+      @el.removeAttr("data-alternative-pickup-locations")
 
   delegateEvents: =>
     super
@@ -55,8 +65,11 @@ class window.App.TakeBackController extends Spine.Controller
     @reservationsContainer.html App.Render "manage/views/reservations/grouped_lines_with_action_date", App.Modules.HasLines.groupByDateRange(@getLines(), false, "end_date"),
       linePartial: "manage/views/reservations/take_back_line"
       renderAvailability: renderAvailability
+      showCourierSelectAll: !!App.InventoryPool.current?.enable_alternative_pickup_locations
+      canToggleCourier: App.AccessRight.atLeastRole(App.User.current.role, "lending_manager")
     do @returnedQuantitiesController.restore
     do @lineSelection.restore
+    do @courierController.syncHeaders
 
   takeBack: =>
     returnedQuantity = {}

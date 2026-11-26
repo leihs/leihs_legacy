@@ -8,6 +8,13 @@ window.TimelineRenderReservations = {
       <span key='label'>{label}</span>
     ]
 
+    var pickupLocationName = TimelineUtil.pickupLocationName(timeline_availability, rr)
+    if(pickupLocationName) {
+      elements.push(
+        <span key='pickup_location' style={{marginLeft: '5px', fontStyle: 'italic'}}>({pickupLocationName})</span>
+      )
+    }
+
     var inventoryCode = TimelineUtil.inventoryCode(timeline_availability, rr)
     if(inventoryCode) {
       elements.push(
@@ -24,8 +31,8 @@ window.TimelineRenderReservations = {
 
       return line.map((rr) => {
 
-        var start = moment(rr.start_date)
-        var end = moment(rr.end_date)
+        var start = moment(rr.timeline_start_date || rr.start_date)
+        var end = moment(rr.timeline_end_date || rr.end_date)
 
         var offset = TimelineUtil.daysDifference(start, firstMoment)
 
