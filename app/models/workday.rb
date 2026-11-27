@@ -105,7 +105,8 @@ class Workday < ApplicationRecord
     total_visits_by_date.each_pair do |date, visits|
       next if date.past? \
         or max_visits_on(date.wday).nil? \
-        or visits.size < max_visits_on(date.wday).to_i
+        or visits.map { |v| [v.user_id, v.type] }.uniq.size \
+          < max_visits_on(date.wday).to_i
       dates << date
     end
     dates.sort
