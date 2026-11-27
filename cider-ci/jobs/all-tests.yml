@@ -4,6 +4,8 @@ jobs:
 
     name: All Tests
 
+    priority: 999
+
     description: |
       This job checks if all tests have passed
 
