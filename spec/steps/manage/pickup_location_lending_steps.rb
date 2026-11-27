@@ -150,12 +150,10 @@ module Manage
       end
 
       step 'the handed to courier checkbox is shown on the hand over line' do
+        expect(page).to have_content('Availability loaded')
         within '#lines' do
-          courier = find('[data-toggle-courier-to-pickup]')
-          expect(courier).to be_present
-          parent = courier.find(:xpath, './ancestor::div[contains(@class,"line-col")][1]')
-          expect(parent[:class]).to include('col1of10')
-          expect(parent[:class]).not_to include('col3of10')
+          expect(page).to have_selector('.line-col.col1of10 [data-toggle-courier-to-pickup]')
+          expect(page).not_to have_selector('.line-col.col3of10 [data-toggle-courier-to-pickup]')
         end
       end
 

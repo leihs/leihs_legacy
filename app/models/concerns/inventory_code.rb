@@ -40,35 +40,76 @@ module InventoryCode
       end
     end
 
-    # proposes the next available number based on the owner inventory_pool
-    # tries to take the next free inventory code
+    FREE_CHECK_BATCH_SIZE = 50
+    FREE_CHECK_MAX_BATCHES = 20
+
+    # items owned by any pool sharing the (case-insensitive) shortname
+    def same_shortname_items(inventory_pool)
+      pool_ids = InventoryPool
+        .where('lower(shortname) = lower(?)', prefix_for_inventory_code(inventory_pool))
+        .select(:id)
+      Item.where(owner_id: pool_ids)
+    end
+
+    def codes_for_number(shortname, num)
+      ["#{shortname}#{num}", "P-#{shortname}#{num}"]
+    end
+
+    # lower-cased codes among `codes` already used by any item
+    def taken_codes(codes)
+      return Set.new if codes.empty?
+
+      Item
+        .where('lower(inventory_code) IN (?)', codes.map(&:downcase))
+        .pluck(Arel.sql('lower(inventory_code)'))
+        .to_set
+    end
+
+    # first number from `start` on, not in `skip`, whose item and package
+    # codes are unused in all pools; checks in batches
+    def first_free_number(shortname, start, skip)
+      from = start
+      FREE_CHECK_MAX_BATCHES.times do
+        candidates = (from...(from + FREE_CHECK_BATCH_SIZE)).reject { |n| skip.include?(n) }
+        taken = taken_codes(candidates.flat_map { |n| codes_for_number(shortname, n) })
+        free = candidates.find do |n|
+          codes_for_number(shortname, n).none? { |c| taken.include?(c.downcase) }
+        end
+        return free if free
+
+        from += FREE_CHECK_BATCH_SIZE
+      end
+      from += 1 while skip.include?(from)
+      from
+    end
+
+    # proposes the next available number based on all pools sharing the
+    # owner's shortname; tries to take the next free inventory code
     # after the previously created Item
     def proposed_inventory_code(inventory_pool, type = :last)
+      items = same_shortname_items(inventory_pool)
+
       latest_inventory_code = \
-        Item
-        .where(owner_id: inventory_pool)
+        items
         .order('created_at DESC')
         .first
         .try(:inventory_code)
 
       shortname = prefix_for_inventory_code(inventory_pool)
 
-      pool_nums = Item.where(owner_id: inventory_pool)
+      pool_nums = items
         .pluck(:inventory_code)
         .map { |c| last_number(strip_pool_prefix(c.to_s, shortname)) }
         .to_set
 
       next_num = case type
                   when :lowest
-                    n = 1
-                    n += 1 while pool_nums.include?(n)
-                    n
+                    first_free_number(shortname, 1, pool_nums)
                   when :highest
                     free_inventory_code_ranges(from: 0).last.first
                   else # :last
-                    n = [last_number(strip_pool_prefix(latest_inventory_code.to_s, shortname)), 1].max
-                    n += 1 while pool_nums.include?(n)
-                    n
+                    start = [last_number(strip_pool_prefix(latest_inventory_code.to_s, shortname)), 1].max
+                    first_free_number(shortname, start, pool_nums)
                   end
 
       prefix_number(inventory_pool, next_num)

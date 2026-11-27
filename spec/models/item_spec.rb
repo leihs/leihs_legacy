@@ -87,6 +87,47 @@ describe Item do
     end
   end
 
+  describe '.proposed_inventory_code across pools' do
+    let(:other_pool) { FactoryBot.create(:inventory_pool) }
+
+    it 'considers other pools with the same shortname' do
+      pool.update(shortname: 'SAME')
+      other_pool.update(shortname: 'same')
+      t = Time.now
+      create_item('SAME100', pool: pool, created_at: t)
+      create_item('SAME205', pool: other_pool, created_at: t + 1)
+      expect(Item.proposed_inventory_code(pool)).to eq('SAME206')
+    end
+
+    it 'continues after newest code of same-shortname pools, not their max' do
+      pool.update(shortname: 'NEW')
+      other_pool.update(shortname: 'NEW')
+      t = Time.now
+      create_item('NEW88892', pool: other_pool, created_at: t)
+      create_item('NEW52260', pool: other_pool, created_at: t + 1)
+      create_item('NEW52294', pool: pool, created_at: t + 2)
+      expect(Item.proposed_inventory_code(pool)).to eq('NEW52295')
+      expect(Item.proposed_inventory_code(other_pool)).to eq('NEW52295')
+    end
+
+    it 'skips codes taken by pools with a different shortname' do
+      pool.update(shortname: 'SKIP')
+      other_pool.update(shortname: 'OTHER')
+      create_item('SKIP3', pool: pool)
+      create_item('skip4', pool: other_pool)
+      create_item('P-SKIP5', pool: other_pool)
+      expect(Item.proposed_inventory_code(pool)).to eq('SKIP6')
+    end
+
+    it 'skips codes taken by other pools when filling gaps' do
+      pool.update(shortname: 'GAP')
+      other_pool.update(shortname: 'OTHER')
+      create_item('GAP1', pool: pool)
+      create_item('GAP2', pool: other_pool)
+      expect(Item.proposed_inventory_code(pool, :lowest)).to eq('GAP3')
+    end
+  end
+
   describe '.proposed_inventory_code(:lowest)' do
     context 'alphabetic shortname' do
       before { pool.update(shortname: 'ABC') }
